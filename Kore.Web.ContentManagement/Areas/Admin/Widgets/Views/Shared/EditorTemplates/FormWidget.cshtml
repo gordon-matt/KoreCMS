@@ -1,0 +1,90 @@
+﻿@model Kore.Web.ContentManagement.Areas.Admin.Widgets.FormWidget
+
+<div id="widget-content">
+    <div class="col-sm-12 col-md-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.HtmlTemplate, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.HtmlTemplate, new { @class = "form-control", data_bind = "wysiwyg: htmlTemplate, wysiwygConfig: tinyMCEConfig" })
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.ThankYouMessage, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.ThankYouMessage, new { @class = "form-control", data_bind = "wysiwyg: thankYouMessage, wysiwygConfig: tinyMCEConfig" })
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.RedirectUrl, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.RedirectUrl, new { @class = "form-control", data_bind = "value: redirectUrl" })
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.EmailAddress, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", data_bind = "value: emailAddress" })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function updateModel() {
+        viewModel.htmlTemplate = ko.observable("");
+        viewModel.thankYouMessage = ko.observable("");
+        viewModel.redirectUrl = ko.observable("");
+        viewModel.emailAddress = ko.observable("");
+
+        var data = ko.mapping.fromJSON(viewModel.widgetValues());
+
+        if (data) {
+            if (data.HtmlTemplate) {
+                viewModel.htmlTemplate(data.HtmlTemplate());
+            }
+            if (data.ThankYouMessage) {
+                viewModel.thankYouMessage(data.ThankYouMessage());
+            }
+            if (data.RedirectUrl) {
+                viewModel.redirectUrl(data.RedirectUrl());
+            }
+            if (data.EmailAddress) {
+                viewModel.emailAddress(data.EmailAddress());
+            }
+        }
+
+        viewModel.tinyMCEConfig = {
+            theme: "modern",
+            plugins: [
+                "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                "searchreplace wordcount visualblocks visualchars code fullscreen",
+                "insertdatetime media nonbreaking save table contextmenu directionality",
+                "emoticons template paste textcolor"
+            ],
+            toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            toolbar2: "print preview media | forecolor backcolor emoticons",
+            image_advtab: true,
+            templates: [
+                { title: 'Test template 1', content: 'Test 1' },
+                { title: 'Test template 2', content: 'Test 2' }
+            ],
+            content_css: tinyMCEContentCss
+        };
+    };
+
+    function cleanUp() {
+        delete viewModel.htmlTemplate;
+        delete viewModel.thankYouMessage;
+        delete viewModel.redirectUrl;
+        delete viewModel.emailAddress;
+    }
+
+    function onBeforeSave() {
+        var data = {
+            HtmlTemplate: viewModel.htmlTemplate(),
+            ThankYouMessage: viewModel.thankYouMessage(),
+            RedirectUrl: viewModel.redirectUrl(),
+            EmailAddress: viewModel.emailAddress()
+        };
+
+        viewModel.widgetValues(ko.mapping.toJSON(data));
+    };
+</script>

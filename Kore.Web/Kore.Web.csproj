@@ -1,0 +1,501 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{36E2F817-E6E3-4942-9714-22547A68F79D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Kore.Web</RootNamespace>
+    <AssemblyName>Kore.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.Mvc5.3.3.3\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi">
+      <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Castle.Core.3.3.1\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.3\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.3\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Spatial, Version=5.6.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Spatial.5.6.3\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.OData, Version=5.3.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.5.3.1\lib\net45\System.Web.Http.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Areas\Admin\Configuration\ConfigurationAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Configuration\ConfigurationNavigationProvider.cs" />
+    <Compile Include="Areas\Admin\Configuration\ConfigurationPermissions.cs" />
+    <Compile Include="Areas\Admin\Configuration\Controllers\Api\SettingsController.cs" />
+    <Compile Include="Areas\Admin\Configuration\Controllers\SettingsController.cs" />
+    <Compile Include="Areas\Admin\ScheduledTasks\Controllers\Api\ScheduledTasksController.cs" />
+    <Compile Include="Areas\Admin\ScheduledTasks\Controllers\ScheduledTaskController.cs" />
+    <Compile Include="Areas\Admin\ScheduledTasks\Models\ScheduledTaskModel.cs" />
+    <Compile Include="Areas\Admin\ScheduledTasks\ScheduledTasksNavigationProvider.cs" />
+    <Compile Include="Areas\Admin\ScheduledTasks\ScheduledTasksPermissions.cs" />
+    <Compile Include="Collections\EnumerableExtensions.cs" />
+    <Compile Include="Configuration\CaptchaSettings.cs" />
+    <Compile Include="Configuration\ISettings.cs" />
+    <Compile Include="Configuration\ISettingService.cs" />
+    <Compile Include="Configuration\KoreWebConfigurationSection.cs" />
+    <Compile Include="Configuration\MobileConfigurationElement.cs" />
+    <Compile Include="Configuration\ResourcesConfigurationElement.cs" />
+    <Compile Include="Configuration\ThemesConfigurationElement.cs" />
+    <Compile Include="Core\EnumExtensions.cs" />
+    <Compile Include="Core\ExpandoObjectExtensions.cs" />
+    <Compile Include="Core\ObjectExtensions.cs" />
+    <Compile Include="Core\StringExtensions.cs" />
+    <Compile Include="Environment\IHttpContextAccessor.cs" />
+    <Compile Include="Events\DefaultEventBus.cs" />
+    <Compile Include="Events\DelegateHelper.cs" />
+    <Compile Include="Events\EventsInterceptor.cs" />
+    <Compile Include="Events\EventsModule.cs" />
+    <Compile Include="Events\EventsRegistrationSource.cs" />
+    <Compile Include="Events\IContentHandler.cs" />
+    <Compile Include="Events\IEventBus.cs" />
+    <Compile Include="Events\IEventHandler.cs" />
+    <Compile Include="Exceptions\DefaultExceptionPolicy.cs" />
+    <Compile Include="Exceptions\IExceptionPolicy.cs" />
+    <Compile Include="Fakes\Extensions.cs" />
+    <Compile Include="Fakes\FakeHttpContext.cs" />
+    <Compile Include="Fakes\FakeHttpContext2.cs" />
+    <Compile Include="Fakes\FakeHttpRequest.cs" />
+    <Compile Include="Fakes\FakeHttpResponse.cs" />
+    <Compile Include="Fakes\FakeHttpResponse2.cs" />
+    <Compile Include="Fakes\FakeHttpSessionState.cs" />
+    <Compile Include="Fakes\FakeHttpWorkerRequest.cs" />
+    <Compile Include="Fakes\FakeIdentity.cs" />
+    <Compile Include="Fakes\FakePrincipal.cs" />
+    <Compile Include="Hosting\IKoreVirtualPathProvider.cs" />
+    <Compile Include="HttpApplicationBase.cs" />
+    <Compile Include="Http\Dispatcher\KoreAssembliesResolver.cs" />
+    <Compile Include="Http\Dispatcher\NamespacesHttpControllerSelector.cs" />
+    <Compile Include="Http\KoreDependencyResolver.cs" />
+    <Compile Include="Http\OData\GenericODataController.cs" />
+    <Compile Include="IMobileDeviceHelper.cs" />
+    <Compile Include="Infrastructure\ConfigurationModule.cs" />
+    <Compile Include="Infrastructure\DefaultLocalizableStringsProvider.cs" />
+    <Compile Include="Infrastructure\DependencyManagement\AutofacRequestLifetimeHttpModule.cs" />
+    <Compile Include="Infrastructure\DependencyManagement\ContainerConfigurer.cs" />
+    <Compile Include="Infrastructure\DependencyManagement\AutofacContainerManager.cs" />
+    <Compile Include="Infrastructure\DependencyRegistrar.cs" />
+    <Compile Include="Infrastructure\IResourceBundleRegistrar.cs" />
+    <Compile Include="Infrastructure\IWebApiRegistrar.cs" />
+    <Compile Include="Infrastructure\KoreWebEngine.cs" />
+    <Compile Include="Infrastructure\WebApiRegistrar.cs" />
+    <Compile Include="Infrastructure\WebAppTypeFinder.cs" />
+    <Compile Include="IO\HtmlStringWriter.cs" />
+    <Compile Include="IWebHelper.cs" />
+    <Compile Include="IWorkContext.cs" />
+    <Compile Include="IWorkContextStateProvider.cs" />
+    <Compile Include="KoreWebConstants.cs" />
+    <Compile Include="KoreWebLocalizableStrings.cs" />
+    <Compile Include="Localization\DefaultWebCultureManager.cs" />
+    <Compile Include="Localization\IWebCultureManager.cs" />
+    <Compile Include="Localization\LanguageContentHandler.cs" />
+    <Compile Include="Localization\Services\CookieCultureSelector.cs" />
+    <Compile Include="Localization\Services\CultureSelectorResult.cs" />
+    <Compile Include="Localization\Services\ICultureSelector.cs" />
+    <Compile Include="Localization\Services\SiteCultureSelector.cs" />
+    <Compile Include="Mvc\ActionResults\JsonNetResult.cs" />
+    <Compile Include="Mvc\ActionResults\RssActionResult.cs" />
+    <Compile Include="Mvc\Attributes\ButtonAttribute.cs" />
+    <Compile Include="Mvc\Attributes\TransactionAttribute.cs" />
+    <Compile Include="Mvc\CombinedHtmlString.cs" />
+    <Compile Include="Mvc\Controls\AdRotator.cs" />
+    <Compile Include="Mvc\Controls\ExtendedSelectListItem.cs" />
+    <Compile Include="Mvc\Controls\ImageMap\CircleHotSpot.cs" />
+    <Compile Include="Mvc\Controls\ImageMap\ImageMap.cs" />
+    <Compile Include="Mvc\Controls\ImageMap\ImageMapHotSpot.cs" />
+    <Compile Include="Mvc\Controls\ImageMap\PolygonHotSpot.cs" />
+    <Compile Include="Mvc\Controls\ImageMap\RectangleHotSpot.cs" />
+    <Compile Include="Mvc\Controls\Panel\MvcPanel.cs" />
+    <Compile Include="Mvc\Controls\Panel\PanelExtensions.cs" />
+    <Compile Include="Mvc\EmbeddedViews\EmbeddedResourceVirtualFile.cs" />
+    <Compile Include="Mvc\EmbeddedViews\EmbeddedResourceMetadata.cs" />
+    <Compile Include="Mvc\EmbeddedViews\EmbeddedResourceResolver.cs" />
+    <Compile Include="Mvc\EmbeddedViews\EmbeddedResourceTable.cs" />
+    <Compile Include="Mvc\EmbeddedViews\EmbeddedScriptVirtualPathProvider.cs" />
+    <Compile Include="Mvc\EmbeddedViews\EmbeddedViewVirtualPathProvider.cs" />
+    <Compile Include="Mvc\EmbeddedViews\IEmbeddedResourceResolver.cs" />
+    <Compile Include="Mvc\FluentTagBuilder.cs" />
+    <Compile Include="Mvc\HtmlHelperExtensions.cs" />
+    <Compile Include="Mvc\Html\GroupedSelectExtensions.cs" />
+    <Compile Include="Mvc\Controls\TreeView.cs" />
+    <Compile Include="Mvc\KoreController.cs" />
+    <Compile Include="Mvc\KoreDependencyResolver.cs" />
+    <Compile Include="Mvc\Optimization\BundleCollection.cs" />
+    <Compile Include="Mvc\Optimization\CompressFilterAttribute.cs" />
+    <Compile Include="Mvc\Optimization\HtmlMinifierAttribute.cs" />
+    <Compile Include="Mvc\Optimization\HtmlMinifierFilter.cs" />
+    <Compile Include="Mvc\Resources\BundleRegistrationException.cs" />
+    <Compile Include="Mvc\Resources\IResourcesManager.cs" />
+    <Compile Include="Mvc\Resources\MetaEntry.cs" />
+    <Compile Include="Mvc\Resources\ResourceEntry.cs" />
+    <Compile Include="Mvc\Resources\ResourceRegister.cs" />
+    <Compile Include="Mvc\Resources\ResourcesManager.cs" />
+    <Compile Include="Mvc\Resources\ScriptRegister.cs" />
+    <Compile Include="Mvc\Resources\StyleRegister.cs" />
+    <Compile Include="Mvc\Resources\UnregisteredBundleException.cs" />
+    <Compile Include="Mvc\RoboUI\ActionResults\RoboUICombinedResult.cs" />
+    <Compile Include="Mvc\RoboUI\ActionResults\RoboUIContentResult.cs" />
+    <Compile Include="Mvc\RoboUI\ActionResults\RoboUIFormResult.cs" />
+    <Compile Include="Mvc\RoboUI\ActionResults\RoboUIGridAjaxData.cs" />
+    <Compile Include="Mvc\RoboUI\ActionResults\RoboUIGridColumn.cs" />
+    <Compile Include="Mvc\RoboUI\ActionResults\RoboUIGridRequest.cs" />
+    <Compile Include="Mvc\RoboUI\ActionResults\RoboUIGridResult.cs" />
+    <Compile Include="Mvc\RoboUI\ActionResults\RoboUIGridRowAction.cs" />
+    <Compile Include="Mvc\RoboUI\ActionResults\RoboUIResult.cs" />
+    <Compile Include="Mvc\RoboUI\ActionResults\RoboUISubGrid.cs" />
+    <Compile Include="Mvc\RoboUI\ActionResults\RoboUIViewResult.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboAutoCompleteAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboButtonAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboCaptchaAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboCascadingCheckBoxListAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboCascadingDropDownAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboChoiceAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboColorPickerAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboComplexAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboControlAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboDatePickerAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboDivAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboFileUploadAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboGridAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboHiddenAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboHtmlAttributeAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboHtmlViewAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboIconFontPickerAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboImageAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboLabelAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboNumericAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboSlugAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\Attributes\RoboTextAttribute.cs" />
+    <Compile Include="Mvc\RoboUI\BaseRoboUIAction.cs" />
+    <Compile Include="Mvc\RoboUI\ButtonSize.cs" />
+    <Compile Include="Mvc\RoboUI\ButtonStyle.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\CustomTypeDescriptorExtensions.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\CustomTypeDescriptorPropertyAccessExpressionBuilder.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\DataRowFieldAccessExpressionBuilder.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\DynamicPropertyAccessExpressionBuilder.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\ExpressionBuilderFactory.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\ExpressionBuilderOptions.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\ExpressionConstants.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\IMemberAccessToken.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\IndexerToken.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\MemberAccessExpressionBuilderBase.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\MemberAccessTokenExtensions.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\MemberAccessTokenizer.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\PropertyAccessExpressionBuilder.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\PropertyToken.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\QueryProviderExtensions.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\UnboxT.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\XmlNodeChildElementAccessExpressionBuilder.cs" />
+    <Compile Include="Mvc\RoboUI\Expressions\XmlNodeExtensions.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\AndNode.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\BooleanNode.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\ComparisonNode.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\CompositeFilterDescriptor.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\DateTimeNode.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\ExpressionBuilderBase.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\ExpressionFactory.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterCompositionLogicalOperator.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterDescription.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterDescriptionExpressionBuilder.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterDescriptor.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterDescriptorBase.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterDescriptorCollection.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterDescriptorCollectionExpressionBuilder.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterDescriptorExpressionBuilder.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterDescriptorFactory.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterExpressionBuilder.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterExtensions.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterLexer.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterNodeVisitor.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterOperator.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterOperatorExtensions.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterParser.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterParserException.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterToken.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterTokenExtensions.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FilterTokenType.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\FunctionNode.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\IFilterDescriptor.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\IFilterNode.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\IFilterNodeVisitor.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\ILogicalNode.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\IOperatorNode.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\IValueNode.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\JsonObject.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\JsonObjectExtensions.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\NumberNode.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\OrNode.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\PredicateFilterDescription.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\PropertyNode.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\StringNode.cs" />
+    <Compile Include="Mvc\RoboUI\Filters\TypeExtensions.cs" />
+    <Compile Include="Mvc\RoboUI\GridLayout.cs" />
+    <Compile Include="Mvc\RoboUI\IDescriptor.cs" />
+    <Compile Include="Mvc\RoboUI\IRoboUIDisplayEventHandler.cs" />
+    <Compile Include="Mvc\RoboUI\Providers\BaseRoboUIFormProvider.cs" />
+    <Compile Include="Mvc\RoboUI\Providers\BaseRoboUIGridProvider.cs" />
+    <Compile Include="Mvc\RoboUI\Providers\Bootstrap3RoboUIFormProvider.cs" />
+    <Compile Include="Mvc\RoboUI\Providers\IRoboUIFormProvider.cs" />
+    <Compile Include="Mvc\RoboUI\Providers\IRoboUIGridProvider.cs" />
+    <Compile Include="Mvc\RoboUI\Providers\JQGridRoboUIGridProvider.cs" />
+    <Compile Include="Mvc\RoboUI\Providers\KendoRoboUIGridProvider.cs" />
+    <Compile Include="Mvc\RoboUI\RoboSettings.cs" />
+    <Compile Include="Mvc\RoboUI\RoboUIFormAction.cs" />
+    <Compile Include="Mvc\RoboUI\RoboUIGroupedLayout.cs" />
+    <Compile Include="Mvc\RoboUI\RoboUITabbedLayout.cs" />
+    <Compile Include="Mvc\RoboUI\RoboUIVirtualPathProvider.cs" />
+    <Compile Include="Mvc\RoboUI\RoboUIWizardValueProvider.cs" />
+    <Compile Include="Mvc\RoboUI\SortDescriptor.cs" />
+    <Compile Include="Mvc\Routing\IHasRequestContext.cs" />
+    <Compile Include="Mvc\Routing\IRouteProvider.cs" />
+    <Compile Include="Mvc\Routing\IRoutePublisher.cs" />
+    <Compile Include="Mvc\Routing\RoutePublisher.cs" />
+    <Compile Include="Mvc\Routing\RouteValueDictionaryExtensions.cs" />
+    <Compile Include="Mvc\Themes\CurrentDesktopThemeStateProvider.cs" />
+    <Compile Include="Mvc\Themes\CurrentMobileThemeStateProvider.cs" />
+    <Compile Include="Mvc\Themes\ILocationFormatProvider.cs" />
+    <Compile Include="Mvc\Themes\IThemeContext.cs" />
+    <Compile Include="Mvc\Themes\IThemeProvider.cs" />
+    <Compile Include="Mvc\Themes\ThemeableBuildManagerViewEngine .cs" />
+    <Compile Include="Mvc\Themes\ThemeableRazorViewEngine.cs" />
+    <Compile Include="Mvc\Themes\ThemeableVirtualPathProviderViewEngine.cs" />
+    <Compile Include="Mvc\Themes\ThemeConfiguration.cs" />
+    <Compile Include="Mvc\Themes\ThemeContext.cs" />
+    <Compile Include="Mvc\Themes\ThemeProvider.cs" />
+    <Compile Include="Mvc\UrlHelperExtensions.cs" />
+    <Compile Include="Mvc\ViewDataContainer.cs" />
+    <Compile Include="Mvc\WebViewPage.cs" />
+    <Compile Include="Navigation\Breadcrumb.cs" />
+    <Compile Include="Navigation\BreadcrumbCollection.cs" />
+    <Compile Include="Navigation\FlatPositionComparer.cs" />
+    <Compile Include="Navigation\INavigationManager.cs" />
+    <Compile Include="Navigation\INavigationProvider.cs" />
+    <Compile Include="Navigation\MenuItem.cs" />
+    <Compile Include="Navigation\MenuItemComparer.cs" />
+    <Compile Include="Navigation\NavigationBuilder.cs" />
+    <Compile Include="Navigation\NavigationItemBuilder.cs" />
+    <Compile Include="Navigation\NavigationManager.cs" />
+    <Compile Include="Net\Mail\Common\StreamUtility.cs" />
+    <Compile Include="Net\Mail\Common\StringUtility.cs" />
+    <Compile Include="Net\Mail\IEmailSender.cs" />
+    <Compile Include="Net\Mail\Mime\Decode\Base64.cs" />
+    <Compile Include="Net\Mail\Mime\Decode\EncodedWord.cs" />
+    <Compile Include="Net\Mail\Mime\Decode\EncodingFinder.cs" />
+    <Compile Include="Net\Mail\Mime\Decode\QuotedPrintable.cs" />
+    <Compile Include="Net\Mail\Mime\Decode\Rfc2231Decoder.cs" />
+    <Compile Include="Net\Mail\Mime\Decode\Rfc2822DateTime.cs" />
+    <Compile Include="Net\Mail\Mime\Header\ContentTransferEncoding.cs" />
+    <Compile Include="Net\Mail\Mime\Header\HeaderExtractor.cs" />
+    <Compile Include="Net\Mail\Mime\Header\HeaderFieldParser.cs" />
+    <Compile Include="Net\Mail\Mime\Header\MessageHeader.cs" />
+    <Compile Include="Net\Mail\Mime\Header\Received.cs" />
+    <Compile Include="Net\Mail\Mime\Header\RfcMailAddress.cs" />
+    <Compile Include="Net\Mail\Mime\Message.cs" />
+    <Compile Include="Net\Mail\Mime\MessagePart.cs" />
+    <Compile Include="Net\Mail\Mime\Traverse\AnswerMessageTraverser.cs" />
+    <Compile Include="Net\Mail\Mime\Traverse\AttachmentFinder.cs" />
+    <Compile Include="Net\Mail\Mime\Traverse\FindAllMessagePartsWithMediaType.cs" />
+    <Compile Include="Net\Mail\Mime\Traverse\FindFirstMessagePartWithMediaType.cs" />
+    <Compile Include="Net\Mail\Mime\Traverse\IAnswerMessageTraverser.cs" />
+    <Compile Include="Net\Mail\Mime\Traverse\IQuestionAnswerMessageTraverser.cs" />
+    <Compile Include="Net\Mail\Mime\Traverse\MultipleMessagePartFinder.cs" />
+    <Compile Include="Net\Mail\Mime\Traverse\TextVersionFinder.cs" />
+    <Compile Include="Net\Mail\Pop3\Apop.cs" />
+    <Compile Include="Net\Mail\Pop3\AuthenticationMethod.cs" />
+    <Compile Include="Net\Mail\Pop3\ConnectionState.cs" />
+    <Compile Include="Net\Mail\Pop3\CramMd5.cs" />
+    <Compile Include="Net\Mail\Pop3\Disposable.cs" />
+    <Compile Include="Net\Mail\Pop3\Exceptions\InvalidLoginException.cs" />
+    <Compile Include="Net\Mail\Pop3\Exceptions\InvalidUseException.cs" />
+    <Compile Include="Net\Mail\Pop3\Exceptions\LoginDelayException.cs" />
+    <Compile Include="Net\Mail\Pop3\Exceptions\PopClientException.cs" />
+    <Compile Include="Net\Mail\Pop3\Exceptions\PopServerException.cs" />
+    <Compile Include="Net\Mail\Pop3\Exceptions\PopServerLockedException.cs" />
+    <Compile Include="Net\Mail\Pop3\Exceptions\PopServerNotAvailableException.cs" />
+    <Compile Include="Net\Mail\Pop3\Exceptions\PopServerNotFoundException.cs" />
+    <Compile Include="Net\Mail\Pop3\Pop3Client.cs" />
+    <Compile Include="Net\Mail\SmtpSettings.cs" />
+    <Compile Include="Plugins\BasePlugin.cs" />
+    <Compile Include="Areas\Admin\Plugins\Controllers\Api\PluginsController.cs" />
+    <Compile Include="Areas\Admin\Plugins\Controllers\PluginController.cs" />
+    <Compile Include="Plugins\IPlugin.cs" />
+    <Compile Include="Plugins\IPluginFinder.cs" />
+    <Compile Include="Areas\Admin\Plugins\Models\EdmPluginDescriptor.cs" />
+    <Compile Include="Plugins\PluginDescriptor.cs" />
+    <Compile Include="Plugins\PluginFileParser.cs" />
+    <Compile Include="Plugins\PluginFinder.cs" />
+    <Compile Include="Plugins\PluginManager.cs" />
+    <Compile Include="Areas\Admin\Plugins\PluginsAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Plugins\PluginsNavigationProvider.cs" />
+    <Compile Include="Areas\Admin\Plugins\PluginsPermissions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Membership\CurrentUserStateProvider.cs" />
+    <Compile Include="Security\Membership\Permissions\CheckAccessContext.cs" />
+    <Compile Include="Security\Membership\Permissions\IAuthorizationService.cs" />
+    <Compile Include="Security\Membership\Permissions\IAuthorizationServiceEventHandler.cs" />
+    <Compile Include="Security\Membership\Permissions\IPermissionProvider.cs" />
+    <Compile Include="Security\Membership\Permissions\Permission.cs" />
+    <Compile Include="Security\Membership\Permissions\RolesBasedAuthorizationService.cs" />
+    <Compile Include="Security\Membership\Permissions\StandardPermissions.cs" />
+    <Compile Include="UI\HtmlTextWriterExtensions.cs" />
+    <Compile Include="UrlBuilder.cs" />
+    <Compile Include="WebHelper.cs" />
+    <Compile Include="WorkContext.cs" />
+    <Compile Include="WorkContextExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Kore\Kore.csproj">
+      <Project>{f5b45103-1be4-401d-a90d-d4cd7a0ac5d4}</Project>
+      <Name>Kore</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <EmbeddedResource Include="Areas\Admin\Configuration\Views\Settings\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\ScheduledTasks\Views\ScheduledTask\Index.cshtml" />
+    <None Include="packages.config" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\SmtpSettings.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Plugins\Views\Plugin\Index.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\CaptchaSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mvc\Filters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\Admin\Plugins\Scripts\index.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\Admin\Configuration\Scripts\index.js" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,54 @@
+﻿.container {
+    width: 98% !important;
+}
+
+body {
+    padding-top: 90px;
+}
+
+.elfinder .elfinder-button {
+    height: 48px;
+    width: 48px;
+    cursor: pointer;
+}
+
+.ui-widget-header {
+    height: auto;
+}
+
+.elfinder .elfinder-button.ui-state-disabled .fa {
+    opacity: 0.4;
+}
+
+.elfinder .elfinder-button {
+    padding: 8px;
+}
+
+.fa-sub {
+    position: relative;
+    left: 1em;
+    width: .2em;
+    top: -0.75em;
+    text-shadow: 0 0 1px black;
+}
+
+#primary-nav > li > a {
+    text-align: center;
+}
+
+    #primary-nav > li > a > i {
+        font-size: 2em;
+    }
+
+    #primary-nav > li > a > span {
+        display: block;
+    }
+
+.navbar-brand {
+    margin-top: 15px;
+}
+
+.k-detail-cell > .tabstrip {
+    border-style:dashed;
+    border-width:2px;
+}

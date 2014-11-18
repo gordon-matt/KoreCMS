@@ -1,0 +1,33 @@
+﻿@using Kore.Localization.Domain
+@using Kore.Web.ContentManagement
+@using Kore.Web.ContentManagement.Extensions;
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    
+    Style.IncludeBundle("kendo-ui");
+
+    Script.IncludeBundle("kendo-ui");
+    Script.IncludeBundle("knockout");
+    Script.IncludeBundle("knockout-mapping");
+    Script.IncludeBundle("tinymce");
+    Script.IncludeBundle("notify");
+
+    Script.IncludeBundle("kore-cms/localizable-strings");
+}
+
+<div id="grid-section" class="row">
+    <div class="col-md-12">
+        <div id="Grid"></div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        var cultureCode = '@ViewBag.CultureCode';
+
+        if (cultureCode == "") {
+            cultureCode = null;
+        }
+    </script>
+}

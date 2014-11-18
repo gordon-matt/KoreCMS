@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F5B45103-1BE4-401D-A90D-D4CD7A0AC5D4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Kore</RootNamespace>
+    <AssemblyName>Kore</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Castle.Core.3.3.1\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ArgumentHelper.cs" />
+    <Compile Include="Caching\ClearCacheTask.cs" />
+    <Compile Include="Caching\Extensions.cs" />
+    <Compile Include="Caching\ICacheManager.cs" />
+    <Compile Include="Caching\KoreNullCache.cs" />
+    <Compile Include="Caching\MemoryCacheManager.cs" />
+    <Compile Include="Caching\PerRequestCacheManager.cs" />
+    <Compile Include="Collections\CollectionExtensions.cs" />
+    <Compile Include="Collections\DictionaryExtensions.cs" />
+    <Compile Include="Collections\EnumerableExtensions.cs" />
+    <Compile Include="Collections\Generic\C5\CircularQueue.cs" />
+    <Compile Include="Collections\Generic\C5\Collections.cs" />
+    <Compile Include="Collections\Generic\C5\Dictionaries.cs" />
+    <Compile Include="Collections\Generic\C5\Enums.cs" />
+    <Compile Include="Collections\Generic\C5\Events.cs" />
+    <Compile Include="Collections\Generic\C5\Exceptions.cs" />
+    <Compile Include="Collections\Generic\C5\Formatting.cs" />
+    <Compile Include="Collections\Generic\C5\HashBag.cs" />
+    <Compile Include="Collections\Generic\C5\HashDictionary.cs" />
+    <Compile Include="Collections\Generic\C5\Hashers.cs" />
+    <Compile Include="Collections\Generic\C5\HashTable.cs" />
+    <Compile Include="Collections\Generic\C5\Interfaces.cs" />
+    <Compile Include="Collections\Generic\C5\MappedEnumerators.cs" />
+    <Compile Include="Collections\Generic\C5\RedBlackTreeDictionary.cs" />
+    <Compile Include="Collections\Generic\C5\RedBlackTreeSet.cs" />
+    <Compile Include="Collections\Generic\C5\SortedArray.cs" />
+    <Compile Include="Collections\Generic\C5\Sorting.cs" />
+    <Compile Include="Collections\Generic\C5\Wrappers.cs" />
+    <Compile Include="Collections\Generic\IRelationship.cs" />
+    <Compile Include="Collections\Generic\Pagination\EnumerableExtensions.cs" />
+    <Compile Include="Collections\Generic\Pagination\IPagedList.cs" />
+    <Compile Include="Collections\Generic\Pagination\PagedList.cs" />
+    <Compile Include="Collections\Generic\PairList.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\Algorithms.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\Bag.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\BigList.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\CollectionBase.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\Comparers.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\Deque.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\DictionaryBase.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\Hash.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\ListBase.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\MultiDictionary.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\MultiDictionaryBase.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\OrderedBag.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\OrderedDictionary.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\OrderedMultiDictionary.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\OrderedSet.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\Pair.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\ReadOnlyCollectionBase.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\ReadOnlyDictionaryBase.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\ReadOnlyListBase.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\ReadOnlyMultiDictionaryBase.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\RedBlack.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\Set.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\Strings.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\Triple.cs" />
+    <Compile Include="Collections\Generic\PowerCollections\Util.cs" />
+    <Compile Include="Collections\Generic\TripleList.cs" />
+    <Compile Include="ComponentModel\IModelAttribute.cs" />
+    <Compile Include="Configuration\DataConfigurationElement.cs" />
+    <Compile Include="Configuration\Domain\Setting.cs" />
+    <Compile Include="Configuration\EngineConfigurationElement.cs" />
+    <Compile Include="Configuration\KoreConfigurationSection.cs" />
+    <Compile Include="Configuration\TasksConfigurationElement.cs" />
+    <Compile Include="Core\ArrayExtensions.cs" />
+    <Compile Include="Core\ByteArrayExtensions.cs" />
+    <Compile Include="Core\CharExtensions.cs" />
+    <Compile Include="Core\DateTimeExtensions.cs" />
+    <Compile Include="Core\DecimalExtensions.cs" />
+    <Compile Include="Core\DoubleExtensions.cs" />
+    <Compile Include="Core\DynamicExtensions.cs" />
+    <Compile Include="Core\EnumExtensions.cs" />
+    <Compile Include="Core\ExceptionExtensions.cs" />
+    <Compile Include="Core\ICloneable.cs" />
+    <Compile Include="Core\IDisposableExtensions.cs" />
+    <Compile Include="Core\Int32Extensions.cs" />
+    <Compile Include="Core\ObjectExtensions.cs" />
+    <Compile Include="Core\RandomExtensions.cs" />
+    <Compile Include="Core\SingleExtensions.cs" />
+    <Compile Include="Core\StringExtensions.cs" />
+    <Compile Include="Core\TimeSpanExtensions.cs" />
+    <Compile Include="Data\ColumnInfo.cs" />
+    <Compile Include="Data\ColumnInfoCollection.cs" />
+    <Compile Include="Data\Common\DbConnectionExtensions.cs" />
+    <Compile Include="Data\Common\DbDataReaderExtensions.cs" />
+    <Compile Include="Data\Common\DbParameterCollectionExtensions.cs" />
+    <Compile Include="Data\Common\DbTypeConverter.cs" />
+    <Compile Include="Data\Common\OleDbTypeConverter.cs" />
+    <Compile Include="Data\Common\SqlDbTypeConverter.cs" />
+    <Compile Include="Data\Common\SystemTypeConverter.cs" />
+    <Compile Include="Data\DataColumnCollectionExtensions.cs" />
+    <Compile Include="Data\DataSetExtensions.cs" />
+    <Compile Include="Data\DataTableExtensions.cs" />
+    <Compile Include="Data\DataTypeConvertor.cs" />
+    <Compile Include="Data\DbTypeExtensions.cs" />
+    <Compile Include="Data\ForeignKeyInfo.cs" />
+    <Compile Include="Data\ForeignKeyInfoCollection.cs" />
+    <Compile Include="Data\IEntity.cs" />
+    <Compile Include="Data\IRepository.cs" />
+    <Compile Include="Data\OleDb\OleDbConnectionExtensions.cs" />
+    <Compile Include="Data\Services\GenericDataService.cs" />
+    <Compile Include="Data\Services\IGenericDataService.cs" />
+    <Compile Include="Data\SqlClient\SqlConnectionExtensions.cs" />
+    <Compile Include="Data\Sql\SqlDataSourceEnumeratorExtensions.cs" />
+    <Compile Include="Drawing\ColorExtensions.cs" />
+    <Compile Include="Drawing\ImageExtensions.cs" />
+    <Compile Include="Exceptions\KoreException.cs" />
+    <Compile Include="IAppContextStateProvider.cs" />
+    <Compile Include="Infrastructure\AppDomainTypeFinder.cs" />
+    <Compile Include="Infrastructure\Old\AutofacDIContainerAdapter.cs" />
+    <Compile Include="Infrastructure\Old\AutofacRegistrationBuilder.cs" />
+    <Compile Include="Infrastructure\DependencyManagement\ComponentLifeStyle.cs" />
+    <Compile Include="Infrastructure\DependencyManagement\IContainerManager.cs" />
+    <Compile Include="Infrastructure\EngineContext.cs" />
+    <Compile Include="Infrastructure\Old\EngineContext_OLD.cs" />
+    <Compile Include="Infrastructure\IDependencyRegistrar.cs" />
+    <Compile Include="Infrastructure\Old\IDIContainerAdapter.cs" />
+    <Compile Include="Infrastructure\Old\IDIRegistrationBuilder.cs" />
+    <Compile Include="Infrastructure\IEngine.cs" />
+    <Compile Include="Infrastructure\IStartupTask.cs" />
+    <Compile Include="Infrastructure\ITypeFinder.cs" />
+    <Compile Include="Infrastructure\Singleton.cs" />
+    <Compile Include="IO\CustomEncodingStringWriter.cs" />
+    <Compile Include="IO\FileInfoExtensions.cs" />
+    <Compile Include="IO\StreamExtensions.cs" />
+    <Compile Include="KoreVersion.cs" />
+    <Compile Include="KoreConstants.cs" />
+    <Compile Include="Linq\Dynamic.cs" />
+    <Compile Include="Linq\LinqKit\ExpandableQuery.cs" />
+    <Compile Include="Linq\LinqKit\ExpressionExpander.cs" />
+    <Compile Include="Linq\LinqKit\ExpressionVisitor.cs" />
+    <Compile Include="Linq\LinqKit\Extensions.cs" />
+    <Compile Include="Linq\LinqKit\Linq.cs" />
+    <Compile Include="Linq\LinqKit\PredicateBuilder.cs" />
+    <Compile Include="Linq\Utils.cs" />
+    <Compile Include="Localization\CurrentCultureStateProvider.cs" />
+    <Compile Include="Localization\DefaultCultureManager.cs" />
+    <Compile Include="Localization\DefaultLanguageManager.cs" />
+    <Compile Include="Localization\DefaultLocalizedStringManager.cs" />
+    <Compile Include="Localization\DI\DependencyRegistrar.cs" />
+    <Compile Include="Localization\DI\LocalizationModule.cs" />
+    <Compile Include="Localization\Domain\Language.cs" />
+    <Compile Include="Localization\Domain\LocalizableString.cs" />
+    <Compile Include="Localization\ICultureManager.cs" />
+    <Compile Include="Localization\IDefaultLocalizableStringsProvider.cs" />
+    <Compile Include="Localization\ILanguageManager.cs" />
+    <Compile Include="Localization\ILocalizableEntity.cs" />
+    <Compile Include="Localization\ILocalizedStringManager.cs" />
+    <Compile Include="Localization\IText.cs" />
+    <Compile Include="Localization\Language.cs" />
+    <Compile Include="Localization\LocalizationUtilities.cs" />
+    <Compile Include="ComponentModel\LocalizedDisplayNameAttribute.cs" />
+    <Compile Include="Localization\LocalizedString.cs" />
+    <Compile Include="Localization\Localizer.cs" />
+    <Compile Include="Localization\NullLocalizer.cs" />
+    <Compile Include="Localization\StartupTask.cs" />
+    <Compile Include="Localization\Text.cs" />
+    <Compile Include="Logging\NLogLoggerFactory.cs" />
+    <Compile Include="Logging\LoggingModule.cs" />
+    <Compile Include="Logging\NLogFilteredLogger.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\AssemblyExtensions.cs" />
+    <Compile Include="Reflection\ObjectExtensions.cs" />
+    <Compile Include="Reflection\StringExtensions.cs" />
+    <Compile Include="Reflection\TypeExtensions.cs" />
+    <Compile Include="StartupTask.cs" />
+    <Compile Include="Tasks\Domain\ScheduledTask.cs" />
+    <Compile Include="Tasks\Services\IScheduledTaskService.cs" />
+    <Compile Include="Tasks\ITask.cs" />
+    <Compile Include="Tasks\Services\ScheduledTaskService.cs" />
+    <Compile Include="Tasks\Task.cs" />
+    <Compile Include="Tasks\TaskManager.cs" />
+    <Compile Include="Tasks\TaskThread.cs" />
+    <Compile Include="Security\Membership\IMembershipService.cs" />
+    <Compile Include="Security\Membership\KorePermission.cs" />
+    <Compile Include="Security\Membership\KoreRole.cs" />
+    <Compile Include="Security\Membership\KoreUser.cs" />
+    <Compile Include="Serialization\Advanced\BinaryPropertyDeserializer.cs" />
+    <Compile Include="Serialization\Advanced\BinaryPropertySerializer.cs" />
+    <Compile Include="Serialization\Advanced\Binary\IBinaryReader.cs" />
+    <Compile Include="Serialization\Advanced\Binary\IBinaryWriter.cs" />
+    <Compile Include="Serialization\Advanced\BurstBinaryReader.cs" />
+    <Compile Include="Serialization\Advanced\BurstBinaryWriter.cs" />
+    <Compile Include="Serialization\Advanced\DefaultXmlReader.cs" />
+    <Compile Include="Serialization\Advanced\DefaultXmlWriter.cs" />
+    <Compile Include="Serialization\Advanced\Deserializing\IPropertyDeserializer.cs" />
+    <Compile Include="Serialization\Advanced\PropertyCache.cs" />
+    <Compile Include="Serialization\Advanced\PropertyProvider.cs" />
+    <Compile Include="Serialization\Advanced\Serializing\IPropertySerializer.cs" />
+    <Compile Include="Serialization\Advanced\Serializing\ITypeNameConverter.cs" />
+    <Compile Include="Serialization\Advanced\Serializing\PropertySerializer.cs" />
+    <Compile Include="Serialization\Advanced\SimpleValueConverter.cs" />
+    <Compile Include="Serialization\Advanced\SizeOptimizedBinaryReader.cs" />
+    <Compile Include="Serialization\Advanced\SizeOptimizedBinaryWriter.cs" />
+    <Compile Include="Serialization\Advanced\TypeNameConverter.cs" />
+    <Compile Include="Serialization\Advanced\XmlPropertyDeserializer.cs" />
+    <Compile Include="Serialization\Advanced\XmlPropertySerializer.cs" />
+    <Compile Include="Serialization\Advanced\Xml\ISimpleValueConverter.cs" />
+    <Compile Include="Serialization\Advanced\Xml\IXmlReader.cs" />
+    <Compile Include="Serialization\Advanced\Xml\IXmlWriter.cs" />
+    <Compile Include="Serialization\BinarySerializationMode.cs" />
+    <Compile Include="Serialization\Core\ArrayAnalyzer.cs" />
+    <Compile Include="Serialization\Core\Binary\BinaryReaderTools.cs" />
+    <Compile Include="Serialization\Core\Binary\BinaryWriterTools.cs" />
+    <Compile Include="Serialization\Core\Binary\Elements.cs" />
+    <Compile Include="Serialization\Core\Binary\IndexGenerator.cs" />
+    <Compile Include="Serialization\Core\CreatingInstanceException.cs" />
+    <Compile Include="Serialization\Core\DefaultInitializer.cs" />
+    <Compile Include="Serialization\Core\DeserializingException.cs" />
+    <Compile Include="Serialization\Core\Property.cs" />
+    <Compile Include="Serialization\Core\SharpSerializerSettings.cs" />
+    <Compile Include="Serialization\Core\SimpleValueParsingException.cs" />
+    <Compile Include="Serialization\Core\Tools.cs" />
+    <Compile Include="Serialization\Core\Xml\Elements.cs" />
+    <Compile Include="Serialization\Deserializing\ObjectFactory.cs" />
+    <Compile Include="Serialization\ExcludeFromSerializationAttribute.cs" />
+    <Compile Include="Serialization\Serializing\PropertyFactory.cs" />
+    <Compile Include="Serialization\Serializing\PropertyTypeInfo.cs" />
+    <Compile Include="Serialization\Serializing\TypeInfo.cs" />
+    <Compile Include="Serialization\Serializing\TypeInfoCollection.cs" />
+    <Compile Include="Serialization\SharpSerializer.cs" />
+    <Compile Include="Serialization\SharpSerializerBinarySettings.cs" />
+    <Compile Include="Serialization\SharpSerializerXmlSettings.cs" />
+    <Compile Include="Text\StringBuilderExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

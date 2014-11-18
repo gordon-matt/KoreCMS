@@ -1,0 +1,72 @@
+﻿@{
+    Style.Include("bootstrap.min.css", true);
+    Style.IncludeUIToTop();
+    Style.Include("common.css");
+
+    Script.IncludeJQuery();
+    Script.IncludeBootstrap();
+    Script.IncludeUIToTop();
+
+    var siteSettings = WorkContext.Resolve<SiteSettings>();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - @siteSettings.Name</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @RenderMetas()
+    @RenderStyles()
+    @RenderHeadScripts()
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h1>
+                    <a href="/">
+                        <img src="~/Styles/Images/logo.png" alt="Logo" />
+                    </a>
+                </h1>
+            </div>
+            <div class="pull-right">
+                @Display(WorkContext.Layout.LanguageSwitchZone)
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <br />
+
+        <div class="row">
+            <nav class="navbar navbar-inverse" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+                            <span class="sr-only">@T("Toggle navigation")</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                        @Display(WorkContext.Layout.Navigation)
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="row">
+            @Display(WorkContext.Layout.Messages)
+            @Display(WorkContext.Layout.Content)
+        </div>
+
+        <div class="row">
+            @Display(WorkContext.Layout.Footer)
+        </div>
+    </div>
+
+    @RenderFootScripts()
+</body>
+</html>

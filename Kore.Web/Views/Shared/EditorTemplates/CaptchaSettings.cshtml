@@ -1,0 +1,46 @@
+﻿@using Kore.Web.Configuration
+
+@model CaptchaSettings
+
+<div id="settings-content">
+    <div class="form-group">
+        @Html.LabelFor(m => m.PublicKey)
+        @Html.TextBoxFor(m => m.PublicKey, new { @class = "form-control", data_bind = "value: publicKey" })
+        @Html.ValidationMessageFor(m => m.PublicKey)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PrivateKey)
+        @Html.TextBoxFor(m => m.PrivateKey, new { @class = "form-control", data_bind = "value: privateKey" })
+        @Html.ValidationMessageFor(m => m.PrivateKey)
+    </div>
+</div>
+
+<script type="text/javascript">
+    function updateModel(data) {
+        viewModel.publicKey = ko.observable("");
+        viewModel.privateKey = ko.observable("");
+
+        if (data) {
+            if (data.PublicKey) {
+                viewModel.publicKey(data.PublicKey);
+            }
+            if (data.PrivateKey) {
+                viewModel.privateKey(data.PrivateKey);
+            }
+        }
+    };
+
+    function cleanUp() {
+        delete viewModel.publicKey;
+        delete viewModel.privateKey;
+    }
+
+    function onBeforeSave() {
+        var data = {
+            PublicKey: viewModel.publicKey(),
+            PrivateKey: viewModel.privateKey()
+        };
+
+        viewModel.value(ko.mapping.toJSON(data));
+    };
+</script>

@@ -1,0 +1,55 @@
+==================================================================================================================
+LICENSES
+==================================================================================================================
+Types:
+	Apache 2.0: http://www.apache.org/licenses/LICENSE-2.0.html (Free to use for anything)
+	MIT: http://opensource.org/licenses/MIT (Free to use for anything)
+	MS-PL: http://opensource.org/licenses/MS-PL (Free to use for anything)
+	BSD License: http://opensource.org/licenses/BSD-2-Clause  (Free to use for anything)
+	New BSD: http://opensource.org/licenses/BSD-3-Clause (Free to use for anything)
+==================================================================================================================
+Autofac:
+	Project Home: https://github.com/autofac/Autofac
+	Format: Referenced DLL
+	Version: 3.3.0
+	License: MIT
+==================================================================================================================
+Castle.Core:
+	Project Home: http://www.castleproject.org/
+	Format: Referenced DLL
+	Features Used: Logging Abstraction
+	Version: 3.2.2
+	License: Apache 2.0
+==================================================================================================================
+EntityFramework.Extended:
+	Project Home: https://github.com/loresoft/EntityFramework.Extended
+	Format: Referenced DLL
+	Version: 6.0.0.86
+	License: No Specific License. But site says free to use for anything we want:
+		"Redistribution and use in source and binary forms, with or without modification, are permitted provided that..."
+==================================================================================================================
+NLog:
+	Project Home: http://nlog-project.org/
+	Format: Referenced DLL
+	Version: 2.1.0
+	License: BSD License
+==================================================================================================================
+SharpSerializer:
+	Project Home: http://sharpserializer.codeplex.com/
+	Format: Copied Source Code
+	Version: 2.20
+	License: New BSD
+==================================================================================================================
+Orchard Project 1.7.2:
+	Project Home: http://www.orchardproject.net/
+	Format: Copied Source Code (and Modified)
+	Features Used: Caching, Events, Localization
+	Version 1.7.2
+	License: New BSD
+	More Info: http://orchard.codeplex.com/discussions/436874
+==================================================================================================================
+ElFinder.Net Connector:
+	Project Home: https://elfinder.codeplex.com/
+	Format: Copied Source Code
+	Version 0.9.5
+	License: New BSD

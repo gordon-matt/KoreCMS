@@ -1,0 +1,28 @@
+﻿using System.Collections.Generic;
+
+namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Scripting.Ast
+{
+    public class ErrorNodeCollector : AstVisitor
+    {
+        private readonly List<ErrorAstNode> errors = new List<ErrorAstNode>();
+
+        public IEnumerable<ErrorAstNode> Collect(AstNode root)
+        {
+            Visit(root);
+            return errors;
+        }
+
+        public override object Visit(AstNode node)
+        {
+            object result = node.Accept(this);
+            VisitChildren(node);
+            return result;
+        }
+
+        public override object VisitError(ErrorAstNode node)
+        {
+            errors.Add(node);
+            return null;
+        }
+    }
+}

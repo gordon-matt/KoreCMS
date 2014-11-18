@@ -1,0 +1,42 @@
+﻿<div id="users-edit-form-section" class="row" style="display:none">
+    <form id="users-edit-form-section-form" role="form">
+        <fieldset>
+            <legend>Edit</legend>
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                    @Html.Label("UserName", "UserName", new { @class = "control-label" })
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-user"></i>
+                        </span>
+                        @Html.TextBox("UserName", null, new { @class = "form-control", data_bind = "value: userModel.userName" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                    @Html.Label("Email", "Email", new { @class = "control-label" })
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-envelope-o"></i>
+                        </span>
+                        @Html.TextBox("Email", null, new { @class = "form-control", data_bind = "value: userModel.email" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-md-3">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBox("IsLockedOut", new { data_bind = "checked: userModel.isLockedOut" }) Locked Out
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group pull-right">
+                    <button type="button" class="btn btn-default" data-bind="click: userModel.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                    <button type="button" class="btn btn-primary" data-bind="click: userModel.save">@T(KoreWebLocalizableStrings.General.Save)</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

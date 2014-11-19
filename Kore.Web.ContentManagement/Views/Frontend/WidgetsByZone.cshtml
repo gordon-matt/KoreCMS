@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Kore.Web.ContentManagement.Areas.Admin.Widgets.IWidget>
+
+@{
+    Layout = null;
+}
+
+@foreach (var widget in Model.OrderBy(x => x.Order))
+{
+    @Html.Partial(widget.DisplayTemplatePath, widget)
+}

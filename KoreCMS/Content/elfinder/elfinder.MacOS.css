@@ -1,0 +1,108 @@
+/**
+ * MacOS X like theme for elFinder.
+ * Required jquery ui "smoothness" theme.
+ *
+ * @author Dmitry (dio) Levashov
+ **/
+/* elfilder */
+#elfinder{ border: 0 !important;font-size: 16px !important;}
+
+#elfinder .elfinder-workzone .elfinder-cwd-parent .elfinder-cwd-icon {
+    background: url("folder_up.png") !important;
+}
+#elfinder .elfinder-workzone .elfinder-cwd-icon-directory {
+    background: url("folder.png") !important;
+}
+#elfinder .elfinder-workzone .elfinder-cwd-view-list .elfinder-cwd-icon-directory {
+    background: url("folder16x16.png") !important;
+}
+#elfinder .elfinder-workzone .elfinder-cwd-view-list .elfinder-cwd-parent .elfinder-cwd-icon-directory {
+    background: url("folder_up16x16.png") !important;
+}
+
+#elfinder .elfinder-toolbar .elfinder-button-icon-home {
+    background: url("home.png") no-repeat !important;
+}
+#elfinder .elfinder-toolbar .elfinder-button-icon-mkdir {
+    background: url("folder_add.png") no-repeat !important;
+}
+#elfinder .elfinder-toolbar .elfinder-button-icon-up {
+    background: url("up.png") no-repeat !important;
+}
+#elfinder .elfinder-toolbar .elfinder-button-icon-upload {
+    background: url("floppy_disc_add.png") no-repeat !important;
+}
+#elfinder .elfinder-toolbar .elfinder-button-icon-info {
+    background: url("info.png") no-repeat !important;
+}
+#elfinder .elfinder-toolbar .elfinder-button-icon-quicklook {
+    background: url("digital_camera.png") no-repeat !important;
+}
+#elfinder .elfinder-toolbar .elfinder-button-icon-copy {
+    background: url("page_add.png") no-repeat !important;
+}
+#elfinder .elfinder-toolbar .elfinder-button-icon-cut {
+    background: url("cut.png") no-repeat !important;
+}
+#elfinder .elfinder-toolbar .elfinder-button-icon-paste {
+    background: url("paste.png") no-repeat !important;
+}
+#elfinder .elfinder-toolbar .elfinder-button-icon-rm {
+    background: url("remove.png") no-repeat !important;
+}
+#elfinder .elfinder-toolbar .elfinder-button-icon-view-list {
+    background: url("list.png") no-repeat !important;
+}
+#elfinder .elfinder-toolbar .elfinder-button-icon-view {
+    background: url("view_list.png") no-repeat !important;
+}
+#elfinder .elfinder-toolbar .elfinder-button-icon-sort {
+    background: url("sort.png") no-repeat !important;
+}
+.elfinder-toolbar .elfinder-button-icon{ width: 32px !important;height: 32px !important;}
+.elfinder .elfinder-button{ padding-left: 10px;}
+.elfinder-toolbar-button-separator{ height: 48px;}
+/* dialogs */
+.std42-dialog, .std42-dialog .ui-widget-content { background-color:#ededed; background-image:none; background-clip: content-box; }
+
+/* navbar */
+.elfinder .elfinder-navbar { background:#dde4eb; }
+.elfinder-navbar .ui-state-hover  { background:transparent; border-color:transparent; }
+.elfinder-navbar .ui-state-active { background: #3875d7;    border-color:#3875d7; color:#fff; }
+/* disabled elfinder */
+.elfinder-disabled .elfinder-navbar .ui-state-active { background: #dadada; border-color:#aaa; color:#fff; }
+
+
+/* current directory */
+/* selected file in "icons" view */
+.elfinder-cwd-view-icons .elfinder-cwd-file .ui-state-hover { background:#ccc; }
+/* list view*/
+.elfinder-cwd table tr:nth-child(odd) { background-color:#edf3fe; }
+.elfinder-cwd table tr { border-top:1px solid #fff; }
+
+/* common selected background/color */
+.elfinder-cwd-view-icons .elfinder-cwd-file .elfinder-cwd-filename.ui-state-hover,
+.elfinder-cwd table td.ui-state-hover,
+.elfinder-button-menu .ui-state-hover { background: #3875d7; color:#fff;}
+/* disabled elfinder */
+.elfinder-disabled .elfinder-cwd-view-icons .elfinder-cwd-file .elfinder-cwd-filename.ui-state-hover,
+.elfinder-disabled .elfinder-cwd table td.ui-state-hover { background:#dadada;}
+
+/* statusbar */
+.elfinder .elfinder-statusbar { color:#555; }
+.elfinder .elfinder-statusbar a { text-decoration:none; color:#555;}
+
+
+.std42-dialog .elfinder-help, .std42-dialog .elfinder-help .ui-widget-content { background:#fff;}
+
+/* contextmenu */
+.elfinder-contextmenu .ui-state-hover { background: #3875d7; color:#fff; }
+.elfinder-contextmenu .ui-state-hover .elfinder-contextmenu-arrow { background-image:url('arrows-active.png'); }
+
+
+
+
+
+
+
+

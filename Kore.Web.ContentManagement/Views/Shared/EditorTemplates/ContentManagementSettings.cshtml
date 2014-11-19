@@ -1,0 +1,60 @@
+﻿@using Kore.Web.ContentManagement.Configuration
+@model ContentManagementSettings
+
+<div id="settings-content">
+    <div class="form-group">
+        @Html.LabelFor(m => m.SiteName)
+        @Html.TextBox("SiteName", null, new { @class = "form-control", data_bind = "value: siteName" })
+        @Html.ValidationMessageFor(m => m.SiteName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DefaultLanguage)
+        @Html.Kore().LanguagesDropDownList("DefaultLanguage", null, new { @class = "form-control", data_bind = "value: defaultLanguage" }, string.Empty)
+        @Html.ValidationMessageFor(m => m.DefaultLanguage)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DefaultGridPageSize)
+        @Html.TextBox("DefaultGridPageSize", null, new { @class = "form-control", data_bind = "value: defaultGridPageSize" })
+        @Html.ValidationMessageFor(m => m.DefaultGridPageSize)
+    </div>
+</div>
+
+<script type="text/javascript">
+    function updateModel(data) {
+        viewModel.siteName = ko.observable("");
+        viewModel.defaultLanguage = ko.observable(null);
+        viewModel.defaultGridPageSize = ko.observable(10);
+
+        if (data) {
+            if (data.SiteName) {
+                viewModel.siteName(data.SiteName);
+            }
+
+            if (data.DefaultLanguage) {
+                viewModel.defaultLanguage(data.DefaultLanguage);
+            }
+
+            if (data.DefaultGridPageSize) {
+                viewModel.defaultGridPageSize(data.DefaultGridPageSize);
+            }
+        }
+    };
+
+    function cleanUp() {
+        delete viewModel.siteName;
+        delete viewModel.defaultLanguage;
+        delete viewModel.defaultGridPageSize;
+    }
+
+    function onBeforeSave() {
+        var data = {
+            Id: viewModel.id(),
+            Name: viewModel.name(),
+            SiteName: viewModel.siteName(),
+            DefaultLanguage: viewModel.defaultLanguage(),
+            DefaultGridPageSize: viewModel.defaultGridPageSize()
+        };
+
+        viewModel.value(ko.mapping.toJSON(data));
+    };
+</script>

@@ -1,0 +1,34 @@
+﻿@model Kore.Web.ContentManagement.Areas.Admin.Widgets.FormWidget
+
+@{
+    bool hasCssClass = !string.IsNullOrEmpty(Model.CssClass);
+}
+
+@if (hasCssClass)
+{
+    @Html.Raw(@"<div class=""@Model.CssClass"">")
+}
+
+@if (Model.ShowTitleOnPage)
+{
+    <header>
+        <h3>@Model.Title</h3>
+    </header>
+}
+
+<form method="post" action="@Url.Action("Save", "FormWidget", new { area = Constants.Areas.Widgets })" enctype="multipart/form-data">
+    @Html.HiddenFor(m => m.ThankYouMessage)
+    @Html.HiddenFor(m => m.RedirectUrl)
+    @Html.HiddenFor(m => m.EmailAddress)
+    @Html.Hidden("WidgetTitle", Model.Title)
+
+    @if (Model.HtmlTemplate.Contains("[Captcha]"))
+    {
+        //TODO
+    }
+</form>
+
+@if (hasCssClass)
+{
+    @Html.Raw("</div>")
+}

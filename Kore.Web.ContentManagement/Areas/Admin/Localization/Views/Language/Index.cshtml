@@ -1,0 +1,128 @@
+﻿@using Kore.Localization.Domain
+@using Kore.Web.ContentManagement
+@using Kore.Web.ContentManagement.Extensions;
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    
+    Style.IncludeBundle("kendo-ui");
+
+    Script.IncludeBundle("kendo-ui");
+    Script.IncludeBundle("knockout");
+    Script.IncludeBundle("knockout-mapping");
+    Script.IncludeBundle("notify");
+
+    Script.IncludeBundle("kore-cms/languages");
+}
+
+<div id="grid-section" class="row">
+    <div class="col-md-12">
+        <a data-bind="click: create" class="btn btn-primary">
+            <i class="fa fa-plus"></i>
+            @T(KoreWebLocalizableStrings.General.Create)
+        </a>
+        <a data-bind="click: clear" class="btn btn-warning">
+            <i class="fa fa-warning"></i>
+            @T(KoreWebLocalizableStrings.General.Clear)
+        </a>
+    </div>
+
+    <div class="clearfix"></div>
+    <br />
+
+    <div class="col-md-12">
+        <div id="Grid"></div>
+    </div>
+</div>
+
+<div id="form-section" class="row" style="display:none">
+    <form id="form-section-form" role="form">
+        <fieldset>
+            <legend id="form-section-legend"></legend>
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                    @Html.Label("Name", "Name", new { @class = "control-label" })
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-file-o"></i>
+                        </span>
+                        @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                    @Html.Label("CultureCode", "Culture", new { @class = "control-label" })
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-globe"></i>
+                        </span>
+                        @Html.CulturesDropDownList("CultureCode", null, new { @class = "form-control", data_bind = "value: cultureCode" }, string.Empty)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+                <div class="form-group">
+                    @Html.Label("UniqueSeoCode", "Unique SEO Code", new { @class = "control-label" })
+                    @Html.TextBox("UniqueSeoCode", null, new { @class = "form-control", data_bind = "value: uniqueSeoCode" })
+                </div>
+            </div>
+            <div class="col-sm-8 col-md-8">
+                <div class="form-group">
+                    @Html.Label("FlagImageFileName", "Flag Image", new { @class = "control-label" })
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-file-o"></i>
+                        </span>
+                        @Html.TextBox("FlagImageFileName", null, new { @class = "form-control", data_bind = "value: flagImageFileName" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-md-3">
+                <div class="form-group">
+                    @Html.Label("SortOrder", "Sort Order", new { @class = "control-label" })
+                    @Html.TextBox("SortOrder", null, new { @class = "form-control", data_bind = "value: sortOrder" })
+                </div>
+            </div>
+            <div class="col-sm-3 col-md-3">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBox("IsRTL", new { data_bind = "checked: isRTL" }) Right-to-Left
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-3 col-md-3">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBox("IsEnabled", new { data_bind = "checked: isEnabled" }) Enabled
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group pull-right">
+                    <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                    <button type="button" class="btn btn-primary" data-bind="click: save">@T(KoreWebLocalizableStrings.General.Save)</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        var translations = {
+            Create: '@T(KoreWebLocalizableStrings.General.Create).Text',
+            Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
+            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.Messages.ConfirmDeleteRecord).Text',
+            DeleteRecordError: '@T(KoreWebLocalizableStrings.Messages.DeleteRecordError).Text',
+            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.DeleteRecordSuccess).Text',
+            Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
+            GetRecordError: '@T(KoreWebLocalizableStrings.Messages.GetRecordError).Text',
+            InsertRecordError: '@T(KoreWebLocalizableStrings.Messages.InsertRecordError).Text',
+            InsertRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.InsertRecordSuccess).Text',
+            Localize: '@T(KoreCmsLocalizableStrings.Localization.Localize).Text',
+            UpdateRecordError: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordError).Text',
+            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text'
+        }
+    </script>
+}

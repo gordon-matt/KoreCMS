@@ -337,6 +337,7 @@
     <Compile Include="FileSystems\Media\IStorageProvider.cs" />
     <Compile Include="FileSystems\PathValidation.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
+    <Compile Include="IKoreCmsDbContext.cs" />
     <Compile Include="Infrastructure\DefaultLocalizableStringsProvider.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="Infrastructure\LocationFormatProvider.cs" />

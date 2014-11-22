@@ -149,7 +149,7 @@ var ViewModel = function () {
         self.zoneId(emptyGuid);
         self.displayCondition('');
         self.widgetValues('');
-        self.pageId(null);
+        self.pageId(pageId);
         self.cultureCode('');
         self.refId(null);
 

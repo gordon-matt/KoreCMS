@@ -13,8 +13,6 @@ using Microsoft.Owin.Security;
 
 namespace Kore.Controllers
 {
-    // Note: Unfortunately some attributes, such as [Route] cannot be inherited and therefore we
-    //  need to override every action just to specify such attributes here in the derived class
     [Authorize]
     [RoutePrefix("account")]
     public class AccountController : Controller

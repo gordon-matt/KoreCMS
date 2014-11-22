@@ -6,6 +6,9 @@ using Kore.Localization;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
 {
+    //TODO: Add TemplatePath as a property for .cshtml files. If not specified, use default...
+    //  this will be the only (and correct) way to insert widgets as well...; we'll
+    //  specify zones in the template
     public class Page : ILocalizableEntity<Guid>, IEntity
     {
         public Guid Id { get; set; }

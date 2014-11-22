@@ -4,6 +4,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.OData;
+using System.Web.Http.OData.Query;
 using Kore.Data;
 using Kore.Infrastructure;
 using Kore.Localization;
@@ -27,6 +28,24 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Controllers.Api
         protected override void SetNewId(Widget entity)
         {
             entity.Id = Guid.NewGuid();
+        }
+
+        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        public override IQueryable<Widget> Get()
+        {
+            return Repository.Table.Where(x => x.PageId == null);
+        }
+
+        [EnableQuery]
+        [HttpPost]
+        public virtual IQueryable<Widget> GetByPageId(ODataActionParameters parameters)
+        {
+            var pageId = (Guid)parameters["pageId"];
+
+            return Repository.Table
+                .Where(x => x.PageId == pageId && x.RefId == null)
+                .OrderBy(x => x.ZoneId)
+                .ThenBy(x => x.Order);
         }
 
         public override IHttpActionResult Put([FromODataUri] Guid key, Widget entity)
@@ -69,18 +88,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Controllers.Api
             Save(entity);
 
             return Created(entity);
-        }
-
-        [EnableQuery]
-        [HttpPost]
-        public virtual IQueryable<Widget> GetByPageId(ODataActionParameters parameters)
-        {
-            var pageId = (Guid)parameters["pageId"];
-
-            return Repository.Table
-                .Where(x => x.PageId == pageId && x.RefId == null)
-                .OrderBy(x => x.ZoneId)
-                .ThenBy(x => x.Order);
         }
 
         private void Save(Widget entity)

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using Kore.Data;
 using Kore.Infrastructure;
 using Kore.Web.Collections;
-using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Widgets;
 using Kore.Web.ContentManagement.Areas.Admin.Widgets.Services;
 
@@ -40,6 +41,21 @@ namespace Kore.Web.ContentManagement
             this.html = html;
         }
 
+        public MvcHtmlString PageTypesDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
+        {
+            var selectList = GetPageTypesSelectList(selectedValue, emptyText);
+            return html.DropDownList(name, selectList, htmlAttributes);
+        }
+
+        public MvcHtmlString PageTypesDropDownListFor(Expression<Func<TModel, string>> expression, object htmlAttributes = null, string emptyText = null)
+        {
+            var func = expression.Compile();
+            var selectedValue = func(html.ViewData.Model);
+
+            var selectList = GetPageTypesSelectList(selectedValue, emptyText);
+            return html.DropDownListFor(expression, selectList, htmlAttributes);
+        }
+
         public MvcHtmlString WidgetTypesDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
         {
             var selectList = GetWidgetTypesSelectList(selectedValue, emptyText);
@@ -68,6 +84,19 @@ namespace Kore.Web.ContentManagement
 
             var selectList = GetZonesSelectList(selectedValue, emptyText);
             return html.DropDownListFor(expression, selectList, htmlAttributes);
+        }
+
+        private static IEnumerable<SelectListItem> GetPageTypesSelectList(string selectedValue = null, string emptyText = null)
+        {
+            var repository = EngineContext.Current.Resolve<IRepository<PageType>>();
+
+            return repository.Table
+                .ToList()
+                .ToSelectList(
+                    value => value.Id,
+                    text => text.Name,
+                    selectedValue,
+                    emptyText);
         }
 
         private static string GetTypeFullName(Type type)

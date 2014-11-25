@@ -1,23 +1,42 @@
-﻿//using System;
-//using Kore.Data;
+﻿using System;
+using System.Data.Entity.ModelConfiguration;
+using Kore.Data;
+using Kore.Data.EntityFramework;
 
-//namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
-//{
-//    public class PageType : IEntity
-//    {
-//        public Guid Id { get; set; }
+namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
+{
+    public class PageType : IEntity
+    {
+        public Guid Id { get; set; }
 
-//        public string Fields { get; set; }
+        public string Name { get; set; }
 
-//        public string TemplatePath { get; set; }
+        public string DisplayTemplatePath { get; set; }
 
-//        #region IEntity Members
+        public string EditorTemplatePath { get; set; }
 
-//        public object[] KeyValues
-//        {
-//            get { return new object[] { Id }; }
-//        }
+        public string Fields { get; set; }
 
-//        #endregion IEntity Members
-//    }
-//}
+        #region IEntity Members
+
+        public object[] KeyValues
+        {
+            get { return new object[] { Id }; }
+        }
+
+        #endregion IEntity Members
+    }
+
+    public class PageTypeMap : EntityTypeConfiguration<PageType>, IEntityTypeConfiguration
+    {
+        public PageTypeMap()
+        {
+            ToTable("Kore_PageTypes");
+            HasKey(x => x.Id);
+            Property(x => x.Name).HasMaxLength(255).IsRequired();
+            Property(x => x.DisplayTemplatePath).HasMaxLength(255);
+            Property(x => x.EditorTemplatePath).HasMaxLength(255);
+            Property(x => x.Fields).IsMaxLength();
+        }
+    }
+}

@@ -29,6 +29,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.EntitySet<MessageTemplate>("MessageTemplates");
             builder.EntitySet<HistoricPage>("HistoricPages");
             builder.EntitySet<Page>("Pages");
+            builder.EntitySet<PageType>("PageTypes");
             builder.EntitySet<KorePermission>("Permissions");
             builder.EntitySet<KoreRole>("Roles");
             builder.EntitySet<KoreUser>("Users");

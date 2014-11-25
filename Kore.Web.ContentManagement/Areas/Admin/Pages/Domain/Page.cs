@@ -13,6 +13,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
     {
         public Guid Id { get; set; }
 
+        public Guid PageTypeId { get; set; }
+
         public string Title { get; set; }
 
         public string Slug { get; set; }
@@ -47,6 +49,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
         {
             ToTable("Kore_Pages");
             HasKey(x => x.Id);
+            Property(x => x.PageTypeId).IsRequired();
             Property(x => x.Title).HasMaxLength(255).IsRequired();
             Property(x => x.Slug).HasMaxLength(255).IsRequired();
             Property(x => x.CssClass).HasMaxLength(255);

@@ -236,13 +236,14 @@
     <Compile Include="Infrastructure\DefaultLocalizableStringsProvider.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="LocalizableStrings.cs" />
+    <Compile Include="Messaging\AccountMessageTemplates.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Pages\TestPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IdentityMembershipService.cs" />
     <Compile Include="Services\MembershipService.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="StartupTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Content\css\dashboard.css" />
@@ -1597,6 +1598,8 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Pages\TestPage.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Pages\TestPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

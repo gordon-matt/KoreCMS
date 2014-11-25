@@ -23,6 +23,10 @@
             <i class="fa fa-plus"></i>
             @T(KoreWebLocalizableStrings.General.Create)
         </a>
+        <a data-bind="click: showPageTypes" class="btn btn-primary">
+            <i class="fa fa-file-o"></i>
+            @T(KoreCmsLocalizableStrings.Pages.PageTypes)
+        </a>
     </div>
 
     <div class="clearfix"></div>
@@ -37,6 +41,12 @@
     <form id="form-section-form" role="form">
         <fieldset>
             <legend id="form-section-legend"></legend>
+            <div class="col-sm-4 col-md-4">
+                <div class="form-group">
+                    @Html.Label("PageTypeId", "Page Type", new { @class = "control-label" })
+                    @Html.KoreCMS().PageTypesDropDownList("PageTypeId", null, null, new { @class = "form-control", data_bind = "value: pageTypeId" })
+                </div>
+            </div>
             <div class="col-sm-4 col-md-4">
                 <div class="form-group">
                     @Html.Label("Title", "Title", new { @class = "control-label" })
@@ -79,18 +89,6 @@
                     @Html.TextBox("CssClass", null, new { @class = "form-control", data_bind = "value: cssClass" })
                 </div>
             </div>
-            @*Default page should not specify a culture code as it is the invariant page (fallback)*@
-            @*<div class="col-sm-6 col-md-6">
-                    <div class="form-group">
-                        @Html.Label("CultureCode", "Culture", new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fa fa-globe"></i>
-                            </span>
-                            @Html.Kore().LanguagesDropDownList("CultureCode", null, new { @class = "form-control", data_bind = "value: cultureCode" }, string.Empty)
-                        </div>
-                    </div>
-                </div>*@
             <div class="col-sm-12 col-md-12">
                 <div class="form-group">
                     @Html.Label("BodyContent", "Body Content", new { @class = "control-label" })
@@ -172,6 +170,68 @@
             </div>
         </div>
     </fieldset>
+</div>
+
+
+
+<div id="page-type-grid-section" class="row" style="display:none">
+    <div class="col-md-12">
+        <a data-bind="click: pageType.create" class="btn btn-primary">
+            <i class="fa fa-plus"></i>
+            @T(KoreWebLocalizableStrings.General.Create)
+        </a>
+        <a data-bind="click: create" class="btn btn-primary">
+            <i class="fa fa-file-o"></i>
+            @T(KoreCmsLocalizableStrings.Pages.Title)
+        </a>
+    </div>
+
+    <div class="clearfix"></div>
+    <br />
+
+    <div class="col-md-12">
+        <div id="PageTypesGrid"></div>
+    </div>
+</div>
+
+<div id="page-type-form-section" class="row" style="display:none">
+    <form id="page-type-form-section-form" role="form">
+        <fieldset>
+            <legend id="page-type-form-section-legend"></legend>
+            <div class="col-sm-4 col-md-4">
+                <div class="form-group">
+                    @Html.Label("PageType_Name", "Name", new { @class = "control-label" })
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-file-o"></i>
+                        </span>
+                        @Html.TextBox("PageType_Name", null, new { @class = "form-control", data_bind = "value: pageType.name" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                    @Html.Label("PageType_DisplayTemplatePath", "Display Template Path", new { @class = "control-label" })
+                    @Html.TextBox("PageType_DisplayTemplatePath", null, new { @class = "form-control", data_bind = "value: pageType.displayTemplatePath" })
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                    @Html.Label("PageType_EditorTemplatePath", "Editor Template Path", new { @class = "control-label" })
+                    @Html.TextBox("PageType_EditorTemplatePath", null, new { @class = "form-control", data_bind = "value: pageType.editorTemplatePath" })
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset id="fields-definition"></fieldset>
+
+        <div class="col-sm-12 col-md-12">
+            <div class="form-group pull-right">
+                <button type="button" class="btn btn-default" data-bind="click: pageType.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                <button type="button" class="btn btn-primary" data-bind="click: pageType.save">@T(KoreWebLocalizableStrings.General.Save)</button>
+            </div>
+        </div>
+    </form>
 </div>
 
 @section scripts {

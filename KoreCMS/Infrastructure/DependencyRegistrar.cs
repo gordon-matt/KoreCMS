@@ -8,6 +8,7 @@ using Kore.Localization;
 using Kore.Security.Membership;
 using Kore.Web.Navigation;
 using KoreCMS.Areas.Admin;
+using KoreCMS.Messaging;
 using KoreCMS.Services;
 
 namespace KoreCMS.Infrastructure
@@ -39,6 +40,9 @@ namespace KoreCMS.Infrastructure
 
             // navigation
             builder.RegisterType<NavigationProvider>().As<INavigationProvider>().SingleInstance();
+
+            // Messaging
+            builder.RegisterType<AccountMessageTemplates>().AsImplementedInterfaces().SingleInstance();
         }
 
         public int Order

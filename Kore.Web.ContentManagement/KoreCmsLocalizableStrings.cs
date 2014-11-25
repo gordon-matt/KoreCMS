@@ -78,6 +78,7 @@
             public const string PageHistory = "Kore.Web.ContentManagement/Pages.PageHistory";
             public const string PageHistoryRestoreError = "Kore.Web.ContentManagement/Pages.PageHistoryRestoreError";
             public const string PageHistoryRestoreSuccess = "Kore.Web.ContentManagement/Pages.PageHistoryRestoreSuccess";
+            public const string PageTypes = "Kore.Web.ContentManagement/Pages.PageTypes";
             public const string RestoreVersion = "Kore.Web.ContentManagement/Pages.RestoreVersion";
             public const string Tags = "Kore.Web.ContentManagement/Pages.Tags";
             public const string Title = "Kore.Web.ContentManagement/Pages.Title";

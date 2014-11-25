@@ -238,6 +238,9 @@
     <Compile Include="Areas\Admin\Messaging\Services\SimpleTextParserEngine.cs" />
     <Compile Include="Areas\Admin\Messaging\Services\UrlContentParserEngine.cs" />
     <Compile Include="Areas\Admin\Messaging\Token.cs" />
+    <Compile Include="Areas\Admin\Pages\Controllers\Api\PageTypesController.cs" />
+    <Compile Include="Areas\Admin\Pages\KorePageType.cs" />
+    <Compile Include="Areas\Admin\Pages\KorePageTypePropertyAttribute.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\Api\HistoricPagesController.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\Api\PagesController.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\PageContentController.cs" />
@@ -306,6 +309,7 @@
     <Compile Include="Areas\Admin\Widgets\Scripting\ScriptExpressionEvaluator.cs" />
     <Compile Include="Areas\Admin\Widgets\Services\IWidgetService.cs" />
     <Compile Include="Areas\Admin\Widgets\Services\IZoneService.cs" />
+    <Compile Include="StartupTask.cs" />
     <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\ChangePassword.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\EditRole.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\EditRolePermissions.cshtml" />
@@ -347,7 +351,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteProvider.cs" />
     <Compile Include="Routing\CmsRouteConstraint.cs" />
-    <Compile Include="StartupTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Localization\Views\Language\Index.cshtml" />

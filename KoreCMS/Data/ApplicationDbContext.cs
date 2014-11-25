@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using Kore.Configuration.Domain;
 using Kore.Data;
 using Kore.Data.EntityFramework;
@@ -8,6 +9,7 @@ using Kore.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Localization.Domain;
+using Kore.Security.Membership;
 using Kore.Tasks.Domain;
 using Kore.Web.ContentManagement;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Domain;
@@ -15,9 +17,11 @@ using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Widgets.Domain;
 using Kore.Web.ContentManagement.Messaging.Domain;
+using Kore.Web.Security.Membership.Permissions;
 using KoreCMS.Data.Domain;
 using Microsoft.AspNet.Identity.EntityFramework;
 using LanguageEntity = Kore.Localization.Domain.Language;
+using PermissionEntity = KoreCMS.Data.Domain.Permission;
 
 namespace KoreCMS.Data
 {
@@ -85,7 +89,7 @@ namespace KoreCMS.Data
 
         #region IKoreSecurityDbContext Members
 
-        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<PermissionEntity> Permissions { get; set; }
 
         #endregion IKoreSecurityDbContext Members
 
@@ -93,6 +97,7 @@ namespace KoreCMS.Data
 
         public virtual void Seed()
         {
+            InitializeMembership();
             InitializeLocalizableStrings();
         }
 
@@ -112,6 +117,55 @@ namespace KoreCMS.Data
             foreach (dynamic configuration in configurations)
             {
                 modelBuilder.Configurations.Add(configuration);
+            }
+        }
+
+        private static void InitializeMembership()
+        {
+            var membershipService = EngineContext.Current.Resolve<IMembershipService>();
+
+            if (membershipService == null)
+            {
+                return;
+            }
+
+            var adminUser = membershipService.GetUserByName("admin@test.com");
+
+            if (adminUser == null)
+            {
+                membershipService.InsertUser(new KoreUser { UserName = "admin@test.com", Email = "admin@test.com" }, "Admin@123");
+                adminUser = membershipService.GetUserByName("admin@test.com");
+            }
+
+            if (adminUser != null)
+            {
+                var administratorsRole = membershipService.GetRoleByName("Administrators");
+                if (administratorsRole == null)
+                {
+                    membershipService.InsertRole(new KoreRole { Name = "Administrators" });
+                    administratorsRole = membershipService.GetRoleByName("Administrators");
+                    membershipService.AssignUserToRoles(adminUser.Id, new[] { administratorsRole.Id });
+                }
+            }
+
+            if (membershipService.SupportsRolePermissions)
+            {
+                var permissions = membershipService.GetAllPermissions();
+
+                if (!permissions.Any())
+                {
+                    var permissionProviders = EngineContext.Current.ResolveAll<IPermissionProvider>();
+                    var toInsert = permissionProviders.SelectMany(x => x.GetPermissions()).Select(x => new KorePermission
+                    {
+                        Name = x.Name,
+                        Category = x.Category,
+                        Description = x.Description
+                    });
+                    foreach (var permission in toInsert)
+                    {
+                        membershipService.InsertPermission(permission);
+                    }
+                }
             }
         }
 

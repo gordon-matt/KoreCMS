@@ -1,11 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Kore.Infrastructure;
-using Kore.Net.Mail;
+using Kore.Security.Membership;
+using Kore.Web.ContentManagement.Messaging;
+using Kore.Web.ContentManagement.Messaging.Services;
 using Kore.Web.Mvc;
 using KoreCMS.Data;
 using KoreCMS.Data.Domain;
+using KoreCMS.Messaging;
 using KoreCMS.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -18,14 +22,20 @@ namespace Kore.Controllers
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
+        private readonly IMembershipService membershipService;
+        private readonly IMessageService messageService;
 
-        public AccountController()
+        public AccountController(IMembershipService membershipService, IMessageService messageService)
         {
+            this.membershipService = membershipService;
+            this.messageService = messageService;
         }
 
         public AccountController(ApplicationUserManager userManager)
         {
             UserManager = userManager;
+            this.membershipService = EngineContext.Current.Resolve<IMembershipService>();
+            this.messageService = EngineContext.Current.Resolve<IMessageService>();
         }
 
         public ApplicationUserManager UserManager
@@ -115,6 +125,16 @@ namespace Kore.Controllers
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+
+                    var tokens = new List<Token>
+                    {
+                        new Token("[UserName]", user.UserName),
+                        new Token("[Email]", user.Email),
+                        new Token("[ConfirmationToken]", callbackUrl)
+                    };
+
+                    messageService.SendEmailMessage(AccountMessageTemplates.Account_Registered, tokens, user.Email);
+
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     return RedirectToAction("Index", "Home");
@@ -143,6 +163,14 @@ namespace Kore.Controllers
             IdentityResult result = await UserManager.ConfirmEmailAsync(userId, code);
             if (result.Succeeded)
             {
+                var user = membershipService.GetUserById(userId);
+                var tokens = new List<Token>
+                {
+                    new Token("[UserName]", user.UserName),
+                    new Token("[Email]", user.Email)
+                };
+                messageService.SendEmailMessage(AccountMessageTemplates.Account_Confirmed, tokens, user.Email);
+
                 return View("ConfirmEmail");
             }
             else
@@ -231,6 +259,13 @@ namespace Kore.Controllers
                 IdentityResult result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
                 if (result.Succeeded)
                 {
+                    var tokens = new List<Token>
+                    {
+                        new Token("[UserName]", user.UserName),
+                        new Token("[Email]", user.Email)
+                    };
+                    messageService.SendEmailMessage(AccountMessageTemplates.Account_PasswordReset, tokens, user.Email);
+
                     return RedirectToAction("ResetPasswordConfirmation", "Account");
                 }
                 else
@@ -540,8 +575,6 @@ namespace Kore.Controllers
         {
             // For information on sending mail, please visit http://go.microsoft.com/fwlink/?LinkID=320771
 
-            var emailSender = EngineContext.Current.Resolve<IEmailSender>();
-
             string link = new FluentTagBuilder("a")
                 .MergeAttribute("href", callbackUrl)
                 .SetInnerText(callbackUrl)
@@ -549,7 +582,7 @@ namespace Kore.Controllers
 
             string body = string.Format("{0}<br/>{1}", message, link);
 
-            emailSender.Send(subject, body, email);
+            messageService.SendEmailMessage(subject, body, email);
         }
 
         public enum ManageMessageId

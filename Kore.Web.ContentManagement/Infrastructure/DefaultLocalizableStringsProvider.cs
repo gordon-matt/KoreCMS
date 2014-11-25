@@ -56,6 +56,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
                         { KoreCmsLocalizableStrings.Pages.History, "History" },
                         { KoreCmsLocalizableStrings.Pages.ManagePages, "Manage Pages" },
                         { KoreCmsLocalizableStrings.Pages.PageHistory, "Page History" },
+                        { KoreCmsLocalizableStrings.Pages.PageTypes, "Page Types" },
                         { KoreCmsLocalizableStrings.Pages.RestoreVersion, "Restore Version" },
                         { KoreCmsLocalizableStrings.Pages.PageHistoryRestoreError, "There was an error when trying to restore the specified page version." },
                         { KoreCmsLocalizableStrings.Pages.PageHistoryRestoreSuccess, "Successfully restored specified page version." },

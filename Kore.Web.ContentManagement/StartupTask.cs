@@ -1,7 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Kore.Collections;
+using Kore.Data;
 using Kore.Infrastructure;
-using Kore.Security.Membership;
-using Kore.Web.Security.Membership.Permissions;
+using Kore.Web.ContentManagement.Areas.Admin.Pages;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 
 namespace Kore.Web.ContentManagement
 {
@@ -11,50 +15,35 @@ namespace Kore.Web.ContentManagement
 
         public void Execute()
         {
-            var membershipService = EngineContext.Current.Resolve<IMembershipService>();
+            var typeFinder = EngineContext.Current.Resolve<ITypeFinder>();
+            var pageTypeRepository = EngineContext.Current.Resolve<IRepository<PageType>>();
 
-            if (membershipService == null)
+            var allPageTypes = typeFinder.FindClassesOfType<KorePageType>()
+                .Select(x => (KorePageType)Activator.CreateInstance(x));
+
+            var allPageTypeNames = allPageTypes.Select(x => x.Name).ToList();
+            var installedPageTypes = pageTypeRepository.Table.ToList();
+            var installedPageTypeNames = installedPageTypes.Select(x => x.Name).ToList();
+
+            var pageTypesToAdd = allPageTypes.Where(x => !installedPageTypeNames.Contains(x.Name)).Select(x => new PageType
             {
-                return;
+                Id = Guid.NewGuid(),
+                Name = x.Name,
+                DisplayTemplatePath = x.DisplayTemplatePath,
+                EditorTemplatePath = x.EditorTemplatePath,
+                Fields = null //TODO
+            });
+
+            if (!pageTypesToAdd.IsNullOrEmpty())
+            {
+                pageTypeRepository.Insert(pageTypesToAdd);
             }
 
-            var adminUser = membershipService.GetUserByName("admin");
+            var pageTypesToDelete = installedPageTypes.Where(x => !allPageTypeNames.Contains(x.Name));
 
-            if (adminUser == null)
+            if (!pageTypesToDelete.IsNullOrEmpty())
             {
-                membershipService.InsertUser(new KoreUser { UserName = "admin" }, "admin123");
-                adminUser = membershipService.GetUserByName("admin");
-            }
-
-            if (adminUser != null)
-            {
-                var administratorsRole = membershipService.GetRoleByName("Administrators");
-                if (administratorsRole == null)
-                {
-                    membershipService.InsertRole(new KoreRole { Name = "Administrators" });
-                    administratorsRole = membershipService.GetRoleByName("Administrators");
-                    membershipService.AssignUserToRoles(adminUser.Id, new[] { administratorsRole.Id });
-                }
-            }
-
-            if (membershipService.SupportsRolePermissions)
-            {
-                var permissions = membershipService.GetAllPermissions();
-
-                if (!permissions.Any())
-                {
-                    var permissionProviders = EngineContext.Current.ResolveAll<IPermissionProvider>();
-                    var toInsert = permissionProviders.SelectMany(x => x.GetPermissions()).Select(x => new KorePermission
-                    {
-                        Name = x.Name,
-                        Category = x.Category,
-                        Description = x.Description
-                    });
-                    foreach (var permission in toInsert)
-                    {
-                        membershipService.InsertPermission(permission);
-                    }
-                }
+                pageTypeRepository.Delete(pageTypesToDelete);
             }
         }
 

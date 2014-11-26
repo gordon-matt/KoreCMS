@@ -61,6 +61,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             // Pages
             builder.RegisterType<PageService>().As<IPageService>().InstancePerDependency();
+            builder.RegisterType<PageTypeService>().As<IPageTypeService>().InstancePerDependency();
             builder.RegisterType<HistoricPageService>().As<IHistoricPageService>().InstancePerDependency();
 
             // Widgets

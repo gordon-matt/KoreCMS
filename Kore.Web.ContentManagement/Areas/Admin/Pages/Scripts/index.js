@@ -40,47 +40,56 @@ var PageTypeVM = function () {
             $("#page-type-form-section-legend").html(translations.Edit);
 
 
+            $.ajax({
+                url: "/admin/pages/page-types/get-editor-ui/" + self.id(),
+                type: "GET",
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                // Clean up from previously injected html/scripts
+                if (typeof cleanUp == 'function') {
+                    cleanUp();
+                }
 
+                // Remove Old Scripts
+                var oldScripts = $('script[data-fields-script="true"]');
 
-            // Clean up from previously injected html/scripts
-            if (typeof cleanUp == 'function') {
-                cleanUp();
-            }
+                if (oldScripts.length > 0) {
+                    $.each(oldScripts, function () {
+                        $(this).remove();
+                    });
+                }
 
-            // Remove Old Scripts
-            var oldScripts = $('script[data-fields-script="true"]');
+                var elementToBind = $("#fields-definition")[0];
+                ko.cleanNode(elementToBind);
 
-            if (oldScripts.length > 0) {
-                $.each(oldScripts, function () {
-                    $(this).remove();
+                var result = $(json.Content);
+
+                // Add new HTML
+                var content = $(result.filter('#fields-content')[0]);
+                var details = $('<div>').append(content.clone()).html();
+                $("#fields-definition").html(details);
+
+                // Add new Scripts
+                var scripts = result.filter('script');
+
+                $.each(scripts, function () {
+                    var script = $(this);
+                    script.attr("data-fields-script", "true");//for some reason, .data("fields-script", "true") doesn't work here
+                    script.appendTo('body');
                 });
-            }
 
-            var elementToBind = $("#fields-definition")[0];
-            ko.cleanNode(elementToBind);
-
-            var result = $(json.Content);
-
-            // Add new HTML
-            var content = $(result.filter('#fields-content')[0]);
-            var details = $('<div>').append(content.clone()).html();
-            $("#fields-definition").html(details);
-
-            // Add new Scripts
-            var scripts = result.filter('script');
-
-            $.each(scripts, function () {
-                var script = $(this);
-                script.attr("data-fields-script", "true");//for some reason, .data("fields-script", "true") doesn't work here
-                script.appendTo('body');
+                // Update Bindings
+                // Ensure the function exists before calling it...
+                if (typeof updateModel == 'function') {
+                    updateModel();
+                    ko.applyBindings(viewModel, elementToBind);
+                }
+            })
+            .fail(function () {
+                $.notify(translations.GetRecordError, "error");
             });
-
-            // Update Bindings
-            // Ensure the function exists before calling it...
-            if (typeof updateModel == 'function') {
-                updateModel();
-                ko.applyBindings(viewModel, elementToBind);
-            }
         })
         .fail(function () {
             $.notify(translations.GetRecordError, "error");
@@ -107,31 +116,63 @@ var PageTypeVM = function () {
     };
 
     self.save = function () {
-        var data = {
-            pageType: {
-                Id: self.pageType.id(),
-                Name: self.pageType.name(),
-                DisplayTemplatePath: self.pageType.displayTemplatePath(),
-                EditorTemplatePath: self.pageType.editorTemplatePath(),
-                // TODO: Fields
-            }
+        var isNew = (self.id() == emptyGuid);
+
+        // ensure the function exists before calling it...
+        if (typeof onBeforeSave == 'function') {
+            onBeforeSave();
+        }
+
+        var record = {
+            Id: self.id(),
+            Name: self.name(),
+            DisplayTemplatePath: self.displayTemplatePath(),
+            EditorTemplatePath: self.editorTemplatePath(),
+            Fields: self.fields()
         };
 
-        $.ajax({
-            url: "/odata/kore/cms/PageTypes",
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(data),
-            dataType: "json",
-            async: false
-        })
-        .done(function (json) {
-            $.notify(translations.UpdateTranslationSuccess, "success");
-            switchSection($("#page-type-grid-section"));
-        })
-        .fail(function () {
-            $.notify(translations.UpdateTranslationError, "error");
-        });
+        if (isNew) {
+            $.ajax({
+                url: "/odata/kore/cms/PageTypes",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(record),
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                $('#PageTypesGrid').data('kendoGrid').dataSource.read();
+                $('#PageTypesGrid').data('kendoGrid').refresh();
+
+                switchSection($("#page-type-grid-section"));
+
+                $.notify(translations.InsertRecordSuccess, "success");
+            })
+            .fail(function () {
+                $.notify(translations.InsertRecordError, "error");
+            });
+        }
+        else {
+            $.ajax({
+                url: "/odata/kore/cms/PageTypes(guid'" + self.id() + "')",
+                type: "PUT",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(record),
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                $('#PageTypesGrid').data('kendoGrid').dataSource.read();
+                $('#PageTypesGrid').data('kendoGrid').refresh();
+
+                switchSection($("#page-type-grid-section"));
+
+                $.notify(translations.UpdateRecordSuccess, "success");
+            })
+            .fail(function () {
+                $.notify(translations.UpdateRecordError, "error");
+            });
+        }
     };
 
     self.cancel = function () {
@@ -581,7 +622,7 @@ $(document).ready(function () {
                 '<a onclick="viewModel.pageType.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a></div>',
             attributes: { "class": "text-center" },
             filterable: false,
-            width: 350
+            width: 130
         }]
     });
 });

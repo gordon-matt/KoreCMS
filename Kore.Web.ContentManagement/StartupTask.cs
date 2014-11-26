@@ -6,6 +6,7 @@ using Kore.Data;
 using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.Pages;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 
 namespace Kore.Web.ContentManagement
 {
@@ -15,11 +16,10 @@ namespace Kore.Web.ContentManagement
 
         public void Execute()
         {
-            var typeFinder = EngineContext.Current.Resolve<ITypeFinder>();
+            var pageTypeService = EngineContext.Current.Resolve<IPageTypeService>();
             var pageTypeRepository = EngineContext.Current.Resolve<IRepository<PageType>>();
 
-            var allPageTypes = typeFinder.FindClassesOfType<KorePageType>()
-                .Select(x => (KorePageType)Activator.CreateInstance(x));
+            var allPageTypes = pageTypeService.GetKorePageTypes();
 
             var allPageTypeNames = allPageTypes.Select(x => x.Name).ToList();
             var installedPageTypes = pageTypeRepository.Table.ToList();

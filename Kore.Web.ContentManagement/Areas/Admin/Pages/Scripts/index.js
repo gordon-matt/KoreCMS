@@ -7,14 +7,12 @@ var PageTypeVM = function () {
     self.name = ko.observable('');
     self.displayTemplatePath = ko.observable('');
     self.editorTemplatePath = ko.observable('');
-    self.fields = ko.observable('');
 
     self.create = function () {
         self.id(emptyGuid);
         self.name('');
         self.displayTemplatePath('');
         self.editorTemplatePath('');
-        self.fields('');
 
         self.validator.resetForm();
         switchSection($("#page-type-form-section"));
@@ -33,63 +31,10 @@ var PageTypeVM = function () {
             self.name(json.Name);
             self.displayTemplatePath(json.DisplayTemplatePath);
             self.editorTemplatePath(json.EditorTemplatePath);
-            self.fields(json.Fields);
 
             self.validator.resetForm();
             switchSection($("#page-type-form-section"));
             $("#page-type-form-section-legend").html(translations.Edit);
-
-
-            $.ajax({
-                url: "/admin/pages/page-types/get-editor-ui/" + self.id(),
-                type: "GET",
-                dataType: "json",
-                async: false
-            })
-            .done(function (json) {
-                // Clean up from previously injected html/scripts
-                if (typeof cleanUp == 'function') {
-                    cleanUp();
-                }
-
-                // Remove Old Scripts
-                var oldScripts = $('script[data-fields-script="true"]');
-
-                if (oldScripts.length > 0) {
-                    $.each(oldScripts, function () {
-                        $(this).remove();
-                    });
-                }
-
-                var elementToBind = $("#fields-definition")[0];
-                ko.cleanNode(elementToBind);
-
-                var result = $(json.Content);
-
-                // Add new HTML
-                var content = $(result.filter('#fields-content')[0]);
-                var details = $('<div>').append(content.clone()).html();
-                $("#fields-definition").html(details);
-
-                // Add new Scripts
-                var scripts = result.filter('script');
-
-                $.each(scripts, function () {
-                    var script = $(this);
-                    script.attr("data-fields-script", "true");//for some reason, .data("fields-script", "true") doesn't work here
-                    script.appendTo('body');
-                });
-
-                // Update Bindings
-                // Ensure the function exists before calling it...
-                if (typeof updateModel == 'function') {
-                    updateModel();
-                    ko.applyBindings(viewModel, elementToBind);
-                }
-            })
-            .fail(function () {
-                $.notify(translations.GetRecordError, "error");
-            });
         })
         .fail(function () {
             $.notify(translations.GetRecordError, "error");
@@ -179,6 +124,10 @@ var PageTypeVM = function () {
         switchSection($("#page-type-grid-section"));
     };
 
+    self.showPages = function () {
+        switchSection($("#grid-section"));
+    };
+
     self.validator = $("#page-type-form-section-form").validate({
         rules: {
             Name: { required: true, maxlength: 255 },
@@ -193,12 +142,10 @@ var TranslationVM = function () {
 
     self.id = ko.observable(emptyGuid);
     self.pageId = ko.observable(emptyGuid);
-    self.cultureCode = ko.observable('');
-    self.title = ko.observable('');
+    self.name = ko.observable('');
+    self.fields = ko.observable('');
     self.isEnabled = ko.observable(false);
-    self.metaKeywords = ko.observable('');
-    self.metaDescription = ko.observable('');
-    self.bodyContent = ko.observable('');
+    self.cultureCode = ko.observable('');
 };
 
 var ViewModel = function () {
@@ -206,27 +153,22 @@ var ViewModel = function () {
     
     self.id = ko.observable(emptyGuid);
     self.pageTypeId = ko.observable(emptyGuid);
-    self.title = ko.observable('');
+    self.name = ko.observable('');
     self.slug = ko.observable('');
-    self.metaKeywords = ko.observable('');
-    self.metaDescription = ko.observable('');
+    self.fields = ko.observable('');
     self.isEnabled = ko.observable(false);
-    self.bodyContent = ko.observable('');
-    self.cssClass = ko.observable('');
     self.cultureCode = ko.observable('');
+
     self.translation = new TranslationVM();
     self.pageType = new PageTypeVM();
 
     self.create = function () {
         self.id(emptyGuid);
         self.pageTypeId(emptyGuid);
-        self.title('');
+        self.name('');
         self.slug('');
-        self.metaKeywords('');
-        self.metaDescription('');
+        self.fields('');
         self.isEnabled(false);
-        self.bodyContent('');
-        self.cssClass('');
         self.cultureCode('');
 
         self.validator.resetForm();
@@ -244,18 +186,66 @@ var ViewModel = function () {
         .done(function (json) {
             self.id(json.Id);
             self.pageTypeId(json.PageTypeId);
-            self.title(json.Title);
+            self.name(json.Name);
             self.slug(json.Slug);
-            self.metaKeywords(json.MetaKeywords);
-            self.metaDescription(json.MetaDescription);
+            self.fields(json.Fields);
             self.isEnabled(json.IsEnabled);
-            self.bodyContent(json.BodyContent);
-            self.cssClass(json.CssClass);
             self.cultureCode(json.CultureCode);
 
             self.validator.resetForm();
             switchSection($("#form-section"));
             $("#form-section-legend").html(translations.Edit);
+
+            $.ajax({
+                url: "/admin/pages/get-editor-ui/" + self.id(),
+                type: "GET",
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                // Clean up from previously injected html/scripts
+                if (typeof cleanUp == 'function') {
+                    cleanUp();
+                }
+
+                // Remove Old Scripts
+                var oldScripts = $('script[data-fields-script="true"]');
+
+                if (oldScripts.length > 0) {
+                    $.each(oldScripts, function () {
+                        $(this).remove();
+                    });
+                }
+
+                var elementToBind = $("#fields-definition")[0];
+                ko.cleanNode(elementToBind);
+
+                var result = $(json.Content);
+
+                // Add new HTML
+                var content = $(result.filter('#fields-content')[0]);
+                var details = $('<div>').append(content.clone()).html();
+                $("#fields-definition").html(details);
+
+                // Add new Scripts
+                var scripts = result.filter('script');
+
+                $.each(scripts, function () {
+                    var script = $(this);
+                    script.attr("data-fields-script", "true");//for some reason, .data("fields-script", "true") doesn't work here
+                    script.appendTo('body');
+                });
+
+                // Update Bindings
+                // Ensure the function exists before calling it...
+                if (typeof updateModel == 'function') {
+                    updateModel();
+                    ko.applyBindings(viewModel, elementToBind);
+                }
+            })
+            .fail(function () {
+                $.notify(translations.GetRecordError, "error");
+            });
         })
         .fail(function () {
             $.notify(translations.GetRecordError, "error");
@@ -287,6 +277,11 @@ var ViewModel = function () {
             return false;
         }
 
+        // ensure the function exists before calling it...
+        if (typeof onBeforeSave == 'function') {
+            onBeforeSave();
+        }
+
         var cultureCode = self.cultureCode();
         if (cultureCode == '') {
             cultureCode = null;
@@ -295,13 +290,10 @@ var ViewModel = function () {
         var record = {
             Id: self.id(),
             PageTypeId: self.pageTypeId(),
-            Title: self.title(),
+            Name: self.name(),
             Slug: self.slug(),
-            MetaKeywords: self.metaKeywords(),
-            MetaDescription: self.metaDescription(),
+            Fields: self.fields(),
             IsEnabled: self.isEnabled(),
-            BodyContent: self.bodyContent(),
-            CssClass: self.cssClass(),
             CultureCode: cultureCode
         };
 
@@ -468,11 +460,8 @@ var ViewModel = function () {
 
     self.validator = $("#form-section-form").validate({
         rules: {
-            Title: { required: true, maxlength: 255 },
-            Slug: { required: true, maxlength: 255 },
-            CssClass: { maxlength: 255 },
-            MetaKeywords: { maxlength: 255 },
-            MetaDescription: { maxlength: 255 }
+            Name: { required: true, maxlength: 255 },
+            Slug: { required: true, maxlength: 255 }
         }
     });
 
@@ -532,7 +521,7 @@ $(document).ready(function () {
             serverPaging: true,
             serverFiltering: true,
             serverSorting: true,
-            sort: { field: "Title", dir: "asc" }
+            sort: { field: "Name", dir: "asc" }
         },
         filterable: true,
         sortable: {
@@ -543,9 +532,9 @@ $(document).ready(function () {
         },
         scrollable: false,
         columns: [{
-            field: "Title",
-            title: "Title",
-            template: '<a href="/#=Slug#" target="_blank">#=Title#</a>',
+            field: "Name",
+            title: "Name",
+            template: '<a href="/#=Slug#" target="_blank">#=Name#</a>',
             filterable: true
         }, {
             field: "Slug",

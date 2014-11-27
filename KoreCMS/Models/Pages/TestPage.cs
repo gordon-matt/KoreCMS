@@ -1,4 +1,6 @@
 ﻿using Kore.Web.ContentManagement.Areas.Admin.Pages;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using Newtonsoft.Json.Linq;
 
 namespace KoreCMS.Models.Pages
 {
@@ -17,6 +19,17 @@ namespace KoreCMS.Models.Pages
         public override string EditorTemplatePath
         {
             get { return "~/Views/Shared/EditorTemplates/Pages/TestPage.cshtml"; }
+        }
+
+        public override void InitializeInstance(Page page)
+        {
+            if (string.IsNullOrEmpty(page.Fields))
+            {
+                return;
+            }
+
+            dynamic fields = JObject.Parse(page.Fields);
+            TestProperty = fields.TestProperty;
         }
 
         [KorePageTypeProperty]

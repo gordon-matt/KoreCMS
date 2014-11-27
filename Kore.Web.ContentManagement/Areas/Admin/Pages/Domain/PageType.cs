@@ -15,8 +15,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
 
         public string EditorTemplatePath { get; set; }
 
-        public string Fields { get; set; }
-
         #region IEntity Members
 
         public object[] KeyValues
@@ -36,7 +34,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
             Property(x => x.Name).HasMaxLength(255).IsRequired();
             Property(x => x.DisplayTemplatePath).HasMaxLength(255);
             Property(x => x.EditorTemplatePath).HasMaxLength(255);
-            Property(x => x.Fields).IsMaxLength();
         }
     }
 }

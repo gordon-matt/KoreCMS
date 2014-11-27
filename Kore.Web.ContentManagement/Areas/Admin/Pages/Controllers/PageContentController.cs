@@ -8,12 +8,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
     public class PageContentController : KoreController
     {
         private readonly IPageService pageService;
+        private readonly IPageTypeService pageTypeService;
 
         public PageContentController(
-            IPageService pageService)
+            IPageService pageService,
+            IPageTypeService pageTypeService)
             : base()
         {
             this.pageService = pageService;
+            this.pageTypeService = pageTypeService;
         }
 
         public ActionResult Index(string slug)
@@ -36,9 +39,19 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             if (page != null && page.IsEnabled)
             {
                 WorkContext.SetState("CurrentPage", page);
-                WorkContext.Breadcrumbs.Add(page.Title);
+                WorkContext.Breadcrumbs.Add(page.Name);
 
-                return View("Kore.Web.ContentManagement.Areas.Admin.Pages.Views.PageContent.PageContent", page);
+                var pageType = pageTypeService.Find(page.PageTypeId);
+                if (pageType != null && !string.IsNullOrEmpty(pageType.DisplayTemplatePath))
+                {
+                    var korePageType = pageTypeService.GetKorePageType(pageType.Name);
+                    korePageType.InitializeInstance(page);
+                    return View(pageType.DisplayTemplatePath, korePageType);
+                }
+                else
+                {
+                    return View("Kore.Web.ContentManagement.Areas.Admin.Pages.Views.PageContent.PageContent", page);
+                }
             }
 
             return HttpNotFound();

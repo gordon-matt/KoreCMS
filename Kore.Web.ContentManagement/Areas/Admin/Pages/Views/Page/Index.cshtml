@@ -5,7 +5,7 @@
 
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
-    
+
     Style.IncludeBundle("kendo-ui");
 
     Script.IncludeBundle("kendo-ui");
@@ -49,12 +49,12 @@
             </div>
             <div class="col-sm-4 col-md-4">
                 <div class="form-group">
-                    @Html.Label("Title", "Title", new { @class = "control-label" })
+                    @Html.Label("Name", "Name", new { @class = "control-label" })
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="fa fa-file-o"></i>
                         </span>
-                        @Html.TextBox("Title", null, new { @class = "form-control", data_bind = "value: title" })
+                        @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
                     </div>
                 </div>
             </div>
@@ -71,37 +71,16 @@
                     </label>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-12">
-                <div class="form-group">
-                    @Html.Label("MetaKeywords", "Meta Keywords", new { @class = "control-label" })
-                    @Html.TextBox("MetaKeywords", null, new { @class = "form-control", data_bind = "value: metaKeywords" })
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-12">
-                <div class="form-group">
-                    @Html.Label("MetaDescription", "Meta Description", new { @class = "control-label" })
-                    @Html.TextBox("MetaDescription", null, new { @class = "form-control", data_bind = "value: metaDescription" })
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-6">
-                <div class="form-group">
-                    @Html.Label("CssClass", "Css Class", new { @class = "control-label" })
-                    @Html.TextBox("CssClass", null, new { @class = "form-control", data_bind = "value: cssClass" })
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-12">
-                <div class="form-group">
-                    @Html.Label("BodyContent", "Body Content", new { @class = "control-label" })
-                    @Html.TextArea("BodyContent", null, new { @class = "form-control", data_bind = "wysiwyg: bodyContent, wysiwygConfig: tinyMCEConfig" })
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-12">
-                <div class="form-group pull-right">
-                    <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: save">@T(KoreWebLocalizableStrings.General.Save)</button>
-                </div>
-            </div>
         </fieldset>
+
+        <fieldset id="fields-definition"></fieldset>
+
+        <div class="col-sm-12 col-md-12">
+            <div class="form-group pull-right">
+                <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                <button type="button" class="btn btn-primary" data-bind="click: save">@T(KoreWebLocalizableStrings.General.Save)</button>
+            </div>
+        </div>
     </form>
 </div>
 
@@ -129,12 +108,12 @@
         <legend id="translate-section-legend"></legend>
         <div class="col-sm-4 col-md-4">
             <div class="form-group">
-                @Html.Label("Translate_Title", "Title", new { @class = "control-label" })
+                @Html.Label("Translate_Name", "Name", new { @class = "control-label" })
                 <div class="input-group">
                     <span class="input-group-addon">
                         <i class="fa fa-file-o"></i>
                     </span>
-                    @Html.TextBox("Translate_Title", null, new { @class = "form-control", data_bind = "value: translation.title" })
+                    @Html.TextBox("Translate_Name", null, new { @class = "form-control", data_bind = "value: translation.name" })
                 </div>
             </div>
         </div>
@@ -145,34 +124,17 @@
                 </label>
             </div>
         </div>
-        <div class="col-sm-12 col-md-12">
-            <div class="form-group">
-                @Html.Label("Translate_MetaKeywords", "Meta Keywords", new { @class = "control-label" })
-                @Html.TextBox("Translate_MetaKeywords", null, new { @class = "form-control", data_bind = "value: translation.metaKeywords" })
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-12">
-            <div class="form-group">
-                @Html.Label("Translate_MetaDescription", "Meta Description", new { @class = "control-label" })
-                @Html.TextBox("Translate_MetaDescription", null, new { @class = "form-control", data_bind = "value: translation.metaDescription" })
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-12">
-            <div class="form-group">
-                @Html.Label("Translate_BodyContent", "Body Content", new { @class = "control-label" })
-                @Html.TextArea("Translate_BodyContent", null, new { @class = "form-control", data_bind = "wysiwyg: translation.bodyContent, wysiwygConfig: tinyMCEConfig" })
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-12">
-            <div class="form-group pull-right">
-                <button type="button" class="btn btn-default" data-bind="click: translate_onCancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                <button type="button" class="btn btn-primary" data-bind="click: translate_onSave">@T(KoreWebLocalizableStrings.General.Save)</button>
-            </div>
-        </div>
     </fieldset>
+
+    <fieldset id="translate-fields-definition"></fieldset>
+
+    <div class="col-sm-12 col-md-12">
+        <div class="form-group pull-right">
+            <button type="button" class="btn btn-default" data-bind="click: translate_onCancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+            <button type="button" class="btn btn-primary" data-bind="click: translate_onSave">@T(KoreWebLocalizableStrings.General.Save)</button>
+        </div>
+    </div>
 </div>
-
-
 
 <div id="page-type-grid-section" class="row" style="display:none">
     <div class="col-md-12">
@@ -180,7 +142,7 @@
             <i class="fa fa-plus"></i>
             @T(KoreWebLocalizableStrings.General.Create)
         </a>
-        <a data-bind="click: create" class="btn btn-primary">
+        <a data-bind="click: pageType.showPages" class="btn btn-primary">
             <i class="fa fa-file-o"></i>
             @T(KoreCmsLocalizableStrings.Pages.Title)
         </a>
@@ -222,9 +184,6 @@
                 </div>
             </div>
         </fieldset>
-
-        <fieldset id="fields-definition"></fieldset>
-
         <div class="col-sm-12 col-md-12">
             <div class="form-group pull-right">
                 <button type="button" class="btn btn-default" data-bind="click: pageType.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>

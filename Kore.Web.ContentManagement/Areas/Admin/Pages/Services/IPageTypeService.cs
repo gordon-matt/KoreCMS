@@ -10,6 +10,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
 {
     public interface IPageTypeService : IGenericDataService<PageType>
     {
+        KorePageType GetKorePageType(string name);
+
         IEnumerable<KorePageType> GetKorePageTypes();
     }
 
@@ -29,6 +31,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
         }
 
         #region IPageTypeService Members
+
+        public KorePageType GetKorePageType(string name)
+        {
+            return korePageTypes.Value.FirstOrDefault(x => x.Name == name);
+        }
 
         public IEnumerable<KorePageType> GetKorePageTypes()
         {

@@ -30,8 +30,7 @@ namespace Kore.Web.ContentManagement
                 Id = Guid.NewGuid(),
                 Name = x.Name,
                 DisplayTemplatePath = x.DisplayTemplatePath,
-                EditorTemplatePath = x.EditorTemplatePath,
-                Fields = null //TODO
+                EditorTemplatePath = x.EditorTemplatePath
             });
 
             if (!pageTypesToAdd.IsNullOrEmpty())

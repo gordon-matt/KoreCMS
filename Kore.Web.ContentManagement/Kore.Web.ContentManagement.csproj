@@ -260,6 +260,7 @@
     <Compile Include="Areas\Admin\Pages\Services\IHistoricPageService.cs" />
     <Compile Include="Areas\Admin\Pages\Services\IPageService.cs" />
     <Compile Include="Areas\Admin\Pages\Services\IPageTypeService.cs" />
+    <Compile Include="Areas\Admin\Pages\StandardPage.cs" />
     <Compile Include="Areas\Admin\Widgets\Controllers\Api\WidgetsController.cs" />
     <Compile Include="Areas\Admin\Widgets\Controllers\Api\ZonesController.cs" />
     <Compile Include="Areas\Admin\Widgets\Controllers\FormWidgetController.cs" />
@@ -365,10 +366,10 @@
     <None Include="app.config" />
     <EmbeddedResource Include="Areas\Admin\Messaging\Views\MessageTemplate\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Messaging\Views\QueuedEmail\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\DisplayTemplates\StandardPage.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\StandardPage.cshtml" />
     <None Include="packages.config" />
-    <None Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\RichTextFull.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\ContentManagementSettings.cshtml" />
     <EmbeddedResource Include="Views\Frontend\WidgetsByZone.cshtml" />

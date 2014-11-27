@@ -50,17 +50,17 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 var historicPage = new HistoricPage
                 {
                     Id = Guid.NewGuid(),
-                    ArchivedDate = DateTime.UtcNow,
-                    BodyContent = currentPage.BodyContent,
-                    CssClass = currentPage.CssClass,
-                    CultureCode = currentPage.CultureCode,
-                    IsEnabled = currentPage.IsEnabled,
-                    MetaDescription = currentPage.MetaDescription,
-                    MetaKeywords = currentPage.MetaKeywords,
                     PageId = currentPage.Id,
-                    RefId = currentPage.RefId,
+                    PageTypeId = currentPage.PageTypeId,
+                    ArchivedDate = DateTime.UtcNow,
+                    Name = currentPage.Name,
                     Slug = currentPage.Slug,
-                    Title = currentPage.Title
+                    Fields = currentPage.Fields,
+                    DateCreatedUtc = currentPage.DateCreatedUtc,
+                    DateModifiedUtc = currentPage.DateModifiedUtc,
+                    IsEnabled = currentPage.IsEnabled,
+                    CultureCode = currentPage.CultureCode,
+                    RefId = currentPage.RefId,
                 };
                 historicPageRepository.Insert(historicPage);
 
@@ -76,6 +76,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             }
 
             return Updated(entity);
+        }
+
+        public override IHttpActionResult Post(Page entity)
+        {
+            entity.DateCreatedUtc = DateTime.UtcNow;
+            entity.DateModifiedUtc = DateTime.UtcNow;
+            return base.Post(entity);
         }
 
         public override IHttpActionResult Put([FromODataUri] Guid key, Page entity)
@@ -98,20 +105,22 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 var historicPage = new HistoricPage
                 {
                     Id = Guid.NewGuid(),
-                    ArchivedDate = DateTime.UtcNow,
-                    BodyContent = currentPage.BodyContent,
-                    CssClass = currentPage.CssClass,
-                    CultureCode = currentPage.CultureCode,
-                    IsEnabled = currentPage.IsEnabled,
-                    MetaDescription = currentPage.MetaDescription,
-                    MetaKeywords = currentPage.MetaKeywords,
                     PageId = currentPage.Id,
-                    RefId = currentPage.RefId,
+                    PageTypeId = currentPage.PageTypeId,
+                    ArchivedDate = DateTime.UtcNow,
+                    Name = currentPage.Name,
                     Slug = currentPage.Slug,
-                    Title = currentPage.Title
+                    Fields = currentPage.Fields,
+                    DateCreatedUtc = currentPage.DateCreatedUtc,
+                    DateModifiedUtc = currentPage.DateModifiedUtc,
+                    IsEnabled = currentPage.IsEnabled,
+                    CultureCode = currentPage.CultureCode,
+                    RefId = currentPage.RefId
                 };
                 historicPageRepository.Insert(historicPage);
 
+                entity.DateCreatedUtc = currentPage.DateCreatedUtc;
+                entity.DateModifiedUtc = DateTime.UtcNow;
                 Repository.Update(entity);
             }
             catch (DbUpdateConcurrencyException)
@@ -138,30 +147,27 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 var record = new Page
                 {
                     Id = Guid.NewGuid(),
-                    Title = translation.Title,
-                    Slug = translation.Title.ToSlugUrl(),
+                    PageTypeId = invariantPage.PageTypeId,
+                    Name = translation.Name,
+                    Slug = translation.Slug,
+                    Fields = translation.Fields,
                     IsEnabled = translation.IsEnabled,
-                    MetaDescription = translation.MetaDescription,
-                    MetaKeywords = translation.MetaKeywords,
-                    BodyContent = translation.BodyContent,
+                    DateCreatedUtc = DateTime.UtcNow,
+                    DateModifiedUtc = DateTime.UtcNow,
                     CultureCode = translation.CultureCode,
                     RefId = translation.PageId,
-                    CssClass = invariantPage.CssClass
                 };
                 Repository.Insert(record);
             }
             else
             {
                 var record = Repository.Table.FirstOrDefault(x => x.Id == translation.Id);
-                record.Title = translation.Title;
-                record.Slug = translation.Title.ToSlugUrl();
+                record.Name = translation.Name;
+                record.Slug = translation.Slug;
+                record.Fields = translation.Fields;
                 record.IsEnabled = translation.IsEnabled;
-                record.MetaDescription = translation.MetaDescription;
-                record.MetaKeywords = translation.MetaKeywords;
-                record.BodyContent = translation.BodyContent;
-                record.CultureCode = translation.CultureCode;
+                record.DateModifiedUtc = DateTime.UtcNow;
                 record.RefId = translation.PageId;
-                record.CssClass = invariantPage.CssClass;
                 Repository.Update(record);
             }
 
@@ -185,12 +191,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 {
                     Id = record.Id,
                     PageId = pageId,
-                    CultureCode = cultureCode,
-                    Title = record.Title,
+                    Name = record.Name,
+                    Slug = record.Slug,
+                    Fields = record.Fields,
                     IsEnabled = record.IsEnabled,
-                    MetaKeywords = record.MetaKeywords,
-                    MetaDescription = record.MetaDescription,
-                    BodyContent = record.BodyContent
+                    CultureCode = cultureCode,
                 };
         }
 
@@ -207,20 +212,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
     public struct Translation
     {
-        public string BodyContent { get; set; }
-
-        public string CultureCode { get; set; }
-
         public Guid Id { get; set; }
-
-        public bool IsEnabled { get; set; }
-
-        public string MetaDescription { get; set; }
-
-        public string MetaKeywords { get; set; }
 
         public Guid PageId { get; set; }
 
-        public string Title { get; set; }
+        public string Name { get; set; }
+
+        public string Slug { get; set; }
+
+        public string Fields { get; set; }
+
+        public bool IsEnabled { get; set; }
+
+        public string CultureCode { get; set; }
     }
 }

@@ -47,13 +47,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             {
                 Id = Guid.NewGuid(),
                 PageId = page.Id,
-                Title = page.Title,
+                PageTypeId = page.PageTypeId,
+                Name = page.Name,
                 Slug = page.Slug,
+                Fields = page.Fields,
+                DateCreatedUtc = page.DateCreatedUtc,
+                DateModifiedUtc = page.DateModifiedUtc,
                 IsEnabled = page.IsEnabled,
-                MetaDescription = page.MetaDescription,
-                MetaKeywords = page.MetaKeywords,
-                BodyContent = page.BodyContent,
-                CssClass = page.CssClass,
                 CultureCode = page.CultureCode,
                 RefId = page.RefId,
                 ArchivedDate = DateTime.UtcNow
@@ -61,15 +61,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             Repository.Insert(backupPage);
 
             // then restore the historical page, as requested
-            page.BodyContent = pageToRestore.BodyContent;
-            page.CssClass = pageToRestore.CssClass;
-            page.CultureCode = pageToRestore.CultureCode;
-            page.IsEnabled = pageToRestore.IsEnabled;
-            page.MetaDescription = pageToRestore.MetaDescription;
-            page.MetaKeywords = pageToRestore.MetaKeywords;
-            page.RefId = pageToRestore.RefId;
+            page.PageTypeId = pageToRestore.PageTypeId;
+            page.Name = pageToRestore.Name;
             page.Slug = pageToRestore.Slug;
-            page.Title = pageToRestore.Title;
+            page.Fields = pageToRestore.Fields;
+            page.DateCreatedUtc = pageToRestore.DateCreatedUtc;
+            page.DateModifiedUtc = pageToRestore.DateModifiedUtc;
+            page.IsEnabled = pageToRestore.IsEnabled;
+            page.CultureCode = pageToRestore.CultureCode;
+            page.RefId = pageToRestore.RefId;
 
             pageRepository.Update(page);
 

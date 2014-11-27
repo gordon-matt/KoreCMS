@@ -6,28 +6,23 @@ using Kore.Localization;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
 {
-    //TODO: Add TemplatePath as a property for .cshtml files. If not specified, use default...
-    //  this will be the only (and correct) way to insert widgets as well...; we'll
-    //  specify zones in the template
     public class Page : ILocalizableEntity<Guid>, IEntity
     {
         public Guid Id { get; set; }
 
         public Guid PageTypeId { get; set; }
 
-        public string Title { get; set; }
+        public string Name { get; set; }
 
         public string Slug { get; set; }
 
-        public string MetaKeywords { get; set; }
-
-        public string MetaDescription { get; set; }
+        public string Fields { get; set; }
 
         public bool IsEnabled { get; set; }
 
-        public string BodyContent { get; set; }
+        public DateTime DateCreatedUtc { get; set; }
 
-        public string CssClass { get; set; }
+        public DateTime DateModifiedUtc { get; set; }
 
         public string CultureCode { get; set; }
 
@@ -50,11 +45,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
             ToTable("Kore_Pages");
             HasKey(x => x.Id);
             Property(x => x.PageTypeId).IsRequired();
-            Property(x => x.Title).HasMaxLength(255).IsRequired();
-            Property(x => x.Slug).HasMaxLength(255).IsRequired();
-            Property(x => x.CssClass).HasMaxLength(255);
-            Property(x => x.MetaKeywords).HasMaxLength(255);
-            Property(x => x.MetaDescription).HasMaxLength(255);
+            Property(x => x.Name).IsRequired().HasMaxLength(255);
+            Property(x => x.Slug).IsRequired().HasMaxLength(255);
+            Property(x => x.Fields).IsMaxLength();
+            Property(x => x.IsEnabled).IsRequired();
+            Property(x => x.DateCreatedUtc).IsRequired();
+            Property(x => x.DateModifiedUtc).IsRequired();
             Property(x => x.CultureCode).HasMaxLength(10);
         }
     }

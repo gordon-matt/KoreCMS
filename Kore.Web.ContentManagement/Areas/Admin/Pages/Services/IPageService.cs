@@ -52,8 +52,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                 {
                     return Update(x => x.RefId == record.Id, x => new Page
                     {
-                        Slug = record.Slug,
-                        CssClass = record.CssClass
+                        Slug = record.Slug
                     });
                 }
                 catch
@@ -65,7 +64,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                         foreach (var item in toUpdate)
                         {
                             item.Slug = record.Slug;
-                            item.CssClass = record.CssClass;
                         }
 
                         return Update(toUpdate);

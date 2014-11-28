@@ -72,8 +72,7 @@ var PageTypeVM = function () {
             Id: self.id(),
             Name: self.name(),
             DisplayTemplatePath: self.displayTemplatePath(),
-            EditorTemplatePath: self.editorTemplatePath(),
-            Fields: self.fields()
+            EditorTemplatePath: self.editorTemplatePath()
         };
 
         if (isNew) {

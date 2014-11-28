@@ -42,16 +42,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                 WorkContext.Breadcrumbs.Add(page.Name);
 
                 var pageType = pageTypeService.Find(page.PageTypeId);
-                if (pageType != null && !string.IsNullOrEmpty(pageType.DisplayTemplatePath))
-                {
-                    var korePageType = pageTypeService.GetKorePageType(pageType.Name);
-                    korePageType.InitializeInstance(page);
-                    return View(pageType.DisplayTemplatePath, korePageType);
-                }
-                else
-                {
-                    return View("Kore.Web.ContentManagement.Areas.Admin.Pages.Views.PageContent.PageContent", page);
-                }
+                var korePageType = pageTypeService.GetKorePageType(pageType.Name);
+                korePageType.InitializeInstance(page);
+                return View(pageType.DisplayTemplatePath, korePageType);
             }
 
             return HttpNotFound();

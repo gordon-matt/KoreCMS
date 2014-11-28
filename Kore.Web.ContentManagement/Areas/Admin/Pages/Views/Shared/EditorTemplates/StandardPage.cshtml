@@ -4,19 +4,19 @@
     <div class="col-sm-12 col-md-12">
         <div class="form-group">
             @Html.Label("MetaKeywords", "Meta Keywords", new { @class = "control-label" })
-            @Html.TextBox("MetaKeywords", null, new { @class = "form-control", data_bind = "value: pageType.metaKeywords" })
+            @Html.TextBox("MetaKeywords", null, new { @class = "form-control", data_bind = "value: metaKeywords" })
         </div>
     </div>
     <div class="col-sm-12 col-md-12">
         <div class="form-group">
             @Html.Label("MetaDescription", "Meta Description", new { @class = "control-label" })
-            @Html.TextBox("MetaDescription", null, new { @class = "form-control", data_bind = "value: pageType.metaDescription" })
+            @Html.TextBox("MetaDescription", null, new { @class = "form-control", data_bind = "value: metaDescription" })
         </div>
     </div>
     <div class="col-sm-12 col-md-12">
         <div class="form-group">
             @Html.Label("BodyContent", "Body Content", new { @class = "control-label" })
-            @Html.TextArea("BodyContent", null, new { @class = "form-control", data_bind = "wysiwyg: pageType.bodyContent, wysiwygConfig: tinyMCEConfig" })
+            @Html.TextArea("BodyContent", null, new { @class = "form-control", data_bind = "wysiwyg: bodyContent, wysiwygConfig: tinyMCE_bodyContent" })
         </div>
     </div>
 </div>
@@ -29,17 +29,42 @@
 
         var data = ko.mapping.fromJSON(viewModel.fields());
 
-        if (data && data.TestProperty) {
-            viewModel.metaKeywords(data.MetaKeywords());
-            viewModel.metaDescription(data.MetaDescription());
-            viewModel.bodyContent(data.BodyContent());
+        if (data) {
+            if (data.MetaKeywords) {
+                viewModel.metaKeywords(data.MetaKeywords());
+            }
+            if (data.MetaDescription) {
+                viewModel.metaDescription(data.MetaDescription());
+            }
+            if (data.BodyContent) {
+                viewModel.bodyContent(data.BodyContent());
+            }
         }
+
+        viewModel.tinyMCE_bodyContent = {
+            theme: "modern",
+            plugins: [
+                "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                "searchreplace wordcount visualblocks visualchars code fullscreen",
+                "insertdatetime media nonbreaking save table contextmenu directionality",
+                "emoticons template paste textcolor"
+            ],
+            toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            toolbar2: "print preview media | forecolor backcolor emoticons",
+            image_advtab: true,
+            templates: [
+                { title: 'Test template 1', content: 'Test 1' },
+                { title: 'Test template 2', content: 'Test 2' }
+            ],
+            content_css: tinyMCEContentCss
+        };
     };
 
     function cleanUp() {
         delete viewModel.metaKeywords;
         delete viewModel.metaDescription;
         delete viewModel.bodyContent;
+        delete viewModel.tinyMCE_bodyContent;
     }
 
     function onBeforeSave() {
@@ -48,7 +73,7 @@
             MetaDescription: viewModel.metaDescription(),
             BodyContent: viewModel.bodyContent()
         };
-
+        alert(ko.mapping.toJSON(data));
         viewModel.fields(ko.mapping.toJSON(data));
     };
 </script>

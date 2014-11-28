@@ -5,14 +5,14 @@ var ViewModel = function () {
 
     self.id = ko.observable(emptyGuid);
     self.pageId = ko.observable(emptyGuid);
+    self.pageTypeId = ko.observable(emptyGuid);
     self.archivedDate = ko.observable(null);
-    self.title = ko.observable('');
+    self.name = ko.observable('');
     self.slug = ko.observable('');
-    self.metaKeywords = ko.observable('');
-    self.metaDescription = ko.observable('');
+    self.fields = ko.observable('');
     self.isEnabled = ko.observable(false);
-    self.bodyContent = ko.observable('');
-    self.cssClass = ko.observable('');
+    self.dateCreatedUtc = ko.observable();
+    self.dateModifiedUtc = ko.observable();
     self.cultureCode = ko.observable('');
     self.refId = ko.observable(null);
 
@@ -26,15 +26,14 @@ var ViewModel = function () {
         .done(function (json) {
             self.id(json.Id);
             self.pageId(json.PageId);
+            self.pageTypeId(json.PageTypeId);
             self.archivedDate(json.ArchivedDate);
-            self.id(json.Id);
-            self.title(json.Title);
+            self.name(json.Name);
             self.slug(json.Slug);
-            self.metaKeywords(json.MetaKeywords);
-            self.metaDescription(json.MetaDescription);
+            self.fields(json.Fields);
             self.isEnabled(json.IsEnabled);
-            self.bodyContent(json.BodyContent);
-            self.cssClass(json.CssClass);
+            self.dateCreatedUtc(json.DateCreatedUtc);
+            self.dateModifiedUtc(json.DateModifiedUtc);
             self.cultureCode(json.CultureCode);
             self.refId(json.RefId);
 
@@ -111,9 +110,9 @@ $(document).ready(function () {
         },
         scrollable: false,
         columns: [{
-            field: "Title",
-            title: "Title",
-            template: '<a href="/#=Slug#" target="_blank">#=Title#</a>',
+            field: "Name",
+            title: "Name",
+            template: '<a href="/#=Slug#" target="_blank">#=Name#</a>',
             filterable: true
         }, {
             field: "ArchivedDate",

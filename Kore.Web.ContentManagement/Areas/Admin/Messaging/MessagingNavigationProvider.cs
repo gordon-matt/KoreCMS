@@ -17,7 +17,7 @@ namespace Kore.Web.ContentManagement.Messaging
             builder.Add(T(KoreCmsLocalizableStrings.Navigation.CMS),
                 menu => menu.Add(T(KoreCmsLocalizableStrings.Messaging.MessageTemplates), "5", item => item
                     .Action("Index", "MessageTemplate", new { area = Constants.Areas.Messaging })
-                    .IconCssClass("kore-icon kore-icon-messages")
+                    .IconCssClass("kore-icon kore-icon-message-templates")
                     .Permission(Permissions.ManageMessages)));
 
             builder.Add(T(KoreCmsLocalizableStrings.Navigation.CMS),

@@ -28,28 +28,28 @@
     <table class="table table-bordered table-condensed">
         <tbody>
             <tr>
-                <th>Title</th>
-                <td><span data-bind="html: title"></span></td>
+                <th>Page Type</th>
+                <td><span data-bind="html: pageTypeId"></span></td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td><span data-bind="html: name"></span></td>
             </tr>
             <tr>
                 <th>Slug</th>
-                <td><span data-bind="html: slug"></span>/td>
+                <td><span data-bind="html: slug"></span></td>
             </tr>
             <tr>
                 <th>Enabled</th>
                 <td><span data-bind="html: isEnabled"></span></td>
             </tr>
             <tr>
-                <th>Meta Keywords</th>
-                <td><span data-bind="html: metaKeywords"></span></td>
+                <th>Date Created (UTC)</th>
+                <td><span data-bind="html: dateCreatedUtc"></span></td>
             </tr>
             <tr>
-                <th>Meta Description</th>
-                <td><span data-bind="html: metaDescription"></span></td>
-            </tr>
-            <tr>
-                <th>CssClass</th>
-                <td><span data-bind="html: cssClass"></span></td>
+                <th>Date Modified (UTC)</th>
+                <td><span data-bind="html: dateModifiedUtc"></span></td>
             </tr>
             <tr>
                 <th>CultureCode</th>
@@ -57,8 +57,8 @@
             </tr>
         </tbody>
     </table>
-    <p>Body Content</p>
-    <div id="BodyContent" data-bind="html: bodyContent"></div>
+    <p>Fields</p>
+    <div id="Fields" data-bind="html: fields"></div>
 
     <div class="pull-right">
         <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>

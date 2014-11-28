@@ -73,7 +73,6 @@
             MetaDescription: viewModel.metaDescription(),
             BodyContent: viewModel.bodyContent()
         };
-        alert(ko.mapping.toJSON(data));
         viewModel.fields(ko.mapping.toJSON(data));
     };
 </script>

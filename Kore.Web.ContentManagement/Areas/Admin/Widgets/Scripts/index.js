@@ -427,7 +427,7 @@ $(document).ready(function () {
     };
 
     // Override grid data source if necessary (to filter by Page ID)
-    if (pageId != '') {
+    if (pageId && pageId != '') {
         ds.transport.read.url = "/odata/kore/cms/Widgets/GetByPageId";
         ds.transport.read.type = "POST";
         ds.transport.read.contentType = "application/json";

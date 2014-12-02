@@ -170,6 +170,20 @@ var ViewModel = function () {
         self.isEnabled(false);
         self.cultureCode('');
 
+        // Remove Old Scripts
+        var oldScripts = $('script[data-fields-script="true"]');
+
+        if (oldScripts.length > 0) {
+            $.each(oldScripts, function () {
+                $(this).remove();
+            });
+        }
+
+        var elementToBind = $("#fields-definition")[0];
+        ko.cleanNode(elementToBind);
+
+        $("#fields-definition").html("");
+
         self.validator.resetForm();
         switchSection($("#form-section"));
         $("#form-section-legend").html(translations.Create);

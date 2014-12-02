@@ -38,11 +38,12 @@ namespace Kore.Web.ContentManagement
                 pageTypeRepository.Insert(pageTypesToAdd);
             }
 
-            var pageTypesToDelete = installedPageTypes.Where(x => !allPageTypeNames.Contains(x.Name));
+            var pageTypesToDelete = installedPageTypes.Where(x => !allPageTypeNames.Contains(x.Name)).ToList();
+            var pageTypesToDeleteIds = pageTypesToDelete.Select(y => y.Id).ToList();
 
             if (!pageTypesToDelete.IsNullOrEmpty())
             {
-                pageTypeRepository.Delete(pageTypesToDelete);
+                pageTypeRepository.Delete(x => pageTypesToDeleteIds.Contains(x.Id));
             }
         }
 

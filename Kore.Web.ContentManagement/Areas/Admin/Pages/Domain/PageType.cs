@@ -11,6 +11,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
 
         public string Name { get; set; }
 
+        public string LayoutPath { get; set; }
+
         public string DisplayTemplatePath { get; set; }
 
         public string EditorTemplatePath { get; set; }
@@ -32,6 +34,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
             ToTable("Kore_PageTypes");
             HasKey(x => x.Id);
             Property(x => x.Name).HasMaxLength(255).IsRequired();
+            Property(x => x.LayoutPath).IsRequired().HasMaxLength(255);
             Property(x => x.DisplayTemplatePath).HasMaxLength(255);
             Property(x => x.EditorTemplatePath).HasMaxLength(255);
         }

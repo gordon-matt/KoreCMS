@@ -1,3 +1,7 @@
 ﻿@model Kore.Web.ContentManagement.Areas.Admin.Pages.StandardPage
 
+@{
+    Layout = Model.LayoutPath;
+}
+
 @Html.Raw(Model.BodyContent)

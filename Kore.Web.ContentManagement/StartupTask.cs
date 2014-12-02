@@ -29,6 +29,7 @@ namespace Kore.Web.ContentManagement
             {
                 Id = Guid.NewGuid(),
                 Name = x.Name,
+                LayoutPath = "~/Views/Shared/_Layout.cshtml",
                 DisplayTemplatePath = x.DisplayTemplatePath,
                 EditorTemplatePath = x.EditorTemplatePath
             });

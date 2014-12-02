@@ -5,12 +5,14 @@ var PageTypeVM = function () {
 
     self.id = ko.observable(emptyGuid);
     self.name = ko.observable('');
+    self.layoutPath = ko.observable('');
     self.displayTemplatePath = ko.observable('');
     self.editorTemplatePath = ko.observable('');
 
     self.create = function () {
         self.id(emptyGuid);
         self.name('');
+        self.layoutPath('');
         self.displayTemplatePath('');
         self.editorTemplatePath('');
 
@@ -29,6 +31,7 @@ var PageTypeVM = function () {
         .done(function (json) {
             self.id(json.Id);
             self.name(json.Name);
+            self.layoutPath(json.LayoutPath);
             self.displayTemplatePath(json.DisplayTemplatePath);
             self.editorTemplatePath(json.EditorTemplatePath);
 
@@ -71,6 +74,7 @@ var PageTypeVM = function () {
         var record = {
             Id: self.id(),
             Name: self.name(),
+            LayoutPath: self.layoutPath(),
             DisplayTemplatePath: self.displayTemplatePath(),
             EditorTemplatePath: self.editorTemplatePath()
         };
@@ -130,6 +134,7 @@ var PageTypeVM = function () {
     self.validator = $("#page-type-form-section-form").validate({
         rules: {
             Name: { required: true, maxlength: 255 },
+            LayoutPath: { required: true, maxlength: 255 },
             DisplayTemplatePath: { maxlength: 255 },
             EditorTemplatePath: { maxlength: 255 }
         }

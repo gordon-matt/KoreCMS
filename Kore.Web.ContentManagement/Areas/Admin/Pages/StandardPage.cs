@@ -10,14 +10,24 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
             get { return "Standard Page"; }
         }
 
+        //public override string DisplayTemplatePath
+        //{
+        //    get { return "Kore.Web.ContentManagement.Areas.Admin.Pages.Views.Shared.DisplayTemplates.StandardPage"; }
+        //}
+
+        //public override string EditorTemplatePath
+        //{
+        //    get { return "Kore.Web.ContentManagement.Areas.Admin.Pages.Views.Shared.EditorTemplates.StandardPage"; }
+        //}
+
         public override string DisplayTemplatePath
         {
-            get { return "Kore.Web.ContentManagement.Areas.Admin.Pages.Views.Shared.DisplayTemplates.StandardPage"; }
+            get { return "~/Views/Shared/DisplayTemplates/Pages/StandardPage.cshtml"; }
         }
 
         public override string EditorTemplatePath
         {
-            get { return "Kore.Web.ContentManagement.Areas.Admin.Pages.Views.Shared.EditorTemplates.StandardPage"; }
+            get { return "~/Views/Shared/EditorTemplates/Pages/StandardPage.cshtml"; }
         }
 
         public override void InitializeInstance(Page page)

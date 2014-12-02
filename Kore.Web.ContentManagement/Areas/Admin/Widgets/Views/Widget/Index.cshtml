@@ -16,7 +16,7 @@
     Script.IncludeBundle("kore-cms/widgets");
 
     var nullablePageId = (Guid?)ViewBag.PageId;
-    string pageId = nullablePageId.HasValue ? nullablePageId.Value.ToString() : string.Empty;
+    string pageId = nullablePageId.HasValue ? nullablePageId.Value.ToString() : null;
 }
 
 <div id="grid-section" class="row">
@@ -181,7 +181,14 @@
 
 @section scripts {
     <script type="text/javascript">
-        var pageId = '@pageId';
+        @if (string.IsNullOrEmpty(pageId))
+        {
+            @:var pageId = null;
+        }
+        else
+        {
+            @:var pageId = '@pageId';
+        }
 
         var translations = {
             Create: '@T(KoreWebLocalizableStrings.General.Create).Text',

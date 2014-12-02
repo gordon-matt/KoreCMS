@@ -173,6 +173,12 @@
             </div>
             <div class="col-sm-12 col-md-12">
                 <div class="form-group">
+                    @Html.Label("PageType_LayoutPath", "Layout Path", new { @class = "control-label" })
+                    @Html.TextBox("PageType_LayoutPath", null, new { @class = "form-control", data_bind = "value: pageType.layoutPath" })
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group">
                     @Html.Label("PageType_DisplayTemplatePath", "Display Template Path", new { @class = "control-label" })
                     @Html.TextBox("PageType_DisplayTemplatePath", null, new { @class = "form-control", data_bind = "value: pageType.displayTemplatePath" })
                 </div>

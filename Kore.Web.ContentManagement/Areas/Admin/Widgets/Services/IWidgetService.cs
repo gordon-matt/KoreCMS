@@ -77,7 +77,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Services
 
         public IEnumerable<IWidget> GetWidgets(Guid? pageId = null, string zoneName = null, bool includeDisabled = false)
         {
-            var key = string.Format("Widgets_GetWidgets_{0}_{1}", includeDisabled, pageId);
+            var key = string.Format("Widgets_GetWidgets_{0}_{1}_{2}", pageId, zoneName, includeDisabled);
             if (includeDisabled)
             {
                 return cacheManager.Get(key, () =>

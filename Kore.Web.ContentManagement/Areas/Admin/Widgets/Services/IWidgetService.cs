@@ -4,13 +4,14 @@ using System.Linq;
 using Kore.Caching;
 using Kore.Data;
 using Kore.Data.Services;
+using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.Widgets.Domain;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Services
 {
     public interface IWidgetService : IGenericDataService<Widget>
     {
-        IEnumerable<IWidget> GetWidgets(Guid? pageId = null, bool includeDisabled = false);
+        IEnumerable<IWidget> GetWidgets(Guid? pageId = null, string zoneName = null, bool includeDisabled = false);
 
         IEnumerable<IWidget> GetWidgets(IEnumerable<Widget> records);
 
@@ -20,11 +21,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Services
     public class WidgetService : GenericDataService<Widget>, IWidgetService
     {
         private readonly ICacheManager cacheManager;
+        private readonly Lazy<IRepository<Zone>> zoneRepository;
 
-        public WidgetService(IRepository<Widget> repository, ICacheManager cacheManager)
+        public WidgetService(
+            ICacheManager cacheManager,
+            IRepository<Widget> repository,
+            Lazy<IRepository<Zone>> zoneRepository)
             : base(repository)
         {
             this.cacheManager = cacheManager;
+            this.zoneRepository = zoneRepository;
         }
 
         #region IWidgetService Members
@@ -69,16 +75,23 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Services
             base.Update(record);
         }
 
-        public IEnumerable<IWidget> GetWidgets(Guid? pageId = null, bool includeDisabled = false)
+        public IEnumerable<IWidget> GetWidgets(Guid? pageId = null, string zoneName = null, bool includeDisabled = false)
         {
             var key = string.Format("Widgets_GetWidgets_{0}_{1}", includeDisabled, pageId);
             if (includeDisabled)
             {
                 return cacheManager.Get(key, () =>
                 {
+                    var zone = zoneRepository.Value.Table.FirstOrDefault(x => x.Name == zoneName);
+
+                    if (zone == null)
+                    {
+                        return Enumerable.Empty<IWidget>();
+                    }
+
                     var records = pageId.HasValue
-                        ? Repository.Table.Where(x => x.PageId == pageId.Value)
-                        : Repository.Table.Where(x => x.PageId == null);
+                        ? Repository.Table.Where(x => x.ZoneId == zone.Id && x.PageId == pageId.Value)
+                        : Repository.Table.Where(x => x.ZoneId == zone.Id && x.PageId == null);
 
                     return GetWidgets(records);
                 });
@@ -87,9 +100,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Services
             {
                 return cacheManager.Get(key, () =>
                 {
+                    var zone = zoneRepository.Value.Table.FirstOrDefault(x => x.Name == zoneName);
+
+                    if (zone == null)
+                    {
+                        return Enumerable.Empty<IWidget>();
+                    }
+
                     var records = pageId.HasValue
-                        ? Repository.Table.Where(x => x.IsEnabled && x.PageId == pageId.Value)
-                        : Repository.Table.Where(x => x.IsEnabled && x.PageId == null);
+                        ? Repository.Table.Where(x => x.IsEnabled && x.ZoneId == zone.Id && x.PageId == pageId.Value)
+                        : Repository.Table.Where(x => x.IsEnabled && x.ZoneId == zone.Id && x.PageId == null);
 
                     return GetWidgets(records);
                 });

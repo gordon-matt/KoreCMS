@@ -35,7 +35,7 @@ namespace Kore.Web.ContentManagement.Controllers
         public ActionResult WidgetsByZone(string zoneName)
         {
             var widgetProviders = EngineContext.Current.ResolveAll<IWidgetProvider>();
-            var widgets = widgetProviders.SelectMany(x => x.GetWidgets(WorkContext.CurrentCultureCode)).ToList();
+            var widgets = widgetProviders.SelectMany(x => x.GetWidgets(zoneName, WorkContext.CurrentCultureCode)).ToList();
             return View("Kore.Web.ContentManagement.Views.Frontend.WidgetsByZone", widgets);
         }
     }

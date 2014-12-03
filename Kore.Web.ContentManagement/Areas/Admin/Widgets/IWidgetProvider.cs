@@ -7,7 +7,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets
 {
     public interface IWidgetProvider
     {
-        IEnumerable<IWidget> GetWidgets(string currentCultureCode);
+        IEnumerable<IWidget> GetWidgets(string zoneName, string currentCultureCode);
     }
 
     public class DefaultWidgetProvider : IWidgetProvider
@@ -21,9 +21,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets
             this.ruleManager = ruleManager;
         }
 
-        public virtual IEnumerable<IWidget> GetWidgets(string currentCultureCode)
+        public virtual IEnumerable<IWidget> GetWidgets(string zoneName, string currentCultureCode)
         {
-            var widgets = widgetService.GetWidgets();
+            var widgets = widgetService.GetWidgets(zoneName: zoneName);
             return widgets.Where(x => IsVisibleWidget(widgets, x, currentCultureCode)).ToList();
         }
 

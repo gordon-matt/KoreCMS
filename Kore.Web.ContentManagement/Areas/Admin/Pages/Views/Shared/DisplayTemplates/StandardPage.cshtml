@@ -4,4 +4,11 @@
     Layout = Model.LayoutPath;
 }
 
-@Html.Raw(Model.BodyContent)
+<article class="page-content">
+    <header>
+        <h1>@Model.InstanceName</h1>
+    </header>
+    <div class="article-content">
+        @Html.Raw(Model.BodyContent)
+    </div>
+</article>

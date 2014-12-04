@@ -7,6 +7,7 @@ using System.Web.Mvc.Html;
 using Kore.Data;
 using Kore.Infrastructure;
 using Kore.Web.Collections;
+using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Widgets;
 using Kore.Web.ContentManagement.Areas.Admin.Widgets.Services;
@@ -19,6 +20,12 @@ namespace Kore.Web.ContentManagement
         {
             return new KoreCMS<TModel>(html);
         }
+
+        //public static bool MenuExists(this HtmlHelper html, string menuName)
+        //{
+        //    var repository = EngineContext.Current.Resolve<IRepository<Menu>>();
+        //    return repository.Table.Any(x => x.Name == menuName);
+        //}
 
         public static MvcHtmlString Menu(this HtmlHelper html, string menuName, string templateViewName)
         {

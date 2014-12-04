@@ -43,6 +43,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 
                 var pageType = pageTypeService.Find(page.PageTypeId);
                 var korePageType = pageTypeService.GetKorePageType(pageType.Name);
+                korePageType.InstanceName = page.Name;
                 korePageType.LayoutPath = pageType.LayoutPath;
                 korePageType.InitializeInstance(page);
                 return View(pageType.DisplayTemplatePath, korePageType);

@@ -169,7 +169,8 @@ var RoleVM = function () {
             switchSection($("#roles-grid-section"));
             $.notify("Successfully saved permissions.", "success");
         })
-        .fail(function () {
+        .fail(function (err) {
+            //alert(err);
             $.notify("There was an error when saving permissions.", "error");
         });
     };

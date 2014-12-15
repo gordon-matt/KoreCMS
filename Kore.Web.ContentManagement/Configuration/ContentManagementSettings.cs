@@ -25,7 +25,7 @@ namespace Kore.Web.ContentManagement.Configuration
         [ScaffoldColumn(false)]
         public string EditorTemplatePath
         {
-            get { return "/Plugins/Kore.Web.ContentManagement/Views/Shared/EditorTemplates/ContentManagementSettings.cshtml"; }
+            get { return "Kore.Web.ContentManagement.Views.Shared.EditorTemplates.ContentManagementSettings"; }
         }
 
         #endregion ISettings Members

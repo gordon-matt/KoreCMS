@@ -118,6 +118,12 @@
             </div>
         </div>
         <div class="col-sm-4 col-md-4">
+            <div class="form-group">
+                @Html.Label("Translate_Slug", "Slug", new { @class = "control-label" })
+                @Html.TextBox("Translate_Slug", null, new { @class = "form-control", data_bind = "value: translation.slug" })
+            </div>
+        </div>
+        <div class="col-sm-4 col-md-4">
             <div class="checkbox">
                 <label>
                     @Html.CheckBox("Translate_IsEnabled", new { data_bind = "checked: translation.isEnabled" }) Enabled

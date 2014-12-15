@@ -20,7 +20,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 
         public string EditorTemplatePath
         {
-            get { return "/Plugins/Kore.Web.ContentManagement/Areas/Admin/Pages/Views/Shared/EditorTemplates/PageSettings.cshtml"; }
+            get { return "Kore.Web.ContentManagement.Areas.Admin.Pages.Views.Shared.EditorTemplates.PageSettings"; }
         }
 
         #endregion

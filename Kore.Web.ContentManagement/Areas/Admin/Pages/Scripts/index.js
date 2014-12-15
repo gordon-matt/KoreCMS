@@ -66,11 +66,6 @@ var PageTypeVM = function () {
     self.save = function () {
         var isNew = (self.id() == emptyGuid);
 
-        // ensure the function exists before calling it...
-        if (typeof onBeforeSave == 'function') {
-            onBeforeSave();
-        }
-
         var record = {
             Id: self.id(),
             Name: self.name(),
@@ -147,10 +142,16 @@ var TranslationVM = function () {
     self.id = ko.observable(emptyGuid);
     self.pageId = ko.observable(emptyGuid);
     self.name = ko.observable('');
+    self.slug = ko.observable('');
     self.fields = ko.observable('');
     self.isEnabled = ko.observable(false);
     self.cultureCode = ko.observable('');
 };
+
+var DynamicModel = function () {
+    var self = this;
+    self.fields = ko.observable('');
+}
 
 var ViewModel = function () {
     var self = this;
@@ -165,6 +166,8 @@ var ViewModel = function () {
 
     self.translation = new TranslationVM();
     self.pageType = new PageTypeVM();
+
+    self.dynamicModel = new DynamicModel();
 
     self.create = function () {
         self.id(emptyGuid);
@@ -209,6 +212,8 @@ var ViewModel = function () {
             self.fields(json.Fields);
             self.isEnabled(json.IsEnabled);
             self.cultureCode(json.CultureCode);
+
+            self.dynamicModel.fields(json.Fields);
 
             self.validator.resetForm();
             switchSection($("#form-section"));
@@ -298,6 +303,7 @@ var ViewModel = function () {
         // ensure the function exists before calling it...
         if (typeof onBeforeSave == 'function') {
             onBeforeSave();
+            self.fields(self.dynamicModel.fields());
         }
 
         var cultureCode = self.cultureCode();
@@ -362,6 +368,10 @@ var ViewModel = function () {
     };
 
     self.cancel = function () {
+        // Clean up from previously injected html/scripts
+        if (typeof cleanUp == 'function') {
+            cleanUp();
+        }
         switchSection($("#grid-section"));
     };
 
@@ -395,6 +405,10 @@ var ViewModel = function () {
     };
 
     self.cultureSelector_onCancel = function () {
+        // Clean up from previously injected html/scripts
+        if (typeof cleanUp == 'function') {
+            cleanUp();
+        }
         switchSection($("#grid-section"));
     };
 
@@ -417,20 +431,76 @@ var ViewModel = function () {
         .done(function (json) {
             self.translation.id(json.Id);
             self.translation.pageId(json.PageId);
-            self.translation.cultureCode(json.CultureCode);
-            self.translation.title(json.Title);
+            self.translation.name(json.Name);
+            self.translation.slug(json.Slug);
+            self.translation.fields(json.Fields);
             self.translation.isEnabled(json.IsEnabled);
-            self.translation.metaKeywords(json.MetaKeywords);
-            self.translation.metaDescription(json.MetaDescription);
-            
-            if (json.BodyContent) {
-                self.translation.bodyContent(json.BodyContent);
-            }
-            else {
-                self.translation.bodyContent("");
-            }
+            self.translation.cultureCode(json.CultureCode);
+
+            self.dynamicModel.fields(json.Fields);
 
             switchSection($("#translate-section"));
+
+
+
+
+
+            if (self.translation.id() != emptyGuid) {
+                $.ajax({
+                    url: "/admin/pages/get-editor-ui/" + self.translation.id(),
+                    type: "GET",
+                    dataType: "json",
+                    async: false
+                })
+                .done(function (json) {
+                    // Clean up from previously injected html/scripts
+                    if (typeof cleanUp == 'function') {
+                        cleanUp();
+                    }
+
+                    // Remove Old Scripts
+                    var oldScripts = $('script[data-fields-script="true"]');
+
+                    if (oldScripts.length > 0) {
+                        $.each(oldScripts, function () {
+                            $(this).remove();
+                        });
+                    }
+
+                    var elementToBind = $("#translate-fields-definition")[0];
+                    ko.cleanNode(elementToBind);
+
+                    var result = $(json.Content);
+
+                    // Add new HTML
+                    var content = $(result.filter('#fields-content')[0]);
+                    var details = $('<div>').append(content.clone()).html();
+                    $("#translate-fields-definition").html(details);
+
+                    // Add new Scripts
+                    var scripts = result.filter('script');
+
+                    $.each(scripts, function () {
+                        var script = $(this);
+                        script.attr("data-fields-script", "true");//for some reason, .data("fields-script", "true") doesn't work here
+                        script.appendTo('body');
+                    });
+
+                    // Update Bindings
+                    // Ensure the function exists before calling it...
+                    if (typeof updateModel == 'function') {
+                        updateModel();
+                        ko.applyBindings(viewModel, elementToBind);
+                    }
+                })
+                .fail(function () {
+                    $.notify(translations.GetRecordError, "error");
+                });
+            }
+
+
+
+
         })
         .fail(function () {
             $.notify(translations.GetTranslationError, "error");
@@ -442,16 +512,21 @@ var ViewModel = function () {
     };
 
     self.translate_onSave = function () {
+        // ensure the function exists before calling it...
+        if (typeof onBeforeSave == 'function') {
+            onBeforeSave();
+            self.translation.fields(self.dynamicModel.fields());
+        }
+
         var data = {
             translation: {
                 Id: self.translation.id(),
                 PageId: self.translation.pageId(),
-                CultureCode: self.translation.cultureCode(),
-                Title: self.translation.title(),
+                Name: self.translation.name(),
+                Slug: self.translation.slug(),
+                Fields: self.translation.fields(),
                 IsEnabled: self.translation.isEnabled(),
-                MetaKeywords: self.translation.metaKeywords(),
-                MetaDescription: self.translation.metaDescription(),
-                BodyContent: self.translation.bodyContent() //TODO: this field it not being sent to the server for some reason...
+                CultureCode: self.translation.cultureCode()
             }
         };
 

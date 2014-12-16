@@ -4,31 +4,44 @@
     <div class="col-sm-12 col-md-12">
         <div class="form-group">
             @Html.Label("MetaKeywords", "Meta Keywords", new { @class = "control-label" })
-            @Html.TextBox("MetaKeywords", null, new { @class = "form-control", data_bind = "value: dynamicModel.metaKeywords" })
+            @Html.TextBox("MetaKeywords", null, new { @class = "form-control", data_bind = "value: metaKeywords" })
         </div>
     </div>
     <div class="col-sm-12 col-md-12">
         <div class="form-group">
             @Html.Label("MetaDescription", "Meta Description", new { @class = "control-label" })
-            @Html.TextBox("MetaDescription", null, new { @class = "form-control", data_bind = "value: dynamicModel.metaDescription" })
+            @Html.TextBox("MetaDescription", null, new { @class = "form-control", data_bind = "value: metaDescription" })
         </div>
     </div>
     <div class="col-sm-12 col-md-12">
         <div class="form-group">
             @Html.Label("BodyContent", "Body Content", new { @class = "control-label" })
-            @Html.TextArea("BodyContent", null, new { @class = "form-control" })
+            @Html.TextArea("BodyContent", null, new { @class = "form-control", data_bind = "wysiwyg: bodyContent, wysiwygConfig: tinyMCE_bodyContent" })
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
     function updateModel() {
+        viewModel.metaKeywords = ko.observable("");
+        viewModel.metaDescription = ko.observable("");
+        viewModel.bodyContent = ko.observable("");
 
-        viewModel.dynamicModel.metaKeywords = ko.observable("");
-        viewModel.dynamicModel.metaDescription = ko.observable("");
+        var data = ko.mapping.fromJSON(viewModel.fields());
 
-        tinymce.init({
-            selector: "#BodyContent",
+        if (data) {
+            if (data.MetaKeywords) {
+                viewModel.metaKeywords(data.MetaKeywords());
+            }
+            if (data.MetaDescription) {
+                viewModel.metaDescription(data.MetaDescription());
+            }
+            if (data.BodyContent) {
+                viewModel.bodyContent(data.BodyContent());
+            }
+        }
+
+        viewModel.tinyMCE_bodyContent = {
             theme: "modern",
             plugins: [
                 "advlist autolink lists link image charmap print preview hr anchor pagebreak",
@@ -43,37 +56,23 @@
                 { title: 'Test template 1', content: 'Test 1' },
                 { title: 'Test template 2', content: 'Test 2' }
             ],
-            content_css: tinyMCEContentCss,
-            init_instance_callback: function () {
-                alert("tinymce init done");
-            }
-        });
-
-        var data = ko.mapping.fromJSON(viewModel.dynamicModel.fields());
-
-        if (data) {
-            if (data.MetaKeywords) {
-                viewModel.dynamicModel.metaKeywords(data.MetaKeywords());
-            }
-            if (data.MetaDescription) {
-                viewModel.dynamicModel.metaDescription(data.MetaDescription());
-            }
-        }
+            content_css: tinyMCEContentCss
+        };
     };
 
     function cleanUp() {
-        delete viewModel.dynamicModel.metaKeywords;
-        delete viewModel.dynamicModel.metaDescription;
-        tinymce.remove('#BodyContent');
+        delete viewModel.metaKeywords;
+        delete viewModel.metaDescription;
+        delete viewModel.bodyContent;
+        delete viewModel.tinyMCE_bodyContent;
     }
 
     function onBeforeSave() {
-        tinyMCE.triggerSave();
         var data = {
-            MetaKeywords: viewModel.dynamicModel.metaKeywords(),
-            MetaDescription: viewModel.dynamicModel.metaDescription(),
-            BodyContent: tinyMCE.get('BodyContent').getContent()
+            MetaKeywords: viewModel.metaKeywords(),
+            MetaDescription: viewModel.metaDescription(),
+            BodyContent: viewModel.bodyContent()
         };
-        viewModel.dynamicModel.fields(ko.mapping.toJSON(data));
+        viewModel.fields(ko.mapping.toJSON(data));
     };
 </script>

@@ -41,13 +41,13 @@
     <form id="form-section-form" role="form">
         <fieldset>
             <legend id="form-section-legend"></legend>
-            <div class="col-sm-4 col-md-4">
+            <div id="form-section-pageTypeId" class="col-sm-12 col-md-12">
                 <div class="form-group">
                     @Html.Label("PageTypeId", "Page Type", new { @class = "control-label" })
                     @Html.KoreCMS().PageTypesDropDownList("PageTypeId", null, null, new { @class = "form-control", data_bind = "value: pageTypeId" })
                 </div>
             </div>
-            <div class="col-sm-4 col-md-4">
+            <div class="col-sm-6 col-md-6">
                 <div class="form-group">
                     @Html.Label("Name", "Name", new { @class = "control-label" })
                     <div class="input-group">
@@ -58,13 +58,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4 col-md-4">
+            <div class="col-sm-6 col-md-6">
                 <div class="form-group">
                     @Html.Label("Slug", "Slug", new { @class = "control-label" })
                     @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: slug" })
                 </div>
             </div>
-            <div class="col-sm-4 col-md-4">
+            <div class="col-sm-6 col-md-6">
                 <div class="checkbox">
                     <label>
                         @Html.CheckBox("IsEnabled", new { data_bind = "checked: isEnabled" }) Enabled
@@ -101,45 +101,6 @@
             </div>
         </div>
     </form>
-</div>
-
-<div id="translate-section" class="row" style="display:none">
-    <fieldset>
-        <legend id="translate-section-legend"></legend>
-        <div class="col-sm-4 col-md-4">
-            <div class="form-group">
-                @Html.Label("Translate_Name", "Name", new { @class = "control-label" })
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <i class="fa fa-file-o"></i>
-                    </span>
-                    @Html.TextBox("Translate_Name", null, new { @class = "form-control", data_bind = "value: translation.name" })
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4 col-md-4">
-            <div class="form-group">
-                @Html.Label("Translate_Slug", "Slug", new { @class = "control-label" })
-                @Html.TextBox("Translate_Slug", null, new { @class = "form-control", data_bind = "value: translation.slug" })
-            </div>
-        </div>
-        <div class="col-sm-4 col-md-4">
-            <div class="checkbox">
-                <label>
-                    @Html.CheckBox("Translate_IsEnabled", new { data_bind = "checked: translation.isEnabled" }) Enabled
-                </label>
-            </div>
-        </div>
-    </fieldset>
-
-    <fieldset id="translate-fields-definition"></fieldset>
-
-    <div class="col-sm-12 col-md-12">
-        <div class="form-group pull-right">
-            <button type="button" class="btn btn-default" data-bind="click: translate_onCancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-            <button type="button" class="btn btn-primary" data-bind="click: translate_onSave">@T(KoreWebLocalizableStrings.General.Save)</button>
-        </div>
-    </div>
 </div>
 
 <div id="page-type-grid-section" class="row" style="display:none">

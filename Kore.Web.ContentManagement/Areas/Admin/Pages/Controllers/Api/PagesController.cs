@@ -136,67 +136,56 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         }
 
         [HttpPost]
-        public IHttpActionResult SaveTranslation(ODataActionParameters parameters)
-        {
-            var translation = (Translation)parameters["translation"];
-
-            var invariantPage = Repository.Find(translation.PageId);
-
-            if (translation.Id == Guid.Empty)
-            {
-                var record = new Page
-                {
-                    Id = Guid.NewGuid(),
-                    PageTypeId = invariantPage.PageTypeId,
-                    Name = translation.Name,
-                    Slug = translation.Slug,
-                    Fields = translation.Fields,
-                    IsEnabled = translation.IsEnabled,
-                    DateCreatedUtc = DateTime.UtcNow,
-                    DateModifiedUtc = DateTime.UtcNow,
-                    CultureCode = translation.CultureCode,
-                    RefId = translation.PageId,
-                };
-                Repository.Insert(record);
-            }
-            else
-            {
-                var record = Repository.Table.FirstOrDefault(x => x.Id == translation.Id);
-                record.Name = translation.Name;
-                record.Slug = translation.Slug;
-                record.Fields = translation.Fields;
-                record.IsEnabled = translation.IsEnabled;
-                record.DateModifiedUtc = DateTime.UtcNow;
-                record.RefId = translation.PageId;
-                Repository.Update(record);
-            }
-
-            return Ok();
-        }
-
-        [HttpPost]
-        public Translation Translate(ODataActionParameters parameters)
+        public EdmPage Translate(ODataActionParameters parameters)
         {
             Guid pageId = (Guid)parameters["pageId"];
             string cultureCode = (string)parameters["cultureCode"];
-            var record = Repository.Table.FirstOrDefault(x => x.RefId == pageId && x.CultureCode == cultureCode);
 
-            return record == null
-                ? new Translation
+            var record = Repository.Table.FirstOrDefault(x => x.RefId == pageId && x.CultureCode == cultureCode);
+            if (record == null)
+            {
+                record = Repository.Find(pageId);
+
+                var translation = new Page
                 {
-                    PageId = pageId,
+                    Id = Guid.NewGuid(),
+                    PageTypeId = record.PageTypeId,
+                    Name = record.Name,
+                    Slug = record.Slug,
+                    Fields = record.Fields,
+                    DateCreatedUtc = DateTime.UtcNow,
+                    DateModifiedUtc = DateTime.UtcNow,
                     CultureCode = cultureCode,
-                }
-                : new Translation
+                    RefId = pageId
+                };
+
+                Repository.Insert(translation);
+
+                return new EdmPage
+                {
+                    Id = translation.Id,
+                    PageTypeId = translation.PageTypeId,
+                    Name = translation.Name,
+                    Slug = translation.Slug,
+                    Fields = translation.Fields,
+                    CultureCode = translation.CultureCode,
+                    RefId = translation.RefId
+                };
+            }
+            else
+            {
+                return new EdmPage
                 {
                     Id = record.Id,
-                    PageId = pageId,
+                    PageTypeId = record.PageTypeId,
                     Name = record.Name,
                     Slug = record.Slug,
                     Fields = record.Fields,
                     IsEnabled = record.IsEnabled,
-                    CultureCode = cultureCode,
+                    CultureCode = record.CultureCode,
+                    RefId = record.RefId
                 };
+            }
         }
 
         protected override Guid GetId(Page entity)
@@ -210,11 +199,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         }
     }
 
-    public struct Translation
+    public struct EdmPage
     {
         public Guid Id { get; set; }
 
-        public Guid PageId { get; set; }
+        public Guid PageTypeId { get; set; }
 
         public string Name { get; set; }
 
@@ -225,5 +214,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         public bool IsEnabled { get; set; }
 
         public string CultureCode { get; set; }
+
+        public Guid? RefId { get; set; }
     }
 }

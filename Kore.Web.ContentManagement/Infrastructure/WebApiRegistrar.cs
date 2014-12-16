@@ -108,11 +108,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             var translateAction = builder.Entity<Page>().Collection.Action("Translate");
             translateAction.Parameter<Guid>("pageId");
             translateAction.Parameter<string>("cultureCode");
-            translateAction.Returns<Translation>();
-
-            var saveTranslationAction = builder.Entity<Page>().Collection.Action("SaveTranslation");
-            saveTranslationAction.Parameter<Translation>("translation");
-            saveTranslationAction.Returns<IHttpActionResult>();
+            translateAction.Returns<EdmPage>();
         }
 
         private static void RegisterWidgetODataActions(ODataModelBuilder builder)

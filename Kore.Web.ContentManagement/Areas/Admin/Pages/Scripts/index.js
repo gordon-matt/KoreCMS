@@ -136,23 +136,6 @@ var PageTypeVM = function () {
     });
 };
 
-var TranslationVM = function () {
-    var self = this;
-
-    self.id = ko.observable(emptyGuid);
-    self.pageId = ko.observable(emptyGuid);
-    self.name = ko.observable('');
-    self.slug = ko.observable('');
-    self.fields = ko.observable('');
-    self.isEnabled = ko.observable(false);
-    self.cultureCode = ko.observable('');
-};
-
-var DynamicModel = function () {
-    var self = this;
-    self.fields = ko.observable('');
-}
-
 var ViewModel = function () {
     var self = this;
     
@@ -163,11 +146,9 @@ var ViewModel = function () {
     self.fields = ko.observable('');
     self.isEnabled = ko.observable(false);
     self.cultureCode = ko.observable('');
+    self.refId = ko.observable(null);
 
-    self.translation = new TranslationVM();
     self.pageType = new PageTypeVM();
-
-    self.dynamicModel = new DynamicModel();
 
     self.create = function () {
         self.id(emptyGuid);
@@ -177,6 +158,13 @@ var ViewModel = function () {
         self.fields('');
         self.isEnabled(false);
         self.cultureCode('');
+        self.refId(null);
+
+
+        // Clean up from previously injected html/scripts
+        if (typeof cleanUp == 'function') {
+            cleanUp();
+        }
 
         // Remove Old Scripts
         var oldScripts = $('script[data-fields-script="true"]');
@@ -189,8 +177,8 @@ var ViewModel = function () {
 
         var elementToBind = $("#fields-definition")[0];
         ko.cleanNode(elementToBind);
-
         $("#fields-definition").html("");
+
 
         self.validator.resetForm();
         switchSection($("#form-section"));
@@ -212,8 +200,7 @@ var ViewModel = function () {
             self.fields(json.Fields);
             self.isEnabled(json.IsEnabled);
             self.cultureCode(json.CultureCode);
-
-            self.dynamicModel.fields(json.Fields);
+            self.refId(json.RefId);
 
             self.validator.resetForm();
             switchSection($("#form-section"));
@@ -303,7 +290,6 @@ var ViewModel = function () {
         // ensure the function exists before calling it...
         if (typeof onBeforeSave == 'function') {
             onBeforeSave();
-            self.fields(self.dynamicModel.fields());
         }
 
         var cultureCode = self.cultureCode();
@@ -318,7 +304,8 @@ var ViewModel = function () {
             Slug: self.slug(),
             Fields: self.fields(),
             IsEnabled: self.isEnabled(),
-            CultureCode: cultureCode
+            CultureCode: cultureCode,
+            RefId: self.refId()
         };
 
         if (self.id() == emptyGuid) {
@@ -372,6 +359,20 @@ var ViewModel = function () {
         if (typeof cleanUp == 'function') {
             cleanUp();
         }
+
+        // Remove Old Scripts
+        var oldScripts = $('script[data-fields-script="true"]');
+
+        if (oldScripts.length > 0) {
+            $.each(oldScripts, function () {
+                $(this).remove();
+            });
+        }
+
+        var elementToBind = $("#fields-definition")[0];
+        ko.cleanNode(elementToBind);
+        $("#fields-definition").html("");
+
         switchSection($("#grid-section"));
     };
 
@@ -409,6 +410,20 @@ var ViewModel = function () {
         if (typeof cleanUp == 'function') {
             cleanUp();
         }
+
+        // Remove Old Scripts
+        var oldScripts = $('script[data-fields-script="true"]');
+
+        if (oldScripts.length > 0) {
+            $.each(oldScripts, function () {
+                $(this).remove();
+            });
+        }
+
+        var elementToBind = $("#fields-definition")[0];
+        ko.cleanNode(elementToBind);
+        $("#fields-definition").html("");
+
         switchSection($("#grid-section"));
     };
 
@@ -429,25 +444,20 @@ var ViewModel = function () {
             async: false
         })
         .done(function (json) {
-            self.translation.id(json.Id);
-            self.translation.pageId(json.PageId);
-            self.translation.name(json.Name);
-            self.translation.slug(json.Slug);
-            self.translation.fields(json.Fields);
-            self.translation.isEnabled(json.IsEnabled);
-            self.translation.cultureCode(json.CultureCode);
+            self.id(json.Id);
+            self.pageTypeId(json.PageTypeId);
+            self.name(json.Name);
+            self.slug(json.Slug);
+            self.fields(json.Fields);
+            self.isEnabled(json.IsEnabled);
+            self.cultureCode(json.CultureCode);
+            self.refId(json.RefId);
 
-            self.dynamicModel.fields(json.Fields);
+            switchSection($("#form-section"));
 
-            switchSection($("#translate-section"));
-
-
-
-
-
-            if (self.translation.id() != emptyGuid) {
+            if (self.id() != emptyGuid) {
                 $.ajax({
-                    url: "/admin/pages/get-editor-ui/" + self.translation.id(),
+                    url: "/admin/pages/get-editor-ui/" + self.id(),
                     type: "GET",
                     dataType: "json",
                     async: false
@@ -467,7 +477,7 @@ var ViewModel = function () {
                         });
                     }
 
-                    var elementToBind = $("#translate-fields-definition")[0];
+                    var elementToBind = $("#fields-definition")[0];
                     ko.cleanNode(elementToBind);
 
                     var result = $(json.Content);
@@ -475,7 +485,7 @@ var ViewModel = function () {
                     // Add new HTML
                     var content = $(result.filter('#fields-content')[0]);
                     var details = $('<div>').append(content.clone()).html();
-                    $("#translate-fields-definition").html(details);
+                    $("#fields-definition").html(details);
 
                     // Add new Scripts
                     var scripts = result.filter('script');
@@ -497,53 +507,9 @@ var ViewModel = function () {
                     $.notify(translations.GetRecordError, "error");
                 });
             }
-
-
-
-
         })
         .fail(function () {
             $.notify(translations.GetTranslationError, "error");
-        });
-    };
-
-    self.translate_onCancel = function () {
-        switchSection($("#grid-section"));
-    };
-
-    self.translate_onSave = function () {
-        // ensure the function exists before calling it...
-        if (typeof onBeforeSave == 'function') {
-            onBeforeSave();
-            self.translation.fields(self.dynamicModel.fields());
-        }
-
-        var data = {
-            translation: {
-                Id: self.translation.id(),
-                PageId: self.translation.pageId(),
-                Name: self.translation.name(),
-                Slug: self.translation.slug(),
-                Fields: self.translation.fields(),
-                IsEnabled: self.translation.isEnabled(),
-                CultureCode: self.translation.cultureCode()
-            }
-        };
-
-        $.ajax({
-            url: "/odata/kore/cms/Pages/SaveTranslation",
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(data),
-            dataType: "json",
-            async: false
-        })
-        .done(function (json) {
-            $.notify(translations.UpdateTranslationSuccess, "success");
-            switchSection($("#grid-section"));
-        })
-        .fail(function () {
-            $.notify(translations.UpdateTranslationError, "error");
         });
     };
 

@@ -22,6 +22,8 @@
     @Html.HiddenFor(m => m.EmailAddress)
     @Html.Hidden("WidgetTitle", Model.Title)
 
+    @Html.Raw(Model.HtmlTemplate)
+
     @if (Model.HtmlTemplate.Contains("[Captcha]"))
     {
         //TODO

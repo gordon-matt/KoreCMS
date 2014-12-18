@@ -159,6 +159,7 @@
     <Compile Include="Configuration\KoreWebConfigurationSection.cs" />
     <Compile Include="Configuration\MobileConfigurationElement.cs" />
     <Compile Include="Configuration\ResourcesConfigurationElement.cs" />
+    <Compile Include="Configuration\KoreSiteSettings.cs" />
     <Compile Include="Configuration\ThemesConfigurationElement.cs" />
     <Compile Include="Core\EnumExtensions.cs" />
     <Compile Include="Core\ExpandoObjectExtensions.cs" />
@@ -185,6 +186,31 @@
     <Compile Include="Fakes\FakeHttpWorkerRequest.cs" />
     <Compile Include="Fakes\FakeIdentity.cs" />
     <Compile Include="Fakes\FakePrincipal.cs" />
+    <Compile Include="Indexing\Configuration\IndexSettings.cs" />
+    <Compile Include="Indexing\Configuration\SearchSettings.cs" />
+    <Compile Include="Indexing\DefaultIndexManager.cs" />
+    <Compile Include="Indexing\Extensions\StringExtensions.cs" />
+    <Compile Include="Indexing\IIndexDocument.cs" />
+    <Compile Include="Indexing\IIndexManager.cs" />
+    <Compile Include="Indexing\IIndexNotifierHandler.cs" />
+    <Compile Include="Indexing\IIndexProvider.cs" />
+    <Compile Include="Indexing\ISearchBits.cs" />
+    <Compile Include="Indexing\ISearchBuilder.cs" />
+    <Compile Include="Indexing\ISearchHit.cs" />
+    <Compile Include="Indexing\MetaDataExtensions.cs" />
+    <Compile Include="Indexing\NullSearchBuilder.cs" />
+    <Compile Include="Indexing\Services\IIndexingContentProvider.cs" />
+    <Compile Include="Indexing\Services\IIndexingService.cs" />
+    <Compile Include="Indexing\Services\IIndexingTaskExecutor.cs" />
+    <Compile Include="Indexing\Services\IIndexStatisticsProvider.cs" />
+    <Compile Include="Indexing\Services\IndexEntry.cs" />
+    <Compile Include="Indexing\Services\IndexingService.cs" />
+    <Compile Include="Indexing\Services\IndexingStatus.cs" />
+    <Compile Include="Indexing\Services\IndexingTaskExecutor.cs" />
+    <Compile Include="Indexing\Services\ISearchService.cs" />
+    <Compile Include="IO\FileSystems\AppData\AppDataFolder.cs" />
+    <Compile Include="IO\FileSystems\AppData\IAppDataFolder.cs" />
+    <Compile Include="IO\FileSystems\AppData\IAppDataFolderRoot.cs" />
     <Compile Include="Hosting\IKoreVirtualPathProvider.cs" />
     <Compile Include="HttpApplicationBase.cs" />
     <Compile Include="Http\Dispatcher\KoreAssembliesResolver.cs" />
@@ -203,7 +229,14 @@
     <Compile Include="Infrastructure\KoreWebEngine.cs" />
     <Compile Include="Infrastructure\WebApiRegistrar.cs" />
     <Compile Include="Infrastructure\WebAppTypeFinder.cs" />
+    <Compile Include="IO\FileSystems\LockFile\DefaultLockFileManager.cs" />
+    <Compile Include="IO\FileSystems\LockFile\ILockFile.cs" />
+    <Compile Include="IO\FileSystems\LockFile\ILockFileManager.cs" />
+    <Compile Include="IO\FileSystems\LockFile\LockFile.cs" />
+    <Compile Include="IO\FileSystems\VirtualPath\DefaultVirtualPathMonitor.cs" />
+    <Compile Include="IO\FileSystems\VirtualPath\IVirtualPathMonitor.cs" />
     <Compile Include="IO\HtmlStringWriter.cs" />
+    <Compile Include="IO\PathValidation.cs" />
     <Compile Include="IWebHelper.cs" />
     <Compile Include="IWorkContext.cs" />
     <Compile Include="IWorkContextStateProvider.cs" />
@@ -237,12 +270,18 @@
     <Compile Include="Mvc\EmbeddedViews\EmbeddedScriptVirtualPathProvider.cs" />
     <Compile Include="Mvc\EmbeddedViews\EmbeddedViewVirtualPathProvider.cs" />
     <Compile Include="Mvc\EmbeddedViews\IEmbeddedResourceResolver.cs" />
+    <Compile Include="Mvc\Filters\IFilterProvider.cs" />
+    <Compile Include="Mvc\Filters\KoreFilterProvider.cs" />
     <Compile Include="Mvc\FluentTagBuilder.cs" />
     <Compile Include="Mvc\HtmlHelperExtensions.cs" />
     <Compile Include="Mvc\Html\GroupedSelectExtensions.cs" />
     <Compile Include="Mvc\Controls\TreeView.cs" />
     <Compile Include="Mvc\KoreController.cs" />
     <Compile Include="Mvc\KoreDependencyResolver.cs" />
+    <Compile Include="Mvc\Notify\Notifier.cs" />
+    <Compile Include="Mvc\Notify\NotifierExtensions.cs" />
+    <Compile Include="Mvc\Notify\NotifyEntry.cs" />
+    <Compile Include="Mvc\Notify\NotifyFilter.cs" />
     <Compile Include="Mvc\Optimization\BundleCollection.cs" />
     <Compile Include="Mvc\Optimization\CompressFilterAttribute.cs" />
     <Compile Include="Mvc\Optimization\HtmlMinifierAttribute.cs" />
@@ -462,6 +501,7 @@
     <Compile Include="Security\Membership\Permissions\StandardPermissions.cs" />
     <Compile Include="UI\HtmlTextWriterExtensions.cs" />
     <Compile Include="UrlBuilder.cs" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\KoreSiteSettings.cshtml" />
     <Compile Include="WebHelper.cs" />
     <Compile Include="WorkContext.cs" />
     <Compile Include="WorkContextExtensions.cs" />
@@ -481,9 +521,7 @@
     <EmbeddedResource Include="Areas\Admin\Plugins\Views\Plugin\Index.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\CaptchaSettings.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mvc\Filters\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Plugins\Scripts\index.js" />
   </ItemGroup>

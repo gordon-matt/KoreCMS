@@ -240,6 +240,7 @@
     <Compile Include="Areas\Admin\Messaging\Token.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\Api\PageTypesController.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\PageTypeController.cs" />
+    <Compile Include="Areas\Admin\Pages\PagesIndexingContentProvider.cs" />
     <Compile Include="Areas\Admin\Pages\KorePageType.cs" />
     <Compile Include="Areas\Admin\Pages\KorePageTypePropertyAttribute.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\Api\HistoricPagesController.cs" />

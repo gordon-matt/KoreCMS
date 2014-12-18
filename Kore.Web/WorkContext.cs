@@ -6,6 +6,7 @@ using System.Threading;
 using System.Web;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
+using Kore.Web.Mvc.Notify;
 using Kore.Web.Navigation;
 
 namespace Kore.Web
@@ -19,6 +20,7 @@ namespace Kore.Web
         {
             workContextStateProviders = EngineContext.Current.ResolveAll<IWorkContextStateProvider>();
             Breadcrumbs = new BreadcrumbCollection();
+            Notifications = new List<NotifyEntry>();
         }
 
         #region IWorkContext Members
@@ -40,6 +42,8 @@ namespace Kore.Web
         }
 
         public BreadcrumbCollection Breadcrumbs { get; set; }
+
+        public ICollection<NotifyEntry> Notifications { get; set; }
 
         public string CurrentDesktopTheme
         {

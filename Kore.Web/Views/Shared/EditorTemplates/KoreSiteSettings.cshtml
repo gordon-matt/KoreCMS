@@ -1,0 +1,44 @@
+﻿@model SiteSettings
+
+<div id="settings-content">
+    <div class="form-group">
+        @Html.LabelFor(m => m.SiteName)
+        @Html.TextBoxFor(m => m.SiteName, new { @class = "form-control", data_bind = "value: siteName" })
+        @Html.ValidationMessageFor(m => m.SiteName)
+    </div>
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.UseRightToLeft, new { data_bind = "checked: useRightToLeft" }) Use Right-to-Left Layout
+        </label>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function updateModel(data) {
+        viewModel.siteName = ko.observable("");
+        viewModel.useRightToLeft = ko.observable(false);
+
+        if (data) {
+            if (data.SiteName) {
+                viewModel.siteName(data.SiteName);
+            }
+            if (data.UseRightToLeft) {
+                viewModel.useRightToLeft(data.UseRightToLeft);
+            }
+        }
+    };
+
+    function cleanUp() {
+        delete viewModel.siteName;
+        delete viewModel.useRightToLeft;
+    }
+
+    function onBeforeSave() {
+        var data = {
+            SiteName: viewModel.siteName(),
+            UseRightToLeft: viewModel.useRightToLeft()
+        };
+
+        viewModel.value(ko.mapping.toJSON(data));
+    };
+</script>

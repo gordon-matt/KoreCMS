@@ -29,6 +29,13 @@ using Kore.Web.Security.Membership.Permissions;
 using Kore.Logging;
 using Kore.Web.Events;
 using Castle.Core.Logging;
+using Kore.Web.IO.FileSystems.AppData;
+using Kore.Web.IO.FileSystems.VirtualPath;
+using Kore.Web.Indexing.Services;
+using Kore.Web.IO.FileSystems.LockFile;
+using Kore.Web.Indexing;
+using Kore.Web.Mvc.Notify;
+using IFilterProvider = Kore.Web.Mvc.Filters.IFilterProvider;
 
 namespace Kore.Web.Infrastructure
 {
@@ -139,6 +146,21 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();
             builder.RegisterType<DefaultEmailSender>().As<IEmailSender>().InstancePerDependency();
             builder.RegisterType<RoboUIVirtualPathProvider>().As<IKoreVirtualPathProvider>().SingleInstance();
+
+            // file systems
+            builder.RegisterType<AppDataFolder>().As<IAppDataFolder>().SingleInstance();
+            builder.RegisterType<AppDataFolderRoot>().As<IAppDataFolderRoot>().SingleInstance();
+            builder.RegisterType<DefaultVirtualPathMonitor>().As<IVirtualPathMonitor>().SingleInstance();
+            builder.RegisterType<Clock>().As<IClock>().SingleInstance();
+            builder.RegisterType<DefaultLockFileManager>().As<ILockFileManager>().SingleInstance();
+
+            // indexing
+            builder.RegisterType<IndexingTaskExecutor>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<IndexingService>().As<IIndexingService>().SingleInstance();
+            builder.RegisterType<SearchService>().As<ISearchService>().InstancePerDependency();
+
+            builder.RegisterType<Notifier>().As<INotifier>().InstancePerDependency();
+            builder.RegisterType<NotifyFilter>().As<IFilterProvider>().InstancePerLifetimeScope();
         }
 
         private static RequestContext RequestContextFactory(IComponentContext context)

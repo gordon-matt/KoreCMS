@@ -68,9 +68,12 @@
     <Compile Include="Caching\ClearCacheTask.cs" />
     <Compile Include="Caching\Extensions.cs" />
     <Compile Include="Caching\ICacheManager.cs" />
+    <Compile Include="Caching\IVolatileToken.cs" />
     <Compile Include="Caching\KoreNullCache.cs" />
     <Compile Include="Caching\MemoryCacheManager.cs" />
     <Compile Include="Caching\PerRequestCacheManager.cs" />
+    <Compile Include="Caching\Weak.cs" />
+    <Compile Include="Clock.cs" />
     <Compile Include="Collections\CollectionExtensions.cs" />
     <Compile Include="Collections\DictionaryExtensions.cs" />
     <Compile Include="Collections\EnumerableExtensions.cs" />
@@ -173,6 +176,7 @@
     <Compile Include="Drawing\ImageExtensions.cs" />
     <Compile Include="Exceptions\KoreException.cs" />
     <Compile Include="IAppContextStateProvider.cs" />
+    <Compile Include="IClock.cs" />
     <Compile Include="Infrastructure\AppDomainTypeFinder.cs" />
     <Compile Include="Infrastructure\Old\AutofacDIContainerAdapter.cs" />
     <Compile Include="Infrastructure\Old\AutofacRegistrationBuilder.cs" />

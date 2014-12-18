@@ -20,6 +20,7 @@ using Kore.Web.ContentManagement.Configuration;
 using Kore.Web.ContentManagement.FileSystems.Media;
 using Kore.Web.ContentManagement.Messaging;
 using Kore.Web.ContentManagement.Messaging.Services;
+using Kore.Web.Indexing.Services;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Navigation;
@@ -162,6 +163,9 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             // Scheduled Tasks
             builder.RegisterType<ProcessQueuedMailTask>().As<ITask>().SingleInstance();
+
+            // Indexing
+            builder.RegisterType<PagesIndexingContentProvider>().As<IIndexingContentProvider>().InstancePerDependency();
         }
 
         public int Order

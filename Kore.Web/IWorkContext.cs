@@ -1,5 +1,7 @@
-﻿using System.Web;
+﻿using System.Collections.Generic;
+using System.Web;
 using Kore.Security.Membership;
+using Kore.Web.Mvc.Notify;
 using Kore.Web.Navigation;
 
 namespace Kore.Web
@@ -16,6 +18,8 @@ namespace Kore.Web
         HttpContextBase HttpContext { get; }
 
         BreadcrumbCollection Breadcrumbs { get; set; }
+
+        ICollection<NotifyEntry> Notifications { get; set; }
 
         string CurrentDesktopTheme { get; }
 

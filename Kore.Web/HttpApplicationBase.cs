@@ -11,6 +11,7 @@ using Kore.Tasks;
 using Kore.Web.Hosting;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.EmbeddedViews;
+using Kore.Web.Mvc.Filters;
 using Kore.Web.Mvc.Themes;
 
 namespace Kore.Web
@@ -74,6 +75,8 @@ namespace Kore.Web
                     HostingEnvironment.RegisterVirtualPathProvider(vpp.Instance);
                 }
             }
+
+            FilterProviders.Providers.Add(new KoreFilterProvider());
 
             //TODO: First check if DB installed yet
             //TODO: currently when a task is updated, the new schedule (number of seconds) does not take effect until restart

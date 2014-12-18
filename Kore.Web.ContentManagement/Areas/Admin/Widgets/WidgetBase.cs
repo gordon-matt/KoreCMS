@@ -78,69 +78,34 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets
 
         #endregion IEntity Members
 
-        //public virtual void RegisterResources(ScriptRegister scriptRegister, StyleRegister styleRegister)
-        //{
-        //}
-
-        //public abstract string BuildDisplay(ViewContext viewContext);
-
-        //public virtual ActionResult DisplayCallback(Controller controller)
-        //{
-        //    return null;
-        //}
-
-        //public string GetDisplayCallbackUrl(UrlHelper urlHelper)
-        //{
-        //    return urlHelper.Action("DisplayCallback", "Widget", new { area = Constants.Areas.Widgets, widgetId = Id });
-        //}
-
-        //public virtual ActionResult BuildEditor(Controller controller, RoboUIFormResult<IWidget> roboForm)
-        //{
-        //    return roboForm;
-        //}
-
-        //public virtual ActionResult EditorCallback(Controller controller)
-        //{
-        //    return null;
-        //}
-
-        //public virtual void OnSaving()
-        //{
-        //}
-
-        //IWidget IWidget.ShallowCopy()
-        //{
-        //    return (IWidget)MemberwiseClone();
-        //}
-
         #endregion IWidget Members
 
-        #region Helpers
+        //#region Helpers
 
-        protected string ViewContent(ViewContext viewContext, string viewName, object model = null)
-        {
-            var controllerContext = new ControllerContext
-            {
-                RouteData = viewContext.RouteData,
-                HttpContext = viewContext.HttpContext,
-            };
+        //protected string ViewContent(ViewContext viewContext, string viewName, object model = null)
+        //{
+        //    var controllerContext = new ControllerContext
+        //    {
+        //        RouteData = viewContext.RouteData,
+        //        HttpContext = viewContext.HttpContext,
+        //    };
 
-            viewContext.ViewData.Model = model;
+        //    viewContext.ViewData.Model = model;
 
-            var result = ViewEngines.Engines.FindPartialView(controllerContext, viewName);
+        //    var result = ViewEngines.Engines.FindPartialView(controllerContext, viewName);
 
-            if (result != null && result.View != null)
-            {
-                using (var writer = new StringWriter())
-                {
-                    result.View.Render(viewContext, writer);
-                    return writer.ToString();
-                }
-            }
+        //    if (result != null && result.View != null)
+        //    {
+        //        using (var writer = new StringWriter())
+        //        {
+        //            result.View.Render(viewContext, writer);
+        //            return writer.ToString();
+        //        }
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
-        #endregion Helpers
+        //#endregion Helpers
     }
 }

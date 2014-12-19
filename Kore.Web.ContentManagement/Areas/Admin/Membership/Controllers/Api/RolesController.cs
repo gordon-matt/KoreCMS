@@ -127,15 +127,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
             });
         }
 
+        // returning IHttpActionResult causes JS error:
+        //  parsererror (SyntaxError: JSON.parse: unexpected end of data at line 1 column 1 of the JSON data)
+        //public virtual IHttpActionResult AssignPermissionsToRole(ODataActionParameters parameters)
         [HttpPost]
-        public virtual IHttpActionResult AssignPermissionsToRole(ODataActionParameters parameters)
+        public virtual void AssignPermissionsToRole(ODataActionParameters parameters)
         {
             string roleId = (string)parameters["roleId"];
             var permissionIds = (IEnumerable<string>)parameters["permissions"];
 
             Service.AssignPermissionsToRole(roleId, permissionIds);
 
-            return Ok();
+            //return Ok();
         }
 
         protected virtual bool EntityExists(string key)

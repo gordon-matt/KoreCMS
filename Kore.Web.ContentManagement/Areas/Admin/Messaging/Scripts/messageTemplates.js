@@ -18,6 +18,8 @@ var ViewModel = function () {
         self.body('');
         self.enabled(false);
 
+        $("#tokens-list").html("");
+
         self.validator.resetForm();
         switchSection($("#form-section"));
         $("#form-section-legend").html(translations.Create);
@@ -37,6 +39,36 @@ var ViewModel = function () {
             self.subject(json.Subject);
             self.body(json.Body);
             self.enabled(json.Enabled);
+
+            $("#tokens-list").html("");
+
+
+
+            $.ajax({
+                url: "/odata/kore/cms/MessageTemplates/GetTokens",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ templateName: json.Name }),
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                if (json.value && json.value.length > 0) {
+                    var s = '';
+                    $.each(json.value, function () {
+                        s += '<li>' + this + '</li>';
+                    });
+                    $("#tokens-list").html(s);
+                }
+            })
+            .fail(function () {
+                //$.notify(translations.GetRecordError, "error");
+                $.notify("Could not get tokens", "error");
+            });
+
+
+
+
 
             self.validator.resetForm();
             switchSection($("#form-section"));

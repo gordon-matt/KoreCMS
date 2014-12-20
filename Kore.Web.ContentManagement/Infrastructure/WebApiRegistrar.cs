@@ -41,6 +41,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             RegisterHistoricPageODataActions(builder);
             RegisterLocalizableStringODataActions(builder);
             RegisterMembershipODataActions(builder);
+            RegisterMessageTemplateODataActions(builder);
             RegisterPageODataActions(builder);
             RegisterWidgetODataActions(builder);
 
@@ -101,6 +102,13 @@ namespace Kore.Web.ContentManagement.Infrastructure
             var getPermissionsForRoleAction = builder.Entity<KorePermission>().Collection.Action("GetPermissionsForRole");
             getPermissionsForRoleAction.Parameter<string>("roleId");
             getPermissionsForRoleAction.ReturnsCollection<EdmKorePermission>();
+        }
+
+        private static void RegisterMessageTemplateODataActions(ODataModelBuilder builder)
+        {
+            var getTokensAction = builder.Entity<MessageTemplate>().Collection.Action("GetTokens");
+            getTokensAction.Parameter<string>("templateName");
+            getTokensAction.ReturnsCollection<string>();
         }
 
         private static void RegisterPageODataActions(ODataModelBuilder builder)

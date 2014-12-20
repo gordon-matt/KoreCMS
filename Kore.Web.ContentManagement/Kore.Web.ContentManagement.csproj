@@ -222,6 +222,7 @@
     <Compile Include="Areas\Admin\Messaging\Domain\QueuedSms.cs" />
     <Compile Include="Areas\Admin\Messaging\IMailMessage.cs" />
     <Compile Include="Areas\Admin\Messaging\IMessageTemplatesProvider.cs" />
+    <Compile Include="Areas\Admin\Messaging\IMessageTemplateTokensProvider.cs" />
     <Compile Include="Areas\Admin\Messaging\IMessageTokensProvider.cs" />
     <Compile Include="Areas\Admin\Messaging\IQueuedMessageProvider.cs" />
     <Compile Include="Areas\Admin\Messaging\MailMessageWrapper.cs" />

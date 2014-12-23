@@ -155,6 +155,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Controllers.Api
                 record.WidgetType = entity.WidgetType;
                 record.WidgetValues = entity.WidgetValues;
 
+                if (string.IsNullOrWhiteSpace(record.WidgetValues))
+                {
+                    // Fix to ensure it can be deserialized. If the value is an empty string, it won't deserialize
+                    //  properly. For example, here: IWidgetService.GetWidgets(IEnumerable<Widget> records).
+                    //  The following line in that method fails (returns null) if WidgetValues is null or empty:
+                    //  widget = (IWidget)record.WidgetValues.JsonDeserialize(widgetType);
+                    record.WidgetValues = "{}";
+                }
+
                 if (entity.PageId.HasValue)
                 {
                     record.PageId = entity.PageId;

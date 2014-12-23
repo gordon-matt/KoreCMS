@@ -7,18 +7,24 @@ using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Indexing;
 using Kore.Web.Indexing.Services;
+using System.Linq;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 {
     public class PagesIndexingContentProvider : IIndexingContentProvider
     {
         private readonly IPageService pageService;
+        private readonly IPageTypeService pageTypeService;
         private readonly UrlHelper urlHelper;
         private readonly static char[] trimCharacters = { ' ', '\r', '\n', '\t' };
 
-        public PagesIndexingContentProvider(IPageService pageService, UrlHelper urlHelper)
+        public PagesIndexingContentProvider(
+            IPageService pageService,
+            IPageTypeService pageTypeService,
+            UrlHelper urlHelper)
         {
             this.pageService = pageService;
+            this.pageTypeService = pageTypeService;
             this.urlHelper = urlHelper;
         }
 
@@ -39,39 +45,42 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
                 }
             }
 
-            throw new NotImplementedException();
+            foreach (var page in pages)
+            {
+                var document = factory(page.Id.ToString());
 
-            // TODO
-            //foreach (var page in pages)
-            //{
-            //    var document = factory(page.Id.ToString());
-            //    document.Add("title", page.Title).Analyze().Store();
-            //    document.Add("meta_keywords", page.MetaKeywords).Analyze();
-            //    document.Add("meta_description", page.MetaDescription).Analyze();
-            //    document.Add("body", page.BodyContent).Analyze().Store();
-            //    document.Add("url", urlHelper.Action("PageContent", "Home", new { area = CornerstoneConstants.Areas.Pages, url = page.Slug })).Store();
+                var pageType = pageTypeService.Find(page.PageTypeId);
+                var korePageType = pageTypeService.GetKorePageType(pageType.Name);
+                korePageType.InstanceName = page.Name;
+                korePageType.LayoutPath = pageType.LayoutPath;
+                korePageType.InitializeInstance(page);
 
-            //    var description = CreatePageDescription(page.BodyContent);
-            //    if (!string.IsNullOrEmpty(description))
-            //    {
-            //        document.Add("description", description.Substring(0, Math.Min(250, description.Length))).Analyze().Store();
-            //    }
+                string description;
+                korePageType.PopulateDocumentIndex(document, out description);
 
-            //    if (!string.IsNullOrEmpty(page.CultureCode))
-            //    {
-            //        var cultureInfo = new CultureInfo(page.CultureCode);
-            //        document.Add("culture", cultureInfo.LCID).Store();
-            //    }
-            //    else
-            //    {
-            //        if (defaultCultureInfo != null)
-            //        {
-            //            document.Add("culture", defaultCultureInfo.LCID).Store();
-            //        }
-            //    }
+                document.Add("url", urlHelper.Action("PageContent", "Home", new { area = Constants.Areas.Pages, url = page.Slug })).Store();
 
-            //    yield return document;
-            //}
+                description = CreatePageDescription(description);
+                if (!string.IsNullOrEmpty(description))
+                {
+                    document.Add("description", description.Left(256)).Analyze().Store();
+                }
+
+                if (!string.IsNullOrEmpty(page.CultureCode))
+                {
+                    var cultureInfo = new CultureInfo(page.CultureCode);
+                    document.Add("culture", cultureInfo.LCID).Store();
+                }
+                else
+                {
+                    if (defaultCultureInfo != null)
+                    {
+                        document.Add("culture", defaultCultureInfo.LCID).Store();
+                    }
+                }
+
+                yield return document;
+            }
         }
 
         private static string CreatePageDescription(string bodyContent)

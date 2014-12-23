@@ -38,7 +38,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 
             if (page != null && page.IsEnabled)
             {
-                WorkContext.SetState("CurrentPage", page);
+                WorkContext.SetState("CurrentPageId", page.Id);
                 WorkContext.Breadcrumbs.Add(page.Name);
 
                 var pageType = pageTypeService.Find(page.PageTypeId);

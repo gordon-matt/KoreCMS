@@ -144,7 +144,7 @@
     <None Include="packages.config" />
     <EmbeddedResource Include="Views\Indexing\Index.cshtml" />
     <EmbeddedResource Include="Views\Search\Results.cshtml" />
-    <None Include="Views\Shared\DisplayTemplates\SearchWidget.cshtml" />
+    <EmbeddedResource Include="Views\Shared\DisplayTemplates\SearchWidget.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

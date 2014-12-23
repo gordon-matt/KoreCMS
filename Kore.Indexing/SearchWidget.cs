@@ -12,7 +12,7 @@ namespace Kore.Indexing
 
         public override string DisplayTemplatePath
         {
-            get { return "Kore.Indexing.Views.Shared.DisplayTemplates.SearchWidget"; }
+            get { return "Kore.Indexing.Views.Shared.DisplayTemplates.SearchWidget.cshtml"; }
         }
 
         public override string EditorTemplatePath

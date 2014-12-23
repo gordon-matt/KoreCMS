@@ -2,6 +2,7 @@
 {
     public static class Constants
     {
-        public const string Area = "Indexing";
+        public const string Area = "Admin/Indexing";
+        public const string DefaultIndexName = "Search";
     }
 }

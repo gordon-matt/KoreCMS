@@ -114,6 +114,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\IndexingController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="IndexingAreaRegistration.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="Lucene\Models\LuceneDocumentIndex.cs" />
     <Compile Include="Lucene\Models\LuceneSearchHit.cs" />
@@ -141,8 +142,11 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Views\Indexing\Index.cshtml" />
+    <EmbeddedResource Include="Views\Search\Results.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\SearchWidget.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

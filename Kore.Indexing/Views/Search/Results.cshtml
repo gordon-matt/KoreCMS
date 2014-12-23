@@ -1,0 +1,33 @@
+﻿@using Kore.Collections.Generic
+@using Kore.Web.Indexing
+
+@model PagedList<ISearchHit>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    string q = ViewBag.Query;
+}
+
+<div class="search-results">
+    <div class="resultStats">
+        @if (Model.ItemCount == 0)
+        {
+            @:Your search - <strong>@q</strong> - did not match any documents.
+        }
+        else
+        {
+            @:Your search - <strong>@q</strong> - resulted in @Model.ItemCount documents.
+            <ul class="thumbnails search-results">
+                @foreach (var hit in Model)
+                {
+                    string desc = hit.GetString("description") ?? hit.GetString("body");
+                    
+                    <li>
+                        <a href="@hit.GetString("url")">@hit.GetString("title")</a>
+                        <div class="description">@desc</div>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>

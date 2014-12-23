@@ -1,4 +1,5 @@
 ﻿using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using Kore.Web.Indexing;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 {
@@ -24,5 +25,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
         #endregion
 
         public abstract void InitializeInstance(Page page);
+
+        public abstract void PopulateDocumentIndex(IDocumentIndex document, out string description);
     }
 }

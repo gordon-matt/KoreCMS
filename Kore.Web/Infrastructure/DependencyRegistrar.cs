@@ -158,6 +158,7 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<IndexingTaskExecutor>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<IndexingService>().As<IIndexingService>().SingleInstance();
             builder.RegisterType<SearchService>().As<ISearchService>().InstancePerDependency();
+            builder.RegisterType<DefaultIndexManager>().As<IIndexManager>().InstancePerDependency();
 
             builder.RegisterType<Notifier>().As<INotifier>().InstancePerDependency();
             builder.RegisterType<NotifyFilter>().As<IFilterProvider>().InstancePerLifetimeScope();

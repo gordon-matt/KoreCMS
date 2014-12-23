@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.Widgets.RuleEngine;
 using Kore.Web.ContentManagement.Areas.Admin.Widgets.Services;
 
@@ -23,7 +25,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets
 
         public virtual IEnumerable<IWidget> GetWidgets(string zoneName, string currentCultureCode)
         {
-            var widgets = widgetService.GetWidgets(zoneName: zoneName);
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            Guid? pageId = workContext.GetState<Guid?>("CurrentPageId");
+
+            var widgets = widgetService.GetWidgets(pageId: pageId, zoneName: zoneName);
             return widgets.Where(x => IsVisibleWidget(widgets, x, currentCultureCode)).ToList();
         }
 

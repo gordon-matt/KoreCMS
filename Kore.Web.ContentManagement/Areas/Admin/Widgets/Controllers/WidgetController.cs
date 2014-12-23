@@ -50,8 +50,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Controllers
             var widgets = EngineContext.Current.ResolveAll<IWidget>();
             var iWidget = widgets.First(x => x.GetType() == widgetType);
 
-            // TODO: See if we can make EditorTemplatePath not so specific a path (just the name), so we can override it in themes, etc
-            string content = RenderRazorPartialViewToString(iWidget.EditorTemplatePath, iWidget);
+            string content;
+
+            try
+            {
+                // TODO: See if we can make EditorTemplatePath not so specific a path (just the name), so we can override it in themes, etc
+                content = RenderRazorPartialViewToString(iWidget.EditorTemplatePath, iWidget);
+            }
+            catch (NotSupportedException)
+            {
+                content = string.Empty;
+            }
+
             return Json(new { Content = content }, JsonRequestBehavior.AllowGet);
         }
     }

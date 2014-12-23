@@ -1,5 +1,6 @@
 ﻿using System;
 using Kore.Web.Configuration;
+using Kore.Web.Mvc.RoboUI;
 
 namespace Kore.Web.Indexing.Configuration
 {

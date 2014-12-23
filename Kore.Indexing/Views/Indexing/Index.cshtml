@@ -1,0 +1,63 @@
+﻿@using Kore.Web.Indexing.Services
+@model IndexEntry
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    string message = ViewBag.Message;
+}
+
+@if (!string.IsNullOrEmpty(message))
+{
+    @Html.Raw(ViewBag.Message)
+}
+
+@if (Model != null)
+{
+    if (Model.LastUpdateUtc == DateTime.MinValue)
+    {
+        <div class="alert alert-info">@T("The search index has not been built yet.")</div>
+    }
+    else
+    {
+        if (Model.DocumentCount == 0)
+        {
+            <div class="alert alert-info">@T("The search index does not contain any documents.")</div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                @string.Format(T("The search index contains {0} document/s.", Model.DocumentCount))
+            </div>
+        }
+
+        if (Model.Fields.Any())
+        {
+            <div class="alert alert-info">
+                @string.Format(T("The search index contains the following fields: {0}."), string.Join(", ", Model.Fields))
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">@T("The search index does not contain any fields.")</div>
+        }
+
+        <div class="alert alert-info">@string.Format(T("The search index was last updated {0}."), Model.LastUpdateUtc)</div>
+
+        switch (Model.IndexingStatus)
+        {
+            case IndexingStatus.Rebuilding:
+                <div class="alert alert-info">@T("The index is currently being rebuilt.")</div>
+                break;
+
+            case IndexingStatus.Updating:
+            <div class="alert alert-info">@T("The index is currently being updated.")</div>
+                break;
+        }
+    }
+    <form method="post" action="@Url.Action("Rebuild")">
+        <div class="form-group">
+            <label>@T("Rebuild the search index for a fresh start:")</label><br />
+            <button class="btn btn-primary" type="submit"><i class="kore-icon kore-icon-refresh"></i>&nbsp;@T("Rebuild")</button>
+        </div>
+    </form>
+}

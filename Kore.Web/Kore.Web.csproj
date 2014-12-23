@@ -194,11 +194,13 @@
     <Compile Include="Indexing\IIndexManager.cs" />
     <Compile Include="Indexing\IIndexNotifierHandler.cs" />
     <Compile Include="Indexing\IIndexProvider.cs" />
+    <Compile Include="Indexing\IndexNotifierHandler.cs" />
     <Compile Include="Indexing\ISearchBits.cs" />
     <Compile Include="Indexing\ISearchBuilder.cs" />
     <Compile Include="Indexing\ISearchHit.cs" />
     <Compile Include="Indexing\MetaDataExtensions.cs" />
     <Compile Include="Indexing\NullSearchBuilder.cs" />
+    <Compile Include="Indexing\SearchableAttribute.cs" />
     <Compile Include="Indexing\Services\IIndexingContentProvider.cs" />
     <Compile Include="Indexing\Services\IIndexingService.cs" />
     <Compile Include="Indexing\Services\IIndexingTaskExecutor.cs" />

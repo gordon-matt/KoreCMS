@@ -155,10 +155,11 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<DefaultLockFileManager>().As<ILockFileManager>().SingleInstance();
 
             // indexing
-            builder.RegisterType<IndexingTaskExecutor>().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterType<IndexingService>().As<IIndexingService>().SingleInstance();
-            builder.RegisterType<SearchService>().As<ISearchService>().InstancePerDependency();
             builder.RegisterType<DefaultIndexManager>().As<IIndexManager>().InstancePerDependency();
+            builder.RegisterType<IndexingService>().As<IIndexingService>().SingleInstance();
+            builder.RegisterType<IndexingTaskExecutor>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<IndexNotifierHandler>().As<IIndexNotifierHandler>().InstancePerDependency();
+            builder.RegisterType<SearchService>().As<ISearchService>().InstancePerDependency();
 
             builder.RegisterType<Notifier>().As<INotifier>().InstancePerDependency();
             builder.RegisterType<NotifyFilter>().As<IFilterProvider>().InstancePerLifetimeScope();

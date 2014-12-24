@@ -30,7 +30,9 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
         [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         public override IQueryable<Setting> Get()
         {
-            var settings = EngineContext.Current.ResolveAll<ISettings>().Select(x => new
+            var allSettings = EngineContext.Current.ResolveAll<ISettings>();
+
+            var settings = allSettings.Select(x => new
             {
                 x.Name,
                 Type = x.GetType().FullName
@@ -46,7 +48,13 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
                     Id = Guid.NewGuid(),
                     Name = x.Name,
                     Type = x.Type
-                });
+                }).ToList();
+
+                foreach (var record in newRecords)
+                {
+                    var setting = allSettings.First(x => x.GetType().FullName == record.Type);
+                    record.Value = Activator.CreateInstance(setting.GetType()).ToJson();
+                }
 
                 Repository.Insert(newRecords);
             }

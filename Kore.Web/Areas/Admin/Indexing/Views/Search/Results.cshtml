@@ -1,10 +1,13 @@
 ﻿@using Kore.Collections.Generic
+@using Kore.Infrastructure
+@using Kore.Web.Configuration
 @using Kore.Web.Indexing
 
 @model PagedList<ISearchHit>
 
 @{
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var siteSettings = EngineContext.Current.Resolve<KoreSiteSettings>();
+    Layout = siteSettings.DefaultFrontendLayoutPath;
     string q = ViewBag.Query;
 }
 

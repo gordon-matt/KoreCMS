@@ -116,6 +116,7 @@ namespace Kore.Web.Infrastructure
             builder.RegisterModule<ConfigurationModule>();
             builder.RegisterType<DefaultSettingService>().As<ISettingService>();
             builder.RegisterType<ScheduledTaskService>().As<IScheduledTaskService>().InstancePerDependency();
+            builder.RegisterType<KoreSiteSettings>().As<ISettings>().SingleInstance();
             builder.RegisterType<SmtpSettings>().As<ISettings>().SingleInstance();
             builder.RegisterType<CaptchaSettings>().As<ISettings>().SingleInstance();
 

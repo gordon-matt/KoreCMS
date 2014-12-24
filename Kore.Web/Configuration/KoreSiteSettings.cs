@@ -16,6 +16,7 @@ namespace Kore.Web.Configuration
             SiteName = "My Kore Site";
             DefaultGridPageSize = 10;
             DefaultLanguage = "en-US";
+            DefaultFrontendLayoutPath = "~/Views/Shared/_Layout.cshtml";
         }
 
         #region ISettings Members
@@ -36,6 +37,9 @@ namespace Kore.Web.Configuration
 
         [Display(Name = "Site Name")]
         public string SiteName { get; set; }
+
+        [Display(Name = "Default Frontend Layout Path")]
+        public string DefaultFrontendLayoutPath { get; set; }
 
         [Display(Name = "Default Language")]
         public string DefaultLanguage

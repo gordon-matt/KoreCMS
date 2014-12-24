@@ -36,6 +36,7 @@ using Kore.Web.IO.FileSystems.LockFile;
 using Kore.Web.Indexing;
 using Kore.Web.Mvc.Notify;
 using IFilterProvider = Kore.Web.Mvc.Filters.IFilterProvider;
+using Kore.Web.Areas.Admin.Indexing;
 
 namespace Kore.Web.Infrastructure
 {
@@ -124,6 +125,7 @@ namespace Kore.Web.Infrastructure
             // navigation
             builder.RegisterType<NavigationManager>().As<INavigationManager>().InstancePerDependency();
             builder.RegisterType<ConfigurationNavigationProvider>().As<INavigationProvider>().SingleInstance();
+            builder.RegisterType<IndexingNavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<PluginsNavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<ScheduledTasksNavigationProvider>().As<INavigationProvider>().SingleInstance();
 

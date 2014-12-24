@@ -34,7 +34,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.WatchdogService", "Plu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Widgets.View360", "Plugins\Kore.Plugins.Widgets.View360\Kore.Plugins.Widgets.View360.csproj", "{FA85EB00-0F20-4642-8F02-D92D6160514E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Indexing", "Kore.Indexing\Kore.Indexing.csproj", "{CB0AA58B-F2B9-4EDB-9D4A-A8B438E1A830}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Indexing.Lucene", "Plugins\Kore.Indexing.Lucene\Kore.Indexing.Lucene.csproj", "{CB0AA58B-F2B9-4EDB-9D4A-A8B438E1A830}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,5 +101,6 @@ Global
 		{A1401A4D-AE43-4254-935A-23A4C11D6185} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 		{D1E6545C-2DDB-4A1D-B38B-48E2DC597AC4} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 		{FA85EB00-0F20-4642-8F02-D92D6160514E} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
+		{CB0AA58B-F2B9-4EDB-9D4A-A8B438E1A830} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 	EndGlobalSection
 EndGlobal

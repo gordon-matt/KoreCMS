@@ -1,4 +1,7 @@
-﻿@model SiteSettings
+﻿@using Kore.Web.Configuration
+@using Kore.Web.Mvc
+
+@model KoreSiteSettings
 
 <div id="settings-content">
     <div class="form-group">
@@ -6,37 +9,70 @@
         @Html.TextBoxFor(m => m.SiteName, new { @class = "form-control", data_bind = "value: siteName" })
         @Html.ValidationMessageFor(m => m.SiteName)
     </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DefaultFrontendLayoutPath)
+        @Html.TextBoxFor(m => m.DefaultFrontendLayoutPath, new { @class = "form-control", data_bind = "value: defaultFrontendLayoutPath" })
+        @Html.ValidationMessageFor(m => m.DefaultFrontendLayoutPath)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DefaultLanguage)
+        @Html.Kore().LanguagesDropDownListFor(m => m.DefaultLanguage, new { @class = "form-control", data_bind = "value: defaultLanguage" })
+        @Html.ValidationMessageFor(m => m.DefaultLanguage)
+    </div>
     <div class="checkbox">
         <label>
             @Html.CheckBoxFor(m => m.UseRightToLeft, new { data_bind = "checked: useRightToLeft" }) Use Right-to-Left Layout
         </label>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DefaultGridPageSize)
+        @Html.TextBoxFor(m => m.DefaultGridPageSize, new { @class = "form-control", data_bind = "value: defaultGridPageSize" })
+        @Html.ValidationMessageFor(m => m.DefaultGridPageSize)
     </div>
 </div>
 
 <script type="text/javascript">
     function updateModel(data) {
         viewModel.siteName = ko.observable("");
+        viewModel.defaultFrontendLayoutPath = ko.observable("");
+        viewModel.defaultLanguage = ko.observable("");
         viewModel.useRightToLeft = ko.observable(false);
+        viewModel.defaultGridPageSize = ko.observable(0);
 
         if (data) {
             if (data.SiteName) {
                 viewModel.siteName(data.SiteName);
             }
+            if (data.DefaultFrontendLayoutPath) {
+                viewModel.defaultFrontendLayoutPath(data.DefaultFrontendLayoutPath);
+            }
+            if (data.DefaultLanguage) {
+                viewModel.defaultLanguage(data.DefaultLanguage);
+            }
             if (data.UseRightToLeft) {
                 viewModel.useRightToLeft(data.UseRightToLeft);
+            }
+            if (data.DefaultGridPageSize) {
+                viewModel.defaultGridPageSize(data.DefaultGridPageSize);
             }
         }
     };
 
     function cleanUp() {
         delete viewModel.siteName;
+        delete viewModel.defaultFrontendLayoutPath;
+        delete viewModel.defaultLanguage;
         delete viewModel.useRightToLeft;
+        delete viewModel.defaultGridPageSize;
     }
 
     function onBeforeSave() {
         var data = {
             SiteName: viewModel.siteName(),
-            UseRightToLeft: viewModel.useRightToLeft()
+            DefaultFrontendLayoutPath: viewModel.defaultFrontendLayoutPath(),
+            DefaultLanguage: viewModel.defaultLanguage(),
+            UseRightToLeft: viewModel.useRightToLeft(),
+            DefaultGridPageSize: viewModel.defaultGridPageSize()
         };
 
         viewModel.value(ko.mapping.toJSON(data));

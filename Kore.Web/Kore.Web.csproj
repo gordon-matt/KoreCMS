@@ -524,7 +524,6 @@
     <EmbeddedResource Include="Areas\Admin\ScheduledTasks\Views\ScheduledTask\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Indexing\Views\Indexing\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Indexing\Views\Search\Results.cshtml" />
-    <EmbeddedResource Include="Areas\Admin\Indexing\Views\Shared\DisplayTemplates\SearchWidget.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\SmtpSettings.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Plugins\Views\Plugin\Index.cshtml" />

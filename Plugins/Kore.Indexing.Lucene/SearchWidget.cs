@@ -12,7 +12,7 @@ namespace Kore.Indexing.Lucene
 
         public override string DisplayTemplatePath
         {
-            get { return "Kore.Indexing.Lucene.Views.Shared.DisplayTemplates.SearchWidget.cshtml"; }
+            get { return "Kore.Indexing.Lucene.Views.Shared.DisplayTemplates.SearchWidget"; }
         }
 
         public override string EditorTemplatePath

@@ -52,7 +52,7 @@ namespace Kore.Web.Areas.Admin.Indexing.Controllers
             }
 
             ViewBag.Title = T("Search Index");
-            return View("Kore.Indexing.Views.Indexing.Index", indexEntry);
+            return View("Kore.Web.Areas.Admin.Indexing.Views.Indexing.Index", indexEntry);
         }
 
         [HttpPost]

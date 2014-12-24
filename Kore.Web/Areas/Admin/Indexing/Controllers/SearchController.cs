@@ -53,7 +53,7 @@ namespace Kore.Web.Areas.Admin.Indexing.Controllers
             }
 
             ViewBag.Title = T("Search");
-            return View("Kore.Indexing.Views.Search.Results", searchHits);
+            return View("Kore.Web.Areas.Admin.Indexing.Views.Search.Results", searchHits);
         }
     }
 }

@@ -58,7 +58,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
                 string description;
                 korePageType.PopulateDocumentIndex(document, out description);
 
-                document.Add("url", urlHelper.Action("PageContent", "Home", new { area = Constants.Areas.Pages, url = page.Slug })).Store();
+                //document.Add("url", urlHelper.Action("Index", "PageContent", new { area = Constants.Areas.Pages, slug = page.Slug })).Store();
+                document.Add("url", "/" + page.Slug).Store();
 
                 description = CreatePageDescription(description);
                 if (!string.IsNullOrEmpty(description))

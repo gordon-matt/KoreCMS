@@ -9,8 +9,7 @@ using Kore.Web.Mvc.Notify;
 
 namespace Kore.Web.Areas.Admin.Indexing.Controllers
 {
-    [Authorize]
-    [RouteArea(KoreWebConstants.Areas.Indexing)]
+    [RouteArea("")]
     [RoutePrefix("Search")]
     public class SearchController : KoreController
     {

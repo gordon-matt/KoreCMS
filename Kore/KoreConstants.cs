@@ -7,9 +7,9 @@
             public const string Administrators = "Administrators";
         }
 
-        internal static class StateProviderNames
-        {
-            public const string CurrentCulture = "CurrentCulture";
-        }
+        //public static class StateProviderNames
+        //{
+        //    public const string CurrentCultureCode = "CurrentCultureCode";
+        //}
     }
 }

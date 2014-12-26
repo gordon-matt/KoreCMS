@@ -117,6 +117,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.RegisterType<FormWidget>().As<IWidget>().InstancePerDependency();
             builder.RegisterType<GoogleAdsenseWidget>().As<IWidget>().InstancePerDependency();
             builder.RegisterType<HtmlWidget>().As<IWidget>().InstancePerDependency();
+            builder.RegisterType<LanguageSwitchWidget>().As<IWidget>().InstancePerDependency();
 
             // TODO: These should probably be moved to another assembly (add-ons)
             //builder.RegisterType<NivoSliderWidget>().As<IWidget>().InstancePerDependency();

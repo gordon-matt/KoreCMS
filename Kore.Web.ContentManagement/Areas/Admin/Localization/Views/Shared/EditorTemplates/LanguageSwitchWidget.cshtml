@@ -1,0 +1,64 @@
+﻿@using Kore.Infrastructure
+@using Kore.Web.ContentManagement.Areas.Admin.Localization
+
+@model LanguageSwitchWidget
+
+<div id="widget-content">
+    <div class="col-sm-12 col-md-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Style, new { @class = "control-label" })
+            @Html.EnumDropDownListFor(m => m.Style, null, new { @class = "form-control", data_bind = "value: style" })
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.UseUrlPrefix, new { data_bind = "checked: useUrlPrefix" }) Use URL Prefix
+            </label>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.MessageText, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.MessageText, new { @class = "form-control", data_bind = "value: messageText" })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function updateModel() {
+        viewModel.style = ko.observable("");
+        viewModel.useUrlPrefix = ko.observable(false);
+        viewModel.messageText = ko.observable("");
+
+        var data = ko.mapping.fromJSON(viewModel.widgetValues());
+
+        if (data) {
+            if (data.Style) {
+                viewModel.style(data.Style());
+            }
+            if (data.UseUrlPrefix) {
+                viewModel.useUrlPrefix(data.UseUrlPrefix());
+            }
+            if (data.MessageText) {
+                viewModel.messageText(data.MessageText());
+            }
+        }
+    };
+
+    function cleanUp() {
+        delete viewModel.style;
+        delete viewModel.useUrlPrefix;
+        delete viewModel.messageText;
+    }
+
+    function onBeforeSave() {
+        var data = {
+            Style: viewModel.dtyle(),
+            UseUrlPrefix: viewModel.useUrlPrefix(),
+            MessageText: viewModel.messageText()
+        };
+
+        viewModel.widgetValues(ko.mapping.toJSON(data));
+    };
+</script>

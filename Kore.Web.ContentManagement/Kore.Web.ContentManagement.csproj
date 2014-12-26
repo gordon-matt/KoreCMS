@@ -133,6 +133,7 @@
     <Compile Include="Areas\Admin\Localization\Controllers\Api\LocalizableStringsController.cs" />
     <Compile Include="Areas\Admin\Localization\Controllers\LanguageController.cs" />
     <Compile Include="Areas\Admin\Localization\Controllers\LocalizableStringController.cs" />
+    <Compile Include="Areas\Admin\Localization\LanguageSwitchWidget.cs" />
     <Compile Include="Areas\Admin\Localization\LocalizationAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Localization\LocalizationNavigationProvider.cs" />
     <Compile Include="Areas\Admin\Localization\Models\ComparitiveLocalizableString.cs" />
@@ -370,6 +371,8 @@
     <EmbeddedResource Include="Areas\Admin\Messaging\Views\QueuedEmail\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\DisplayTemplates\StandardPage.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\StandardPage.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Localization\Views\Shared\DisplayTemplates\LanguageSwitchWidget.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Localization\Views\Shared\EditorTemplates\LanguageSwitchWidget.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\RichTextFull.cshtml" />

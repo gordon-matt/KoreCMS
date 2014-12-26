@@ -123,7 +123,7 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<SmtpSettings>().As<ISettings>().SingleInstance();
             builder.RegisterType<CaptchaSettings>().As<ISettings>().SingleInstance();
 
-            builder.RegisterType<SearchSettings>().As<ISettings>().SingleInstance();
+            //builder.RegisterType<SearchSettings>().As<ISettings>().SingleInstance();
 
             builder.RegisterModule<LoggingModule>();
             //builder.RegisterType<NLogFilteredLogger>().As<ILogger>().InstancePerDependency();

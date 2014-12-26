@@ -550,14 +550,14 @@ namespace Kore.Web.Mvc
             return html.DropDownListFor(expression, selectList, htmlAttributes);
         }
 
-        public static MvcHtmlString EnumDropDownListFor<TModel, TEnum>(this HtmlHelper<TModel> html, Expression<Func<TModel, TEnum>> expression, string emptyText = null, object htmlAttributes = null) where TEnum : struct
-        {
-            var func = expression.Compile();
-            var selectedValue = func(html.ViewData.Model);
+        //public static MvcHtmlString EnumDropDownListFor<TModel, TEnum>(this HtmlHelper<TModel> html, Expression<Func<TModel, TEnum>> expression, string emptyText = null, object htmlAttributes = null) where TEnum : struct
+        //{
+        //    var func = expression.Compile();
+        //    var selectedValue = func(html.ViewData.Model);
 
-            var selectList = EnumExtensions.ToSelectList<TEnum>(selectedValue, emptyText);
-            return html.DropDownListFor(expression, selectList, htmlAttributes);
-        }
+        //    var selectList = EnumExtensions.ToSelectList<TEnum>(selectedValue, emptyText);
+        //    return html.DropDownListFor(expression, selectList, htmlAttributes);
+        //}
 
         public static MvcHtmlString EnumMultiDropDownListFor<TModel, TEnum>(this HtmlHelper<TModel> html, Expression<Func<TModel, IEnumerable<TEnum>>> expression, string emptyText = null, object htmlAttributes = null) where TEnum : struct
         {

@@ -2,7 +2,7 @@
 using Kore.Security.Membership;
 using Kore.Web.Environment;
 
-namespace Kore.Web
+namespace Kore.Web.Security.Membership
 {
     public class CurrentUserStateProvider : IWorkContextStateProvider
     {
@@ -17,7 +17,7 @@ namespace Kore.Web
 
         public Func<WorkContext, T> Get<T>(string name)
         {
-            if (name == "CurrentUser")
+            if (name == KoreWebConstants.StateProviders.CurrentUser)
             {
                 var httpContext = httpContextAccessor.Current();
                 if (httpContext.User.Identity.IsAuthenticated)

@@ -37,6 +37,9 @@ using Kore.Web.Indexing;
 using Kore.Web.Mvc.Notify;
 using IFilterProvider = Kore.Web.Mvc.Filters.IFilterProvider;
 using Kore.Web.Areas.Admin.Indexing;
+using Kore.Web.Indexing.Configuration;
+using Kore.Web.Security.Membership;
+using Kore.Web.Localization;
 
 namespace Kore.Web.Infrastructure
 {
@@ -120,6 +123,8 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<SmtpSettings>().As<ISettings>().SingleInstance();
             builder.RegisterType<CaptchaSettings>().As<ISettings>().SingleInstance();
 
+            builder.RegisterType<SearchSettings>().As<ISettings>().SingleInstance();
+
             builder.RegisterModule<LoggingModule>();
             //builder.RegisterType<NLogFilteredLogger>().As<ILogger>().InstancePerDependency();
 
@@ -139,11 +144,13 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<CurrentUserStateProvider>().As<IWorkContextStateProvider>();
             builder.RegisterType<CurrentDesktopThemeStateProvider>().As<IWorkContextStateProvider>();
             builder.RegisterType<CurrentMobileThemeStateProvider>().As<IWorkContextStateProvider>();
+            builder.RegisterType<CurrentCultureCodeStateProvider>().As<IWorkContextStateProvider>();
 
             // localization
             builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
             builder.RegisterType<LanguageManager>().As<ILanguageManager>().SingleInstance();
             builder.RegisterType<DefaultLocalizedStringManager>().As<ILocalizedStringManager>().InstancePerLifetimeScope();
+            builder.RegisterType<DefaultCultureManager>().As<ICultureManager>().InstancePerLifetimeScope();
 
             // misc
             builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();

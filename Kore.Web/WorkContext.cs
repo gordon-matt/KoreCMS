@@ -47,23 +47,23 @@ namespace Kore.Web
 
         public string CurrentDesktopTheme
         {
-            get { return GetState<string>("CurrentDesktopTheme"); }
-            set { SetState("CurrentDesktopTheme", value); }
+            get { return GetState<string>(KoreWebConstants.StateProviders.CurrentDesktopTheme); }
+            set { SetState(KoreWebConstants.StateProviders.CurrentDesktopTheme, value); }
         }
 
         public string CurrentMobileTheme
         {
-            get { return GetState<string>("CurrentMobileTheme"); }
+            get { return GetState<string>(KoreWebConstants.StateProviders.CurrentMobileTheme); }
         }
 
         public string CurrentCultureCode
         {
-            get { return GetState<string>("CurrentCultureCode"); }
+            get { return GetState<string>(KoreWebConstants.StateProviders.CurrentCultureCode); }
         }
 
         public KoreUser CurrentUser
         {
-            get { return GetState<KoreUser>("CurrentUser"); }
+            get { return GetState<KoreUser>(KoreWebConstants.StateProviders.CurrentUser); }
         }
 
         public string ShortDatePattern

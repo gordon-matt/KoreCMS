@@ -248,6 +248,7 @@
     <Compile Include="IWorkContextStateProvider.cs" />
     <Compile Include="KoreWebConstants.cs" />
     <Compile Include="KoreWebLocalizableStrings.cs" />
+    <Compile Include="Localization\CurrentCultureCodeStateProvider.cs" />
     <Compile Include="Localization\DefaultWebCultureManager.cs" />
     <Compile Include="Localization\IWebCultureManager.cs" />
     <Compile Include="Localization\LanguageContentHandler.cs" />

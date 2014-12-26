@@ -17,7 +17,7 @@ namespace Kore.Web.Mvc.Themes
 
         public Func<WorkContext, T> Get<T>(string name)
         {
-            if (name == "CurrentDesktopTheme")
+            if (name == KoreWebConstants.StateProviders.CurrentDesktopTheme)
             {
                 var currentTheme = KoreWebConfigurationSection.WebInstance.Themes.DefaultDesktopTheme;
                 return ctx => (T)(object)currentTheme;

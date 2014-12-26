@@ -17,7 +17,7 @@ namespace Kore.Web.Mvc.Themes
 
         public Func<WorkContext, T> Get<T>(string name)
         {
-            if (name == "CurrentMobileTheme")
+            if (name == KoreWebConstants.StateProviders.CurrentMobileTheme)
             {
                 var currentTheme = KoreWebConfigurationSection.WebInstance.Themes.DefaultMobileTheme;
                 return ctx => (T)(object)currentTheme;

@@ -107,9 +107,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Services
                         return Enumerable.Empty<IWidget>();
                     }
 
-                    var records = pageId.HasValue
-                        ? Repository.Table.Where(x => x.IsEnabled && x.ZoneId == zone.Id && x.PageId == pageId.Value)
-                        : Repository.Table.Where(x => x.IsEnabled && x.ZoneId == zone.Id && x.PageId == null);
+                    var records = Repository.Table.Where(x => x.IsEnabled && x.ZoneId == zone.Id && x.PageId == null).ToList();
+
+                    if (pageId.HasValue)
+                    {
+                        records.AddRange(Repository.Table.Where(x => x.IsEnabled && x.ZoneId == zone.Id && x.PageId == pageId.Value));
+                    }
 
                     return GetWidgets(records);
                 });

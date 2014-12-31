@@ -18,14 +18,16 @@
 </div>
 
 <div id="form-section" class="row" style="display:none">
-    @*HTML injected here*@
-    <div id="settings-details"></div>
-    <div class="col-sm-12 col-md-12">
-        <div class="form-group pull-right">
-            <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-            <button type="button" class="btn btn-primary" data-bind="click: save">@T(KoreWebLocalizableStrings.General.Save)</button>
+    <article class="col-sm-12 col-md-12">
+        @*HTML injected here*@
+        <div id="settings-details"></div>
+        <div class="col-sm-12 col-md-12">
+            <div class="form-group pull-right">
+                <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                <button type="button" class="btn btn-primary" data-bind="click: save">@T(KoreWebLocalizableStrings.General.Save)</button>
+            </div>
         </div>
-    </div>
+    </article>
 </div>
 
 @section scripts {

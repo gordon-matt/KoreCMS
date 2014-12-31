@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using Kore.Data;
@@ -13,6 +14,8 @@ using Kore.Web.Http.OData;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Controllers.Api
 {
+    [Authorize(Roles = KoreConstants.Roles.Administrators)]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class WidgetsController : GenericODataController<Widget, Guid>
     {
         public WidgetsController(IRepository<Widget> repository)

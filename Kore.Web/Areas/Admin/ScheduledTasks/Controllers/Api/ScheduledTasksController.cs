@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.OData;
 using Kore.Data;
 using Kore.Tasks;
@@ -8,6 +9,8 @@ using Kore.Web.Http.OData;
 
 namespace Kore.Web.Areas.Admin.ScheduledTasks.Controllers.Api
 {
+    [Authorize(Roles = KoreConstants.Roles.Administrators)]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ScheduledTasksController : GenericODataController<ScheduledTask, int>
     {
         public ScheduledTasksController(IRepository<ScheduledTask> repository)

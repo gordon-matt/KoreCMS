@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using Kore.Configuration.Domain;
@@ -10,6 +12,8 @@ using Kore.Web.Http.OData;
 
 namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
 {
+    [Authorize(Roles = KoreConstants.Roles.Administrators)]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class SettingsController : GenericODataController<Setting, Guid>
     {
         public SettingsController(IRepository<Setting> repository)

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using Kore.Web.Areas.Admin.Plugins.Models;
@@ -7,6 +9,8 @@ using Kore.Web.Plugins;
 
 namespace Kore.Web.Areas.Admin.Plugins.Controllers.Api
 {
+    [Authorize(Roles = KoreConstants.Roles.Administrators)]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class PluginsController : ODataController
     {
         private readonly IPluginFinder pluginFinder;

@@ -33,36 +33,31 @@
 </div>
 
 <div id="form-section" class="row" style="display:none">
-    <form id="form-section-form" role="form">
-        <fieldset>
-            <legend id="form-section-legend"></legend>
-            <div class="col-sm-12 col-md-12">
-                <div class="form-group">
-                    @Html.Label("Name", "Name", new { @class = "control-label" })
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="fa fa-file-o"></i>
-                        </span>
-                        @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
+    <article class="col-sm-12 col-md-12">
+        <form id="form-section-form" role="form">
+            <fieldset>
+                <legend id="form-section-legend"></legend>
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        @Html.Label("Name", "Name", new { @class = "control-label" })
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-file-o"></i>
+                            </span>
+                            @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-12 col-md-12">
-                <div class="form-group pull-right">
-                    <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: save">@T(KoreWebLocalizableStrings.General.Save)</button>
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group pull-right">
+                        <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                        <button type="button" class="btn btn-primary" data-bind="click: save">@T(KoreWebLocalizableStrings.General.Save)</button>
+                    </div>
                 </div>
-            </div>
-        </fieldset>
-    </form>
+            </fieldset>
+        </form>
+    </article>
 </div>
-
-
-
-
-
-
-
 
 <div id="items-grid-section" class="row" style="display:none">
     <div class="col-md-12">
@@ -84,84 +79,82 @@
     </div>
 </div>
 
-
-
-
 <div id="items-edit-section" class="row" style="display:none">
-    <form id="item-edit-section-form" role="form">
-        <fieldset>
-            <legend id="item-edit-section-legend"></legend>
-            <div class="col-sm-6 col-md-6">
-                <div class="form-group">
-                    @Html.Label("Item_Text", "Text", new { @class = "control-label" })
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="fa fa-file-o"></i>
-                        </span>
-                        @Html.TextBox("Item_Text", null, new { @class = "form-control", data_bind = "value: menuItem.text" })
+    <article class="col-sm-12 col-md-12">
+        <form id="item-edit-section-form" role="form">
+            <fieldset>
+                <legend id="item-edit-section-legend"></legend>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Item_Text", "Text", new { @class = "control-label" })
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-file-o"></i>
+                            </span>
+                            @Html.TextBox("Item_Text", null, new { @class = "form-control", data_bind = "value: menuItem.text" })
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-6 col-md-6">
-                <div class="form-group">
-                    @Html.Label("Item_Url", "URL", new { @class = "control-label" })
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="fa fa-globe"></i>
-                        </span>
-                        @Html.TextBox("Item_Url", null, new { @class = "form-control", data_bind = "value: menuItem.url" })
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Item_Url", "URL", new { @class = "control-label" })
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-globe"></i>
+                            </span>
+                            @Html.TextBox("Item_Url", null, new { @class = "form-control", data_bind = "value: menuItem.url" })
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-12 col-md-12">
-                <div class="form-group">
-                    @Html.Label("Item_Description", "Description", new { @class = "control-label" })
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="fa fa-file-o"></i>
-                        </span>
-                        @Html.TextBox("Item_Description", null, new { @class = "form-control", data_bind = "value: menuItem.description" })
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        @Html.Label("Item_Description", "Description", new { @class = "control-label" })
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-file-o"></i>
+                            </span>
+                            @Html.TextBox("Item_Description", null, new { @class = "form-control", data_bind = "value: menuItem.description" })
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-6 col-md-6">
-                <div class="form-group">
-                    @Html.Label("Item_CssClass", "Css Class", new { @class = "control-label" })
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="fa fa-font"></i>
-                        </span>
-                        @Html.TextBox("Item_CssClass", null, new { @class = "form-control", data_bind = "value: menuItem.cssClass" })
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Item_CssClass", "Css Class", new { @class = "control-label" })
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-font"></i>
+                            </span>
+                            @Html.TextBox("Item_CssClass", null, new { @class = "form-control", data_bind = "value: menuItem.cssClass" })
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-6 col-md-6">
-                <div class="form-group">
-                    @Html.Label("Item_Position", "Position", new { @class = "control-label" })
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="fa fa-sort-numeric-asc"></i>
-                        </span>
-                        @Html.TextBox("Item_Position", null, new { @class = "form-control", data_bind = "value: menuItem.position" })
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Item_Position", "Position", new { @class = "control-label" })
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-sort-numeric-asc"></i>
+                            </span>
+                            @Html.TextBox("Item_Position", null, new { @class = "form-control", data_bind = "value: menuItem.position" })
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-3 col-md-3">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBox("Item_Enabled", new { data_bind = "checked: menuItem.enabled" }) Enabled
-                    </label>
+                <div class="col-sm-3 col-md-3">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBox("Item_Enabled", new { data_bind = "checked: menuItem.enabled" }) Enabled
+                        </label>
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-12 col-md-12">
-                <div class="form-group pull-right">
-                    <button type="button" class="btn btn-default" data-bind="click: menuItem.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: menuItem.save">@T(KoreWebLocalizableStrings.General.Save)</button>
-
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group pull-right">
+                        <button type="button" class="btn btn-default" data-bind="click: menuItem.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                        <button type="button" class="btn btn-primary" data-bind="click: menuItem.save">@T(KoreWebLocalizableStrings.General.Save)</button>
+                    </div>
                 </div>
-            </div>
-        </fieldset>
-    </form>
+            </fieldset>
+        </form>
+    </article>
 </div>
 
 <script type="text/x-kendo-template" id="items-template">

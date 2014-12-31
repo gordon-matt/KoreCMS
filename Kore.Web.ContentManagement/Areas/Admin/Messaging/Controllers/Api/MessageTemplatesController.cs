@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.OData;
 using Kore.Data;
 using Kore.Web.ContentManagement.Messaging.Domain;
@@ -9,6 +10,8 @@ using Kore.Web.Http.OData;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers.Api
 {
+    [Authorize(Roles = KoreConstants.Roles.Administrators)]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class MessageTemplatesController : GenericODataController<MessageTemplate, Guid>
     {
         private readonly Lazy<IEnumerable<IMessageTemplateTokensProvider>> tokensProviders;

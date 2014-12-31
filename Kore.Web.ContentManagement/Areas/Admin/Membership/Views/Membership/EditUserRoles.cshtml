@@ -1,19 +1,21 @@
 ﻿<div id="user-roles-form-section" class="row" style="display:none">
-    <form id="user-roles-form-section-form" role="form">
-        <fieldset>
-            <legend>@T(KoreCmsLocalizableStrings.Membership.UpdateUserRoles)</legend>
-            <div class="col-sm-12 col-md-12">
-                <div class="form-group">
-                    @Html.Label("UserRoles", "Roles", new { @class = "control-label" })
-                    @Html.Kore().RolesCheckBoxList("UserRoles", null, new { @class = "checkbox" }, new { data_bind = "checked: userModel.roles" })
+    <article class="col-sm-12 col-md-12">
+        <form id="user-roles-form-section-form" role="form">
+            <fieldset>
+                <legend>@T(KoreCmsLocalizableStrings.Membership.UpdateUserRoles)</legend>
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        @Html.Label("UserRoles", "Roles", new { @class = "control-label" })
+                        @Html.Kore().RolesCheckBoxList("UserRoles", null, new { @class = "checkbox" }, new { data_bind = "checked: userModel.roles" })
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-12 col-md-12">
-                <div class="form-group pull-right">
-                    <button type="button" class="btn btn-default" data-bind="click: userModel.editRoles_cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: userModel.editRoles_save">@T(KoreWebLocalizableStrings.General.Save)</button>
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group pull-right">
+                        <button type="button" class="btn btn-default" data-bind="click: userModel.editRoles_cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                        <button type="button" class="btn btn-primary" data-bind="click: userModel.editRoles_save">@T(KoreWebLocalizableStrings.General.Save)</button>
+                    </div>
                 </div>
-            </div>
-        </fieldset>
-    </form>
+            </fieldset>
+        </form>
+    </article>
 </div>

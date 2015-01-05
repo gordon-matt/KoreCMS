@@ -10,7 +10,6 @@ using Kore.Web.Http.OData;
 namespace Kore.Web.Areas.Admin.ScheduledTasks.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ScheduledTasksController : GenericODataController<ScheduledTask, int>
     {
         public ScheduledTasksController(IRepository<ScheduledTask> repository)

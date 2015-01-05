@@ -10,7 +10,6 @@ using Kore.Web.Plugins;
 namespace Kore.Web.Areas.Admin.Plugins.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class PluginsController : ODataController
     {
         private readonly IPluginFinder pluginFinder;

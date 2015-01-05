@@ -11,7 +11,6 @@ using Kore.Security.Membership;
 namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class PermissionsController : ODataController
     {
         protected IMembershipService Service { get; private set; }

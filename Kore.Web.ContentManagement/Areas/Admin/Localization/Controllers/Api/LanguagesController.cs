@@ -8,7 +8,6 @@ using Kore.Web.Http.OData;
 namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class LanguagesController : GenericODataController<Language, Guid>
     {
         public LanguagesController(IRepository<Language> repository)

@@ -13,7 +13,6 @@ using Kore.Web.Http.OData;
 namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class SettingsController : GenericODataController<Setting, Guid>
     {
         public SettingsController(IRepository<Setting> repository)

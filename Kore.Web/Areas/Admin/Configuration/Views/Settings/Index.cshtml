@@ -180,15 +180,18 @@
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(record),
                     dataType: "json",
-                    async: false
+                    async: false,
+                    //xhrFields: {
+                    //    withCredentials: true
+                    //}
                 })
                 .done(function (json) {
                     switchSection($("#grid-section"));
 
                     $.notify(translations.UpdateRecordSuccess, "success");
                 })
-                .fail(function () {
-                    $.notify(translations.UpdateRecordError, "error");
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    $.notify(translations.UpdateRecordError + ": " + jqXHR.responseText || textStatus, "error");
                 });
             };
 

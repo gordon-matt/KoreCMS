@@ -9,7 +9,6 @@ using Kore.Web.Http.OData;
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class HistoricPagesController : GenericODataController<HistoricPage, Guid>
     {
         private readonly IRepository<Page> pageRepository;

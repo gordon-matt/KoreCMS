@@ -8,7 +8,6 @@ using Kore.Web.Http.OData;
 namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ZonesController : GenericODataController<Zone, Guid>
     {
         public ZonesController(IRepository<Zone> repository)

@@ -11,7 +11,6 @@ using Kore.Web.Http.OData;
 namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class MessageTemplatesController : GenericODataController<MessageTemplate, Guid>
     {
         private readonly Lazy<IEnumerable<IMessageTemplateTokensProvider>> tokensProviders;

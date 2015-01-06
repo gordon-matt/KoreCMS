@@ -1,4 +1,5 @@
 ﻿using System;
+using Kore.Infrastructure;
 using Kore.Web.Configuration;
 using Kore.Web.Environment;
 
@@ -19,7 +20,8 @@ namespace Kore.Web.Mvc.Themes
         {
             if (name == KoreWebConstants.StateProviders.CurrentDesktopTheme)
             {
-                var currentTheme = KoreWebConfigurationSection.WebInstance.Themes.DefaultDesktopTheme;
+                //var currentTheme = KoreWebConfigurationSection.WebInstance.Themes.DefaultDesktopTheme;
+                string currentTheme = EngineContext.Current.Resolve<IThemeContext>().WorkingDesktopTheme;
                 return ctx => (T)(object)currentTheme;
             }
             return null;

@@ -150,7 +150,12 @@
     <Compile Include="Areas\Admin\Configuration\ConfigurationNavigationProvider.cs" />
     <Compile Include="Areas\Admin\Configuration\ConfigurationPermissions.cs" />
     <Compile Include="Areas\Admin\Configuration\Controllers\Api\SettingsController.cs" />
+    <Compile Include="Areas\Admin\Configuration\Controllers\Api\ThemesController.cs" />
     <Compile Include="Areas\Admin\Configuration\Controllers\SettingsController.cs" />
+    <Compile Include="Areas\Admin\Configuration\Controllers\ThemeController.cs" />
+    <Compile Include="Areas\Admin\Configuration\Models\EdmThemeConfiguration.cs" />
+    <Compile Include="Areas\Admin\Configuration\Models\SettingModel.cs" />
+    <Compile Include="Areas\Admin\Configuration\Services\ISettingsService.cs" />
     <Compile Include="Areas\Admin\Indexing\Controllers\IndexingController.cs" />
     <Compile Include="Areas\Admin\Indexing\Controllers\SearchController.cs" />
     <Compile Include="Areas\Admin\Indexing\IndexingAreaRegistration.cs" />
@@ -529,17 +534,17 @@
     <EmbeddedResource Include="Areas\Admin\ScheduledTasks\Views\ScheduledTask\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Indexing\Views\Indexing\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Indexing\Views\Search\Results.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Configuration\Views\Theme\Index.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\SmtpSettings.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Plugins\Views\Plugin\Index.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\CaptchaSettings.cshtml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Admin\Plugins\Scripts\index.js" />
+    <Folder Include="Areas\Admin\Configuration\Scripts\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Admin\Configuration\Scripts\index.js" />
+    <EmbeddedResource Include="Areas\Admin\Plugins\Scripts\index.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

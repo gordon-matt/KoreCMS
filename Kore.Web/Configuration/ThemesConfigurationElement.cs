@@ -18,12 +18,12 @@ namespace Kore.Web.Configuration
             set { base["allowUserToSelectTheme"] = value; }
         }
 
-        [ConfigurationProperty("defaultDesktopTheme", IsRequired = false, DefaultValue = "Default")]
-        public string DefaultDesktopTheme
-        {
-            get { return (string)base["defaultDesktopTheme"]; }
-            set { base["defaultDesktopTheme"] = value; }
-        }
+        //[ConfigurationProperty("defaultDesktopTheme", IsRequired = false, DefaultValue = "Default")]
+        //public string DefaultDesktopTheme
+        //{
+        //    get { return (string)base["defaultDesktopTheme"]; }
+        //    set { base["defaultDesktopTheme"] = value; }
+        //}
 
         [ConfigurationProperty("defaultMobileTheme", IsRequired = false, DefaultValue = "Mobile")]
         public string DefaultMobileTheme

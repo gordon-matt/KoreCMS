@@ -9,6 +9,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers
 {
     [Authorize]
     [RouteArea(KoreWebConstants.Areas.Configuration)]
+    [RoutePrefix("Settings")]
     public class SettingsController : KoreController
     {
         private readonly Lazy<IEnumerable<ISettings>> settings;

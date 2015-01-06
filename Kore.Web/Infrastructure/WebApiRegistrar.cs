@@ -2,6 +2,7 @@
 using System.Web.Http.OData.Builder;
 using Kore.Configuration.Domain;
 using Kore.Tasks.Domain;
+using Kore.Web.Areas.Admin.Configuration.Models;
 using Kore.Web.Areas.Admin.Plugins.Models;
 
 namespace Kore.Web.Infrastructure
@@ -16,9 +17,11 @@ namespace Kore.Web.Infrastructure
             builder.EntitySet<EdmPluginDescriptor>("Plugins");
             builder.EntitySet<ScheduledTask>("ScheduledTasks");
             builder.EntitySet<Setting>("Settings");
+            builder.EntitySet<EdmThemeConfiguration>("Themes");
 
             RegisterPluginODataActions(builder);
             RegisterScheduledTaskODataActions(builder);
+            RegisterThemeODataActions(builder);
 
             config.Routes.MapODataRoute("OData_Kore_Web", "odata/kore/web", builder.GetEdmModel());
         }
@@ -41,6 +44,13 @@ namespace Kore.Web.Infrastructure
             var runNowAction = builder.Entity<ScheduledTask>().Collection.Action("RunNow");
             runNowAction.Parameter<int>("taskId");
             runNowAction.Returns<IHttpActionResult>();
+        }
+
+        private static void RegisterThemeODataActions(ODataModelBuilder builder)
+        {
+            var setDesktopThemeAction = builder.Entity<EdmThemeConfiguration>().Collection.Action("SetDesktopTheme");
+            setDesktopThemeAction.Parameter<string>("themeName");
+            setDesktopThemeAction.Returns<IHttpActionResult>();
         }
     }
 }

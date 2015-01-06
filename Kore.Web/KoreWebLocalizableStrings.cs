@@ -25,6 +25,7 @@
             public const string SetDefault = "Kore.Web/General.SetDefault";
             public const string Settings = "Kore.Web/General.Settings";
             public const string Submit = "Kore.Web/General.Submit";
+            public const string Themes = "Kore.Web/General.Themes";
             public const string Toggle = "Kore.Web/General.Toggle";
             public const string View = "Kore.Web/General.View";
             public const string ViewFormat = "Kore.Web/General.ViewFormat";
@@ -56,6 +57,13 @@
             public const string UninstallPluginError = "Kore.Web/Messages.UninstallPluginError";
 
             #endregion Plugins
+
+            #region Themes
+
+            public const string SetDesktopThemeError = "Kore.Web/Messages.SetDesktopThemeError";
+            public const string SetDesktopThemeSuccess = "Kore.Web/Messages.SetDesktopThemeSuccess";
+
+            #endregion
         }
 
         public static class Navigation

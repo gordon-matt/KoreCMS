@@ -1,0 +1,124 @@
+﻿@using Kore.Web
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+    Style.IncludeBundle("kendo-ui");
+
+    Script.IncludeBundle("kendo-ui");
+    Script.IncludeBundle("notify");
+}
+
+<div id="grid-section" class="row">
+    <div class="col-md-12">
+        <div id="Grid"></div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        var translations = {
+            SetDesktopThemeError: '@T(KoreWebLocalizableStrings.Messages.SetDesktopThemeError).Text',
+            SetDesktopThemeSuccess: '@T(KoreWebLocalizableStrings.Messages.SetDesktopThemeSuccess).Text'
+        };
+
+        $(document).ready(function () {
+            $("#Grid").kendoGrid({
+                data: null,
+                dataSource: {
+                    type: "odata",
+                    transport: {
+                        read: {
+                            url: "/odata/kore/web/Themes",
+                            dataType: "json"
+                        }
+                    },
+                    schema: {
+                        data: function (data) {
+                            return data.value;
+                        },
+                        total: function (data) {
+                            return data["odata.count"];
+                        },
+                        model: {
+                            fields: {
+                                PreviewImageUrl: { type: "string" },
+                                Title: { type: "string" },
+                                PreviewText: { type: "string" },
+                                SupportRtl: { type: "boolean" },
+                                MobileTheme: { type: "boolean" },
+                                IsDefaultDesktopTheme: { type: "boolean" }
+                            }
+                        }
+                    },
+                    pageSize: 10,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true,
+                    sort: { field: "Title", dir: "asc" }
+                },
+                filterable: true,
+                sortable: {
+                    allowUnsort: false
+                },
+                pageable: {
+                    refresh: true
+                },
+                scrollable: false,
+                columns: [{
+                    field: "PreviewImageUrl",
+                    title: "Preview",
+                    template: '<img src="#=PreviewImageUrl#" alt="#=Title#" class="thumbnail" />',
+                    filterable: true,
+                    width: 200
+                }, {
+                    field: "Title",
+                    title: "Title",
+                    filterable: true
+                }, {
+                    field: "SupportRtl",
+                    title: "Supports RTL",
+                    template: '<i class="fa #=SupportRtl ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
+                    attributes: { "class": "text-center" },
+                    filterable: true,
+                    width: 70
+                }, {
+                    field: "MobileTheme",
+                    title: "For Mobile?",
+                    template: '<i class="fa #=MobileTheme ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
+                    attributes: { "class": "text-center" },
+                    filterable: true,
+                    width: 70
+                }, {
+                    field: "IsDefaultDesktopTheme",
+                    title: "Default Desktop Theme",
+                    template:
+                        '# if(IsDefaultDesktopTheme) {# <i class="fa fa-check-circle fa-2x text-success"></i> #} ' +
+                        'else {# <a href="javascript:void(0);" onclick="setDesktopTheme(\'#=Title#\')" class="btn btn-default btn-sm">Set</a> #} #',
+                    attributes: { "class": "text-center" },
+                    filterable: false,
+                    width: 130
+                }]
+            });
+        });
+
+        function setDesktopTheme(name) {
+            $.ajax({
+                url: "/odata/kore/web/Themes/SetDesktopTheme",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ themeName: name }),
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                $('#Grid').data('kendoGrid').dataSource.read();
+                $('#Grid').data('kendoGrid').refresh();
+                $.notify(translations.SetDesktopThemeSuccess, "success");
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(translations.SetDesktopThemeError + ": " + jqXHR.responseText || textStatus, "error");
+            });
+        }
+    </script>
+}

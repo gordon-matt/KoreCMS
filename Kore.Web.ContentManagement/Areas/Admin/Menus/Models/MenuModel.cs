@@ -14,12 +14,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Models
         [Required]
         public string Name { get; set; }
 
+        public string UrlFilter { get; set; }
+
         public static implicit operator MenuModel(Menu other)
         {
             return new MenuModel
             {
                 Id = other.Id,
-                Name = other.Name
+                Name = other.Name,
+                UrlFilter = other.UrlFilter
             };
         }
     }

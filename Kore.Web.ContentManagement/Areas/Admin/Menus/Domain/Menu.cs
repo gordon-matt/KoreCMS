@@ -11,6 +11,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Domain
 
         public string Name { get; set; }
 
+        public string UrlFilter { get; set; }
+
         #region IEntity Members
 
         public object[] KeyValues
@@ -28,6 +30,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Domain
             ToTable("Kore_Menus");
             HasKey(x => x.Id);
             Property(x => x.Name).HasMaxLength(255).IsRequired();
+            Property(x => x.UrlFilter).HasMaxLength(255);
         }
     }
 }

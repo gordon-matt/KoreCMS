@@ -7,7 +7,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Services
 {
     public interface IMenuService : IGenericDataService<Menu>
     {
-        Menu FindByName(string name);
+        Menu FindByName(string name, string urlFilter = null);
     }
 
     public class MenuService : GenericDataService<Menu>, IMenuService
@@ -19,9 +19,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Services
 
         #region IMenuService Members
 
-        public Menu FindByName(string name)
+        public Menu FindByName(string name, string urlFilter = null)
         {
-            return Repository.Table.FirstOrDefault(x => x.Name == name);
+            if (string.IsNullOrEmpty(urlFilter))
+            {
+                return Repository.Table.FirstOrDefault(x => x.Name == name && x.UrlFilter == null);
+            }
+
+            var records = Repository.Table.Where(x => x.Name == name).ToList();
+            return records.FirstOrDefault(x => x.UrlFilter.Contains(urlFilter));
         }
 
         #endregion IMenuService Members

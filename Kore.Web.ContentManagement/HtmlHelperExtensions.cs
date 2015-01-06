@@ -27,9 +27,15 @@ namespace Kore.Web.ContentManagement
         //    return repository.Table.Any(x => x.Name == menuName);
         //}
 
-        public static MvcHtmlString Menu(this HtmlHelper html, string menuName, string templateViewName)
+        public static MvcHtmlString Menu(this HtmlHelper html, string menuName, string templateViewName, bool filterByUrl = false)
         {
-            return html.Action("Menu", "Frontend", new { area = "", name = menuName, templateViewName = templateViewName });
+            return html.Action("Menu", "Frontend", new
+            {
+                area = "",
+                name = menuName,
+                templateViewName = templateViewName,
+                filterByUrl = filterByUrl
+            });
         }
 
         public static MvcHtmlString WidgetZone(this HtmlHelper html, string zoneName)

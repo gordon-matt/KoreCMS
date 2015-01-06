@@ -218,7 +218,6 @@
     <Compile Include="Areas\Admin\Menus\Models\MenuModel.cs" />
     <Compile Include="Areas\Admin\Menus\Services\IMenuItemService.cs" />
     <Compile Include="Areas\Admin\Menus\Services\IMenuService.cs" />
-    <Compile Include="Areas\Admin\Menus\Widgets\MenuWidget.cs" />
     <Compile Include="Areas\Admin\Messaging\Controllers\Api\MessageTemplatesController.cs" />
     <Compile Include="Areas\Admin\Messaging\Controllers\Api\QueuedEmailsController.cs" />
     <Compile Include="Areas\Admin\Messaging\Controllers\MessageTemplateController.cs" />

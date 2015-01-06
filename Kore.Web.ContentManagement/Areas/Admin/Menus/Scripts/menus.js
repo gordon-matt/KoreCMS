@@ -211,12 +211,14 @@ var ViewModel = function () {
 
     self.id = ko.observable(emptyGuid);
     self.name = ko.observable('');
+    self.urlFilter = ko.observable('');
 
     self.menuItem = new MenuItemVM();
 
     self.create = function () {
         self.id(emptyGuid);
         self.name('');
+        self.urlFilter('');
 
         self.validator.resetForm();
         switchSection($("#form-section"));
@@ -233,6 +235,7 @@ var ViewModel = function () {
         .done(function (json) {
             self.id(json.Id);
             self.name(json.Name);
+            self.urlFilter(json.UrlFilter);
 
             self.validator.resetForm();
             switchSection($("#form-section"));
@@ -270,7 +273,8 @@ var ViewModel = function () {
 
         var record = {
             Id: self.id(),
-            Name: self.name()
+            Name: self.name(),
+            UrlFilter: self.urlFilter()
         };
 
         if (self.id() == emptyGuid) {
@@ -370,7 +374,8 @@ $(document).ready(function () {
                 model: {
                     id: "Id",
                     fields: {
-                        Name: { type: "string" }
+                        Name: { type: "string" },
+                        UrlFilter: { type: "string" }
                     }
                 }
             },
@@ -393,6 +398,10 @@ $(document).ready(function () {
             title: "Name",
             filterable: true
         }, {
+            field: "UrlFilter",
+            title: "URL Filter",
+            filterable: true
+        }, {
             field: "Id",
             title: " ",
             template:
@@ -410,11 +419,6 @@ $(document).ready(function () {
         //    this.expandRow(this.tbody.find("tr.k-master-row").first());
         //},
     });
-
-
-
-
-
 
 
     $("#ItemsGrid").kendoGrid({
@@ -512,13 +516,6 @@ $(document).ready(function () {
         detailTemplate: kendo.template($("#items-template").html()),
         detailInit: detailInit
     });
-
-
-
-
-
-
-
 
 });
 

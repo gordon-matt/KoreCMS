@@ -177,6 +177,7 @@
                 $.ajax({
                     url: "/odata/kore/web/Settings(guid'" + self.id() + "')",
                     type: "PUT",
+                    crossDomain: true,
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(record),
                     dataType: "json",

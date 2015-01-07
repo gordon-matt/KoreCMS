@@ -20,6 +20,16 @@
         @Html.ValidationMessageFor(m => m.DefaultDesktopTheme)
     </div>
     <div class="form-group">
+        @Html.LabelFor(m => m.DefaultMobileTheme)
+        @Html.Kore().ThemesDropDownListFor(m => m.DefaultMobileTheme, new { @class = "form-control", data_bind = "value: defaultMobileTheme" })
+        @Html.ValidationMessageFor(m => m.DefaultMobileTheme)
+    </div>
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.AllowUserToSelectTheme, new { data_bind = "checked: allowUserToSelectTheme" }) Allow User To Select Theme
+        </label>
+    </div>
+    <div class="form-group">
         @Html.LabelFor(m => m.DefaultLanguage)
         @Html.Kore().LanguagesDropDownListFor(m => m.DefaultLanguage, new { @class = "form-control", data_bind = "value: defaultLanguage" })
         @Html.ValidationMessageFor(m => m.DefaultLanguage)
@@ -41,6 +51,8 @@
         viewModel.siteName = ko.observable("");
         viewModel.defaultFrontendLayoutPath = ko.observable("");
         viewModel.defaultDesktopTheme = ko.observable("");
+        viewModel.defaultMobileTheme = ko.observable("");
+        viewModel.allowUserToSelectTheme = ko.observable(false);
         viewModel.defaultLanguage = ko.observable("");
         viewModel.useRightToLeft = ko.observable(false);
         viewModel.defaultGridPageSize = ko.observable(0);
@@ -54,6 +66,12 @@
             }
             if (data.DefaultDesktopTheme) {
                 viewModel.defaultDesktopTheme(data.DefaultDesktopTheme);
+            }
+            if (data.DefaultMobileTheme) {
+                viewModel.defaultMobileTheme(data.DefaultMobileTheme);
+            }
+            if (data.AllowUserToSelectTheme) {
+                viewModel.allowUserToSelectTheme(data.AllowUserToSelectTheme);
             }
             if (data.DefaultLanguage) {
                 viewModel.defaultLanguage(data.DefaultLanguage);
@@ -71,6 +89,8 @@
         delete viewModel.siteName;
         delete viewModel.defaultFrontendLayoutPath;
         delete viewModel.defaultDesktopTheme;
+        delete viewModel.defaultMobileTheme;
+        delete viewModel.allowUserToSelectTheme;
         delete viewModel.defaultLanguage;
         delete viewModel.useRightToLeft;
         delete viewModel.defaultGridPageSize;
@@ -81,6 +101,8 @@
             SiteName: viewModel.siteName(),
             DefaultFrontendLayoutPath: viewModel.defaultFrontendLayoutPath(),
             DefaultDesktopTheme: viewModel.defaultDesktopTheme(),
+            DefaultMobileTheme: viewModel.defaultMobileTheme(),
+            AllowUserToSelectTheme: viewModel.allowUserToSelectTheme(),
             DefaultLanguage: viewModel.defaultLanguage(),
             UseRightToLeft: viewModel.useRightToLeft(),
             DefaultGridPageSize: viewModel.defaultGridPageSize()

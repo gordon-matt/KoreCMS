@@ -19,7 +19,9 @@
     <script type="text/javascript">
         var translations = {
             SetDesktopThemeError: '@T(KoreWebLocalizableStrings.Messages.SetDesktopThemeError).Text',
-            SetDesktopThemeSuccess: '@T(KoreWebLocalizableStrings.Messages.SetDesktopThemeSuccess).Text'
+            SetDesktopThemeSuccess: '@T(KoreWebLocalizableStrings.Messages.SetDesktopThemeSuccess).Text',
+            SetMobileThemeError: '@T(KoreWebLocalizableStrings.Messages.SetMobileThemeError).Text',
+            SetMobileThemeSuccess: '@T(KoreWebLocalizableStrings.Messages.SetMobileThemeSuccess).Text'
         };
 
         $(document).ready(function () {
@@ -47,7 +49,8 @@
                                 PreviewText: { type: "string" },
                                 SupportRtl: { type: "boolean" },
                                 MobileTheme: { type: "boolean" },
-                                IsDefaultDesktopTheme: { type: "boolean" }
+                                IsDefaultDesktopTheme: { type: "boolean" },
+                                IsDefaultMobileTheme: { type: "boolean" }
                             }
                         }
                     },
@@ -98,6 +101,15 @@
                     attributes: { "class": "text-center" },
                     filterable: false,
                     width: 130
+                }, {
+                    field: "IsDefaultMobileTheme",
+                    title: "Default Mobile Theme",
+                    template:
+                        '# if(IsDefaultMobileTheme) {# <i class="fa fa-check-circle fa-2x text-success"></i> #} ' +
+                        'else {# <a href="javascript:void(0);" onclick="setMobileTheme(\'#=Title#\')" class="btn btn-default btn-sm">Set</a> #} #',
+                    attributes: { "class": "text-center" },
+                    filterable: false,
+                    width: 130
                 }]
             });
         });
@@ -118,6 +130,25 @@
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(translations.SetDesktopThemeError + ": " + jqXHR.responseText || textStatus, "error");
+            });
+        }
+
+        function setMobileTheme(name) {
+            $.ajax({
+                url: "/odata/kore/web/Themes/SetMobileTheme",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ themeName: name }),
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                $('#Grid').data('kendoGrid').dataSource.read();
+                $('#Grid').data('kendoGrid').refresh();
+                $.notify(translations.SetMobileThemeSuccess, "success");
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(translations.SetMobileThemeError + ": " + jqXHR.responseText || textStatus, "error");
             });
         }
     </script>

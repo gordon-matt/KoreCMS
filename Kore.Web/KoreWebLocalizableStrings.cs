@@ -62,6 +62,8 @@
 
             public const string SetDesktopThemeError = "Kore.Web/Messages.SetDesktopThemeError";
             public const string SetDesktopThemeSuccess = "Kore.Web/Messages.SetDesktopThemeSuccess";
+            public const string SetMobileThemeError = "Kore.Web/Messages.SetMobileThemeError";
+            public const string SetMobileThemeSuccess = "Kore.Web/Messages.SetMobileThemeSuccess";
 
             #endregion
         }

@@ -72,7 +72,7 @@ namespace Kore.Web.Mvc.Themes
             }
             set
             {
-                if (!KoreWebConfigurationSection.WebInstance.Themes.AllowUserToSelectTheme)
+                if (!siteSettings.AllowUserToSelectTheme)
                 {
                     return;
                 }
@@ -93,7 +93,7 @@ namespace Kore.Web.Mvc.Themes
                     return cachedMobileThemeName;
 
                 //default store theme
-                string theme = KoreWebConfigurationSection.WebInstance.Themes.DefaultMobileTheme;
+                string theme = siteSettings.DefaultMobileTheme;
 
                 //ensure that theme exists
                 if (!themeProvider.ThemeConfigurationExists(theme))

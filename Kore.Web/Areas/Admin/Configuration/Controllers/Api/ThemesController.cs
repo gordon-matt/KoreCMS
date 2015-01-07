@@ -40,11 +40,10 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
                 {
                     theme.IsDefaultDesktopTheme = true;
                 }
-
-                //TODO
-                //if (theme.Title == themeContext.WorkingMobileTheme)
-                //{
-                //}
+                if (theme.Title == siteSettings.DefaultMobileTheme)
+                {
+                    theme.IsDefaultMobileTheme = true;
+                }
             }
 
             return themes.AsQueryable();
@@ -55,6 +54,14 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
         {
             string themeName = (string)parameters["themeName"];
             siteSettings.DefaultDesktopTheme = themeName;
+            settingsService.Value.SaveSettings(siteSettings);
+        }
+
+        [HttpPost]
+        public virtual void SetMobileTheme(ODataActionParameters parameters)
+        {
+            string themeName = (string)parameters["themeName"];
+            siteSettings.DefaultMobileTheme = themeName;
             settingsService.Value.SaveSettings(siteSettings);
         }
     }

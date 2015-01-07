@@ -12,7 +12,7 @@
 }
 
 <div class="search-results">
-    <div class="resultStats">
+    <div class="result-stats">
         @if (Model.ItemCount == 0)
         {
             @:Your search - <strong>@q</strong> - did not match any documents.
@@ -25,7 +25,7 @@
                 {
                     string desc = hit.GetString("description") ?? hit.GetString("body");
                     
-                    <li>
+                    <li class="search-result">
                         <a href="@hit.GetString("url")">@hit.GetString("title")</a>
                         <div class="description">@desc</div>
                     </li>

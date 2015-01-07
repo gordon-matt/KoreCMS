@@ -51,6 +51,10 @@ namespace Kore.Web.Infrastructure
             var setDesktopThemeAction = builder.Entity<EdmThemeConfiguration>().Collection.Action("SetDesktopTheme");
             setDesktopThemeAction.Parameter<string>("themeName");
             setDesktopThemeAction.Returns<IHttpActionResult>();
+
+            var setMobileThemeAction = builder.Entity<EdmThemeConfiguration>().Collection.Action("SetMobileTheme");
+            setMobileThemeAction.Parameter<string>("themeName");
+            setMobileThemeAction.Returns<IHttpActionResult>();
         }
     }
 }

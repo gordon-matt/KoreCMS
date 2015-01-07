@@ -101,7 +101,7 @@
                     self.value(json.Value);
 
                     $.ajax({
-                        url: "/admin/configuration/get-editor-ui/" + replaceAll(self.type(), ".", "-"),
+                        url: "/admin/configuration/settings/get-editor-ui/" + replaceAll(self.type(), ".", "-"),
                         type: "GET",
                         dataType: "json",
                         async: false

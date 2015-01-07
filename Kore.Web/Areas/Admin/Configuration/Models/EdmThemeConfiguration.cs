@@ -16,6 +16,8 @@ namespace Kore.Web.Areas.Admin.Configuration.Models
 
         public bool IsDefaultDesktopTheme { get; set; }
 
+        public bool IsDefaultMobileTheme { get; set; }
+
         public static implicit operator EdmThemeConfiguration(ThemeConfiguration other)
         {
             return new EdmThemeConfiguration

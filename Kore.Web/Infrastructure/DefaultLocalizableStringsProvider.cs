@@ -57,6 +57,8 @@ namespace Kore.Web.Infrastructure
                         { KoreWebLocalizableStrings.Messages.UninstallPluginSuccess, "Successfully uninstalled plugin." },
                         { KoreWebLocalizableStrings.Messages.SetDesktopThemeError, "Error when setting default desktop theme." },
                         { KoreWebLocalizableStrings.Messages.SetDesktopThemeSuccess, "Successfully set default desktop theme." },
+                        { KoreWebLocalizableStrings.Messages.SetMobileThemeError, "Error when setting default mobile theme." },
+                        { KoreWebLocalizableStrings.Messages.SetMobileThemeSuccess, "Successfully set default mobile theme." },
                         { KoreWebLocalizableStrings.Navigation.Configuration, "Configuration" },
                         { KoreWebLocalizableStrings.Plugins.ManagePlugins, "Manage Plugins" },
                         { KoreWebLocalizableStrings.Plugins.Title, "Plugins" },

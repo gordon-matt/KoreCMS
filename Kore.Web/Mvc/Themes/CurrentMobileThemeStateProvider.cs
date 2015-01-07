@@ -1,4 +1,5 @@
 ﻿using System;
+using Kore.Infrastructure;
 using Kore.Web.Configuration;
 using Kore.Web.Environment;
 
@@ -19,7 +20,7 @@ namespace Kore.Web.Mvc.Themes
         {
             if (name == KoreWebConstants.StateProviders.CurrentMobileTheme)
             {
-                var currentTheme = KoreWebConfigurationSection.WebInstance.Themes.DefaultMobileTheme;
+                var currentTheme = EngineContext.Current.Resolve<IThemeContext>().WorkingMobileTheme;
                 return ctx => (T)(object)currentTheme;
             }
             return null;

@@ -1968,7 +1968,7 @@ namespace Kore.Web.Mvc.JQGrid
         /// <returns></returns>
         public override string ToString()
         {
-            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
             var scriptRegister = new ScriptRegister(workContext);
             scriptRegister.IncludeInline(RenderJavascript().Replace("##gridid##", clientId));
 

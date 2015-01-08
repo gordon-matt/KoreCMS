@@ -40,6 +40,7 @@ using Kore.Web.Areas.Admin.Indexing;
 using Kore.Web.Indexing.Configuration;
 using Kore.Web.Security.Membership;
 using Kore.Web.Localization;
+using Kore.Web.Localization.Services;
 
 namespace Kore.Web.Infrastructure
 {
@@ -97,7 +98,7 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<PerRequestCacheManager>().As<ICacheManager>().Named<ICacheManager>("Kore_Cache_Per_Request").InstancePerLifetimeScope();
 
             //work context, themes, routes, etc
-            builder.RegisterType<WorkContext>().As<IWorkContext>().InstancePerLifetimeScope();
+            builder.RegisterType<WebWorkContext>().As<IWebWorkContext>().InstancePerLifetimeScope();
 
             builder.RegisterType<MobileDeviceHelper>().As<IMobileDeviceHelper>().InstancePerLifetimeScope();
             builder.RegisterType<ThemeProvider>().As<IThemeProvider>().InstancePerLifetimeScope();
@@ -145,12 +146,16 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<CurrentDesktopThemeStateProvider>().As<IWorkContextStateProvider>();
             builder.RegisterType<CurrentMobileThemeStateProvider>().As<IWorkContextStateProvider>();
             builder.RegisterType<CurrentCultureCodeStateProvider>().As<IWorkContextStateProvider>();
+            builder.RegisterType<HttpContextStateProvider>().As<IWorkContextStateProvider>();
 
             // localization
             builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
             builder.RegisterType<LanguageManager>().As<ILanguageManager>().SingleInstance();
             builder.RegisterType<DefaultLocalizedStringManager>().As<ILocalizedStringManager>().InstancePerLifetimeScope();
-            builder.RegisterType<DefaultCultureManager>().As<ICultureManager>().InstancePerLifetimeScope();
+            builder.RegisterType<DefaultWebCultureManager>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            builder.RegisterType<SiteCultureSelector>().As<ICultureSelector>().SingleInstance();
+            builder.RegisterType<CookieCultureSelector>().As<ICultureSelector>().SingleInstance();
 
             // misc
             builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();

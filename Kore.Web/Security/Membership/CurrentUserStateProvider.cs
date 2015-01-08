@@ -15,7 +15,7 @@ namespace Kore.Web.Security.Membership
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        public Func<WorkContext, T> Get<T>(string name)
+        public Func<IWebWorkContext, T> Get<T>(string name)
         {
             if (name == KoreWebConstants.StateProviders.CurrentUser)
             {

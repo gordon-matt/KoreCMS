@@ -16,7 +16,7 @@ namespace Kore.Web.Mvc.Themes
 
         #region IWorkContextStateProvider Members
 
-        public Func<WorkContext, T> Get<T>(string name)
+        public Func<IWebWorkContext, T> Get<T>(string name)
         {
             if (name == KoreWebConstants.StateProviders.CurrentMobileTheme)
             {

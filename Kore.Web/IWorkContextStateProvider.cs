@@ -1,11 +1,9 @@
 ﻿using System;
 
-//using Kore.DI;
-
 namespace Kore.Web
 {
-    public interface IWorkContextStateProvider //: IDependency
+    public interface IWorkContextStateProvider
     {
-        Func<WorkContext, T> Get<T>(string name);
+        Func<IWebWorkContext, T> Get<T>(string name);
     }
 }

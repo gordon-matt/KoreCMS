@@ -1,43 +1,46 @@
-﻿//using System.Web;
-//using Kore.Composition;
-//using Kore.Infrastructure;
-//using Kore.Localization;
-//using Kore.Web.Configuration;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Kore.Localization;
+using Kore.Web.Localization.Services;
 
-//namespace Kore.Web.Localization
-//{
-//    public class DefaultWebCultureManager : DefaultCultureManager, IWebCultureManager
-//    {
-//        #region IWebCultureManager Members
+namespace Kore.Web.Localization
+{
+    public class DefaultWebCultureManager : DefaultCultureManager, IWebCultureManager
+    {
+        private readonly IEnumerable<ICultureSelector> cultureSelectors;
 
-//        public virtual string GetCurrentCulture(HttpContextBase requestContext)
-//        {
-//            var languageService = EngineContext.Current.Resolve<ILanguageService>();
+        public DefaultWebCultureManager(IEnumerable<ICultureSelector> cultureSelectors)
+        {
+            this.cultureSelectors = cultureSelectors;
+        }
 
-//            var cookie = requestContext.Request.Cookies["CurrentCulture"];
-//            if (cookie != null && !string.IsNullOrEmpty(cookie.Value))
-//            {
-//                var language = languageService.GetLanguage(cookie.Value);
-//                if (language != null)
-//                {
-//                    return language.CultureCode;
-//                }
-//            }
+        #region IWebCultureManager Members
 
-//            //TODO
-//            //var siteSettings = EngineContext.Current.Resolve<SiteSettings>();
-//            //if (!string.IsNullOrEmpty(siteSettings.DefaultLanguage))
-//            //{
-//            //    var language = languageService.GetLanguage(siteSettings.DefaultLanguage);
-//            //    if (language != null)
-//            //    {
-//            //        return language.CultureCode;
-//            //    }
-//            //}
+        public virtual string GetCurrentCulture(HttpContextBase requestContext)
+        {
+            if (requestContext.Items.Contains("CachedCurrentCulture"))
+            {
+                return requestContext.Items["CachedCurrentCulture"].ToString();
+            }
 
-//            return "en-US";
-//        }
+            var requestedCultures = cultureSelectors
+                .Select(x => x.GetCulture(requestContext))
+                .ToList()
+                .Where(x => x != null)
+                .OrderByDescending(x => x.Priority);
 
-//        #endregion IWebCultureManager Members
-//    }
-//}
+            var cultureCode = "en-US";
+
+            if (requestedCultures.Any())
+            {
+                cultureCode = requestedCultures.First().CultureCode;
+            }
+
+            requestContext.Items["CachedCurrentCulture"] = cultureCode;
+            return cultureCode;
+        }
+
+        #endregion IWebCultureManager Members
+    }
+}

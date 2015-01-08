@@ -14,7 +14,7 @@ namespace Kore.Web.Mvc.Resources
         private readonly UrlHelper urlHelper;
         private readonly WebPageBase viewPage;
 
-        public ScriptRegister(IWorkContext workContext, WebPageBase viewPage = null)
+        public ScriptRegister(IWebWorkContext workContext, WebPageBase viewPage = null)
             : base(workContext)
         {
             this.viewPage = viewPage;

@@ -241,7 +241,7 @@ namespace Kore.Web.Mvc.RoboUI.Providers
                 ? "robo-form-" + Guid.NewGuid().ToString("N").ToLowerInvariant()
                 : roboForm.FormId;
 
-            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
             var scriptRegister = new ScriptRegister(workContext);
 
             Write(sb, string.IsNullOrEmpty(roboForm.CssClass)
@@ -1226,7 +1226,7 @@ namespace Kore.Web.Mvc.RoboUI.Providers
                 sb.AppendFormat("$.ajax({{url: '{0}', data: 'sender={2}&' + $(this.form).serialize(), type: 'POST', dataType: 'json', success: function(result){{ var control = $('#{1}'); control.empty(); if(!result || !result.length){{ return; }} var items = '{5}'; $.each(result, function(index, item){{ if(items.indexOf(item.Value) != -1){{control.append('<label class = \"{3}\"><input type=\"checkbox\" name=\"{4}\" value=\"'+ item.Value +'\" checked=\"checked\">' + item.Text + '</label>');}} else{{control.append('<label class = \"{3}\"><input type=\"checkbox\" name=\"{4}\" value=\"'+ item.Value +'\">' + item.Text + '</label>');}} }}); }} }});", sourceUrl, clientId, roboAttribute.ParentControl, cssClass, roboAttribute.Name, selectedItems);
             }
 
-            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
             var scriptRegister = new ScriptRegister(workContext);
             scriptRegister.IncludeInline(sb.ToString());
 
@@ -1338,7 +1338,7 @@ namespace Kore.Web.Mvc.RoboUI.Providers
                 sb.AppendFormat("$('#{0}').chosen({{ no_results_text: \"No results matched\", allow_single_deselect:true }});", clientId);
             }
 
-            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
 
             var scriptRegister = new ScriptRegister(workContext);
             scriptRegister.IncludeInline(sb.ToString());
@@ -1365,7 +1365,7 @@ namespace Kore.Web.Mvc.RoboUI.Providers
 
         public override string RenderColorPickerAttribute<TModel>(HtmlHelper htmlHelper, RoboUIFormResult<TModel> roboForm, RoboColorPickerAttribute roboAttribute)
         {
-            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
             var scriptRegister = new ScriptRegister(workContext);
             var clientId = roboForm.ViewData.TemplateInfo.GetFullHtmlFieldId(roboAttribute.Name);
             scriptRegister.IncludeInline(string.Format("$('#{0}').simplecolorpicker({{ picker: {1}, theme: '{2}' }});", clientId, roboAttribute.Picker.ToString().ToLowerInvariant(), roboAttribute.Theme));
@@ -1726,7 +1726,7 @@ namespace Kore.Web.Mvc.RoboUI.Providers
                 }
             }
 
-            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
 
             var scriptRegister = new ScriptRegister(workContext);
             scriptRegister.IncludeInline(string.Format("$('#{0}_Container').fineUploader({1}).on('upload', function(){{ var f = document.getElementById('{0}').form; var o ={{}};var a = $(f).serializeArray(); $.each(a, function(){{ if(o[this.name] !== undefined){{ if(!o[this.name].push){{ o[this.name]=[o[this.name]]; }} o[this.name].push(this.value || ''); }}else{{ o[this.name] = this.value || '';}} }}); $(this).fineUploader('setParams', o); }}).on('complete', function(event, id, name, responseJSON){{ if(responseJSON.success){{ $('#{0}').val(responseJSON.mediaUrl); }} else {{ $('#{0}').val(''); }} }}).on('complete', function(){{ $('#{0}_Container .qq-upload-list').hide(); }});",
@@ -1978,7 +1978,7 @@ namespace Kore.Web.Mvc.RoboUI.Providers
 
             if (roboAttribute.EnabledScroll)
             {
-                var workContext = EngineContext.Current.Resolve<IWorkContext>();
+                var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
                 var scriptRegister = new ScriptRegister(workContext);
                 scriptRegister.IncludeInline(string.Format("$('#{0}').parent().css('overflow','auto');", clientId));
             }
@@ -2853,7 +2853,7 @@ namespace Kore.Web.Mvc.RoboUI.Providers
 
                 if (attribute.EnableChosen)
                 {
-                    var workContext = EngineContext.Current.Resolve<IWorkContext>();
+                    var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
                     var scriptRegister = new ScriptRegister(workContext);
                     scriptRegister.IncludeInline(string.Format("$('#{0}').chosen({{ no_results_text: \"No results matched\", allow_single_deselect:true, display_selected_options: true, inherit_select_classes : true }});", htmlHelper.ViewData.TemplateInfo.GetFullHtmlFieldId(attribute.Name)));
                 }

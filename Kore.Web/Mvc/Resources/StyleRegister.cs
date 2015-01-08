@@ -10,7 +10,7 @@ namespace Kore.Web.Mvc.Resources
     {
         private readonly UrlHelper urlHelper;
 
-        public StyleRegister(IWorkContext workContext)
+        public StyleRegister(IWebWorkContext workContext)
             : base(workContext)
         {
             urlHelper = EngineContext.Current.Resolve<UrlHelper>();

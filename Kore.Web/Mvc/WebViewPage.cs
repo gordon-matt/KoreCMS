@@ -48,7 +48,7 @@ namespace Kore.Web.Mvc
             }
         }
 
-        public IWorkContext WorkContext { get; private set; }
+        public IWebWorkContext WorkContext { get; private set; }
 
         public void AppendMeta(string name, string content, string contentSeparator)
         {
@@ -80,7 +80,7 @@ namespace Kore.Web.Mvc
                 return;
             }
 
-            WorkContext = EngineContext.Current.Resolve<IWorkContext>();
+            WorkContext = EngineContext.Current.Resolve<IWebWorkContext>();
             resourcesManager = EngineContext.Current.Resolve<IResourcesManager>();
             Script = new ScriptRegister(WorkContext, this);
             Style = new StyleRegister(WorkContext);

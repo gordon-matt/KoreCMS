@@ -6,6 +6,6 @@ namespace Kore.Web.ContentManagement.Messaging.Services
     {
         int Priority { get; }
 
-        string ParseTemplate(string template, ParseTemplateContext context, WorkContext workContext);
+        string ParseTemplate(string template, ParseTemplateContext context, WebWorkContext workContext);
     }
 }

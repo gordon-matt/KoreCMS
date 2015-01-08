@@ -10,7 +10,7 @@ namespace Kore.Web.ContentManagement.Messaging.Services
     {
         public int Priority { get { return 5; } }
 
-        public string ParseTemplate(string template, ParseTemplateContext context, WorkContext workContext)
+        public string ParseTemplate(string template, ParseTemplateContext context, WebWorkContext workContext)
         {
             if (context.ViewBag != null)
             {

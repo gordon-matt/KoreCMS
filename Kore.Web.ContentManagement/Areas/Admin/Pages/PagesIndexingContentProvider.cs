@@ -32,7 +32,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
         {
             var pages = pageService.Repository.Table.ToHashSet();
             CultureInfo defaultCultureInfo = null;
-            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
             if (!string.IsNullOrEmpty(workContext.CurrentCultureCode))
             {
                 try

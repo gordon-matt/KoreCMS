@@ -25,7 +25,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets
 
         public virtual IEnumerable<IWidget> GetWidgets(string zoneName, string currentCultureCode)
         {
-            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
             Guid? pageId = workContext.GetState<Guid?>("CurrentPageId");
 
             var widgets = widgetService.GetWidgets(pageId: pageId, zoneName: zoneName);

@@ -380,7 +380,7 @@ namespace Kore.Web.Mvc.RoboUI
             {
                 setupAction(this);
             }
-            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
             var scriptRegister = new ScriptRegister(workContext);
             var styleRegister = new StyleRegister(workContext);
             GetAdditionalResources(scriptRegister, styleRegister);

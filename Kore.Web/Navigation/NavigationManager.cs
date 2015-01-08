@@ -15,13 +15,13 @@ namespace Kore.Web.Navigation
         private readonly UrlHelper urlHelper;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IAuthorizationService authorizationService;
-        private readonly IWorkContext workContext;
+        private readonly IWebWorkContext workContext;
 
         public NavigationManager(
             IEnumerable<INavigationProvider> providers,
             UrlHelper urlHelper,
             IHttpContextAccessor httpContextAccessor,
-            IWorkContext workContext,
+            IWebWorkContext workContext,
             IAuthorizationService authorizationService = null)
         {
             this.providers = providers;
@@ -84,7 +84,7 @@ namespace Kore.Web.Navigation
             return menuItems;
         }
 
-        private IEnumerable<MenuItem> Reduce(IEnumerable<MenuItem> items, IWorkContext workContext)
+        private IEnumerable<MenuItem> Reduce(IEnumerable<MenuItem> items, IWebWorkContext workContext)
         {
             foreach (var item in items)
             {

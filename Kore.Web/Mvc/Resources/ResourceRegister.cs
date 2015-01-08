@@ -10,9 +10,9 @@ namespace Kore.Web.Mvc.Resources
     public abstract class ResourceRegister
     {
         private readonly IResourcesManager resourcesManager;
-        private readonly IWorkContext workContext;
+        private readonly IWebWorkContext workContext;
 
-        protected ResourceRegister(IWorkContext workContext)
+        protected ResourceRegister(IWebWorkContext workContext)
         {
             resourcesManager = EngineContext.Current.Resolve<IResourcesManager>();
             this.workContext = workContext;

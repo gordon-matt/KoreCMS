@@ -15,7 +15,7 @@ namespace Kore.Web.Mvc
     {
         private HtmlHelper html = null;
 
-        public IWorkContext WorkContext { get; set; }
+        public IWebWorkContext WorkContext { get; set; }
 
         public Localizer T { get; set; }
 
@@ -50,7 +50,7 @@ namespace Kore.Web.Mvc
 
         protected KoreController()
         {
-            WorkContext = EngineContext.Current.Resolve<IWorkContext>();
+            WorkContext = EngineContext.Current.Resolve<IWebWorkContext>();
             T = LocalizationUtilities.Resolve();
             Logger = NullLogger.Instance;
         }

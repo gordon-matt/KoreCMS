@@ -199,6 +199,7 @@
     <Compile Include="Fakes\FakeHttpWorkerRequest.cs" />
     <Compile Include="Fakes\FakeIdentity.cs" />
     <Compile Include="Fakes\FakePrincipal.cs" />
+    <Compile Include="HttpContextStateProvider.cs" />
     <Compile Include="Indexing\Configuration\IndexSettings.cs" />
     <Compile Include="Indexing\Configuration\SearchSettings.cs" />
     <Compile Include="Indexing\DefaultIndexManager.cs" />
@@ -253,7 +254,7 @@
     <Compile Include="IO\HtmlStringWriter.cs" />
     <Compile Include="IO\PathValidation.cs" />
     <Compile Include="IWebHelper.cs" />
-    <Compile Include="IWorkContext.cs" />
+    <Compile Include="IWebWorkContext.cs" />
     <Compile Include="IWorkContextStateProvider.cs" />
     <Compile Include="KoreWebConstants.cs" />
     <Compile Include="KoreWebLocalizableStrings.cs" />
@@ -519,7 +520,7 @@
     <Compile Include="UrlBuilder.cs" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\KoreSiteSettings.cshtml" />
     <Compile Include="WebHelper.cs" />
-    <Compile Include="WorkContext.cs" />
+    <Compile Include="WebWorkContext.cs" />
     <Compile Include="WorkContextExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

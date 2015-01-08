@@ -105,7 +105,7 @@ namespace Kore.Web.Mvc.Notify
                 return;
             }
 
-            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
 
             foreach (var messageEntry in messageEntries)
             {

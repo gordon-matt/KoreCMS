@@ -17,7 +17,7 @@ namespace Kore.Web.Mvc.RoboUI.Providers
     {
         public override string Render<TModel>(RoboUIGridResult<TModel> roboUIGrid, HtmlHelper htmlHelper)
         {
-            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
             var scriptRegister = new ScriptRegister(workContext);
             var sb = new StringBuilder(2048);
 

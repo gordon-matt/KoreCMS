@@ -9,7 +9,7 @@ namespace Kore.Web
     /// <summary>
     /// Work context
     /// </summary>
-    public interface IWorkContext
+    public interface IWebWorkContext
     {
         T GetState<T>(string name);
 

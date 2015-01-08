@@ -31,7 +31,7 @@ namespace Kore.Web
     {
         #region Fields
 
-        private readonly IWorkContext _workContext;
+        private readonly IWebWorkContext _workContext;
 
         #endregion Fields
 
@@ -41,7 +41,7 @@ namespace Kore.Web
         /// Ctor
         /// </summary>
         /// <param name="workContext">Work context</param>
-        public MobileDeviceHelper(IWorkContext workContext)
+        public MobileDeviceHelper(IWebWorkContext workContext)
         {
             this._workContext = workContext;
         }

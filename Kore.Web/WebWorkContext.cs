@@ -11,12 +11,12 @@ using Kore.Web.Navigation;
 
 namespace Kore.Web
 {
-    public partial class WorkContext : IWorkContext
+    public partial class WebWorkContext : IWebWorkContext
     {
         private readonly ConcurrentDictionary<string, Func<object>> stateResolvers = new ConcurrentDictionary<string, Func<object>>();
         private readonly IEnumerable<IWorkContextStateProvider> workContextStateProviders;
 
-        public WorkContext()
+        public WebWorkContext()
         {
             workContextStateProviders = EngineContext.Current.ResolveAll<IWorkContextStateProvider>();
             Breadcrumbs = new BreadcrumbCollection();

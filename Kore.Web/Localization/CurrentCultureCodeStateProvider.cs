@@ -5,20 +5,20 @@ namespace Kore.Web.Localization
 {
     public class CurrentCultureCodeStateProvider : IWorkContextStateProvider
     {
-        private readonly ICultureManager cultureManager;
+        private readonly IWebCultureManager cultureManager;
 
-        public CurrentCultureCodeStateProvider(ICultureManager cultureManager)
+        public CurrentCultureCodeStateProvider(IWebCultureManager cultureManager)
         {
             this.cultureManager = cultureManager;
         }
 
         #region IWorkContextStateProvider Members
 
-        public Func<WorkContext, T> Get<T>(string name)
+        public Func<IWebWorkContext, T> Get<T>(string name)
         {
             if (name == KoreWebConstants.StateProviders.CurrentCultureCode)
             {
-                return ctx => (T)(object)cultureManager.GetCurrentCulture();
+                return ctx => (T)(object)cultureManager.GetCurrentCulture(ctx.HttpContext);
             }
             return null;
         }

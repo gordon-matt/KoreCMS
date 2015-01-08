@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Web;
+using Kore.Infrastructure;
 
 namespace Kore.Localization
 {
@@ -19,8 +20,9 @@ namespace Kore.Localization
 
         public LocalizedString Get(string textHint, params object[] args)
         {
-            var currentCulture = Thread.CurrentThread.CurrentUICulture.Name;
-            var localizedFormat = localizedStringManager.GetLocalizedString(textHint, currentCulture);
+            //string currentCulture = Thread.CurrentThread.CurrentUICulture.Name;
+            string currentCulture = EngineContext.Current.Resolve<IWorkContext>().CurrentCultureCode;
+            string localizedFormat = localizedStringManager.GetLocalizedString(textHint, currentCulture);
 
             if (string.IsNullOrEmpty(localizedFormat))
             {
@@ -28,10 +30,14 @@ namespace Kore.Localization
             }
 
             return args.Length == 0
-                       ? new LocalizedString(localizedFormat, textHint, args)
-                       : new LocalizedString(
-                             string.Format(GetFormatProvider(currentCulture), localizedFormat,
-                                           args.Select(Encode).ToArray()), textHint, args);
+                ? new LocalizedString(localizedFormat, textHint, args)
+                : new LocalizedString(
+                    string.Format(
+                        GetFormatProvider(currentCulture),
+                        localizedFormat,
+                        args.Select(Encode).ToArray()),
+                    textHint,
+                    args);
         }
 
         #endregion IText Members
@@ -42,10 +48,7 @@ namespace Kore.Localization
             {
                 return CultureInfo.GetCultureInfoByIetfLanguageTag(currentCulture);
             }
-            catch
-            {
-                return null;
-            }
+            catch { return null; }
         }
 
         private static object Encode(object arg)

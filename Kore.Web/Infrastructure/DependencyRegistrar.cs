@@ -98,7 +98,7 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<PerRequestCacheManager>().As<ICacheManager>().Named<ICacheManager>("Kore_Cache_Per_Request").InstancePerLifetimeScope();
 
             //work context, themes, routes, etc
-            builder.RegisterType<WebWorkContext>().As<IWebWorkContext>().InstancePerLifetimeScope();
+            builder.RegisterType<WebWorkContext>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
             builder.RegisterType<MobileDeviceHelper>().As<IMobileDeviceHelper>().InstancePerLifetimeScope();
             builder.RegisterType<ThemeProvider>().As<IThemeProvider>().InstancePerLifetimeScope();

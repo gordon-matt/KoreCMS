@@ -66,25 +66,6 @@ namespace Kore.Web
             get { return GetState<KoreUser>(KoreWebConstants.StateProviders.CurrentUser); }
         }
 
-        public string ShortDatePattern
-        {
-            get
-            {
-                return string.Format("{{0:{0}}}",
-                    Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern);
-            }
-        }
-
-        public string FullDateTimePattern
-        {
-            get
-            {
-                return string.Format("{{0:{0} {1}}}",
-                    Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern,
-                    Thread.CurrentThread.CurrentCulture.DateTimeFormat.LongTimePattern);
-            }
-        }
-
         #endregion IWorkContext Members
 
         private Func<object> FindResolverForState<T>(string name)

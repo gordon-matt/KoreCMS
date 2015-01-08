@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Web.Mvc;
 using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
@@ -39,8 +40,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
             {
                 {"upload_dir", Url.Action("UploadFiles", "UploadFiles")},
                 {"allowed_extensions", "jpg,png,doc"},
-                {"date_format", WorkContext.ShortDatePattern},
-                {"datetime_format", WorkContext.FullDateTimePattern},
+                {"date_format", string.Format(
+                    "{{0:{0}}}",
+                    Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern)},
+                {"datetime_format", string.Format(
+                    "{{0:{0} {1}}}",
+                    Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern,
+                    Thread.CurrentThread.CurrentCulture.DateTimeFormat.LongTimePattern)},
+                //{"date_format", WorkContext.ShortDatePattern},
+                //{"datetime_format", WorkContext.FullDateTimePattern},
                 {"per_page", 10},
                 {"disable_settings", 1},
                 {"session_upload_dir", "FilesUpload"},

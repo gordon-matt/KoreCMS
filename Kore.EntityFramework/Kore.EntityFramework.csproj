@@ -68,7 +68,6 @@
     <Compile Include="Data\EntityFramework\DependencyRegistrar.cs" />
     <Compile Include="Data\EntityFramework\EntityFrameworkRepository.cs" />
     <Compile Include="Data\EntityFramework\IEntityTypeConfiguration.cs" />
-    <Compile Include="Data\EntityFramework\KoreDbContext.cs" />
     <Compile Include="Data\EntityFramework\QueryableExtensions.cs" />
     <Compile Include="Data\IKoreDbContext.cs" />
     <Compile Include="DropCreateSeedDatabaseIfModelChanges.cs" />

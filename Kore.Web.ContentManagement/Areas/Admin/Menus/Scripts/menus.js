@@ -69,15 +69,7 @@ var MenuItemVM = function () {
                 async: false
             })
             .done(function (json) {
-                if (parentId) {
-                    $('#items-grid-' + parentId).data('kendoGrid').dataSource.read();
-                    $('#items-grid-' + parentId).data('kendoGrid').refresh();
-                }
-                else {
-                    $('#ItemsGrid').data('kendoGrid').dataSource.read();
-                    $('#ItemsGrid').data('kendoGrid').refresh();
-                }
-
+                refreshGrid(parentId);
                 $.notify(translations.DeleteRecordSuccess, "success");
             })
             .fail(function () {
@@ -118,16 +110,8 @@ var MenuItemVM = function () {
                 async: false
             })
             .done(function (json) {
-                if (parentId) {
-                    $('#items-grid-' + parentId).data('kendoGrid').dataSource.read();
-                    $('#items-grid-' + parentId).data('kendoGrid').refresh();
-                }
-                else {
-                    $('#ItemsGrid').data('kendoGrid').dataSource.read();
-                    $('#ItemsGrid').data('kendoGrid').refresh();
-                }
+                refreshGrid(parentId);
                 switchSection($("#items-grid-section"));
-
                 $.notify(translations.InsertRecordSuccess, "success");
             })
             .fail(function () {
@@ -145,17 +129,8 @@ var MenuItemVM = function () {
                 async: false
             })
             .done(function (json) {
-                if (parentId) {
-                    $('#items-grid-' + parentId).data('kendoGrid').dataSource.read();
-                    $('#items-grid-' + parentId).data('kendoGrid').refresh();
-                }
-                else {
-                    $('#ItemsGrid').data('kendoGrid').dataSource.read();
-                    $('#ItemsGrid').data('kendoGrid').refresh();
-                }
-
+                refreshGrid(parentId);
                 switchSection($("#items-grid-section"));
-
                 $.notify(translations.UpdateRecordSuccess, "success");
             })
             .fail(function () {
@@ -186,9 +161,7 @@ var MenuItemVM = function () {
             async: false
         })
         .done(function (json) {
-            $('#items-grid-' + parentId).data('kendoGrid').dataSource.read();
-            $('#items-grid-' + parentId).data('kendoGrid').refresh();
-
+            refreshGrid(parentId);
             $.notify(translations.UpdateRecordSuccess, "success");
         })
         .fail(function () {
@@ -205,6 +178,23 @@ var MenuItemVM = function () {
         }
     });
 };
+
+function refreshGrid(parentId) {
+    if (parentId && (parentId != "null")) {
+        try {
+            $('#items-grid-' + parentId).data('kendoGrid').dataSource.read();
+            $('#items-grid-' + parentId).data('kendoGrid').refresh();
+        }
+        catch (err) {
+            $('#ItemsGrid').data('kendoGrid').dataSource.read();
+            $('#ItemsGrid').data('kendoGrid').refresh();
+        }
+    }
+    else {
+        $('#ItemsGrid').data('kendoGrid').dataSource.read();
+        $('#ItemsGrid').data('kendoGrid').refresh();
+    }
+}
 
 var ViewModel = function () {
     var self = this;

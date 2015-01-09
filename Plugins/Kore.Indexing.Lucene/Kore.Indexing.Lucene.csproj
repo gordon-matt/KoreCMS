@@ -32,9 +32,11 @@
   <ItemGroup>
     <Reference Include="Autofac">
       <HintPath>..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Castle.Core">
       <HintPath>..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -73,7 +75,7 @@
       <HintPath>..\..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.SpellChecker.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
+      <Private>False</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -125,14 +127,17 @@
     <ProjectReference Include="..\..\Kore.Web.ContentManagement\Kore.Web.ContentManagement.csproj">
       <Project>{90ec17f4-d7c5-454f-9e56-947978525e88}</Project>
       <Name>Kore.Web.ContentManagement</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Kore.Web\Kore.Web.csproj">
       <Project>{36e2f817-e6e3-4942-9714-22547a68f79d}</Project>
       <Name>Kore.Web</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Kore\Kore.csproj">
       <Project>{f5b45103-1be4-401d-a90d-d4cd7a0ac5d4}</Project>
       <Name>Kore</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

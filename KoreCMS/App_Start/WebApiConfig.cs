@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using System.Web.Http.Cors;
 using Kore.Infrastructure;
 using Kore.Web.Infrastructure;
 
@@ -8,6 +9,7 @@ namespace KoreCMS
     {
         public static void Register(HttpConfiguration config)
         {
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*") { SupportsCredentials = true });
             //config.Services.Replace(typeof(IAssembliesResolver), new KoreAssembliesResolver());
 
             // Web API configuration and services

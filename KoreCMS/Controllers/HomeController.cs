@@ -3,7 +3,7 @@ using KoreCMS.Data;
 
 namespace KoreCMS.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         [Route("")]
         public ActionResult Index()

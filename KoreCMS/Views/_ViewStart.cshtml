@@ -1,3 +1,15 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@using Kore.Infrastructure
+@using Kore.Web.Configuration
+
+@{
+    var siteSettings = EngineContext.Current.Resolve<KoreSiteSettings>();
+
+    if (string.IsNullOrEmpty(siteSettings.DefaultFrontendLayoutPath))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = siteSettings.DefaultFrontendLayoutPath;
+    }
 }

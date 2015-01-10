@@ -37,7 +37,7 @@ namespace Kore.Web.Infrastructure
                         { KoreWebLocalizableStrings.General.SetDefault, "Set Default" },
                         { KoreWebLocalizableStrings.General.Settings, "Settings" },
                         { KoreWebLocalizableStrings.General.Submit, "Submit" },
-                        { KoreWebLocalizableStrings.General.Themes, "Theme" },
+                        { KoreWebLocalizableStrings.General.Themes, "Themes" },
                         { KoreWebLocalizableStrings.General.Toggle, "Toggle" },
                         { KoreWebLocalizableStrings.General.View, "View" },
                         { KoreWebLocalizableStrings.General.ViewFormat, "View {0}" },

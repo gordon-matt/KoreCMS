@@ -6,23 +6,28 @@ body {
     padding-top: 90px;
 }
 
-.elfinder .elfinder-button {
-    height: 48px;
-    width: 48px;
-    cursor: pointer;
-}
+/* elfinder */
 
-.ui-widget-header {
-    height: auto;
+.elfinder .elfinder-button {
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    padding: 8px;
 }
 
 .elfinder .elfinder-button.ui-state-disabled .fa {
     opacity: 0.4;
 }
 
-.elfinder .elfinder-button {
-    padding: 8px;
+.ui-widget-header {
+    height: auto;
 }
+
+.ui-widget-overlay {
+    z-index: auto !important;
+}
+
+/* End elfinder */
 
 .fa-sub {
     position: relative;

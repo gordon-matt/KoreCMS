@@ -97,7 +97,6 @@ namespace KoreCMS.Data
 
         public virtual void Seed()
         {
-            InitializeMembership();
             InitializeLocalizableStrings();
         }
 
@@ -117,55 +116,6 @@ namespace KoreCMS.Data
             foreach (dynamic configuration in configurations)
             {
                 modelBuilder.Configurations.Add(configuration);
-            }
-        }
-
-        private static void InitializeMembership()
-        {
-            var membershipService = EngineContext.Current.Resolve<IMembershipService>();
-
-            if (membershipService == null)
-            {
-                return;
-            }
-
-            var adminUser = membershipService.GetUserByName("admin@test.com");
-
-            if (adminUser == null)
-            {
-                membershipService.InsertUser(new KoreUser { UserName = "admin@test.com", Email = "admin@test.com" }, "Admin@123");
-                adminUser = membershipService.GetUserByName("admin@test.com");
-            }
-
-            if (adminUser != null)
-            {
-                var administratorsRole = membershipService.GetRoleByName("Administrators");
-                if (administratorsRole == null)
-                {
-                    membershipService.InsertRole(new KoreRole { Name = "Administrators" });
-                    administratorsRole = membershipService.GetRoleByName("Administrators");
-                    membershipService.AssignUserToRoles(adminUser.Id, new[] { administratorsRole.Id });
-                }
-            }
-
-            if (membershipService.SupportsRolePermissions)
-            {
-                var permissions = membershipService.GetAllPermissions();
-
-                if (!permissions.Any())
-                {
-                    var permissionProviders = EngineContext.Current.ResolveAll<IPermissionProvider>();
-                    var toInsert = permissionProviders.SelectMany(x => x.GetPermissions()).Select(x => new KorePermission
-                    {
-                        Name = x.Name,
-                        Category = x.Category,
-                        Description = x.Description
-                    });
-                    foreach (var permission in toInsert)
-                    {
-                        membershipService.InsertPermission(permission);
-                    }
-                }
             }
         }
 

@@ -1,8 +1,9 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Kore.Infrastructure
+@using Kore.Web.Configuration
 
 @{
-    var siteSettings = EngineContext.Current.Resolve<SiteSettings>();
+    var siteSettings = EngineContext.Current.Resolve<KoreSiteSettings>();
     
     Style.IncludeJQueryUI();
     Style.IncludeBootstrap();

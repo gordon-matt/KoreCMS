@@ -145,6 +145,9 @@
       <HintPath>..\packages\System.Spatial.5.6.3\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Cors">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.2\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -158,6 +161,9 @@
     <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.2\lib\net45\System.Web.Http.Cors.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.OData">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.5.3.1\lib\net45\System.Web.Http.OData.dll</HintPath>
@@ -237,8 +243,10 @@
     </Compile>
     <Compile Include="Infrastructure\DefaultLocalizableStringsProvider.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
+    <Compile Include="Initialization.cs" />
     <Compile Include="LocalizableStrings.cs" />
     <Compile Include="Messaging\AccountMessageTemplates.cs" />
+    <Compile Include="Messaging\AccountMessageTemplateTokensProvider.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Pages\TestPage.cs" />
@@ -291,6 +299,27 @@
     <Content Include="Content\elfinder\toolbar.png" />
     <Content Include="Content\elfinder\up.png" />
     <Content Include="Content\elfinder\view_list.png" />
+    <Content Include="Content\elfinder_2_1\css\elfinder.full.css" />
+    <Content Include="Content\elfinder_2_1\css\elfinder.min.css" />
+    <Content Include="Content\elfinder_2_1\css\theme.css" />
+    <Content Include="Content\elfinder_2_1\img\arrows-active.png" />
+    <Content Include="Content\elfinder_2_1\img\arrows-normal.png" />
+    <Content Include="Content\elfinder_2_1\img\crop.gif" />
+    <Content Include="Content\elfinder_2_1\img\dialogs.png" />
+    <Content Include="Content\elfinder_2_1\img\icons-big.png" />
+    <Content Include="Content\elfinder_2_1\img\icons-small.png" />
+    <Content Include="Content\elfinder_2_1\img\logo.png" />
+    <Content Include="Content\elfinder_2_1\img\progress.gif" />
+    <Content Include="Content\elfinder_2_1\img\quicklook-bg.png" />
+    <Content Include="Content\elfinder_2_1\img\quicklook-icons.png" />
+    <Content Include="Content\elfinder_2_1\img\resize.png" />
+    <Content Include="Content\elfinder_2_1\img\spinner-mini.gif" />
+    <Content Include="Content\elfinder_2_1\img\toolbar.png" />
+    <Content Include="Content\elfinder_2_1\img\volume_icon_dropbox.png" />
+    <Content Include="Content\elfinder_2_1\img\volume_icon_ftp.png" />
+    <Content Include="Content\elfinder_2_1\img\volume_icon_local.png" />
+    <Content Include="Content\elfinder_2_1\img\volume_icon_sql.png" />
+    <Content Include="Content\elfinder_2_1\sounds\rm.wav" />
     <Content Include="Content\fancybox\blank.gif" />
     <Content Include="Content\fancybox\fancybox_buttons.png" />
     <Content Include="Content\fancybox\fancybox_loading%402x.gif" />
@@ -546,6 +575,36 @@
     <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\elFinder.js" />
     <Content Include="Scripts\elfinder.min.js" />
+    <Content Include="Scripts\elfinder\elfinder.full.js" />
+    <Content Include="Scripts\elfinder\elfinder.min.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.ar.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.bg.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.ca.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.cs.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.da.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.de.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.el.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.es.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.fa.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.fr.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.hu.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.it.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.jp.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.ko.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.LANG.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.nl.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.no.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.pl.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.pt_BR.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.ru.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.sk.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.sl.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.sr.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.sv.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.tr.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.vi.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.zh_CN.js" />
+    <Content Include="Scripts\elfinder\i18n\elfinder.zh_TW.js" />
     <Content Include="Scripts\i18n\grid.locale-ar.js" />
     <Content Include="Scripts\i18n\grid.locale-bg.js" />
     <Content Include="Scripts\i18n\grid.locale-bg1251.js" />

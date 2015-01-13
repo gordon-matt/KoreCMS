@@ -21,8 +21,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Controllers
 
         [HttpPost]
         [Route("form-widget/save")]
-        public ActionResult Save(bool enableCaptcha, string thankYouMessage, string redirectUrl, string emailAddress, string widgetTitle)
+        [ValidateInput(false)]
+        public ActionResult Save(FormCollection formCollection)
         {
+            bool enableCaptcha = Convert.ToBoolean(formCollection["EnableCaptcha"]);
+            string thankYouMessage = formCollection["ThankYouMessage"];
+            string redirectUrl = formCollection["RedirectUrl"];
+            string emailAddress = formCollection["EmailAddress"];
+            string widgetTitle = formCollection["WidgetTitle"];
+
             // Validate captcha
             if (enableCaptcha)
             {
@@ -41,13 +48,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Controllers
                 }
             }
 
-            var values = Request.Form.AllKeys.ToDictionary(key => key, key => (object)Request.Form[key]);
+            var values = Request.Form.AllKeys.ToDictionary(key => key, key => (object)formCollection[key]);
+            //var values = Request.Form.AllKeys.ToDictionary(key => key, key => (object)Request.Form[key]);
 
             // Remove some items
             values.Remove("EnableCaptcha");
             values.Remove("captcha_challenge");
             values.Remove("captcha_response");
-            values.Remove("ThankyouMessage");
+            values.Remove("ThankYouMessage");
             values.Remove("RedirectUrl");
             values.Remove("EmailAddress");
             values.Remove("WidgetTitle");

@@ -1,4 +1,7 @@
-﻿@model Kore.Web.ContentManagement.Areas.Admin.Widgets.FormWidget
+﻿@using Kore.Localization
+@using Kore.Web.ContentManagement.Areas.Admin.Widgets
+
+@model FormWidget
 
 @{
     bool hasCssClass = !string.IsNullOrEmpty(Model.CssClass);
@@ -22,12 +25,26 @@
     @Html.HiddenFor(m => m.EmailAddress)
     @Html.Hidden("WidgetTitle", Model.Title)
 
-    @Html.Raw(Model.HtmlTemplate)
+    @{
+        string htmlTemplate = Model.HtmlTemplate;
+    }
 
     @if (Model.HtmlTemplate.Contains("[Captcha]"))
     {
-        //TODO
+        @Html.Hidden("EnableCaptcha", true)
+        var localizer = LocalizationUtilities.Resolve();
+        string captcha = FormWidget.GenerateCaptcha();
+        htmlTemplate = htmlTemplate.Replace("[Captcha]", captcha);
+        htmlTemplate = htmlTemplate.Replace("[CaptchaResponse]", string.Format(
+            "<input type=\"text\" class=\"form-control form-captcha\" name=\"captcha_response\" data-val=\"true\" data-val-required=\"{0}\" /><span data-valmsg-for=\"captcha_response\" data-valmsg-replace=\"true\"></span>",
+            localizer(Kore.Web.KoreWebLocalizableStrings.Validation.Required)));
     }
+    else
+    {
+        @Html.Hidden("EnableCaptcha", false)
+    }
+    
+    @Html.Raw(htmlTemplate)
 </form>
 
 @if (hasCssClass)

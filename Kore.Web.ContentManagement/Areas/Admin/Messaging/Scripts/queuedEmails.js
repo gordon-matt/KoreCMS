@@ -13,8 +13,9 @@ function deleteRecord(id) {
 
             $.notify(translations.DeleteRecordSuccess, "success");
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify(translations.DeleteRecordError, "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     }
 };

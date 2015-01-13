@@ -27,7 +27,6 @@
                 data: JSON.stringify({
                     taskId: id
                 }),
-                dataType: "json",
                 contentType: "application/json; charset=utf-8"
             })
             .done(function (json) {
@@ -35,8 +34,9 @@
                 $('#Grid').data('kendoGrid').refresh();
                 $.notify("Successfully executed task.", "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify("There was an error when executing the task.", "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
 

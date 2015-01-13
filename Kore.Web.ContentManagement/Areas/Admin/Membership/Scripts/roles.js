@@ -36,8 +36,9 @@ var RoleVM = function () {
             switchSection($("#roles-form-section"));
             $("#roles-form-section-legend").html("Edit");
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify("There was an error when retrieving the record.", "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     };
 
@@ -54,8 +55,9 @@ var RoleVM = function () {
 
                 $.notify("Successfully deleted record.", "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify("There was an error when deleting the record.", "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
     };
@@ -89,8 +91,9 @@ var RoleVM = function () {
 
                 $.notify("Successfully inserted record.", "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify("There was an error when inserting the record.", "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
         else {
@@ -111,8 +114,9 @@ var RoleVM = function () {
 
                 $.notify("Successfully updated record.", "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify("There was an error when updating the record.", "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
     };
@@ -140,8 +144,9 @@ var RoleVM = function () {
                 });
             }
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify("There was an error when retrieving the record.", "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
 
         switchSection($("#role-permissions-form-section"));
@@ -162,7 +167,6 @@ var RoleVM = function () {
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
-            dataType: "json",
             async: false
         })
         .done(function (json) {
@@ -171,6 +175,7 @@ var RoleVM = function () {
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify("There was an error when saving permissions.", "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     };
 

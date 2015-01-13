@@ -152,12 +152,14 @@
                         //self.validator.resetForm();
                         switchSection($("#form-section"));
                     })
-                    .fail(function () {
+                    .fail(function (jqXHR, textStatus, errorThrown) {
                         $.notify(translations.GetRecordError, "error");
+                        console.log(textStatus + ': ' + errorThrown);
                     });
                 })
-                .fail(function () {
+                .fail(function (jqXHR, textStatus, errorThrown) {
                     $.notify(translations.GetRecordError, "error");
+                    console.log(textStatus + ': ' + errorThrown);
                 });
             };
 
@@ -193,6 +195,7 @@
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
                     $.notify(translations.UpdateRecordError + ": " + jqXHR.responseText || textStatus, "error");
+                    console.log(textStatus + ': ' + errorThrown);
                 });
             };
 

@@ -27,15 +27,15 @@ var ChangePasswordVM = function () {
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(record),
-            dataType: "json",
             async: false
         })
         .done(function (json) {
             switchSection($("#users-grid-section"));
             $.notify("Successfully changed password.", "success");
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify("There was an error when changing the password.", "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     };
 
@@ -115,8 +115,9 @@ var UserVM = function () {
             self.validator.resetForm();
             switchSection($("#users-edit-form-section"));
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify("There was an error when retrieving the record.", "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     };
 
@@ -133,8 +134,9 @@ var UserVM = function () {
 
                 $.notify("Successfully deleted record.", "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify("There was an error when deleting the record.", "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
     };
@@ -172,8 +174,9 @@ var UserVM = function () {
 
                 $.notify("Successfully inserted record.", "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify("There was an error when inserting the record.", "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
         else {
@@ -194,8 +197,9 @@ var UserVM = function () {
 
                 $.notify("Successfully updated record.", "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify("There was an error when updating the record.", "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
     };
@@ -224,8 +228,9 @@ var UserVM = function () {
                 });
             }
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify("There was an error when retrieving the record.", "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
 
         switchSection($("#user-roles-form-section"));
@@ -246,15 +251,15 @@ var UserVM = function () {
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
-            dataType: "json",
             async: false
         })
         .done(function (json) {
             switchSection($("#users-grid-section"));
             $.notify("Successfully saved roles.", "success");
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify("There was an error when saving roles.", "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     };
 

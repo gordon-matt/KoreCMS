@@ -6,6 +6,7 @@ using System.Drawing.Text;
 using System.Globalization;
 using System.IO;
 using System.Web.Helpers;
+using System.Web.Mvc;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Widgets
 {
@@ -16,9 +17,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets
             get { return "Form Widget"; }
         }
 
+        [AllowHtml]
         [Display(Name = "Html Template")]
         public string HtmlTemplate { get; set; }
 
+        [AllowHtml]
         [Display(Name = "'Thank You' Message")]
         public string ThankYouMessage { get; set; }
 
@@ -38,50 +41,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets
             get { return "Kore.Web.ContentManagement.Areas.Admin.Widgets.Views.Shared.EditorTemplates.FormWidget"; }
         }
 
-        //public override string BuildDisplay(ViewContext viewContext)
-        //{
-        //    var urlHelper = new UrlHelper(viewContext.RequestContext);
-
-        //    using (var sw = new StringWriter())
-        //    using (var writer = new HtmlTextWriter(sw))
-        //    {
-        //        if (!string.IsNullOrEmpty(CssClass))
-        //        {
-        //            writer.AddAttribute(HtmlTextWriterAttribute.Class, CssClass);
-        //        }
-        //        writer.RenderBeginTag(HtmlTextWriterTag.Div);
-
-        //        if (ShowTitleOnPage)
-        //        {
-        //            writer.Write("<header><h3>{0}</h3></header>", Title);
-        //        }
-
-        //        writer.Write("<form method=\"post\" action=\"{0}\" enctype=\"multipart/form-data\">", urlHelper.Action("Save", "FormWidget", new { area = Constants.Areas.Widgets }));
-        //        writer.Write("<input type=\"hidden\" name=\"ThankyouMessage\" value=\"{0}\"/>", ThankyouMessage);
-        //        writer.Write("<input type=\"hidden\" name=\"RedirectUrl\" value=\"{0}\"/>", RedirectUrl);
-        //        writer.Write("<input type=\"hidden\" name=\"EmailAddress\" value=\"{0}\"/>", EmailAddress);
-        //        writer.Write("<input type=\"hidden\" name=\"WidgetTitle\" value=\"{0}\"/>", Title);
-
-        //        var htmlTemplate = HtmlTemplate;
-        //        if (htmlTemplate.Contains("[Captcha]"))
-        //        {
-        //            var localizer = LocalizationUtilities.Resolve();
-        //            var captcha = GenerateCaptcha();
-        //            htmlTemplate = htmlTemplate.Replace("[Captcha]", captcha);
-        //            htmlTemplate = htmlTemplate.Replace("[CaptchaResponse]", string.Format("<input type=\"text\" class=\"form-control form-captcha\" name=\"captcha_response\" data-val=\"true\" data-val-required=\"{0}\" /><span data-valmsg-for=\"captcha_response\" data-valmsg-replace=\"true\"></span>", localizer(Kore.Web.LocalizableStrings.Validation.Required)));
-        //            writer.Write("<input type=\"hidden\" name=\"EnableCaptcha\" value=\"true\"/>");
-        //            writer.Write(htmlTemplate);
-        //        }
-
-        //        writer.Write("</form>");
-
-        //        writer.RenderEndTag(); // div
-
-        //        return sw.ToString();
-        //    }
-        //}
-
-        private static string GenerateCaptcha()
+        public static string GenerateCaptcha()
         {
             var random = new Random((int)DateTime.Now.Ticks);
             //generate new question

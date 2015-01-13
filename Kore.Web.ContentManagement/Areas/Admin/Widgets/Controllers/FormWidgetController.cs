@@ -5,6 +5,7 @@ using System.Text;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using Kore.Net.Mail;
+using Kore.Web.ContentManagement.Areas.Admin.Widgets.Models;
 using Kore.Web.Mvc;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Controllers
@@ -109,23 +110,23 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Controllers
             {
                 emailSender.Send(mailMessage);
 
-                //TODO: Implement this on UI
-                return Json(new
+                var result = new SaveResultModel
                 {
                     Success = true,
                     Message = thankYouMessage,
                     RedirectUrl = !string.IsNullOrWhiteSpace(redirectUrl) ? redirectUrl : Url.Content("~/")
-                });
+                };
+                return View("Kore.Web.ContentManagement.Areas.Admin.Widgets.Views.FormWidget.SaveResult", result);
             }
             catch (Exception ex)
             {
-                //TODO: Implement this on UI
-                return Json(new
+                var result = new SaveResultModel
                 {
                     Success = false,
                     Message = ex.GetBaseException().Message,
                     RedirectUrl = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.Content("~/")
-                });
+                };
+                return View("Kore.Web.ContentManagement.Areas.Admin.Widgets.Views.FormWidget.SaveResult", result);
             }
         }
     }

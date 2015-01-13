@@ -280,6 +280,7 @@
     <Compile Include="Areas\Admin\Widgets\HtmlWidget.cs" />
     <Compile Include="Areas\Admin\Widgets\IWidget.cs" />
     <Compile Include="Areas\Admin\Widgets\IWidgetProvider.cs" />
+    <Compile Include="Areas\Admin\Widgets\Models\SaveResultModel.cs" />
     <Compile Include="Areas\Admin\Widgets\Models\WidgetModel.cs" />
     <Compile Include="Areas\Admin\Widgets\Models\ZoneModel.cs" />
     <Compile Include="Areas\Admin\Widgets\RuleEngine\BuiltinRuleProvider.cs" />
@@ -319,6 +320,7 @@
     <Compile Include="Areas\Admin\Widgets\Scripting\ScriptExpressionEvaluator.cs" />
     <Compile Include="Areas\Admin\Widgets\Services\IWidgetService.cs" />
     <Compile Include="Areas\Admin\Widgets\Services\IZoneService.cs" />
+    <EmbeddedResource Include="Areas\Admin\Widgets\Views\FormWidget\SaveResult.cshtml" />
     <Compile Include="StartupTask.cs" />
     <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\ChangePassword.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\EditRole.cshtml" />

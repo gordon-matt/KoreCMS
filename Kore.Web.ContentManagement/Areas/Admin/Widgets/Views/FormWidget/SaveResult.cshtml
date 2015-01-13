@@ -1,0 +1,14 @@
+﻿@using Kore.Web.ContentManagement.Areas.Admin.Widgets.Models
+
+@model SaveResultModel
+
+@if (Model.Success)
+{
+    <p>@Model.Message</p>
+}
+else
+{
+    <p class="text-danger">@Model.Message</p>
+}
+
+<p>Click to continue: <a href="@Model.RedirectUrl" class="btn btn-primary">Redirect</a></p>

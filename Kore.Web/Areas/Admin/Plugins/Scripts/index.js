@@ -17,8 +17,9 @@
 
 //        $.notify(translations.InstallPluginSuccess, "success");
 //    })
-//    .fail(function () {
+//    .fail(function (jqXHR, textStatus, errorThrown) {
 //        $.notify(translations.InstallPluginError, "error");
+//          console.log(textStatus + ': ' + errorThrown);
 //    });
 //}
 
@@ -39,8 +40,9 @@
 
 //        $.notify(translations.UninstallPluginSuccess, "success");
 //    })
-//    .fail(function () {
+//    .fail(function (jqXHR, textStatus, errorThrown) {
 //        $.notify(translations.UninstallPluginError, "error");
+//        console.log(textStatus + ': ' + errorThrown);
 //    });
 //}
 

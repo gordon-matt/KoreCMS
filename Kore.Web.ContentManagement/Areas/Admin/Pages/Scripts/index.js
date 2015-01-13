@@ -39,8 +39,9 @@ var PageTypeVM = function () {
             switchSection($("#page-type-form-section"));
             $("#page-type-form-section-legend").html(translations.Edit);
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify(translations.GetRecordError, "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     };
 
@@ -57,8 +58,9 @@ var PageTypeVM = function () {
 
                 $.notify(translations.DeleteRecordSuccess, "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(translations.DeleteRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
     };
@@ -91,8 +93,9 @@ var PageTypeVM = function () {
 
                 $.notify(translations.InsertRecordSuccess, "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(translations.InsertRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
         else {
@@ -112,8 +115,9 @@ var PageTypeVM = function () {
 
                 $.notify(translations.UpdateRecordSuccess, "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(translations.UpdateRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
     };
@@ -253,12 +257,14 @@ var ViewModel = function () {
                     ko.applyBindings(viewModel, elementToBind);
                 }
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(translations.GetRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify(translations.GetRecordError, "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     };
 
@@ -275,8 +281,9 @@ var ViewModel = function () {
 
                 $.notify(translations.DeleteRecordSuccess, "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(translations.DeleteRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
     };
@@ -326,8 +333,9 @@ var ViewModel = function () {
 
                 $.notify(translations.InsertRecordSuccess, "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(translations.InsertRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
         else {
@@ -348,8 +356,9 @@ var ViewModel = function () {
 
                 $.notify(translations.UpdateRecordSuccess, "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(translations.UpdateRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
     };
@@ -395,8 +404,9 @@ var ViewModel = function () {
 
             $.notify(translations.UpdateRecordSuccess, "success");
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify(translations.UpdateRecordError, "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     };
 
@@ -503,13 +513,15 @@ var ViewModel = function () {
                         ko.applyBindings(viewModel, elementToBind);
                     }
                 })
-                .fail(function () {
+                .fail(function (jqXHR, textStatus, errorThrown) {
                     $.notify(translations.GetRecordError, "error");
+                    console.log(textStatus + ': ' + errorThrown);
                 });
             }
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify(translations.GetTranslationError, "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     };
 

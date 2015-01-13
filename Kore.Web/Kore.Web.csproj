@@ -543,6 +543,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Configuration\Scripts\" />
+    <Folder Include="Areas\Admin\Log\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Plugins\Scripts\index.js" />

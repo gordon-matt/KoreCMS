@@ -39,8 +39,9 @@ var ViewModel = function () {
 
             switchSection($("#details-section"));
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify(translations.GetRecordError, "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     };
 
@@ -55,8 +56,9 @@ var ViewModel = function () {
             switchSection($("#grid-section"));
             $.notify(translations.PageHistoryRestoreSuccess, "success");
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify(translations.PageHistoryRestoreError, "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     };
 

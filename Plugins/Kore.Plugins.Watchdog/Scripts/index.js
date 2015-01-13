@@ -56,8 +56,9 @@ var ViewModel = function () {
 
                 $.notify(translations.DeleteRecordSuccess, "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(translations.DeleteRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
     };
@@ -90,8 +91,9 @@ var ViewModel = function () {
 
             $.notify(translations.InsertRecordSuccess, "success");
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify(translations.InsertRecordError, "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     };
 
@@ -101,29 +103,29 @@ var ViewModel = function () {
 
     self.stopService = function (instanceId, name) {
         if (confirm(translations.ConfirmStopService)) {
-            self.executeAction(baseUrl + "/StopService", instanceId, name, translations.StopServiceError, translations.StopServiceSuccess);
+            self.executeAction(baseUrl + "/StopService", instanceId, name, translations.StopServiceError, translations.StopServiceSuccess, false);
         }
     };
 
     self.startService = function (instanceId, name) {
-        self.executeAction(baseUrl + "/StartService", instanceId, name, translations.StartServiceError, translations.StartServiceSuccess);
+        self.executeAction(baseUrl + "/StartService", instanceId, name, translations.StartServiceError, translations.StartServiceSuccess, false);
     };
 
     self.restartService = function (instanceId, name) {
-        self.executeAction(baseUrl + "/RestartService", instanceId, name, translations.RestartServiceError, translations.RestartServiceSuccess);
+        self.executeAction(baseUrl + "/RestartService", instanceId, name, translations.RestartServiceError, translations.RestartServiceSuccess, false);
     };
 
     self.addService = function (instanceId, name) {
-        self.executeAction(baseUrl + "/AddService", instanceId, name, translations.AddServiceError, translations.AddServiceSuccess);
+        self.executeAction(baseUrl + "/AddService", instanceId, name, translations.AddServiceError, translations.AddServiceSuccess, true);
     };
 
     self.removeService = function (instanceId, name) {
         if (confirm(translations.ConfirmRemoveService)) {
-            self.executeAction(baseUrl + "/RemoveService", instanceId, name, translations.RemoveServiceError, translations.RemoveServiceSuccess);
+            self.executeAction(baseUrl + "/RemoveService", instanceId, name, translations.RemoveServiceError, translations.RemoveServiceSuccess, true);
         }
     };
 
-    self.executeAction = function (url, instanceId, name, successMsg, errorMsg) {
+    self.executeAction = function (url, instanceId, name, successMsg, errorMsg, returnsVoid) {
         var data = {
             instanceId: instanceId,
             name: name
@@ -134,7 +136,7 @@ var ViewModel = function () {
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
-            dataType: "json",
+            dataType: returnsVoid ? "text" : "json",
             async: false
         })
         .done(function (json) {
@@ -145,8 +147,9 @@ var ViewModel = function () {
 
             $.notify(successMsg, "success");
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify(errorMsg, "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     }
 

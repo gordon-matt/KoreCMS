@@ -55,8 +55,9 @@ var MenuItemVM = function () {
             self.validator.resetForm();
             switchSection($("#items-edit-section"));
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify(translations.GetRecordError, "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     };
 
@@ -72,8 +73,9 @@ var MenuItemVM = function () {
                 refreshGrid(parentId);
                 $.notify(translations.DeleteRecordSuccess, "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(translations.DeleteRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
     };
@@ -114,8 +116,9 @@ var MenuItemVM = function () {
                 switchSection($("#items-grid-section"));
                 $.notify(translations.InsertRecordSuccess, "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(translations.InsertRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
         else {
@@ -133,8 +136,9 @@ var MenuItemVM = function () {
                 switchSection($("#items-grid-section"));
                 $.notify(translations.UpdateRecordSuccess, "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(translations.UpdateRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
     };
@@ -164,8 +168,9 @@ var MenuItemVM = function () {
             refreshGrid(parentId);
             $.notify(translations.UpdateRecordSuccess, "success");
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify(translations.UpdateRecordError, "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     };
 
@@ -231,8 +236,9 @@ var ViewModel = function () {
             switchSection($("#form-section"));
             $("#form-section-legend").html(translations.Edit);
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify(translations.GetRecordError, "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     };
 
@@ -249,8 +255,9 @@ var ViewModel = function () {
 
                 $.notify(translations.DeleteRecordSuccess, "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(translations.DeleteRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
     };
@@ -285,8 +292,9 @@ var ViewModel = function () {
 
                 $.notify(translations.InsertRecordSuccess, "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(translations.InsertRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
         else {
@@ -307,8 +315,9 @@ var ViewModel = function () {
 
                 $.notify(translations.UpdateRecordSuccess, "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(translations.UpdateRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
     };

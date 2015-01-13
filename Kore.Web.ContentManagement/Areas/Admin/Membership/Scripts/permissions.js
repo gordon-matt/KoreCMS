@@ -36,8 +36,9 @@ var PermissionVM = function () {
             switchSection($("#permissions-form-section"));
             $("#permissions-form-section-legend").html("Edit");
         })
-        .fail(function () {
+        .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify("There was an error when retrieving the record.", "error");
+            console.log(textStatus + ': ' + errorThrown);
         });
     };
 
@@ -54,8 +55,9 @@ var PermissionVM = function () {
 
                 $.notify("Successfully deleted record.", "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify("There was an error when deleting the record.", "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
     };
@@ -91,8 +93,9 @@ var PermissionVM = function () {
 
                 $.notify("Successfully inserted record.", "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify("There was an error when inserting the record.", "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
         else {
@@ -113,8 +116,9 @@ var PermissionVM = function () {
 
                 $.notify("Successfully updated record.", "success");
             })
-            .fail(function () {
+            .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify("There was an error when updating the record.", "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
         }
     };

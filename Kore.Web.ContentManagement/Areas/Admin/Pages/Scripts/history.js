@@ -78,7 +78,7 @@ $(document).ready(function () {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/cms/HistoricPages",
+                    url: "/odata/kore/cms/HistoricPages?$filter=PageId eq guid'" + pageId + "'",
                     dataType: "json"
                 }
             },
@@ -103,7 +103,7 @@ $(document).ready(function () {
             serverSorting: true,
             sort: { field: "ArchivedDate", dir: "desc" }
         },
-        filterable: true,
+        filterable: false,
         sortable: {
             allowUnsort: false
         },
@@ -115,12 +115,10 @@ $(document).ready(function () {
             field: "Name",
             title: "Name",
             template: '<a href="/#=Slug#" target="_blank">#=Name#</a>',
-            filterable: true
         }, {
             field: "ArchivedDate",
             title: "Archived Date",
             format: "{0:yyyy-MM-dd HH:mm:ss}",
-            filterable: true,
             width: 150
         }, {
             field: "Id",
@@ -128,7 +126,6 @@ $(document).ready(function () {
             template:
                 '<div class="btn-group"><a onclick="viewModel.view(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.View + '</a></div>',
             attributes: { "class": "text-center" },
-            filterable: false,
             width: 70
         }]
     });

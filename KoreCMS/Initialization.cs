@@ -38,9 +38,10 @@ namespace KoreCMS
                 adminUser = membershipService.GetUserByName("admin@test.com");
             }
 
+            KoreRole administratorsRole = null;
             if (adminUser != null)
             {
-                var administratorsRole = membershipService.GetRoleByName("Administrators");
+                administratorsRole = membershipService.GetRoleByName("Administrators");
                 if (administratorsRole == null)
                 {
                     membershipService.InsertRole(new KoreRole { Name = "Administrators" });
@@ -66,6 +67,12 @@ namespace KoreCMS
                     foreach (var permission in toInsert)
                     {
                         membershipService.InsertPermission(permission);
+                    }
+
+                    if (administratorsRole != null)
+                    {
+                        var fullAccessPermission = membershipService.GetPermissionByName("FullAccess");
+                        membershipService.AssignPermissionsToRole(administratorsRole.Id, new[] { fullAccessPermission.Id });
                     }
                 }
             }

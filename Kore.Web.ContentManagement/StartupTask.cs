@@ -32,7 +32,7 @@ namespace Kore.Web.ContentManagement
                 LayoutPath = "~/Views/Shared/_Layout.cshtml",
                 DisplayTemplatePath = x.DisplayTemplatePath,
                 EditorTemplatePath = x.EditorTemplatePath
-            });
+            }).ToList();
 
             if (!pageTypesToAdd.IsNullOrEmpty())
             {

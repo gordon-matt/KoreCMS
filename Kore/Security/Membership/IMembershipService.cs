@@ -75,5 +75,21 @@ namespace Kore.Security.Membership
         void UpdatePermission(KorePermission permission);
 
         #endregion Permissions
+
+        #region Profile
+
+        IDictionary<string, string> GetProfile(string userId);
+
+        void UpdateProfile(string userId, IDictionary<string, string> profile, bool deleteExisting = false);
+
+        string GetProfileEntry(string userId, string key);
+
+        void SaveProfileEntry(string userId, string key, string value);
+
+        void DeleteProfileEntry(string userId, string key);
+
+        IEnumerable<KoreUserProfileEntry> GetProfileEntriesByKey(string key);
+
+        #endregion Profile
     }
 }

@@ -9,38 +9,36 @@ using Autofac.Integration.WebApi;
 using Kore.Caching;
 using Kore.Infrastructure;
 using Kore.Localization;
+using Kore.Logging;
 using Kore.Net.Mail;
 using Kore.Tasks.Services;
 using Kore.Web.Areas.Admin.Configuration;
+using Kore.Web.Areas.Admin.Indexing;
 using Kore.Web.Areas.Admin.Plugins;
+using Kore.Web.Areas.Admin.ScheduledTasks;
 using Kore.Web.Configuration;
 using Kore.Web.Environment;
+using Kore.Web.Events;
 using Kore.Web.Fakes;
 using Kore.Web.Hosting;
+using Kore.Web.Indexing;
+using Kore.Web.Indexing.Services;
+using Kore.Web.IO.FileSystems.AppData;
+using Kore.Web.IO.FileSystems.LockFile;
+using Kore.Web.IO.FileSystems.VirtualPath;
+using Kore.Web.Localization;
+using Kore.Web.Localization.Services;
 using Kore.Web.Mvc.EmbeddedViews;
+using Kore.Web.Mvc.Notify;
 using Kore.Web.Mvc.Resources;
 using Kore.Web.Mvc.RoboUI;
 using Kore.Web.Mvc.Routing;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Navigation;
 using Kore.Web.Plugins;
-using Kore.Web.Areas.Admin.ScheduledTasks;
-using Kore.Web.Security.Membership.Permissions;
-using Kore.Logging;
-using Kore.Web.Events;
-using Castle.Core.Logging;
-using Kore.Web.IO.FileSystems.AppData;
-using Kore.Web.IO.FileSystems.VirtualPath;
-using Kore.Web.Indexing.Services;
-using Kore.Web.IO.FileSystems.LockFile;
-using Kore.Web.Indexing;
-using Kore.Web.Mvc.Notify;
-using IFilterProvider = Kore.Web.Mvc.Filters.IFilterProvider;
-using Kore.Web.Areas.Admin.Indexing;
-using Kore.Web.Indexing.Configuration;
 using Kore.Web.Security.Membership;
-using Kore.Web.Localization;
-using Kore.Web.Localization.Services;
+using Kore.Web.Security.Membership.Permissions;
+using IFilterProvider = Kore.Web.Mvc.Filters.IFilterProvider;
 
 namespace Kore.Web.Infrastructure
 {
@@ -178,6 +176,10 @@ namespace Kore.Web.Infrastructure
 
             builder.RegisterType<Notifier>().As<INotifier>().InstancePerDependency();
             builder.RegisterType<NotifyFilter>().As<IFilterProvider>().InstancePerLifetimeScope();
+
+            // user profile providers
+            builder.RegisterType<KoreWebUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
+            builder.RegisterType<LocalizationUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
         }
 
         private static RequestContext RequestContextFactory(IComponentContext context)

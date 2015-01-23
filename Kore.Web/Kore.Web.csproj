@@ -262,6 +262,7 @@
     <Compile Include="Localization\DefaultWebCultureManager.cs" />
     <Compile Include="Localization\IWebCultureManager.cs" />
     <Compile Include="Localization\LanguageContentHandler.cs" />
+    <Compile Include="Localization\LocalizationUserProfileProvider.cs" />
     <Compile Include="Localization\Services\CookieCultureSelector.cs" />
     <Compile Include="Localization\Services\CultureSelectorResult.cs" />
     <Compile Include="Localization\Services\ICultureSelector.cs" />
@@ -509,6 +510,8 @@
     <Compile Include="Areas\Admin\Plugins\PluginsPermissions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\Membership\CurrentUserStateProvider.cs" />
+    <Compile Include="Security\Membership\KoreWebUserProfileProvider.cs" />
+    <Compile Include="Security\Membership\IUserProfileProvider.cs" />
     <Compile Include="Security\Membership\Permissions\CheckAccessContext.cs" />
     <Compile Include="Security\Membership\Permissions\IAuthorizationService.cs" />
     <Compile Include="Security\Membership\Permissions\IAuthorizationServiceEventHandler.cs" />

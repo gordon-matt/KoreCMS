@@ -294,7 +294,7 @@ namespace Kore.Web.Mvc.RoboUI.Providers
             scriptRegister.IncludeBundle("jquery-ui");
             styleRegister.IncludeBundle("jquery-ui");
 
-            scriptRegister.IncludeBundle("jquery-validate");
+            scriptRegister.IncludeBundle("jqueryval");
 
             //scriptRegister.IncludeBundle("fancybox");
             //styleRegister.IncludeBundle("fancybox");

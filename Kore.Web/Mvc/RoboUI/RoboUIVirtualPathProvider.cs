@@ -53,7 +53,7 @@ namespace Kore.Web.Mvc.RoboUI
                 string layoutPath = null;
                 string currentArea = (string)HttpContext.Current.Request.RequestContext.RouteData.DataTokens["area"];
 
-                if (RoboSettings.AreaLayoutPaths.ContainsKey(currentArea))
+                if (!string.IsNullOrEmpty(currentArea) && RoboSettings.AreaLayoutPaths.ContainsKey(currentArea))
                 {
                     layoutPath = RoboSettings.AreaLayoutPaths[currentArea];
                 }

@@ -1,6 +1,9 @@
 using System;
 using System.Web;
+using Kore.Infrastructure;
+using Kore.Security.Membership;
 using Kore.Web.Configuration;
+using Kore.Web.Security.Membership;
 
 namespace Kore.Web
 {
@@ -99,7 +102,9 @@ namespace Kore.Web
         /// </summary>
         public virtual bool UserDontUseMobileVersion()
         {
-            throw new NotImplementedException();
+            var membershipService = EngineContext.Current.Resolve<IMembershipService>();
+            string dontUseMobileVersion = membershipService.GetProfileEntry(_workContext.CurrentUser.Id, KoreWebUserProfileProvider.DontUseMobileVersion);
+            return !string.IsNullOrEmpty(dontUseMobileVersion) && bool.Parse(dontUseMobileVersion);
             //return _workContext.CurrentCustomer.GetAttribute<bool>(SystemCustomerAttributeNames.DontUseMobileVersion, _tenantContext.CurrentStore.Id);
         }
 

@@ -672,7 +672,7 @@ namespace Kore.Web.Mvc.RoboUI
         {
             if (ShowValidationSummary)
             {
-                scriptRegister.IncludeBundle("jquery-validate");
+                scriptRegister.IncludeBundle("jqueryval");
             }
 
             GetProperties().ForEach(property => property.GetAdditionalResources(scriptRegister, styleRegister));

@@ -234,6 +234,7 @@
     <Compile Include="Reflection\ObjectExtensions.cs" />
     <Compile Include="Reflection\StringExtensions.cs" />
     <Compile Include="Reflection\TypeExtensions.cs" />
+    <Compile Include="Security\Membership\KoreUserProfileEntry.cs" />
     <Compile Include="StartupTask.cs" />
     <Compile Include="Tasks\Domain\ScheduledTask.cs" />
     <Compile Include="Tasks\Services\IScheduledTaskService.cs" />

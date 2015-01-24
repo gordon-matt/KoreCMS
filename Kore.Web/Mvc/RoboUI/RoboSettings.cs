@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Kore.Infrastructure;
+using Kore.Web.Configuration;
 using Kore.Web.Mvc.RoboUI.Providers;
 
 namespace Kore.Web.Mvc.RoboUI
@@ -7,8 +9,14 @@ namespace Kore.Web.Mvc.RoboUI
     {
         static RoboSettings()
         {
+            var siteSettings = EngineContext.Current.Resolve<KoreSiteSettings>();
+
             AreaLayoutPaths = new Dictionary<string, string>();
-            DefaultLayoutPath = "~/Views/Shared/_Layout.cshtml";
+
+            DefaultLayoutPath = string.IsNullOrEmpty(siteSettings.DefaultFrontendLayoutPath)
+                ? "~/Views/Shared/_Layout.cshtml"
+                : siteSettings.DefaultFrontendLayoutPath;
+
             DefaultFormProvider = new Bootstrap3RoboUIFormProvider();
             DefaultGridProvider = new JQGridRoboUIGridProvider();
         }

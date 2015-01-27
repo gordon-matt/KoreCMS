@@ -10,7 +10,9 @@ using Kore.Web.Mvc;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Controllers
 {
-    [RouteArea(Constants.Areas.Widgets)]
+    //[RouteArea(Constants.Areas.Widgets)]
+    [RouteArea("")]
+    [RoutePrefix("kore-cms")]
     public class FormWidgetController : KoreController
     {
         private readonly IEmailSender emailSender;

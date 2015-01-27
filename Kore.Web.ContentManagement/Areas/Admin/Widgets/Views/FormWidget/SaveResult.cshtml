@@ -2,13 +2,23 @@
 
 @model SaveResultModel
 
-@if (Model.Success)
-{
-    <p>@Model.Message</p>
-}
-else
-{
-    <p class="text-danger">@Model.Message</p>
-}
+<script>
+    if (!window.jQuery) {
+        document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"><\/script>');
+    }
+</script>
 
-<p>Click to continue: <a href="@Model.RedirectUrl" class="btn btn-primary">Redirect</a></p>
+@Html.Raw(Model.Message)
+
+<p>
+    If this page does not automatically redirect, please click the following link to continue:
+    <a href="@Model.RedirectUrl" class="btn btn-primary">Redirect</a>
+</p>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () {
+            window.location.replace('@Model.RedirectUrl');
+        }, 5000);
+    });
+</script>

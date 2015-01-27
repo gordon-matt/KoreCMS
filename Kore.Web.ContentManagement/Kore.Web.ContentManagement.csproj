@@ -395,10 +395,6 @@
       <Project>{2a636196-0b16-484a-8dd8-4bab656dec08}</Project>
       <Name>Kore.EntityFramework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Kore.Web.Mvc.KendoUI\Kore.Web.Mvc.KendoUI.csproj">
-      <Project>{aae0de6c-d0d6-4ff7-9efa-8c09163246d0}</Project>
-      <Name>Kore.Web.Mvc.KendoUI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Kore.Web\Kore.Web.csproj">
       <Project>{36e2f817-e6e3-4942-9714-22547a68f79d}</Project>
       <Name>Kore.Web</Name>

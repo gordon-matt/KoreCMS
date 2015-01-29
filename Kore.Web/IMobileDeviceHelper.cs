@@ -102,6 +102,12 @@ namespace Kore.Web
         /// </summary>
         public virtual bool UserDontUseMobileVersion()
         {
+
+            if (_workContext.CurrentUser == null)
+            {
+                return false;
+            }
+
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
             string dontUseMobileVersion = membershipService.GetProfileEntry(_workContext.CurrentUser.Id, KoreWebUserProfileProvider.DontUseMobileVersion);
             return !string.IsNullOrEmpty(dontUseMobileVersion) && bool.Parse(dontUseMobileVersion);

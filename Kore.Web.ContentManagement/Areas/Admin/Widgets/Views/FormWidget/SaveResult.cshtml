@@ -10,11 +10,14 @@
 
 @Html.Raw(Model.Message)
 
-<p>
-    If this page does not automatically redirect, please click the following link to continue:
-    <a href="@Model.RedirectUrl" class="btn btn-primary">Redirect</a>
-</p>
 
+<div style="text-align:center;margin-top:140px;">
+    <p>
+        If this page does not automatically redirect, please click the following link to continue:
+        <a href="@Model.RedirectUrl" class="btn btn-primary">Redirect</a>
+    </p>
+
+</div>
 <script type="text/javascript">
     $(document).ready(function () {
         setTimeout(function () {
@@ -22,3 +25,4 @@
         }, 5000);
     });
 </script>
+

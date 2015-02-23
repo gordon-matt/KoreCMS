@@ -6,8 +6,8 @@ namespace KoreCMS.Services
 {
     public class MembershipService : IdentityMembershipService<ApplicationDbContext>
     {
-        public MembershipService(IRepository<Permission> permissionRepository)
-            : base(permissionRepository)
+        public MembershipService(IRepository<UserProfileEntry> userProfileRepository)
+            : base(userProfileRepository)
         {
         }
     }

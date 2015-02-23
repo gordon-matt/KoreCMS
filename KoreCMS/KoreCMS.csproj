@@ -235,6 +235,7 @@
     <Compile Include="Data\ApplicationUserManager.cs" />
     <Compile Include="Data\Domain\ApplicationUser.cs" />
     <Compile Include="Data\Domain\Permission.cs" />
+    <Compile Include="Data\Domain\UserProfileEntry.cs" />
     <Compile Include="Data\IKoreSecurityDbContext.cs" />
     <Compile Include="Extensions\ScriptRegisterExtensions.cs" />
     <Compile Include="Extensions\StyleRegisterExtensions.cs" />

@@ -23,6 +23,7 @@ namespace KoreCMS.Services
         private readonly ApplicationUserManager userManager;
         private readonly RoleStore<IdentityRole> roleStore;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IRepository<UserProfileEntry> userProfileRepository;
 
         private static Dictionary<string, List<KoreRole>> cachedUserRoles;
         private static Dictionary<string, List<KorePermission>> cachedRolePermissions;
@@ -33,13 +34,14 @@ namespace KoreCMS.Services
             cachedRolePermissions = new Dictionary<string, List<KorePermission>>();
         }
 
-        public IdentityMembershipService(IRepository<Permission> permissionRepository)
+        public IdentityMembershipService(IRepository<UserProfileEntry> userProfileRepository)
         {
             dbContext = new TDbContext();
             this.userStore = new UserStore<ApplicationUser>(dbContext);
             this.roleStore = new RoleStore<IdentityRole>(dbContext);
             this.userManager = new ApplicationUserManager(userStore);
             this.roleManager = new RoleManager<IdentityRole>(roleStore);
+            this.userProfileRepository = userProfileRepository;
         }
 
         #region IMembershipService Members
@@ -473,6 +475,131 @@ namespace KoreCMS.Services
         }
 
         #endregion Permissions
+
+        #region Profile
+
+        public IDictionary<string, string> GetProfile(string userId)
+        {
+            return userProfileRepository.Table.Where(x => x.UserId == userId).ToDictionary(k => k.Key, v => v.Value);
+        }
+
+        public void UpdateProfile(string userId, IDictionary<string, string> profile, bool deleteExisting = false)
+        {
+            var entries = userProfileRepository.Table.Where(x => x.UserId == userId).ToList();
+
+            if (deleteExisting)
+            {
+                userProfileRepository.Delete(entries);
+
+                var toInsert = profile.Select(x => new UserProfileEntry
+                {
+                    UserId = userId,
+                    Key = x.Key,
+                    Value = x.Value
+                }).ToList();
+
+                userProfileRepository.Insert(toInsert);
+            }
+            else
+            {
+                var toUpdate = new List<UserProfileEntry>();
+                var toInsert = new List<UserProfileEntry>();
+
+                foreach (var keyValue in profile)
+                {
+                    var existing = entries.FirstOrDefault(x => x.Key == keyValue.Key);
+
+                    if (existing != null)
+                    {
+                        existing.Value = keyValue.Value;
+                        toUpdate.Add(existing);
+                    }
+                    else
+                    {
+                        toInsert.Add(new UserProfileEntry
+                        {
+                            UserId = userId,
+                            Key = keyValue.Key,
+                            Value = keyValue.Value
+                        });
+                    }
+                }
+
+                if (toUpdate.Any())
+                {
+                    userProfileRepository.Update(toUpdate);
+                }
+
+                if (toInsert.Any())
+                {
+                    userProfileRepository.Insert(toInsert);
+                }
+            }
+        }
+
+        public string GetProfileEntry(string userId, string key)
+        {
+            var entry = userProfileRepository.Table.FirstOrDefault(x =>
+                x.UserId == userId &&
+                x.Key == key);
+
+            if (entry != null)
+            {
+                return entry.Value;
+            }
+
+            return null;
+        }
+
+        public void SaveProfileEntry(string userId, string key, string value)
+        {
+            var entry = userProfileRepository.Table.FirstOrDefault(x =>
+                x.UserId == userId &&
+                x.Key == key);
+
+            if (entry != null)
+            {
+                entry.Value = value;
+                userProfileRepository.Update(entry);
+            }
+            else
+            {
+                userProfileRepository.Insert(new UserProfileEntry
+                {
+                    UserId = userId,
+                    Key = key,
+                    Value = value
+                });
+            }
+        }
+
+        public void DeleteProfileEntry(string userId, string key)
+        {
+            var entry = userProfileRepository.Table.FirstOrDefault(x =>
+                x.UserId == userId &&
+                x.Key == key);
+
+            if (entry != null)
+            {
+                userProfileRepository.Delete(entry);
+            }
+        }
+
+        public IEnumerable<KoreUserProfileEntry> GetProfileEntriesByKey(string key)
+        {
+            return userProfileRepository.Table
+                .Where(x => x.Key == key)
+                .ToHashSet()
+                .Select(x => new KoreUserProfileEntry
+                {
+                    Id = x.Id.ToString(),
+                    UserId = x.UserId,
+                    Key = x.Key,
+                    Value = x.Value
+                });
+        }
+
+        #endregion Profile
 
         #endregion IMembershipService Members
 

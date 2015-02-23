@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -7,6 +8,10 @@ using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Messaging;
 using Kore.Web.ContentManagement.Messaging.Services;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.RoboUI;
+using Kore.Web.Mvc.Routing;
+using Kore.Web.Security.Membership;
+using Kore.Web.Security.Membership.Permissions;
 using KoreCMS.Data;
 using KoreCMS.Data.Domain;
 using KoreCMS.Messaging;
@@ -19,16 +24,18 @@ namespace Kore.Controllers
 {
     [Authorize]
     [RoutePrefix("account")]
-    public class AccountController : Controller
+    public class AccountController : KoreController
     {
         private ApplicationUserManager _userManager;
         private readonly IMembershipService membershipService;
         private readonly IMessageService messageService;
+        private readonly Lazy<IEnumerable<IUserProfileProvider>> userProfileProviders;
 
-        public AccountController(IMembershipService membershipService, IMessageService messageService)
+        public AccountController(IMembershipService membershipService, IMessageService messageService, Lazy<IEnumerable<IUserProfileProvider>> userProfileProviders)
         {
             this.membershipService = membershipService;
             this.messageService = messageService;
+            this.userProfileProviders = userProfileProviders;
         }
 
         public AccountController(ApplicationUserManager userManager)
@@ -36,6 +43,10 @@ namespace Kore.Controllers
             UserManager = userManager;
             this.membershipService = EngineContext.Current.Resolve<IMembershipService>();
             this.messageService = EngineContext.Current.Resolve<IMessageService>();
+            this.userProfileProviders = new Lazy<IEnumerable<IUserProfileProvider>>(() =>
+            {
+                return EngineContext.Current.ResolveAll<IUserProfileProvider>();
+            });
         }
 
         public ApplicationUserManager UserManager
@@ -533,6 +544,155 @@ namespace Kore.Controllers
             }
             base.Dispose(disposing);
         }
+
+        #region User Profile
+
+        [Route("profile/{userId}")]
+        public virtual ActionResult ViewProfile(string userId)
+        {
+            return UserProfile(userId);
+        }
+
+        [Route("my-profile")]
+        public virtual ActionResult ViewMyProfile()
+        {
+            return UserProfile(WorkContext.CurrentUser.Id);
+        }
+
+        [Route("profile/edit/{userId}/")]
+        public virtual ActionResult EditProfile(string userId)
+        {
+            return UserProfile(userId, true);
+        }
+
+        [Route("my-profile/edit")]
+        public virtual ActionResult EditMyProfile()
+        {
+            return UserProfile(WorkContext.CurrentUser.Id, true);
+        }
+
+        private ActionResult UserProfile(string userId, bool editMode = false)
+        {
+            var result = new RoboUIFormResult(ControllerContext)
+            {
+                FormActionUrl = Url.Action("UpdateProfile"),
+                SubmitButtonText = T("Save"),
+                ReadOnly = !editMode,
+                ShowCancelButton = false
+            };
+
+            string title;
+            bool onlyPublicProperties = false;
+
+            if (editMode)
+            {
+                if (userId == WorkContext.CurrentUser.Id)
+                {
+                    title = T("Edit My Profile");
+                }
+                else if (CheckPermission(StandardPermissions.FullAccess))
+                {
+                    title = T("Edit Profile");
+                }
+                else
+                {
+                    return new HttpUnauthorizedResult();
+                }
+            }
+            else
+            {
+                if (userId == WorkContext.CurrentUser.Id)
+                {
+                    title = T("My Profile");
+
+                    result.AddAction()
+                        .HasText(T("Edit"))
+                        .HasUrl(Url.Action("EditMyProfile"))
+                        .HasButtonStyle(ButtonStyle.Primary);
+                }
+                else if (CheckPermission(StandardPermissions.FullAccess))
+                {
+                    var user = membershipService.GetUserById(userId);
+                    title = string.Format(T("Profile for '{0}'", user.UserName));
+
+                    result.AddAction()
+                        .HasText(T("Edit"))
+                        .HasUrl(Url.Action("EditProfile", RouteData.Values.Merge(new { userId })))
+                        .HasButtonStyle(ButtonStyle.Primary);
+                }
+                else
+                {
+                    var user = membershipService.GetUserById(userId);
+                    title = string.Format(T("Profile for '{0}'", user.UserName));
+                    onlyPublicProperties = true;
+                }
+
+                result.CancelButtonText = T("Close");
+            }
+
+            result.Title = title;
+
+            result.AddHiddenValue("UserId", userId.ToString());
+
+            bool hasProperties = false;
+            foreach (var provider in userProfileProviders.Value)
+            {
+                var newGroup = result.AddGroupedLayout(provider.Category);
+
+                foreach (var field in provider.GetFields(userId, onlyPublicProperties))
+                {
+                    hasProperties = true;
+
+                    result.AddProperty(field.Name, field, field.Value);
+                    newGroup.Add(field.Name);
+                }
+            }
+
+            if (!hasProperties)
+            {
+                return Content(T("There is no profile available to view.").Text);
+            }
+
+            return result;
+        }
+
+        [Button("Save")]
+        [HttpPost]
+        [Route("update-profile")]
+        [ValidateInput(false)]
+        public virtual ActionResult UpdateProfile()
+        {
+            var userId = Request.Form["UserId"];
+
+            var newProfile = new Dictionary<string, string>();
+
+            foreach (var provider in userProfileProviders.Value)
+            {
+                foreach (var fieldName in provider.GetFieldNames())
+                {
+                    string value = Request.Form[fieldName];
+
+                    if (value == "true,false")
+                    {
+                        value = "true";
+                    }
+
+                    newProfile.Add(fieldName, value);
+                }
+            }
+
+            membershipService.UpdateProfile(userId, newProfile);
+
+            //eventBus.Notify<IMembershipEventHandler>(x => x.ProfileChanged(userId, newProfile));
+
+            if (userId == WorkContext.CurrentUser.Id)
+            {
+                return RedirectToAction("ViewMyProfile");
+            }
+            return RedirectToAction("ViewMyProfile", RouteData.Values.Merge(new { userId }));
+        }
+
+        #endregion User Profile
 
         #region Helpers
 

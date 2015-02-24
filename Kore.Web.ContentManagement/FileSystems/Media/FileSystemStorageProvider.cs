@@ -459,24 +459,24 @@ namespace Kore.Web.ContentManagement.FileSystems.Media
                 this.directoryInfo = directoryInfo;
             }
 
-            #region Implementation of IStorageFolder
+            #region IStorageFolder Members
 
-            public string GetPath()
+            public string Path
             {
-                return path;
+                get { return path; }
             }
 
-            public string GetName()
+            public string Name
             {
-                return directoryInfo.Name;
+                get { return directoryInfo.Name; }
             }
 
-            public DateTime GetLastUpdated()
+            public DateTime LastUpdated
             {
-                return directoryInfo.LastWriteTime;
+                get { return directoryInfo.LastWriteTime; }
             }
 
-            #endregion Implementation of IStorageFolder
+            #endregion
         }
     }
 }

@@ -70,9 +70,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
 
             result["dirList"] = new JArray { folders.Select(x => new JObject
             {
-                {"name", x.GetName()},
-                {"size", ""},
-                {"last_modified", x.GetLastUpdated()}
+                { "name", x.Name },
+                { "size", ""},
+                { "last_modified", x.LastUpdated }
             }).ToArray() };
 
             result["fileList"] = new JArray { files.Select(ConvertMediaFileToJson).ToArray() };

@@ -133,7 +133,8 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.RegisterType<MediaService>().As<IMediaService>().InstancePerDependency();
             builder.RegisterType<MediaPathProvider>().As<IMediaPathProvider>().InstancePerDependency();
             builder.RegisterType<MediaPartService>().As<IMediaPartService>().InstancePerDependency();
-            builder.RegisterType<SystemMediaDriver>().As<IDriver>().InstancePerDependency();
+            //builder.RegisterType<SystemMediaDriver>().As<IDriver>().InstancePerDependency();
+            builder.RegisterType<FileSystemDriver>().As<IDriver>().InstancePerDependency();
 
             #endregion Other: Media
 

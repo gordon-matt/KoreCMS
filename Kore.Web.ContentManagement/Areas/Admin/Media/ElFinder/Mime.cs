@@ -11,30 +11,28 @@ namespace ElFinder
         static Mime()
         {
             _mimeTypes = new Dictionary<string, string>();
-            Assembly assembly = Assembly.GetExecutingAssembly();
+            var assembly = Assembly.GetExecutingAssembly();
             if (assembly != null)
             {
-                using (Stream stream = assembly.GetManifestResourceStream("ElFinder.mimeTypes.txt"))
+                using (var stream = assembly.GetManifestResourceStream("Kore.Web.ContentManagement.Areas.Admin.Media.ElFinder.mimeTypes.txt"))
+                using (var reader = new StreamReader(stream))
                 {
-                    using (StreamReader reader = new StreamReader(stream))
+                    while (!reader.EndOfStream)
                     {
-                        while (!reader.EndOfStream)
+                        string line = reader.ReadLine();
+                        line = line.Trim();
+                        if (!string.IsNullOrWhiteSpace(line) && line[0] != '#')
                         {
-                            string line = reader.ReadLine();
-                            line = line.Trim();
-                            if (!string.IsNullOrWhiteSpace(line) && line[0] != '#')
+                            string[] parts = line.Split(' ');
+                            if (parts.Length > 1)
                             {
-                                string[] parts = line.Split(' ');
-                                if (parts.Length > 1)
+                                string mime = parts[0];
+                                for (int i = 1; i < parts.Length; i++)
                                 {
-                                    string mime = parts[0];
-                                    for (int i = 1; i < parts.Length; i++)
+                                    string ext = parts[i].ToLower();
+                                    if (!_mimeTypes.ContainsKey(ext))
                                     {
-                                        string ext = parts[i].ToLower();
-                                        if (!_mimeTypes.ContainsKey(ext))
-                                        {
-                                            _mimeTypes.Add(ext, mime);
-                                        }
+                                        _mimeTypes.Add(ext, mime);
                                     }
                                 }
                             }

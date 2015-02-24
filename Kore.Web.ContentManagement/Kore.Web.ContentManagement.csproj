@@ -381,6 +381,7 @@
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\StandardPage.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Localization\Views\Shared\DisplayTemplates\LanguageSwitchWidget.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Localization\Views\Shared\EditorTemplates\LanguageSwitchWidget.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Media\Views\Media\Browse.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\RichTextFull.cshtml" />
@@ -409,7 +410,7 @@
     <EmbeddedResource Include="Areas\Admin\Messaging\Scripts\messageTemplates.js" />
     <EmbeddedResource Include="Areas\Admin\Localization\Scripts\index.js" />
     <EmbeddedResource Include="Areas\Admin\Localization\Scripts\localizableStrings.js" />
-    <Content Include="Areas\Admin\Media\ElFinder\mimeTypes.txt" />
+    <EmbeddedResource Include="Areas\Admin\Media\ElFinder\mimeTypes.txt" />
     <Content Include="Areas\Admin\Media\Services\mimeTypes.txt" />
     <EmbeddedResource Include="Areas\Admin\Membership\Scripts\membership.js" />
     <EmbeddedResource Include="Areas\Admin\Membership\Scripts\permissions.js" />

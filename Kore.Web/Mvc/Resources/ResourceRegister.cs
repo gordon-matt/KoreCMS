@@ -42,6 +42,12 @@ namespace Kore.Web.Mvc.Resources
 
         //public abstract void IncludeBundle(string bundleName, int? order = null);
 
+        public virtual string GetBundleUrl(string bundleName)
+        {
+            string bundleUrl = string.Concat(BundleBasePath, bundleName);
+            return BundleTable.Bundles.ResolveBundleUrl(bundleUrl);
+        }
+
         public virtual ResourceEntry IncludeBundle(string bundleName, int? order = null)
         {
             string bundleUrl = string.Concat(BundleBasePath, bundleName);

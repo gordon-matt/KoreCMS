@@ -16,6 +16,46 @@ function replaceAll(string, find, replace) {
     return string.replace(new RegExp(escapeRegExp(find), 'g'), replace);
 }
 
+var koreDefaultTinyMCEConfig = {
+    theme: "modern",
+    plugins: [
+        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+        "searchreplace wordcount visualblocks visualchars code fullscreen",
+        "insertdatetime media nonbreaking save table contextmenu directionality",
+        "emoticons template paste textcolor"
+    ],
+    toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+    toolbar2: "print preview media | forecolor backcolor emoticons",
+    image_advtab: true,
+    templates: [
+        { title: 'Test template 1', content: 'Test 1' },
+        { title: 'Test template 2', content: 'Test 2' }
+    ],
+    //force_br_newlines: false,
+    //force_p_newlines: false,
+    //forced_root_block: '',
+    file_browser_callback: elFinderBrowser
+};
+
+function elFinderBrowser(field_name, url, type, win) {
+    tinymce.activeEditor.windowManager.open({
+        file: '/admin/media/media-library/browse',// use an absolute path!
+        title: 'elFinder 2.0',
+        width: 900,
+        height: 450,
+        resizable: 'yes'
+    }, {
+        setUrl: function (url) {
+            win.document.getElementById(field_name).value = url;
+        }
+    });
+    return false;
+}
+
+if (typeof tinyMCEContentCss !== 'undefined') {
+    koreDefaultTinyMCEConfig.content_css = tinyMCEContentCss;
+}
+
 $(document).ready(function () {
     jQuery.validator.setDefaults({
         highlight: function (element) {

@@ -63,12 +63,16 @@ namespace ElFinder.DTO
                 throw new ArgumentNullException("info");
             if (root == null)
                 throw new ArgumentNullException("root");
-            string parentPath = info.Directory.FullName.Substring(root.Directory.FullName.Length);
-            string relativePath = info.FullName.Substring(root.Directory.FullName.Length);
+
+            string trimmedInfoDir = info.Directory.FullName.TrimEnd(new[] { '\\' });
+            string trimmedRootDir = root.Directory.FullName.TrimEnd(new[] { '\\' });
+
+            string parentPath = trimmedInfoDir.Substring(trimmedRootDir.Length);
+            string relativePath = info.FullName.Substring(trimmedRootDir.Length);
             FileDTO response;
             if (root.CanCreateThumbnail(info))
             {
-                ImageDTO imageResponse = new ImageDTO();
+                var imageResponse = new ImageDTO();
                 imageResponse.Thumbnail = root.GetExistingThumbHash(info) ?? (object)1;
                 var dim = root.GetImageDimension(info);
                 imageResponse.Dimension = string.Format("{0}x{1}", dim.Width, dim.Height);
@@ -125,12 +129,16 @@ namespace ElFinder.DTO
             }
             else
             {
-                string parentPath = directory.Parent.FullName.Substring(root.Directory.FullName.Length);
+                string trimmedDir = directory.FullName.TrimEnd(new[] { '\\' });
+                string trimmedParentDir = directory.Parent.FullName.TrimEnd(new[] { '\\' });
+                string trimmedRootDir = root.Directory.FullName.TrimEnd(new[] { '\\' });
+
+                string parentPath = trimmedParentDir.Substring(trimmedRootDir.Length);
                 DirectoryDTO response = new DirectoryDTO()
                 {
                     Mime = "directory",
                     ContainsChildDirs = directory.GetDirectories().Length > 0 ? (byte)1 : (byte)0,
-                    Hash = root.VolumeId + Helper.EncodePath(directory.FullName.Substring(root.Directory.FullName.Length)),
+                    Hash = root.VolumeId + Helper.EncodePath(trimmedDir.Substring(trimmedRootDir.Length)),
                     Read = 1,
                     Write = root.IsReadOnly ? (byte)0 : (byte)1,
                     Locked = root.IsLocked ? (byte)1 : (byte)0,

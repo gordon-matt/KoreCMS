@@ -115,109 +115,118 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
         [Route("browse")]
         public ActionResult Browse()
         {
-            var target = Request.QueryString["target"];
-
-            var sb = new StringBuilder();
-
-            if (target != null)
-            {
-                sb.Append("<div class=\"box media-browse\">");
-                sb.Append("<div class=\"box-header\"><span class=\"title\">File Browse</span><div class=\"buttons\"><a class=\"btn btn-close\" href=\"javascript:void(0)\" onclick=\"parent.jQuery.fancybox.close();\"><i class=\"kore-icon kore-icon-close\"></i></a></div></div>");
-                sb.Append("<div class=\"box-content nopadding\" style=\"border-bottom: none;\">");
-            }
-
-            sb.Append("<div id=\"fileContainer\" style=\"height: 190px; padding-left: 5px;\"></div>");
-
-            if (target != null)
-            {
-                sb.Append("</div>");
-                sb.Append("</div>");
-            }
-
-            var scriptRegister = new ScriptRegister(WorkContext);
-            var styleRegister = new StyleRegister(WorkContext);
-
-            if (target != null)
-            {
-                scriptRegister.IncludeInline(string.Format("$('#fileContainer').fileTree({{ root: '/', script: '{0}', multiFolder: false }}, function(file){{ try{{parent.document.getElementById('{1}').value = file; parent.jQuery.fancybox.close(); }}catch(e){{}} }});",
-                    Url.Action("FileTreeConnector", "Media", new { area = Constants.Areas.Media }), target));
-            }
-            else
-            {
-                scriptRegister.IncludeInline(string.Format("$('#fileContainer').fileTree({{ root: '/', script: '{0}', multiFolder: false }}, function(file){{ try{{parent.fileclick(file);}}catch(e){{}} }});",
-                    Url.Action("FileTreeConnector", "Media", new { area = Constants.Areas.Media })));
-            }
-
-            scriptRegister.IncludeBundle("jquery-filetree");
-            styleRegister.IncludeBundle("jquery-filetree");
-
-            var result = new RoboUIContentResult(sb.ToString());
-
-            return result;
+            return View("Kore.Web.ContentManagement.Areas.Admin.Media.Views.Media.Browse");
         }
 
-        [HttpPost]
+        //[HttpPost]
         [Route("connector")]
         public ActionResult Connector()
         {
-            var driver = EngineContext.Current.Resolve<IDriver>();
-            var connector = new Connector(driver);
-            return connector.Process(HttpContext.Request);
+            return ConnectorInstance.Process(HttpContext.Request);
         }
 
-        #region File Tree Connector
+        private Connector connectorInstance;
 
-        [HttpPost]
-        [Route("file-tree-connector")]
-        public ActionResult FileTreeConnector(string dir)
+        private Connector ConnectorInstance
         {
-            var path = string.IsNullOrEmpty(dir) ? null : Server.UrlDecode(dir.Trim('/'));
-
-            var mediaService = EngineContext.Current.Resolve<IMediaService>();
-            var folders = mediaService.GetMediaFolders(path);
-            var files = mediaService.GetMediaFiles(path);
-
-            var sb = new StringBuilder();
-
-            sb.Append("<ul class=\"jqueryFileTree\" style=\"display: none;\">");
-
-            foreach (var folder in folders)
+            get
             {
-                if (string.IsNullOrEmpty(dir) && folder.Name == "UploadFiles")
+                if (connectorInstance == null)
                 {
-                    continue;
+                    var driver = EngineContext.Current.Resolve<IDriver>();
+                    var pathProvider = EngineContext.Current.Resolve<IMediaPathProvider>();
+
+                    if (driver is FileSystemDriver)
+                    {
+                        var fileSystemDriver = (driver as FileSystemDriver);
+                        var thumbsStorage = new DirectoryInfo(Server.MapPath(pathProvider.PublicPath));
+                        fileSystemDriver.AddRoot(new Root(new DirectoryInfo(Server.MapPath(pathProvider.PublicPath)), "/Media/")
+                        {
+                            Alias = "My Documents",
+                            StartPath = new DirectoryInfo(Server.MapPath(pathProvider.PublicPath)),
+                            ThumbnailsStorage = thumbsStorage,
+                            //MaxUploadSizeInMb = 2.2,
+                            ThumbnailsUrl = "Thumbnails/"
+                        });
+                        connectorInstance = new Connector(fileSystemDriver);
+                    }
+                    else
+                    {
+                        connectorInstance = new Connector(driver);
+                    }
                 }
-                sb.AppendFormat("<li class=\"directory collapsed\"><a href=\"#\" rel=\"{0}/\">{1}</a></li>", folder.MediaPath.Replace('\\', '/'), folder.Name);
+                return connectorInstance;
             }
-
-            foreach (var file in files)
-            {
-                sb.AppendFormat("<li class=\"file ext_{0}\"><a href=\"#\" rel=\"{1}\">{2}</a></li>", Path.GetExtension(file.Name), file.MediaPath, file.Name);
-            }
-
-            sb.Append("</ul>");
-
-            return Content(sb.ToString());
         }
 
-        [HttpPost]
-        [Route("file-tree-connector/new-folder")]
-        public ActionResult NewFolder(string folder)
+        //public ActionResult Index()
+        //{
+        //    return ConnectorInstance.Process(this.HttpContext.Request);
+        //}
+
+        public ActionResult SelectFile(string target)
         {
-            var path = string.IsNullOrEmpty(folder) ? null : folder.Trim('/');
-            if (string.IsNullOrEmpty(path))
-            {
-                return null;
-            }
-
-            var parentPath = Path.GetDirectoryName(path);
-            var folderName = Path.GetFileName(path);
-            var mediaService = EngineContext.Current.Resolve<IMediaService>();
-            mediaService.CreateFolder(parentPath, folderName);
-
-            return Content(folder + "/");
+            return Json(ConnectorInstance.GetFileByHash(target).FullName);
         }
 
-        #endregion File Tree Connector
+        public ActionResult Thumbs(string tmb)
+        {
+            return ConnectorInstance.GetThumbnail(Request, Response, tmb);
+        }
+
+        //#region File Tree Connector
+
+        //[HttpPost]
+        //[Route("file-tree-connector")]
+        //public ActionResult FileTreeConnector(string dir)
+        //{
+        //    var path = string.IsNullOrEmpty(dir) ? null : Server.UrlDecode(dir.Trim('/'));
+
+        //    var mediaService = EngineContext.Current.Resolve<IMediaService>();
+        //    var folders = mediaService.GetMediaFolders(path);
+        //    var files = mediaService.GetMediaFiles(path);
+
+        //    var sb = new StringBuilder();
+
+        //    sb.Append("<ul class=\"jqueryFileTree\" style=\"display: none;\">");
+
+        //    foreach (var folder in folders)
+        //    {
+        //        if (string.IsNullOrEmpty(dir) && folder.Name == "UploadFiles")
+        //        {
+        //            continue;
+        //        }
+        //        sb.AppendFormat("<li class=\"directory collapsed\"><a href=\"#\" rel=\"{0}/\">{1}</a></li>", folder.MediaPath.Replace('\\', '/'), folder.Name);
+        //    }
+
+        //    foreach (var file in files)
+        //    {
+        //        sb.AppendFormat("<li class=\"file ext_{0}\"><a href=\"#\" rel=\"{1}\">{2}</a></li>", Path.GetExtension(file.Name), file.MediaPath, file.Name);
+        //    }
+
+        //    sb.Append("</ul>");
+
+        //    return Content(sb.ToString());
+        //}
+
+        //[HttpPost]
+        //[Route("file-tree-connector/new-folder")]
+        //public ActionResult NewFolder(string folder)
+        //{
+        //    var path = string.IsNullOrEmpty(folder) ? null : folder.Trim('/');
+        //    if (string.IsNullOrEmpty(path))
+        //    {
+        //        return null;
+        //    }
+
+        //    var parentPath = Path.GetDirectoryName(path);
+        //    var folderName = Path.GetFileName(path);
+        //    var mediaService = EngineContext.Current.Resolve<IMediaService>();
+        //    mediaService.CreateFolder(parentPath, folderName);
+
+        //    return Content(folder + "/");
+        //}
+
+        //#endregion File Tree Connector
     }
 }

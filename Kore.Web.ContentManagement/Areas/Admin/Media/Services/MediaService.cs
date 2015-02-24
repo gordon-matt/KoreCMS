@@ -72,9 +72,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
         {
             return new MediaFolder
             {
-                Name = folder.GetName(),
-                LastUpdated = folder.GetLastUpdated(),
-                MediaPath = folder.GetPath()
+                Name = folder.Name,
+                LastUpdated = folder.LastUpdated,
+                MediaPath = folder.Path
             };
         }
 

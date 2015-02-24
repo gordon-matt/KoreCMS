@@ -4,11 +4,11 @@ namespace Kore.Web.ContentManagement.FileSystems.Media
 {
     public interface IStorageFolder
     {
-        string GetPath();
+        string Path { get; }
 
-        string GetName();
+        string Name { get; }
 
-        DateTime GetLastUpdated();
+        DateTime LastUpdated { get; }
     }
 
     public class StorageFolder : IStorageFolder
@@ -18,20 +18,5 @@ namespace Kore.Web.ContentManagement.FileSystems.Media
         public string Name { get; set; }
 
         public DateTime LastUpdated { get; set; }
-
-        public string GetPath()
-        {
-            return Path;
-        }
-
-        public string GetName()
-        {
-            return Name;
-        }
-
-        public DateTime GetLastUpdated()
-        {
-            return LastUpdated;
-        }
     }
 }

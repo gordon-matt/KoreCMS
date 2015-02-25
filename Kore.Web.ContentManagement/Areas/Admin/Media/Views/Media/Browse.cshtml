@@ -15,7 +15,6 @@
 
     @*<div id="fileContainer" style="height: 250px; padding-left: 5px;"></div>*@
 
-
     @*<script type="text/javascript">
             $('#fileContainer').fileTree({
                 root: '/',
@@ -47,91 +46,78 @@
         }
 
 
-
-
-
-
-
-
-        var myCommands = elFinder.prototype._options.commands;
-        var disabled = ['extract', 'archive', 'resize', 'help', 'select'];
-        $.each(disabled, function (i, cmd) {
-            var idx;
-            (idx = $.inArray(cmd, myCommands)) !== -1 && myCommands.splice(idx, 1);
-        });
-        var options = {
-            url: '@Url.Action("Connector", "Media", new { area = Constants.Areas.Media })',  // connector URL
-            getFileCallback: function (file) { // editor callback
-                // file.url - commandsOptions.getfile.onlyURL = false (default)
-                // file     - commandsOptions.getfile.onlyURL = true
-                FileBrowserDialogue.mySubmit(file); // pass selected file path to TinyMCE
-            },
-            requestType: 'post',
-            commands: myCommands,
-            lang: 'en',
-            ui: ['toolbar'],
-            rememberLastDir: false,
-            height: 500,
-            resizable: false,
-            defaultView: 'list',
-            uiOptions: {
-                toolbar: [
-                    ['home', 'up'],
-                    ['mkdir', 'upload'],
-                    ['info'],
-                    ['quicklook'],
-                    ['cut', 'paste'],
-                    ['rm'],
-                    ['view', 'sort']
-                ],
-                tree: {
-                    openRootOnLoad: false,
+        $(document).ready(function () {
+            var myCommands = elFinder.prototype._options.commands;
+            var disabled = ['extract', 'archive', 'resize', 'help', 'select'];
+            $.each(disabled, function (i, cmd) {
+                var idx;
+                (idx = $.inArray(cmd, myCommands)) !== -1 && myCommands.splice(idx, 1);
+            });
+            var options = {
+                url: '@Url.Action("Connector", "Media", new { area = Constants.Areas.Media })',  // connector URL
+                getFileCallback: function (file) { // editor callback
+                    // file.url - commandsOptions.getfile.onlyURL = false (default)
+                    // file     - commandsOptions.getfile.onlyURL = true
+                    FileBrowserDialogue.mySubmit(file); // pass selected file path to TinyMCE
                 },
-                cwd: {
-                    oldSchool: true
-                }
-            },
-            contextmenu: {
-                navbar: ['open', '|', 'cut', 'paste', '|', 'rm', '|', 'info'],
-
-                cwd: ['reload', 'back', '|', 'upload', 'paste', '|', 'info'],
-
-                files: [
-                    'getfile', '|', 'open', 'quicklook', '|', 'download', '|', 'cut', 'paste', '|',
-                    'rm', '|', 'edit', 'rename', 'resize', '|', 'archive', 'extract', '|', 'info'
-                ]
-            },
-            handlers: {
-                upload: function (event, instance) {
-                    var uploadedFiles = event.data.added;
-                    var archives = ['application/x-gzip', 'application/x-tar', 'application/x-bzip2'];
-                    for (i in uploadedFiles) {
-                        var file = uploadedFiles[i];
-                        if (jQuery.inArray(file.mime, archives) >= 0) {
-                            instance.exec('extract', file.hash);
-                        }
+                requestType: 'post',
+                commands: myCommands,
+                lang: 'en',
+                ui: ['toolbar'],
+                rememberLastDir: false,
+                height: 500,
+                resizable: false,
+                defaultView: 'list',
+                uiOptions: {
+                    toolbar: [
+                        ['home', 'up'],
+                        ['mkdir', 'upload'],
+                        ['info'],
+                        ['quicklook'],
+                        ['cut', 'paste'],
+                        ['rm'],
+                        ['view', 'sort']
+                    ],
+                    tree: {
+                        openRootOnLoad: false,
+                    },
+                    cwd: {
+                        oldSchool: true
                     }
                 },
-            },
-            dialog: { width: 900, modal: true, title: "Files" }, // open in dialog window
-            commandsOptions: {
-                getfile: {
-                    onlyURL: true,
-                    multiple: false,
-                    folders: false,
-                    oncomplete: ''
+                contextmenu: {
+                    navbar: ['open', '|', 'cut', 'paste', '|', 'rm', '|', 'info'],
+
+                    cwd: ['reload', 'back', '|', 'upload', 'paste', '|', 'info'],
+
+                    files: [
+                        'getfile', '|', 'open', 'quicklook', '|', 'download', '|', 'cut', 'paste', '|',
+                        'rm', '|', 'edit', 'rename', 'resize', '|', 'archive', 'extract', '|', 'info'
+                    ]
                 },
-            }
-        };
+                handlers: {
+                    upload: function (event, instance) {
+                        var uploadedFiles = event.data.added;
+                        var archives = ['application/x-gzip', 'application/x-tar', 'application/x-bzip2'];
+                        for (i in uploadedFiles) {
+                            var file = uploadedFiles[i];
+                            if (jQuery.inArray(file.mime, archives) >= 0) {
+                                instance.exec('extract', file.hash);
+                            }
+                        }
+                    },
+                },
+                dialog: { width: 900, modal: true, title: "Files" }, // open in dialog window
+                commandsOptions: {
+                    getfile: {
+                        onlyURL: true,
+                        multiple: false,
+                        folders: false,
+                        oncomplete: ''
+                    },
+                }
+            };
 
-
-
-
-
-
-
-
-        $(document).ready(function () {
             var elf = $('#elfinder').elfinder(options);
 
             @*var elf = $('#elfinder').elfinder({

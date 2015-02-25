@@ -274,7 +274,7 @@ namespace ElFinder
             if (_thumbnailsDirectory == null)
                 return null;
             string relativePath = originalDirectory.FullName.Substring(_directory.FullName.Length);
-            string thumbDir = _thumbnailsDirectory.FullName + relativePath;
+            string thumbDir = Path.Combine(_thumbnailsDirectory.FullName, relativePath);
             return System.IO.Directory.Exists(thumbDir) ? thumbDir : null;
         }
 
@@ -315,27 +315,32 @@ namespace ElFinder
                 }
             }
             string fullPath = originalImage.File.DirectoryName + "\\" + name + originalImage.File.Extension;
+            //fullPath = Path.ChangeExtension(fullPath, originalImage.File.Extension);
 
             if (_thumbnailsDirectory != null)
             {
                 FileInfo thumbPath;
                 if (originalImage.File.FullName.StartsWith(_thumbnailsDirectory.FullName))
+                {
                     thumbPath = originalImage.File;
+                }
                 else
+                {
                     thumbPath = new FileInfo(Path.Combine(_thumbnailsDirectory.FullName, originalImage.RelativePath));
+                }
                 if (!thumbPath.Exists)
                 {
                     if (!thumbPath.Directory.Exists)
-                        System.IO.Directory.CreateDirectory(thumbPath.Directory.FullName);
-                    using (FileStream thumbFile = thumbPath.Create())
                     {
-                        using (FileStream original = File.OpenRead(fullPath))
-                        {
-                            ImageWithMime thumb = PicturesEditor.GenerateThumbnail(original, _thumbnailsSize, true);
-                            thumb.ImageStream.CopyTo(thumbFile);
-                            thumb.ImageStream.Position = 0;
-                            return thumb;
-                        }
+                        System.IO.Directory.CreateDirectory(thumbPath.Directory.FullName);
+                    }
+                    using (var thumbFile = thumbPath.Create())
+                    using (var original = File.OpenRead(fullPath))
+                    {
+                        var thumb = PicturesEditor.GenerateThumbnail(original, _thumbnailsSize, true);
+                        thumb.ImageStream.CopyTo(thumbFile);
+                        thumb.ImageStream.Position = 0;
+                        return thumb;
                     }
                 }
                 else
@@ -357,7 +362,7 @@ namespace ElFinder
             if (_thumbnailsDirectory == null || !CanCreateThumbnail(originalImage))
                 return null;
             string relativePath = originalImage.FullName.Substring(_directory.FullName.Length);
-            string thumbDir = Path.GetDirectoryName(_thumbnailsDirectory.FullName + relativePath);
+            string thumbDir = Path.GetDirectoryName(Path.Combine(_thumbnailsDirectory.FullName, relativePath));
             string thumbName = Path.GetFileNameWithoutExtension(originalImage.Name) + "_" + Helper.GetFileMd5(originalImage) + originalImage.Extension;
             return Path.Combine(thumbDir, thumbName);
         }

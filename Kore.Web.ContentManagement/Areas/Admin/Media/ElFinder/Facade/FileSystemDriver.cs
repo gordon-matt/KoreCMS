@@ -102,15 +102,18 @@ namespace ElFinder
             }
             Root root = _roots.First(r => r.VolumeId == volumePrefix);
             string path = Helper.DecodePath(pathHash);
-            string dirUrl = path != root.Directory.Name ? path : string.Empty;
-            var dir = new DirectoryInfo(root.Directory.FullName + dirUrl);
+            string dirUrl = path != root.Directory.Name ? path.TrimStart(new[] { '\\' }) : string.Empty;
+
+            string trimmedRoot = root.Directory.FullName.TrimEnd(new[] { '\\' });
+
+            var dir = new DirectoryInfo(Path.Combine(trimmedRoot, dirUrl));
             if (dir.Exists)
             {
                 return new FullPath(root, dir);
             }
             else
             {
-                var file = new FileInfo(root.Directory.FullName + dirUrl);
+                var file = new FileInfo(Path.Combine(trimmedRoot, dirUrl));
                 return new FullPath(root, file);
             }
         }
@@ -207,7 +210,7 @@ namespace ElFinder
         ActionResult IDriver.File(string target, bool download)
         {
             FullPath fullPath = ParsePath(target);
-            if (fullPath.IsDirectoty)
+            if (fullPath.IsDirectory)
                 return new HttpStatusCodeResult(403, "You can not download whole folder");
             if (!fullPath.File.Exists)
                 return new HttpNotFoundResult("File not found");

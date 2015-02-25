@@ -507,7 +507,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
         public ActionResult File(string target, bool download)
         {
             FullPath fullPath = ParsePath(target);
-            if (fullPath.IsDirectoty)
+            if (fullPath.IsDirectory)
                 return new HttpStatusCodeResult(403, "You can not download whole folder");
             if (!fullPath.File.Exists)
                 return new HttpNotFoundResult("File not found");
@@ -538,14 +538,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
             //Root root = _roots.First(r => r.VolumeId == volumePrefix);
             //string path = Helper.DecodePath(pathHash);
             //string dirUrl = path != root.Directory.Name ? path : string.Empty;
-            //var dir = new DirectoryInfo(root.Directory.FullName + dirUrl);
+            //var dir = new DirectoryInfo(Path.Combine(root.Directory.FullName, dirUrl));
             //if (dir.Exists)
             //{
             //    return new FullPath(root, dir);
             //}
             //else
             //{
-            //    var file = new FileInfo(root.Directory.FullName + dirUrl);
+            //    var file = new FileInfo(Path.Combine(root.Directory.FullName, dirUrl));
             //    return new FullPath(root, file);
             //}
         }

@@ -194,7 +194,7 @@ namespace ElFinder
         public FileSystemInfo GetFileByHash(string hash)
         {
             FullPath path = _driver.ParsePath(hash);
-            return !path.IsDirectoty ? (FileSystemInfo)path.File : (FileSystemInfo)path.Directory;
+            return !path.IsDirectory ? (FileSystemInfo)path.File : (FileSystemInfo)path.Directory;
         }
 
         public ActionResult GetThumbnail(HttpRequestBase request, HttpResponseBase response, string hash)
@@ -203,7 +203,7 @@ namespace ElFinder
             if (thumbHash != null)
             {
                 FullPath path = _driver.ParsePath(thumbHash);
-                if (!path.IsDirectoty && path.Root.CanCreateThumbnail(path.File))
+                if (!path.IsDirectory && path.Root.CanCreateThumbnail(path.File))
                 {
                     if (!HttpCacheHelper.IsFileFromCache(path.File, request, response))
                     {

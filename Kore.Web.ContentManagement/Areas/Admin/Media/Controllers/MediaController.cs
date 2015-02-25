@@ -169,6 +169,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
             return Json(ConnectorInstance.GetFileByHash(target).FullName);
         }
 
+        [Route("Thumbnails/{tmb}")]
         public ActionResult Thumbs(string tmb)
         {
             return ConnectorInstance.GetThumbnail(Request, Response, tmb);

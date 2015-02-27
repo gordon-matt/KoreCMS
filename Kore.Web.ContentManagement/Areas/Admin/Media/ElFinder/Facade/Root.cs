@@ -361,7 +361,7 @@ namespace ElFinder
         {
             if (_thumbnailsDirectory == null || !CanCreateThumbnail(originalImage))
                 return null;
-            string relativePath = originalImage.FullName.Substring(_directory.FullName.Length);
+            string relativePath = originalImage.FullName.Substring(_directory.FullName.Length).TrimStart(new[] { '\\' });
             string thumbDir = Path.GetDirectoryName(Path.Combine(_thumbnailsDirectory.FullName, relativePath));
             string thumbName = Path.GetFileNameWithoutExtension(originalImage.Name) + "_" + Helper.GetFileMd5(originalImage) + originalImage.Extension;
             return Path.Combine(thumbDir, thumbName);

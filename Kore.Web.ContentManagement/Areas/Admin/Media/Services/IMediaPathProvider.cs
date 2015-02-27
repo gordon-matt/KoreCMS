@@ -45,10 +45,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
                 //StoragePath = Path.Combine(mediaPath, settings.Name);
                 //VirtualPath = "~/Media/" + settings.Name + "/";
 
-                var appPath = "";
+                string appPath = string.Empty;
                 if (HostingEnvironment.IsHosted)
                 {
-                    appPath = HostingEnvironment.ApplicationVirtualPath ?? "";
+                    appPath = HostingEnvironment.ApplicationVirtualPath ?? string.Empty;
                 }
 
                 if (!appPath.EndsWith("/"))
@@ -61,7 +61,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
                     appPath = '/' + appPath;
                 }
 
-                PublicPath = appPath + "Media/";
+                PublicPath = appPath + "Media";
 
                 // TODO: think about tenancy in future:
                 //PublicPath = appPath + "Media/" + settings.Name + "/";

@@ -133,7 +133,13 @@ namespace ElFinder.DTO
                 string trimmedParentDir = directory.Parent.FullName.TrimEnd(new[] { '\\' });
                 string trimmedRootDir = root.Directory.FullName.TrimEnd(new[] { '\\' });
 
-                string parentPath = trimmedParentDir.Substring(trimmedRootDir.Length);
+                string parentPath = trimmedRootDir;
+                if (trimmedRootDir.Length <= trimmedParentDir.Length)
+                {
+                    parentPath = trimmedParentDir.Substring(trimmedRootDir.Length);
+                }
+                string parentHash = root.VolumeId + Helper.EncodePath(parentPath.Length > 0 ? parentPath : directory.Parent.Name);
+
                 DirectoryDTO response = new DirectoryDTO()
                 {
                     Mime = "directory",
@@ -145,7 +151,7 @@ namespace ElFinder.DTO
                     Size = 0,
                     Name = directory.Name,
                     UnixTimeStamp = (long)(directory.LastWriteTimeUtc - _unixOrigin).TotalSeconds,
-                    ParentHash = root.VolumeId + Helper.EncodePath(parentPath.Length > 0 ? parentPath : directory.Parent.Name)
+                    ParentHash = parentHash
                 };
                 return response;
             }

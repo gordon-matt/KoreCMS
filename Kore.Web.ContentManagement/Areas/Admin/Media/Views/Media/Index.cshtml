@@ -1,38 +1,17 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    
+    Style.IncludeBundle("jquery-ui");
+    Style.IncludeBundle("elfinder");
+    Script.IncludeBundle("jquery-migrate");
+    Script.IncludeBundle("jquery-ui");
+    Script.IncludeBundle("elfinder");
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Browser</title>
-    <link rel="stylesheet" type="text/css" href="@Style.GetBundleUrl("jquery-ui")" />
-    <link rel="stylesheet" type="text/css" href="@Style.GetBundleUrl("elfinder")" />
-</head>
-<body>
-    <div id="elfinder"></div>
+<div id="elfinder"></div>
 
-    <script type="text/javascript" src="@Script.GetBundleUrl("jquery")"></script>
-    <script type="text/javascript" src="@Script.GetBundleUrl("jquery-ui")"></script>
-    <script type="text/javascript" src="@Script.GetBundleUrl("elfinder")"></script>
-
+@section scripts {
     <script type="text/javascript">
-
-        var FileBrowserDialogue = {
-            init: function () {
-                // Here goes your code for setting your custom things onLoad.
-            },
-            mySubmit: function (URL) {
-                // pass selected file path to TinyMCE
-                parent.tinymce.activeEditor.windowManager.getParams().setUrl(URL);
-
-                // close popup window
-                parent.tinymce.activeEditor.windowManager.close();
-            }
-        }
-
         $(function () {
             var myCommands = elFinder.prototype._options.commands;
             var disabled = ['extract', 'archive', 'help', 'select'];
@@ -72,11 +51,6 @@
                         $('#elfinder-selectFile').hide();
                         selectedFile = null;
                     }
-                },
-                getFileCallback: function (file) { // editor callback
-                    // file.url - commandsOptions.getfile.onlyURL = false (default)
-                    // file     - commandsOptions.getfile.onlyURL = true
-                    FileBrowserDialogue.mySubmit(file.url); // pass selected file path to TinyMCE
                 }
             };
             $('#elfinder').elfinder(options).elfinder('instance');
@@ -92,5 +66,4 @@
             });
         });
     </script>
-</body>
-</html>
+}

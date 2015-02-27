@@ -27,89 +27,91 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
 
             ViewBag.Title = T("Manage Media");
 
-            var sb = new StringBuilder();
-            sb.Append("<div id=\"elfinder\"></div>");
+            return View("Kore.Web.ContentManagement.Areas.Admin.Media.Views.Media.Index");
 
-            var scriptRegister = new ScriptRegister(WorkContext);
-            var styleRegister = new StyleRegister(WorkContext);
+//            var sb = new StringBuilder();
+//            sb.Append("<div id=\"elfinder\"></div>");
 
-            scriptRegister.IncludeInline(string.Format(@"
-	                var myCommands = elFinder.prototype._options.commands;
-	                var disabled = ['extract', 'archive', 'resize', 'help', 'select'];
-	                $.each(disabled, function (i, cmd) {{
-	                    var idx;
-	                    (idx = $.inArray(cmd, myCommands)) !== -1 && myCommands.splice(idx, 1);
-	                }});
-	                var options = {{
-	                    url: '{0}',
-	                    requestType: 'post',
-	                    commands: myCommands,
-	                    lang: 'en',
-	                    ui: ['toolbar'],
-	                    rememberLastDir: false,
-	                    height: 500,
-	                    resizable: false,
-                        defaultView: 'list',
-	                    uiOptions: {{
-	                        toolbar: [
-                                ['home', 'up'],
-                                ['mkdir', 'upload'],
-                                ['info'],
-                                ['quicklook'],
-                                ['cut', 'paste'],
-                                ['rm'],
-                                ['view', 'sort']
-	                        ],
-	                        tree: {{
-	                            openRootOnLoad: false,
-	                        }},
-	                        cwd: {{
-	                            oldSchool: true
-	                        }}
-	                    }},
-	                    contextmenu: {{
-	                        navbar: ['open', '|', 'cut', 'paste', '|', 'rm', '|', 'info'],
+//            var scriptRegister = new ScriptRegister(WorkContext);
+//            var styleRegister = new StyleRegister(WorkContext);
 
-	                        cwd: ['reload', 'back', '|', 'upload', 'paste', '|', 'info'],
+//            scriptRegister.IncludeInline(string.Format(@"
+//	                var myCommands = elFinder.prototype._options.commands;
+//	                var disabled = ['extract', 'archive', 'resize', 'help', 'select'];
+//	                $.each(disabled, function (i, cmd) {{
+//	                    var idx;
+//	                    (idx = $.inArray(cmd, myCommands)) !== -1 && myCommands.splice(idx, 1);
+//	                }});
+//	                var options = {{
+//	                    url: '{0}',
+//	                    requestType: 'post',
+//	                    commands: myCommands,
+//	                    lang: 'en',
+//	                    ui: ['toolbar'],
+//	                    rememberLastDir: false,
+//	                    height: 500,
+//	                    resizable: false,
+//                        defaultView: 'list',
+//	                    uiOptions: {{
+//	                        toolbar: [
+//                                ['home', 'up'],
+//                                ['mkdir', 'upload'],
+//                                ['info'],
+//                                ['quicklook'],
+//                                ['cut', 'paste'],
+//                                ['rm'],
+//                                ['view', 'sort']
+//	                        ],
+//	                        tree: {{
+//	                            openRootOnLoad: false,
+//	                        }},
+//	                        cwd: {{
+//	                            oldSchool: true
+//	                        }}
+//	                    }},
+//	                    contextmenu: {{
+//	                        navbar: ['open', '|', 'cut', 'paste', '|', 'rm', '|', 'info'],
+//
+//	                        cwd: ['reload', 'back', '|', 'upload', 'paste', '|', 'info'],
+//
+//	                        files: [
+//                                'getfile', '|', 'open', 'quicklook', '|', 'download', '|', 'cut', 'paste', '|',
+//                                'rm', '|', 'edit', 'rename', 'resize', '|', 'archive', 'extract', '|', 'info'
+//	                        ]
+//	                    }},
+//	                    handlers: {{
+//	                        upload: function (event, instance) {{
+//	                            var uploadedFiles = event.data.added;
+//	                            var archives = ['application/x-gzip', 'application/x-tar', 'application/x-bzip2'];
+//	                            for (i in uploadedFiles) {{
+//	                                var file = uploadedFiles[i];
+//	                                if (jQuery.inArray(file.mime, archives) >= 0) {{
+//	                                    instance.exec('extract', file.hash);
+//	                                }}
+//	                            }}
+//	                        }},
+//	                    }},
+//	                    dialog: {{ width: 900, modal: true, title: ""Files"" }}, // open in dialog window
+//	                    commandsOptions: {{
+//	                        getfile: {{
+//	                            onlyURL: true,
+//	                            multiple: false,
+//	                            folders: false,
+//	                            oncomplete: ''
+//	                        }},
+//	                    }}
+//	                }};
+//	                $('#elfinder').elfinder(options).elfinder('instance');", @Url.Action("Connector", "Media", RouteData.Values)));
 
-	                        files: [
-                                'getfile', '|', 'open', 'quicklook', '|', 'download', '|', 'cut', 'paste', '|',
-                                'rm', '|', 'edit', 'rename', 'resize', '|', 'archive', 'extract', '|', 'info'
-	                        ]
-	                    }},
-	                    handlers: {{
-	                        upload: function (event, instance) {{
-	                            var uploadedFiles = event.data.added;
-	                            var archives = ['application/x-gzip', 'application/x-tar', 'application/x-bzip2'];
-	                            for (i in uploadedFiles) {{
-	                                var file = uploadedFiles[i];
-	                                if (jQuery.inArray(file.mime, archives) >= 0) {{
-	                                    instance.exec('extract', file.hash);
-	                                }}
-	                            }}
-	                        }},
-	                    }},
-	                    dialog: {{ width: 900, modal: true, title: ""Files"" }}, // open in dialog window
-	                    commandsOptions: {{
-	                        getfile: {{
-	                            onlyURL: true,
-	                            multiple: false,
-	                            folders: false,
-	                            oncomplete: ''
-	                        }},
-	                    }}
-	                }};
-	                $('#elfinder').elfinder(options).elfinder('instance');", @Url.Action("Connector", "Media", RouteData.Values)));
+//            scriptRegister.IncludeBundle("jquery-ui");
+//            scriptRegister.IncludeBundle("jquery-migrate");
+//            scriptRegister.IncludeBundle("elfinder");
 
-            scriptRegister.IncludeBundle("jquery-ui");
-            scriptRegister.IncludeBundle("jquery-migrate");
-            scriptRegister.IncludeBundle("elfinder");
+//            styleRegister.IncludeBundle("jquery-ui");
+//            styleRegister.IncludeBundle("elfinder");
 
-            styleRegister.IncludeBundle("jquery-ui");
-            styleRegister.IncludeBundle("elfinder");
-
-            var result = new RoboUIContentResult(sb.ToString());
-            return result;
+//            var result = new RoboUIContentResult(sb.ToString());
+//            return result;
         }
 
         [Route("browse")]
@@ -139,14 +141,17 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
                     if (driver is FileSystemDriver)
                     {
                         var fileSystemDriver = (driver as FileSystemDriver);
-                        var thumbsStorage = new DirectoryInfo(Server.MapPath(pathProvider.PublicPath));
-                        fileSystemDriver.AddRoot(new Root(new DirectoryInfo(Server.MapPath(pathProvider.PublicPath)), "/Media/")
+
+                        string publicPath = pathProvider.PublicPath.TrimEnd(new[] { '\\' });
+
+                        var thumbsStorage = new DirectoryInfo(Server.MapPath(publicPath));
+                        fileSystemDriver.AddRoot(new Root(new DirectoryInfo(Server.MapPath(publicPath)), "/Media/")
                         {
                             Alias = "My Documents",
-                            StartPath = new DirectoryInfo(Server.MapPath(pathProvider.PublicPath)),
+                            StartPath = new DirectoryInfo(Server.MapPath(Path.Combine(publicPath, "Default"))),
                             ThumbnailsStorage = thumbsStorage,
                             //MaxUploadSizeInMb = 2.2,
-                            ThumbnailsUrl = "Thumbnails/"
+                            ThumbnailsUrl = "/admin/media/media-library/thumbnails/"
                         });
                         connectorInstance = new Connector(fileSystemDriver);
                     }
@@ -169,10 +174,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
             return Json(ConnectorInstance.GetFileByHash(target).FullName);
         }
 
-        [Route("Thumbnails/{tmb}")]
-        public ActionResult Thumbs(string tmb)
+        [Route("thumbnails/{thumbHash}")]
+        public ActionResult Thumbs(string thumbHash)
         {
-            return ConnectorInstance.GetThumbnail(Request, Response, tmb);
+            return ConnectorInstance.GetThumbnail(Request, Response, thumbHash);
         }
 
         //#region File Tree Connector

@@ -41,8 +41,8 @@ function elFinderBrowser(field_name, url, type, win) {
     tinymce.activeEditor.windowManager.open({
         file: '/admin/media/media-library/browse',// use an absolute path!
         title: 'elFinder 2.0',
-        width: 900,
-        height: 450,
+        width: 1200,
+        height: 480,
         resizable: 'yes'
     }, {
         setUrl: function (url) {

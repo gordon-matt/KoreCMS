@@ -27,7 +27,7 @@ namespace ElFinder
 
         private void DirectoryCopy(DirectoryInfo sourceDir, string destDirName, bool copySubDirs)
         {
-            DirectoryInfo[] dirs = sourceDir.GetDirectories();
+            var dirs = sourceDir.GetDirectories();
 
             // If the source directory does not exist, throw an exception.
             if (!sourceDir.Exists)
@@ -42,9 +42,9 @@ namespace ElFinder
             }
 
             // Get the file contents of the directory to copy.
-            FileInfo[] files = sourceDir.GetFiles();
+            var files = sourceDir.GetFiles();
 
-            foreach (FileInfo file in files)
+            foreach (var file in files)
             {
                 // Create the path to the new copy of the file.
                 string temppath = Path.Combine(destDirName, file.Name);
@@ -56,7 +56,7 @@ namespace ElFinder
             // If copySubDirs is true, copy the subdirectories.
             if (copySubDirs)
             {
-                foreach (DirectoryInfo subdir in dirs)
+                foreach (var subdir in dirs)
                 {
                     // Create the subdirectory.
                     string temppath = Path.Combine(destDirName, subdir.Name);
@@ -147,14 +147,14 @@ namespace ElFinder
 
         JsonResult IDriver.Open(string target, bool tree)
         {
-            FullPath fullPath = ParsePath(target);
-            OpenResponse answer = new OpenResponse(DTOBase.Create(fullPath.Directory, fullPath.Root), fullPath);
-            foreach (FileInfo item in fullPath.Directory.GetFiles())
+            var fullPath = ParsePath(target);
+            var answer = new OpenResponse(DTOBase.Create(fullPath.Directory, fullPath.Root), fullPath);
+            foreach (var item in fullPath.Directory.GetFiles())
             {
                 if ((item.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
                     answer.Files.Add(DTOBase.Create(item, fullPath.Root));
             }
-            foreach (DirectoryInfo item in fullPath.Directory.GetDirectories())
+            foreach (var item in fullPath.Directory.GetDirectories())
             {
                 if ((item.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
                     answer.Files.Add(DTOBase.Create(item, fullPath.Root));
@@ -176,25 +176,25 @@ namespace ElFinder
             {
                 fullPath = ParsePath(target);
             }
-            InitResponse answer = new InitResponse(DTOBase.Create(fullPath.Directory, fullPath.Root), new Options(fullPath));
+            var answer = new InitResponse(DTOBase.Create(fullPath.Directory, fullPath.Root), new Options(fullPath));
 
-            foreach (FileInfo item in fullPath.Directory.GetFiles())
+            foreach (var item in fullPath.Directory.GetFiles())
             {
                 if ((item.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
                     answer.Files.Add(DTOBase.Create(item, fullPath.Root));
             }
-            foreach (DirectoryInfo item in fullPath.Directory.GetDirectories())
+            foreach (var item in fullPath.Directory.GetDirectories())
             {
                 if ((item.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
                     answer.Files.Add(DTOBase.Create(item, fullPath.Root));
             }
-            foreach (Root item in _roots)
+            foreach (var item in _roots)
             {
                 answer.Files.Add(DTOBase.Create(item.Directory, item));
             }
             if (fullPath.Root.Directory.FullName != fullPath.Directory.FullName)
             {
-                foreach (DirectoryInfo item in fullPath.Root.Directory.GetDirectories())
+                foreach (var item in fullPath.Root.Directory.GetDirectories())
                 {
                     if ((item.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
                         answer.Files.Add(DTOBase.Create(item, fullPath.Root));
@@ -209,7 +209,7 @@ namespace ElFinder
 
         ActionResult IDriver.File(string target, bool download)
         {
-            FullPath fullPath = ParsePath(target);
+            var fullPath = ParsePath(target);
             if (fullPath.IsDirectory)
                 return new HttpStatusCodeResult(403, "You can not download whole folder");
             if (!fullPath.File.Exists)
@@ -221,20 +221,23 @@ namespace ElFinder
 
         JsonResult IDriver.Parents(string target)
         {
-            FullPath fullPath = ParsePath(target);
-            TreeResponse answer = new TreeResponse();
-            if (fullPath.Directory.FullName == fullPath.Root.Directory.FullName)
+            var fullPath = ParsePath(target);
+            var answer = new TreeResponse();
+
+            string trimmedRoot = fullPath.Root.Directory.FullName.TrimEnd(new[] { '\\' });
+
+            if (fullPath.Directory.FullName == trimmedRoot)
             {
                 answer.Tree.Add(DTOBase.Create(fullPath.Directory, fullPath.Root));
             }
             else
             {
-                DirectoryInfo parent = fullPath.Directory;
+                var parent = fullPath.Directory;
                 foreach (var item in parent.Parent.GetDirectories())
                 {
                     answer.Tree.Add(DTOBase.Create(item, fullPath.Root));
                 }
-                while (parent.FullName != fullPath.Root.Directory.FullName)
+                while (parent.FullName != trimmedRoot)
                 {
                     parent = parent.Parent;
                     answer.Tree.Add(DTOBase.Create(parent, fullPath.Root));
@@ -245,8 +248,8 @@ namespace ElFinder
 
         JsonResult IDriver.Tree(string target)
         {
-            FullPath fullPath = ParsePath(target);
-            TreeResponse answer = new TreeResponse();
+            var fullPath = ParsePath(target);
+            var answer = new TreeResponse();
             foreach (var item in fullPath.Directory.GetDirectories())
             {
                 if ((item.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
@@ -257,8 +260,8 @@ namespace ElFinder
 
         JsonResult IDriver.List(string target)
         {
-            FullPath fullPath = ParsePath(target);
-            ListResponse answer = new ListResponse();
+            var fullPath = ParsePath(target);
+            var answer = new ListResponse();
             foreach (var item in fullPath.Directory.GetFileSystemInfos())
             {
                 answer.List.Add(item.Name);
@@ -268,22 +271,22 @@ namespace ElFinder
 
         JsonResult IDriver.MakeDir(string target, string name)
         {
-            FullPath fullPath = ParsePath(target);
-            DirectoryInfo newDir = Directory.CreateDirectory(Path.Combine(fullPath.Directory.FullName, name));
+            var fullPath = ParsePath(target);
+            var newDir = Directory.CreateDirectory(Path.Combine(fullPath.Directory.FullName, name));
             return Json(new AddResponse(newDir, fullPath.Root));
         }
 
         JsonResult IDriver.MakeFile(string target, string name)
         {
-            FullPath fullPath = ParsePath(target);
-            FileInfo newFile = new FileInfo(Path.Combine(fullPath.Directory.FullName, name));
+            var fullPath = ParsePath(target);
+            var newFile = new FileInfo(Path.Combine(fullPath.Directory.FullName, name));
             newFile.Create().Close();
             return Json(new AddResponse(newFile, fullPath.Root));
         }
 
         JsonResult IDriver.Rename(string target, string name)
         {
-            FullPath fullPath = ParsePath(target);
+            var fullPath = ParsePath(target);
             var answer = new ReplaceResponse();
             answer.Removed.Add(target);
             RemoveThumbs(fullPath);
@@ -304,10 +307,10 @@ namespace ElFinder
 
         JsonResult IDriver.Remove(IEnumerable<string> targets)
         {
-            RemoveResponse answer = new RemoveResponse();
+            var answer = new RemoveResponse();
             foreach (string item in targets)
             {
-                FullPath fullPath = ParsePath(item);
+                var fullPath = ParsePath(item);
                 RemoveThumbs(fullPath);
                 if (fullPath.Directory != null)
                 {
@@ -324,9 +327,9 @@ namespace ElFinder
 
         JsonResult IDriver.Get(string target)
         {
-            FullPath fullPath = ParsePath(target);
-            GetResponse answer = new GetResponse();
-            using (StreamReader reader = new StreamReader(fullPath.File.OpenRead()))
+            var fullPath = ParsePath(target);
+            var answer = new GetResponse();
+            using (var reader = new StreamReader(fullPath.File.OpenRead()))
             {
                 answer.Content = reader.ReadToEnd();
             }
@@ -335,9 +338,9 @@ namespace ElFinder
 
         JsonResult IDriver.Put(string target, string content)
         {
-            FullPath fullPath = ParsePath(target);
-            ChangedResponse answer = new ChangedResponse();
-            using (StreamWriter writer = new StreamWriter(fullPath.File.FullName, false))
+            var fullPath = ParsePath(target);
+            var answer = new ChangedResponse();
+            using (var writer = new StreamWriter(fullPath.File.FullName, false))
             {
                 writer.Write(content);
             }
@@ -347,14 +350,14 @@ namespace ElFinder
 
         JsonResult IDriver.Paste(string source, string dest, IEnumerable<string> targets, bool isCut)
         {
-            FullPath destPath = ParsePath(dest);
-            ReplaceResponse response = new ReplaceResponse();
+            var destPath = ParsePath(dest);
+            var response = new ReplaceResponse();
             foreach (var item in targets)
             {
-                FullPath src = ParsePath(item);
+                var src = ParsePath(item);
                 if (src.Directory != null)
                 {
-                    DirectoryInfo newDir = new DirectoryInfo(Path.Combine(destPath.Directory.FullName, src.Directory.Name));
+                    var newDir = new DirectoryInfo(Path.Combine(destPath.Directory.FullName, src.Directory.Name));
                     if (newDir.Exists)
                         Directory.Delete(newDir.FullName, true);
                     if (isCut)
@@ -392,13 +395,13 @@ namespace ElFinder
 
         JsonResult IDriver.Upload(string target, System.Web.HttpFileCollectionBase targets)
         {
-            FullPath dest = ParsePath(target);
+            var dest = ParsePath(target);
             var response = new AddResponse();
             if (dest.Root.MaxUploadSize.HasValue)
             {
                 for (int i = 0; i < targets.AllKeys.Length; i++)
                 {
-                    HttpPostedFileBase file = targets[i];
+                    var file = targets[i];
                     if (file.ContentLength > dest.Root.MaxUploadSize.Value)
                     {
                         return Error.MaxUploadFileSize();
@@ -407,8 +410,8 @@ namespace ElFinder
             }
             for (int i = 0; i < targets.AllKeys.Length; i++)
             {
-                HttpPostedFileBase file = targets[i];
-                FileInfo path = new FileInfo(Path.Combine(dest.Directory.FullName, Path.GetFileName(file.FileName)));
+                var file = targets[i];
+                var path = new FileInfo(Path.Combine(dest.Directory.FullName, Path.GetFileName(file.FileName)));
 
                 if (path.Exists)
                 {
@@ -453,10 +456,10 @@ namespace ElFinder
 
         JsonResult IDriver.Duplicate(IEnumerable<string> targets)
         {
-            AddResponse response = new AddResponse();
+            var response = new AddResponse();
             foreach (var target in targets)
             {
-                FullPath fullPath = ParsePath(target);
+                var fullPath = ParsePath(target);
                 if (fullPath.Directory != null)
                 {
                     var parentPath = fullPath.Directory.Parent.FullName;
@@ -512,10 +515,10 @@ namespace ElFinder
 
         JsonResult IDriver.Thumbs(IEnumerable<string> targets)
         {
-            ThumbsResponse response = new ThumbsResponse();
+            var response = new ThumbsResponse();
             foreach (string target in targets)
             {
-                FullPath path = ParsePath(target);
+                var path = ParsePath(target);
                 response.Images.Add(target, path.Root.GenerateThumbHash(path.File));
             }
             return Json(response);
@@ -523,14 +526,14 @@ namespace ElFinder
 
         JsonResult IDriver.Dim(string target)
         {
-            FullPath path = ParsePath(target);
-            DimResponse response = new DimResponse(path.Root.GetImageDimension(path.File));
+            var path = ParsePath(target);
+            var response = new DimResponse(path.Root.GetImageDimension(path.File));
             return Json(response);
         }
 
         JsonResult IDriver.Resize(string target, int width, int height)
         {
-            FullPath path = ParsePath(target);
+            var path = ParsePath(target);
             RemoveThumbs(path);
             path.Root.PicturesEditor.Resize(path.File.FullName, width, height);
             var output = new ChangedResponse();
@@ -540,7 +543,7 @@ namespace ElFinder
 
         JsonResult IDriver.Crop(string target, int x, int y, int width, int height)
         {
-            FullPath path = ParsePath(target);
+            var path = ParsePath(target);
             RemoveThumbs(path);
             path.Root.PicturesEditor.Crop(path.File.FullName, x, y, width, height);
             var output = new ChangedResponse();
@@ -550,7 +553,7 @@ namespace ElFinder
 
         JsonResult IDriver.Rotate(string target, int degree)
         {
-            FullPath path = ParsePath(target);
+            var path = ParsePath(target);
             RemoveThumbs(path);
             path.Root.PicturesEditor.Rotate(path.File.FullName, degree);
             var output = new ChangedResponse();

@@ -37,21 +37,21 @@
                         ['duplicate', 'rename', 'edit', 'resize'],
                         ['view', 'sort']
                     ]
-                },
-                handlers: {
-                    select: function (event, elfinderInstance) {
-                        if (event.data.selected.length == 1) {
-                            var item = $('#' + event.data.selected[0]);
-                            if (!item.hasClass('directory')) {
-                                selectedFile = event.data.selected[0];
-                                $('#elfinder-selectFile').show();
-                                return;
-                            }
-                        }
-                        $('#elfinder-selectFile').hide();
-                        selectedFile = null;
-                    }
-                }
+                }//,
+                //handlers: {
+                //    select: function (event, elfinderInstance) {
+                //        if (event.data.selected.length == 1) {
+                //            var item = $('#' + event.data.selected[0]);
+                //            if (!item.hasClass('directory')) {
+                //                selectedFile = event.data.selected[0];
+                //                $('#elfinder-selectFile').show();
+                //                return;
+                //            }
+                //        }
+                //        $('#elfinder-selectFile').hide();
+                //        selectedFile = null;
+                //    }
+                //}
             };
             $('#elfinder').elfinder(options).elfinder('instance');
 

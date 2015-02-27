@@ -8,8 +8,31 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Browser</title>
+    <link rel="stylesheet" type="text/css" href="@Style.GetBundleUrl("admin-base-css")" />
+    <link rel="stylesheet" type="text/css" href="@Style.GetBundleUrl("kore-icons")" />
     <link rel="stylesheet" type="text/css" href="@Style.GetBundleUrl("jquery-ui")" />
     <link rel="stylesheet" type="text/css" href="@Style.GetBundleUrl("elfinder")" />
+
+    <style type="text/css">
+        .elfinder .elfinder-button {
+            cursor: pointer;
+        }
+            .elfinder .elfinder-button.ui-state-disabled .fa {
+                opacity: 0.4;
+            }
+        .ui-widget-header {
+            height: auto;
+        }
+        .ui-widget-overlay {
+            z-index: auto !important;
+        }
+        .fa-sub {
+            position: relative;
+            left: 0.5em;
+            width: 1em;
+            top: -0.38em;
+        }
+    </style>
 </head>
 <body>
     <div id="elfinder"></div>
@@ -92,5 +115,38 @@
             });
         });
     </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //add classes: elFinder
+            $(".elfinder-button-icon.elfinder-button-icon-back").removeClass().addClass("fa fa-arrow-left");
+            $(".elfinder-button-icon.elfinder-button-icon-forward").removeClass().addClass("fa fa-arrow-right");
+            $(".elfinder-button-icon.elfinder-button-icon-reload").removeClass().addClass("fa fa-refresh");
+            $(".elfinder-button-icon.elfinder-button-icon-home").removeClass().addClass("fa fa-home");
+            $(".elfinder-button-icon.elfinder-button-icon-up").removeClass().addClass("fa fa-level-up");
+            $(".elfinder-button-icon.elfinder-button-icon-mkfile").removeClass().addClass("fa fa-file-o");
+            $(".elfinder-button-icon.elfinder-button-icon-upload").removeClass().addClass("fa fa-upload");
+            $(".elfinder-button-icon.elfinder-button-icon-open").removeClass().addClass("fa fa-folder-open-o");
+            $(".elfinder-button-icon.elfinder-button-icon-download").removeClass().addClass("fa fa-save");
+            $(".elfinder-button-icon.elfinder-button-icon-info").removeClass().addClass("fa fa-info");
+            $(".elfinder-button-icon.elfinder-button-icon-quicklook").removeClass().addClass("fa fa-search");
+            $(".elfinder-button-icon.elfinder-button-icon-copy").removeClass().addClass("fa fa-copy");
+            $(".elfinder-button-icon.elfinder-button-icon-cut").removeClass().addClass("fa fa-cut");
+            $(".elfinder-button-icon.elfinder-button-icon-paste").removeClass().addClass("fa fa-paste");
+            $(".elfinder-button-icon.elfinder-button-icon-rm").removeClass().addClass("fa fa-trash-o");
+            $(".elfinder-button-icon.elfinder-button-icon-duplicate").removeClass().addClass("fa fa-copy");
+            $(".elfinder-button-icon.elfinder-button-icon-edit").removeClass().addClass("fa fa-edit");
+            $(".elfinder-button-icon.elfinder-button-icon-resize").removeClass().addClass("fa fa-arrows-alt");
+            $(".elfinder-button-icon.elfinder-button-icon-view").removeClass().addClass("fa fa-th-list");
+            $(".elfinder-button-icon.elfinder-button-icon-view.elfinder-button-icon-view-list").removeClass().addClass("fa fa-list");
+            $(".elfinder-button-icon.elfinder-button-icon-sort").removeClass().addClass("fa fa-sort-alpha-asc");
+
+            $(".elfinder-button-icon.elfinder-button-icon-mkdir")
+                .removeClass()
+                .addClass("fa fa-stack-1x fa-folder-open-o")
+                .parent().addClass("fa-stack")
+                .append('<span class="fa fa-stack-1x fa-sub fa-plus text-primary"></span>');
+        });
+    </script>
+
 </body>
 </html>

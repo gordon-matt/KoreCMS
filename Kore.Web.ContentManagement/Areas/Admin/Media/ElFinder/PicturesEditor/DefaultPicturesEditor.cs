@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+using Kore;
 
 namespace ElFinder
 {
@@ -29,7 +30,7 @@ namespace ElFinder
 
         public ImageWithMime GenerateThumbnail(Stream input, int size, bool aspectRatio)
         {
-            using (Image inputImage = Image.FromStream(input))
+            using (var inputImage = Image.FromStream(input))
             {
                 int width;
                 int height;
@@ -55,28 +56,35 @@ namespace ElFinder
         public bool CanProcessFile(string fileExtension)
         {
             string ext = fileExtension.ToLower();
-            return ext == ".png" || ext == ".jpg" || ext == ".jpeg" || ext == ".gif" || ext == ".tiff";
+            return ext.In(".png", ".jpg", ".jpeg", ".gif", ".tif", ".tiff");
         }
 
         public string ConvertThumbnailExtension(string originalImageExtension)
         {
             string ext = originalImageExtension.ToLower();
-            if (ext == ".tiff")
+
+            if (ext == ".tif" || ext == ".tiff")
+            {
                 return ".png";
+            }
             if (ext == ".png" || ext == ".jpg" || ext == ".jpeg" || ext == ".gif")
+            {
                 return ext;
+            }
             else
+            {
                 throw new ArgumentException(typeof(DefaultPicturesEditor).FullName + " not support thumbnails for '" + originalImageExtension + "' file extension");
+            }
         }
 
         public void Resize(string file, int width, int height)
         {
             ImageWithMime output;
-            using (Image inputImage = Image.FromFile(file))
+            using (var inputImage = Image.FromFile(file))
             {
                 output = ScaleOrCrop(inputImage, new Rectangle(0, 0, inputImage.Width, inputImage.Height), new Rectangle(0, 0, width, height));
             }
-            using (FileStream outputFile = File.Create(file))
+            using (var outputFile = File.Create(file))
             {
                 output.ImageStream.CopyTo(outputFile);
             }
@@ -85,11 +93,11 @@ namespace ElFinder
         public void Crop(string file, int x, int y, int width, int height)
         {
             ImageWithMime output;
-            using (Image inputImage = Image.FromFile(file))
+            using (var inputImage = Image.FromFile(file))
             {
                 output = ScaleOrCrop(inputImage, new Rectangle(x, y, width, height), new Rectangle(0, 0, width, height));
             }
-            using (FileStream outputFile = File.Create(file))
+            using (var outputFile = File.Create(file))
             {
                 output.ImageStream.CopyTo(outputFile);
             }
@@ -98,11 +106,11 @@ namespace ElFinder
         public void Rotate(string file, int angle)
         {
             ImageWithMime output;
-            using (Image inputImage = Image.FromFile(file))
+            using (var inputImage = Image.FromFile(file))
             {
                 output = Rotate(inputImage, angle);
             }
-            using (FileStream outputFile = File.Create(file))
+            using (var outputFile = File.Create(file))
             {
                 output.ImageStream.CopyTo(outputFile);
             }
@@ -110,9 +118,9 @@ namespace ElFinder
 
         private ImageWithMime ScaleOrCrop(Image inputImage, Rectangle src, Rectangle dst)
         {
-            using (Bitmap newImage = new Bitmap(dst.Width, dst.Height))
+            using (var newImage = new Bitmap(dst.Width, dst.Height))
             {
-                using (Graphics gr = Graphics.FromImage(newImage))
+                using (var gr = Graphics.FromImage(newImage))
                 {
                     gr.SmoothingMode = SmoothingMode.HighQuality;
                     gr.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -185,35 +193,39 @@ namespace ElFinder
                     Point[] points;
                     if (locked_theta >= 0.0 && locked_theta < pi2)
                     {
-                        points = new Point[] {
-											 new Point( (int) oppositeBottom, 0 ),
-											 new Point( nWidth, (int) oppositeTop ),
-											 new Point( 0, (int) adjacentBottom )
-										 };
+                        points = new Point[]
+                        {
+							new Point((int)oppositeBottom, 0),
+							new Point(nWidth, (int)oppositeTop),
+							new Point(0, (int)adjacentBottom)
+						};
                     }
                     else if (locked_theta >= pi2 && locked_theta < Math.PI)
                     {
-                        points = new Point[] {
-											 new Point( nWidth, (int) oppositeTop ),
-											 new Point( (int) adjacentTop, nHeight ),
-											 new Point( (int) oppositeBottom, 0 )
-										 };
+                        points = new Point[]
+                        {
+							new Point(nWidth, (int)oppositeTop),
+							new Point((int)adjacentTop, nHeight),
+							new Point((int)oppositeBottom, 0)
+						};
                     }
                     else if (locked_theta >= Math.PI && locked_theta < (Math.PI + pi2))
                     {
-                        points = new Point[] {
-											 new Point( (int) adjacentTop, nHeight ),
-											 new Point( 0, (int) adjacentBottom ),
-											 new Point( nWidth, (int) oppositeTop )
-										 };
+                        points = new Point[]
+                        {
+							new Point((int)adjacentTop, nHeight),
+							new Point(0, (int)adjacentBottom),
+							new Point(nWidth, (int)oppositeTop)
+						};
                     }
                     else
                     {
-                        points = new Point[] {
-											 new Point( 0, (int) adjacentBottom ),
-											 new Point( (int) oppositeBottom, 0 ),
-											 new Point( (int) adjacentTop, nHeight )
-										 };
+                        points = new Point[]
+                        {
+							new Point(0, (int)adjacentBottom),
+							new Point((int)oppositeBottom, 0),
+							new Point((int)adjacentTop, nHeight)
+						};
                     }
                     g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
 
@@ -225,8 +237,9 @@ namespace ElFinder
 
         private ImageWithMime SaveImage(Bitmap inputImage, ImageFormat imageFormat)
         {
-            MemoryStream output = new MemoryStream();
+            var output = new MemoryStream();
             string mime;
+
             if (imageFormat.Guid == ImageFormat.Jpeg.Guid)
             {
                 inputImage.Save(output, ImageFormat.Jpeg);
@@ -242,6 +255,7 @@ namespace ElFinder
                 inputImage.Save(output, ImageFormat.Png);
                 mime = "image/png";
             }
+
             output.Position = 0;
             return new ImageWithMime(mime, output);
         }

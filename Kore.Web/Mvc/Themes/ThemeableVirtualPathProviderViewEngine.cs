@@ -75,7 +75,7 @@ namespace Kore.Web.Mvc.Themes
             List<ViewLocation> viewLocations = GetViewLocations(locations, hasAreaName ? areaLocations : null, controllerContext);
             if (viewLocations.Count == 0)
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "Properties cannot be null or empty.", new object[] { locationsPropertyName }));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "Properties cannot be null or empty. {0}", locationsPropertyName));
             }
             bool isSpecificPath = IsSpecificPath(name);
             string key = this.CreateCacheKey(cacheKeyPrefix, name, isSpecificPath ? string.Empty : controllerName, areaName, theme);

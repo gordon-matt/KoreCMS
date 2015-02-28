@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Kore.Exceptions
 {
+    [Serializable]
     public class KoreException : Exception
     {
         public KoreException()

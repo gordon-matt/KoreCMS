@@ -2,6 +2,7 @@
 
 namespace Kore.Web.Mvc.Resources
 {
+    [Serializable]
     public class BundleRegistrationException : Exception
     {
         private const string MessageFormat = "'{0}' could not be registered.";

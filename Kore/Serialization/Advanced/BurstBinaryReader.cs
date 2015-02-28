@@ -27,6 +27,7 @@
 #endregion Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 using System;
+
 using System.IO;
 using System.Text;
 using Kore.Serialization.Advanced.Binary;
@@ -38,7 +39,7 @@ namespace Kore.Serialization.Advanced
     /// <summary>
     ///   Reads data which was stored with the BurstBinaryWriter
     /// </summary>
-    public sealed class BurstBinaryReader : IBinaryReader
+    public sealed class BurstBinaryReader : IBinaryReader, IDisposable
     {
         private readonly Encoding _encoding;
         private readonly ITypeNameConverter _typeNameConverter;
@@ -135,5 +136,14 @@ namespace Kore.Serialization.Advanced
         }
 
         #endregion IBinaryReader Members
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            _reader.DisposeIfNotNull();
+        }
+
+        #endregion IDisposable Members
     }
 }

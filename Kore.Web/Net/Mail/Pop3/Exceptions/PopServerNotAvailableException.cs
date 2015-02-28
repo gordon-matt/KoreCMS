@@ -5,6 +5,7 @@ namespace Kore.Net.Mail.Pop3.Exceptions
     /// <summary>
     /// Thrown when the POP3 server sends an error "-ERR" during initial handshake "HELO".
     /// </summary>
+    [Serializable]
     public class PopServerNotAvailableException : PopClientException
     {
         ///<summary>

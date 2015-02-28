@@ -5,6 +5,7 @@ namespace Kore.Net.Mail.Pop3.Exceptions
     /// <summary>
     /// This is the base exception for all <see cref="Pop3Client"/> exceptions.
     /// </summary>
+    [Serializable]
     public abstract class PopClientException : Exception
     {
         ///<summary>

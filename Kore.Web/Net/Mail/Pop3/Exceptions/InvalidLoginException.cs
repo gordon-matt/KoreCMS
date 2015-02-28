@@ -5,6 +5,7 @@ namespace Kore.Net.Mail.Pop3.Exceptions
     /// <summary>
     /// Thrown when the supplied username or password is not accepted by the POP3 server.
     /// </summary>
+    [Serializable]
     public class InvalidLoginException : PopClientException
     {
         ///<summary>

@@ -40,7 +40,7 @@ namespace Kore.Serialization.Advanced
     ///   If there are more objects to store, their types are multiple stored, what increases the file size.
     ///   This format is simple and has small overhead.
     /// </summary>
-    public sealed class BurstBinaryWriter : IBinaryWriter
+    public sealed class BurstBinaryWriter : IBinaryWriter, IDisposable
     {
         private readonly Encoding _encoding;
         private readonly ITypeNameConverter _typeNameConverter;
@@ -141,5 +141,14 @@ namespace Kore.Serialization.Advanced
         }
 
         #endregion IBinaryWriter Members
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            _writer.DisposeIfNotNull();
+        }
+
+        #endregion
     }
 }

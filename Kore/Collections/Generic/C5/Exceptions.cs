@@ -26,6 +26,7 @@ namespace Kore.Collections.Generic.C5
     /// <summary>
     /// An exception to throw from library code when an internal inconsistency is encountered.
     /// </summary>
+    [Serializable]
     public class InternalException : Exception
     {
         internal InternalException(string message)
@@ -40,6 +41,7 @@ namespace Kore.Collections.Generic.C5
     /// (method or set property) is called. No check is made to see if the update operation,
     /// if allowed, would actually change the collection. </para>
     /// </summary>
+    [Serializable]
     public class ReadOnlyCollectionException : Exception
     {
         /// <summary>
@@ -63,6 +65,7 @@ namespace Kore.Collections.Generic.C5
     /// <summary>
     ///
     /// </summary>
+    [Serializable]
     public class FixedSizeCollectionException : Exception
     {
         /// <summary>
@@ -86,6 +89,7 @@ namespace Kore.Collections.Generic.C5
     /// <summary>
     ///
     /// </summary>
+    [Serializable]
     public class UnlistenableEventException : Exception
     {
         /// <summary>
@@ -110,6 +114,7 @@ namespace Kore.Collections.Generic.C5
     /// An exception thrown by enumerators, range views etc. when accessed after
     /// the underlying collection has been modified.
     /// </summary>
+    [Serializable]
     public class CollectionModifiedException : Exception
     {
         /// <summary>
@@ -139,6 +144,7 @@ namespace Kore.Collections.Generic.C5
     /// Sort, Reverse or Shuffle on some other, overlapping view or the whole list.
     /// </para>
     /// </summary>
+    [Serializable]
     public class ViewDisposedException : Exception
     {
         /// <summary>
@@ -165,6 +171,7 @@ namespace Kore.Collections.Generic.C5
     /// <para>The typical scenario is a lookup by key in a dictionary with an indexer,
     /// see e.g. <see cref="P:C5.IDictionary`2.Item(`0)"/></para>
     /// </summary>
+    [Serializable]
     public class NoSuchItemException : Exception
     {
         /// <summary>
@@ -189,6 +196,7 @@ namespace Kore.Collections.Generic.C5
     /// An exception thrown by an operation on a list (<see cref="T:C5.IList`1"/>)
     /// that only makes sense for a view, not for an underlying list.
     /// </summary>
+    [Serializable]
     public class NotAViewException : Exception
     {
         /// <summary>
@@ -217,6 +225,7 @@ namespace Kore.Collections.Generic.C5
     /// </para>
     /// <para>With dictionaries this can happen with the <see cref="M:C5.IDictionary`2.Add(`0,`1)"/> metod.</para>
     /// </summary>
+    [Serializable]
     public class DuplicateNotAllowedException : Exception
     {
         /// <summary>
@@ -240,6 +249,7 @@ namespace Kore.Collections.Generic.C5
     /// <summary>
     ///
     /// </summary>
+    [Serializable]
     public class InvalidPriorityQueueHandleException : Exception
     {
         /// <summary>
@@ -264,6 +274,7 @@ namespace Kore.Collections.Generic.C5
     /// An exception thrown by an operation that need to construct a natural
     /// comparer for a type.
     /// </summary>
+    [Serializable]
     public class NotComparableException : Exception
     {
         /// <summary>
@@ -288,6 +299,7 @@ namespace Kore.Collections.Generic.C5
     /// An exception thrown by operations on a list that expects an argument
     /// that is a view on the same underlying list.
     /// </summary>
+    [Serializable]
     public class IncompatibleViewException : Exception
     {
         /// <summary>

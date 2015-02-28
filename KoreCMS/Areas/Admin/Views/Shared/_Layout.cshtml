@@ -7,14 +7,12 @@
     
     Style.IncludeJQueryUI();
     Style.IncludeBootstrap();
-    Style.IncludeJQGrid();
     Style.IncludeBundle("kore-icons");
     Style.IncludeExternal("~/Areas/Admin/Content/css/dashboard.css");
 
     Script.IncludeJQuery();
     Script.IncludeJQueryUI();
     Script.IncludeBootstrap();
-    Script.IncludeJQGrid();
     Script.IncludeJQueryValidate();
 }
 
@@ -109,16 +107,31 @@
             @*tinyMCEContentCss = ['@Url.Content("~/Content/bootstrap.min.css")'],['@Url.Content("~/Content/font-awesome.min.css")'];*@
             tinyMCE.baseURL = '@Url.Content("~/Scripts/tinymce/")';
         }
+    </script>
+
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
         $(document).ready(function () {
             //add classes: elFinder
+            $(".elfinder-button-icon.elfinder-button-icon-back").removeClass().addClass("fa fa-2x fa-arrow-left");
+            $(".elfinder-button-icon.elfinder-button-icon-forward").removeClass().addClass("fa fa-2x fa-arrow-right");
+            $(".elfinder-button-icon.elfinder-button-icon-reload").removeClass().addClass("fa fa-2x fa-refresh");
             $(".elfinder-button-icon.elfinder-button-icon-home").removeClass().addClass("fa fa-2x fa-home");
             $(".elfinder-button-icon.elfinder-button-icon-up").removeClass().addClass("fa fa-2x fa-level-up");
+            $(".elfinder-button-icon.elfinder-button-icon-mkfile").removeClass().addClass("fa fa-2x fa-file-o");
             $(".elfinder-button-icon.elfinder-button-icon-upload").removeClass().addClass("fa fa-2x fa-upload");
+            $(".elfinder-button-icon.elfinder-button-icon-open").removeClass().addClass("fa fa-2x fa-folder-open-o");
+            $(".elfinder-button-icon.elfinder-button-icon-download").removeClass().addClass("fa fa-2x fa-save");
             $(".elfinder-button-icon.elfinder-button-icon-info").removeClass().addClass("fa fa-2x fa-info");
             $(".elfinder-button-icon.elfinder-button-icon-quicklook").removeClass().addClass("fa fa-2x fa-search");
+            $(".elfinder-button-icon.elfinder-button-icon-copy").removeClass().addClass("fa fa-2x fa-copy");
             $(".elfinder-button-icon.elfinder-button-icon-cut").removeClass().addClass("fa fa-2x fa-cut");
             $(".elfinder-button-icon.elfinder-button-icon-paste").removeClass().addClass("fa fa-2x fa-paste");
             $(".elfinder-button-icon.elfinder-button-icon-rm").removeClass().addClass("fa fa-2x fa-trash-o");
+            $(".elfinder-button-icon.elfinder-button-icon-duplicate").removeClass().addClass("fa fa-2x fa-copy");
+            $(".elfinder-button-icon.elfinder-button-icon-edit").removeClass().addClass("fa fa-2x fa-edit");
+            $(".elfinder-button-icon.elfinder-button-icon-resize").removeClass().addClass("fa fa-2x fa-arrows-alt");
             $(".elfinder-button-icon.elfinder-button-icon-view").removeClass().addClass("fa fa-2x fa-th-list");
             $(".elfinder-button-icon.elfinder-button-icon-view.elfinder-button-icon-view-list").removeClass().addClass("fa fa-2x fa-list");
             $(".elfinder-button-icon.elfinder-button-icon-sort").removeClass().addClass("fa fa-2x fa-sort-alpha-asc");
@@ -131,6 +144,5 @@
         });
     </script>
 
-    @RenderSection("scripts", required: false)
 </body>
 </html>

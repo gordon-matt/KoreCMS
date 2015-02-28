@@ -1665,6 +1665,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Media\Default\" />
     <Folder Include="Themes\Default\Content\" />
     <Folder Include="Themes\Default\Views\Home\" />
     <Folder Include="Themes\Default\Views\Plugins\Kore.Web.ContentManagement\Shared\EditorTemplates\" />

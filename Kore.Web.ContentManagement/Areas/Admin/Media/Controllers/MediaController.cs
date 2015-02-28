@@ -80,11 +80,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
             }
         }
 
-        //public ActionResult Index()
-        //{
-        //    return ConnectorInstance.Process(this.HttpContext.Request);
-        //}
-
         public ActionResult SelectFile(string target)
         {
             return Json(ConnectorInstance.GetFileByHash(target).FullName);

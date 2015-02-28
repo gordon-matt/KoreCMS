@@ -1019,9 +1019,6 @@ namespace Kore
             }
         }
 
-
-
-
         public static string SafeTrim(this string s, params char[] trimChars)
         {
             if (string.IsNullOrEmpty(s))
@@ -1030,7 +1027,6 @@ namespace Kore
             }
             return s.Trim(trimChars);
         }
-
 
         #region Compression
 

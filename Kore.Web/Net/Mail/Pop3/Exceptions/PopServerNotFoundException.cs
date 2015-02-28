@@ -5,6 +5,7 @@ namespace Kore.Net.Mail.Pop3.Exceptions
     /// <summary>
     /// Thrown when the specified POP3 server can not be found or connected to.
     /// </summary>
+    [Serializable]
     public class PopServerNotFoundException : PopClientException
     {
         ///<summary>

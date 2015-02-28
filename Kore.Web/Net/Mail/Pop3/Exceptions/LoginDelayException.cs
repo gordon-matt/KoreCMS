@@ -1,4 +1,6 @@
-﻿namespace Kore.Net.Mail.Pop3.Exceptions
+﻿using System;
+
+namespace Kore.Net.Mail.Pop3.Exceptions
 {
     /// <summary>
     /// This exception indicates that the user has logged in recently and
@@ -6,6 +8,7 @@
     /// Check the parameter to the LOGIN-DELAY capability, that the server responds with when
     /// <see cref="Pop3Client.Capabilities()"/> is called, to see what the delay is.
     /// </summary>
+    [Serializable]
     public class LoginDelayException : PopClientException
     {
         ///<summary>

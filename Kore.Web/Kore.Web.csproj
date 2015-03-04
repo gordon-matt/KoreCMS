@@ -520,6 +520,7 @@
     <Compile Include="Security\Membership\Permissions\Permission.cs" />
     <Compile Include="Security\Membership\Permissions\RolesBasedAuthorizationService.cs" />
     <Compile Include="Security\Membership\Permissions\StandardPermissions.cs" />
+    <Compile Include="Infrastructure\StartupTask.cs" />
     <Compile Include="UI\HtmlTextWriterExtensions.cs" />
     <Compile Include="UrlBuilder.cs" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\KoreSiteSettings.cshtml" />

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
+using System.Net;
 using System.Web.Mvc;
-
 using ElFinder.DTO;
 using ElFinder.Response;
 
@@ -167,26 +166,35 @@ namespace ElFinder
             FullPath fullPath;
             if (string.IsNullOrEmpty(target))
             {
-                Root root = _roots.FirstOrDefault(r => r.StartPath != null);
+                var root = _roots.FirstOrDefault(r => r.StartPath != null);
+                
                 if (root == null)
+                {
                     root = _roots.First();
+                }
+                
                 fullPath = new FullPath(root, root.StartPath ?? root.Directory);
             }
             else
             {
                 fullPath = ParsePath(target);
             }
+
             var answer = new InitResponse(DTOBase.Create(fullPath.Directory, fullPath.Root), new Options(fullPath));
 
             foreach (var item in fullPath.Directory.GetFiles())
             {
                 if ((item.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                {
                     answer.Files.Add(DTOBase.Create(item, fullPath.Root));
+                }
             }
             foreach (var item in fullPath.Directory.GetDirectories())
             {
                 if ((item.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                {
                     answer.Files.Add(DTOBase.Create(item, fullPath.Root));
+                }
             }
             foreach (var item in _roots)
             {
@@ -197,7 +205,9 @@ namespace ElFinder
                 foreach (var item in fullPath.Root.Directory.GetDirectories())
                 {
                     if ((item.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                    {
                         answer.Files.Add(DTOBase.Create(item, fullPath.Root));
+                    }
                 }
             }
             if (fullPath.Root.MaxUploadSize.HasValue)
@@ -210,12 +220,20 @@ namespace ElFinder
         ActionResult IDriver.File(string target, bool download)
         {
             var fullPath = ParsePath(target);
+
             if (fullPath.IsDirectory)
-                return new HttpStatusCodeResult(403, "You can not download whole folder");
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "You cannot download an entire folder");
+            }
             if (!fullPath.File.Exists)
+            {
                 return new HttpNotFoundResult("File not found");
+            }
             if (fullPath.Root.IsShowOnly)
-                return new HttpStatusCodeResult(403, "Access denied. Volume is for show only");
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Access denied. Volume is for show only");
+            }
+
             return new DownloadFileResult(fullPath.File, download);
         }
 

@@ -16,7 +16,6 @@ using Kore.Web.ContentManagement.Areas.Admin.Widgets;
 using Kore.Web.ContentManagement.Areas.Admin.Widgets.RuleEngine;
 using Kore.Web.ContentManagement.Areas.Admin.Widgets.Scripting;
 using Kore.Web.ContentManagement.Areas.Admin.Widgets.Services;
-using Kore.Web.ContentManagement.Configuration;
 using Kore.Web.ContentManagement.FileSystems.Media;
 using Kore.Web.ContentManagement.Messaging;
 using Kore.Web.ContentManagement.Messaging.Services;
@@ -107,7 +106,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             #region Configuration
 
-            builder.RegisterType<ContentManagementSettings>().As<ISettings>().SingleInstance();
             builder.RegisterType<PageSettings>().As<ISettings>().SingleInstance();
 
             #endregion Configuration

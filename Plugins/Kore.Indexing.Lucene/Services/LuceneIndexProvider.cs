@@ -6,7 +6,7 @@ using System.Linq;
 using Castle.Core.Logging;
 using Kore.Indexing.Lucene.Models;
 using Kore.Localization;
-using Kore.Web.ContentManagement.Configuration;
+using Kore.Web.Configuration;
 using Kore.Web.Indexing;
 using Kore.Web.IO.FileSystems.AppData;
 using Lucene.Net.Analysis;
@@ -31,7 +31,7 @@ namespace Kore.Indexing.Lucene.Services
         private readonly string _basePath;
         public static readonly DateTime DefaultMinDateTime = new DateTime(1980, 1, 1);
 
-        public LuceneIndexProvider(IAppDataFolder appDataFolder, ContentManagementSettings shellSettings)
+        public LuceneIndexProvider(IAppDataFolder appDataFolder, KoreSiteSettings shellSettings)
         {
             _appDataFolder = appDataFolder;
             _analyzer = CreateAnalyzer();

@@ -81,6 +81,7 @@ namespace Kore.Data.EntityFramework
 
         public int Delete(TEntity entity)
         {
+            Entities.Attach(entity);
             Entities.Remove(entity);
             return Context.SaveChanges();
         }
@@ -89,6 +90,7 @@ namespace Kore.Data.EntityFramework
         {
             foreach (var entity in entities)
             {
+                Entities.Attach(entity);
                 Entities.Remove(entity);
             }
             return Context.SaveChanges();

@@ -18,8 +18,8 @@ namespace ElFinder
 
         public override void ExecuteResult(ControllerContext context)
         {
-            HttpResponseBase response = context.HttpContext.Response;
-            HttpRequestBase request = context.HttpContext.Request;
+            var response = context.HttpContext.Response;
+            var request = context.HttpContext.Request;
             if (!HttpCacheHelper.IsFileFromCache(File, request, response))
             {
                 string fileName;

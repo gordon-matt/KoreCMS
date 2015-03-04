@@ -16,6 +16,11 @@ namespace Kore.Web.ContentManagement
 
         public void Execute()
         {
+            EnsurePageTypes();
+        }
+
+        private static void EnsurePageTypes()
+        {
             var pageTypeService = EngineContext.Current.Resolve<IPageTypeService>();
             var pageTypeRepository = EngineContext.Current.Resolve<IRepository<PageType>>();
 

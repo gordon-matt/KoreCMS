@@ -80,6 +80,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
             }
         }
 
+        [Route("SelectFile/{target}")]
         public ActionResult SelectFile(string target)
         {
             return Json(ConnectorInstance.GetFileByHash(target).FullName);

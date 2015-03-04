@@ -82,20 +82,6 @@
                         ['view', 'sort']
                     ]
                 },
-                handlers: {
-                    select: function (event, elfinderInstance) {
-                        if (event.data.selected.length == 1) {
-                            var item = $('#' + event.data.selected[0]);
-                            if (!item.hasClass('directory')) {
-                                selectedFile = event.data.selected[0];
-                                $('#elfinder-selectFile').show();
-                                return;
-                            }
-                        }
-                        $('#elfinder-selectFile').hide();
-                        selectedFile = null;
-                    }
-                },
                 getFileCallback: function (file) { // editor callback
                     // file.url - commandsOptions.getfile.onlyURL = false (default)
                     // file     - commandsOptions.getfile.onlyURL = true
@@ -103,21 +89,10 @@
                 }
             };
             $('#elfinder').elfinder(options).elfinder('instance');
-
-            $('.elfinder-toolbar:first').append('<div class="ui-widget-content ui-corner-all elfinder-buttonset" id="elfinder-selectFile" style="display:none; float:right;">' +
-            '<div class="ui-state-default elfinder-button" title="Select" style="width: 100px;"></div>');
-            $('#elfinder-selectFile').click(function () {
-                if (selectedFile != null) {
-                    $.post('files/selectFile', { target: selectedFile }, function (response) {
-                        alert(response);
-                    });
-                }
-            });
         });
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
-            //add classes: elFinder
             $(".elfinder-button-icon.elfinder-button-icon-back").removeClass().addClass("fa fa-arrow-left");
             $(".elfinder-button-icon.elfinder-button-icon-forward").removeClass().addClass("fa fa-arrow-right");
             $(".elfinder-button-icon.elfinder-button-icon-reload").removeClass().addClass("fa fa-refresh");

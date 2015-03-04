@@ -342,7 +342,6 @@
     <Compile Include="Areas\Admin\Widgets\WidgetPermissions.cs" />
     <Compile Include="Areas\Admin\Widgets\WidgetsAreaRegistration.cs" />
     <Compile Include="CmsNavigationProvider.cs" />
-    <Compile Include="Configuration\ContentManagementSettings.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\FrontendController.cs" />
     <Compile Include="Extensions\ScriptRegisterExtensions.cs" />
@@ -387,7 +386,6 @@
     <None Include="packages.config" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\RichTextFull.cshtml" />
-    <EmbeddedResource Include="Views\Shared\EditorTemplates\ContentManagementSettings.cshtml" />
     <EmbeddedResource Include="Views\Frontend\WidgetsByZone.cshtml" />
     <EmbeddedResource Include="Views\_ViewStart.cshtml" />
     <EmbeddedResource Include="Views\web.config" />

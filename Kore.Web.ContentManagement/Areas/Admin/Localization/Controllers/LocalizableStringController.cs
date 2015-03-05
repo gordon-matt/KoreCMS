@@ -26,13 +26,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            ViewBag.Title = T(KoreCmsLocalizableStrings.Localization.ManageLocalizableStrings);
-
             var language = languageService.Value.Find(languageId);
 
             WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Localization.Languages), Url.Action("Index", "Language"));
             WorkContext.Breadcrumbs.Add(language.Name);
             WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Localization.LocalizableStrings));
+
+            ViewBag.Title = T(KoreCmsLocalizableStrings.Localization.Title);
+            ViewBag.SubTitle = T(KoreCmsLocalizableStrings.Localization.LocalizableStrings);
 
             ViewBag.CultureCode = language.CultureCode;
 

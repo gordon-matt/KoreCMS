@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Kore.Web.Configuration
 {
@@ -37,11 +32,20 @@ namespace Kore.Web.Configuration
 
         #endregion ISettings Members
 
+        #region General
+
         [Display(Name = "Site Name")]
         public string SiteName { get; set; }
 
         [Display(Name = "Default Frontend Layout Path")]
         public string DefaultFrontendLayoutPath { get; set; }
+
+        [Display(Name = "Default Grid Page Size")]
+        public int DefaultGridPageSize { get; set; }
+
+        #endregion General
+
+        #region Themes
 
         [Display(Name = "Default Desktop Theme")]
         public string DefaultDesktopTheme { get; set; }
@@ -51,6 +55,10 @@ namespace Kore.Web.Configuration
 
         [Display(Name = "Allow User To Select Theme")]
         public bool AllowUserToSelectTheme { get; set; }
+
+        #endregion Themes
+
+        #region Localization
 
         [Display(Name = "Default Language")]
         public string DefaultLanguage
@@ -62,7 +70,16 @@ namespace Kore.Web.Configuration
         [Display(Name = "Use Right-to-Left Layout")]
         public bool UseRightToLeft { get; set; }
 
-        [Display(Name = "Default Grid Page Size")]
-        public int DefaultGridPageSize { get; set; }
+        #endregion Localization
+
+        #region SEO
+
+        [Display(Name = "Default Meta Keywords")]
+        public string DefaultMetaKeywords { get; set; }
+
+        [Display(Name = "Default Meta Description")]
+        public string DefaultMetaDescription { get; set; }
+
+        #endregion SEO
     }
 }

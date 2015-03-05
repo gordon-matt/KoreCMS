@@ -28,8 +28,11 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers
                 return new HttpUnauthorizedResult();
             }
 
+            WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.General.Configuration));
             WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.General.Settings));
-            ViewBag.Title = T(KoreWebLocalizableStrings.General.Settings);
+
+            ViewBag.Title = T(KoreWebLocalizableStrings.General.Configuration);
+            ViewBag.SubTitle = T(KoreWebLocalizableStrings.General.Settings);
 
             return View("Kore.Web.Areas.Admin.Configuration.Views.Settings.Index");
         }

@@ -29,7 +29,9 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
             }
 
             WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.Plugins.Title));
-            ViewBag.Title = T(KoreWebLocalizableStrings.Plugins.ManagePlugins);
+
+            ViewBag.Title = T(KoreWebLocalizableStrings.Plugins.Title);
+            ViewBag.SubTitle = T(KoreWebLocalizableStrings.Plugins.ManagePlugins);
 
             return View("Kore.Web.Areas.Admin.Plugins.Views.Plugin.Index");
         }

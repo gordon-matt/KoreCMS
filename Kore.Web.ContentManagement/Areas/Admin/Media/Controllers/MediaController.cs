@@ -23,9 +23,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            WorkContext.Breadcrumbs.Add(T("Media"));
+            WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Media.Title));
+            WorkContext.Breadcrumbs.Add(T("Manage Media"));
 
-            ViewBag.Title = T("Manage Media");
+            ViewBag.Title = T(KoreCmsLocalizableStrings.Media.Title);
+            ViewBag.SubTitle = T("Manage Media");
 
             return View("Kore.Web.ContentManagement.Areas.Admin.Media.Views.Media.Index");
         }

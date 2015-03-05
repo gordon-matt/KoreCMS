@@ -36,10 +36,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            ViewBag.Title = T(KoreCmsLocalizableStrings.Membership.Users);
-
             WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Membership.Title));
             WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Membership.Users));
+
+            ViewBag.Title = T(KoreCmsLocalizableStrings.Membership.Title);
+            ViewBag.SubTitle = T(KoreCmsLocalizableStrings.Membership.Users);
 
             ViewBag.SelectList = membershipService.GetAllRoles().ToSelectList(v => v.Id.ToString(), t => t.Name, "[All Roles]");
 
@@ -56,10 +57,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            ViewBag.Title = T(KoreCmsLocalizableStrings.Membership.Roles);
-
             WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Membership.Title));
             WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Membership.Roles));
+
+            ViewBag.Title = T(KoreCmsLocalizableStrings.Membership.Title);
+            ViewBag.SubTitle = T(KoreCmsLocalizableStrings.Membership.Roles);
 
             ViewBag.InitialView = "Role";
             return View("Kore.Web.ContentManagement.Areas.Admin.Membership.Views.Membership.Index");

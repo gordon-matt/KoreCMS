@@ -30,7 +30,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 
             WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Pages.Title));
 
-            ViewBag.Title = T(KoreCmsLocalizableStrings.Pages.ManagePages);
+            ViewBag.Title = T(KoreCmsLocalizableStrings.Pages.Title);
+            ViewBag.SubTitle = T(KoreCmsLocalizableStrings.Pages.ManagePages);
 
             return View("Kore.Web.ContentManagement.Areas.Admin.Pages.Views.Page.Index");
         }
@@ -65,7 +66,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 
             ViewBag.PageId = pageId;
 
-            ViewBag.Title = T(KoreCmsLocalizableStrings.Pages.PageHistory);
+            ViewBag.Title = T(KoreCmsLocalizableStrings.Pages.Title);
+            ViewBag.SubTitle = T(KoreCmsLocalizableStrings.Pages.PageHistory);
 
             return View("Kore.Web.ContentManagement.Areas.Admin.Pages.Views.Page.History");
         }

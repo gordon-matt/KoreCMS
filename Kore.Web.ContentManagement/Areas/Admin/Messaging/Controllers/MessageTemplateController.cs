@@ -21,6 +21,7 @@ namespace Kore.Web.ContentManagement.Messaging.Controllers
             WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Messaging.MessageTemplates));
 
             ViewBag.Title = T(KoreCmsLocalizableStrings.Messaging.Title);
+            ViewBag.SubTitle = T(KoreCmsLocalizableStrings.Messaging.MessageTemplates);
 
             return View("Kore.Web.ContentManagement.Areas.Admin.Messaging.Views.MessageTemplate.Index");
         }

@@ -74,10 +74,12 @@ $(document).ready(function () {
         }, {
             field: "CreatedOnUtc",
             title: "Created On (UTC)",
+            format: "{0:yyyy-MM-dd HH:mm:ss}",
             filterable: true
         }, {
             field: "SentOnUtc",
             title: "Sent On (UTC)",
+            format: "{0:yyyy-MM-dd HH:mm:ss}",
             filterable: true
         }, {
             field: "SentTries",

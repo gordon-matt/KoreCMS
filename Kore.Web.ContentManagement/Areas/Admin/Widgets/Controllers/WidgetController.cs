@@ -29,7 +29,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Controllers
 
             WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Widgets.Title));
 
-            ViewBag.Title = T(KoreCmsLocalizableStrings.Widgets.ManageWidgets);
+            ViewBag.Title = T(KoreCmsLocalizableStrings.Widgets.Title);
+            ViewBag.SubTitle = T(KoreCmsLocalizableStrings.Widgets.ManageWidgets);
 
             if (pageId.HasValue)
             {

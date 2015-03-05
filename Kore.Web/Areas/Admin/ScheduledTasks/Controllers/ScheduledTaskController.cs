@@ -17,7 +17,8 @@ namespace Kore.Web.Areas.Admin.ScheduledTasks.Controllers
 
             WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.ScheduledTasks.Title));
 
-            ViewBag.Title = T(KoreWebLocalizableStrings.ScheduledTasks.ManageScheduledTasks);
+            ViewBag.Title = T(KoreWebLocalizableStrings.ScheduledTasks.Title);
+            ViewBag.SubTitle = T(KoreWebLocalizableStrings.ScheduledTasks.ManageScheduledTasks);
 
             return View("Kore.Web.Areas.Admin.ScheduledTasks.Views.ScheduledTask.Index");
         }

@@ -4,45 +4,81 @@
 @model KoreSiteSettings
 
 <div id="settings-content">
-    <div class="form-group">
-        @Html.LabelFor(m => m.SiteName)
-        @Html.TextBoxFor(m => m.SiteName, new { @class = "form-control", data_bind = "value: siteName" })
-        @Html.ValidationMessageFor(m => m.SiteName)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.DefaultFrontendLayoutPath)
-        @Html.TextBoxFor(m => m.DefaultFrontendLayoutPath, new { @class = "form-control", data_bind = "value: defaultFrontendLayoutPath" })
-        @Html.ValidationMessageFor(m => m.DefaultFrontendLayoutPath)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.DefaultDesktopTheme)
-        @Html.Kore().ThemesDropDownListFor(m => m.DefaultDesktopTheme, new { @class = "form-control", data_bind = "value: defaultDesktopTheme" })
-        @Html.ValidationMessageFor(m => m.DefaultDesktopTheme)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.DefaultMobileTheme)
-        @Html.Kore().ThemesDropDownListFor(m => m.DefaultMobileTheme, new { @class = "form-control", data_bind = "value: defaultMobileTheme" })
-        @Html.ValidationMessageFor(m => m.DefaultMobileTheme)
-    </div>
-    <div class="checkbox">
-        <label>
-            @Html.CheckBoxFor(m => m.AllowUserToSelectTheme, new { data_bind = "checked: allowUserToSelectTheme" }) Allow User To Select Theme
-        </label>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.DefaultLanguage)
-        @Html.Kore().LanguagesDropDownListFor(m => m.DefaultLanguage, new { @class = "form-control", data_bind = "value: defaultLanguage" })
-        @Html.ValidationMessageFor(m => m.DefaultLanguage)
-    </div>
-    <div class="checkbox">
-        <label>
-            @Html.CheckBoxFor(m => m.UseRightToLeft, new { data_bind = "checked: useRightToLeft" }) Use Right-to-Left Layout
-        </label>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.DefaultGridPageSize)
-        @Html.TextBoxFor(m => m.DefaultGridPageSize, new { @class = "form-control", data_bind = "value: defaultGridPageSize" })
-        @Html.ValidationMessageFor(m => m.DefaultGridPageSize)
+    <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#General" aria-controls="General" role="tab" data-toggle="tab">General</a>
+            </li>
+            <li role="presentation">
+                <a href="#Themes" aria-controls="Themes" role="tab" data-toggle="tab">Themes</a>
+            </li>
+            <li role="presentation">
+                <a href="#Localization" aria-controls="Localization" role="tab" data-toggle="tab">Localization</a>
+            </li>
+            <li role="presentation">
+                <a href="#SEO" aria-controls="SEO" role="tab" data-toggle="tab">SEO</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="General">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SiteName)
+                    @Html.TextBoxFor(m => m.SiteName, new { @class = "form-control", data_bind = "value: siteName" })
+                    @Html.ValidationMessageFor(m => m.SiteName)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DefaultFrontendLayoutPath)
+                    @Html.TextBoxFor(m => m.DefaultFrontendLayoutPath, new { @class = "form-control", data_bind = "value: defaultFrontendLayoutPath" })
+                    @Html.ValidationMessageFor(m => m.DefaultFrontendLayoutPath)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DefaultGridPageSize)
+                    @Html.TextBoxFor(m => m.DefaultGridPageSize, new { @class = "form-control", data_bind = "value: defaultGridPageSize" })
+                    @Html.ValidationMessageFor(m => m.DefaultGridPageSize)
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="Themes">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DefaultDesktopTheme)
+                    @Html.Kore().ThemesDropDownListFor(m => m.DefaultDesktopTheme, new { @class = "form-control", data_bind = "value: defaultDesktopTheme" })
+                    @Html.ValidationMessageFor(m => m.DefaultDesktopTheme)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DefaultMobileTheme)
+                    @Html.Kore().ThemesDropDownListFor(m => m.DefaultMobileTheme, new { @class = "form-control", data_bind = "value: defaultMobileTheme" })
+                    @Html.ValidationMessageFor(m => m.DefaultMobileTheme)
+                </div>
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(m => m.AllowUserToSelectTheme, new { data_bind = "checked: allowUserToSelectTheme" }) Allow User To Select Theme
+                    </label>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="Localization">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DefaultLanguage)
+                    @Html.Kore().LanguagesDropDownListFor(m => m.DefaultLanguage, new { @class = "form-control", data_bind = "value: defaultLanguage" })
+                    @Html.ValidationMessageFor(m => m.DefaultLanguage)
+                </div>
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(m => m.UseRightToLeft, new { data_bind = "checked: useRightToLeft" }) Use Right-to-Left Layout
+                    </label>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="SEO">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DefaultMetaKeywords)
+                    @Html.TextBoxFor(m => m.DefaultMetaKeywords, new { @class = "form-control", data_bind = "value: defaultMetaKeywords" })
+                    @Html.ValidationMessageFor(m => m.DefaultMetaKeywords)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DefaultMetaDescription)
+                    @Html.TextBoxFor(m => m.DefaultMetaDescription, new { @class = "form-control", data_bind = "value: defaultMetaDescription" })
+                    @Html.ValidationMessageFor(m => m.DefaultMetaDescription)
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -50,12 +86,14 @@
     function updateModel(data) {
         viewModel.siteName = ko.observable("");
         viewModel.defaultFrontendLayoutPath = ko.observable("");
+        viewModel.defaultGridPageSize = ko.observable(0);
         viewModel.defaultDesktopTheme = ko.observable("");
         viewModel.defaultMobileTheme = ko.observable("");
         viewModel.allowUserToSelectTheme = ko.observable(false);
         viewModel.defaultLanguage = ko.observable("");
         viewModel.useRightToLeft = ko.observable(false);
-        viewModel.defaultGridPageSize = ko.observable(0);
+        viewModel.defaultMetaKeywords = ko.observable("");
+        viewModel.defaultMetaDescription = ko.observable("");
 
         if (data) {
             if (data.SiteName) {
@@ -63,6 +101,9 @@
             }
             if (data.DefaultFrontendLayoutPath) {
                 viewModel.defaultFrontendLayoutPath(data.DefaultFrontendLayoutPath);
+            }
+            if (data.DefaultGridPageSize) {
+                viewModel.defaultGridPageSize(data.DefaultGridPageSize);
             }
             if (data.DefaultDesktopTheme) {
                 viewModel.defaultDesktopTheme(data.DefaultDesktopTheme);
@@ -79,8 +120,11 @@
             if (data.UseRightToLeft) {
                 viewModel.useRightToLeft(data.UseRightToLeft);
             }
-            if (data.DefaultGridPageSize) {
-                viewModel.defaultGridPageSize(data.DefaultGridPageSize);
+            if (data.DefaultMetaKeywords) {
+                viewModel.defaultMetaKeywords(data.DefaultMetaKeywords);
+            }
+            if (data.DefaultMetaDescription) {
+                viewModel.defaultMetaDescription(data.DefaultMetaDescription);
             }
         }
     };
@@ -88,24 +132,28 @@
     function cleanUp() {
         delete viewModel.siteName;
         delete viewModel.defaultFrontendLayoutPath;
+        delete viewModel.defaultGridPageSize;
         delete viewModel.defaultDesktopTheme;
         delete viewModel.defaultMobileTheme;
         delete viewModel.allowUserToSelectTheme;
         delete viewModel.defaultLanguage;
         delete viewModel.useRightToLeft;
-        delete viewModel.defaultGridPageSize;
+        delete viewModel.defaultMetaKeywords;
+        delete viewModel.defaultMetaDescription;
     }
 
     function onBeforeSave() {
         var data = {
             SiteName: viewModel.siteName(),
             DefaultFrontendLayoutPath: viewModel.defaultFrontendLayoutPath(),
+            DefaultGridPageSize: viewModel.defaultGridPageSize(),
             DefaultDesktopTheme: viewModel.defaultDesktopTheme(),
             DefaultMobileTheme: viewModel.defaultMobileTheme(),
             AllowUserToSelectTheme: viewModel.allowUserToSelectTheme(),
             DefaultLanguage: viewModel.defaultLanguage(),
             UseRightToLeft: viewModel.useRightToLeft(),
-            DefaultGridPageSize: viewModel.defaultGridPageSize()
+            DefaultMetaKeywords: viewModel.defaultMetaKeywords(),
+            DefaultMetaDescription: viewModel.defaultMetaDescription()
         };
 
         viewModel.value(ko.mapping.toJSON(data));

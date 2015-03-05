@@ -246,7 +246,6 @@
     <Compile Include="Areas\Admin\Messaging\Services\UrlContentParserEngine.cs" />
     <Compile Include="Areas\Admin\Messaging\Token.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\Api\PageTypesController.cs" />
-    <Compile Include="Areas\Admin\Pages\Controllers\PageTypeController.cs" />
     <Compile Include="Areas\Admin\Pages\PagesIndexingContentProvider.cs" />
     <Compile Include="Areas\Admin\Pages\KorePageType.cs" />
     <Compile Include="Areas\Admin\Pages\KorePageTypePropertyAttribute.cs" />
@@ -273,7 +272,6 @@
     <Compile Include="Areas\Admin\Widgets\Controllers\Api\ZonesController.cs" />
     <Compile Include="Areas\Admin\Widgets\Controllers\FormWidgetController.cs" />
     <Compile Include="Areas\Admin\Widgets\Controllers\WidgetController.cs" />
-    <Compile Include="Areas\Admin\Widgets\Controllers\ZoneController.cs" />
     <Compile Include="Areas\Admin\Widgets\Domain\Widget.cs" />
     <Compile Include="Areas\Admin\Widgets\Domain\Zone.cs" />
     <Compile Include="Areas\Admin\Widgets\FormWidget.cs" />

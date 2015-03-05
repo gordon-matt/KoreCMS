@@ -19,8 +19,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
                 return new HttpUnauthorizedResult();
             }
 
+            WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Localization.Title));
             WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Localization.Languages));
-            ViewBag.Title = T(KoreCmsLocalizableStrings.Localization.ManageLanguages);
+
+            ViewBag.Title = T(KoreCmsLocalizableStrings.Localization.Title);
+            ViewBag.SubTitle = T(KoreCmsLocalizableStrings.Localization.Languages);
 
             return View("Kore.Web.ContentManagement.Areas.Admin.Localization.Views.Language.Index");
         }

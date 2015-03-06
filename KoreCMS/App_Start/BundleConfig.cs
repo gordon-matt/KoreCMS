@@ -11,6 +11,8 @@ namespace KoreCMS
         {
             #region Scripts
 
+            bundles.Add(new ScriptBundle("~/bundles/js/bootstrap").Include("~/Scripts/bootstrap.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/elfinder").Include("~/Scripts/elfinder/elfinder.full.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/jquery").Include("~/Scripts/jquery-{version}.js"));
@@ -50,6 +52,10 @@ namespace KoreCMS
             bundles.Add(new StyleBundle("~/bundles/content/css")
                 .Include("~/Content/bootstrap.css", cssRewriteUrlTransform)
                 .Include("~/Content/site.css", cssRewriteUrlTransform));
+
+            bundles.Add(new StyleBundle("~/bundles/content/bootstrap")
+                .Include("~/Content/bootstrap-theme.css", cssRewriteUrlTransform)
+                .Include("~/Content/bootstrap.css", cssRewriteUrlTransform));
 
             bundles.Add(new StyleBundle("~/bundles/content/elfinder")
                 .Include("~/Content/elfinder_2_1/css/elfinder.min.css", cssRewriteUrlTransform)

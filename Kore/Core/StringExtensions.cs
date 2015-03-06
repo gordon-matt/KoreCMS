@@ -314,6 +314,23 @@ namespace Kore
             return s.Any(char.IsWhiteSpace);
         }
 
+        /// <summary>
+        /// <para>Determines whether the end of this string instance matches</para>
+        /// <para>one of the specified strings.</para>
+        /// </summary>
+        /// <param name="s">The string</param>
+        /// <param name="values">The strings to compare</param>
+        /// <returns>true if any value matches the end of this string; otherwise, false.</returns>
+        public static bool EndsWithAny(this string s, params string[] values)
+        {
+            foreach (string value in values)
+            {
+                if (s.EndsWith(value))
+                { return true; }
+            }
+            return false;
+        }
+
         public static string HtmlClassify(this string text)
         {
             if (String.IsNullOrWhiteSpace(text))

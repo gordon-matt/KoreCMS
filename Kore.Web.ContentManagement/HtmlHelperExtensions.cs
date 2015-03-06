@@ -7,7 +7,7 @@ using System.Web.Mvc.Html;
 using Kore.Data;
 using Kore.Infrastructure;
 using Kore.Web.Collections;
-using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Widgets;
 using Kore.Web.ContentManagement.Areas.Admin.Widgets.Services;
@@ -54,6 +54,21 @@ namespace Kore.Web.ContentManagement
             this.html = html;
         }
 
+        public MvcHtmlString MediaFoldersDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
+        {
+            var selectList = GetMediaFoldersSelectList(selectedValue, emptyText);
+            return html.DropDownList(name, selectList, htmlAttributes);
+        }
+
+        public MvcHtmlString MediaFoldersDropDownListFor(Expression<Func<TModel, string>> expression, object htmlAttributes = null, string emptyText = null)
+        {
+            var func = expression.Compile();
+            var selectedValue = func(html.ViewData.Model);
+
+            var selectList = GetMediaFoldersSelectList(selectedValue, emptyText);
+            return html.DropDownListFor(expression, selectList, htmlAttributes);
+        }
+
         public MvcHtmlString PageTypesDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
         {
             var selectList = GetPageTypesSelectList(selectedValue, emptyText);
@@ -97,6 +112,40 @@ namespace Kore.Web.ContentManagement
 
             var selectList = GetZonesSelectList(selectedValue, emptyText);
             return html.DropDownListFor(expression, selectList, htmlAttributes);
+        }
+
+        private static void GetMediaFolders(IMediaService service, List<Tuple<string, string>> folders, string path, byte level = 0)
+        {
+            var mediaFolders = service.GetMediaFolders(path);
+
+            foreach (var folder in mediaFolders)
+            {
+                if (level != 0)
+                {
+                    string folderName = string.Concat("---".Repeat(level), " ", folder.Name);
+                    folders.Add(new Tuple<string, string>(folderName, folder.MediaPath));
+                }
+                else
+                {
+                    folders.Add(new Tuple<string, string>(folder.Name, folder.MediaPath));
+                }
+                GetMediaFolders(service, folders, folder.MediaPath, (byte)(level + 1));
+            }
+        }
+
+        private static IEnumerable<SelectListItem> GetMediaFoldersSelectList(string selectedValue = null, string emptyText = null)
+        {
+            var service = EngineContext.Current.Resolve<IMediaService>();
+
+            var folders = new List<Tuple<string, string>>();
+            GetMediaFolders(service, folders, null);
+
+            return folders
+                .ToSelectList(
+                    value => value.Item2,
+                    text => text.Item1,
+                    selectedValue,
+                    emptyText);
         }
 
         private static IEnumerable<SelectListItem> GetPageTypesSelectList(string selectedValue = null, string emptyText = null)

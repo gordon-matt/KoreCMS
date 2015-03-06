@@ -1,0 +1,44 @@
+﻿@using Kore
+@using Kore.Infrastructure
+@using Kore.Plugins.Widgets.Bootstrap3.Widgets
+@using Kore.Web
+@using Kore.Web.ContentManagement.Areas.Admin.Media.Services
+
+@model Bootstrap3ImageGalleryWidget
+
+@{
+    Style.IncludeBundle("bootstrap");
+    Script.IncludeBundle("jquery");
+    Script.IncludeBundle("bootstrap");
+
+    var mediaService = EngineContext.Current.Resolve<IMediaService>();
+    var images = mediaService.GetMediaFiles(Model.MediaFolder);
+
+    string thumbSizeCss = string.Concat(
+        Bootstrap3ImageGalleryWidget.GetThumbSizeCss(Model.ImagesPerRowXS, "xs"), " ",
+        Bootstrap3ImageGalleryWidget.GetThumbSizeCss(Model.ImagesPerRowS, "sm"), " ",
+        Bootstrap3ImageGalleryWidget.GetThumbSizeCss(Model.ImagesPerRowM, "md"), " ",
+        Bootstrap3ImageGalleryWidget.GetThumbSizeCss(Model.ImagesPerRowL, "lg"));
+}
+
+<style type="text/css">
+    .thumb {
+        margin-bottom: 30px;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">@Model.Title</h1>
+        </div>
+        @foreach (var image in images)
+        {
+            <div class="@thumbSizeCss thumb">
+                <a class="thumbnail" href="@image.MediaPath" target="_blank">
+                    <img class="img-responsive" src="@image.MediaPath" alt="@image.Name">
+                </a>
+            </div>
+        }
+    </div>
+</div>

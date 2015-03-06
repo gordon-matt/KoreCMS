@@ -199,8 +199,6 @@
     <Compile Include="Areas\Admin\Media\Services\MediaService.cs" />
     <Compile Include="Areas\Admin\Media\Services\SystemMediaDriver.cs" />
     <Compile Include="Areas\Admin\Media\Widgets\NivoSliderWidget.cs" />
-    <Compile Include="Areas\Admin\Media\Widgets\PhotoGalleryWidget.cs" />
-    <Compile Include="Areas\Admin\Media\Widgets\SupersizedWidget.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\PermissionsController.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\RolesController.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\UsersController.cs" />
@@ -248,7 +246,6 @@
     <Compile Include="Areas\Admin\Pages\Controllers\Api\PageTypesController.cs" />
     <Compile Include="Areas\Admin\Pages\PagesIndexingContentProvider.cs" />
     <Compile Include="Areas\Admin\Pages\KorePageType.cs" />
-    <Compile Include="Areas\Admin\Pages\KorePageTypePropertyAttribute.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\Api\HistoricPagesController.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\Api\PagesController.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\PageContentController.cs" />

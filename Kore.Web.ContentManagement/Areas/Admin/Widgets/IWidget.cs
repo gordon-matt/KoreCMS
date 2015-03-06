@@ -37,21 +37,5 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets
         string DisplayTemplatePath { get; }
 
         string EditorTemplatePath { get; }
-
-        //void RegisterResources(ScriptRegister scriptRegister, StyleRegister styleRegister);
-
-        //string BuildDisplay(ViewContext viewContext);
-
-        //ActionResult DisplayCallback(Controller controller);
-
-        //string GetDisplayCallbackUrl(UrlHelper urlHelper);
-
-        //ActionResult BuildEditor(Controller controller, RoboUIFormResult<IWidget> form);
-
-        //ActionResult EditorCallback(Controller controller);
-
-        //void OnSaving();
-
-        //IWidget ShallowCopy();
     }
 }

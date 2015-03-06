@@ -22,6 +22,7 @@ namespace Kore.Web.Infrastructure
 
             var settingsToAdd = allSettings.Where(x => !installedSettingNames.Contains(x.Name)).Select(x => new Setting
             {
+                Id = Guid.NewGuid(),
                 Name = x.Name,
                 Type = x.GetType().AssemblyQualifiedName,
                 Value = Activator.CreateInstance(x.GetType()).ToJson()

@@ -6,8 +6,7 @@
 @model PagedList<ISearchHit>
 
 @{
-    var siteSettings = EngineContext.Current.Resolve<KoreSiteSettings>();
-    Layout = siteSettings.DefaultFrontendLayoutPath;
+    Layout = SiteSettings.DefaultFrontendLayoutPath;
     string q = ViewBag.Query;
 }
 

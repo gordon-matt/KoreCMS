@@ -77,6 +77,11 @@
                     @Html.TextBoxFor(m => m.DefaultMetaDescription, new { @class = "form-control", data_bind = "value: defaultMetaDescription" })
                     @Html.ValidationMessageFor(m => m.DefaultMetaDescription)
                 </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.HomePageTitle)
+                    @Html.TextBoxFor(m => m.HomePageTitle, new { @class = "form-control", data_bind = "value: homePageTitle" })
+                    @Html.ValidationMessageFor(m => m.HomePageTitle)
+                </div>
             </div>
         </div>
     </div>
@@ -94,6 +99,7 @@
         viewModel.useRightToLeft = ko.observable(false);
         viewModel.defaultMetaKeywords = ko.observable("");
         viewModel.defaultMetaDescription = ko.observable("");
+        viewModel.homePageTitle = ko.observable("");
 
         if (data) {
             if (data.SiteName) {
@@ -126,6 +132,9 @@
             if (data.DefaultMetaDescription) {
                 viewModel.defaultMetaDescription(data.DefaultMetaDescription);
             }
+            if (data.HomePageTitle) {
+                viewModel.homePageTitle(data.HomePageTitle);
+            }
         }
     };
 
@@ -140,6 +149,7 @@
         delete viewModel.useRightToLeft;
         delete viewModel.defaultMetaKeywords;
         delete viewModel.defaultMetaDescription;
+        delete viewModel.homePageTitle;
     }
 
     function onBeforeSave() {
@@ -153,7 +163,8 @@
             DefaultLanguage: viewModel.defaultLanguage(),
             UseRightToLeft: viewModel.useRightToLeft(),
             DefaultMetaKeywords: viewModel.defaultMetaKeywords(),
-            DefaultMetaDescription: viewModel.defaultMetaDescription()
+            DefaultMetaDescription: viewModel.defaultMetaDescription(),
+            HomePageTitle: viewModel.homePageTitle()
         };
 
         viewModel.value(ko.mapping.toJSON(data));

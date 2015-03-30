@@ -14,6 +14,7 @@ namespace Kore.Web.Configuration
             DefaultGridPageSize = 10;
             DefaultLanguage = "en-US";
             DefaultFrontendLayoutPath = "~/Views/Shared/_Layout.cshtml";
+            HomePageTitle = "Home Page";
         }
 
         #region ISettings Members
@@ -79,6 +80,9 @@ namespace Kore.Web.Configuration
 
         [Display(Name = "Default Meta Description")]
         public string DefaultMetaDescription { get; set; }
+
+        [Display(Name = "Home Page Title")]
+        public string HomePageTitle { get; set; }
 
         #endregion SEO
     }

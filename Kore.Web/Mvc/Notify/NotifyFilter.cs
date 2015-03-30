@@ -12,7 +12,6 @@ namespace Kore.Web.Mvc.Notify
     {
         private const string TempDataMessages = "messages";
         private readonly INotifier _notifier;
-        private readonly dynamic _shapeFactory;
 
         public NotifyFilter(INotifier notifier)
         {

@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Kore.Infrastructure;
 using Kore.Localization;
+using Kore.Web.Configuration;
 using Kore.Web.Mvc.Resources;
 using Kore.Web.Navigation;
 using Kore.Web.Security.Membership.Permissions;
@@ -13,6 +15,8 @@ namespace Kore.Web.Mvc
     public interface IWebViewPage : IViewDataContainer
     {
         ScriptRegister Script { get; }
+
+        KoreSiteSettings SiteSettings { get; }
 
         StyleRegister Style { get; }
 
@@ -24,28 +28,12 @@ namespace Kore.Web.Mvc
         private bool initializationCompleted;
         private Localizer localizer = NullLocalizer.Instance;
         private IResourcesManager resourcesManager;
+        private KoreSiteSettings siteSettings;
 
         //TODO: can we make this static? Since the items wont change (cant add at runtime)
         public IEnumerable<MenuItem> MenuItems
         {
             get { return EngineContext.Current.Resolve<INavigationManager>().BuildMenu(); }
-        }
-
-        public ScriptRegister Script { get; private set; }
-
-        public StyleRegister Style { get; private set; }
-
-        public Localizer T
-        {
-            get
-            {
-                if (localizer == NullLocalizer.Instance)
-                {
-                    localizer = LocalizationUtilities.Resolve(VirtualPath);
-                }
-
-                return localizer;
-            }
         }
 
         public IWebWorkContext WorkContext { get; private set; }
@@ -87,22 +75,18 @@ namespace Kore.Web.Mvc
             initializationCompleted = true;
         }
 
-        public MvcHtmlString RenderScripts()
-        {
-            return Script.Render();
-        }
-
-        public MvcHtmlString RenderStyles()
-        {
-            return Style.Render();
-        }
-
         public MvcHtmlString RenderMetas()
         {
-            var metas = resourcesManager.GetRegisteredMetas();
-            if (!metas.Any())
+            var metas = resourcesManager.GetRegisteredMetas().ToList();
+
+            if (!metas.Any(x => x.Name.Equals("keywords", StringComparison.InvariantCultureIgnoreCase)))
             {
-                return null;
+                metas.Add(new MetaEntry { Name = "keywords", Content = SiteSettings.DefaultMetaKeywords });
+            }
+
+            if (!metas.Any(x => x.Name.Equals("description", StringComparison.InvariantCultureIgnoreCase)))
+            {
+                metas.Add(new MetaEntry { Name = "description", Content = SiteSettings.DefaultMetaDescription });
             }
 
             var sb = new StringBuilder();
@@ -111,6 +95,16 @@ namespace Kore.Web.Mvc
                 sb.Append(meta);
             }
             return new MvcHtmlString(sb.ToString());
+        }
+
+        public MvcHtmlString RenderScripts()
+        {
+            return Script.Render();
+        }
+
+        public MvcHtmlString RenderStyles()
+        {
+            return Style.Render();
         }
 
         public void SetMeta(string name, string content)
@@ -122,6 +116,39 @@ namespace Kore.Web.Mvc
         {
             resourcesManager.SetMeta(meta);
         }
+
+        #region IWebViewPage Members
+
+        public ScriptRegister Script { get; private set; }
+
+        public KoreSiteSettings SiteSettings
+        {
+            get
+            {
+                if (siteSettings == null)
+                {
+                    siteSettings = EngineContext.Current.Resolve<KoreSiteSettings>();
+                }
+                return siteSettings;
+            }
+        }
+
+        public StyleRegister Style { get; private set; }
+
+        public Localizer T
+        {
+            get
+            {
+                if (localizer == NullLocalizer.Instance)
+                {
+                    localizer = LocalizationUtilities.Resolve(VirtualPath);
+                }
+
+                return localizer;
+            }
+        }
+
+        #endregion IWebViewPage Members
     }
 
     public abstract class WebViewPage : WebViewPage<dynamic>

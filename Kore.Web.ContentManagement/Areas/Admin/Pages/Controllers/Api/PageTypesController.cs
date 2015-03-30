@@ -10,8 +10,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class PageTypesController : GenericODataController<PageType, Guid>
     {
-        private readonly IRepository<PageType> repository;
-
         public PageTypesController(IRepository<PageType> repository)
             : base(repository)
         {

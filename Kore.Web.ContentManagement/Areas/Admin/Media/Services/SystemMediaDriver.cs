@@ -553,7 +553,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
         #region Private
 
         private const string _volumePrefix = "v";
-        private List<Root> _roots;
 
         private void DirectoryCopy(DirectoryInfo sourceDir, string destDirName, bool copySubDirs)
         {

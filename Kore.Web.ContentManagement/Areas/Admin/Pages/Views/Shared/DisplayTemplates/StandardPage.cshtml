@@ -2,8 +2,10 @@
 
 @{
     Layout = Model.LayoutPath;
+    ViewBag.Title = Model.InstanceName;
     SetMeta("keywords", Model.MetaKeywords);
     SetMeta("description", Model.MetaDescription);
+    SetMeta("title", Model.InstanceName);
 }
 
 <article class="page-content">

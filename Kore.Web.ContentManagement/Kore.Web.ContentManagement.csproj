@@ -244,6 +244,7 @@
     <Compile Include="Areas\Admin\Messaging\Services\UrlContentParserEngine.cs" />
     <Compile Include="Areas\Admin\Messaging\Token.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\Api\PageTypesController.cs" />
+    <Compile Include="Areas\Admin\Pages\Domain\PageWidget.cs" />
     <Compile Include="Areas\Admin\Pages\PagesIndexingContentProvider.cs" />
     <Compile Include="Areas\Admin\Pages\KorePageType.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\Api\HistoricPagesController.cs" />
@@ -253,9 +254,6 @@
     <Compile Include="Areas\Admin\Pages\Domain\HistoricPage.cs" />
     <Compile Include="Areas\Admin\Pages\Domain\Page.cs" />
     <Compile Include="Areas\Admin\Pages\Domain\PageVersion.cs" />
-    <Compile Include="Areas\Admin\Pages\Models\HistoricPageModel.cs" />
-    <Compile Include="Areas\Admin\Pages\Models\PageModel.cs" />
-    <Compile Include="Areas\Admin\Pages\Models\TranslationModel.cs" />
     <Compile Include="Areas\Admin\Pages\PagesAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Pages\PageSettings.cs" />
     <Compile Include="Areas\Admin\Pages\PagesNavigationProvider.cs" />
@@ -420,7 +418,9 @@
     <EmbeddedResource Include="Scripts\kore-cms-common.js" />
     <EmbeddedResource Include="Scripts\kore-cms-localization.js" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Pages\Models\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

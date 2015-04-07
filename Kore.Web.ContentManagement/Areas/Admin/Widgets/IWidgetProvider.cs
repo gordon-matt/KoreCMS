@@ -28,7 +28,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets
             var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
             Guid? pageId = workContext.GetState<Guid?>("CurrentPageId");
 
-            var widgets = widgetService.GetWidgets(pageId: pageId, zoneName: zoneName);
+            var widgets = widgetService.GetWidgets(zoneName: zoneName, pageId: pageId);
             return widgets.Where(x => IsVisibleWidget(widgets, x, currentCultureCode)).ToList();
         }
 

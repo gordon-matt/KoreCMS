@@ -1,4 +1,7 @@
-﻿using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+﻿using System;
+using System.Collections.Generic;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Widgets;
 using Kore.Web.Indexing;
 using Newtonsoft.Json.Linq;
 
@@ -41,6 +44,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
             document.Add("meta_description", MetaDescription).Analyze();
             document.Add("body", BodyContent).Analyze().Store();
             description = BodyContent;
+        }
+
+        public override void ReplaceContentTokens(Func<string, string> func)
+        {
+            BodyContent = func(BodyContent);
         }
 
         [Searchable]

@@ -11,7 +11,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Services
 {
     public interface IWidgetService : IGenericDataService<Widget>
     {
-        IEnumerable<IWidget> GetWidgets(Guid? pageId = null, string zoneName = null, bool includeDisabled = false);
+        IEnumerable<IWidget> GetWidgets(Guid pageId);
+
+        IEnumerable<IWidget> GetWidgets(string zoneName, Guid? pageId = null, bool includeDisabled = false);
 
         IEnumerable<IWidget> GetWidgets(IEnumerable<Widget> records);
 
@@ -75,9 +77,19 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Services
             base.Update(record);
         }
 
-        public IEnumerable<IWidget> GetWidgets(Guid? pageId = null, string zoneName = null, bool includeDisabled = false)
+        public IEnumerable<IWidget> GetWidgets(Guid pageId)
         {
-            var key = string.Format("Widgets_GetWidgets_{0}_{1}_{2}", pageId, zoneName, includeDisabled);
+            string key = string.Format("Widgets_GetWidgets_{0}", pageId);
+            return cacheManager.Get(key, () =>
+            {
+                var records = Repository.Table.Where(x => x.PageId == pageId).ToList();
+                return GetWidgets(records);
+            });
+        }
+
+        public IEnumerable<IWidget> GetWidgets(string zoneName, Guid? pageId = null, bool includeDisabled = false)
+        {
+            string key = string.Format("Widgets_GetWidgets_{0}_{1}_{2}", pageId, zoneName, includeDisabled);
             if (includeDisabled)
             {
                 return cacheManager.Get(key, () =>
@@ -118,6 +130,54 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Services
                 });
             }
         }
+
+        // TODO: TEST THIS ONE (SIMPLIFIED)
+        //public IEnumerable<IWidget> GetWidgets(Guid? pageId = null, string zoneName = null, bool includeDisabled = false)
+        //{
+        //    var key = string.Format("Widgets_GetWidgets_{0}_{1}_{2}", pageId, zoneName, includeDisabled);
+
+        //    return cacheManager.Get(key, () =>
+        //    {
+        //        var records = new List<Widget>();
+
+        //        // Include everything
+        //        var query = Repository.Table;
+
+        //        if (!includeDisabled)
+        //        {
+        //            // Get enabled widgets only
+        //            query = query.Where(x => x.IsEnabled);
+        //        }
+
+        //        // If zone name provided
+        //        if (!string.IsNullOrEmpty(zoneName))
+        //        {
+        //            var zone = zoneRepository.Value.Table.FirstOrDefault(x => x.Name == zoneName);
+
+        //            // If zone exists
+        //            if (zone != null)
+        //            {
+        //                // Get all non page-specific widgets for that zone
+        //                records.AddRange(query.Where(x => x.ZoneId == zone.Id && x.PageId == null));
+
+        //                // If page Id specified...
+        //                if (pageId.HasValue)
+        //                {
+        //                    //... include widgets for that page and for that zone
+        //                    records.AddRange(query.Where(x => x.ZoneId == zone.Id && x.PageId == pageId.Value));
+        //                }
+        //            }
+        //        }
+        //        // If page Id specified...
+        //        else if (pageId.HasValue)
+        //        {
+        //            //... get all widgets for that page (all zones)
+        //            records.AddRange(query.Where(x => x.PageId == pageId.Value));
+        //        }
+
+        //        return GetWidgets(records);
+        //    });
+        //}
 
         #endregion IWidgetService Members
     }

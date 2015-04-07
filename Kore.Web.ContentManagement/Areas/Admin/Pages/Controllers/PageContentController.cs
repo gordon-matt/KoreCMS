@@ -61,7 +61,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                 korePageType.LayoutPath = pageType.LayoutPath;
                 korePageType.InitializeInstance(page);
 
-                //TODO: Use the widgets on the page
                 var widgets = widgetService.GetWidgets(page.Id);
                 korePageType.ReplaceContentTokens(x => InsertWidgets(x, widgets));
 
@@ -73,6 +72,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 
         private string InsertWidgets(string content, IEnumerable<IWidget> widgets)
         {
+            if (string.IsNullOrEmpty(content))
+            {
+                return null;
+            }
+
             foreach (Match match in WidgetZonePattern.Matches(content))
             {
                 string zoneName = match.Groups["Zone"].Value;

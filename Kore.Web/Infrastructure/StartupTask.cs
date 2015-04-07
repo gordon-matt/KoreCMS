@@ -24,7 +24,7 @@ namespace Kore.Web.Infrastructure
             {
                 Id = Guid.NewGuid(),
                 Name = x.Name,
-                Type = x.GetType().AssemblyQualifiedName,
+                Type = x.GetType().FullName,
                 Value = Activator.CreateInstance(x.GetType()).ToJson()
             }).ToList();
 

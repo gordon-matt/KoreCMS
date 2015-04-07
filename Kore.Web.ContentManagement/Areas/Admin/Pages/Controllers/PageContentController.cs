@@ -1,5 +1,12 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Web.Mvc;
+using Kore.Data;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
+using Kore.Web.ContentManagement.Areas.Admin.Widgets;
+using Kore.Web.ContentManagement.Areas.Admin.Widgets.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Widgets.Services;
 using Kore.Web.Mvc;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
@@ -7,16 +14,23 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
     [RouteArea(Constants.Areas.Pages)]
     public class PageContentController : KoreController
     {
+        protected static Regex WidgetZonePattern = new Regex(@"\[\[WidgetZone:(?<Zone>.*)\]\]", RegexOptions.Compiled);
         private readonly IPageService pageService;
         private readonly IPageTypeService pageTypeService;
+        private readonly IWidgetService widgetService;
+        private readonly IRepository<Zone> zoneRepository;
 
         public PageContentController(
             IPageService pageService,
-            IPageTypeService pageTypeService)
+            IPageTypeService pageTypeService,
+            IWidgetService widgetService,
+            IRepository<Zone> zoneRepository)
             : base()
         {
             this.pageService = pageService;
             this.pageTypeService = pageTypeService;
+            this.widgetService = widgetService;
+            this.zoneRepository = zoneRepository;
         }
 
         public ActionResult Index(string slug)
@@ -46,10 +60,31 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                 korePageType.InstanceName = page.Name;
                 korePageType.LayoutPath = pageType.LayoutPath;
                 korePageType.InitializeInstance(page);
+
+                //TODO: Use the widgets on the page
+                var widgets = widgetService.GetWidgets(page.Id);
+                korePageType.ReplaceContentTokens(x => InsertWidgets(x, widgets));
+
                 return View(pageType.DisplayTemplatePath, korePageType);
             }
 
             return HttpNotFound();
+        }
+
+        private string InsertWidgets(string content, IEnumerable<IWidget> widgets)
+        {
+            foreach (Match match in WidgetZonePattern.Matches(content))
+            {
+                string zoneName = match.Groups["Zone"].Value;
+
+                var zone = zoneRepository.Table.FirstOrDefault(x => x.Name == zoneName);
+                var widgetsByZone = widgets.Where(x => x.ZoneId == zone.Id);
+
+                string html = RenderRazorPartialViewToString("Kore.Web.ContentManagement.Views.Frontend.WidgetsByZone", widgetsByZone);
+
+                content = content.Replace(match.Value, html);
+            }
+            return content;
         }
     }
 }

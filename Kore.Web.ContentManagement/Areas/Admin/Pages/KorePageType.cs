@@ -1,5 +1,14 @@
-﻿using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+﻿using System.Linq;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Widgets;
 using Kore.Web.Indexing;
+using Kore.Infrastructure;
+using Kore.Web.ContentManagement.Areas.Admin.Widgets.Domain;
+using Kore.Data;
+using System.Text;
+using System;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 {
@@ -27,5 +36,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
         public abstract void InitializeInstance(Page page);
 
         public abstract void PopulateDocumentIndex(IDocumentIndex document, out string description);
+
+        public abstract void ReplaceContentTokens(Func<string, string> func);
     }
 }

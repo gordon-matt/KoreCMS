@@ -23,7 +23,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Services
         {
             if (string.IsNullOrEmpty(urlFilter))
             {
-                return Repository.Table.FirstOrDefault(x => x.Name == name && x.UrlFilter == null);
+                return Repository.Table.FirstOrDefault(x => x.Name == name && (x.UrlFilter == null || x.UrlFilter == ""));
             }
 
             var records = Repository.Table.Where(x => x.Name == name).ToList();

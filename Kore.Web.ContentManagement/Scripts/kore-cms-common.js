@@ -3,6 +3,9 @@
 var currentSection = $("#grid-section");
 
 function switchSection(section) {
+    if (section.attr("id") == currentSection.attr("id")) {
+        return;
+    }
     currentSection.hide("fast");
     section.show("fast");
     currentSection = section;
@@ -24,7 +27,7 @@ var koreDefaultTinyMCEConfig = {
         "insertdatetime media nonbreaking save table contextmenu directionality",
         "emoticons template paste textcolor"
     ],
-    toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+    toolbar1: "insertfile undo redo | styleselect | ltr rtl | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
     toolbar2: "print preview media | forecolor backcolor emoticons",
     image_advtab: true,
     image_dimensions: false,

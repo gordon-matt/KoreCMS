@@ -153,6 +153,7 @@ namespace Kore.Web.ContentManagement
             var repository = EngineContext.Current.Resolve<IRepository<PageType>>();
 
             return repository.Table
+                .OrderBy(x => x.Name)
                 .ToList()
                 .ToSelectList(
                     value => value.Id,
@@ -191,6 +192,7 @@ namespace Kore.Web.ContentManagement
             var zoneService = EngineContext.Current.Resolve<IZoneService>();
 
             return zoneService.Repository.Table
+                .OrderBy(x => x.Name)
                 .ToList()
                 .ToSelectList(
                     value => value.Id,

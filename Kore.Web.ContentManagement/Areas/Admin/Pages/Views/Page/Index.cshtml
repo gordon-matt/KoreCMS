@@ -1,6 +1,7 @@
 ﻿@using Kore.Web.ContentManagement
 @using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
 @using Kore.Web.ContentManagement.Extensions;
+@using Kore.Web.Mvc
 @using CMSPage = Kore.Web.ContentManagement.Areas.Admin.Pages.Domain.Page
 
 @{
@@ -17,159 +18,196 @@
     Script.IncludeBundle("kore-cms/pages");
 }
 
-<div id="grid-section" class="row">
-    <div class="col-md-12">
-        <a data-bind="click: create" class="btn btn-primary">
-            <i class="fa fa-plus"></i>
-            @T(KoreWebLocalizableStrings.General.Create)
-        </a>
-        <a data-bind="click: showPageTypes" class="btn btn-info">
-            <i class="fa fa-crop"></i>
-            @T(KoreCmsLocalizableStrings.Pages.PageTypes)
-        </a>
-    </div>
-
-    <div class="clearfix"></div>
-    <br />
-
-    <div class="col-md-12">
-        <div id="Grid"></div>
-    </div>
-</div>
-
-<div id="form-section" class="row" style="display:none">
-    <article class="col-sm-12 col-md-12">
-        <form id="form-section-form" role="form">
-            <fieldset>
-                <legend id="form-section-legend"></legend>
-                <div id="form-section-pageTypeId" class="col-sm-12 col-md-12">
-                    <div class="form-group">
-                        @Html.Label("PageTypeId", "Page Type", new { @class = "control-label" })
-                        @Html.KoreCMS().PageTypesDropDownList("PageTypeId", null, null, new { @class = "form-control", data_bind = "value: pageTypeId" })
-                    </div>
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <a data-bind="click: create" class="btn btn-primary">
+                    <i class="fa fa-plus"></i>
+                    @T(KoreWebLocalizableStrings.General.Create)
+                </a>
+                <a data-bind="click: showPageTypes" class="btn btn-info">
+                    <i class="fa fa-crop"></i>
+                    @T(KoreCmsLocalizableStrings.Pages.PageTypes)
+                </a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <br />
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="well">
+                    <div id="treeview"></div>
                 </div>
-                <div class="col-sm-6 col-md-6">
-                    <div class="form-group">
-                        @Html.Label("Name", "Name", new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fa fa-file-o"></i>
-                            </span>
-                            @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">
+        <div id="page-buttons" class="row" data-bind="visible: showButtons">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="btn-group pull-left">
+                    <a data-bind="click: createSubPage" class="btn btn-primary">
+                        <i class="fa fa-plus"></i>
+                        @T(KoreCmsLocalizableStrings.Pages.CreateSubPage)
+                    </a>
+                </div>
+                <div class="btn-group pull-right">
+                    <a onclick="viewModel.delete()" class="btn btn-danger">@T(KoreWebLocalizableStrings.General.Delete).Text</a>
+                    <a data-bind="attr: { href: '/admin/pages/' + id() + '/history' }" class="btn btn-warning">@T(KoreCmsLocalizableStrings.Pages.History).Text</a>
+                    <a data-bind="click: translate" class="btn btn-primary">@T(KoreCmsLocalizableStrings.Pages.Translations).Text</a>
+                    <a data-bind="attr: { href: '/admin/widgets/' + id() }" class="btn btn-info">@T(KoreCmsLocalizableStrings.Widgets.Title).Text</a>
+                    <a data-bind="click: toggleEnabled" class="btn btn-default">@T(KoreWebLocalizableStrings.General.Toggle).Text</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div id="blank-section" class="row" style="display:none">
+                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="alert alert-info">
+                            Select a page from the left menu to begin editing.
                         </div>
-                    </div>
+                    </article>
                 </div>
-                <div class="col-sm-6 col-md-6">
-                    <div class="form-group">
-                        @Html.Label("Slug", "Slug", new { @class = "control-label" })
-                        @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: slug" })
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6">
-                    <div class="checkbox">
-                        <label>
-                            @Html.CheckBox("IsEnabled", new { data_bind = "checked: isEnabled" }) Enabled
-                        </label>
-                    </div>
-                </div>
-            </fieldset>
 
-            <fieldset id="fields-definition"></fieldset>
+                <div id="form-section" class="row" style="display:none">
+                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <form id="form-section-form" role="form">
+                            <fieldset>
+                                <legend id="form-section-legend"></legend>
+                                <div id="form-section-pageTypeId" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("PageTypeId", "Page Type", new { @class = "control-label" })
+                                        @Html.KoreCMS().PageTypesDropDownList("PageTypeId", null, null, new { @class = "form-control", data_bind = "value: pageTypeId" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        @Html.Label("Name", "Name", new { @class = "control-label" })
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-file-o"></i>
+                                            </span>
+                                            @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        @Html.Label("Slug", "Slug", new { @class = "control-label" })
+                                        @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: slug" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="checkbox">
+                                        <label>
+                                            @Html.CheckBox("IsEnabled", new { data_bind = "checked: isEnabled" }) Enabled
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
 
-            <div class="col-sm-12 col-md-12">
-                <div class="form-group pull-right">
-                    <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: save">@T(KoreWebLocalizableStrings.General.Save)</button>
+                            <fieldset id="fields-definition"></fieldset>
+
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group pull-right">
+                                    <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                    <button type="button" class="btn btn-primary" data-bind="click: save">@T(KoreWebLocalizableStrings.General.Save)</button>
+                                </div>
+                            </div>
+                        </form>
+                    </article>
+                </div>
+
+                <div id="culture-selector-section" class="row" style="display:none">
+                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <form id="culture-selector-form" role="form">
+                            @Html.Hidden("CultureSelector_PageId")
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    @Html.Label("CultureSelector_CultureCode", "Culture", new { @class = "control-label" })
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-globe"></i>
+                                        </span>
+                                        @Html.Kore().LanguagesDropDownList("CultureSelector_CultureCode", null, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group pull-right">
+                                    <button type="button" class="btn btn-default" data-bind="click: cultureSelector_onCancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                    <button type="button" class="btn btn-primary" data-bind="click: cultureSelector_onSelected">@T(KoreWebLocalizableStrings.General.OK)</button>
+                                </div>
+                            </div>
+                        </form>
+                    </article>
+                </div>
+
+                <div id="page-type-grid-section" class="row" style="display:none">
+                    @*<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <a data-bind="click: pageType.showPages" class="btn btn-info">
+                            <i class="fa fa-file-o"></i>
+                            @T(KoreCmsLocalizableStrings.Pages.Title)
+                        </a>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <br />*@
+
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div id="PageTypesGrid"></div>
+                    </div>
+                </div>
+
+                <div id="page-type-form-section" class="row" style="display:none">
+                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <form id="page-type-form-section-form" role="form">
+                            <fieldset>
+                                <legend id="page-type-form-section-legend"></legend>
+                                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <div class="form-group">
+                                        @Html.Label("PageType_Name", "Name", new { @class = "control-label" })
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-file-o"></i>
+                                            </span>
+                                            @Html.TextBox("PageType_Name", null, new { @class = "form-control", data_bind = "value: pageType.name" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("PageType_LayoutPath", "Layout Path", new { @class = "control-label" })
+                                        @Html.TextBox("PageType_LayoutPath", null, new { @class = "form-control", data_bind = "value: pageType.layoutPath" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("PageType_DisplayTemplatePath", "Display Template Path", new { @class = "control-label" })
+                                        @Html.TextBox("PageType_DisplayTemplatePath", null, new { @class = "form-control", data_bind = "value: pageType.displayTemplatePath" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("PageType_EditorTemplatePath", "Editor Template Path", new { @class = "control-label" })
+                                        @Html.TextBox("PageType_EditorTemplatePath", null, new { @class = "form-control", data_bind = "value: pageType.editorTemplatePath" })
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group pull-right">
+                                    <button type="button" class="btn btn-default" data-bind="click: pageType.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                    <button type="button" class="btn btn-primary" data-bind="click: pageType.save">@T(KoreWebLocalizableStrings.General.Save)</button>
+                                </div>
+                            </div>
+                        </form>
+                    </article>
                 </div>
             </div>
-        </form>
-    </article>
-</div>
-
-<div id="culture-selector-section" class="row" style="display:none">
-    <article class="col-sm-12 col-md-12">
-        <form id="culture-selector-form" role="form">
-            @Html.Hidden("CultureSelector_PageId")
-            <div class="form-group">
-                @Html.Label("CultureSelector_CultureCode", "Culture", new { @class = "control-label" })
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <i class="fa fa-globe"></i>
-                    </span>
-                    @Html.Kore().LanguagesDropDownList("CultureSelector_CultureCode", null, new { @class = "form-control" })
-                </div>
-                <div class="form-group pull-right">
-                    <button type="button" class="btn btn-default" data-bind="click: cultureSelector_onCancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: cultureSelector_onSelected">@T(KoreWebLocalizableStrings.General.OK)</button>
-                </div>
-            </div>
-        </form>
-    </article>
-</div>
-
-<div id="page-type-grid-section" class="row" style="display:none">
-    <div class="col-md-12">
-        <a data-bind="click: pageType.create" class="btn btn-primary">
-            <i class="fa fa-plus"></i>
-            @T(KoreWebLocalizableStrings.General.Create)
-        </a>
-        <a data-bind="click: pageType.showPages" class="btn btn-info">
-            <i class="fa fa-file-o"></i>
-            @T(KoreCmsLocalizableStrings.Pages.Title)
-        </a>
+        </div>
     </div>
-
-    <div class="clearfix"></div>
-    <br />
-
-    <div class="col-md-12">
-        <div id="PageTypesGrid"></div>
-    </div>
-</div>
-
-<div id="page-type-form-section" class="row" style="display:none">
-    <article class="col-sm-12 col-md-12">
-        <form id="page-type-form-section-form" role="form">
-            <fieldset>
-                <legend id="page-type-form-section-legend"></legend>
-                <div class="col-sm-4 col-md-4">
-                    <div class="form-group">
-                        @Html.Label("PageType_Name", "Name", new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fa fa-file-o"></i>
-                            </span>
-                            @Html.TextBox("PageType_Name", null, new { @class = "form-control", data_bind = "value: pageType.name" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-12">
-                    <div class="form-group">
-                        @Html.Label("PageType_LayoutPath", "Layout Path", new { @class = "control-label" })
-                        @Html.TextBox("PageType_LayoutPath", null, new { @class = "form-control", data_bind = "value: pageType.layoutPath" })
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-12">
-                    <div class="form-group">
-                        @Html.Label("PageType_DisplayTemplatePath", "Display Template Path", new { @class = "control-label" })
-                        @Html.TextBox("PageType_DisplayTemplatePath", null, new { @class = "form-control", data_bind = "value: pageType.displayTemplatePath" })
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-12">
-                    <div class="form-group">
-                        @Html.Label("PageType_EditorTemplatePath", "Editor Template Path", new { @class = "control-label" })
-                        @Html.TextBox("PageType_EditorTemplatePath", null, new { @class = "form-control", data_bind = "value: pageType.editorTemplatePath" })
-                    </div>
-                </div>
-            </fieldset>
-            <div class="col-sm-12 col-md-12">
-                <div class="form-group pull-right">
-                    <button type="button" class="btn btn-default" data-bind="click: pageType.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: pageType.save">@T(KoreWebLocalizableStrings.General.Save)</button>
-                </div>
-            </div>
-        </form>
-    </article>
 </div>
 
 @section scripts {
@@ -194,5 +232,8 @@
             UpdateTranslationSuccess: '@T(KoreCmsLocalizableStrings.Messages.UpdateTranslationSuccess).Text',
             Widgets: '@T(KoreCmsLocalizableStrings.Widgets.Title).Text'
         }
+    </script>
+    <script id="treeview-template" type="text/kendo-ui-template">
+        <a href="javascript:void(0)" onclick="viewModel.edit('#=item.Id#')">#= item.Name #</a>
     </script>
 }

@@ -12,6 +12,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
 
         public Guid PageId { get; set; }
 
+        public Guid? ParentId { get; set; }
+
         public Guid PageTypeId { get; set; }
 
         public DateTime ArchivedDate { get; set; }

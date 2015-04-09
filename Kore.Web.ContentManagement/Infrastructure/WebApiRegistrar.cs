@@ -37,6 +37,10 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.EntitySet<Widget>("Widgets");
             builder.EntitySet<Zone>("Zones");
 
+            // Special
+            builder.EntitySet<PageTreeItem>("PageTree");
+            //builder.ComplexType<PageTreeComplexItem>();
+
             // Action Configurations
             RegisterHistoricPageODataActions(builder);
             RegisterLocalizableStringODataActions(builder);

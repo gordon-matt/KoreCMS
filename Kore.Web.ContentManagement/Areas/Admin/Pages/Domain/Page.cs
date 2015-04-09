@@ -10,6 +10,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
     {
         public Guid Id { get; set; }
 
+        public Guid? ParentId { get; set; }
+
         public Guid PageTypeId { get; set; }
 
         public string Name { get; set; }

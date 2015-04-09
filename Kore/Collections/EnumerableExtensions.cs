@@ -345,6 +345,16 @@ namespace Kore.Collections
             return dictionary;
         }
 
+        //public static IEnumerable<T> GetAncestors<T>(this T source, Func<T, T> parentOf)
+        //{
+        //    var parent = parentOf(source);
+        //    while (parent != null)
+        //    {
+        //        yield return parent;
+        //        parent = parentOf(parent);
+        //    }
+        //}
+
         public static IEnumerable<T> Descendants<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> descendBy)
         {
             foreach (T value in source)

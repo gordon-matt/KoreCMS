@@ -5,116 +5,288 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using System.Web.WebPages;
-using Kore.Collections.Generic;
 
 namespace Kore.Web.Mvc.Controls
 {
+    ///// <summary>
+    ///// Create an HTML tree from a resursive collection of items
+    ///// </summary>
+    //public class TreeView<T> : IHtmlString
+    //{
+    //    private readonly IEnumerable<IRelationship<T>> items;
+    //    private Func<IRelationship<T>, string> displayProperty = item => item.ToString();
+    //    private string emptyContent = "No children";
+    //    private IDictionary<string, object> htmlAttributes = new Dictionary<string, object>();
+    //    private IDictionary<string, object> childHtmlAttributes = new Dictionary<string, object>();
+    //    private IDictionary<string, object> itemWithChildrenHtmlAttributes = new Dictionary<string, object>();
+    //    private Func<IRelationship<T>, HelperResult> itemTemplate;
+
+    //    public TreeView(IEnumerable<IRelationship<T>> items)
+    //    {
+    //        this.items = items;
+
+    //        // The ItemTemplate will default to rendering the DisplayProperty
+    //        itemTemplate = item => new HelperResult(writer => writer.Write(displayProperty(item)));
+    //    }
+
+    //    /// <summary>
+    //    /// The property which will display the text rendered for each item
+    //    /// </summary>
+    //    public TreeView<T> ItemText(Func<IRelationship<T>, string> selector)
+    //    {
+    //        if (selector == null) throw new ArgumentNullException("selector");
+    //        displayProperty = selector;
+    //        return this;
+    //    }
+
+    //    /// <summary>
+    //    /// The template used to render each item in the tree view
+    //    /// </summary>
+    //    public TreeView<T> ItemTemplate(Func<IRelationship<T>, HelperResult> template)
+    //    {
+    //        if (template == null) throw new ArgumentNullException("template");
+    //        itemTemplate = template;
+    //        return this;
+    //    }
+
+    //    /// <summary>
+    //    /// Content displayed if the list is empty
+    //    /// </summary>
+    //    public TreeView<T> EmptyContent(string content)
+    //    {
+    //        if (content == null) throw new ArgumentNullException("content");
+    //        emptyContent = content;
+    //        return this;
+    //    }
+
+    //    /// <summary>
+    //    /// HTML attributes appended to the root ul node
+    //    /// </summary>
+    //    public TreeView<T> HtmlAttributes(object attributes)
+    //    {
+    //        HtmlAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(attributes));
+    //        return this;
+    //    }
+
+    //    /// <summary>
+    //    /// HTML attributes appended to the root ul node
+    //    /// </summary>
+    //    public TreeView<T> HtmlAttributes(IDictionary<string, object> attributes)
+    //    {
+    //        if (attributes == null) throw new ArgumentNullException("attributes");
+    //        htmlAttributes = attributes;
+    //        return this;
+    //    }
+
+    //    /// <summary>
+    //    /// HTML attributes appended to the children items
+    //    /// </summary>
+    //    public TreeView<T> ChildHtmlAttributes(object attributes)
+    //    {
+    //        ChildHtmlAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(attributes));
+    //        return this;
+    //    }
+
+    //    /// <summary>
+    //    /// HTML attributes appended to the children items
+    //    /// </summary>
+    //    public TreeView<T> ChildHtmlAttributes(IDictionary<string, object> attributes)
+    //    {
+    //        if (attributes == null) throw new ArgumentNullException("attributes");
+    //        childHtmlAttributes = attributes;
+    //        return this;
+    //    }
+
+    //    /// <summary>
+    //    /// HTML attributes appended to the item with children items
+    //    /// </summary>
+    //    public TreeView<T> ItemWithChildrenHtmlAttributes(object attributes)
+    //    {
+    //        ItemWithChildrenHtmlAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(attributes));
+    //        return this;
+    //    }
+
+    //    /// <summary>
+    //    /// HTML attributes appended to the item with children items
+    //    /// </summary>
+    //    public TreeView<T> ItemWithChildrenHtmlAttributes(IDictionary<string, object> attributes)
+    //    {
+    //        if (attributes == null) throw new ArgumentNullException("attributes");
+    //        itemWithChildrenHtmlAttributes = attributes;
+    //        return this;
+    //    }
+
+    //    public string ToHtmlString()
+    //    {
+    //        return ToString();
+    //    }
+
+    //    public override string ToString()
+    //    {
+    //        var listItems = items.ToList();
+
+    //        var ul = new TagBuilder("ul");
+    //        ul.MergeAttributes(htmlAttributes);
+
+    //        if (listItems.Count == 0)
+    //        {
+    //            var li = new TagBuilder("li")
+    //            {
+    //                InnerHtml = emptyContent
+    //            };
+    //            ul.InnerHtml += li.ToString();
+    //        }
+
+    //        foreach (var item in listItems)
+    //        {
+    //            BuildNestedTag(ul, item);
+    //        }
+
+    //        return ul.ToString();
+    //    }
+
+    //    private void AppendChildren(TagBuilder parentTag, IRelationship<T> parentItem)
+    //    {
+    //        if (!parentItem.Any())
+    //        {
+    //            return;
+    //        }
+
+    //        var innerUl = new TagBuilder("ul");
+    //        innerUl.MergeAttributes(childHtmlAttributes);
+
+    //        foreach (var item in parentItem)
+    //        {
+    //            BuildNestedTag(innerUl, item);
+    //        }
+
+    //        parentTag.InnerHtml += innerUl.ToString();
+    //    }
+
+    //    private void BuildNestedTag(TagBuilder parentTag, IRelationship<T> parentItem)
+    //    {
+    //        var li = GetLi(parentItem);
+    //        parentTag.InnerHtml += li.ToString(TagRenderMode.StartTag);
+    //        AppendChildren(li, parentItem);
+    //        parentTag.InnerHtml += li.InnerHtml + li.ToString(TagRenderMode.EndTag);
+    //    }
+
+    //    private TagBuilder GetLi(IRelationship<T> item)
+    //    {
+    //        var li = new TagBuilder("li")
+    //        {
+    //            InnerHtml = itemTemplate(item).ToHtmlString()
+    //        };
+
+    //        if (item.Any())
+    //        {
+    //            li.MergeAttributes(itemWithChildrenHtmlAttributes);
+    //        }
+
+    //        return li;
+    //    }
+    //}
+
     /// <summary>
     /// Create an HTML tree from a resursive collection of items
     /// </summary>
     public class TreeView<T> : IHtmlString
     {
-        private readonly IEnumerable<IRelationship<T>> items;
-        private Func<IRelationship<T>, string> displayProperty = item => item.ToString();
-        private string emptyContent = "No children";
-        private IDictionary<string, object> htmlAttributes = new Dictionary<string, object>();
-        private IDictionary<string, object> childHtmlAttributes = new Dictionary<string, object>();
-        private IDictionary<string, object> itemWithChildrenHtmlAttributes = new Dictionary<string, object>();
-        private Func<IRelationship<T>, HelperResult> itemTemplate;
+        private readonly HtmlHelper _html;
+        private readonly IEnumerable<T> _items = Enumerable.Empty<T>();
+        private Func<T, string> _displayProperty = item => item.ToString();
+        private Func<T, IEnumerable<T>> _childrenProperty;
+        private string _emptyContent = "No children";
+        private IDictionary<string, object> _htmlAttributes = new Dictionary<string, object>();
+        private IDictionary<string, object> _childHtmlAttributes = new Dictionary<string, object>();
+        private Func<T, HelperResult> _itemTemplate;
 
-        public TreeView(IEnumerable<IRelationship<T>> items)
+        public TreeView(HtmlHelper html, IEnumerable<T> items)
         {
-            this.items = items;
-
+            if (html == null) throw new ArgumentNullException("html");
+            _html = html;
+            _items = items;
             // The ItemTemplate will default to rendering the DisplayProperty
-            itemTemplate = item => new HelperResult(writer => writer.Write(displayProperty(item)));
+            _itemTemplate = item => new HelperResult(writer => writer.Write(_displayProperty(item)));
         }
 
         /// <summary>
         /// The property which will display the text rendered for each item
         /// </summary>
-        public TreeView<T> ItemText(Func<IRelationship<T>, string> selector)
+        public TreeView<T> ItemText(Func<T, string> selector)
         {
             if (selector == null) throw new ArgumentNullException("selector");
-            displayProperty = selector;
+            _displayProperty = selector;
             return this;
         }
 
         /// <summary>
         /// The template used to render each item in the tree view
         /// </summary>
-        public TreeView<T> ItemTemplate(Func<IRelationship<T>, HelperResult> template)
+        public TreeView<T> ItemTemplate(Func<T, HelperResult> itemTemplate)
         {
-            if (template == null) throw new ArgumentNullException("template");
-            itemTemplate = template;
+            if (itemTemplate == null) throw new ArgumentNullException("itemTemplate");
+            _itemTemplate = itemTemplate;
+            return this;
+        }
+
+        /// <summary>
+        /// The property which returns the children items
+        /// </summary>
+        public TreeView<T> Children(Func<T, IEnumerable<T>> selector)
+        {
+            if (selector == null) throw new ArgumentNullException("selector");
+            _childrenProperty = selector;
             return this;
         }
 
         /// <summary>
         /// Content displayed if the list is empty
         /// </summary>
-        public TreeView<T> EmptyContent(string content)
+        public TreeView<T> EmptyContent(string emptyContent)
         {
-            if (content == null) throw new ArgumentNullException("content");
-            emptyContent = content;
+            if (emptyContent == null) throw new ArgumentNullException("emptyContent");
+            _emptyContent = emptyContent;
             return this;
         }
 
         /// <summary>
         /// HTML attributes appended to the root ul node
         /// </summary>
-        public TreeView<T> HtmlAttributes(object attributes)
+        public TreeView<T> HtmlAttributes(object htmlAttributes)
         {
-            HtmlAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(attributes));
+            HtmlAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
             return this;
         }
 
         /// <summary>
         /// HTML attributes appended to the root ul node
         /// </summary>
-        public TreeView<T> HtmlAttributes(IDictionary<string, object> attributes)
+        public TreeView<T> HtmlAttributes(IDictionary<string, object> htmlAttributes)
         {
-            if (attributes == null) throw new ArgumentNullException("attributes");
-            htmlAttributes = attributes;
+            if (htmlAttributes == null) throw new ArgumentNullException("htmlAttributes");
+            _htmlAttributes = htmlAttributes;
             return this;
         }
 
         /// <summary>
         /// HTML attributes appended to the children items
         /// </summary>
-        public TreeView<T> ChildHtmlAttributes(object attributes)
+        public TreeView<T> ChildrenHtmlAttributes(object htmlAttributes)
         {
-            ChildHtmlAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(attributes));
+            ChildrenHtmlAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
             return this;
         }
 
         /// <summary>
         /// HTML attributes appended to the children items
         /// </summary>
-        public TreeView<T> ChildHtmlAttributes(IDictionary<string, object> attributes)
+        public TreeView<T> ChildrenHtmlAttributes(IDictionary<string, object> htmlAttributes)
         {
-            if (attributes == null) throw new ArgumentNullException("attributes");
-            childHtmlAttributes = attributes;
-            return this;
-        }
-
-        /// <summary>
-        /// HTML attributes appended to the item with children items
-        /// </summary>
-        public TreeView<T> ItemWithChildrenHtmlAttributes(object attributes)
-        {
-            ItemWithChildrenHtmlAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(attributes));
-            return this;
-        }
-
-        /// <summary>
-        /// HTML attributes appended to the item with children items
-        /// </summary>
-        public TreeView<T> ItemWithChildrenHtmlAttributes(IDictionary<string, object> attributes)
-        {
-            if (attributes == null) throw new ArgumentNullException("attributes");
-            itemWithChildrenHtmlAttributes = attributes;
+            if (htmlAttributes == null) throw new ArgumentNullException("htmlAttributes");
+            _childHtmlAttributes = htmlAttributes;
             return this;
         }
 
@@ -123,67 +295,82 @@ namespace Kore.Web.Mvc.Controls
             return ToString();
         }
 
+        public void Render()
+        {
+            var writer = _html.ViewContext.Writer;
+            using (var textWriter = new HtmlTextWriter(writer))
+            {
+                textWriter.Write(ToString());
+            }
+        }
+
+        private void ValidateSettings()
+        {
+            if (_childrenProperty == null)
+            {
+                throw new InvalidOperationException("You must call the Children() method to tell the tree view how to find child items");
+            }
+        }
+
         public override string ToString()
         {
-            var listItems = items.ToList();
+            ValidateSettings();
+
+            var listItems = _items.ToList();
 
             var ul = new TagBuilder("ul");
-            ul.MergeAttributes(htmlAttributes);
+            ul.MergeAttributes(_htmlAttributes);
 
             if (listItems.Count == 0)
             {
                 var li = new TagBuilder("li")
                 {
-                    InnerHtml = emptyContent
+                    InnerHtml = _emptyContent
                 };
                 ul.InnerHtml += li.ToString();
             }
 
             foreach (var item in listItems)
             {
-                BuildNestedTag(ul, item);
+                BuildNestedTag(ul, item, _childrenProperty);
             }
 
             return ul.ToString();
         }
 
-        private void AppendChildren(TagBuilder parentTag, IRelationship<T> parentItem)
+        private void AppendChildren(TagBuilder parentTag, T parentItem, Func<T, IEnumerable<T>> childrenProperty)
         {
-            if (!parentItem.Any())
+            var children = childrenProperty(parentItem).ToList();
+            if (children.Count() == 0)
             {
                 return;
             }
 
             var innerUl = new TagBuilder("ul");
-            innerUl.MergeAttributes(childHtmlAttributes);
+            innerUl.MergeAttributes(_childHtmlAttributes);
 
-            foreach (var item in parentItem)
+            foreach (var item in children)
             {
-                BuildNestedTag(innerUl, item);
+                BuildNestedTag(innerUl, item, childrenProperty);
             }
 
             parentTag.InnerHtml += innerUl.ToString();
         }
 
-        private void BuildNestedTag(TagBuilder parentTag, IRelationship<T> parentItem)
+        private void BuildNestedTag(TagBuilder parentTag, T parentItem, Func<T, IEnumerable<T>> childrenProperty)
         {
             var li = GetLi(parentItem);
             parentTag.InnerHtml += li.ToString(TagRenderMode.StartTag);
-            AppendChildren(li, parentItem);
+            AppendChildren(li, parentItem, childrenProperty);
             parentTag.InnerHtml += li.InnerHtml + li.ToString(TagRenderMode.EndTag);
         }
 
-        private TagBuilder GetLi(IRelationship<T> item)
+        private TagBuilder GetLi(T item)
         {
             var li = new TagBuilder("li")
             {
-                InnerHtml = itemTemplate(item).ToHtmlString()
+                InnerHtml = _itemTemplate(item).ToHtmlString()
             };
-
-            if (item.Any())
-            {
-                li.MergeAttributes(itemWithChildrenHtmlAttributes);
-            }
 
             return li;
         }

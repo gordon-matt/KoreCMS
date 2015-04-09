@@ -27,11 +27,39 @@ namespace Kore.Web.ContentManagement
         //    return repository.Table.Any(x => x.Name == menuName);
         //}
 
+        public static MvcHtmlString AutoBreadcrumbs(this HtmlHelper html, string templateViewName)
+        {
+            return html.Action("AutoBreadcrumbs", "Frontend", new
+            {
+                area = string.Empty,
+                templateViewName = templateViewName
+            });
+        }
+
+        public static MvcHtmlString AutoMenu(this HtmlHelper html, string templateViewName, bool includeHomePageLink = true)
+        {
+            return html.Action("AutoMenu", "Frontend", new
+            {
+                area = string.Empty,
+                templateViewName = templateViewName,
+                includeHomePageLink = includeHomePageLink
+            });
+        }
+
+        public static MvcHtmlString AutoSubMenu(this HtmlHelper html, string templateViewName)
+        {
+            return html.Action("AutoSubMenu", "Frontend", new
+            {
+                area = string.Empty,
+                templateViewName = templateViewName
+            });
+        }
+
         public static MvcHtmlString Menu(this HtmlHelper html, string menuName, string templateViewName, bool filterByUrl = false)
         {
             return html.Action("Menu", "Frontend", new
             {
-                area = "",
+                area = string.Empty,
                 name = menuName,
                 templateViewName = templateViewName,
                 filterByUrl = filterByUrl

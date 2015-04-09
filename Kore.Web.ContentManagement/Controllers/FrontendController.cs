@@ -1,11 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Kore.Collections;
 using Kore.Infrastructure;
+using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Widgets;
 using Kore.Web.Mvc;
+using Kore.Web.Navigation;
+using MenuItem = Kore.Web.ContentManagement.Areas.Admin.Menus.Domain.MenuItem;
 
 namespace Kore.Web.ContentManagement.Controllers
 {
@@ -13,6 +18,124 @@ namespace Kore.Web.ContentManagement.Controllers
     [RoutePrefix("kore-cms")]
     public class FrontendController : KoreController
     {
+        [ChildActionOnly]
+        [Route("auto-breadcrumbs")]
+        public ActionResult AutoBreadcrumbs(string templateViewName)
+        {
+            string currentUrlSlug = Request.Url.ToString().RightOfLastIndexOf('/');
+
+            var pageService = EngineContext.Current.Resolve<IPageService>();
+
+            var currentPage = pageService.Repository.Table.FirstOrDefault(y => y.Slug == currentUrlSlug);
+            var query = pageService.Repository.Table.Where(x => x.IsEnabled).ToHashSet();
+
+            var breadcrumbs = new List<Breadcrumb>();
+
+            if (currentPage != null)
+            {
+                var parentId = currentPage.ParentId;
+                while (parentId != null)
+                {
+                    var page = query.FirstOrDefault(y => y.Id == parentId);
+                    breadcrumbs.Add(new Breadcrumb
+                    {
+                        Text = page.Name,
+                        Url = "/" + page.Slug
+                    });
+                    parentId = page.ParentId;
+                }
+
+                breadcrumbs.Add(new Breadcrumb
+                {
+                    Text = currentPage.Name
+                });
+            }
+
+            return View(templateViewName, breadcrumbs);
+        }
+
+        [ChildActionOnly]
+        [Route("auto-menu")]
+        public ActionResult AutoMenu(string templateViewName, bool includeHomePageLink = true)
+        {
+            var pageService = EngineContext.Current.Resolve<IPageService>();
+            var menuItems = new List<MenuItem>();
+            var menuId = Guid.NewGuid();
+
+            if (includeHomePageLink)
+            {
+                menuItems.Add(new MenuItem
+                {
+                    Id = menuId,
+                    Text = "Home", //TODO: Localize
+                    Url = "/",
+                    Enabled = true,
+                    ParentId = null,
+                    Position = -1 // Always first
+                });
+            }
+
+            var pages = pageService.Repository.Table
+                .Where(x => x.IsEnabled)
+                .OrderBy(x => x.Name)
+                .ToHashSet()
+                .Select((x, index) => new MenuItem
+            {
+                Id = x.Id,
+                Text = x.Name,
+                Url = "/" + x.Slug,
+                Enabled = true,
+                ParentId = x.ParentId,
+                Position = index
+            });
+
+            menuItems.AddRange(pages);
+
+            ViewBag.MenuId = menuId;
+            return View(templateViewName, menuItems);
+        }
+
+        [ChildActionOnly]
+        [Route("auto-sub-menu")]
+        public ActionResult AutoSubMenu(string templateViewName)
+        {
+            string currentUrlSlug = Request.Url.ToString().RightOfLastIndexOf('/');
+
+            var pageService = EngineContext.Current.Resolve<IPageService>();
+            var menuItems = new List<MenuItem>();
+            var menuId = Guid.NewGuid();
+
+            var currentPage = pageService.Repository.Table.FirstOrDefault(y => y.Slug == currentUrlSlug);
+            var query = pageService.Repository.Table.Where(x => x.IsEnabled);
+
+            if (currentPage != null)
+            {
+                query = query.Where(x => x.ParentId == currentPage.Id);
+            }
+            else
+            {
+                query = query.Where(x => x.ParentId == null);
+            }
+
+            var pages = query
+                .OrderBy(x => x.Name)
+                .ToHashSet()
+                .Select((x, index) => new MenuItem
+                {
+                    Id = x.Id,
+                    Text = x.Name,
+                    Url = "/" + x.Slug,
+                    Enabled = true,
+                    ParentId = x.ParentId,
+                    Position = index
+                });
+
+            menuItems.AddRange(pages);
+
+            ViewBag.MenuId = menuId;
+            return View(templateViewName, menuItems);
+        }
+
         [ChildActionOnly]
         [Route("menu")]
         public ActionResult Menu(string name, string templateViewName, bool filterByUrl = false)

@@ -590,6 +590,14 @@ namespace Kore.Web.Mvc
         {
             return new RoboUIGridResult<TModel>(htmlHelper.ViewContext);
         }
+
+        /// <summary>
+        /// Create an HTML tree from a recursive collection of items
+        /// </summary>
+        public static TreeView<T> TreeView<T>(this HtmlHelper html, IEnumerable<T> items)
+        {
+            return new TreeView<T>(html, items);
+        }
     }
 
     public class Kore<TModel>

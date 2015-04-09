@@ -73,6 +73,7 @@
         public static class Pages
         {
             public const string ConfirmRestoreVersion = "Kore.Web.ContentManagement/Pages.ConfirmRestoreVersion";
+            public const string CreateSubPage = "Kore.Web.ContentManagement/Pages.CreateSubPage";
             public const string History = "Kore.Web.ContentManagement/Pages.History";
             public const string ManagePages = "Kore.Web.ContentManagement/Pages.ManagePages";
             public const string PageHistory = "Kore.Web.ContentManagement/Pages.PageHistory";

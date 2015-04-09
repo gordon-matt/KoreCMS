@@ -9,6 +9,18 @@ var PageTypeVM = function () {
     self.displayTemplatePath = ko.observable('');
     self.editorTemplatePath = ko.observable('');
 
+    self.create = function () {
+        self.id(emptyGuid);
+        self.name('');
+        self.layoutPath('');
+        self.displayTemplatePath('');
+        self.editorTemplatePath('');
+
+        self.validator.resetForm();
+        switchSection($("#page-type-form-section"));
+        $("#page-type-form-section-legend").html(translations.Create);
+    };
+
     self.edit = function (id) {
         $.ajax({
             url: "/odata/kore/cms/PageTypes(guid'" + id + "')",
@@ -114,9 +126,9 @@ var PageTypeVM = function () {
         switchSection($("#page-type-grid-section"));
     };
 
-    //self.showPages = function () {
-    //    switchSection($("#blank-section"));
-    //};
+    self.showPages = function () {
+        switchSection($("#grid-section"));
+    };
 
     self.validator = $("#page-type-form-section-form").validate({
         rules: {
@@ -132,7 +144,6 @@ var ViewModel = function () {
     var self = this;
     
     self.id = ko.observable(emptyGuid);
-    self.parentId = ko.observable(null);
     self.pageTypeId = ko.observable(emptyGuid);
     self.name = ko.observable('');
     self.slug = ko.observable('');
@@ -140,23 +151,11 @@ var ViewModel = function () {
     self.isEnabled = ko.observable(false);
     self.cultureCode = ko.observable('');
     self.refId = ko.observable(null);
-    self.showButtons = ko.observable(false);
 
     self.pageType = new PageTypeVM();
 
-    self.pageModelStub = null;
-
     self.create = function () {
-        self.createNew(null);
-    };
-
-    self.createSubPage = function () {
-        self.createNew(self.id());
-    };
-
-    self.createNew = function (parentId) {
         self.id(emptyGuid);
-        self.parentId(parentId);
         self.pageTypeId(emptyGuid);
         self.name('');
         self.slug('');
@@ -165,13 +164,11 @@ var ViewModel = function () {
         self.cultureCode('');
         self.refId(null);
 
-        self.showButtons(false);
 
         // Clean up from previously injected html/scripts
-        if (self.pageModelStub != null && typeof self.pageModelStub.cleanUp === 'function') {
-            self.pageModelStub.cleanUp();
+        if (typeof cleanUp == 'function') {
+            cleanUp();
         }
-        self.pageModelStub = null;
 
         // Remove Old Scripts
         var oldScripts = $('script[data-fields-script="true"]');
@@ -185,6 +182,7 @@ var ViewModel = function () {
         var elementToBind = $("#fields-definition")[0];
         ko.cleanNode(elementToBind);
         $("#fields-definition").html("");
+
 
         self.validator.resetForm();
         switchSection($("#form-section"));
@@ -200,7 +198,6 @@ var ViewModel = function () {
         })
         .done(function (json) {
             self.id(json.Id);
-            self.parentId(json.ParentId);
             self.pageTypeId(json.PageTypeId);
             self.name(json.Name);
             self.slug(json.Slug);
@@ -208,8 +205,6 @@ var ViewModel = function () {
             self.isEnabled(json.IsEnabled);
             self.cultureCode(json.CultureCode);
             self.refId(json.RefId);
-
-            self.showButtons(true);
 
             self.validator.resetForm();
             switchSection($("#form-section"));
@@ -223,10 +218,9 @@ var ViewModel = function () {
             })
             .done(function (json) {
                 // Clean up from previously injected html/scripts
-                if (self.pageModelStub != null && typeof self.pageModelStub.cleanUp === 'function') {
-                    self.pageModelStub.cleanUp();
+                if (typeof cleanUp == 'function') {
+                    cleanUp();
                 }
-                self.pageModelStub = null;
 
                 // Remove Old Scripts
                 var oldScripts = $('script[data-fields-script="true"]');
@@ -258,11 +252,8 @@ var ViewModel = function () {
 
                 // Update Bindings
                 // Ensure the function exists before calling it...
-                if (typeof pageModel != null) {
-                    self.pageModelStub = pageModel;
-                    if (typeof self.pageModelStub.updateModel === 'function') {
-                        self.pageModelStub.updateModel();
-                    }
+                if (typeof updateModel == 'function') {
+                    updateModel();
                     ko.applyBindings(viewModel, elementToBind);
                 }
             })
@@ -277,15 +268,17 @@ var ViewModel = function () {
         });
     };
 
-    self.delete = function () {
+    self.delete = function (id) {
         if (confirm(translations.DeleteRecordConfirm)) {
             $.ajax({
-                url: "/odata/kore/cms/Pages(guid'" + self.id() + "')",
+                url: "/odata/kore/cms/Pages(guid'" + id + "')",
                 type: "DELETE",
                 async: false
             })
             .done(function (json) {
-                self.refresh();
+                $('#Grid').data('kendoGrid').dataSource.read();
+                $('#Grid').data('kendoGrid').refresh();
+
                 $.notify(translations.DeleteRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -302,8 +295,8 @@ var ViewModel = function () {
         }
 
         // ensure the function exists before calling it...
-        if (self.pageModelStub != null && typeof self.pageModelStub.onBeforeSave === 'function') {
-            self.pageModelStub.onBeforeSave();
+        if (typeof onBeforeSave == 'function') {
+            onBeforeSave();
         }
 
         var cultureCode = self.cultureCode();
@@ -313,7 +306,6 @@ var ViewModel = function () {
 
         var record = {
             Id: self.id(),
-            ParentId: self.parentId(),
             PageTypeId: self.pageTypeId(),
             Name: self.name(),
             Slug: self.slug(),
@@ -334,7 +326,11 @@ var ViewModel = function () {
                 async: false
             })
             .done(function (json) {
-                self.refresh();
+                $('#Grid').data('kendoGrid').dataSource.read();
+                $('#Grid').data('kendoGrid').refresh();
+
+                switchSection($("#grid-section"));
+
                 $.notify(translations.InsertRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -353,7 +349,11 @@ var ViewModel = function () {
                 async: false
             })
             .done(function (json) {
-                self.refresh();
+                $('#Grid').data('kendoGrid').dataSource.read();
+                $('#Grid').data('kendoGrid').refresh();
+
+                switchSection($("#grid-section"));
+
                 $.notify(translations.UpdateRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -365,10 +365,9 @@ var ViewModel = function () {
 
     self.cancel = function () {
         // Clean up from previously injected html/scripts
-        if (self.pageModelStub != null && typeof self.pageModelStub.cleanUp === 'function') {
-            self.pageModelStub.cleanUp();
+        if (typeof cleanUp == 'function') {
+            cleanUp();
         }
-        self.pageModelStub = null;
 
         // Remove Old Scripts
         var oldScripts = $('script[data-fields-script="true"]');
@@ -383,17 +382,16 @@ var ViewModel = function () {
         ko.cleanNode(elementToBind);
         $("#fields-definition").html("");
 
-        switchSection($("#blank-section"));
-        self.showButtons(false);
+        switchSection($("#grid-section"));
     };
 
-    self.toggleEnabled = function () {
+    self.toggleEnabled = function (id, enabled) {
         var patch = {
-            IsEnabled: !self.isEnabled()
+            IsEnabled: !enabled
         };
 
         $.ajax({
-            url: "/odata/kore/cms/Pages(guid'" + self.id() + "')",
+            url: "/odata/kore/cms/Pages(guid'" + id + "')",
             type: "PATCH",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(patch),
@@ -401,7 +399,9 @@ var ViewModel = function () {
             async: false
         })
         .done(function (json) {
-            self.refresh();
+            $('#Grid').data('kendoGrid').dataSource.read();
+            $('#Grid').data('kendoGrid').refresh();
+
             $.notify(translations.UpdateRecordSuccess, "success");
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
@@ -412,16 +412,14 @@ var ViewModel = function () {
 
     self.translate = function (id) {
         $("#CultureSelector_PageId").val(id); //TODO: make this a self variable
-        self.showButtons(false);
         switchSection($("#culture-selector-section"));
     };
 
     self.cultureSelector_onCancel = function () {
         // Clean up from previously injected html/scripts
-        if (self.pageModelStub != null && typeof self.pageModelStub.cleanUp === 'function') {
-            self.pageModelStub.cleanUp();
+        if (typeof cleanUp == 'function') {
+            cleanUp();
         }
-        self.pageModelStub = null;
 
         // Remove Old Scripts
         var oldScripts = $('script[data-fields-script="true"]');
@@ -436,8 +434,7 @@ var ViewModel = function () {
         ko.cleanNode(elementToBind);
         $("#fields-definition").html("");
 
-        switchSection($("#blank-section"));
-        self.showButtons(false);
+        switchSection($("#grid-section"));
     };
 
     self.cultureSelector_onSelected = function () {
@@ -458,7 +455,6 @@ var ViewModel = function () {
         })
         .done(function (json) {
             self.id(json.Id);
-            self.parentId(json.ParentId);
             self.pageTypeId(json.PageTypeId);
             self.name(json.Name);
             self.slug(json.Slug);
@@ -468,7 +464,6 @@ var ViewModel = function () {
             self.refId(json.RefId);
 
             switchSection($("#form-section"));
-            self.showButtons(false);
 
             if (self.id() != emptyGuid) {
                 $.ajax({
@@ -479,10 +474,9 @@ var ViewModel = function () {
                 })
                 .done(function (json) {
                     // Clean up from previously injected html/scripts
-                    if (self.pageModelStub != null && typeof self.pageModelStub.cleanUp === 'function') {
-                        self.pageModelStub.cleanUp();
+                    if (typeof cleanUp == 'function') {
+                        cleanUp();
                     }
-                    self.pageModelStub = null;
 
                     // Remove Old Scripts
                     var oldScripts = $('script[data-fields-script="true"]');
@@ -514,11 +508,8 @@ var ViewModel = function () {
 
                     // Update Bindings
                     // Ensure the function exists before calling it...
-                    if (typeof pageModel != null) {
-                        self.pageModelStub = pageModel;
-                        if (typeof self.pageModelStub.updateModel === 'function') {
-                            self.pageModelStub.updateModel();
-                        }
+                    if (typeof updateModel == 'function') {
+                        updateModel();
                         ko.applyBindings(viewModel, elementToBind);
                     }
                 })
@@ -535,15 +526,8 @@ var ViewModel = function () {
     };
 
     self.showPageTypes = function () {
-        self.showButtons(false);
         switchSection($("#page-type-grid-section"));
     };
-
-    self.refresh = function () {
-        switchSection($("#blank-section"));
-        self.showButtons(false);
-        $("#treeview").data("kendoTreeView").dataSource.read();
-    }
 
     self.validator = $("#form-section-form").validate({
         rules: {
@@ -558,7 +542,76 @@ $(document).ready(function () {
     viewModel = new ViewModel();
     ko.applyBindings(viewModel);
 
-    switchSection($("#blank-section"));
+    $("#Grid").kendoGrid({
+        data: null,
+        dataSource: {
+            type: "odata",
+            transport: {
+                read: {
+                    url: "/odata/kore/cms/Pages",
+                    dataType: "json"
+                }
+            },
+            schema: {
+                data: function (data) {
+                    return data.value;
+                },
+                total: function (data) {
+                    return data["odata.count"];
+                },
+                model: {
+                    fields: {
+                        Title: { type: "string" },
+                        Slug: { type: "string" },
+                        IsEnabled: { type: "boolean" }
+                    }
+                }
+            },
+            pageSize: 10,
+            serverPaging: true,
+            serverFiltering: true,
+            serverSorting: true,
+            sort: { field: "Name", dir: "asc" }
+        },
+        filterable: true,
+        sortable: {
+            allowUnsort: false
+        },
+        pageable: {
+            refresh: true
+        },
+        scrollable: false,
+        columns: [{
+            field: "Name",
+            title: "Name",
+            template: '<a href="/#=Slug#" target="_blank">#=Name#</a>',
+            filterable: true
+        }, {
+            field: "Slug",
+            title: "Slug",
+            filterable: true
+        }, {
+            field: "IsEnabled",
+            title: "Is Enabled",
+            template: '<i class="fa #=IsEnabled ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
+            attributes: { "class": "text-center" },
+            filterable: true,
+            width: 70
+        }, {
+            field: "Id",
+            title: " ",
+            template:
+                '<div class="btn-group"><a onclick="viewModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
+                '<a onclick="viewModel.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
+                '<a href="/admin/pages/#=Id#/history" class="btn btn-warning btn-xs">' + translations.History + '</a>' +
+                '<a onclick="viewModel.translate(\'#=Id#\')" class="btn btn-primary btn-xs">' + translations.Translations + '</a>' +
+                '<a href="/admin/widgets/#=Id#" class="btn btn-info btn-xs">' + translations.Widgets + '</a>' +
+                '<a onclick="viewModel.toggleEnabled(\'#=Id#\', #=IsEnabled#)" class="btn btn-default btn-xs">' + translations.Toggle + '</a></div>',
+            attributes: { "class": "text-center" },
+            filterable: false,
+            width: 350
+        }]
+    });
 
     $("#PageTypesGrid").kendoGrid({
         data: null,
@@ -604,40 +657,11 @@ $(document).ready(function () {
             field: "Id",
             title: " ",
             template:
-                '<a onclick="viewModel.pageType.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>',
+                '<div class="btn-group"><a onclick="viewModel.pageType.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
+                '<a onclick="viewModel.pageType.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a></div>',
             attributes: { "class": "text-center" },
             filterable: false,
             width: 130
         }]
-    });
-
-    var PagesDS = new kendo.data.HierarchicalDataSource({
-        type: "odata",
-        transport: {
-            read: {
-                url: "/odata/kore/cms/PageTree?$expand=SubPages/SubPages",
-                dataType: "json"
-            }
-        },
-        schema: {
-            data: function (response) {
-                return response.value;
-            },
-            total: function (response) {
-                return response.value.length;
-            },
-            model: {
-                id: "Id",
-                children: "SubPages"
-            }
-        }
-    });
-
-    PagesDS.read();
-
-    $("#treeview").kendoTreeView({
-        template: kendo.template($("#treeview-template").html()),
-        dataSource: PagesDS,
-        dataTextField: ["Name"]
     });
 });

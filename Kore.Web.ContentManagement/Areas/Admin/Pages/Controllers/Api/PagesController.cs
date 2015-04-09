@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using System.Web.Http.OData;
+using Kore.Collections;
 using Kore.Data;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.Http.OData;
@@ -52,6 +53,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 {
                     Id = Guid.NewGuid(),
                     PageId = currentPage.Id,
+                    ParentId = currentPage.ParentId,
                     PageTypeId = currentPage.PageTypeId,
                     ArchivedDate = DateTime.UtcNow,
                     Name = currentPage.Name,
@@ -107,6 +109,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 {
                     Id = Guid.NewGuid(),
                     PageId = currentPage.Id,
+                    ParentId = currentPage.ParentId,
                     PageTypeId = currentPage.PageTypeId,
                     ArchivedDate = DateTime.UtcNow,
                     Name = currentPage.Name,
@@ -150,6 +153,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 var translation = new Page
                 {
                     Id = Guid.NewGuid(),
+                    ParentId = record.ParentId,
                     PageTypeId = record.PageTypeId,
                     Name = record.Name,
                     Slug = record.Slug,
@@ -165,6 +169,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 return new EdmPage
                 {
                     Id = translation.Id,
+                    ParentId = translation.ParentId,
                     PageTypeId = translation.PageTypeId,
                     Name = translation.Name,
                     Slug = translation.Slug,
@@ -178,6 +183,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 return new EdmPage
                 {
                     Id = record.Id,
+                    ParentId = record.ParentId,
                     PageTypeId = record.PageTypeId,
                     Name = record.Name,
                     Slug = record.Slug,
@@ -204,6 +210,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
     {
         public Guid Id { get; set; }
 
+        public Guid? ParentId { get; set; }
+
         public Guid PageTypeId { get; set; }
 
         public string Name { get; set; }
@@ -218,4 +226,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
         public Guid? RefId { get; set; }
     }
+
+    //public struct EdmPageTreeItem
+    //{
+    //    public Guid Id { get; set; }
+
+    //    public string Name { get; set; }
+
+    //    public EdmPageTreeItem[] SubPages { get; set; }
+    //}
 }

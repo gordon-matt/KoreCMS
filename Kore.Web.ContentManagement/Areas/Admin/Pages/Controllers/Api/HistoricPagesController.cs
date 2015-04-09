@@ -48,6 +48,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             {
                 Id = Guid.NewGuid(),
                 PageId = page.Id,
+                ParentId = page.ParentId,
                 PageTypeId = page.PageTypeId,
                 Name = page.Name,
                 Slug = page.Slug,
@@ -62,6 +63,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             Repository.Insert(backupPage);
 
             // then restore the historical page, as requested
+            page.ParentId = pageToRestore.ParentId;
             page.PageTypeId = pageToRestore.PageTypeId;
             page.Name = pageToRestore.Name;
             page.Slug = pageToRestore.Slug;

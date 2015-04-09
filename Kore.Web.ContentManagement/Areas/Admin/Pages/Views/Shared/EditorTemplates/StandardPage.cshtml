@@ -22,41 +22,81 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel() {
-        viewModel.metaKeywords = ko.observable("");
-        viewModel.metaDescription = ko.observable("");
-        viewModel.bodyContent = ko.observable("");
+    var pageModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.metaKeywords = ko.observable("");
+            viewModel.metaDescription = ko.observable("");
+            viewModel.bodyContent = ko.observable("");
 
-        var data = ko.mapping.fromJSON(viewModel.fields());
+            var data = ko.mapping.fromJSON(viewModel.fields());
 
-        if (data) {
-            if (data.MetaKeywords) {
-                viewModel.metaKeywords(data.MetaKeywords());
+            if (data) {
+                if (data.MetaKeywords) {
+                    viewModel.metaKeywords(data.MetaKeywords());
+                }
+                if (data.MetaDescription) {
+                    viewModel.metaDescription(data.MetaDescription());
+                }
+                if (data.BodyContent) {
+                    viewModel.bodyContent(data.BodyContent());
+                }
             }
-            if (data.MetaDescription) {
-                viewModel.metaDescription(data.MetaDescription());
-            }
-            if (data.BodyContent) {
-                viewModel.bodyContent(data.BodyContent());
-            }
-        }
 
-        viewModel.tinyMCE_bodyContent = koreDefaultTinyMCEConfig;
-    };
-
-    function cleanUp() {
-        delete viewModel.metaKeywords;
-        delete viewModel.metaDescription;
-        delete viewModel.bodyContent;
-        delete viewModel.tinyMCE_bodyContent;
-    }
-
-    function onBeforeSave() {
-        var data = {
-            MetaKeywords: viewModel.metaKeywords(),
-            MetaDescription: viewModel.metaDescription(),
-            BodyContent: viewModel.bodyContent()
+            viewModel.tinyMCE_bodyContent = koreDefaultTinyMCEConfig;
         };
-        viewModel.fields(ko.mapping.toJSON(data));
-    };
+        f.cleanUp = function () {
+            delete viewModel.metaKeywords;
+            delete viewModel.metaDescription;
+            delete viewModel.bodyContent;
+            delete viewModel.tinyMCE_bodyContent;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                MetaKeywords: viewModel.metaKeywords(),
+                MetaDescription: viewModel.metaDescription(),
+                BodyContent: viewModel.bodyContent()
+            };
+            viewModel.fields(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
+
+    //function updateModel() {
+    //    viewModel.metaKeywords = ko.observable("");
+    //    viewModel.metaDescription = ko.observable("");
+    //    viewModel.bodyContent = ko.observable("");
+
+    //    var data = ko.mapping.fromJSON(viewModel.fields());
+
+    //    if (data) {
+    //        if (data.MetaKeywords) {
+    //            viewModel.metaKeywords(data.MetaKeywords());
+    //        }
+    //        if (data.MetaDescription) {
+    //            viewModel.metaDescription(data.MetaDescription());
+    //        }
+    //        if (data.BodyContent) {
+    //            viewModel.bodyContent(data.BodyContent());
+    //        }
+    //    }
+
+    //    viewModel.tinyMCE_bodyContent = koreDefaultTinyMCEConfig;
+    //};
+
+    //function cleanUp() {
+    //    delete viewModel.metaKeywords;
+    //    delete viewModel.metaDescription;
+    //    delete viewModel.bodyContent;
+    //    delete viewModel.tinyMCE_bodyContent;
+    //}
+
+    //function onBeforeSave() {
+    //    var data = {
+    //        MetaKeywords: viewModel.metaKeywords(),
+    //        MetaDescription: viewModel.metaDescription(),
+    //        BodyContent: viewModel.bodyContent()
+    //    };
+    //    viewModel.fields(ko.mapping.toJSON(data));
+    //};
 </script>

@@ -243,6 +243,7 @@
     <Compile Include="Areas\Admin\Messaging\Services\SimpleTextParserEngine.cs" />
     <Compile Include="Areas\Admin\Messaging\Services\UrlContentParserEngine.cs" />
     <Compile Include="Areas\Admin\Messaging\Token.cs" />
+    <Compile Include="Areas\Admin\Pages\Controllers\Api\PageTreeController.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\Api\PageTypesController.cs" />
     <Compile Include="Areas\Admin\Pages\Domain\PageWidget.cs" />
     <Compile Include="Areas\Admin\Pages\PagesIndexingContentProvider.cs" />
@@ -376,6 +377,7 @@
     <EmbeddedResource Include="Areas\Admin\Localization\Views\Shared\EditorTemplates\LanguageSwitchWidget.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Media\Views\Media\Browse.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Media\Views\Media\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\Views\Page\Index_Old.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\RichTextFull.cshtml" />
@@ -399,6 +401,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Pages\Scripts\index_Old.js" />
     <EmbeddedResource Include="Areas\Admin\Messaging\Scripts\queuedEmails.js" />
     <EmbeddedResource Include="Areas\Admin\Messaging\Scripts\messageTemplates.js" />
     <EmbeddedResource Include="Areas\Admin\Localization\Scripts\index.js" />

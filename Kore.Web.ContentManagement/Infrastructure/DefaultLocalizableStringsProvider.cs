@@ -53,6 +53,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
                         { KoreCmsLocalizableStrings.Navigation.CMS, "CMS" },
                         { KoreCmsLocalizableStrings.Navigation.Home, "Home" },
                         { KoreCmsLocalizableStrings.Pages.ConfirmRestoreVersion, "Are you sure you want to restore this version?" },
+                        { KoreCmsLocalizableStrings.Pages.CreateSubPage, "Create Sub Page" },
                         { KoreCmsLocalizableStrings.Pages.History, "History" },
                         { KoreCmsLocalizableStrings.Pages.ManagePages, "Manage Pages" },
                         { KoreCmsLocalizableStrings.Pages.PageHistory, "Page History" },

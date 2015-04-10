@@ -534,3 +534,4 @@
 /// <reference path="tinymce/plugins/compat3x/utils/form_utils.js" />
 /// <reference path="tinymce/plugins/compat3x/utils/mctabs.js" />
 /// <reference path="tinymce/plugins/compat3x/utils/validate.js" />
+/// <reference path="tinymce/plugins/kore_widgetzone/plugin.js" />

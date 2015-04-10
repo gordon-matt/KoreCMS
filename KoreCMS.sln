@@ -44,6 +44,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "v1.0.0", "v1.0.0", "{A5151B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Widgets.Bootstrap3", "Plugins\Kore.Plugins.Widgets.Bootstrap3\Kore.Plugins.Widgets.Bootstrap3.csproj", "{310DCE69-E369-41D6-8BDA-CC641FEEF9E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Widgets.Google", "Plugins\Kore.Plugins.Widgets.Google\Kore.Plugins.Widgets.Google.csproj", "{CACB917B-6AAE-43D9-98BC-C919BF234DFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +104,10 @@ Global
 		{310DCE69-E369-41D6-8BDA-CC641FEEF9E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{310DCE69-E369-41D6-8BDA-CC641FEEF9E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{310DCE69-E369-41D6-8BDA-CC641FEEF9E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CACB917B-6AAE-43D9-98BC-C919BF234DFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CACB917B-6AAE-43D9-98BC-C919BF234DFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CACB917B-6AAE-43D9-98BC-C919BF234DFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CACB917B-6AAE-43D9-98BC-C919BF234DFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,5 +123,6 @@ Global
 		{801FCF62-6E40-4218-9EDD-21E2CCFCA872} = {2ED43291-13A7-4774-818A-379C7A1EC8EE}
 		{A5151BCB-FCEF-4ADF-98A8-B2792BEF6B01} = {2ED43291-13A7-4774-818A-379C7A1EC8EE}
 		{310DCE69-E369-41D6-8BDA-CC641FEEF9E8} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
+		{CACB917B-6AAE-43D9-98BC-C919BF234DFE} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 	EndGlobalSection
 EndGlobal

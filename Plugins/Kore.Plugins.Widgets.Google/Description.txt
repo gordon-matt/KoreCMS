@@ -1,0 +1,8 @@
+﻿Group: Widgets
+FriendlyName: Google
+SystemName: Kore.Plugins.Widgets.Google
+Version: 1.00
+SupportedVersions: 1.00
+Author: Widecommerce
+DisplayOrder: 1
+FileName: Kore.Plugins.Widgets.Google.dll

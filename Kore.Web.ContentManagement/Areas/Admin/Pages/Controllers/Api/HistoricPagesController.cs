@@ -53,9 +53,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 Name = page.Name,
                 Slug = page.Slug,
                 Fields = page.Fields,
+                IsEnabled = page.IsEnabled,
+                Order = page.Order,
                 DateCreatedUtc = page.DateCreatedUtc,
                 DateModifiedUtc = page.DateModifiedUtc,
-                IsEnabled = page.IsEnabled,
                 CultureCode = page.CultureCode,
                 RefId = page.RefId,
                 ArchivedDate = DateTime.UtcNow
@@ -68,9 +69,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             page.Name = pageToRestore.Name;
             page.Slug = pageToRestore.Slug;
             page.Fields = pageToRestore.Fields;
+            page.IsEnabled = pageToRestore.IsEnabled;
+            page.Order = pageToRestore.Order;
             page.DateCreatedUtc = pageToRestore.DateCreatedUtc;
             page.DateModifiedUtc = pageToRestore.DateModifiedUtc;
-            page.IsEnabled = pageToRestore.IsEnabled;
             page.CultureCode = pageToRestore.CultureCode;
             page.RefId = pageToRestore.RefId;
 

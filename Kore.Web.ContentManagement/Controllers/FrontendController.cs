@@ -77,7 +77,8 @@ namespace Kore.Web.ContentManagement.Controllers
 
             var pages = pageService.Repository.Table
                 .Where(x => x.IsEnabled)
-                .OrderBy(x => x.Name)
+                .OrderBy(x => x.Order)
+                .ThenBy(x => x.Name)
                 .ToHashSet()
                 .Select((x, index) => new MenuItem
             {
@@ -118,7 +119,8 @@ namespace Kore.Web.ContentManagement.Controllers
             }
 
             var pages = query
-                .OrderBy(x => x.Name)
+                .OrderBy(x => x.Order)
+                .ThenBy(x => x.Name)
                 .ToHashSet()
                 .Select((x, index) => new MenuItem
                 {

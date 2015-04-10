@@ -26,6 +26,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
 
         public bool IsEnabled { get; set; }
 
+        public int Order { get; set; }
+
         public DateTime DateCreatedUtc { get; set; }
 
         public DateTime DateModifiedUtc { get; set; }
@@ -57,6 +59,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
             Property(x => x.Slug).HasMaxLength(255).IsRequired();
             Property(x => x.Fields).IsMaxLength();
             Property(x => x.IsEnabled).IsRequired();
+            Property(x => x.Order).IsRequired();
             Property(x => x.DateCreatedUtc).IsRequired();
             Property(x => x.DateModifiedUtc).IsRequired();
             Property(x => x.CultureCode).HasMaxLength(10);

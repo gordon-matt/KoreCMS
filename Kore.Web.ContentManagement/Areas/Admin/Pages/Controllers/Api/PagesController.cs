@@ -55,15 +55,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     PageId = currentPage.Id,
                     ParentId = currentPage.ParentId,
                     PageTypeId = currentPage.PageTypeId,
-                    ArchivedDate = DateTime.UtcNow,
                     Name = currentPage.Name,
                     Slug = currentPage.Slug,
                     Fields = currentPage.Fields,
+                    IsEnabled = currentPage.IsEnabled,
+                    Order = currentPage.Order,
                     DateCreatedUtc = currentPage.DateCreatedUtc,
                     DateModifiedUtc = currentPage.DateModifiedUtc,
-                    IsEnabled = currentPage.IsEnabled,
                     CultureCode = currentPage.CultureCode,
                     RefId = currentPage.RefId,
+                    ArchivedDate = DateTime.UtcNow
                 };
                 historicPageRepository.Insert(historicPage);
 
@@ -111,15 +112,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     PageId = currentPage.Id,
                     ParentId = currentPage.ParentId,
                     PageTypeId = currentPage.PageTypeId,
-                    ArchivedDate = DateTime.UtcNow,
                     Name = currentPage.Name,
                     Slug = currentPage.Slug,
                     Fields = currentPage.Fields,
+                    IsEnabled = currentPage.IsEnabled,
+                    Order = currentPage.Order,
                     DateCreatedUtc = currentPage.DateCreatedUtc,
                     DateModifiedUtc = currentPage.DateModifiedUtc,
-                    IsEnabled = currentPage.IsEnabled,
                     CultureCode = currentPage.CultureCode,
-                    RefId = currentPage.RefId
+                    RefId = currentPage.RefId,
+                    ArchivedDate = DateTime.UtcNow
                 };
                 historicPageRepository.Insert(historicPage);
 
@@ -158,6 +160,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     Name = record.Name,
                     Slug = record.Slug,
                     Fields = record.Fields,
+                    Order = record.Order,
                     DateCreatedUtc = DateTime.UtcNow,
                     DateModifiedUtc = DateTime.UtcNow,
                     CultureCode = cultureCode,
@@ -174,6 +177,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     Name = translation.Name,
                     Slug = translation.Slug,
                     Fields = translation.Fields,
+                    Order = translation.Order,
                     CultureCode = translation.CultureCode,
                     RefId = translation.RefId
                 };
@@ -189,6 +193,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     Slug = record.Slug,
                     Fields = record.Fields,
                     IsEnabled = record.IsEnabled,
+                    Order = record.Order,
                     CultureCode = record.CultureCode,
                     RefId = record.RefId
                 };
@@ -221,6 +226,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         public string Fields { get; set; }
 
         public bool IsEnabled { get; set; }
+
+        public int Order { get; set; }
 
         public string CultureCode { get; set; }
 

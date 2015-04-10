@@ -99,6 +99,17 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        @Html.Label("Order", "Order", new { @class = "control-label" })
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-sort-amount-asc"></i>
+                                            </span>
+                                            @Html.TextBox("Order", null, new { @class = "form-control", data_bind = "value: order" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                     <div class="checkbox">
                                         <label>
                                             @Html.CheckBox("IsEnabled", new { data_bind = "checked: isEnabled" }) Enabled

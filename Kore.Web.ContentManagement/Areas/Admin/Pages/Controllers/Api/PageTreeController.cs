@@ -26,7 +26,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
             var hierarchy = pages
                 .Where(x => x.ParentId == null)
-                .OrderBy(x => x.Name)
+                .OrderBy(x => x.Order)
+                .ThenBy(x => x.Name)
                 .Select(x => new PageTreeItem
                 {
                     Id = x.Id,
@@ -42,7 +43,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         {
             return pages
                 .Where(x => x.ParentId == parentId)
-                .OrderBy(x => x.Name)
+                .OrderBy(x => x.Order)
+                .ThenBy(x => x.Name)
                 .Select(x => new PageTreeItem
                 {
                     Id = x.Id,
@@ -68,20 +70,4 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
         public List<PageTreeItem> SubPages { get; set; }
     }
-
-    //public class PageTreeComplexItem
-    //{
-    //    public PageTreeComplexItem()
-    //    {
-    //        SubPages = new List<PageTreeComplexItem>();
-    //    }
-
-    //    public Guid Id { get; set; }
-
-    //    public string Name { get; set; }
-
-    //    public bool IsEnabled { get; set; }
-
-    //    public List<PageTreeComplexItem> SubPages { get; set; }
-    //}
 }

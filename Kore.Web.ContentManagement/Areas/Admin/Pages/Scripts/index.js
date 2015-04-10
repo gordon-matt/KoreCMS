@@ -138,6 +138,7 @@ var ViewModel = function () {
     self.slug = ko.observable('');
     self.fields = ko.observable('');
     self.isEnabled = ko.observable(false);
+    self.order = ko.observable(0);
     self.cultureCode = ko.observable('');
     self.refId = ko.observable(null);
     self.showButtons = ko.observable(false);
@@ -162,6 +163,7 @@ var ViewModel = function () {
         self.slug('');
         self.fields('');
         self.isEnabled(false);
+        self.order(0);
         self.cultureCode('');
         self.refId(null);
 
@@ -206,6 +208,7 @@ var ViewModel = function () {
             self.slug(json.Slug);
             self.fields(json.Fields);
             self.isEnabled(json.IsEnabled);
+            self.order(json.Order);
             self.cultureCode(json.CultureCode);
             self.refId(json.RefId);
 
@@ -319,6 +322,7 @@ var ViewModel = function () {
             Slug: self.slug(),
             Fields: self.fields(),
             IsEnabled: self.isEnabled(),
+            Order: self.order(),
             CultureCode: cultureCode,
             RefId: self.refId()
         };
@@ -464,6 +468,7 @@ var ViewModel = function () {
             self.slug(json.Slug);
             self.fields(json.Fields);
             self.isEnabled(json.IsEnabled);
+            self.order(json.Order);
             self.cultureCode(json.CultureCode);
             self.refId(json.RefId);
 
@@ -548,7 +553,8 @@ var ViewModel = function () {
     self.validator = $("#form-section-form").validate({
         rules: {
             Name: { required: true, maxlength: 255 },
-            Slug: { required: true, maxlength: 255 }
+            Slug: { required: true, maxlength: 255 },
+            Order: { required: true, digits: true }
         }
     });
 };

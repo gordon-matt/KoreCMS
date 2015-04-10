@@ -1,0 +1,27 @@
+﻿@using MenuItem = Kore.Web.ContentManagement.Areas.Admin.Menus.Domain.MenuItem
+@model IEnumerable<MenuItem>
+
+@{
+    Layout = null;
+    Guid menuId = ViewBag.MenuId;
+}
+
+@helper BuildMenuItems(MenuItem menuItem, string currentUrl, bool isFirstLevel)
+{
+    bool isCurrent = currentUrl.EndsWith(menuItem.Url);
+    string cssClass = (menuItem.CssClass + (isCurrent ? " active" : string.Empty)).Trim();
+    string url = menuItem.IsExternalUrl ? menuItem.Url : Url.Content("~/" + menuItem.Url);
+
+    <a class="list-group-item @cssClass" href="@url">@menuItem.Text</a>
+}
+
+<div class="list-group">
+    @{
+        string currentUrl = Request.Url.ToString();
+
+        foreach (var menuItem in Model.OrderBy(x => x.Position).ThenBy(x => x.Text))
+        {
+            @BuildMenuItems(menuItem, currentUrl, true)
+        }
+    }
+</div>

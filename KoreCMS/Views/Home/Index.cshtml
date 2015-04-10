@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = string.IsNullOrEmpty(SiteSettings.HomePageTitle) ? "Home Page" : SiteSettings.HomePageTitle;
 }
 
 <div class="jumbotron">

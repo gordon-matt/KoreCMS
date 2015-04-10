@@ -231,6 +231,7 @@
     <Compile Include="Configuration\SiteSettings.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
     <Compile Include="Data\ApplicationUserManager.cs" />
@@ -322,6 +323,7 @@
     <Content Include="Content\elfinder_2_1\img\volume_icon_local.png" />
     <Content Include="Content\elfinder_2_1\img\volume_icon_sql.png" />
     <Content Include="Content\elfinder_2_1\sounds\rm.wav" />
+    <Content Include="Content\Error404.css" />
     <Content Include="Content\fancybox\blank.gif" />
     <Content Include="Content\fancybox\fancybox_buttons.png" />
     <Content Include="Content\fancybox\fancybox_loading%402x.gif" />
@@ -652,7 +654,7 @@
     <Content Include="Scripts\i18n\grid.locale-vi.js" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\AdminMenu.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\Breadcrumbs.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\AdminBreadcrumbs.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
@@ -1197,6 +1199,8 @@
     <Content Include="Scripts\tinymce\plugins\importcss\plugin.min.js" />
     <Content Include="Scripts\tinymce\plugins\insertdatetime\plugin.js" />
     <Content Include="Scripts\tinymce\plugins\insertdatetime\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\kore_widgetzone\img\kore_widgetzone.png" />
+    <Content Include="Scripts\tinymce\plugins\kore_widgetzone\plugin.js" />
     <Content Include="Scripts\tinymce\plugins\layer\plugin.js" />
     <Content Include="Scripts\tinymce\plugins\layer\plugin.min.js" />
     <Content Include="Scripts\tinymce\plugins\legacyoutput\plugin.js" />
@@ -1663,6 +1667,10 @@
     </Content>
     <Content Include="Views\Shared\DisplayTemplates\Pages\TestPage.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Pages\TestPage.cshtml" />
+    <Content Include="Views\Error\Error404.cshtml" />
+    <Content Include="Views\Shared\Breadcrumbs.cshtml" />
+    <Content Include="Views\Shared\LeftMenu.cshtml" />
+    <Content Include="Views\Shared\MainMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -113,7 +113,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
             #region Widgets
 
             builder.RegisterType<FormWidget>().As<IWidget>().InstancePerDependency();
-            builder.RegisterType<GoogleAdsenseWidget>().As<IWidget>().InstancePerDependency();
             builder.RegisterType<HtmlWidget>().As<IWidget>().InstancePerDependency();
             builder.RegisterType<LanguageSwitchWidget>().As<IWidget>().InstancePerDependency();
 

@@ -271,7 +271,6 @@
     <Compile Include="Areas\Admin\Widgets\Domain\Widget.cs" />
     <Compile Include="Areas\Admin\Widgets\Domain\Zone.cs" />
     <Compile Include="Areas\Admin\Widgets\FormWidget.cs" />
-    <Compile Include="Areas\Admin\Widgets\GoogleAdsenseWidget.cs" />
     <Compile Include="Areas\Admin\Widgets\HtmlWidget.cs" />
     <Compile Include="Areas\Admin\Widgets\IWidget.cs" />
     <Compile Include="Areas\Admin\Widgets\IWidgetProvider.cs" />
@@ -326,10 +325,8 @@
     <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\Roles.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\Users.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Widgets\Views\Shared\DisplayTemplates\FormWidget.cshtml" />
-    <EmbeddedResource Include="Areas\Admin\Widgets\Views\Shared\DisplayTemplates\GoogleAdsenseWidget.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Widgets\Views\Shared\DisplayTemplates\HtmlWidget.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Widgets\Views\Shared\EditorTemplates\FormWidget.cshtml" />
-    <EmbeddedResource Include="Areas\Admin\Widgets\Views\Shared\EditorTemplates\GoogleAdsenseWidget.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Widgets\Views\Shared\EditorTemplates\HtmlWidget.cshtml" />
     <Compile Include="Areas\Admin\Widgets\WidgetBase.cs" />
     <Compile Include="Areas\Admin\Widgets\WidgetNavigationProvider.cs" />

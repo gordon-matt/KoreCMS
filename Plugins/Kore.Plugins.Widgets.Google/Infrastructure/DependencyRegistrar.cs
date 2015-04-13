@@ -19,6 +19,8 @@ namespace Kore.Plugins.Widgets.Google.Infrastructure
             }
 
             builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
+            builder.RegisterType<GoogleAnalyticsWidget>().As<IWidget>().InstancePerDependency();
+            builder.RegisterType<GoogleAdSenseWidget>().As<IWidget>().InstancePerDependency();
             builder.RegisterType<GoogleMapWidget>().As<IWidget>().InstancePerDependency();
         }
 

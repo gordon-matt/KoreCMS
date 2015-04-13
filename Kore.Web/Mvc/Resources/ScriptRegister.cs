@@ -36,21 +36,6 @@ namespace Kore.Web.Mvc.Resources
             get { return KoreWebConfigurationSection.WebInstance.Resources.Scripts.VirtualBasePath; }
         }
 
-        //public override void IncludeBundle(string bundleName, int? order = null)
-        //{
-        //    if (!BundleCollection.Scripts.ContainsKey(bundleName)) return;
-
-        //    var files = BundleCollection.Scripts[bundleName];
-        //    foreach (var file in files)
-        //    {
-        //        var resourceEntry = Include(file);
-        //        if (order.HasValue)
-        //        {
-        //            resourceEntry.Order = order.Value;
-        //        }
-        //    }
-        //}
-
         public IDisposable AtFoot()
         {
             return new CaptureScope(viewPage, s => base.IncludeInline(s.ToHtmlString()));
@@ -60,21 +45,6 @@ namespace Kore.Web.Mvc.Resources
         {
             base.IncludeInline("<script type=\"text/javascript\">" + code + "</script>", ignoreExists);
         }
-
-        //public override MvcHtmlString Render(string bundleName)
-        //{
-        //    if (!BundleCollection.Scripts.ContainsKey(bundleName)) return null;
-
-        //    var files = BundleCollection.Scripts[bundleName];
-        //    var sb = new StringBuilder();
-
-        //    foreach (var file in files)
-        //    {
-        //        sb.AppendLine(BuildResource(string.Concat(VirtualBasePath, "/", file)));
-        //    }
-
-        //    return new MvcHtmlString(sb.ToString());
-        //}
 
         protected override string BuildInlineResources(IEnumerable<string> resources)
         {

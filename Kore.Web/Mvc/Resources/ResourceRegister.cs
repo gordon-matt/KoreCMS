@@ -40,8 +40,6 @@ namespace Kore.Web.Mvc.Resources
             return resourceEntry;
         }
 
-        //public abstract void IncludeBundle(string bundleName, int? order = null);
-
         public virtual string GetBundleUrl(string bundleName)
         {
             string bundleUrl = string.Concat(BundleBasePath, bundleName);
@@ -111,8 +109,6 @@ namespace Kore.Web.Mvc.Resources
 
             return new MvcHtmlString(sb.ToString());
         }
-
-        //public abstract MvcHtmlString Render(string bundleName);
 
         public virtual MvcHtmlString Render(string bundleName)
         {

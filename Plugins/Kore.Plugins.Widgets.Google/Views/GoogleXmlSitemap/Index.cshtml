@@ -1,0 +1,22 @@
+﻿@using Kore.Plugins.Widgets.Google.Data.Domain
+@using Kore.Plugins.Widgets.Google.Extensions
+@model IEnumerable<GoogleSitemapPageConfig>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+    Style.IncludeBundle("kendo-ui");
+
+    Script.IncludeBundle("kendo-ui");
+    Script.IncludeBundle("knockout");
+    Script.IncludeBundle("knockout-mapping");
+    Script.IncludeBundle("notify");
+
+    Script.IncludePluginScript("index.js");
+}
+
+<div id="grid-section" class="row">
+    <div class="col-md-12">
+        <div id="Grid"></div>
+    </div>
+</div>

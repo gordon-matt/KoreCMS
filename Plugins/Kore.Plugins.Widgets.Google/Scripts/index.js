@@ -2,6 +2,49 @@
 
 var odataBaseUrl = "/odata/kore/plugins/google/GoogleXmlSitemap/";
 
+var changeFrequencies = [
+    {
+        "Id": 0,
+        "Name": "Always"
+    },
+    {
+        "Id": 1,
+        "Name": "Hourly"
+    },
+    {
+        "Id": 2,
+        "Name": "Daily"
+    },
+    {
+        "Id": 3,
+        "Name": "Weekly"
+    },
+    {
+        "Id": 4,
+        "Name": "Monthly"
+    },
+    {
+        "Id": 5,
+        "Name": "Yearly"
+    },
+    {
+        "Id": 6,
+        "Name": "Never"
+    },
+];
+
+function changeFrequenciesDropDownEditor(container, options) {
+    $('<input required data-text-field="Name" data-value-field="Id" data-bind="value:' + options.field + '"/>')
+		.appendTo(container)
+		.kendoDropDownList({
+		    autoBind: false,
+		    dataSource: new kendo.data.DataSource({
+		        data: changeFrequencies
+		    }),
+		    template: "#=data.Name#"
+		});
+}
+
 $(document).ready(function () {
     $("#Grid").kendoGrid({
         data: null,
@@ -29,7 +72,9 @@ $(document).ready(function () {
                     else if (operation === "update") {
                         return kendo.stringify({
                             id: options.Id,
-                            entity: options
+                            changeFrequency: options.ChangeFrequency,
+                            priority: options.Priority
+                            //entity: options
                         });
                     }
                 }
@@ -46,10 +91,16 @@ $(document).ready(function () {
                     fields: {
                         Id: { type: "number", editable: false },
                         Location: { type: "string", editable: false },
-                        ChangeFrequency: { type: "number" },
+                        ChangeFrequency: { defaultValue: { Id: "3", Name: "Weekly" } },
                         Priority: { type: "number" }
                     }
                 }
+            },
+            sync: function (e) {
+                // Refresh grid after save (not ideal, but if we don't, then the enum column (ChangeFrequency) shows
+                //  a number instead of the name). Haven't found a better solution yet.
+                $('#Grid').data('kendoGrid').dataSource.read();
+                $('#Grid').data('kendoGrid').refresh();
             },
             batch: false,
             pageSize: 10,
@@ -93,7 +144,9 @@ $(document).ready(function () {
         }, {
             field: "ChangeFrequency",
             title: "ChangeFrequency",
-            filterable: false
+            filterable: false,
+            editor: changeFrequenciesDropDownEditor,
+            template: "#=ChangeFrequency#"
         }, {
             field: "Priority",
             title: "Priority",

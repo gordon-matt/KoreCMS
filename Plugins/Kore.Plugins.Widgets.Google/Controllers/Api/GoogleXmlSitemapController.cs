@@ -89,16 +89,12 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
         public virtual IHttpActionResult SetConfig(ODataActionParameters parameters)
         {
             int id = (int)parameters["id"];
-            var model = (GoogleSitemapPageConfigModel)parameters["entity"];
+            byte changeFrequency = (byte)parameters["changeFrequency"];
+            float priority = (float)parameters["priority"];
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            if (!id.Equals(model.Id))
-            {
-                return BadRequest();
             }
 
             var entity = Repository.Find(id);
@@ -109,11 +105,17 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
             }
             else
             {
-                entity.ChangeFrequency = model.ChangeFrequency;
-                entity.Priority = model.Priority;
+                entity.ChangeFrequency = (ChangeFrequency)changeFrequency;
+                entity.Priority = priority;
                 Repository.Update(entity);
 
-                return Updated(model);
+                return Updated(new GoogleSitemapPageConfigModel
+                {
+                    Id = entity.Id,
+                    //Location = 
+                    ChangeFrequency = entity.ChangeFrequency,
+                    Priority = entity.Priority
+                });
             }
         }
     }

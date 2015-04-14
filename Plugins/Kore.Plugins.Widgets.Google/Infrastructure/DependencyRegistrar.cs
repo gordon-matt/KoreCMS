@@ -3,6 +3,9 @@ using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Plugins.Widgets.Google.Widgets;
 using Kore.Web.ContentManagement.Areas.Admin.Widgets;
+using Kore.Web.Infrastructure;
+using Kore.Web.Mvc.Themes;
+using Kore.Web.Navigation;
 using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Widgets.Google.Infrastructure
@@ -22,6 +25,10 @@ namespace Kore.Plugins.Widgets.Google.Infrastructure
             builder.RegisterType<GoogleAnalyticsWidget>().As<IWidget>().InstancePerDependency();
             builder.RegisterType<GoogleAdSenseWidget>().As<IWidget>().InstancePerDependency();
             builder.RegisterType<GoogleMapWidget>().As<IWidget>().InstancePerDependency();
+
+            builder.RegisterType<LocationFormatProvider>().As<ILocationFormatProvider>().SingleInstance();
+            builder.RegisterType<NavigationProvider>().As<INavigationProvider>().SingleInstance();
+            builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();
         }
 
         public int Order

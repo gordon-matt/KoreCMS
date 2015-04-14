@@ -16,6 +16,8 @@ namespace Kore.Plugins.Widgets.Google.Infrastructure
                     CultureCode = null,
                     LocalizedStrings = new Dictionary<string, string>
                     {
+                        { LocalizableStrings.Google, "Google" },
+                        { LocalizableStrings.XMLSitemap, "XML Sitemap" }
                     }
                 }
             };

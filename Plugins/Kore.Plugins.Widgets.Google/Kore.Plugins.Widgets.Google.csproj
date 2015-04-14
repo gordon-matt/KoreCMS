@@ -126,6 +126,7 @@
     <Compile Include="Infrastructure\WebApiRegistrar.cs" />
     <Compile Include="LocalizableStrings.cs" />
     <Compile Include="Models\GoogleSitemapPageConfigModel.cs" />
+    <Compile Include="Models\GoogleSitemapXmlFile.cs" />
     <Compile Include="NavigationProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GooglePlugin.cs" />

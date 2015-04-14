@@ -1,4 +1,5 @@
-﻿@using Kore.Plugins.Widgets.Google.Data.Domain
+﻿@using Kore.Plugins.Widgets.Google
+@using Kore.Plugins.Widgets.Google.Data.Domain
 @using Kore.Plugins.Widgets.Google.Extensions
 @model IEnumerable<GoogleSitemapPageConfig>
 
@@ -17,6 +18,26 @@
 
 <div id="grid-section" class="row">
     <div class="col-md-12">
+        <a onclick="generateFile()" href="javascript:void(0)" class="btn btn-success">
+            <i class="fa fa-save"></i>
+            @T(LocalizableStrings.GenerateFile)
+        </a>
+    </div>
+
+    <div class="clearfix"></div>
+    <br />
+
+    <div class="col-md-12">
         <div id="Grid"></div>
     </div>
 </div>
+
+@section scripts {
+    <script type="text/javascript">
+        var translations = {
+            ConfirmGenerateFile: '@T(LocalizableStrings.ConfirmGenerateFile).Text',
+            GenerateFileSuccess: '@T(LocalizableStrings.GenerateFileSuccess).Text',
+            GenerateFileError: '@T(LocalizableStrings.GenerateFileError).Text'
+        }
+</script>
+}

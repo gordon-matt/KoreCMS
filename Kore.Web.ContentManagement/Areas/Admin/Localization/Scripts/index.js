@@ -149,6 +149,7 @@ var ViewModel = function () {
     };
 
     self.clear = function () {
+        //TODO
     };
 
     self.validator = $("#form-section-form").validate({

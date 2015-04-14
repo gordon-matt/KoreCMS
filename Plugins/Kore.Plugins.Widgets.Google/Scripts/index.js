@@ -161,3 +161,22 @@ $(document).ready(function () {
         editable: "inline"
     });
 });
+
+function generateFile() {
+    if (confirm(translations.ConfirmGenerateFile)) {
+        $.ajax({
+            url: odataBaseUrl + "Generate",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false
+        })
+        .done(function (json) {
+            $.notify(translations.GenerateFileSuccess, "success");
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            $.notify(translations.GenerateFileError, "error");
+            console.log(textStatus + ': ' + errorThrown);
+        });
+    }
+}

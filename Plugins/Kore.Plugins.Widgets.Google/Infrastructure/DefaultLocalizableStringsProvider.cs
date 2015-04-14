@@ -16,6 +16,10 @@ namespace Kore.Plugins.Widgets.Google.Infrastructure
                     CultureCode = null,
                     LocalizedStrings = new Dictionary<string, string>
                     {
+                        { LocalizableStrings.ConfirmGenerateFile, "Are you sure you want to generate a new XML sitemap file? Warning: This will replace the existing one." },
+                        { LocalizableStrings.GenerateFile, "Generate File" },
+                        { LocalizableStrings.GenerateFileError, "Error when generating XML sitemap file." },
+                        { LocalizableStrings.GenerateFileSuccess, "Successfully generated XML sitemap file." },
                         { LocalizableStrings.Google, "Google" },
                         { LocalizableStrings.XMLSitemap, "XML Sitemap" }
                     }

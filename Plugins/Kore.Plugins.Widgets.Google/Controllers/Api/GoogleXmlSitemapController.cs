@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.OData;
 using Kore.Collections;
@@ -109,13 +111,48 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
                 entity.Priority = priority;
                 Repository.Update(entity);
 
-                return Updated(new GoogleSitemapPageConfigModel
+                return Updated(entity);
+                //return Updated(new GoogleSitemapPageConfigModel
+                //{
+                //    Id = entity.Id,
+                //    Location = pageRepository.Table.First(x => x.Id == entity.PageId).Slug,
+                //    ChangeFrequency = entity.ChangeFrequency,
+                //    Priority = entity.Priority
+                //});
+            }
+        }
+
+        [HttpPost]
+        public virtual IHttpActionResult Generate(ODataActionParameters parameters)
+        {
+            var config = Repository.Table.ToHashSet();
+            var file = new GoogleSitemapXmlFile();
+
+            var pages = pageRepository.Table.ToHashSet();
+            foreach (var item in config)
+            {
+                var page = pages.First(x => x.Id == item.PageId);
+                file.Urls.Add(new UrlElement
                 {
-                    Id = entity.Id,
-                    //Location = 
-                    ChangeFrequency = entity.ChangeFrequency,
-                    Priority = entity.Priority
+                    Location = string.Concat(Request.RequestUri.GetLeftPart(UriPartial.Authority), "/", page.Slug),
+                    LastModified = page.DateModifiedUtc.ToString("yyyy-MM-dd"),
+                    ChangeFrequency = item.ChangeFrequency,
+                    Priority = item.Priority
                 });
+            }
+
+            try
+            {
+                file.XmlSerialize(
+                    HostingEnvironment.MapPath("~/sitemap.xml"),
+                    removeNamespaces: false,
+                    omitXmlDeclaration: false);
+
+                return Ok();
+            }
+            catch (Exception x)
+            {
+                return InternalServerError(x);
             }
         }
     }

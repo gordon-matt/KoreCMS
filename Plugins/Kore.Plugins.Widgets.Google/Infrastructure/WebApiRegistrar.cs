@@ -24,6 +24,9 @@ namespace Kore.Plugins.Widgets.Google.Infrastructure
             setConfigAction.Parameter<float>("priority");
             setConfigAction.Returns<IHttpActionResult>();
 
+            var generateAction = builder.Entity<GoogleSitemapPageConfig>().Collection.Action("Generate");
+            generateAction.Returns<IHttpActionResult>();
+
             config.Routes.MapODataRoute("OData_Kore_Plugin_Google", "odata/kore/plugins/google", builder.GetEdmModel());
         }
 

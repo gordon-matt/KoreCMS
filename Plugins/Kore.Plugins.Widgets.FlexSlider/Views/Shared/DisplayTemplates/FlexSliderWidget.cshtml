@@ -1,0 +1,69 @@
+﻿@using Kore.Infrastructure
+@using Kore.Plugins.Widgets.FlexSlider.Extensions
+@using Kore.Plugins.Widgets.FlexSlider.Widgets
+@using Kore.Web.ContentManagement.Areas.Admin.Media.Services
+
+@model FlexSliderWidget
+
+@{
+    Style.IncludePluginStyle("FlexSlider/flexslider.css");
+    //Script.IncludeBundle("jquery");
+    Script.IncludePluginScript("jquery.flexslider-min.js");
+
+    var mediaService = EngineContext.Current.Resolve<IMediaService>();
+    var images = mediaService.GetMediaFiles(Model.MediaFolder);
+
+    string sliderId = "slider-" + Guid.NewGuid();
+}
+
+@*<style type="text/css">
+    .flexslider {
+        margin: auto;
+    }
+
+    .flex-caption {
+        background: none repeat scroll 0 0 #000000;
+        margin: 0px;
+        opacity: 0.7;
+        bottom: 0;
+        color: #FFFFFF !important;
+        left: 0;
+        /*padding: 10px;*/
+        position: relative;
+        right: 0;
+        display: none;
+    }
+</style>*@
+
+@* Flex Slider does not support rtl and will be blank if you try. Therefore we force ltr here *@
+<section class="slider" dir="ltr">
+    <div id="@sliderId" class="flexslider effect2">
+        <ul class="slides">
+            @foreach (var slide in images)
+            {
+                <li>
+                    @Html.Image(null, slide.MediaPath, slide.Name)
+                    @*<p class="flex-caption">@slide.Caption</p>*@
+                </li>
+            }
+        </ul>
+    </div>
+</section>
+
+@using (Script.AtFoot())
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#@sliderId').flexslider({
+                animation: "slide",
+                controlNav: @Model.ControlNav.ToString().ToLowerInvariant(),
+                animationLoop: @Model.AnimationLoop.ToString().ToLowerInvariant(),
+                slideshow: @Model.Slideshow.ToString().ToLowerInvariant(),
+                slideshowSpeed: @Model.SlideshowSpeed,
+                start: function (slider) {
+                    $('body').removeClass('loading');
+                },
+            });
+        });
+    </script>
+}

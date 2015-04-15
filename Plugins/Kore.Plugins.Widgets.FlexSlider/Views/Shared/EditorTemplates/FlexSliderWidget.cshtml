@@ -1,0 +1,89 @@
+﻿@using Kore.Web.ContentManagement
+@using Kore.Plugins.Widgets.FlexSlider.Widgets
+
+@model FlexSliderWidget
+
+<div id="widget-content">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.MediaFolder, new { @class = "control-label" })
+            @Html.KoreCMS().MediaFoldersDropDownListFor(m => m.MediaFolder, new { @class = "form-control", data_bind = "value: mediaFolder" })
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBox("ControlNav", new { data_bind = "checked: controlNav" }) Control Nav
+            </label>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBox("AnimationLoop", new { data_bind = "checked: animationLoop" }) Animation Loop
+            </label>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBox("Slideshow", new { data_bind = "checked: slideshow" }) Slideshow
+            </label>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.SlideshowSpeed, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.SlideshowSpeed, new { @class = "form-control", data_bind = "value: slideshowSpeed" })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function updateModel() {
+        viewModel.mediaFolder = ko.observable("");
+        viewModel.controlNav = ko.observable(false);
+        viewModel.animationLoop = ko.observable(true);
+        viewModel.slideshow = ko.observable(true);
+        viewModel.slideshowSpeed = ko.observable(5000);
+
+        var data = ko.mapping.fromJSON(viewModel.widgetValues());
+
+        if ((isFunction(data) && data()) || data) {
+            if (data.MediaFolder == undefined) {
+                // If this is not set, it means the widget is new and we have nothing in widgetValues
+                return;
+            }
+            viewModel.mediaFolder(data.MediaFolder());
+            viewModel.controlNav(data.ControlNav());
+            viewModel.animationLoop(data.AnimationLoop());
+            viewModel.slideshow(data.Slideshow());
+            viewModel.slideshowSpeed(data.SlideshowSpeed());
+        }
+    };
+
+    function cleanUp() {
+        delete viewModel.mediaFolder;
+        delete viewModel.controlNav;
+        delete viewModel.animationLoop;
+        delete viewModel.slideshow;
+        delete viewModel.slideshowSpeed;
+    }
+
+    function onBeforeSave() {
+        var data = {
+            MediaFolder: viewModel.mediaFolder(),
+            ControlNav: viewModel.controlNav(),
+            AnimationLoop: viewModel.animationLoop(),
+            Slideshow: viewModel.slideshow(),
+            SlideshowSpeed: viewModel.slideshowSpeed()
+        };
+
+        viewModel.widgetValues(ko.mapping.toJSON(data));
+    };
+
+    function isFunction(functionToCheck) {
+        var getType = {};
+        return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+    }
+</script>

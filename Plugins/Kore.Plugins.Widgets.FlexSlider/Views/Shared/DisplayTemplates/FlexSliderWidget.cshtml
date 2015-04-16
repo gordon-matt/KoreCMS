@@ -12,6 +12,8 @@
 
     var mediaService = EngineContext.Current.Resolve<IMediaService>();
     var images = mediaService.GetMediaFiles(Model.MediaFolder);
+
+    var html = Model.ToHtmlString();
 }
 
 @* Flex Slider does not support rtl and will be blank if you try. Therefore we force ltr here *@
@@ -33,16 +35,7 @@
 {
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#@Model.ControlId').flexslider({
-                animation: "slide",
-                controlNav: @Model.ControlNav.ToString().ToLowerInvariant(),
-                animationLoop: @Model.AnimationLoop.ToString().ToLowerInvariant(),
-                slideshow: @Model.Slideshow.ToString().ToLowerInvariant(),
-                slideshowSpeed: @Model.SlideshowSpeed,
-                start: function (slider) {
-                    $('body').removeClass('loading');
-                },
-            });
+            @html
         });
     </script>
 }

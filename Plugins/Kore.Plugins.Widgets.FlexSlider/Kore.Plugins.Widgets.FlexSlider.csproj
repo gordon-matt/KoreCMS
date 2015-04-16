@@ -123,7 +123,11 @@
     <Compile Include="LocalizableStrings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FlexSliderPlugin.cs" />
+    <Compile Include="Widgets\AnimationType.cs" />
+    <Compile Include="Widgets\ControlNavOption.cs" />
+    <Compile Include="Widgets\EasingMethod.cs" />
     <Compile Include="Widgets\FlexSliderWidget.cs" />
+    <Compile Include="Widgets\SlideDirection.cs" />
     <Content Include="Content\FlexSlider\flexslider.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -161,12 +165,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\Api\" />
-    <Folder Include="Data\Domain\" />
-    <Folder Include="Models\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\Kore.EntityFramework\Kore.EntityFramework.csproj">
       <Project>{2a636196-0b16-484a-8dd8-4bab656dec08}</Project>

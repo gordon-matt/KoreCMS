@@ -291,73 +291,184 @@ namespace Kore.Plugins.Widgets.FlexSlider.Widgets
         {
             var sb = new StringBuilder(512);
 
-            sb.AppendFormat("$('#{0}').flexslider({", ControlId);
+            sb.AppendFormat(@"$('#{0}').flexslider({{", ControlId);
 
-            if (Animation != AnimationType.Fade)
-            {
-                sb.AppendFormat(@"animation: ""{0}"",", Animation.ToString().ToLowerInvariant());
-            }
             if (!string.IsNullOrWhiteSpace(Namespace))
             {
-                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+                sb.AppendFormat("namespace: '{0}',", Namespace);
             }
             if (!string.IsNullOrWhiteSpace(Selector))
             {
-                sb.AppendFormat(@"selector: ""{0}"",", Selector);
+                sb.AppendFormat("selector: '{0}',", Selector);
             }
             if (StartAt > 0)
             {
-                sb.AppendFormat(@"startAt: ""{0}"",", StartAt);
+                sb.AppendFormat("startAt: {0},", StartAt);
             }
             if (!Slideshow)
             {
-                sb.AppendFormat(@"slideshow: false,");
+                sb.Append("slideshow: false,");
             }
-            if (!string.IsNullOrWhiteSpace(Namespace))
+            if (SlideshowSpeed != 7000)
             {
-                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+                sb.AppendFormat("slideshowSpeed: {0},", SlideshowSpeed);
             }
-            if (!string.IsNullOrWhiteSpace(Namespace))
+            if (InitDelay > 0)
             {
-                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+                sb.AppendFormat("initDelay: {0},", InitDelay);
             }
-            if (!string.IsNullOrWhiteSpace(Namespace))
+            if (Randomize)
             {
-                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+                sb.Append("randomize: true,");
             }
-            if (!string.IsNullOrWhiteSpace(Namespace))
+            if (!PauseOnAction)
             {
-                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+                sb.Append("pauseOnAction: false,");
             }
-            if (!string.IsNullOrWhiteSpace(Namespace))
+            if (PauseOnHover)
             {
-                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+                sb.Append("pauseOnHover: true,");
             }
-            if (!string.IsNullOrWhiteSpace(Namespace))
+            if (!Touch)
             {
-                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+                sb.Append("touch: false,");
             }
-            if (!string.IsNullOrWhiteSpace(Namespace))
+            if (Video)
             {
-                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+                sb.Append("video: true,");
             }
-            if (!string.IsNullOrWhiteSpace(Namespace))
+            if (!string.IsNullOrWhiteSpace(Sync))
             {
-                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+                sb.AppendFormat("sync: '{0}',", Sync);
             }
-            if (!string.IsNullOrWhiteSpace(Namespace))
+            if (!string.IsNullOrWhiteSpace(AsNavFor))
             {
-                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+                sb.AppendFormat("asNavFor: '{0}',", AsNavFor);
             }
-            if (!string.IsNullOrWhiteSpace(Namespace))
+            if (ItemWidth > 0)
             {
-                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+                sb.AppendFormat("itemWidth: {0},", ItemWidth);
             }
-            if (!string.IsNullOrWhiteSpace(Namespace))
+            if (ItemMargin > 0)
             {
-                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+                sb.AppendFormat("itemMargin: {0},", ItemMargin);
             }
-
+            if (MinItems > 0)
+            {
+                sb.AppendFormat("minItems: {0},", MinItems);
+            }
+            if (MaxItems > 0)
+            {
+                sb.AppendFormat("maxItems: {0},", MaxItems);
+            }
+            if (Animation != AnimationType.Fade)
+            {
+                sb.AppendFormat("animation: '{0}',", Animation.ToString().ToLowerInvariant());
+            }
+            if (AnimationSpeed != 600)
+            {
+                sb.AppendFormat("animationSpeed: {0},", AnimationSpeed);
+            }
+            if (Direction != SlideDirection.Horizontal)
+            {
+                sb.Append("direction: 'vertical',");
+            }
+            if (Reverse)
+            {
+                sb.Append("reverse: true,");
+            }
+            if (Move > 0)
+            {
+                sb.AppendFormat("move: {0},", Move);
+            }
+            if (!AnimationLoop)
+            {
+                sb.Append("animationLoop: false,");
+            }
+            if (SmoothHeight)
+            {
+                sb.Append("smoothHeight: true,");
+            }
+            if (Easing != EasingMethod.swing)
+            {
+                sb.AppendFormat("easing: '{0}',", Easing.ToString());
+            }
+            if (!UseCSS)
+            {
+                sb.Append("useCSS: false,");
+            }
+            if (ControlNav != ControlNavOption.True)
+            {
+                sb.AppendFormat("controlNav: '{0}',", ControlNav.ToString().ToLowerInvariant());
+            }
+            if (!DirectionNav)
+            {
+                sb.Append("directionNav: false,");
+            }
+            if (!string.IsNullOrWhiteSpace(PrevText))
+            {
+                sb.AppendFormat("prevText: '{0}',", PrevText);
+            }
+            if (!string.IsNullOrWhiteSpace(NextText))
+            {
+                sb.AppendFormat("nextText: '{0}',", NextText);
+            }
+            if (PausePlay)
+            {
+                sb.Append("pausePlay: true,");
+            }
+            if (!string.IsNullOrWhiteSpace(PauseText))
+            {
+                sb.AppendFormat("pauseText: '{0}',", PauseText);
+            }
+            if (!string.IsNullOrWhiteSpace(PlayText))
+            {
+                sb.AppendFormat("playText: '{0}',", PlayText);
+            }
+            if (!string.IsNullOrWhiteSpace(ControlsContainer))
+            {
+                sb.AppendFormat("controlsContainer: '{0}',", ControlsContainer);
+            }
+            if (!string.IsNullOrWhiteSpace(ManualControls))
+            {
+                sb.AppendFormat("manualControls: '{0}',", ManualControls);
+            }
+            if (!Keyboard)
+            {
+                sb.Append("keyboard: false,");
+            }
+            if (MultipleKeyboard)
+            {
+                sb.Append("multipleKeyboard: true,");
+            }
+            if (Mousewheel)
+            {
+                sb.Append("mousewheel: true,");
+            }
+            if (!string.IsNullOrWhiteSpace(OnStart))
+            {
+                sb.AppendFormat(@"start: function(slider){{'{0}'}},", OnStart);
+            }
+            if (!string.IsNullOrWhiteSpace(OnEnd))
+            {
+                sb.AppendFormat(@"end: function(slider){{'{0}'}},", OnEnd);
+            }
+            if (!string.IsNullOrWhiteSpace(OnBefore))
+            {
+                sb.AppendFormat(@"before: function(slider){{'{0}'}},", OnBefore);
+            }
+            if (!string.IsNullOrWhiteSpace(OnAfter))
+            {
+                sb.AppendFormat(@"after: function(slider){{'{0}'}},", OnAfter);
+            }
+            if (!string.IsNullOrWhiteSpace(OnAdded))
+            {
+                sb.AppendFormat(@"added: function(slider){{'{0}'}},", OnAdded);
+            }
+            if (!string.IsNullOrWhiteSpace(OnRemoved))
+            {
+                sb.AppendFormat(@"removed: function(slider){{'{0}'}},", OnRemoved);
+            }
 
             sb.Remove(sb.Length - 1, 1); // Remove last comma
 

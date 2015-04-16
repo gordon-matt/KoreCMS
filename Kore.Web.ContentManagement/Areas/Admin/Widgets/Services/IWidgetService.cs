@@ -54,7 +54,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Widgets.Services
                     var widgetType = Type.GetType(record.WidgetType);
                     widget = (IWidget)record.WidgetValues.JsonDeserialize(widgetType);
                 }
-                catch { continue; }
+                catch
+                {
+                    // TODO: Log error
+                    continue;
+                }
 
                 widget.Id = record.Id;
                 widget.Title = record.Title;

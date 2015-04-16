@@ -25,7 +25,6 @@ namespace Kore.Plugins.Widgets.FlexSlider.Infrastructure
             builder.RegisterType<FlexSliderWidget>().As<IWidget>().InstancePerDependency();
 
             builder.RegisterType<LocationFormatProvider>().As<ILocationFormatProvider>().SingleInstance();
-            builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();
         }
 
         public int Order

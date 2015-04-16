@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Web.Mvc;
 using Kore.Web.ContentManagement.Areas.Admin.Widgets;
 
 namespace Kore.Plugins.Widgets.FlexSlider.Widgets
@@ -284,6 +286,85 @@ namespace Kore.Plugins.Widgets.FlexSlider.Widgets
         public string OnRemoved { get; set; }
 
         #endregion Events
+
+        public MvcHtmlString ToHtmlString()
+        {
+            var sb = new StringBuilder(512);
+
+            sb.AppendFormat("$('#{0}').flexslider({", ControlId);
+
+            if (Animation != AnimationType.Fade)
+            {
+                sb.AppendFormat(@"animation: ""{0}"",", Animation.ToString().ToLowerInvariant());
+            }
+            if (!string.IsNullOrWhiteSpace(Namespace))
+            {
+                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+            }
+            if (!string.IsNullOrWhiteSpace(Selector))
+            {
+                sb.AppendFormat(@"selector: ""{0}"",", Selector);
+            }
+            if (StartAt > 0)
+            {
+                sb.AppendFormat(@"startAt: ""{0}"",", StartAt);
+            }
+            if (!Slideshow)
+            {
+                sb.AppendFormat(@"slideshow: false,");
+            }
+            if (!string.IsNullOrWhiteSpace(Namespace))
+            {
+                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+            }
+            if (!string.IsNullOrWhiteSpace(Namespace))
+            {
+                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+            }
+            if (!string.IsNullOrWhiteSpace(Namespace))
+            {
+                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+            }
+            if (!string.IsNullOrWhiteSpace(Namespace))
+            {
+                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+            }
+            if (!string.IsNullOrWhiteSpace(Namespace))
+            {
+                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+            }
+            if (!string.IsNullOrWhiteSpace(Namespace))
+            {
+                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+            }
+            if (!string.IsNullOrWhiteSpace(Namespace))
+            {
+                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+            }
+            if (!string.IsNullOrWhiteSpace(Namespace))
+            {
+                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+            }
+            if (!string.IsNullOrWhiteSpace(Namespace))
+            {
+                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+            }
+            if (!string.IsNullOrWhiteSpace(Namespace))
+            {
+                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+            }
+            if (!string.IsNullOrWhiteSpace(Namespace))
+            {
+                sb.AppendFormat(@"namespace: ""{0}"",", Namespace);
+            }
+
+
+            sb.Remove(sb.Length - 1, 1); // Remove last comma
+
+            sb.Append("});");
+
+            return new MvcHtmlString(sb.ToString());
+        }
 
         #region WidgetBase Overrides
 

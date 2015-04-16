@@ -12,13 +12,11 @@
 
     var mediaService = EngineContext.Current.Resolve<IMediaService>();
     var images = mediaService.GetMediaFiles(Model.MediaFolder);
-
-    string sliderId = "slider-" + Guid.NewGuid();
 }
 
 @* Flex Slider does not support rtl and will be blank if you try. Therefore we force ltr here *@
 <section class="slider" dir="ltr">
-    <div id="@sliderId" class="flexslider effect2">
+    <div id="@Model.ControlId" class="flexslider effect2">
         <ul class="slides">
             @foreach (var slide in images)
             {
@@ -35,7 +33,7 @@
 {
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#@sliderId').flexslider({
+            $('#@Model.ControlId').flexslider({
                 animation: "slide",
                 controlNav: @Model.ControlNav.ToString().ToLowerInvariant(),
                 animationLoop: @Model.AnimationLoop.ToString().ToLowerInvariant(),

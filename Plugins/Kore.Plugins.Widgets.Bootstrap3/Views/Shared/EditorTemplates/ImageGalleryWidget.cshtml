@@ -36,60 +36,57 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel() {
-        viewModel.mediaFolder = ko.observable("");
-        viewModel.imagesPerRowXS = ko.observable(2);
-        viewModel.imagesPerRowS = ko.observable(3);
-        viewModel.imagesPerRowM = ko.observable(3);
-        viewModel.imagesPerRowL = ko.observable(4);
+    var widgetModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.mediaFolder = ko.observable("");
+            viewModel.imagesPerRowXS = ko.observable(2);
+            viewModel.imagesPerRowS = ko.observable(3);
+            viewModel.imagesPerRowM = ko.observable(3);
+            viewModel.imagesPerRowL = ko.observable(4);
 
-        var data = ko.mapping.fromJSON(viewModel.widgetValues());
+            var data = ko.mapping.fromJSON(viewModel.widgetValues());
 
-        if ((isFunction(data) && data()) || data) {
-            if (data.MediaFolder == undefined) {
-                // If this is not set, it means the widget is new and we have nothing in widgetValues
-                return;
+            if ((isFunction(data) && data()) || data) {
+                if (data.MediaFolder == undefined) {
+                    // If this is not set, it means the widget is new and we have nothing in widgetValues
+                    return;
+                }
+                if (isFunction(data.MediaFolder)) {
+                    viewModel.mediaFolder(data.MediaFolder());
+                }
+                if (isFunction(data.ImagesPerRowXS)) {
+                    viewModel.imagesPerRowXS(data.ImagesPerRowXS());
+                }
+                if (isFunction(data.ImagesPerRowS)) {
+                    viewModel.imagesPerRowS(data.ImagesPerRowS());
+                }
+                if (isFunction(data.ImagesPerRowM)) {
+                    viewModel.imagesPerRowM(data.ImagesPerRowM());
+                }
+                if (isFunction(data.ImagesPerRowL)) {
+                    viewModel.imagesPerRowL(data.ImagesPerRowL());
+                }
             }
-            if (isFunction(data.MediaFolder)) {
-                viewModel.mediaFolder(data.MediaFolder());
-            }
-            if (isFunction(data.ImagesPerRowXS)) {
-                viewModel.imagesPerRowXS(data.ImagesPerRowXS());
-            }
-            if (isFunction(data.ImagesPerRowS)) {
-                viewModel.imagesPerRowS(data.ImagesPerRowS());
-            }
-            if (isFunction(data.ImagesPerRowM)) {
-                viewModel.imagesPerRowM(data.ImagesPerRowM());
-            }
-            if (isFunction(data.ImagesPerRowL)) {
-                viewModel.imagesPerRowL(data.ImagesPerRowL());
-            }
-        }
-    };
-
-    function cleanUp() {
-        delete viewModel.mediaFolder;
-        delete viewModel.imagesPerRowXS;
-        delete viewModel.imagesPerRowS;
-        delete viewModel.imagesPerRowM;
-        delete viewModel.imagesPerRowL;
-    }
-
-    function onBeforeSave() {
-        var data = {
-            MediaFolder: viewModel.mediaFolder(),
-            ImagesPerRowXS: viewModel.imagesPerRowXS(),
-            ImagesPerRowS: viewModel.imagesPerRowS(),
-            ImagesPerRowM: viewModel.imagesPerRowM(),
-            ImagesPerRowL: viewModel.imagesPerRowL()
         };
+        f.cleanUp = function () {
+            delete viewModel.mediaFolder;
+            delete viewModel.imagesPerRowXS;
+            delete viewModel.imagesPerRowS;
+            delete viewModel.imagesPerRowM;
+            delete viewModel.imagesPerRowL;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                MediaFolder: viewModel.mediaFolder(),
+                ImagesPerRowXS: viewModel.imagesPerRowXS(),
+                ImagesPerRowS: viewModel.imagesPerRowS(),
+                ImagesPerRowM: viewModel.imagesPerRowM(),
+                ImagesPerRowL: viewModel.imagesPerRowL()
+            };
 
-        viewModel.widgetValues(ko.mapping.toJSON(data));
-    };
-
-    function isFunction(functionToCheck) {
-        var getType = {};
-        return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-    }
+            viewModel.widgetValues(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
 </script>

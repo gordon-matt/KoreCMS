@@ -18,42 +18,39 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel() {
-        viewModel.accountNumber = ko.observable(0);
-        viewModel.domainName = ko.observable(0);
+    var widgetModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.accountNumber = ko.observable(0);
+            viewModel.domainName = ko.observable(0);
 
-        var data = ko.mapping.fromJSON(viewModel.widgetValues());
+            var data = ko.mapping.fromJSON(viewModel.widgetValues());
 
-        if ((isFunction(data) && data()) || data) {
-            if (data.accountNumber == undefined) {
-                // If this is not set, it means the widget is new and we have nothing in widgetValues
-                return;
+            if ((isFunction(data) && data()) || data) {
+                if (data.accountNumber == undefined) {
+                    // If this is not set, it means the widget is new and we have nothing in widgetValues
+                    return;
+                }
+                if (data.AccountNumber) {
+                    viewModel.accountNumber(data.AccountNumber());
+                }
+                if (data.DomainName) {
+                    viewModel.domainName(data.DomainName());
+                }
             }
-            if (data.AccountNumber) {
-                viewModel.accountNumber(data.AccountNumber());
-            }
-            if (data.DomainName) {
-                viewModel.domainName(data.DomainName());
-            }
-        }
-    };
-
-    function cleanUp() {
-        delete viewModel.accountNumber;
-        delete viewModel.domainName;
-    }
-
-    function onBeforeSave() {
-        var data = {
-            AccountNumber: viewModel.accountNumber(),
-            DomainName: viewModel.domainName()
         };
+        f.cleanUp = function () {
+            delete viewModel.accountNumber;
+            delete viewModel.domainName;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                AccountNumber: viewModel.accountNumber(),
+                DomainName: viewModel.domainName()
+            };
 
-        viewModel.widgetValues(ko.mapping.toJSON(data));
-    };
-
-    function isFunction(functionToCheck) {
-        var getType = {};
-        return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-    }
+            viewModel.widgetValues(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
 </script>

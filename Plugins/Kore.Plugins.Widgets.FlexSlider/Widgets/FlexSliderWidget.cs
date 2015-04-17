@@ -447,27 +447,27 @@ namespace Kore.Plugins.Widgets.FlexSlider.Widgets
             }
             if (!string.IsNullOrWhiteSpace(OnStart))
             {
-                sb.AppendFormat(@"start: function(slider){{'{0}'}},", OnStart);
+                sb.AppendFormat(@"start: function(slider){{{0}}},", OnStart);
             }
             if (!string.IsNullOrWhiteSpace(OnEnd))
             {
-                sb.AppendFormat(@"end: function(slider){{'{0}'}},", OnEnd);
+                sb.AppendFormat(@"end: function(slider){{{0}}},", OnEnd);
             }
             if (!string.IsNullOrWhiteSpace(OnBefore))
             {
-                sb.AppendFormat(@"before: function(slider){{'{0}'}},", OnBefore);
+                sb.AppendFormat(@"before: function(slider){{{0}}},", OnBefore);
             }
             if (!string.IsNullOrWhiteSpace(OnAfter))
             {
-                sb.AppendFormat(@"after: function(slider){{'{0}'}},", OnAfter);
+                sb.AppendFormat(@"after: function(slider){{{0}}},", OnAfter);
             }
             if (!string.IsNullOrWhiteSpace(OnAdded))
             {
-                sb.AppendFormat(@"added: function(slider){{'{0}'}},", OnAdded);
+                sb.AppendFormat(@"added: function(slider){{{0}}},", OnAdded);
             }
             if (!string.IsNullOrWhiteSpace(OnRemoved))
             {
-                sb.AppendFormat(@"removed: function(slider){{'{0}'}},", OnRemoved);
+                sb.AppendFormat(@"removed: function(slider){{{0}}},", OnRemoved);
             }
 
             sb.Remove(sb.Length - 1, 1); // Remove last comma

@@ -26,39 +26,41 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel() {
-        viewModel.style = ko.observable("");
-        viewModel.useUrlPrefix = ko.observable(false);
-        viewModel.messageText = ko.observable("");
+    var widgetModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.style = ko.observable("");
+            viewModel.useUrlPrefix = ko.observable(false);
+            viewModel.messageText = ko.observable("");
 
-        var data = ko.mapping.fromJSON(viewModel.widgetValues());
+            var data = ko.mapping.fromJSON(viewModel.widgetValues());
 
-        if (data) {
-            if (data.Style) {
-                viewModel.style(data.Style());
+            if (data) {
+                if (data.Style) {
+                    viewModel.style(data.Style());
+                }
+                if (data.UseUrlPrefix) {
+                    viewModel.useUrlPrefix(data.UseUrlPrefix());
+                }
+                if (data.MessageText) {
+                    viewModel.messageText(data.MessageText());
+                }
             }
-            if (data.UseUrlPrefix) {
-                viewModel.useUrlPrefix(data.UseUrlPrefix());
-            }
-            if (data.MessageText) {
-                viewModel.messageText(data.MessageText());
-            }
-        }
-    };
-
-    function cleanUp() {
-        delete viewModel.style;
-        delete viewModel.useUrlPrefix;
-        delete viewModel.messageText;
-    }
-
-    function onBeforeSave() {
-        var data = {
-            Style: viewModel.dtyle(),
-            UseUrlPrefix: viewModel.useUrlPrefix(),
-            MessageText: viewModel.messageText()
         };
+        f.cleanUp = function () {
+            delete viewModel.style;
+            delete viewModel.useUrlPrefix;
+            delete viewModel.messageText;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                Style: viewModel.dtyle(),
+                UseUrlPrefix: viewModel.useUrlPrefix(),
+                MessageText: viewModel.messageText()
+            };
 
-        viewModel.widgetValues(ko.mapping.toJSON(data));
-    };
+            viewModel.widgetValues(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
 </script>

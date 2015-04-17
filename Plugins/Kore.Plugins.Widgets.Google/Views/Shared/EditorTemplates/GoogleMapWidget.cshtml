@@ -30,54 +30,51 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel() {
-        viewModel.latitude = ko.observable(0);
-        viewModel.longitude = ko.observable(0);
-        viewModel.zoom = ko.observable(0);
-        viewModel.height = ko.observable(0);
+    var widgetModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.latitude = ko.observable(0);
+            viewModel.longitude = ko.observable(0);
+            viewModel.zoom = ko.observable(0);
+            viewModel.height = ko.observable(0);
 
-        var data = ko.mapping.fromJSON(viewModel.widgetValues());
+            var data = ko.mapping.fromJSON(viewModel.widgetValues());
 
-        if ((isFunction(data) && data()) || data) {
-            if (data.Latitude == undefined) {
-                // If this is not set, it means the widget is new and we have nothing in widgetValues
-                return;
+            if ((isFunction(data) && data()) || data) {
+                if (data.Latitude == undefined) {
+                    // If this is not set, it means the widget is new and we have nothing in widgetValues
+                    return;
+                }
+                if (data.Latitude) {
+                    viewModel.latitude(data.Latitude());
+                }
+                if (data.Longitude) {
+                    viewModel.longitude(data.Longitude());
+                }
+                if (data.Zoom) {
+                    viewModel.zoom(data.Zoom());
+                }
+                if (data.Height) {
+                    viewModel.height(data.Height());
+                }
             }
-            if (data.Latitude) {
-                viewModel.latitude(data.Latitude());
-            }
-            if (data.Longitude) {
-                viewModel.longitude(data.Longitude());
-            }
-            if (data.Zoom) {
-                viewModel.zoom(data.Zoom());
-            }
-            if (data.Height) {
-                viewModel.height(data.Height());
-            }
-        }
-    };
-
-    function cleanUp() {
-        delete viewModel.latitude;
-        delete viewModel.longitude;
-        delete viewModel.zoom;
-        delete viewModel.height;
-    }
-
-    function onBeforeSave() {
-        var data = {
-            Latitude: viewModel.latitude(),
-            Longitude: viewModel.longitude(),
-            Zoom: viewModel.zoom(),
-            Height: viewModel.height()
         };
+        f.cleanUp = function () {
+            delete viewModel.latitude;
+            delete viewModel.longitude;
+            delete viewModel.zoom;
+            delete viewModel.height;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                Latitude: viewModel.latitude(),
+                Longitude: viewModel.longitude(),
+                Zoom: viewModel.zoom(),
+                Height: viewModel.height()
+            };
 
-        viewModel.widgetValues(ko.mapping.toJSON(data));
-    };
-
-    function isFunction(functionToCheck) {
-        var getType = {};
-        return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-    }
+            viewModel.widgetValues(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
 </script>

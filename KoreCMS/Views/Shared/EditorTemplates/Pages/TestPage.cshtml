@@ -8,25 +8,27 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel() {
-        viewModel.testProperty = ko.observable("");
+    var widgetModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.testProperty = ko.observable("");
 
-        var data = ko.mapping.fromJSON(viewModel.fields());
+            var data = ko.mapping.fromJSON(viewModel.fields());
 
-        if (data && data.TestProperty) {
-            viewModel.testProperty(data.TestProperty());
-        }
-    };
-
-    function cleanUp() {
-        delete viewModel.testProperty;
-    }
-
-    function onBeforeSave() {
-        var data = {
-            TestProperty: viewModel.testProperty()
+            if (data && data.TestProperty) {
+                viewModel.testProperty(data.TestProperty());
+            }
         };
+        f.cleanUp = function () {
+            delete viewModel.testProperty;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                TestProperty: viewModel.testProperty()
+            };
 
-        viewModel.fields(ko.mapping.toJSON(data));
-    };
+            viewModel.fields(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
 </script>

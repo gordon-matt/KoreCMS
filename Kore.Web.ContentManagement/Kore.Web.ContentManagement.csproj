@@ -399,6 +399,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Pages\Scripts\index_Old.js" />
+    <Content Include="Areas\Admin\Widgets\Scripts\index_Old.js" />
     <EmbeddedResource Include="Areas\Admin\Messaging\Scripts\queuedEmails.js" />
     <EmbeddedResource Include="Areas\Admin\Messaging\Scripts\messageTemplates.js" />
     <EmbeddedResource Include="Areas\Admin\Localization\Scripts\index.js" />

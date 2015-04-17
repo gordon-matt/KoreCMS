@@ -268,186 +268,183 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel() {
-        viewModel.mode = ko.observable(0);
-        viewModel.imagesPattern = ko.observable("");
-        viewModel.imagesDirectory = ko.observable("");
-        viewModel.fullSizeImagesDirectory = ko.observable("");
-        viewModel.autoRotate = ko.observable(false);
-        viewModel.autoRotateDirection = ko.observable(1);
-        viewModel.autoRotateSpeed = ko.observable(0);
-        viewModel.autoRotateStopOnMove = ko.observable(false);
-        viewModel.loadFullSizeImagesOnZoom = ko.observable(false);
-        viewModel.loadFullSizeImagesOnFullscreen = ko.observable(false);
-        viewModel.width = ko.observable(0);
-        viewModel.height = ko.observable(0);
-        viewModel.rows = ko.observable(0);
-        viewModel.columns = ko.observable(0);
-        viewModel.xAxisSensitivity = ko.observable(0);
-        viewModel.yAxisSensitivity = ko.observable(0);
-        viewModel.inertiaConstant = ko.observable(0);
-        viewModel.buttonWidth = ko.observable(30);
-        viewModel.buttonHeight = ko.observable(30);
-        viewModel.buttonMargin = ko.observable(0);
-        viewModel.turnSpeed = ko.observable(0);
-        viewModel.showButtons = ko.observable(false);
-        viewModel.showTool = ko.observable(false);
-        viewModel.showPlay = ko.observable(false);
-        viewModel.showPause = ko.observable(false);
-        viewModel.showZoom = ko.observable(false);
-        viewModel.showTurn = ko.observable(false);
-        viewModel.showFullscreen = ko.observable(false);
-        viewModel.displayLoader = ko.observable(false);
-        viewModel.loaderHolderClassName = ko.observable("");
-        viewModel.loadingTitle = ko.observable("");
-        viewModel.loadingSubtitle = ko.observable("");
-        viewModel.loadingMessage = ko.observable("");
-        viewModel.loaderModalBackground = ko.observable("");
-        viewModel.loaderModalOpacity = ko.observable(0);
-        viewModel.loaderCircleWidth = ko.observable(0);
-        viewModel.loaderCircleLineWidth = ko.observable(0);
-        viewModel.loaderCircleLineColor = ko.observable("");
-        viewModel.loaderCircleBackgroundColor = ko.observable("");
+    var widgetModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.mode = ko.observable(0);
+            viewModel.imagesPattern = ko.observable("");
+            viewModel.imagesDirectory = ko.observable("");
+            viewModel.fullSizeImagesDirectory = ko.observable("");
+            viewModel.autoRotate = ko.observable(false);
+            viewModel.autoRotateDirection = ko.observable(1);
+            viewModel.autoRotateSpeed = ko.observable(0);
+            viewModel.autoRotateStopOnMove = ko.observable(false);
+            viewModel.loadFullSizeImagesOnZoom = ko.observable(false);
+            viewModel.loadFullSizeImagesOnFullscreen = ko.observable(false);
+            viewModel.width = ko.observable(0);
+            viewModel.height = ko.observable(0);
+            viewModel.rows = ko.observable(0);
+            viewModel.columns = ko.observable(0);
+            viewModel.xAxisSensitivity = ko.observable(0);
+            viewModel.yAxisSensitivity = ko.observable(0);
+            viewModel.inertiaConstant = ko.observable(0);
+            viewModel.buttonWidth = ko.observable(30);
+            viewModel.buttonHeight = ko.observable(30);
+            viewModel.buttonMargin = ko.observable(0);
+            viewModel.turnSpeed = ko.observable(0);
+            viewModel.showButtons = ko.observable(false);
+            viewModel.showTool = ko.observable(false);
+            viewModel.showPlay = ko.observable(false);
+            viewModel.showPause = ko.observable(false);
+            viewModel.showZoom = ko.observable(false);
+            viewModel.showTurn = ko.observable(false);
+            viewModel.showFullscreen = ko.observable(false);
+            viewModel.displayLoader = ko.observable(false);
+            viewModel.loaderHolderClassName = ko.observable("");
+            viewModel.loadingTitle = ko.observable("");
+            viewModel.loadingSubtitle = ko.observable("");
+            viewModel.loadingMessage = ko.observable("");
+            viewModel.loaderModalBackground = ko.observable("");
+            viewModel.loaderModalOpacity = ko.observable(0);
+            viewModel.loaderCircleWidth = ko.observable(0);
+            viewModel.loaderCircleLineWidth = ko.observable(0);
+            viewModel.loaderCircleLineColor = ko.observable("");
+            viewModel.loaderCircleBackgroundColor = ko.observable("");
 
-        var data = ko.mapping.fromJSON(viewModel.widgetValues());
+            var data = ko.mapping.fromJSON(viewModel.widgetValues());
 
-        if ((isFunction(data) && data()) || data) {
-            if (data.Mode == undefined) {
-                // If this is not set, it means the widget is new and we have nothing in widgetValues
-                return;
+            if ((isFunction(data) && data()) || data) {
+                if (data.Mode == undefined) {
+                    // If this is not set, it means the widget is new and we have nothing in widgetValues
+                    return;
+                }
+                viewModel.mode(data.Mode());
+                viewModel.imagesPattern(data.ImagesPattern());
+                viewModel.imagesDirectory(data.ImagesDirectory());
+                viewModel.fullSizeImagesDirectory(data.FullSizeImagesDirectory());
+                viewModel.autoRotate(data.AutoRotate());
+                viewModel.autoRotateDirection(data.AutoRotateDirection());
+                viewModel.autoRotateSpeed(data.AutoRotateSpeed());
+                viewModel.autoRotateStopOnMove(data.AutoRotateStopOnMove());
+                viewModel.loadFullSizeImagesOnZoom(data.LoadFullSizeImagesOnZoom());
+                viewModel.loadFullSizeImagesOnFullscreen(data.LoadFullSizeImagesOnFullscreen());
+                viewModel.width(data.Width());
+                viewModel.height(data.Height());
+                viewModel.rows(data.Rows());
+                viewModel.columns(data.Columns());
+                viewModel.xAxisSensitivity(data.XAxisSensitivity());
+                viewModel.yAxisSensitivity(data.YAxisSensitivity());
+                viewModel.inertiaConstant(data.InertiaConstant());
+                viewModel.buttonWidth(data.ButtonWidth());
+                viewModel.buttonHeight(data.ButtonHeight());
+                viewModel.buttonMargin(data.ButtonMargin());
+                viewModel.turnSpeed(data.TurnSpeed());
+                viewModel.showButtons(data.ShowButtons());
+                viewModel.showTool(data.ShowTool());
+                viewModel.showPlay(data.ShowPlay());
+                viewModel.showPause(data.ShowPause());
+                viewModel.showZoom(data.ShowZoom());
+                viewModel.showTurn(data.ShowTurn());
+                viewModel.showFullscreen(data.ShowFullscreen());
+                viewModel.displayLoader(data.DisplayLoader());
+                viewModel.loaderHolderClassName(data.LoaderHolderClassName());
+                viewModel.loadingTitle(data.LoadingTitle());
+                viewModel.loadingSubtitle(data.LoadingSubtitle());
+                viewModel.loadingMessage(data.LoadingMessage());
+                viewModel.loaderModalBackground(data.LoaderModalBackground());
+                viewModel.loaderModalOpacity(data.LoaderModalOpacity());
+                viewModel.loaderCircleWidth(data.LoaderCircleWidth());
+                viewModel.loaderCircleLineWidth(data.LoaderCircleLineWidth());
+                viewModel.loaderCircleLineColor(data.LoaderCircleLineColor());
+                viewModel.loaderCircleBackgroundColor(data.LoaderCircleBackgroundColor());
             }
-            viewModel.mode(data.Mode());
-            viewModel.imagesPattern(data.ImagesPattern());
-            viewModel.imagesDirectory(data.ImagesDirectory());
-            viewModel.fullSizeImagesDirectory(data.FullSizeImagesDirectory());
-            viewModel.autoRotate(data.AutoRotate());
-            viewModel.autoRotateDirection(data.AutoRotateDirection());
-            viewModel.autoRotateSpeed(data.AutoRotateSpeed());
-            viewModel.autoRotateStopOnMove(data.AutoRotateStopOnMove());
-            viewModel.loadFullSizeImagesOnZoom(data.LoadFullSizeImagesOnZoom());
-            viewModel.loadFullSizeImagesOnFullscreen(data.LoadFullSizeImagesOnFullscreen());
-            viewModel.width(data.Width());
-            viewModel.height(data.Height());
-            viewModel.rows(data.Rows());
-            viewModel.columns(data.Columns());
-            viewModel.xAxisSensitivity(data.XAxisSensitivity());
-            viewModel.yAxisSensitivity(data.YAxisSensitivity());
-            viewModel.inertiaConstant(data.InertiaConstant());
-            viewModel.buttonWidth(data.ButtonWidth());
-            viewModel.buttonHeight(data.ButtonHeight());
-            viewModel.buttonMargin(data.ButtonMargin());
-            viewModel.turnSpeed(data.TurnSpeed());
-            viewModel.showButtons(data.ShowButtons());
-            viewModel.showTool(data.ShowTool());
-            viewModel.showPlay(data.ShowPlay());
-            viewModel.showPause(data.ShowPause());
-            viewModel.showZoom(data.ShowZoom());
-            viewModel.showTurn(data.ShowTurn());
-            viewModel.showFullscreen(data.ShowFullscreen());
-            viewModel.displayLoader(data.DisplayLoader());
-            viewModel.loaderHolderClassName(data.LoaderHolderClassName());
-            viewModel.loadingTitle(data.LoadingTitle());
-            viewModel.loadingSubtitle(data.LoadingSubtitle());
-            viewModel.loadingMessage(data.LoadingMessage());
-            viewModel.loaderModalBackground(data.LoaderModalBackground());
-            viewModel.loaderModalOpacity(data.LoaderModalOpacity());
-            viewModel.loaderCircleWidth(data.LoaderCircleWidth());
-            viewModel.loaderCircleLineWidth(data.LoaderCircleLineWidth());
-            viewModel.loaderCircleLineColor(data.LoaderCircleLineColor());
-            viewModel.loaderCircleBackgroundColor(data.LoaderCircleBackgroundColor());
-        }
-    };
-
-    function cleanUp() {
-        delete viewModel.mode;
-        delete viewModel.imagesPattern;
-        delete viewModel.imagesDirectory;
-        delete viewModel.fullSizeImagesDirectory;
-        delete viewModel.autoRotate;
-        delete viewModel.autoRotateDirection;
-        delete viewModel.autoRotateSpeed;
-        delete viewModel.autoRotateStopOnMove;
-        delete viewModel.loadFullSizeImagesOnZoom;
-        delete viewModel.loadFullSizeImagesOnFullscreen;
-        delete viewModel.width;
-        delete viewModel.height;
-        delete viewModel.rows;
-        delete viewModel.columns;
-        delete viewModel.xAxisSensitivity;
-        delete viewModel.yAxisSensitivity;
-        delete viewModel.inertiaConstant;
-        delete viewModel.buttonWidth;
-        delete viewModel.buttonHeight;
-        delete viewModel.buttonMargin;
-        delete viewModel.turnSpeed;
-        delete viewModel.showButtons;
-        delete viewModel.showTool;
-        delete viewModel.showPlay;
-        delete viewModel.showPause;
-        delete viewModel.showZoom;
-        delete viewModel.showTurn;
-        delete viewModel.showFullscreen;
-        delete viewModel.displayLoader;
-        delete viewModel.loaderHolderClassName;
-        delete viewModel.loadingTitle;
-        delete viewModel.loadingSubtitle;
-        delete viewModel.loadingMessage;
-        delete viewModel.loaderModalBackground;
-        delete viewModel.loaderModalOpacity;
-        delete viewModel.loaderCircleWidth;
-        delete viewModel.loaderCircleLineWidth;
-        delete viewModel.loaderCircleLineColor;
-        delete viewModel.loaderCircleBackgroundColor;
-    }
-
-    function onBeforeSave() {
-        var data = {
-            Mode: viewModel.mode(),
-            ImagesPattern: viewModel.imagesPattern(),
-            ImagesDirectory: viewModel.imagesDirectory(),
-            FullSizeImagesDirectory: viewModel.fullSizeImagesDirectory(),
-            AutoRotate: viewModel.autoRotate(),
-            AutoRotateDirection: viewModel.autoRotateDirection(),
-            AutoRotateSpeed: viewModel.autoRotateSpeed(),
-            AutoRotateStopOnMove: viewModel.autoRotateStopOnMove(),
-            LoadFullSizeImagesOnZoom: viewModel.loadFullSizeImagesOnZoom(),
-            LoadFullSizeImagesOnFullscreen: viewModel.loadFullSizeImagesOnFullscreen(),
-            Width: viewModel.width(),
-            Height: viewModel.height(),
-            Rows: viewModel.rows(),
-            Columns: viewModel.columns(),
-            XAxisSensitivity: viewModel.xAxisSensitivity(),
-            YAxisSensitivity: viewModel.yAxisSensitivity(),
-            InertiaConstant: viewModel.inertiaConstant(),
-            ButtonWidth: viewModel.buttonWidth(),
-            ButtonHeight: viewModel.buttonHeight(),
-            ButtonMargin: viewModel.buttonMargin(),
-            TurnSpeed: viewModel.turnSpeed(),
-            ShowButtons: viewModel.showButtons(),
-            ShowTool: viewModel.showTool(),
-            ShowPlay: viewModel.showPlay(),
-            ShowPause: viewModel.showPause(),
-            ShowZoom: viewModel.showZoom(),
-            ShowTurn: viewModel.showTurn(),
-            ShowFullscreen: viewModel.showFullscreen(),
-            DisplayLoader: viewModel.displayLoader(),
-            LoaderHolderClassName: viewModel.loaderHolderClassName(),
-            LoadingTitle: viewModel.loadingTitle(),
-            LoadingSubtitle: viewModel.loadingSubtitle(),
-            LoadingMessage: viewModel.loadingMessage(),
-            LoaderModalBackground: viewModel.loaderModalBackground(),
-            LoaderModalOpacity: viewModel.loaderModalOpacity(),
-            LoaderCircleWidth: viewModel.loaderCircleWidth(),
-            LoaderCircleLineWidth: viewModel.loaderCircleLineWidth(),
-            LoaderCircleLineColor: viewModel.loaderCircleLineColor(),
-            LoaderCircleBackgroundColor: viewModel.loaderCircleBackgroundColor()
         };
+        f.cleanUp = function () {
+            delete viewModel.mode;
+            delete viewModel.imagesPattern;
+            delete viewModel.imagesDirectory;
+            delete viewModel.fullSizeImagesDirectory;
+            delete viewModel.autoRotate;
+            delete viewModel.autoRotateDirection;
+            delete viewModel.autoRotateSpeed;
+            delete viewModel.autoRotateStopOnMove;
+            delete viewModel.loadFullSizeImagesOnZoom;
+            delete viewModel.loadFullSizeImagesOnFullscreen;
+            delete viewModel.width;
+            delete viewModel.height;
+            delete viewModel.rows;
+            delete viewModel.columns;
+            delete viewModel.xAxisSensitivity;
+            delete viewModel.yAxisSensitivity;
+            delete viewModel.inertiaConstant;
+            delete viewModel.buttonWidth;
+            delete viewModel.buttonHeight;
+            delete viewModel.buttonMargin;
+            delete viewModel.turnSpeed;
+            delete viewModel.showButtons;
+            delete viewModel.showTool;
+            delete viewModel.showPlay;
+            delete viewModel.showPause;
+            delete viewModel.showZoom;
+            delete viewModel.showTurn;
+            delete viewModel.showFullscreen;
+            delete viewModel.displayLoader;
+            delete viewModel.loaderHolderClassName;
+            delete viewModel.loadingTitle;
+            delete viewModel.loadingSubtitle;
+            delete viewModel.loadingMessage;
+            delete viewModel.loaderModalBackground;
+            delete viewModel.loaderModalOpacity;
+            delete viewModel.loaderCircleWidth;
+            delete viewModel.loaderCircleLineWidth;
+            delete viewModel.loaderCircleLineColor;
+            delete viewModel.loaderCircleBackgroundColor;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                Mode: viewModel.mode(),
+                ImagesPattern: viewModel.imagesPattern(),
+                ImagesDirectory: viewModel.imagesDirectory(),
+                FullSizeImagesDirectory: viewModel.fullSizeImagesDirectory(),
+                AutoRotate: viewModel.autoRotate(),
+                AutoRotateDirection: viewModel.autoRotateDirection(),
+                AutoRotateSpeed: viewModel.autoRotateSpeed(),
+                AutoRotateStopOnMove: viewModel.autoRotateStopOnMove(),
+                LoadFullSizeImagesOnZoom: viewModel.loadFullSizeImagesOnZoom(),
+                LoadFullSizeImagesOnFullscreen: viewModel.loadFullSizeImagesOnFullscreen(),
+                Width: viewModel.width(),
+                Height: viewModel.height(),
+                Rows: viewModel.rows(),
+                Columns: viewModel.columns(),
+                XAxisSensitivity: viewModel.xAxisSensitivity(),
+                YAxisSensitivity: viewModel.yAxisSensitivity(),
+                InertiaConstant: viewModel.inertiaConstant(),
+                ButtonWidth: viewModel.buttonWidth(),
+                ButtonHeight: viewModel.buttonHeight(),
+                ButtonMargin: viewModel.buttonMargin(),
+                TurnSpeed: viewModel.turnSpeed(),
+                ShowButtons: viewModel.showButtons(),
+                ShowTool: viewModel.showTool(),
+                ShowPlay: viewModel.showPlay(),
+                ShowPause: viewModel.showPause(),
+                ShowZoom: viewModel.showZoom(),
+                ShowTurn: viewModel.showTurn(),
+                ShowFullscreen: viewModel.showFullscreen(),
+                DisplayLoader: viewModel.displayLoader(),
+                LoaderHolderClassName: viewModel.loaderHolderClassName(),
+                LoadingTitle: viewModel.loadingTitle(),
+                LoadingSubtitle: viewModel.loadingSubtitle(),
+                LoadingMessage: viewModel.loadingMessage(),
+                LoaderModalBackground: viewModel.loaderModalBackground(),
+                LoaderModalOpacity: viewModel.loaderModalOpacity(),
+                LoaderCircleWidth: viewModel.loaderCircleWidth(),
+                LoaderCircleLineWidth: viewModel.loaderCircleLineWidth(),
+                LoaderCircleLineColor: viewModel.loaderCircleLineColor(),
+                LoaderCircleBackgroundColor: viewModel.loaderCircleBackgroundColor()
+            };
 
-        viewModel.widgetValues(ko.mapping.toJSON(data));
-    };
-
-    function isFunction(functionToCheck) {
-        var getType = {};
-        return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-    }
+            viewModel.widgetValues(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
 </script>

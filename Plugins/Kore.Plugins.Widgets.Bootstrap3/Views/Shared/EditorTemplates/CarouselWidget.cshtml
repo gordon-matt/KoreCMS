@@ -57,62 +57,59 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel() {
-        viewModel.mediaFolder = ko.observable("");
-        viewModel.interval = ko.observable(0);
-        viewModel.startIndex = ko.observable(0);
-        viewModel.keyboard = ko.observable(true);
-        viewModel.pauseOnHover = ko.observable(true);
-        viewModel.wrap = ko.observable(true);
-        viewModel.onSlideEvent = ko.observable("");
-        viewModel.onSlidEvent = ko.observable("");
+    var widgetModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.mediaFolder = ko.observable("");
+            viewModel.interval = ko.observable(0);
+            viewModel.startIndex = ko.observable(0);
+            viewModel.keyboard = ko.observable(true);
+            viewModel.pauseOnHover = ko.observable(true);
+            viewModel.wrap = ko.observable(true);
+            viewModel.onSlideEvent = ko.observable("");
+            viewModel.onSlidEvent = ko.observable("");
 
-        var data = ko.mapping.fromJSON(viewModel.widgetValues());
+            var data = ko.mapping.fromJSON(viewModel.widgetValues());
 
-        if ((isFunction(data) && data()) || data) {
-            if (data.MediaFolder == undefined) {
-                // If this is not set, it means the widget is new and we have nothing in widgetValues
-                return;
+            if ((isFunction(data) && data()) || data) {
+                if (data.MediaFolder == undefined) {
+                    // If this is not set, it means the widget is new and we have nothing in widgetValues
+                    return;
+                }
+                viewModel.mediaFolder(data.MediaFolder());
+                viewModel.interval(data.Interval());
+                viewModel.startIndex(data.StartIndex());
+                viewModel.keyboard(data.Keyboard());
+                viewModel.pauseOnHover(data.PauseOnHover());
+                viewModel.wrap(data.Wrap());
+                viewModel.onSlideEvent(data.OnSlideEvent());
+                viewModel.onSlidEvent(data.OnSlidEvent());
             }
-            viewModel.mediaFolder(data.MediaFolder());
-            viewModel.interval(data.Interval());
-            viewModel.startIndex(data.StartIndex());
-            viewModel.keyboard(data.Keyboard());
-            viewModel.pauseOnHover(data.PauseOnHover());
-            viewModel.wrap(data.Wrap());
-            viewModel.onSlideEvent(data.OnSlideEvent());
-            viewModel.onSlidEvent(data.OnSlidEvent());
-        }
-    };
-
-    function cleanUp() {
-        delete viewModel.mediaFolder;
-        delete viewModel.interval;
-        delete viewModel.startIndex;
-        delete viewModel.keyboard;
-        delete viewModel.pauseOnHover;
-        delete viewModel.wrap;
-        delete viewModel.onSlideEvent;
-        delete viewModel.onSlidEvent;
-    }
-
-    function onBeforeSave() {
-        var data = {
-            MediaFolder: viewModel.mediaFolder(),
-            Interval: viewModel.interval(),
-            StartIndex: viewModel.startIndex(),
-            Keyboard: viewModel.keyboard(),
-            PauseOnHover: viewModel.pauseOnHover(),
-            Wrap: viewModel.wrap(),
-            OnSlideEvent: viewModel.onSlideEvent(),
-            OnSlidEvent: viewModel.onSlidEvent()
         };
+        f.cleanUp = function () {
+            delete viewModel.mediaFolder;
+            delete viewModel.interval;
+            delete viewModel.startIndex;
+            delete viewModel.keyboard;
+            delete viewModel.pauseOnHover;
+            delete viewModel.wrap;
+            delete viewModel.onSlideEvent;
+            delete viewModel.onSlidEvent;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                MediaFolder: viewModel.mediaFolder(),
+                Interval: viewModel.interval(),
+                StartIndex: viewModel.startIndex(),
+                Keyboard: viewModel.keyboard(),
+                PauseOnHover: viewModel.pauseOnHover(),
+                Wrap: viewModel.wrap(),
+                OnSlideEvent: viewModel.onSlideEvent(),
+                OnSlidEvent: viewModel.onSlidEvent()
+            };
 
-        viewModel.widgetValues(ko.mapping.toJSON(data));
-    };
-
-    function isFunction(functionToCheck) {
-        var getType = {};
-        return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-    }
+            viewModel.widgetValues(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
 </script>

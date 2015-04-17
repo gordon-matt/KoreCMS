@@ -141,8 +141,6 @@ var ViewModel = function () {
     self.cultureCode = ko.observable('');
     self.refId = ko.observable(null);
 
-    self.widgetModelStub = null;
-
     self.zoneModel = new ZoneModel();
 
     self.create = function () {
@@ -159,23 +157,6 @@ var ViewModel = function () {
         self.cultureCode('');
         self.refId(null);
 
-        // Clean up from previously injected html/scripts
-        if (self.widgetModelStub != null && typeof self.widgetModelStub.cleanUp === 'function') {
-            self.widgetModelStub.cleanUp();
-        }
-        self.widgetModelStub = null;
-
-        // Remove Old Scripts
-        var oldScripts = $('script[data-widget-script="true"]');
-
-        if (oldScripts.length > 0) {
-            $.each(oldScripts, function () {
-                $(this).remove();
-            });
-        }
-
-        var elementToBind = $("#widget-details")[0];
-        ko.cleanNode(elementToBind);
         $("#widget-details").html("");
 
         self.createFormValidator.resetForm();
@@ -213,10 +194,9 @@ var ViewModel = function () {
             .done(function (json) {
 
                 // Clean up from previously injected html/scripts
-                if (self.widgetModelStub != null && typeof self.widgetModelStub.cleanUp === 'function') {
-                    self.widgetModelStub.cleanUp();
+                if (typeof cleanUp == 'function') {
+                    cleanUp();
                 }
-                self.widgetModelStub = null;
 
                 // Remove Old Scripts
                 var oldScripts = $('script[data-widget-script="true"]');
@@ -229,7 +209,6 @@ var ViewModel = function () {
 
                 var elementToBind = $("#widget-details")[0];
                 ko.cleanNode(elementToBind);
-                $("#widget-details").html("");
 
                 var result = $(json.Content);
 
@@ -249,11 +228,8 @@ var ViewModel = function () {
 
                 // Update Bindings
                 // Ensure the function exists before calling it...
-                if (typeof widgetModel != null) {
-                    self.widgetModelStub = widgetModel;
-                    if (typeof self.widgetModelStub.updateModel === 'function') {
-                        self.widgetModelStub.updateModel();
-                    }
+                if (typeof updateModel == 'function') {
+                    updateModel();
                     ko.applyBindings(viewModel, elementToBind);
                 }
             })
@@ -311,8 +287,8 @@ var ViewModel = function () {
         }
 
         // ensure the function exists before calling it...
-        if (self.widgetModelStub != null && typeof self.widgetModelStub.onBeforeSave === 'function') {
-            self.widgetModelStub.onBeforeSave();
+        if (typeof onBeforeSave == 'function') {
+            onBeforeSave();
         }
 
         var record = {
@@ -377,25 +353,6 @@ var ViewModel = function () {
     };
 
     self.cancel = function () {
-        // Clean up from previously injected html/scripts
-        if (self.widgetModelStub != null && typeof self.widgetModelStub.cleanUp === 'function') {
-            self.widgetModelStub.cleanUp();
-        }
-        self.widgetModelStub = null;
-
-        // Remove Old Scripts
-        var oldScripts = $('script[data-widget-script="true"]');
-
-        if (oldScripts.length > 0) {
-            $.each(oldScripts, function () {
-                $(this).remove();
-            });
-        }
-
-        var elementToBind = $("#widget-details")[0];
-        ko.cleanNode(elementToBind);
-        $("#widget-details").html("");
-
         switchSection($("#grid-section"));
     };
 

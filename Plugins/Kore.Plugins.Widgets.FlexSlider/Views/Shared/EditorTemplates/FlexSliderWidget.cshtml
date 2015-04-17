@@ -137,13 +137,13 @@
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Animation, new { @class = "control-label" })
-                            @Html.EnumDropDownListFor(m => m.Animation, new { @class = "form-control", data_bind = "checked: animation" })
+                            @Html.EnumDropDownListFor(m => m.Animation, new { @class = "form-control", data_bind = "value: animation" })
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Easing, new { @class = "control-label" })
-                            @Html.EnumDropDownListFor(m => m.Easing, new { @class = "form-control", data_bind = "checked: easing" })
+                            @Html.EnumDropDownListFor(m => m.Easing, new { @class = "form-control", data_bind = "value: easing" })
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -161,7 +161,7 @@
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Direction, new { @class = "control-label" })
-                            @Html.EnumDropDownListFor(m => m.Direction, new { @class = "form-control", data_bind = "checked: direction" })
+                            @Html.EnumDropDownListFor(m => m.Direction, new { @class = "form-control", data_bind = "value: direction" })
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -191,7 +191,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="form-group">
                             @Html.LabelFor(m => m.ControlNav, new { @class = "control-label" })
-                            @Html.EnumDropDownListFor(m => m.ControlNav, new { @class = "form-control", data_bind = "checked: controlNav" })
+                            @Html.EnumDropDownListFor(m => m.ControlNav, new { @class = "form-control", data_bind = "value: controlNav" })
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -302,214 +302,210 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel() {
-        viewModel.mediaFolder = ko.observable("");
-        viewModel.controlId = ko.observable("slider");
-        viewModel.namespace = ko.observable(null);
-        viewModel.selector = ko.observable(null);
-        viewModel.startAt = ko.observable(0);
-        viewModel.slideshow = ko.observable(true);
-        viewModel.slideshowSpeed = ko.observable(7000);
-        viewModel.initDelay = ko.observable(0);
-        viewModel.randomize = ko.observable(false);
-        viewModel.pauseOnAction = ko.observable(true);
-        viewModel.pauseOnHover = ko.observable(false);
-        viewModel.touch = ko.observable(true);
-        viewModel.video = ko.observable(false);
-        viewModel.sync = ko.observable("");
-        viewModel.asNavFor = ko.observable("");
-        viewModel.itemWidth = ko.observable(0);
-        viewModel.itemMargin = ko.observable(0);
-        viewModel.minItems = ko.observable(0);
-        viewModel.maxItems = ko.observable(0);
-        viewModel.animation = ko.observable(0);
-        viewModel.animationSpeed = ko.observable(600);
-        viewModel.direction = ko.observable(0);
-        viewModel.reverse = ko.observable(false);
-        viewModel.move = ko.observable(0);
-        viewModel.animationLoop = ko.observable(true);
-        viewModel.smoothHeight = ko.observable(false);
-        viewModel.easing = ko.observable(1);
-        viewModel.useCSS = ko.observable(true);
-        viewModel.controlNav = ko.observable(1);
-        viewModel.directionNav = ko.observable(true);
-        viewModel.prevText = ko.observable("Previous");
-        viewModel.nextText = ko.observable("Next");
-        viewModel.pausePlay = ko.observable(false);
-        viewModel.pauseText = ko.observable("Pause");
-        viewModel.playText = ko.observable("Play");
-        viewModel.controlsContainer = ko.observable("");
-        viewModel.manualControls = ko.observable("");
-        viewModel.keyboard = ko.observable(true);
-        viewModel.multipleKeyboard = ko.observable(false);
-        viewModel.mousewheel = ko.observable(false);
-        viewModel.onStart = ko.observable(null);
-        viewModel.onEnd = ko.observable(null);
-        viewModel.onBefore = ko.observable(null);
-        viewModel.onAfter = ko.observable(null);
-        viewModel.onAdded = ko.observable(null);
-        viewModel.onRemoved = ko.observable(null);
+    var widgetModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.mediaFolder = ko.observable("");
+            viewModel.controlId = ko.observable("slider");
+            viewModel.namespace = ko.observable(null);
+            viewModel.selector = ko.observable(null);
+            viewModel.startAt = ko.observable(0);
+            viewModel.slideshow = ko.observable(true);
+            viewModel.slideshowSpeed = ko.observable(7000);
+            viewModel.initDelay = ko.observable(0);
+            viewModel.randomize = ko.observable(false);
+            viewModel.pauseOnAction = ko.observable(true);
+            viewModel.pauseOnHover = ko.observable(false);
+            viewModel.touch = ko.observable(true);
+            viewModel.video = ko.observable(false);
+            viewModel.sync = ko.observable("");
+            viewModel.asNavFor = ko.observable("");
+            viewModel.itemWidth = ko.observable(0);
+            viewModel.itemMargin = ko.observable(0);
+            viewModel.minItems = ko.observable(0);
+            viewModel.maxItems = ko.observable(0);
+            viewModel.animation = ko.observable(0);
+            viewModel.animationSpeed = ko.observable(600);
+            viewModel.direction = ko.observable(0);
+            viewModel.reverse = ko.observable(false);
+            viewModel.move = ko.observable(0);
+            viewModel.animationLoop = ko.observable(true);
+            viewModel.smoothHeight = ko.observable(false);
+            viewModel.easing = ko.observable(1);
+            viewModel.useCSS = ko.observable(true);
+            viewModel.controlNav = ko.observable(1);
+            viewModel.directionNav = ko.observable(true);
+            viewModel.prevText = ko.observable("Previous");
+            viewModel.nextText = ko.observable("Next");
+            viewModel.pausePlay = ko.observable(false);
+            viewModel.pauseText = ko.observable("Pause");
+            viewModel.playText = ko.observable("Play");
+            viewModel.controlsContainer = ko.observable("");
+            viewModel.manualControls = ko.observable("");
+            viewModel.keyboard = ko.observable(true);
+            viewModel.multipleKeyboard = ko.observable(false);
+            viewModel.mousewheel = ko.observable(false);
+            viewModel.onStart = ko.observable(null);
+            viewModel.onEnd = ko.observable(null);
+            viewModel.onBefore = ko.observable(null);
+            viewModel.onAfter = ko.observable(null);
+            viewModel.onAdded = ko.observable(null);
+            viewModel.onRemoved = ko.observable(null);
 
-        var data = ko.mapping.fromJSON(viewModel.widgetValues());
+            var data = ko.mapping.fromJSON(viewModel.widgetValues());
 
-        if ((isFunction(data) && data()) || data) {
-            if (data.MediaFolder == undefined) {
-                // If this is not set, it means the widget is new and we have nothing in widgetValues
-                return;
+            if ((isFunction(data) && data()) || data) {
+                if (data.MediaFolder == undefined) {
+                    // If this is not set, it means the widget is new and we have nothing in widgetValues
+                    return;
+                }
+                viewModel.mediaFolder(data.MediaFolder());
+                viewModel.controlId(data.ControlId());
+                viewModel.namespace(data.Namespace());
+                viewModel.selector(data.Selector());
+                viewModel.startAt(data.StartAt());
+                viewModel.slideshow(data.Slideshow());
+                viewModel.slideshowSpeed(data.SlideshowSpeed());
+                viewModel.initDelay(data.InitDelay());
+                viewModel.randomize(data.Randomize());
+                viewModel.pauseOnAction(data.PauseOnAction());
+                viewModel.pauseOnHover(data.PauseOnHover());
+                viewModel.touch(data.Touch());
+                viewModel.video(data.Video());
+                viewModel.sync(data.Sync());
+                viewModel.asNavFor(data.AsNavFor());
+                viewModel.itemWidth(data.ItemWidth());
+                viewModel.itemMargin(data.ItemMargin());
+                viewModel.minItems(data.MinItems());
+                viewModel.maxItems(data.MaxItems());
+                viewModel.animation(data.Animation());
+                viewModel.animationSpeed(data.AnimationSpeed());
+                viewModel.direction(data.Direction());
+                viewModel.reverse(data.Reverse());
+                viewModel.move(data.Move());
+                viewModel.animationLoop(data.AnimationLoop());
+                viewModel.smoothHeight(data.SmoothHeight());
+                viewModel.easing(data.Easing());
+                viewModel.useCSS(data.UseCSS());
+                viewModel.controlNav(data.ControlNav());
+                viewModel.directionNav(data.DirectionNav());
+                viewModel.prevText(data.PrevText());
+                viewModel.nextText(data.NextText());
+                viewModel.pausePlay(data.PausePlay());
+                viewModel.pauseText(data.PauseText());
+                viewModel.playText(data.PlayText());
+                viewModel.controlsContainer(data.ControlsContainer());
+                viewModel.manualControls(data.ManualControls());
+                viewModel.keyboard(data.Keyboard());
+                viewModel.multipleKeyboard(data.MultipleKeyboard());
+                viewModel.mousewheel(data.Mousewheel());
+                viewModel.onStart(data.OnStart());
+                viewModel.onEnd(data.OnEnd());
+                viewModel.onBefore(data.OnBefore());
+                viewModel.onAfter(data.OnAfter());
+                viewModel.onAdded(data.OnAdded());
+                viewModel.onRemoved(data.OnRemoved());
             }
-            viewModel.mediaFolder(data.MediaFolder());
-            viewModel.controlId(data.ControlId());
-            viewModel.namespace(data.Namespace());
-            viewModel.selector(data.Selector());
-            viewModel.startAt(data.StartAt());
-            viewModel.slideshow(data.Slideshow());
-            viewModel.slideshowSpeed(data.SlideshowSpeed());
-            viewModel.initDelay(data.InitDelay());
-            viewModel.randomize(data.Randomize());
-            viewModel.pauseOnAction(data.PauseOnAction());
-            viewModel.pauseOnHover(data.PauseOnHover());
-            viewModel.touch(data.Touch());
-            viewModel.video(data.Video());
-            viewModel.sync(data.Sync());
-            viewModel.asNavFor(data.AsNavFor());
-            viewModel.itemWidth(data.ItemWidth());
-            viewModel.itemMargin(data.ItemMargin());
-            viewModel.minItems(data.MinItems());
-            viewModel.maxItems(data.MaxItems());
-            viewModel.animation(data.Animation());
-            viewModel.animationSpeed(data.AnimationSpeed());
-            viewModel.direction(data.Direction());
-            viewModel.reverse(data.Reverse());
-            viewModel.move(data.Move());
-            viewModel.animationLoop(data.AnimationLoop());
-            viewModel.smoothHeight(data.SmoothHeight());
-            viewModel.easing(data.Easing());
-            viewModel.useCSS(data.UseCSS());
-            viewModel.controlNav(data.ControlNav());
-            viewModel.directionNav(data.DirectionNav());
-            viewModel.prevText(data.PrevText());
-            viewModel.nextText(data.NextText());
-            viewModel.pausePlay(data.PausePlay());
-            viewModel.pauseText(data.PauseText());
-            viewModel.playText(data.PlayText());
-            viewModel.controlsContainer(data.ControlsContainer());
-            viewModel.manualControls(data.ManualControls());
-            viewModel.keyboard(data.Keyboard());
-            viewModel.multipleKeyboard(data.MultipleKeyboard());
-            viewModel.mousewheel(data.Mousewheel());
-            viewModel.onStart(data.OnStart());
-            viewModel.onEnd(data.OnEnd());
-            viewModel.onBefore(data.OnBefore());
-            viewModel.onAfter(data.OnAfter());
-            viewModel.onAdded(data.OnAdded());
-            viewModel.onRemoved(data.OnRemoved());
-        }
-    };
-
-    function cleanUp() {
-        delete viewModel.mediaFolder;
-        delete viewModel.controlId;
-        delete viewModel.namespace;
-        delete viewModel.selector;
-        delete viewModel.startAt;
-        delete viewModel.slideshow;
-        delete viewModel.slideshowSpeed;
-        delete viewModel.initDelay;
-        delete viewModel.randomize;
-        delete viewModel.pauseOnAction;
-        delete viewModel.pauseOnHover;
-        delete viewModel.touch;
-        delete viewModel.video;
-        delete viewModel.sync;
-        delete viewModel.asNavFor;
-        delete viewModel.itemWidth;
-        delete viewModel.itemMargin;
-        delete viewModel.minItems;
-        delete viewModel.maxItems;
-        delete viewModel.animation;
-        delete viewModel.animationSpeed;
-        delete viewModel.direction;
-        delete viewModel.reverse;
-        delete viewModel.move;
-        delete viewModel.animationLoop;
-        delete viewModel.smoothHeight;
-        delete viewModel.easing;
-        delete viewModel.useCSS;
-        delete viewModel.controlNav;
-        delete viewModel.directionNav;
-        delete viewModel.prevText;
-        delete viewModel.nextText;
-        delete viewModel.pausePlay;
-        delete viewModel.pauseText;
-        delete viewModel.playText;
-        delete viewModel.controlsContainer;
-        delete viewModel.manualControls;
-        delete viewModel.keyboard;
-        delete viewModel.multipleKeyboard;
-        delete viewModel.mousewheel;
-        delete viewModel.onStart;
-        delete viewModel.onEnd;
-        delete viewModel.onBefore;
-        delete viewModel.onAfter;
-        delete viewModel.onAdded;
-        delete viewModel.onRemoved;
-    }
-
-    function onBeforeSave() {
-        var data = {
-            MediaFolder: viewModel.mediaFolder(),
-            ControlId: viewModel.controlId(),
-            Namespace: viewModel.namespace(),
-            Selector: viewModel.selector(),
-            StartAt: viewModel.startAt(),
-            Slideshow: viewModel.slideshow(),
-            SlideshowSpeed: viewModel.slideshowSpeed(),
-            InitDelay: viewModel.initDelay(),
-            Randomize: viewModel.randomize(),
-            PauseOnAction: viewModel.pauseOnAction(),
-            PauseOnHover: viewModel.pauseOnHover(),
-            Touch: viewModel.touch(),
-            Video: viewModel.video(),
-            Sync: viewModel.sync(),
-            AsNavFor: viewModel.asNavFor(),
-            ItemWidth: viewModel.itemWidth(),
-            ItemMargin: viewModel.itemMargin(),
-            MinItems: viewModel.minItems(),
-            MaxItems: viewModel.maxItems(),
-            Animation: viewModel.animation(),
-            AnimationSpeed: viewModel.animationSpeed(),
-            Direction: viewModel.direction(),
-            Reverse: viewModel.reverse(),
-            Move: viewModel.move(),
-            AnimationLoop: viewModel.animationLoop(),
-            SmoothHeight: viewModel.smoothHeight(),
-            Easing: viewModel.easing(),
-            UseCSS: viewModel.useCSS(),
-            ControlNav: viewModel.controlNav(),
-            DirectionNav: viewModel.directionNav(),
-            PrevText: viewModel.prevText(),
-            NextText: viewModel.nextText(),
-            PausePlay: viewModel.pausePlay(),
-            PauseText: viewModel.pauseText(),
-            PlayText: viewModel.playText(),
-            ControlsContainer: viewModel.controlsContainer(),
-            ManualControls: viewModel.manualControls(),
-            Keyboard: viewModel.keyboard(),
-            MultipleKeyboard: viewModel.multipleKeyboard(),
-            Mousewheel: viewModel.mousewheel(),
-            OnStart: viewModel.onStart(),
-            OnEnd: viewModel.onEnd(),
-            OnBefore: viewModel.onBefore(),
-            OnAfter: viewModel.onAfter(),
-            OnAdded: viewModel.onAdded(),
-            OnRemoved: viewModel.onRemoved()
         };
-
-        viewModel.widgetValues(ko.mapping.toJSON(data));
-    };
-
-    function isFunction(functionToCheck) {
-        var getType = {};
-        return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-    }
+        f.cleanUp = function () {
+            delete viewModel.mediaFolder;
+            delete viewModel.controlId;
+            delete viewModel.namespace;
+            delete viewModel.selector;
+            delete viewModel.startAt;
+            delete viewModel.slideshow;
+            delete viewModel.slideshowSpeed;
+            delete viewModel.initDelay;
+            delete viewModel.randomize;
+            delete viewModel.pauseOnAction;
+            delete viewModel.pauseOnHover;
+            delete viewModel.touch;
+            delete viewModel.video;
+            delete viewModel.sync;
+            delete viewModel.asNavFor;
+            delete viewModel.itemWidth;
+            delete viewModel.itemMargin;
+            delete viewModel.minItems;
+            delete viewModel.maxItems;
+            delete viewModel.animation;
+            delete viewModel.animationSpeed;
+            delete viewModel.direction;
+            delete viewModel.reverse;
+            delete viewModel.move;
+            delete viewModel.animationLoop;
+            delete viewModel.smoothHeight;
+            delete viewModel.easing;
+            delete viewModel.useCSS;
+            delete viewModel.controlNav;
+            delete viewModel.directionNav;
+            delete viewModel.prevText;
+            delete viewModel.nextText;
+            delete viewModel.pausePlay;
+            delete viewModel.pauseText;
+            delete viewModel.playText;
+            delete viewModel.controlsContainer;
+            delete viewModel.manualControls;
+            delete viewModel.keyboard;
+            delete viewModel.multipleKeyboard;
+            delete viewModel.mousewheel;
+            delete viewModel.onStart;
+            delete viewModel.onEnd;
+            delete viewModel.onBefore;
+            delete viewModel.onAfter;
+            delete viewModel.onAdded;
+            delete viewModel.onRemoved;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                MediaFolder: viewModel.mediaFolder(),
+                ControlId: viewModel.controlId(),
+                Namespace: viewModel.namespace(),
+                Selector: viewModel.selector(),
+                StartAt: viewModel.startAt(),
+                Slideshow: viewModel.slideshow(),
+                SlideshowSpeed: viewModel.slideshowSpeed(),
+                InitDelay: viewModel.initDelay(),
+                Randomize: viewModel.randomize(),
+                PauseOnAction: viewModel.pauseOnAction(),
+                PauseOnHover: viewModel.pauseOnHover(),
+                Touch: viewModel.touch(),
+                Video: viewModel.video(),
+                Sync: viewModel.sync(),
+                AsNavFor: viewModel.asNavFor(),
+                ItemWidth: viewModel.itemWidth(),
+                ItemMargin: viewModel.itemMargin(),
+                MinItems: viewModel.minItems(),
+                MaxItems: viewModel.maxItems(),
+                Animation: viewModel.animation(),
+                AnimationSpeed: viewModel.animationSpeed(),
+                Direction: viewModel.direction(),
+                Reverse: viewModel.reverse(),
+                Move: viewModel.move(),
+                AnimationLoop: viewModel.animationLoop(),
+                SmoothHeight: viewModel.smoothHeight(),
+                Easing: viewModel.easing(),
+                UseCSS: viewModel.useCSS(),
+                ControlNav: viewModel.controlNav(),
+                DirectionNav: viewModel.directionNav(),
+                PrevText: viewModel.prevText(),
+                NextText: viewModel.nextText(),
+                PausePlay: viewModel.pausePlay(),
+                PauseText: viewModel.pauseText(),
+                PlayText: viewModel.playText(),
+                ControlsContainer: viewModel.controlsContainer(),
+                ManualControls: viewModel.manualControls(),
+                Keyboard: viewModel.keyboard(),
+                MultipleKeyboard: viewModel.multipleKeyboard(),
+                Mousewheel: viewModel.mousewheel(),
+                OnStart: viewModel.onStart(),
+                OnEnd: viewModel.onEnd(),
+                OnBefore: viewModel.onBefore(),
+                OnAfter: viewModel.onAfter(),
+                OnAdded: viewModel.onAdded(),
+                OnRemoved: viewModel.onRemoved()
+            };
+            viewModel.widgetValues(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
 </script>

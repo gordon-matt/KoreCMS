@@ -397,19 +397,23 @@ namespace Kore.Plugins.Widgets.FlexSlider.Widgets
             {
                 sb.Append("useCSS: false,");
             }
-            if (ControlNav != ControlNavOption.True)
+
+            switch (ControlNav)
             {
-                sb.AppendFormat("controlNav: '{0}',", ControlNav.ToString().ToLowerInvariant());
+                case ControlNavOption.Thumbnails: sb.AppendFormat("controlNav: 'thumbnails',"); break;
+                case ControlNavOption.False: sb.AppendFormat("controlNav: false,"); break;
+                default: break;
             }
+
             if (!DirectionNav)
             {
                 sb.Append("directionNav: false,");
             }
-            if (!string.IsNullOrWhiteSpace(PrevText))
+            if (!string.IsNullOrWhiteSpace(PrevText) && PrevText != "Previous")
             {
                 sb.AppendFormat("prevText: '{0}',", PrevText);
             }
-            if (!string.IsNullOrWhiteSpace(NextText))
+            if (!string.IsNullOrWhiteSpace(NextText) && PrevText != "Next")
             {
                 sb.AppendFormat("nextText: '{0}',", NextText);
             }
@@ -417,11 +421,11 @@ namespace Kore.Plugins.Widgets.FlexSlider.Widgets
             {
                 sb.Append("pausePlay: true,");
             }
-            if (!string.IsNullOrWhiteSpace(PauseText))
+            if (!string.IsNullOrWhiteSpace(PauseText) && PrevText != "Pause")
             {
                 sb.AppendFormat("pauseText: '{0}',", PauseText);
             }
-            if (!string.IsNullOrWhiteSpace(PlayText))
+            if (!string.IsNullOrWhiteSpace(PlayText) && PrevText != "Play")
             {
                 sb.AppendFormat("playText: '{0}',", PlayText);
             }

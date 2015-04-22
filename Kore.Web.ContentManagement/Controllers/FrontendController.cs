@@ -45,6 +45,8 @@ namespace Kore.Web.ContentManagement.Controllers
                     parentId = page.ParentId;
                 }
 
+                breadcrumbs.Reverse();
+
                 breadcrumbs.Add(new Breadcrumb
                 {
                     Text = currentPage.Name

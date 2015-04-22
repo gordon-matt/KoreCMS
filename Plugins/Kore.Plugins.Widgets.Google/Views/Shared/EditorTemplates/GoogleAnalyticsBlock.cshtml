@@ -1,0 +1,56 @@
+﻿@using Kore.Web.ContentManagement
+
+@model Kore.Plugins.Widgets.Google.ContentBlocks.GoogleAnalyticsBlock
+
+<div id="block-content">
+    <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.AccountNumber, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.AccountNumber, new { @class = "form-control", data_bind = "value: accountNumber" })
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.DomainName, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.DomainName, new { @class = "form-control", data_bind = "value: domainName" })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var contentBlockModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.accountNumber = ko.observable(0);
+            viewModel.domainName = ko.observable(0);
+
+            var data = ko.mapping.fromJSON(viewModel.blockValues());
+
+            if ((isFunction(data) && data()) || data) {
+                if (data.accountNumber == undefined) {
+                    // If this is not set, it means the contentBlock is new and we have nothing in blockValues
+                    return;
+                }
+                if (data.AccountNumber) {
+                    viewModel.accountNumber(data.AccountNumber());
+                }
+                if (data.DomainName) {
+                    viewModel.domainName(data.DomainName());
+                }
+            }
+        };
+        f.cleanUp = function () {
+            delete viewModel.accountNumber;
+            delete viewModel.domainName;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                AccountNumber: viewModel.accountNumber(),
+                DomainName: viewModel.domainName()
+            };
+
+            viewModel.blockValues(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
+</script>

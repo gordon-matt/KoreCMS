@@ -55,7 +55,7 @@
                     <a onclick="viewModel.delete()" class="btn btn-danger">@T(KoreWebLocalizableStrings.General.Delete).Text</a>
                     <a data-bind="attr: { href: '/admin/pages/' + id() + '/history' }" class="btn btn-warning">@T(KoreCmsLocalizableStrings.Pages.History).Text</a>
                     <a data-bind="click: translate" class="btn btn-primary">@T(KoreCmsLocalizableStrings.Pages.Translations).Text</a>
-                    <a data-bind="attr: { href: '/admin/widgets/' + id() }" class="btn btn-info">@T(KoreCmsLocalizableStrings.Widgets.Title).Text</a>
+                    <a data-bind="attr: { href: '/admin/contentBlocks/' + id() }" class="btn btn-info">@T(KoreCmsLocalizableStrings.ContentBlocks.Title).Text</a>
                     <a data-bind="click: toggleEnabled" class="btn btn-default">@T(KoreWebLocalizableStrings.General.Toggle).Text</a>
                 </div>
             </div>
@@ -241,7 +241,7 @@
             UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text',
             UpdateTranslationError: '@T(KoreCmsLocalizableStrings.Messages.UpdateTranslationError).Text',
             UpdateTranslationSuccess: '@T(KoreCmsLocalizableStrings.Messages.UpdateTranslationSuccess).Text',
-            Widgets: '@T(KoreCmsLocalizableStrings.Widgets.Title).Text'
+            ContentBlocks: '@T(KoreCmsLocalizableStrings.ContentBlocks.Title).Text'
         }
     </script>
     <script id="treeview-template" type="text/kendo-ui-template">

@@ -64,10 +64,10 @@ namespace Kore.Web.ContentManagement.Infrastructure
                         { KoreCmsLocalizableStrings.Pages.Tags, "Tags" },
                         { KoreCmsLocalizableStrings.Pages.Title, "Pages" },
                         { KoreCmsLocalizableStrings.Pages.Translations, "Translations" },
-                        { KoreCmsLocalizableStrings.Widgets.ManageWidgets, "Manage Widgets" },
-                        { KoreCmsLocalizableStrings.Widgets.ManageZones, "Manage Zones" },
-                        { KoreCmsLocalizableStrings.Widgets.Title, "Widgets" },
-                        { KoreCmsLocalizableStrings.Widgets.Zones, "Zones" },
+                        { KoreCmsLocalizableStrings.ContentBlocks.ManageContentBlocks, "Manage Content Blocks" },
+                        { KoreCmsLocalizableStrings.ContentBlocks.ManageZones, "Manage Zones" },
+                        { KoreCmsLocalizableStrings.ContentBlocks.Title, "Content Blocks" },
+                        { KoreCmsLocalizableStrings.ContentBlocks.Zones, "Zones" },
                     }
                 }
             };

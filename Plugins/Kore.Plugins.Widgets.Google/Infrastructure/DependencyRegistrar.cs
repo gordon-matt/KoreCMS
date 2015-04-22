@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using Kore.Infrastructure;
 using Kore.Localization;
-using Kore.Plugins.Widgets.Google.Widgets;
-using Kore.Web.ContentManagement.Areas.Admin.Widgets;
+using Kore.Plugins.Widgets.Google.ContentBlocks;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Navigation;
@@ -22,9 +22,9 @@ namespace Kore.Plugins.Widgets.Google.Infrastructure
             }
 
             builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
-            builder.RegisterType<GoogleAnalyticsWidget>().As<IWidget>().InstancePerDependency();
-            builder.RegisterType<GoogleAdSenseWidget>().As<IWidget>().InstancePerDependency();
-            builder.RegisterType<GoogleMapWidget>().As<IWidget>().InstancePerDependency();
+            builder.RegisterType<GoogleAnalyticsBlock>().As<IContentBlock>().InstancePerDependency();
+            builder.RegisterType<GoogleAdSenseBlock>().As<IContentBlock>().InstancePerDependency();
+            builder.RegisterType<GoogleMapBlock>().As<IContentBlock>().InstancePerDependency();
 
             builder.RegisterType<LocationFormatProvider>().As<ILocationFormatProvider>().SingleInstance();
             builder.RegisterType<NavigationProvider>().As<INavigationProvider>().SingleInstance();

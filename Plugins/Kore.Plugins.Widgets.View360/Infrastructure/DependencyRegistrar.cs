@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Kore.Infrastructure;
 using Kore.Localization;
-using Kore.Web.ContentManagement.Areas.Admin.Widgets;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Widgets.View360.Infrastructure
@@ -18,7 +18,7 @@ namespace Kore.Plugins.Widgets.View360.Infrastructure
             }
 
             builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
-            builder.RegisterType<View360Widget>().As<IWidget>().InstancePerDependency();
+            builder.RegisterType<View360Block>().As<IContentBlock>().InstancePerDependency();
         }
 
         public int Order

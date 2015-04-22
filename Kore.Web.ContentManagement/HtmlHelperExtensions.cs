@@ -9,8 +9,8 @@ using Kore.Infrastructure;
 using Kore.Web.Collections;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
-using Kore.Web.ContentManagement.Areas.Admin.Widgets;
-using Kore.Web.ContentManagement.Areas.Admin.Widgets.Services;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 
 namespace Kore.Web.ContentManagement
 {
@@ -66,9 +66,9 @@ namespace Kore.Web.ContentManagement
             });
         }
 
-        public static MvcHtmlString WidgetZone(this HtmlHelper html, string zoneName)
+        public static MvcHtmlString ContentZone(this HtmlHelper html, string zoneName)
         {
-            return html.Action("WidgetsByZone", "Frontend", new { area = "", zoneName = zoneName });
+            return html.Action("ContentBlocksByZone", "Frontend", new { area = "", zoneName = zoneName });
         }
     }
 
@@ -112,18 +112,18 @@ namespace Kore.Web.ContentManagement
             return html.DropDownListFor(expression, selectList, htmlAttributes);
         }
 
-        public MvcHtmlString WidgetTypesDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
+        public MvcHtmlString ContentBlockTypesDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
         {
-            var selectList = GetWidgetTypesSelectList(selectedValue, emptyText);
+            var selectList = GetContentBlockTypesSelectList(selectedValue, emptyText);
             return html.DropDownList(name, selectList, htmlAttributes);
         }
 
-        public MvcHtmlString WidgetTypesDropDownListFor(Expression<Func<TModel, string>> expression, object htmlAttributes = null, string emptyText = null)
+        public MvcHtmlString ContentBlockTypesDropDownListFor(Expression<Func<TModel, string>> expression, object htmlAttributes = null, string emptyText = null)
         {
             var func = expression.Compile();
             var selectedValue = func(html.ViewData.Model);
 
-            var selectList = GetWidgetTypesSelectList(selectedValue, emptyText);
+            var selectList = GetContentBlockTypesSelectList(selectedValue, emptyText);
             return html.DropDownListFor(expression, selectList, htmlAttributes);
         }
 
@@ -195,11 +195,11 @@ namespace Kore.Web.ContentManagement
             return string.Concat(type.FullName, ", ", type.Assembly.GetName().Name);
         }
 
-        private static IEnumerable<SelectListItem> GetWidgetTypesSelectList(string selectedValue = null, string emptyText = null)
+        private static IEnumerable<SelectListItem> GetContentBlockTypesSelectList(string selectedValue = null, string emptyText = null)
         {
-            var widgets = EngineContext.Current.ResolveAll<IWidget>();
+            var contentBlocks = EngineContext.Current.ResolveAll<IContentBlock>();
 
-            var widgetTypes = widgets
+            var blockTypes = contentBlocks
                 .Select(x => new
                 {
                     x.Name,
@@ -208,7 +208,7 @@ namespace Kore.Web.ContentManagement
                 .OrderBy(x => x.Name)
                 .ToDictionary(k => k.Name, v => v.Type);
 
-            return widgetTypes.ToSelectList(
+            return blockTypes.ToSelectList(
                 value => value.Value,
                 text => text.Key,
                 selectedValue,

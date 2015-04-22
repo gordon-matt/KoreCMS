@@ -11,7 +11,7 @@
             public const string Messaging = "Admin/Messaging";
             public const string Menus = "Admin/Menus";
             public const string Pages = "Admin/Pages";
-            public const string Widgets = "Admin/Widgets";
+            public const string ContentBlocks = "Admin/ContentBlocks";
         }
     }
 }

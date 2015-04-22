@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.IContentBlock>
+
+@{
+    Layout = null;
+}
+
+@foreach (var contentBlock in Model.OrderBy(x => x.Order))
+{
+    @Html.Partial(contentBlock.DisplayTemplatePath, contentBlock)
+}

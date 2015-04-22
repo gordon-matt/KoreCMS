@@ -121,7 +121,7 @@
     <Compile Include="Services\LuceneSearchBuilder.cs" />
     <Compile Include="Services\SearchBits.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchWidget.cs" />
+    <Compile Include="LuceneSearchBlock.cs" />
     <Compile Include="LuceneIndexingPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -144,7 +144,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <EmbeddedResource Include="Views\Shared\DisplayTemplates\SearchWidget.cshtml" />
+    <EmbeddedResource Include="Views\Shared\DisplayTemplates\LuceneSearchBlock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Description.txt">

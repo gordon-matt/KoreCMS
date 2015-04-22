@@ -1,14 +1,16 @@
 ﻿using System.Data.Entity;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
-using Kore.Web.ContentManagement.Areas.Admin.Widgets.Domain;
 using Kore.Web.ContentManagement.Messaging.Domain;
 
 namespace Kore.Web.ContentManagement
 {
     public interface IKoreCmsDbContext
     {
+        DbSet<ContentBlock> ContentBlocks { get; set; }
+
         DbSet<HistoricPage> HistoricPages { get; set; }
 
         DbSet<MediaPart> MediaParts { get; set; }
@@ -26,8 +28,6 @@ namespace Kore.Web.ContentManagement
         DbSet<QueuedEmail> QueuedEmails { get; set; }
 
         DbSet<QueuedSms> QueuedSms { get; set; }
-
-        DbSet<Widget> Widgets { get; set; }
 
         DbSet<Zone> Zones { get; set; }
     }

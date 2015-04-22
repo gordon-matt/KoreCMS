@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using Kore.Infrastructure;
 using Kore.Localization;
-using Kore.Plugins.Widgets.Bootstrap3.Widgets;
-using Kore.Web.ContentManagement.Areas.Admin.Widgets;
+using Kore.Plugins.Widgets.Bootstrap3.ContentBlocks;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Widgets.Bootstrap3.Infrastructure
@@ -19,8 +19,8 @@ namespace Kore.Plugins.Widgets.Bootstrap3.Infrastructure
             }
 
             builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
-            builder.RegisterType<Bootstrap3CarouselWidget>().As<IWidget>().InstancePerDependency();
-            builder.RegisterType<Bootstrap3ImageGalleryWidget>().As<IWidget>().InstancePerDependency();
+            builder.RegisterType<Bootstrap3CarouselBlock>().As<IContentBlock>().InstancePerDependency();
+            builder.RegisterType<Bootstrap3ImageGalleryBlock>().As<IContentBlock>().InstancePerDependency();
         }
 
         public int Order

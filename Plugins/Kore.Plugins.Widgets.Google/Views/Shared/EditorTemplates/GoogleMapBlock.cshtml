@@ -1,0 +1,80 @@
+﻿@using Kore.Web.ContentManagement
+
+@model Kore.Plugins.Widgets.Google.ContentBlocks.GoogleMapBlock
+
+<div id="block-content">
+    <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Latitude, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Latitude, new { @class = "form-control", data_bind = "value: latitude" })
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Longitude, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Longitude, new { @class = "form-control", data_bind = "value: longitude" })
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Zoom, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Zoom, new { @class = "form-control", data_bind = "value: zoom" })
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Height, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Height, new { @class = "form-control", data_bind = "value: height" })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var contentBlockModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.latitude = ko.observable(0);
+            viewModel.longitude = ko.observable(0);
+            viewModel.zoom = ko.observable(0);
+            viewModel.height = ko.observable(0);
+
+            var data = ko.mapping.fromJSON(viewModel.blockValues());
+
+            if ((isFunction(data) && data()) || data) {
+                if (data.Latitude == undefined) {
+                    // If this is not set, it means the contentBlock is new and we have nothing in blockValues
+                    return;
+                }
+                if (data.Latitude) {
+                    viewModel.latitude(data.Latitude());
+                }
+                if (data.Longitude) {
+                    viewModel.longitude(data.Longitude());
+                }
+                if (data.Zoom) {
+                    viewModel.zoom(data.Zoom());
+                }
+                if (data.Height) {
+                    viewModel.height(data.Height());
+                }
+            }
+        };
+        f.cleanUp = function () {
+            delete viewModel.latitude;
+            delete viewModel.longitude;
+            delete viewModel.zoom;
+            delete viewModel.height;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                Latitude: viewModel.latitude(),
+                Longitude: viewModel.longitude(),
+                Zoom: viewModel.zoom(),
+                Height: viewModel.height()
+            };
+
+            viewModel.blockValues(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
+</script>

@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using Kore.Infrastructure;
 using Kore.Localization;
-using Kore.Plugins.Widgets.FlexSlider.Widgets;
-using Kore.Web.ContentManagement.Areas.Admin.Widgets;
+using Kore.Plugins.Widgets.FlexSlider.ContentBlocks;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Navigation;
@@ -22,7 +22,7 @@ namespace Kore.Plugins.Widgets.FlexSlider.Infrastructure
             }
 
             builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
-            builder.RegisterType<FlexSliderWidget>().As<IWidget>().InstancePerDependency();
+            builder.RegisterType<FlexSliderBlock>().As<IContentBlock>().InstancePerDependency();
 
             builder.RegisterType<LocationFormatProvider>().As<ILocationFormatProvider>().SingleInstance();
         }

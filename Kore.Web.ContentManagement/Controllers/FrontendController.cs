@@ -7,7 +7,7 @@ using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
-using Kore.Web.ContentManagement.Areas.Admin.Widgets;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.Mvc;
 using Kore.Web.Navigation;
 using MenuItem = Kore.Web.ContentManagement.Areas.Admin.Menus.Domain.MenuItem;
@@ -172,12 +172,12 @@ namespace Kore.Web.ContentManagement.Controllers
         }
 
         [ChildActionOnly]
-        [Route("widgets-by-zone")]
-        public ActionResult WidgetsByZone(string zoneName)
+        [Route("content-blocks-by-zone")]
+        public ActionResult ContentBlocksByZone(string zoneName)
         {
-            var widgetProviders = EngineContext.Current.ResolveAll<IWidgetProvider>();
-            var widgets = widgetProviders.SelectMany(x => x.GetWidgets(zoneName, WorkContext.CurrentCultureCode)).ToList();
-            return View("Kore.Web.ContentManagement.Views.Frontend.WidgetsByZone", widgets);
+            var contentBlockProviders = EngineContext.Current.ResolveAll<IContentBlockProvider>();
+            var contentBlocks = contentBlockProviders.SelectMany(x => x.GetContentBlocks(zoneName, WorkContext.CurrentCultureCode)).ToList();
+            return View("Kore.Web.ContentManagement.Views.Frontend.ContentBlocksByZone", contentBlocks);
         }
     }
 }

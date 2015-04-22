@@ -252,7 +252,6 @@
     <Compile Include="Messaging\AccountMessageTemplateTokensProvider.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Pages\TestPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IdentityMembershipService.cs" />
     <Compile Include="Services\MembershipService.cs" />
@@ -1665,8 +1664,6 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\Shared\DisplayTemplates\Pages\TestPage.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Pages\TestPage.cshtml" />
     <Content Include="Views\Error\Error404.cshtml" />
     <Content Include="Views\Shared\Breadcrumbs.cshtml" />
     <Content Include="Views\Shared\LeftMenu.cshtml" />
@@ -1675,9 +1672,12 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Media\Default\" />
+    <Folder Include="Models\Pages\" />
     <Folder Include="Themes\Default\Content\" />
     <Folder Include="Themes\Default\Views\Home\" />
     <Folder Include="Themes\Default\Views\Plugins\Kore.Web.ContentManagement\Shared\EditorTemplates\" />
+    <Folder Include="Views\Shared\DisplayTemplates\Pages\" />
+    <Folder Include="Views\Shared\EditorTemplates\Pages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

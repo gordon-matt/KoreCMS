@@ -87,15 +87,15 @@
     <Compile Include="LocalizableStrings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View360Plugin.cs" />
-    <Compile Include="View360Widget.cs" />
+    <Compile Include="View360Block.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Views\Shared\DisplayTemplates\View360Widget.cshtml">
+    <None Include="Views\Shared\DisplayTemplates\View360Block.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\Shared\EditorTemplates\View360Widget.cshtml">
+    <None Include="Views\Shared\EditorTemplates\View360Block.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Views\web.config">

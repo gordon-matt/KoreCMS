@@ -46,9 +46,9 @@ namespace Kore.Web.ContentManagement.Infrastructure
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/queued-emails")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Messaging.Scripts.queuedEmails.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/widgets")
+            bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/content-blocks")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Scripts.kore-cms-common.js")
-                .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Widgets.Scripts.index.js"));
+                .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripts.index.js"));
         }
 
         #endregion IResourceBundleRegistrar Members

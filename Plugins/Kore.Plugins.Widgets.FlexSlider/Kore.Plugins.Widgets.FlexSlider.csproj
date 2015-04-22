@@ -100,11 +100,11 @@
     <Compile Include="LocalizableStrings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FlexSliderPlugin.cs" />
-    <Compile Include="Widgets\AnimationType.cs" />
-    <Compile Include="Widgets\ControlNavOption.cs" />
-    <Compile Include="Widgets\EasingMethod.cs" />
-    <Compile Include="Widgets\FlexSliderWidget.cs" />
-    <Compile Include="Widgets\SlideDirection.cs" />
+    <Compile Include="ContentBlocks\AnimationType.cs" />
+    <Compile Include="ContentBlocks\ControlNavOption.cs" />
+    <Compile Include="ContentBlocks\EasingMethod.cs" />
+    <Compile Include="ContentBlocks\FlexSliderBlock.cs" />
+    <Compile Include="ContentBlocks\SlideDirection.cs" />
     <Content Include="Content\FlexSlider\flexslider.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -130,10 +130,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="Views\Shared\DisplayTemplates\FlexSliderWidget.cshtml">
+    <None Include="Views\Shared\DisplayTemplates\FlexSliderBlock.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\Shared\EditorTemplates\FlexSliderWidget.cshtml">
+    <None Include="Views\Shared\EditorTemplates\FlexSliderBlock.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Views\web.config">

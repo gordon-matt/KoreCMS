@@ -12,10 +12,10 @@ using Kore.Web.ContentManagement.Areas.Admin.Menus;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
-using Kore.Web.ContentManagement.Areas.Admin.Widgets;
-using Kore.Web.ContentManagement.Areas.Admin.Widgets.RuleEngine;
-using Kore.Web.ContentManagement.Areas.Admin.Widgets.Scripting;
-using Kore.Web.ContentManagement.Areas.Admin.Widgets.Services;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.RuleEngine;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.ContentManagement.FileSystems.Media;
 using Kore.Web.ContentManagement.Messaging;
 using Kore.Web.ContentManagement.Messaging.Services;
@@ -64,8 +64,8 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.RegisterType<PageTypeService>().As<IPageTypeService>().InstancePerDependency();
             builder.RegisterType<HistoricPageService>().As<IHistoricPageService>().InstancePerDependency();
 
-            // Widgets
-            builder.RegisterType<WidgetService>().As<IWidgetService>().InstancePerDependency();
+            // Content Blocks
+            builder.RegisterType<ContentBlockService>().As<IContentBlockService>().InstancePerDependency();
             builder.RegisterType<ZoneService>().As<IZoneService>().InstancePerDependency();
 
             #endregion Services
@@ -85,7 +85,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.RegisterType<MenusNavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<MessagingNavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<PagesNavigationProvider>().As<INavigationProvider>().SingleInstance();
-            builder.RegisterType<WidgetNavigationProvider>().As<INavigationProvider>().SingleInstance();
+            builder.RegisterType<ContentBlockNavigationProvider>().As<INavigationProvider>().SingleInstance();
 
             #endregion Navigation
 
@@ -94,7 +94,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.RegisterType<MediaPermissions>().As<IPermissionProvider>().SingleInstance();
             builder.RegisterType<MenusPermissions>().As<IPermissionProvider>().SingleInstance();
             builder.RegisterType<PagesPermissions>().As<IPermissionProvider>().SingleInstance();
-            builder.RegisterType<WidgetPermissions>().As<IPermissionProvider>().SingleInstance();
+            builder.RegisterType<ContentBlockPermissions>().As<IPermissionProvider>().SingleInstance();
 
             #endregion Security
 
@@ -110,18 +110,18 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             #endregion Configuration
 
-            #region Widgets
+            #region ContentBlocks
 
-            builder.RegisterType<FormWidget>().As<IWidget>().InstancePerDependency();
-            builder.RegisterType<HtmlWidget>().As<IWidget>().InstancePerDependency();
-            builder.RegisterType<LanguageSwitchWidget>().As<IWidget>().InstancePerDependency();
+            builder.RegisterType<FormBlock>().As<IContentBlock>().InstancePerDependency();
+            builder.RegisterType<HtmlBlock>().As<IContentBlock>().InstancePerDependency();
+            builder.RegisterType<LanguageSwitchBlock>().As<IContentBlock>().InstancePerDependency();
 
             // TODO: These should probably be moved to another assembly (add-ons)
-            //builder.RegisterType<NivoSliderWidget>().As<IWidget>().InstancePerDependency();
-            //builder.RegisterType<PhotoGalleryWidget>().As<IWidget>().InstancePerDependency();
-            //builder.RegisterType<SupersizedWidget>().As<IWidget>().InstancePerDependency();
+            //builder.RegisterType<NivoSliderBlock>().As<IContentBlock>().InstancePerDependency();
+            //builder.RegisterType<PhotoGalleryBlock>().As<IContentBlock>().InstancePerDependency();
+            //builder.RegisterType<SupersizedBlock>().As<IContentBlock>().InstancePerDependency();
 
-            #endregion Widgets
+            #endregion ContentBlocks
 
             #region Other: Media
 
@@ -135,18 +135,18 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             #endregion Other: Media
 
-            #region Other: Widgets
+            #region Other: ContentBlocks
 
             builder.RegisterType<BuiltinRuleProvider>().As<IRuleProvider>().InstancePerDependency();
             builder.RegisterType<DisabledRuleProvider>().As<IRuleProvider>().InstancePerDependency();
             builder.RegisterType<UrlRuleProvider>().As<IRuleProvider>().InstancePerDependency();
 
-            builder.RegisterType<DefaultWidgetProvider>().As<IWidgetProvider>().InstancePerDependency();
+            builder.RegisterType<DefaultContentBlockProvider>().As<IContentBlockProvider>().InstancePerDependency();
 
             builder.RegisterType<RuleManager>().As<IRuleManager>().InstancePerDependency();
             builder.RegisterType<ScriptExpressionEvaluator>().As<IScriptExpressionEvaluator>().InstancePerDependency();
 
-            #endregion Other: Widgets
+            #endregion Other: ContentBlocks
 
             #region Other: Messaging
 

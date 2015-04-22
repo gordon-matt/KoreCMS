@@ -9,7 +9,7 @@ using Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
-using Kore.Web.ContentManagement.Areas.Admin.Widgets.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 using Kore.Web.ContentManagement.Messaging.Domain;
 using Kore.Web.Infrastructure;
 
@@ -34,7 +34,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.EntitySet<KoreRole>("Roles");
             builder.EntitySet<KoreUser>("Users");
             builder.EntitySet<QueuedEmail>("QueuedEmails");
-            builder.EntitySet<Widget>("Widgets");
+            builder.EntitySet<ContentBlock>("ContentBlocks");
             builder.EntitySet<Zone>("Zones");
 
             // Special
@@ -47,7 +47,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             RegisterMembershipODataActions(builder);
             RegisterMessageTemplateODataActions(builder);
             RegisterPageODataActions(builder);
-            RegisterWidgetODataActions(builder);
+            RegisterContentBlockODataActions(builder);
 
             config.Routes.MapODataRoute("OData_Kore_CMS", "odata/kore/cms", builder.GetEdmModel());
         }
@@ -123,11 +123,11 @@ namespace Kore.Web.ContentManagement.Infrastructure
             translateAction.Returns<EdmPage>();
         }
 
-        private static void RegisterWidgetODataActions(ODataModelBuilder builder)
+        private static void RegisterContentBlockODataActions(ODataModelBuilder builder)
         {
-            var getByPageIdAction = builder.Entity<Widget>().Collection.Action("GetByPageId");
+            var getByPageIdAction = builder.Entity<ContentBlock>().Collection.Action("GetByPageId");
             getByPageIdAction.Parameter<Guid>("pageId");
-            getByPageIdAction.ReturnsCollectionFromEntitySet<Widget>("Widgets");
+            getByPageIdAction.ReturnsCollectionFromEntitySet<ContentBlock>("ContentBlocks");
         }
     }
 }

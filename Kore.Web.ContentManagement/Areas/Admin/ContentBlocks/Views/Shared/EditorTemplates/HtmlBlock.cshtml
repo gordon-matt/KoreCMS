@@ -1,0 +1,38 @@
+﻿@model Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.HtmlBlock
+
+
+<div id="block-content" class="col-sm-12 col-md-12">
+    <div class="form-group">
+        @Html.Label("BodyContent", "Body Content", new { @class = "control-label" })
+        @Html.TextArea("BodyContent", null, new { @class = "form-control", data_bind = "wysiwyg: bodyContent, wysiwygConfig: tinyMCEConfig" })
+    </div>
+</div>
+
+<script type="text/javascript">
+    var contentBlockModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.bodyContent = ko.observable("");
+
+            var data = ko.mapping.fromJSON(viewModel.blockValues());
+
+            if (data && data.BodyContent) {
+                viewModel.bodyContent(data.BodyContent());
+            }
+
+            viewModel.tinyMCEConfig = koreDefaultTinyMCEConfig;
+        };
+        f.cleanUp = function () {
+            delete viewModel.bodyContent;
+            delete viewModel.tinyMCEConfig;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                BodyContent: viewModel.bodyContent()
+            };
+
+            viewModel.blockValues(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
+</script>

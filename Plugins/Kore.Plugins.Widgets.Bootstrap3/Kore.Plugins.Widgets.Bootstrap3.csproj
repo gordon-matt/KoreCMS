@@ -87,22 +87,22 @@
     <Compile Include="LocalizableStrings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Bootstrap3Plugin.cs" />
-    <Compile Include="Widgets\Bootstrap3CarouselWidget.cs" />
-    <Compile Include="Widgets\Bootstrap3ImageGalleryWidget.cs" />
+    <Compile Include="ContentBlocks\Bootstrap3CarouselBlock.cs" />
+    <Compile Include="ContentBlocks\Bootstrap3ImageGalleryBlock.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Views\Shared\DisplayTemplates\CarouselWidget.cshtml">
+    <None Include="Views\Shared\DisplayTemplates\CarouselBlock.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\Shared\DisplayTemplates\ImageGalleryWidget.cshtml">
+    <None Include="Views\Shared\DisplayTemplates\ImageGalleryBlock.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\Shared\EditorTemplates\CarouselWidget.cshtml">
+    <None Include="Views\Shared\EditorTemplates\CarouselBlock.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\Shared\EditorTemplates\ImageGalleryWidget.cshtml">
+    <None Include="Views\Shared\EditorTemplates\ImageGalleryBlock.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Views\web.config">

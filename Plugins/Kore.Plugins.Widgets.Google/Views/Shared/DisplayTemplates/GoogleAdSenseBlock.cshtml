@@ -1,0 +1,39 @@
+﻿@model Kore.Plugins.Widgets.Google.ContentBlocks.GoogleAdSenseBlock
+
+@{
+    bool hasCssClass = !string.IsNullOrEmpty(Model.CssClass);
+}
+
+@if (hasCssClass)
+{
+    @Html.Raw(@"<div class=""@Model.CssClass"">")
+}
+
+@if (Model.EnableLazyLoadAd)
+{
+    <div class="lazyload_ad" original="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+        <code type="text/javascript">
+            <!--
+                google_ad_client = "@Model.AdClient";
+                google_ad_slot = "@Model.AdSlot";
+                google_ad_width = @Model.Width;
+                google_ad_height = @Model.Height;
+            -->
+        </code>
+    </div>
+}
+else
+{
+    <script type="text/javascript">
+        google_ad_client = "@Model.AdClient";
+        google_ad_slot = "@Model.AdSlot";
+        google_ad_width = @Model.Width;
+        google_ad_height = @Model.Height;
+    </script>
+    <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+}
+
+@if (hasCssClass)
+{
+    @Html.Raw("</div>")
+}

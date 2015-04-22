@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
-using Kore.Web.ContentManagement.Areas.Admin.Widgets;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.Indexing;
 using Newtonsoft.Json.Linq;
 

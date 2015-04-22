@@ -86,12 +86,12 @@
             public const string Translations = "Kore.Web.ContentManagement/Pages.Translations";
         }
 
-        public static class Widgets
+        public static class ContentBlocks
         {
-            public const string ManageWidgets = "Kore.Web.ContentManagement/Widgets.ManageWidgets";
-            public const string ManageZones = "Kore.Web.ContentManagement/Widgets.ManageZones";
-            public const string Title = "Kore.Web.ContentManagement/Widgets.Title";
-            public const string Zones = "Kore.Web.ContentManagement/Widgets.Zones";
+            public const string ManageContentBlocks = "Kore.Web.ContentManagement/ContentBlocks.ManageContentBlocks";
+            public const string ManageZones = "Kore.Web.ContentManagement/ContentBlocks.ManageZones";
+            public const string Title = "Kore.Web.ContentManagement/ContentBlocks.Title";
+            public const string Zones = "Kore.Web.ContentManagement/ContentBlocks.Zones";
         }
     }
 }

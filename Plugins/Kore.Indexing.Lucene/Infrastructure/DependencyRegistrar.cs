@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Kore.Indexing.Lucene.Services;
 using Kore.Infrastructure;
-using Kore.Web.ContentManagement.Areas.Admin.Widgets;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.Indexing;
 using Kore.Web.Navigation;
 using Kore.Web.Plugins;
@@ -21,7 +21,7 @@ namespace Kore.Indexing.Lucene.Infrastructure
 
             builder.RegisterType<LuceneIndexProvider>().As<IIndexProvider>().InstancePerDependency();
             builder.RegisterType<LuceneSearchBuilder>().As<ISearchBuilder>().InstancePerDependency();
-            builder.RegisterType<SearchWidget>().As<IWidget>().InstancePerDependency();
+            builder.RegisterType<LuceneSearchBlock>().As<IContentBlock>().InstancePerDependency();
         }
 
         public int Order

@@ -140,9 +140,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GooglePlugin.cs" />
     <Compile Include="Services\IGoogleSitemapPageConfigService.cs" />
-    <Compile Include="Widgets\GoogleAdSenseWidget.cs" />
-    <Compile Include="Widgets\GoogleAnalyticsWidget.cs" />
-    <Compile Include="Widgets\GoogleMapWidget.cs" />
+    <Compile Include="ContentBlocks\GoogleAdSenseBlock.cs" />
+    <Compile Include="ContentBlocks\GoogleAnalyticsBlock.cs" />
+    <Compile Include="ContentBlocks\GoogleMapBlock.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -150,22 +150,22 @@
     <None Include="Views\GoogleXmlSitemap\Index.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\Shared\DisplayTemplates\GoogleAdSenseWidget.cshtml">
+    <None Include="Views\Shared\DisplayTemplates\GoogleAdSenseBlock.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\Shared\DisplayTemplates\GoogleAnalyticsWidget.cshtml">
+    <None Include="Views\Shared\DisplayTemplates\GoogleAnalyticsBlock.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\Shared\DisplayTemplates\GoogleMapWidget.cshtml">
+    <None Include="Views\Shared\DisplayTemplates\GoogleMapBlock.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\Shared\EditorTemplates\GoogleAdSenseWidget.cshtml">
+    <None Include="Views\Shared\EditorTemplates\GoogleAdSenseBlock.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\Shared\EditorTemplates\GoogleAnalyticsWidget.cshtml">
+    <None Include="Views\Shared\EditorTemplates\GoogleAnalyticsBlock.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\Shared\EditorTemplates\GoogleMapWidget.cshtml">
+    <None Include="Views\Shared\EditorTemplates\GoogleMapBlock.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Views\web.config">

@@ -43,6 +43,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             // Action Configurations
             RegisterHistoricPageODataActions(builder);
+            RegisterLanguageODataActions(builder);
             RegisterLocalizableStringODataActions(builder);
             RegisterMembershipODataActions(builder);
             RegisterMessageTemplateODataActions(builder);
@@ -58,6 +59,12 @@ namespace Kore.Web.ContentManagement.Infrastructure
         {
             var restoreVersionAction = builder.Entity<HistoricPage>().Action("RestoreVersion");
             restoreVersionAction.Returns<IHttpActionResult>();
+        }
+
+        private static void RegisterLanguageODataActions(ODataModelBuilder builder)
+        {
+            var resetLocalizableStringsAction = builder.Entity<Language>().Collection.Action("ResetLocalizableStrings");
+            resetLocalizableStringsAction.Returns<IHttpActionResult>();
         }
 
         private static void RegisterLocalizableStringODataActions(ODataModelBuilder builder)

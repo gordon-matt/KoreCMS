@@ -33,6 +33,9 @@
 
         public static class Messages
         {
+            public const string ResetLocalizableStringsError = "Kore.Web/Messages.ResetLocalizableStringsError";
+            public const string ResetLocalizableStringsSuccess = "Kore.Web/Messages.ResetLocalizableStringsSuccess";
+
             #region General
 
             public const string ConfirmDeleteRecord = "Kore.Web/Messages.ConfirmDeleteRecord";

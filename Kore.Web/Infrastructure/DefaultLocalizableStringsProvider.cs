@@ -42,6 +42,8 @@ namespace Kore.Web.Infrastructure
                         { KoreWebLocalizableStrings.General.View, "View" },
                         { KoreWebLocalizableStrings.General.ViewFormat, "View {0}" },
                         { KoreWebLocalizableStrings.Messages.ConfirmDeleteRecord, "Are you sure that you want to delete this record?" },
+                        { KoreWebLocalizableStrings.Messages.ResetLocalizableStringsError, "There was an error when resetting the localized strings." },
+                        { KoreWebLocalizableStrings.Messages.ResetLocalizableStringsSuccess, "Successfully reset the localized strings." },
                         { KoreWebLocalizableStrings.Messages.DeleteRecordError, "There was an error when deleting the record." },
                         { KoreWebLocalizableStrings.Messages.DeleteRecordErrorFormat, "There was an error when deleting the record. Additional information as follows: {0}" },
                         { KoreWebLocalizableStrings.Messages.DeleteRecordSuccess, "Successfully deleted record." },

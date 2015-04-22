@@ -149,7 +149,17 @@ var ViewModel = function () {
     };
 
     self.clear = function () {
-        //TODO
+        $.ajax({
+            url: "/odata/kore/cms/Languages/ResetLocalizableStrings",
+            type: "POST"
+        })
+        .done(function (json) {
+            $.notify(translations.ResetLocalizableStringsSuccess, "success");
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            $.notify(translations.ResetLocalizableStringsError, "error");
+            console.log(textStatus + ': ' + errorThrown);
+        });
     };
 
     self.validator = $("#form-section-form").validate({

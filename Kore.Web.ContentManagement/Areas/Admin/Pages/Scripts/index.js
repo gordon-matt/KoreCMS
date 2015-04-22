@@ -639,11 +639,15 @@ $(document).ready(function () {
         }
     });
 
-    PagesDS.read();
+    //PagesDS.read();
 
     $("#treeview").kendoTreeView({
         template: kendo.template($("#treeview-template").html()),
         dataSource: PagesDS,
-        dataTextField: ["Name"]
+        dataTextField: ["Name"],
+        loadOnDemand: false,
+        dataBound: function (e) {
+            $("#treeview").data("kendoTreeView").expand(".k-item");
+        }
     });
 });

@@ -75,6 +75,7 @@
     <Compile Include="ISupportSeed.cs" />
     <Compile Include="Localization\Domain\LanguageMap.cs" />
     <Compile Include="Localization\Domain\LocalizableStringMap.cs" />
+    <Compile Include="Logging\Domain\LogEntryMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScheduledTasks\Domain\ScheduledTaskMap.cs" />
   </ItemGroup>

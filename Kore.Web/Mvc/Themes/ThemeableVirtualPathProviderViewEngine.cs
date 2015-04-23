@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Castle.Core.Logging;
 using Kore.Infrastructure;
 
 namespace Kore.Web.Mvc.Themes
@@ -239,12 +240,35 @@ namespace Kore.Web.Mvc.Themes
                 return new ViewEngineResult(this.CreateView(controllerContext, viewPath, masterPath), this);
             }
 
+            //if (viewPathSearchLocations == null)
+            //{
+            //    viewPathSearchLocations = new string[0];
+            //}
+
             if (masterPathSearchedLocations == null)
             {
                 masterPathSearchedLocations = new string[0];
             }
 
-            return new ViewEngineResult(viewPathSearchLocations.Union<string>(masterPathSearchedLocations));
+            var searchedLocations = Enumerable.Empty<string>();
+
+            try
+            {
+                searchedLocations = viewPathSearchLocations.Union<string>(masterPathSearchedLocations);
+            }
+            catch (Exception x)
+            {
+                var logger = NullLogger.Instance;
+                logger.Error(
+                    string.Format(
+                        "Could not find locations for:{0}ViewName: {1}{0}MasterName: {2}",
+                        System.Environment.NewLine,
+                        viewName,
+                        masterName),
+                    x);
+            }
+
+            return new ViewEngineResult(searchedLocations);
         }
 
         protected virtual ViewEngineResult FindThemeablePartialView(ControllerContext controllerContext, string partialViewName, bool useCache, bool mobile)

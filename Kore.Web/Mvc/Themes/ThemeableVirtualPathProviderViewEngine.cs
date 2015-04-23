@@ -240,35 +240,27 @@ namespace Kore.Web.Mvc.Themes
                 return new ViewEngineResult(this.CreateView(controllerContext, viewPath, masterPath), this);
             }
 
-            //if (viewPathSearchLocations == null)
-            //{
-            //    viewPathSearchLocations = new string[0];
-            //}
+            // 2015.04.23: This happened one time, but could not be replicated. Then after adding logging
+            //  and trying again, it stopped happening... without having changed any logic (may have been a
+            //  problem on that 1 production server only.
+            if (viewPathSearchLocations == null)
+            {
+                NullLogger.Instance.Error(
+                    string.Format(
+                        "Could not find locations for:{0}ViewName: {1}{0}MasterName: {2}",
+                        System.Environment.NewLine,
+                        viewName,
+                        masterName));
+
+                viewPathSearchLocations = new string[0];
+            }
 
             if (masterPathSearchedLocations == null)
             {
                 masterPathSearchedLocations = new string[0];
             }
 
-            var searchedLocations = Enumerable.Empty<string>();
-
-            try
-            {
-                searchedLocations = viewPathSearchLocations.Union<string>(masterPathSearchedLocations);
-            }
-            catch (Exception x)
-            {
-                var logger = NullLogger.Instance;
-                logger.Error(
-                    string.Format(
-                        "Could not find locations for:{0}ViewName: {1}{0}MasterName: {2}",
-                        System.Environment.NewLine,
-                        viewName,
-                        masterName),
-                    x);
-            }
-
-            return new ViewEngineResult(searchedLocations);
+            return new ViewEngineResult(viewPathSearchLocations.Union<string>(masterPathSearchedLocations));
         }
 
         protected virtual ViewEngineResult FindThemeablePartialView(ControllerContext controllerContext, string partialViewName, bool useCache, bool mobile)

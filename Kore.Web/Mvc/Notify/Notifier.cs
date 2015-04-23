@@ -41,7 +41,7 @@ namespace Kore.Web.Mvc.Notify
 
         public void Add(NotifyType type, string message)
         {
-            Logger.InfoFormat("Notification {0} message: {1}", type, message);
+            //Logger.InfoFormat("Notification {0} message: {1}", type, message);
             _entries.Add(new NotifyEntry { Type = type, Message = message });
         }
 

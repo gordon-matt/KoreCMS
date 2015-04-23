@@ -4,10 +4,10 @@ using System.Linq;
 using System.Web.Mvc;
 using Kore.Collections;
 using Kore.Infrastructure;
-using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
-using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
-using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
+using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
+using Kore.Web.ContentManagement.Areas.Admin.Pages;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Mvc;
 using Kore.Web.Navigation;
 using MenuItem = Kore.Web.ContentManagement.Areas.Admin.Menus.Domain.MenuItem;
@@ -37,11 +37,16 @@ namespace Kore.Web.ContentManagement.Controllers
                 while (parentId != null)
                 {
                     var page = query.FirstOrDefault(y => y.Id == parentId);
-                    breadcrumbs.Add(new Breadcrumb
+
+                    if (PageSecurityHelper.CheckUserHasAccessToPage(page, User))
                     {
-                        Text = page.Name,
-                        Url = "/" + page.Slug
-                    });
+                        breadcrumbs.Add(new Breadcrumb
+                        {
+                            Text = page.Name,
+                            Url = "/" + page.Slug
+                        });
+                    }
+
                     parentId = page.ParentId;
                 }
 
@@ -79,9 +84,13 @@ namespace Kore.Web.ContentManagement.Controllers
 
             var pages = pageService.Repository.Table
                 .Where(x => x.IsEnabled)
+                .ToHashSet();
+
+            var authorizedPages = pages.Where(x => PageSecurityHelper.CheckUserHasAccessToPage(x, User));
+
+            var items = authorizedPages
                 .OrderBy(x => x.Order)
                 .ThenBy(x => x.Name)
-                .ToHashSet()
                 .Select((x, index) => new MenuItem
             {
                 Id = x.Id,
@@ -92,7 +101,7 @@ namespace Kore.Web.ContentManagement.Controllers
                 Position = index
             });
 
-            menuItems.AddRange(pages);
+            menuItems.AddRange(items);
 
             ViewBag.MenuId = menuId;
             return View(templateViewName, menuItems);
@@ -120,10 +129,13 @@ namespace Kore.Web.ContentManagement.Controllers
                 query = query.Where(x => x.ParentId == null);
             }
 
-            var pages = query
+            var pages = query.ToHashSet();
+
+            var authorizedPages = pages.Where(x => PageSecurityHelper.CheckUserHasAccessToPage(x, User));
+
+            var items = authorizedPages
                 .OrderBy(x => x.Order)
                 .ThenBy(x => x.Name)
-                .ToHashSet()
                 .Select((x, index) => new MenuItem
                 {
                     Id = x.Id,
@@ -134,7 +146,7 @@ namespace Kore.Web.ContentManagement.Controllers
                     Position = index
                 });
 
-            menuItems.AddRange(pages);
+            menuItems.AddRange(items);
 
             ViewBag.MenuId = menuId;
             return View(templateViewName, menuItems);

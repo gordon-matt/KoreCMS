@@ -59,32 +59,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             if (page != null && page.IsEnabled)
             {
                 // If there are access restrictions
-                if (!string.IsNullOrEmpty(page.AccessRestrictions))
+                if (!PageSecurityHelper.CheckUserHasAccessToPage(page, User))
                 {
-                    dynamic accessRestrictions = JObject.Parse(page.AccessRestrictions);
-                    string roleIds = accessRestrictions.Roles;
-
-                    if (!string.IsNullOrEmpty(roleIds))
-                    {
-                        var roleNames = roleIds.Split(',')
-                            .Select(id =>
-                            {
-                                if (!string.IsNullOrEmpty(id))
-                                {
-                                    var role = membershipService.Value.GetRoleById(id);
-                                    return role == null ? null : role.Name;
-                                }
-                                return null;
-                            })
-                            .Where(x => x != null)
-                            .ToList();
-
-                        bool authorized = roleNames.Any(x => User.IsInRole(x));
-                        if (!authorized)
-                        {
-                            return new HttpUnauthorizedResult();
-                        }
-                    }
+                    return new HttpUnauthorizedResult();
                 }
 
                 // Else no restrictions (available for anyone to view)

@@ -125,7 +125,6 @@ namespace Kore.Web.Infrastructure
             //builder.RegisterType<SearchSettings>().As<ISettings>().SingleInstance();
 
             builder.RegisterModule<LoggingModule>();
-            //builder.RegisterType<NLogFilteredLogger>().As<ILogger>().InstancePerDependency();
 
             // navigation
             builder.RegisterType<NavigationManager>().As<INavigationManager>().InstancePerDependency();

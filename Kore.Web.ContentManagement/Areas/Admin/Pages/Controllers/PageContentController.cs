@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using Kore.Data;
-using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
+using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 {
@@ -15,22 +18,25 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
     public class PageContentController : KoreController
     {
         protected static Regex ContentZonePattern = new Regex(@"\[\[ContentZone:(?<Zone>.*)\]\]", RegexOptions.Compiled);
+        private readonly IContentBlockService contentBlockService;
+        private readonly Lazy<IMembershipService> membershipService;
         private readonly IPageService pageService;
         private readonly IPageTypeService pageTypeService;
-        private readonly IContentBlockService contentBlockService;
         private readonly IRepository<Zone> zoneRepository;
 
         public PageContentController(
             IPageService pageService,
             IPageTypeService pageTypeService,
             IContentBlockService contentBlockService,
-            IRepository<Zone> zoneRepository)
+            IRepository<Zone> zoneRepository,
+            Lazy<IMembershipService> membershipService)
             : base()
         {
             this.pageService = pageService;
             this.pageTypeService = pageTypeService;
             this.contentBlockService = contentBlockService;
             this.zoneRepository = zoneRepository;
+            this.membershipService = membershipService;
         }
 
         public ActionResult Index(string slug)
@@ -52,6 +58,36 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 
             if (page != null && page.IsEnabled)
             {
+                // If there are access restrictions
+                if (!string.IsNullOrEmpty(page.AccessRestrictions))
+                {
+                    dynamic accessRestrictions = JObject.Parse(page.AccessRestrictions);
+                    string roleIds = accessRestrictions.Roles;
+
+                    if (!string.IsNullOrEmpty(roleIds))
+                    {
+                        var roleNames = roleIds.Split(',')
+                            .Select(id =>
+                            {
+                                if (!string.IsNullOrEmpty(id))
+                                {
+                                    var role = membershipService.Value.GetRoleById(id);
+                                    return role == null ? null : role.Name;
+                                }
+                                return null;
+                            })
+                            .Where(x => x != null)
+                            .ToList();
+
+                        bool authorized = roleNames.Any(x => User.IsInRole(x));
+                        if (!authorized)
+                        {
+                            return new HttpUnauthorizedResult();
+                        }
+                    }
+                }
+
+                // Else no restrictions (available for anyone to view)
                 WorkContext.SetState("CurrentPageId", page.Id);
                 WorkContext.Breadcrumbs.Add(page.Name);
 

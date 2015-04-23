@@ -139,9 +139,12 @@ var ViewModel = function () {
     self.fields = ko.observable('');
     self.isEnabled = ko.observable(false);
     self.order = ko.observable(0);
+    self.accessRestrictions = null; // doesn't need to be an observable
     self.cultureCode = ko.observable('');
     self.refId = ko.observable(null);
     self.showButtons = ko.observable(false);
+
+    self.roles = ko.observableArray([]);
 
     self.pageType = new PageTypeVM();
 
@@ -164,8 +167,11 @@ var ViewModel = function () {
         self.fields('');
         self.isEnabled(false);
         self.order(0);
+        self.accessRestrictions = null;
         self.cultureCode('');
         self.refId(null);
+
+        self.roles([]);
 
         self.showButtons(false);
 
@@ -209,9 +215,11 @@ var ViewModel = function () {
             self.fields(json.Fields);
             self.isEnabled(json.IsEnabled);
             self.order(json.Order);
+            self.accessRestrictions = ko.mapping.fromJSON(json.AccessRestrictions);
             self.cultureCode(json.CultureCode);
             self.refId(json.RefId);
 
+            self.roles(self.accessRestrictions.Roles().split(','));
             self.showButtons(true);
 
             self.validator.resetForm();
@@ -323,6 +331,9 @@ var ViewModel = function () {
             Fields: self.fields(),
             IsEnabled: self.isEnabled(),
             Order: self.order(),
+            AccessRestrictions: JSON.stringify({
+                Roles: self.roles().join()
+            }),
             CultureCode: cultureCode,
             RefId: self.refId()
         };
@@ -469,11 +480,16 @@ var ViewModel = function () {
             self.fields(json.Fields);
             self.isEnabled(json.IsEnabled);
             self.order(json.Order);
+            self.accessRestrictions = ko.mapping.fromJSON(json.AccessRestrictions);
             self.cultureCode(json.CultureCode);
             self.refId(json.RefId);
 
-            switchSection($("#form-section"));
+            self.roles(self.accessRestrictions.Roles().split(','));
             self.showButtons(false);
+            
+            self.validator.resetForm();
+            switchSection($("#form-section"));
+            $("#form-section-legend").html(translations.Edit);
 
             if (self.id() != emptyGuid) {
                 $.ajax({
@@ -638,8 +654,6 @@ $(document).ready(function () {
             }
         }
     });
-
-    //PagesDS.read();
 
     $("#treeview").kendoTreeView({
         template: kendo.template($("#treeview-template").html()),

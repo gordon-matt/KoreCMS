@@ -7,26 +7,15 @@ using System.Web.Mvc.Html;
 using Kore.Data;
 using Kore.Infrastructure;
 using Kore.Web.Collections;
-using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
-using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
+using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 
 namespace Kore.Web.ContentManagement
 {
     public static class HtmlHelperExtensions
     {
-        public static KoreCMS<TModel> KoreCMS<TModel>(this HtmlHelper<TModel> html) where TModel : class
-        {
-            return new KoreCMS<TModel>(html);
-        }
-
-        //public static bool MenuExists(this HtmlHelper html, string menuName)
-        //{
-        //    var repository = EngineContext.Current.Resolve<IRepository<Menu>>();
-        //    return repository.Table.Any(x => x.Name == menuName);
-        //}
-
         public static MvcHtmlString AutoBreadcrumbs(this HtmlHelper html, string templateViewName)
         {
             return html.Action("AutoBreadcrumbs", "Frontend", new
@@ -55,6 +44,16 @@ namespace Kore.Web.ContentManagement
             });
         }
 
+        public static MvcHtmlString ContentZone(this HtmlHelper html, string zoneName)
+        {
+            return html.Action("ContentBlocksByZone", "Frontend", new { area = "", zoneName = zoneName });
+        }
+
+        public static KoreCMS<TModel> KoreCMS<TModel>(this HtmlHelper<TModel> html) where TModel : class
+        {
+            return new KoreCMS<TModel>(html);
+        }
+
         public static MvcHtmlString Menu(this HtmlHelper html, string menuName, string templateViewName, bool filterByUrl = false)
         {
             return html.Action("Menu", "Frontend", new
@@ -64,11 +63,6 @@ namespace Kore.Web.ContentManagement
                 templateViewName = templateViewName,
                 filterByUrl = filterByUrl
             });
-        }
-
-        public static MvcHtmlString ContentZone(this HtmlHelper html, string zoneName)
-        {
-            return html.Action("ContentBlocksByZone", "Frontend", new { area = "", zoneName = zoneName });
         }
     }
 
@@ -80,6 +74,21 @@ namespace Kore.Web.ContentManagement
         internal KoreCMS(HtmlHelper<TModel> html)
         {
             this.html = html;
+        }
+
+        public MvcHtmlString ContentBlockTypesDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
+        {
+            var selectList = GetContentBlockTypesSelectList(selectedValue, emptyText);
+            return html.DropDownList(name, selectList, htmlAttributes);
+        }
+
+        public MvcHtmlString ContentBlockTypesDropDownListFor(Expression<Func<TModel, string>> expression, object htmlAttributes = null, string emptyText = null)
+        {
+            var func = expression.Compile();
+            var selectedValue = func(html.ViewData.Model);
+
+            var selectList = GetContentBlockTypesSelectList(selectedValue, emptyText);
+            return html.DropDownListFor(expression, selectList, htmlAttributes);
         }
 
         public MvcHtmlString MediaFoldersDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
@@ -112,21 +121,6 @@ namespace Kore.Web.ContentManagement
             return html.DropDownListFor(expression, selectList, htmlAttributes);
         }
 
-        public MvcHtmlString ContentBlockTypesDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
-        {
-            var selectList = GetContentBlockTypesSelectList(selectedValue, emptyText);
-            return html.DropDownList(name, selectList, htmlAttributes);
-        }
-
-        public MvcHtmlString ContentBlockTypesDropDownListFor(Expression<Func<TModel, string>> expression, object htmlAttributes = null, string emptyText = null)
-        {
-            var func = expression.Compile();
-            var selectedValue = func(html.ViewData.Model);
-
-            var selectList = GetContentBlockTypesSelectList(selectedValue, emptyText);
-            return html.DropDownListFor(expression, selectList, htmlAttributes);
-        }
-
         public MvcHtmlString ZonesDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
         {
             var selectList = GetZonesSelectList(selectedValue, emptyText);
@@ -140,6 +134,26 @@ namespace Kore.Web.ContentManagement
 
             var selectList = GetZonesSelectList(selectedValue, emptyText);
             return html.DropDownListFor(expression, selectList, htmlAttributes);
+        }
+
+        private static IEnumerable<SelectListItem> GetContentBlockTypesSelectList(string selectedValue = null, string emptyText = null)
+        {
+            var contentBlocks = EngineContext.Current.ResolveAll<IContentBlock>();
+
+            var blockTypes = contentBlocks
+                .Select(x => new
+                {
+                    x.Name,
+                    Type = GetTypeFullName(x.GetType())
+                })
+                .OrderBy(x => x.Name)
+                .ToDictionary(k => k.Name, v => v.Type);
+
+            return blockTypes.ToSelectList(
+                value => value.Value,
+                text => text.Key,
+                selectedValue,
+                emptyText);
         }
 
         private static void GetMediaFolders(IMediaService service, List<Tuple<string, string>> folders, string path, byte level = 0)
@@ -193,26 +207,6 @@ namespace Kore.Web.ContentManagement
         private static string GetTypeFullName(Type type)
         {
             return string.Concat(type.FullName, ", ", type.Assembly.GetName().Name);
-        }
-
-        private static IEnumerable<SelectListItem> GetContentBlockTypesSelectList(string selectedValue = null, string emptyText = null)
-        {
-            var contentBlocks = EngineContext.Current.ResolveAll<IContentBlock>();
-
-            var blockTypes = contentBlocks
-                .Select(x => new
-                {
-                    x.Name,
-                    Type = GetTypeFullName(x.GetType())
-                })
-                .OrderBy(x => x.Name)
-                .ToDictionary(k => k.Name, v => v.Type);
-
-            return blockTypes.ToSelectList(
-                value => value.Value,
-                text => text.Key,
-                selectedValue,
-                emptyText);
         }
 
         private static IEnumerable<SelectListItem> GetZonesSelectList(string selectedValue = null, string emptyText = null)

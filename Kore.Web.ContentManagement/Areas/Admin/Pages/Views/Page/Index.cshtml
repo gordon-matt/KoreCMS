@@ -98,7 +98,7 @@
                                         @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: slug" })
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         @Html.Label("Order", "Order", new { @class = "control-label" })
                                         <div class="input-group">
@@ -109,7 +109,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <div class="form-group">
+                                        @Html.Label("Roles", "Roles", new { @class = "control-label" })
+                                        @Html.Kore().RolesCheckBoxList("Roles", null, new { @class = "checkbox" }, new { data_bind = "checked: roles" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                     <div class="checkbox">
                                         <label>
                                             @Html.CheckBox("IsEnabled", new { data_bind = "checked: isEnabled" }) Enabled

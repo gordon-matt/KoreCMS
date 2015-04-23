@@ -245,6 +245,7 @@
     <Compile Include="Areas\Admin\Messaging\Token.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\Api\PageTreeController.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\Api\PageTypesController.cs" />
+    <Compile Include="Areas\Admin\Pages\PageSecurityHelper.cs" />
     <Compile Include="Areas\Admin\Pages\PagesIndexingContentProvider.cs" />
     <Compile Include="Areas\Admin\Pages\KorePageType.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\Api\HistoricPagesController.cs" />

@@ -24,5 +24,10 @@ namespace Kore.Security.Membership
         }
 
         #endregion IEntity Members
+
+        public override string ToString()
+        {
+            return UserName;
+        }
     }
 }

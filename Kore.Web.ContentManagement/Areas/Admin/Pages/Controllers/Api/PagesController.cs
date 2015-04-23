@@ -60,6 +60,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     Fields = currentPage.Fields,
                     IsEnabled = currentPage.IsEnabled,
                     Order = currentPage.Order,
+                    AccessRestrictions = currentPage.AccessRestrictions,
                     DateCreatedUtc = currentPage.DateCreatedUtc,
                     DateModifiedUtc = currentPage.DateModifiedUtc,
                     CultureCode = currentPage.CultureCode,
@@ -117,6 +118,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     Fields = currentPage.Fields,
                     IsEnabled = currentPage.IsEnabled,
                     Order = currentPage.Order,
+                    AccessRestrictions = currentPage.AccessRestrictions,
                     DateCreatedUtc = currentPage.DateCreatedUtc,
                     DateModifiedUtc = currentPage.DateModifiedUtc,
                     CultureCode = currentPage.CultureCode,
@@ -161,6 +163,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     Slug = record.Slug,
                     Fields = record.Fields,
                     Order = record.Order,
+                    AccessRestrictions = record.AccessRestrictions,
                     DateCreatedUtc = DateTime.UtcNow,
                     DateModifiedUtc = DateTime.UtcNow,
                     CultureCode = cultureCode,
@@ -194,6 +197,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     Fields = record.Fields,
                     IsEnabled = record.IsEnabled,
                     Order = record.Order,
+                    AccessRestrictions = record.AccessRestrictions,
                     CultureCode = record.CultureCode,
                     RefId = record.RefId
                 };
@@ -229,17 +233,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
         public int Order { get; set; }
 
+        public string AccessRestrictions { get; set; }
+
         public string CultureCode { get; set; }
 
         public Guid? RefId { get; set; }
     }
-
-    //public struct EdmPageTreeItem
-    //{
-    //    public Guid Id { get; set; }
-
-    //    public string Name { get; set; }
-
-    //    public EdmPageTreeItem[] SubPages { get; set; }
-    //}
 }

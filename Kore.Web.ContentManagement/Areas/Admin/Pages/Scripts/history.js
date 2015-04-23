@@ -5,12 +5,14 @@ var ViewModel = function () {
 
     self.id = ko.observable(emptyGuid);
     self.pageId = ko.observable(emptyGuid);
+    self.parentId = ko.observable(null);
     self.pageTypeId = ko.observable(emptyGuid);
     self.archivedDate = ko.observable(null);
     self.name = ko.observable('');
     self.slug = ko.observable('');
     self.fields = ko.observable('');
     self.isEnabled = ko.observable(false);
+    self.order = ko.observable(0);
     self.dateCreatedUtc = ko.observable();
     self.dateModifiedUtc = ko.observable();
     self.cultureCode = ko.observable('');
@@ -26,12 +28,14 @@ var ViewModel = function () {
         .done(function (json) {
             self.id(json.Id);
             self.pageId(json.PageId);
+            self.parentId(json.ParentId);
             self.pageTypeId(json.PageTypeId);
             self.archivedDate(json.ArchivedDate);
             self.name(json.Name);
             self.slug(json.Slug);
             self.fields(json.Fields);
             self.isEnabled(json.IsEnabled);
+            self.order(json.Order);
             self.dateCreatedUtc(json.DateCreatedUtc);
             self.dateModifiedUtc(json.DateModifiedUtc);
             self.cultureCode(json.CultureCode);

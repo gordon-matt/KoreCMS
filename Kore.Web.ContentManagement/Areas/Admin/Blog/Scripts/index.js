@@ -11,6 +11,18 @@ var ViewModel = function () {
 
     self.tinyMCE_fullDescription = koreDefaultTinyMCEConfig;
 
+    self.create = function () {
+        self.id(emptyGuid);
+        self.headline('');
+        self.slug('');
+        self.shortDescription('');
+        self.fullDescription('');
+
+        self.validator.resetForm();
+        switchSection($("#form-section"));
+        $("#form-section-legend").html(translations.Create);
+    };
+
     self.edit = function (id) {
         $.ajax({
             url: "/odata/kore/cms/Blogs(guid'" + id + "')",

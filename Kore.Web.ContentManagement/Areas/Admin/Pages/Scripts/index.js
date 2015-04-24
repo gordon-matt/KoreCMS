@@ -219,7 +219,13 @@ var ViewModel = function () {
             self.cultureCode(json.CultureCode);
             self.refId(json.RefId);
 
-            self.roles(self.accessRestrictions.Roles().split(','));
+            if (self.accessRestrictions.Roles === "function") {
+                self.roles(self.accessRestrictions.Roles().split(','));
+            }
+            else {
+                self.roles([]);
+            }
+
             self.showButtons(true);
 
             self.validator.resetForm();
@@ -484,7 +490,13 @@ var ViewModel = function () {
             self.cultureCode(json.CultureCode);
             self.refId(json.RefId);
 
-            self.roles(self.accessRestrictions.Roles().split(','));
+            if (self.accessRestrictions.Roles === "function") {
+                self.roles(self.accessRestrictions.Roles().split(','));
+            }
+            else {
+                self.roles([]);
+            }
+
             self.showButtons(false);
             
             self.validator.resetForm();

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Kore.Web.Mvc.Themes;
 
-namespace Kore.Indexing.Lucene.Lucene.Infrastructure
+namespace Kore.Indexing.Lucene.Infrastructure
 {
     public class LocationFormatProvider : ILocationFormatProvider
     {
@@ -16,6 +16,10 @@ namespace Kore.Indexing.Lucene.Lucene.Infrastructure
                     //themes
                     "~/Areas/{2}/Themes/{3}/Views/Plugins/Kore.Indexing.Lucene/{1}/{0}.cshtml",
                     "~/Areas/{2}/Themes/{3}/Views/Plugins/Kore.Indexing.Lucene/Shared/{0}.cshtml",
+
+                    //shared
+                    "~/Areas/{2}/Views/Plugins/Kore.Indexing.Lucene/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Kore.Indexing.Lucene/Shared/{0}.cshtml",
 
                     //default
                     "~/Plugins/Kore.Indexing.Lucene/Areas/{2}/Views/{1}/{0}.cshtml",
@@ -34,6 +38,10 @@ namespace Kore.Indexing.Lucene.Lucene.Infrastructure
                     "~/Areas/{2}/Themes/{3}/Views/Plugins/Kore.Indexing.Lucene/{1}/{0}.cshtml",
                     "~/Areas/{2}/Themes/{3}/Views/Plugins/Kore.Indexing.Lucene/Shared/{0}.cshtml",
 
+                    //shared
+                    "~/Areas/{2}/Views/Plugins/Kore.Indexing.Lucene/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Kore.Indexing.Lucene/Shared/{0}.cshtml",
+
                     //default
                     "~/Plugins/Kore.Indexing.Lucene/Areas/{2}/Views/{1}/{0}.cshtml",
                     "~/Plugins/Kore.Indexing.Lucene/Areas/{2}/Views/Shared/{0}.cshtml",
@@ -50,6 +58,10 @@ namespace Kore.Indexing.Lucene.Lucene.Infrastructure
                     //themes
                     "~/Areas/{2}/Themes/{3}/Views/Plugins/Kore.Indexing.Lucene/{1}/{0}.cshtml",
                     "~/Areas/{2}/Themes/{3}/Views/Plugins/Kore.Indexing.Lucene/Shared/{0}.cshtml",
+
+                    //shared
+                    "~/Areas/{2}/Views/Plugins/Kore.Indexing.Lucene/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Kore.Indexing.Lucene/Shared/{0}.cshtml",
 
                     //default
                     "~/Plugins/Kore.Indexing.Lucene/Areas/{2}/Views/{1}/{0}.cshtml",
@@ -68,6 +80,10 @@ namespace Kore.Indexing.Lucene.Lucene.Infrastructure
                     "~/Themes/{2}/Views/Plugins/Kore.Indexing.Lucene/{1}/{0}.cshtml",
                     "~/Themes/{2}/Views/Plugins/Kore.Indexing.Lucene/Shared/{0}.cshtml",
 
+                    //shared
+                    "~/Views/Plugins/Kore.Indexing.Lucene/{1}/{0}.cshtml",
+                    "~/Views/Plugins/Kore.Indexing.Lucene/Shared/{0}.cshtml",
+
                     //default
                     "~/Plugins/Kore.Indexing.Lucene/Views/{1}/{0}.cshtml",
                     "~/Plugins/Kore.Indexing.Lucene/Views/Shared/{0}.cshtml",
@@ -85,6 +101,10 @@ namespace Kore.Indexing.Lucene.Lucene.Infrastructure
                     "~/Themes/{2}/Views/Plugins/Kore.Indexing.Lucene/{1}/{0}.cshtml",
                     "~/Themes/{2}/Views/Plugins/Kore.Indexing.Lucene/Shared/{0}.cshtml",
 
+                    //shared
+                    "~/Views/Plugins/Kore.Indexing.Lucene/{1}/{0}.cshtml",
+                    "~/Views/Plugins/Kore.Indexing.Lucene/Shared/{0}.cshtml",
+
                     //default
                     "~/Plugins/Kore.Indexing.Lucene/Views/{1}/{0}.cshtml",
                     "~/Plugins/Kore.Indexing.Lucene/Views/Shared/{0}.cshtml",
@@ -101,6 +121,10 @@ namespace Kore.Indexing.Lucene.Lucene.Infrastructure
                     //themes
                     "~/Themes/{2}/Views/Plugins/Kore.Indexing.Lucene/{1}/{0}.cshtml",
                     "~/Themes/{2}/Views/Plugins/Kore.Indexing.Lucene/Shared/{0}.cshtml",
+
+                    //shared
+                    "~/Views/Plugins/Kore.Indexing.Lucene/{1}/{0}.cshtml",
+                    "~/Views/Plugins/Kore.Indexing.Lucene/Shared/{0}.cshtml",
 
                     //default
                     "~/Plugins/Kore.Indexing.Lucene/Views/{1}/{0}.cshtml",

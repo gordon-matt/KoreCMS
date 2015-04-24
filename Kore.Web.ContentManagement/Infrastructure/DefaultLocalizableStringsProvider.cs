@@ -16,7 +16,12 @@ namespace Kore.Web.ContentManagement.Infrastructure
                     CultureCode = null,
                     LocalizedStrings = new Dictionary<string, string>
                     {
-                        //{ LocalizableStrings.Lists.Title, "Lists" },
+                        { KoreCmsLocalizableStrings.Blog.ManageBlog, "Manage Blog" },
+                        { KoreCmsLocalizableStrings.Blog.Title, "Blog" },
+                        { KoreCmsLocalizableStrings.ContentBlocks.ManageContentBlocks, "Manage Content Blocks" },
+                        { KoreCmsLocalizableStrings.ContentBlocks.ManageZones, "Manage Zones" },
+                        { KoreCmsLocalizableStrings.ContentBlocks.Title, "Content Blocks" },
+                        { KoreCmsLocalizableStrings.ContentBlocks.Zones, "Zones" },
                         { KoreCmsLocalizableStrings.Localization.IsRTL, "Is Right-to-Left" },
                         { KoreCmsLocalizableStrings.Localization.Languages, "Languages" },
                         { KoreCmsLocalizableStrings.Localization.LocalizableStrings, "Localizable Strings" },
@@ -64,10 +69,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
                         { KoreCmsLocalizableStrings.Pages.Tags, "Tags" },
                         { KoreCmsLocalizableStrings.Pages.Title, "Pages" },
                         { KoreCmsLocalizableStrings.Pages.Translations, "Translations" },
-                        { KoreCmsLocalizableStrings.ContentBlocks.ManageContentBlocks, "Manage Content Blocks" },
-                        { KoreCmsLocalizableStrings.ContentBlocks.ManageZones, "Manage Zones" },
-                        { KoreCmsLocalizableStrings.ContentBlocks.Title, "Content Blocks" },
-                        { KoreCmsLocalizableStrings.ContentBlocks.Zones, "Zones" },
                     }
                 }
             };

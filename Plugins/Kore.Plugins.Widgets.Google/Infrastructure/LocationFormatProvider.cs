@@ -21,6 +21,10 @@ namespace Kore.Plugins.Widgets.Google.Infrastructure
                     "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Widgets.Google/{1}/{0}.cshtml",
                     "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Widgets.Google/Shared/{0}.cshtml",
 
+                    //shared
+                    "~/Areas/{2}/Views/Plugins/Plugins.Widgets.Google/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Plugins.Widgets.Google/Shared/{0}.cshtml",
+
                     //default
                     "~/Plugins/Plugins.Widgets.Google/Areas/{2}/Views/{1}/{0}.cshtml",
                     "~/Plugins/Plugins.Widgets.Google/Areas/{2}/Views/Shared/{0}.cshtml",
@@ -37,6 +41,10 @@ namespace Kore.Plugins.Widgets.Google.Infrastructure
                     //themes
                     "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Widgets.Google/{1}/{0}.cshtml",
                     "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Widgets.Google/Shared/{0}.cshtml",
+
+                    //shared
+                    "~/Areas/{2}/Views/Plugins/Plugins.Widgets.Google/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Plugins.Widgets.Google/Shared/{0}.cshtml",
 
                     //default
                     "~/Plugins/Plugins.Widgets.Google/Areas/{2}/Views/{1}/{0}.cshtml",
@@ -55,6 +63,10 @@ namespace Kore.Plugins.Widgets.Google.Infrastructure
                     "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Widgets.Google/{1}/{0}.cshtml",
                     "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Widgets.Google/Shared/{0}.cshtml",
 
+                    //shared
+                    "~/Areas/{2}/Views/Plugins/Plugins.Widgets.Google/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Plugins.Widgets.Google/Shared/{0}.cshtml",
+
                     //default
                     "~/Plugins/Plugins.Widgets.Google/Areas/{2}/Views/{1}/{0}.cshtml",
                     "~/Plugins/Plugins.Widgets.Google/Areas/{2}/Views/Shared/{0}.cshtml",
@@ -71,6 +83,10 @@ namespace Kore.Plugins.Widgets.Google.Infrastructure
                     //themes
                     "~/Themes/{2}/Views/Plugins/Plugins.Widgets.Google/{1}/{0}.cshtml",
                     "~/Themes/{2}/Views/Plugins/Plugins.Widgets.Google/Shared/{0}.cshtml",
+
+                    //shared
+                    "~/Views/Plugins/Plugins.Widgets.Google/{1}/{0}.cshtml",
+                    "~/Views/Plugins/Plugins.Widgets.Google/Shared/{0}.cshtml",
 
                     //default
                     "~/Plugins/Plugins.Widgets.Google/Views/{1}/{0}.cshtml",
@@ -89,6 +105,10 @@ namespace Kore.Plugins.Widgets.Google.Infrastructure
                     "~/Themes/{2}/Views/Plugins/Plugins.Widgets.Google/{1}/{0}.cshtml",
                     "~/Themes/{2}/Views/Plugins/Plugins.Widgets.Google/Shared/{0}.cshtml",
 
+                    //shared
+                    "~/Views/Plugins/Plugins.Widgets.Google/{1}/{0}.cshtml",
+                    "~/Views/Plugins/Plugins.Widgets.Google/Shared/{0}.cshtml",
+
                     //default
                     "~/Plugins/Plugins.Widgets.Google/Views/{1}/{0}.cshtml",
                     "~/Plugins/Plugins.Widgets.Google/Views/Shared/{0}.cshtml",
@@ -105,6 +125,10 @@ namespace Kore.Plugins.Widgets.Google.Infrastructure
                     //themes
                     "~/Themes/{2}/Views/Plugins/Plugins.Widgets.Google/{1}/{0}.cshtml",
                     "~/Themes/{2}/Views/Plugins/Plugins.Widgets.Google/Shared/{0}.cshtml",
+
+                    //shared
+                    "~/Views/Plugins/Plugins.Widgets.Google/{1}/{0}.cshtml",
+                    "~/Views/Plugins/Plugins.Widgets.Google/Shared/{0}.cshtml",
 
                     //default
                     "~/Plugins/Plugins.Widgets.Google/Views/{1}/{0}.cshtml",

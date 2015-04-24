@@ -4,6 +4,11 @@ using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Tasks;
 using Kore.Web.Configuration;
+using Kore.Web.ContentManagement.Areas.Admin.Blog;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.RuleEngine;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Localization;
 using Kore.Web.ContentManagement.Areas.Admin.Localization.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Media;
@@ -12,10 +17,6 @@ using Kore.Web.ContentManagement.Areas.Admin.Menus;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
-using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
-using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.RuleEngine;
-using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting;
-using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.ContentManagement.FileSystems.Media;
 using Kore.Web.ContentManagement.Messaging;
 using Kore.Web.ContentManagement.Messaging.Services;
@@ -23,7 +24,6 @@ using Kore.Web.Indexing.Services;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Navigation;
-using Kore.Web.Plugins;
 using Kore.Web.Security.Membership.Permissions;
 using KoreCMS.Areas.Admin.Navigation;
 
@@ -35,11 +35,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
-            //if (!PluginManager.IsPluginInstalled("Kore.Web.ContentManagement"))
-            //{
-            //    return;
-            //}
-
             #region Services
 
             // Localization
@@ -79,22 +74,24 @@ namespace Kore.Web.ContentManagement.Infrastructure
             #region Navigation
 
             builder.RegisterType<CmsNavigationProvider>().As<INavigationProvider>().SingleInstance();
+            builder.RegisterType<BlogNavigationProvider>().As<INavigationProvider>().SingleInstance();
+            builder.RegisterType<ContentBlockNavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<LocalizationNavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<MediaNavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<MembershipNavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<MenusNavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<MessagingNavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<PagesNavigationProvider>().As<INavigationProvider>().SingleInstance();
-            builder.RegisterType<ContentBlockNavigationProvider>().As<INavigationProvider>().SingleInstance();
 
             #endregion Navigation
 
             #region Security
 
+            builder.RegisterType<ContentBlockPermissions>().As<IPermissionProvider>().SingleInstance();
+            builder.RegisterType<BlogPermissions>().As<IPermissionProvider>().SingleInstance();
             builder.RegisterType<MediaPermissions>().As<IPermissionProvider>().SingleInstance();
             builder.RegisterType<MenusPermissions>().As<IPermissionProvider>().SingleInstance();
             builder.RegisterType<PagesPermissions>().As<IPermissionProvider>().SingleInstance();
-            builder.RegisterType<ContentBlockPermissions>().As<IPermissionProvider>().SingleInstance();
 
             #endregion Security
 
@@ -110,7 +107,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             #endregion Configuration
 
-            #region ContentBlocks
+            #region Content Blocks
 
             builder.RegisterType<FormBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<HtmlBlock>().As<IContentBlock>().InstancePerDependency();
@@ -121,7 +118,20 @@ namespace Kore.Web.ContentManagement.Infrastructure
             //builder.RegisterType<PhotoGalleryBlock>().As<IContentBlock>().InstancePerDependency();
             //builder.RegisterType<SupersizedBlock>().As<IContentBlock>().InstancePerDependency();
 
-            #endregion ContentBlocks
+            #endregion Content Blocks
+
+            #region Other: Content Blocks
+
+            builder.RegisterType<BuiltinRuleProvider>().As<IRuleProvider>().InstancePerDependency();
+            builder.RegisterType<DisabledRuleProvider>().As<IRuleProvider>().InstancePerDependency();
+            builder.RegisterType<UrlRuleProvider>().As<IRuleProvider>().InstancePerDependency();
+
+            builder.RegisterType<DefaultContentBlockProvider>().As<IContentBlockProvider>().InstancePerDependency();
+
+            builder.RegisterType<RuleManager>().As<IRuleManager>().InstancePerDependency();
+            builder.RegisterType<ScriptExpressionEvaluator>().As<IScriptExpressionEvaluator>().InstancePerDependency();
+
+            #endregion Other: Content Blocks
 
             #region Other: Media
 
@@ -135,26 +145,13 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             #endregion Other: Media
 
-            #region Other: ContentBlocks
-
-            builder.RegisterType<BuiltinRuleProvider>().As<IRuleProvider>().InstancePerDependency();
-            builder.RegisterType<DisabledRuleProvider>().As<IRuleProvider>().InstancePerDependency();
-            builder.RegisterType<UrlRuleProvider>().As<IRuleProvider>().InstancePerDependency();
-
-            builder.RegisterType<DefaultContentBlockProvider>().As<IContentBlockProvider>().InstancePerDependency();
-
-            builder.RegisterType<RuleManager>().As<IRuleManager>().InstancePerDependency();
-            builder.RegisterType<ScriptExpressionEvaluator>().As<IScriptExpressionEvaluator>().InstancePerDependency();
-
-            #endregion Other: ContentBlocks
-
             #region Other: Messaging
 
             //builder.RegisterType<SimpleTextParserEngine>().As<IParserEngine>().InstancePerDependency();
             //builder.RegisterType<UrlContentParserEngine>().As<IParserEngine>().InstancePerDependency();
             builder.RegisterType<Tokenizer>().As<ITokenizer>().InstancePerDependency();
 
-            #endregion
+            #endregion Other: Messaging
 
             // Other
             builder.RegisterType<ResourceBundleRegistrar>().As<IResourceBundleRegistrar>().SingleInstance();

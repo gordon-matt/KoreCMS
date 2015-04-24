@@ -135,6 +135,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\Admin\Blog\BlogAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Blog\BlogNavigationProvider.cs" />
+    <Compile Include="Areas\Admin\Blog\BlogPermissions.cs" />
+    <Compile Include="Areas\Admin\Blog\Controllers\Api\BlogsController.cs" />
+    <Compile Include="Areas\Admin\Blog\Controllers\BlogContentController.cs" />
+    <Compile Include="Areas\Admin\Blog\Controllers\BlogController.cs" />
+    <Compile Include="Areas\Admin\Blog\Domain\BlogEntry.cs" />
     <Compile Include="Areas\Admin\Localization\Controllers\Api\LanguagesController.cs" />
     <Compile Include="Areas\Admin\Localization\Controllers\Api\LocalizableStringsController.cs" />
     <Compile Include="Areas\Admin\Localization\Controllers\LanguageController.cs" />
@@ -374,6 +381,9 @@
     <EmbeddedResource Include="Areas\Admin\Localization\Views\Shared\EditorTemplates\LanguageSwitchBlock.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Media\Views\Media\Browse.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Media\Views\Media\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Blog\Views\BlogContent\Details.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Blog\Views\BlogContent\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Blog\Views\Blog\Index.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\RichTextFull.cshtml" />
@@ -402,6 +412,7 @@
     <EmbeddedResource Include="Areas\Admin\Localization\Scripts\index.js" />
     <EmbeddedResource Include="Areas\Admin\Localization\Scripts\localizableStrings.js" />
     <EmbeddedResource Include="Areas\Admin\Media\ElFinder\mimeTypes.txt" />
+    <EmbeddedResource Include="Areas\Admin\Blog\Scripts\index.js" />
     <Content Include="Areas\Admin\Media\Services\mimeTypes.txt" />
     <EmbeddedResource Include="Areas\Admin\Membership\Scripts\membership.js" />
     <EmbeddedResource Include="Areas\Admin\Membership\Scripts\permissions.js" />

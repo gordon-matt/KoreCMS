@@ -12,6 +12,7 @@ using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 using Kore.Web.ContentManagement.Messaging.Domain;
 using Kore.Web.Infrastructure;
+using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
 
 namespace Kore.Web.ContentManagement.Infrastructure
 {
@@ -22,6 +23,8 @@ namespace Kore.Web.ContentManagement.Infrastructure
         public void Register(HttpConfiguration config)
         {
             ODataModelBuilder builder = new ODataConventionModelBuilder();
+            builder.EntitySet<BlogEntry>("Blogs");
+            builder.EntitySet<ContentBlock>("ContentBlocks");
             builder.EntitySet<Language>("Languages");
             builder.EntitySet<LocalizableString>("LocalizableStrings");
             builder.EntitySet<Menu>("Menus");
@@ -34,21 +37,19 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.EntitySet<KoreRole>("Roles");
             builder.EntitySet<KoreUser>("Users");
             builder.EntitySet<QueuedEmail>("QueuedEmails");
-            builder.EntitySet<ContentBlock>("ContentBlocks");
             builder.EntitySet<Zone>("Zones");
 
             // Special
             builder.EntitySet<PageTreeItem>("PageTree");
-            //builder.ComplexType<PageTreeComplexItem>();
 
             // Action Configurations
+            RegisterContentBlockODataActions(builder);
             RegisterHistoricPageODataActions(builder);
             RegisterLanguageODataActions(builder);
             RegisterLocalizableStringODataActions(builder);
             RegisterMembershipODataActions(builder);
             RegisterMessageTemplateODataActions(builder);
             RegisterPageODataActions(builder);
-            RegisterContentBlockODataActions(builder);
 
             config.Routes.MapODataRoute("OData_Kore_CMS", "odata/kore/cms", builder.GetEdmModel());
         }

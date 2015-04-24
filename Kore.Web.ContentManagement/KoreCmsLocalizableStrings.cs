@@ -7,6 +7,12 @@
         //    public const string Title = "Kore.Web.ContentManagement/CMS.Lists.Title";
         //}
 
+        public static class Blog
+        {
+            public const string ManageBlog = "Kore.Web.ContentManagement/CMS.Blog.ManageBlog";
+            public const string Title = "Kore.Web.ContentManagement/CMS.Blog.Title";
+        }
+
         public static class Localization
         {
             public const string IsRTL = "Kore.Web.ContentManagement/Localization.IsRTL";

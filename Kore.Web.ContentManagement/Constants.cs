@@ -4,6 +4,7 @@
     {
         public static class Areas
         {
+            public const string Blog = "Admin/Blog";
             public const string Localization = "Admin/Localization";
             //public const string Lists = "Admin/Lists";
             public const string Media = "Admin/Media";

@@ -12,9 +12,8 @@ namespace KoreCMS
             #region Scripts
 
             bundles.Add(new ScriptBundle("~/bundles/js/bootstrap").Include("~/Scripts/bootstrap.js"));
-
+            bundles.Add(new ScriptBundle("~/bundles/js/breeze").Include("~/Scripts/breeze.min.js"));
             bundles.Add(new ScriptBundle("~/bundles/js/elfinder").Include("~/Scripts/elfinder/elfinder.full.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/js/jquery").Include("~/Scripts/jquery-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/js/jquery-migrate").Include("~/Scripts/jquery-migrate-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/js/jquery-ui").Include("~/Scripts/jquery-ui-{version}.js"));

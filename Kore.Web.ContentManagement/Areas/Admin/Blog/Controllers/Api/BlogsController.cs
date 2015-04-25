@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Http.OData;
+using System.Web.Http.OData.Query;
 using Kore.Data;
 using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
@@ -19,6 +21,20 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
             : base(repository)
         {
             this.membershipService = membershipService;
+        }
+
+        [AllowAnonymous]
+        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        public override IQueryable<BlogEntry> Get()
+        {
+            return base.Get();
+        }
+
+        [AllowAnonymous]
+        [EnableQuery]
+        public override SingleResult<BlogEntry> Get(Guid key)
+        {
+            return base.Get(key);
         }
 
         public override IHttpActionResult Post(BlogEntry entity)

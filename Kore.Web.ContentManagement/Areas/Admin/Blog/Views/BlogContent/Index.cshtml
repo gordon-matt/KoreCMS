@@ -1,1 +1,16 @@
-﻿
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Script.IncludeBundle("breeze");
+    Script.IncludeBundle("kore-cms/blog-content");
+}
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div data-bind="foreach: entries">
+            <h2 data-bind="html: headline"></h2>
+            <p>Posted by <span data-bind="html: userName"></span> on <span data-bind="html: dateTime"></span></p>
+            <p data-bind="html: shortDescription"></p>
+        </div>
+    </div>
+</div>

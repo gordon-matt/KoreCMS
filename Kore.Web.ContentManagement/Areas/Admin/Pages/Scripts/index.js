@@ -219,8 +219,9 @@ var ViewModel = function () {
             self.cultureCode(json.CultureCode);
             self.refId(json.RefId);
 
-            if (self.accessRestrictions.Roles === "function") {
-                self.roles(self.accessRestrictions.Roles().split(','));
+            if (self.accessRestrictions.Roles != null) {
+                var split = self.accessRestrictions.Roles().split(',');
+                self.roles(split);
             }
             else {
                 self.roles([]);
@@ -673,7 +674,9 @@ $(document).ready(function () {
         dataTextField: ["Name"],
         loadOnDemand: false,
         dataBound: function (e) {
-            $("#treeview").data("kendoTreeView").expand(".k-item");
+            setTimeout(function () {
+                $("#treeview").data("kendoTreeView").expand(".k-item");
+            }, 20);
         }
     });
 });

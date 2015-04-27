@@ -27,7 +27,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 return result;
             }
             // Else return default template
-            return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.Blog.Index");
+            return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.Index");
         }
     }
 }

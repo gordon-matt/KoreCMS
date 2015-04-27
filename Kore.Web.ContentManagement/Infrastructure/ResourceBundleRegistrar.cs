@@ -16,6 +16,9 @@ namespace Kore.Web.ContentManagement.Infrastructure
                 .Include("~/Scripts/Kore.Web.ContentManagement.Scripts.kore-cms-common.js")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Blog.Scripts.blog.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/blog-content")
+                .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Blog.Scripts.blogContent.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/languages")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Scripts.kore-cms-common.js")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Localization.Scripts.index.js"));

@@ -1,5 +1,16 @@
 ﻿'use strict'
 
+var currentSection = $("#main-section");
+
+function switchSection(section) {
+    if (section.attr("id") == currentSection.attr("id")) {
+        return;
+    }
+    currentSection.hide("fast");
+    section.show("fast");
+    currentSection = section;
+};
+
 var BlogEntryModel = function () {
     var self = this;
 
@@ -8,11 +19,21 @@ var BlogEntryModel = function () {
     self.dateCreated = ko.observable('');
     self.shortDescription = ko.observable('');
     self.fullDescription = ko.observable('');
+
+    self.showDetails = function () {
+        viewModel.selected(self);
+        switchSection($('#details-section'));
+    };
 };
 
 var ViewModel = function () {
     var self = this;
     self.entries = ko.observableArray([]);
+    self.selected = ko.observable(new BlogEntryModel());
+
+    self.showMain = function () {
+        switchSection($('#main-section'));
+    };
 };
 
 var viewModel;
@@ -24,9 +45,8 @@ $(document).ready(function () {
     var query = new breeze.EntityQuery().from("Blogs");
 
     manager.executeQuery(query).then(function (data) {
-        $.each(data.httpResponse.data.results, function () {
-            var current = $(this).children().first();
-            alert(JSON.stringify(current));
+        $(data.httpResponse.data.results).each(function () {
+            var current = this;
             var entry = new BlogEntryModel();
             entry.headline(current.Headline);
             entry.userName(current.UserName);

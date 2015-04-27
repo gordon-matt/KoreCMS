@@ -1,7 +1,9 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="bootbox.js" />
 /// <reference path="bootstrap.js" />
+/// <reference path="breeze.js" />
 /// <reference path="chosen.jquery.js" />
+/// <reference path="datajs-1.1.3.js" />
 /// <reference path="elfinder.js" />
 /// <reference path="jquery-2.1.1.js" />
 /// <reference path="jquery-migrate-1.2.1.js" />
@@ -25,6 +27,7 @@
 /// <reference path="knockout.mapping-latest.js" />
 /// <reference path="modernizr-2.8.3.js" />
 /// <reference path="notify.min.js" />
+/// <reference path="q.js" />
 /// <reference path="respond.js" />
 /// <reference path="respond.matchmedia.addlistener.js" />
 /// <reference path="wysiwyg.js" />
@@ -535,8 +538,6 @@
 /// <reference path="tinymce/plugins/compat3x/utils/form_utils.js" />
 /// <reference path="tinymce/plugins/compat3x/utils/mctabs.js" />
 /// <reference path="tinymce/plugins/compat3x/utils/validate.js" />
-/// <reference path="q.min.js" />
-/// <reference path="breeze.min.js" />
  
  / / /   < r e f e r e n c e   p a t h = " b r e e z e . d e b u g . j s "   / >  
  

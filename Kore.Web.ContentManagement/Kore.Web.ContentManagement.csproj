@@ -412,7 +412,7 @@
     <EmbeddedResource Include="Areas\Admin\Localization\Scripts\localizableStrings.js" />
     <EmbeddedResource Include="Areas\Admin\Media\ElFinder\mimeTypes.txt" />
     <EmbeddedResource Include="Areas\Admin\Blog\Scripts\blog.js" />
-    <Content Include="Areas\Admin\Blog\Scripts\blogContent.js" />
+    <EmbeddedResource Include="Areas\Admin\Blog\Scripts\blogContent.js" />
     <Content Include="Areas\Admin\Media\Services\mimeTypes.txt" />
     <EmbeddedResource Include="Areas\Admin\Membership\Scripts\membership.js" />
     <EmbeddedResource Include="Areas\Admin\Membership\Scripts\permissions.js" />

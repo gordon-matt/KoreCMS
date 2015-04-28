@@ -84,7 +84,10 @@ function getBlogs() {
             var entry = new BlogEntryModel();
             entry.headline(current.Headline);
             entry.userId(current.UserId);
-            entry.dateCreated(current.DateCreated);
+
+            var date = moment(current.DateCreated);
+            entry.dateCreated(date.format("YYYY-MM-DD HH:mm:ss"));
+
             entry.shortDescription(current.ShortDescription);
             entry.fullDescription(current.FullDescription);
             viewModel.entries.push(entry);

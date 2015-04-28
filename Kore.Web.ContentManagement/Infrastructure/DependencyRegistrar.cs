@@ -103,6 +103,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             #region Configuration
 
+            builder.RegisterType<BlogSettings>().As<ISettings>().SingleInstance();
             builder.RegisterType<PageSettings>().As<ISettings>().SingleInstance();
 
             #endregion Configuration

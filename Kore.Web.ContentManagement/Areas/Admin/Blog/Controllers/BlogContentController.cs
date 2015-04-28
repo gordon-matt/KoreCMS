@@ -19,13 +19,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            var result = View();
+            var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "Index", null);
 
             // If someone has provided a custom template (see LocationFormatProvider)
-            if (result.View != null)
+            if (viewEngineResult.View != null)
             {
-                return result;
+                return View();
             }
+
             // Else return default template
             return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.Index");
         }

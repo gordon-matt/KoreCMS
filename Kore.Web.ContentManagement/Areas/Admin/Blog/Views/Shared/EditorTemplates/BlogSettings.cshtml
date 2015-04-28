@@ -1,0 +1,57 @@
+﻿@using Kore.Web.ContentManagement.Areas.Admin.Blog
+
+@model BlogSettings
+
+<div id="settings-content">
+    <div class="form-group">
+        @Html.LabelFor(m => m.PageTitle)
+        @Html.TextBox("PageTitle", null, new { @class = "form-control", data_bind = "value: pageTitle" })
+        @Html.ValidationMessageFor(m => m.PageTitle)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DateFormat)
+        @Html.TextBox("DateFormat", null, new { @class = "form-control", data_bind = "value: dateFormat" })
+        @Html.ValidationMessageFor(m => m.DateFormat)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ItemsPerPage)
+        @Html.TextBox("ItemsPerPage", null, new { @class = "form-control", data_bind = "value: itemsPerPage" })
+        @Html.ValidationMessageFor(m => m.ItemsPerPage)
+    </div>
+</div>
+
+<script type="text/javascript">
+    function updateModel(data) {
+        viewModel.pageTitle = ko.observable("Blog");
+        viewModel.dateFormat = ko.observable("YYYY-MM-DD HH:mm:ss");
+        viewModel.itemsPerPage = ko.observable(5);
+        
+        if (data) {
+            if (data.PageTitle) {
+                viewModel.pageTitle(data.PageTitle);
+            }
+            if (data.DateFormat) {
+                viewModel.dateFormat(data.DateFormat);
+            }
+            if (data.ItemsPerPage) {
+                viewModel.itemsPerPage(data.ItemsPerPage);
+            }
+        }
+    };
+
+    function cleanUp() {
+        delete viewModel.pageTitle;
+        delete viewModel.dateFormat;
+        delete viewModel.itemsPerPage;
+    }
+
+    function onBeforeSave() {
+        var data = {
+            PageTitle: viewModel.pageTitle(),
+            DateFormat: viewModel.dateFormat(),
+            ItemsPerPage: viewModel.itemsPerPage()
+        };
+
+        viewModel.value(ko.mapping.toJSON(data));
+    };
+</script>

@@ -37,7 +37,7 @@ var ViewModel = function () {
 
     self.total = ko.observable(0);
     self.pageIndex = ko.observable(1);
-    self.pageSize = 5;
+    self.pageSize = settings.itemsPerPage;
 
     self.pageCount = function () {
         return Math.ceil(self.total() / self.pageSize);
@@ -86,7 +86,7 @@ function getBlogs() {
             entry.userId(current.UserId);
 
             var date = moment(current.DateCreated);
-            entry.dateCreated(date.format("YYYY-MM-DD HH:mm:ss"));
+            entry.dateCreated(date.format(settings.dateFormat));
 
             entry.shortDescription(current.ShortDescription);
             entry.fullDescription(current.FullDescription);
@@ -117,13 +117,15 @@ function getUserNames() {
     var query = new breeze.EntityQuery().from("PublicUsers");
 
     var predicate = null;
+    var haveAnyNew = false;
     $(userIds).each(function (index, userId) {
         if (!localStorage.getItem(localStorageUsersKey + userId)) {
+            haveAnyNew = true;
             if (predicate == null) {
-                predicate = breeze.Predicate.create('UserId', '==', userId);
+                predicate = breeze.Predicate.create('Id', '==', userId);
             }
             else {
-                predicate = predicate.or(breeze.Predicate.create('UserId', '==', userId));
+                predicate = predicate.or(breeze.Predicate.create('Id', '==', userId));
             }
         }
     });
@@ -132,15 +134,21 @@ function getUserNames() {
         .where(predicate)
         .select("Id, UserName");
 
-    manager.executeQuery(query).then(function (data) {
-        $(data.httpResponse.data.results).each(function (index, item) {
-            localStorage.setItem(localStorageUsersKey + item.Id, item.UserName);
+    if (haveAnyNew) {
+        manager.executeQuery(query).then(function (data) {
+            $(data.httpResponse.data.results).each(function (index, item) {
+                localStorage.setItem(localStorageUsersKey + item.Id, item.UserName);
+            });
+            $(viewModel.entries()).each(function (index, item) {
+                item.userName(localStorage.getItem(localStorageUsersKey + item.userId()));
+            });
+        }).fail(function (e) {
+            alert(e);
         });
-
+    }
+    else {
         $(viewModel.entries()).each(function (index, item) {
             item.userName(localStorage.getItem(localStorageUsersKey + item.userId()));
         });
-    }).fail(function (e) {
-        alert(e);
-    });
+    }
 };

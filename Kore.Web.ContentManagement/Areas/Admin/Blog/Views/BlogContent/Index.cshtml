@@ -1,17 +1,23 @@
-﻿@{
+﻿@using Kore.Infrastructure
+@using Kore.Web.ContentManagement.Areas.Admin.Blog
+
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     Script.IncludeBundle("breeze");
     Script.IncludeBundle("knockout");
     Script.IncludeBundle("kore-cms/blog-content");
+
+    var settings = EngineContext.Current.Resolve<BlogSettings>();
+    ViewBag.Title = settings.PageTitle;
 }
 
 <div id="main-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div data-bind="foreach: entries">
-            <a data-bind="click: showDetails"><h2 data-bind="html: headline"></h2></a>
-            <p>Posted by <span data-bind="html: userName"></span> on <span data-bind="html: dateCreated"></span></p>
-            <p data-bind="html: shortDescription"></p>
+            <h2 class="blog-headline"><a data-bind="text: headline, click: showDetails"></a></h2>
+            <p>Posted by <span data-bind="text: userName"></span> on <span data-bind="text: dateCreated"></span></p>
+            <p class="blog-short-desc" data-bind="html: shortDescription"></p>
             <hr />
         </div>
     </div>
@@ -24,10 +30,17 @@
         <div class="pull-right">
             <a class="btn btn-default" data-bind="click: showMain">Back</a>
         </div>
-        <h1 data-bind="html: selected().headline"></h1>
-        <p data-bind="html: selected().fullDescription"></p>
+        <h1 class="blog-headline" data-bind="text: selected().headline"></h1>
+        <p class="blog-full-desc" data-bind="html: selected().fullDescription"></p>
         <div class="pull-right">
             <a class="btn btn-default" data-bind="click: showMain">Back</a>
         </div>
     </article>
 </div>
+
+<script type="text/javascript">
+    var settings = {
+        dateFormat: '@settings.DateFormat',
+        itemsPerPage: @settings.ItemsPerPage
+    };
+</script>

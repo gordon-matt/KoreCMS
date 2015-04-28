@@ -138,6 +138,7 @@
     <Compile Include="Areas\Admin\Blog\BlogAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Blog\BlogNavigationProvider.cs" />
     <Compile Include="Areas\Admin\Blog\BlogPermissions.cs" />
+    <Compile Include="Areas\Admin\Blog\BlogSettings.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\Api\BlogsController.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\BlogContentController.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\BlogController.cs" />
@@ -384,6 +385,7 @@
     <EmbeddedResource Include="Areas\Admin\Media\Views\Media\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\BlogContent\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Blog\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\EditorTemplates\BlogSettings.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\RichTextFull.cshtml" />

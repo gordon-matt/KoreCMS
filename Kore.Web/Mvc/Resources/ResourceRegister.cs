@@ -24,7 +24,7 @@ namespace Kore.Web.Mvc.Resources
 
         protected abstract string VirtualBasePath { get; }
 
-        public virtual ResourceEntry Include(string path, bool isThemePath = false)
+        public virtual ResourceEntry Include(string path, bool isThemePath = false, int? order = null)
         {
             ResourceEntry resourceEntry;
             if (isThemePath)
@@ -37,6 +37,12 @@ namespace Kore.Web.Mvc.Resources
                 resourceEntry = new ResourceEntry(ResourceType, string.Concat(VirtualBasePath, "/", path));
             }
             resourcesManager.RegisterResource(resourceEntry);
+
+            if (order.HasValue)
+            {
+                resourceEntry.Order = order.Value;
+            }
+
             return resourceEntry;
         }
 

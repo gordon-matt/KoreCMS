@@ -2,7 +2,14 @@
 @using Kore.Web.ContentManagement.Areas.Admin.Blog
 
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (string.IsNullOrEmpty(SiteSettings.DefaultFrontendLayoutPath))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = SiteSettings.DefaultFrontendLayoutPath;
+    }
 
     Script.IncludeBundle("breeze");
     Script.IncludeBundle("knockout");
@@ -12,20 +19,22 @@
     ViewBag.Title = settings.PageTitle;
 }
 
-<div id="main-section" class="row">
+<div id="main-section" class="row blog-section">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div data-bind="foreach: entries">
-            <h2 class="blog-headline"><a data-bind="text: headline, click: showDetails"></a></h2>
-            <p>Posted by <span data-bind="text: userName"></span> on <span data-bind="text: dateCreated"></span></p>
-            <p class="blog-short-desc" data-bind="html: shortDescription"></p>
-            <hr />
+            <article class="blog-teaser">
+                <h2 class="blog-headline"><a data-bind="text: headline, click: showDetails"></a></h2>
+                <p>Posted by <span data-bind="text: userName"></span> on <span data-bind="text: dateCreated"></span></p>
+                <p class="blog-short-desc" data-bind="html: shortDescription"></p>
+                <hr />
+            </article>
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div id="pager"></div>
     </div>
 </div>
-<div id="details-section" class="row" style="display:none">
+<div id="details-section" class="row blog-section" style="display:none">
     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="pull-right">
             <a class="btn btn-default" data-bind="click: showMain">Back</a>

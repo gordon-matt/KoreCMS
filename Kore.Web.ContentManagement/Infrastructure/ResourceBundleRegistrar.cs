@@ -18,6 +18,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/blog-content")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Scripts.jquery.bootpag.min.js")
+                .Include("~/Scripts/Kore.Web.ContentManagement.Scripts.moment.js")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Blog.Scripts.blogContent.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/languages")

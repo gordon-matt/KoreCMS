@@ -1,4 +1,6 @@
 ﻿using System.Data.Entity;
+using Kore.Logging.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
@@ -9,9 +11,13 @@ namespace Kore.Web.ContentManagement
 {
     public interface IKoreCmsDbContext
     {
+        DbSet<BlogEntry> Blog { get; set; }
+
         DbSet<ContentBlock> ContentBlocks { get; set; }
 
         DbSet<HistoricPage> HistoricPages { get; set; }
+
+        DbSet<LogEntry> Log { get; set; }
 
         DbSet<MediaPart> MediaParts { get; set; }
 

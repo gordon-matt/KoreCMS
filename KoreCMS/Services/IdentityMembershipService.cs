@@ -55,13 +55,18 @@ namespace KoreCMS.Services
 
         public IEnumerable<KoreUser> GetAllUsers()
         {
+            return GetAllUsersAsQueryable().ToHashSet();
+        }
+
+        public IQueryable<KoreUser> GetAllUsersAsQueryable()
+        {
             return dbContext.Users.Select(x => new KoreUser
             {
                 Id = x.Id,
                 UserName = x.UserName,
                 Email = x.Email,
                 IsLockedOut = x.LockoutEnabled
-            }).ToList();
+            });
         }
 
         public KoreUser GetUserById(object userId)

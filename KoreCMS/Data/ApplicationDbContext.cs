@@ -8,8 +8,10 @@ using Kore.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Localization.Domain;
+using Kore.Logging.Domain;
 using Kore.Tasks.Domain;
 using Kore.Web.ContentManagement;
+using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
@@ -60,9 +62,13 @@ namespace KoreCMS.Data
 
         #region IKoreCmsDbContext Members
 
+        public DbSet<BlogEntry> Blog { get; set; }
+
         public DbSet<ContentBlock> ContentBlocks { get; set; }
 
         public DbSet<HistoricPage> HistoricPages { get; set; }
+
+        public DbSet<LogEntry> Log { get; set; }
 
         public DbSet<MediaPart> MediaParts { get; set; }
 

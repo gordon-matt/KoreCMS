@@ -34,6 +34,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.EntitySet<Page>("Pages");
             builder.EntitySet<PageType>("PageTypes");
             builder.EntitySet<KorePermission>("Permissions");
+            builder.EntitySet<PublicUserInfo>("PublicUsers");
             builder.EntitySet<KoreRole>("Roles");
             builder.EntitySet<KoreUser>("Users");
             builder.EntitySet<QueuedEmail>("QueuedEmails");

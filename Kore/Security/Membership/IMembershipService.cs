@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Kore.Security.Membership
 {
@@ -17,6 +18,8 @@ namespace Kore.Security.Membership
         #region Users
 
         IEnumerable<KoreUser> GetAllUsers();
+
+        IQueryable<KoreUser> GetAllUsersAsQueryable();
 
         KoreUser GetUserById(object userId);
 

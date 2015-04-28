@@ -20,7 +20,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         }
 
         [EnableQuery]
-        public virtual IEnumerable<PageTreeItem> Get()
+        public IEnumerable<PageTreeItem> Get()
         {
             var pages = pageRepository.Table.ToHashSet();
 

@@ -2,6 +2,9 @@
 
 var currentSection = $("#main-section");
 
+var localStorageRootKey = "BlogContent_";
+var localStorageUsersKey = localStorageRootKey + "Users_";
+
 function switchSection(section) {
     if (section.attr("id") == currentSection.attr("id")) {
         return;
@@ -15,6 +18,7 @@ var BlogEntryModel = function () {
     var self = this;
 
     self.headline = ko.observable('');
+    self.userId = ko.observable('');
     self.userName = ko.observable('');
     self.dateCreated = ko.observable('');
     self.shortDescription = ko.observable('');
@@ -48,15 +52,21 @@ breeze.config.initializeAdapterInstances({ dataService: "OData" });
 var manager = new breeze.EntityManager('/odata/kore/cms');
 
 var pagerInitialized = false;
+var userIds = [];
 
 var viewModel;
 $(document).ready(function () {
+    //TODO: clear local storage from before... for this page only..
+    // See: http://stackoverflow.com/questions/8419354/get-html5-localstorage-keys
+
     viewModel = new ViewModel();
-    runQuery();
+    getBlogs();
     ko.applyBindings(viewModel);
 });
 
-function runQuery() {
+function getBlogs() {
+    userIds = [];
+
     var query = new breeze.EntityQuery()
         .from("Blogs")
         .orderBy("DateCreated desc")
@@ -68,15 +78,17 @@ function runQuery() {
         viewModel.entries([]);
         viewModel.selected(new BlogEntryModel());
         viewModel.total(data.inlineCount);
+
         $(data.httpResponse.data.results).each(function () {
             var current = this;
             var entry = new BlogEntryModel();
             entry.headline(current.Headline);
-            entry.userName(current.UserName);
+            entry.userId(current.UserId);
             entry.dateCreated(current.DateCreated);
             entry.shortDescription(current.ShortDescription);
             entry.fullDescription(current.FullDescription);
             viewModel.entries.push(entry);
+            userIds.push(current.UserId);
         });
 
         if (!pagerInitialized) {
@@ -88,10 +100,43 @@ function runQuery() {
                 firstLastUse: true,
             }).on("page", function (event, num) {
                 viewModel.pageIndex(num);
-                runQuery();
+                getBlogs();
             });
             pagerInitialized = true;
         }
+        getUserNames();
+    }).fail(function (e) {
+        alert(e);
+    });
+};
+
+function getUserNames() {
+    var query = new breeze.EntityQuery().from("PublicUsers");
+
+    var predicate = null;
+    $(userIds).each(function (index, userId) {
+        if (!localStorage.getItem(localStorageUsersKey + userId)) {
+            if (predicate == null) {
+                predicate = breeze.Predicate.create('UserId', '==', userId);
+            }
+            else {
+                predicate = predicate.or(breeze.Predicate.create('UserId', '==', userId));
+            }
+        }
+    });
+
+    query = query
+        .where(predicate)
+        .select("Id, UserName");
+
+    manager.executeQuery(query).then(function (data) {
+        $(data.httpResponse.data.results).each(function (index, item) {
+            localStorage.setItem(localStorageUsersKey + item.Id, item.UserName);
+        });
+
+        $(viewModel.entries()).each(function (index, item) {
+            item.userName(localStorage.getItem(localStorageUsersKey + item.userId()));
+        });
     }).fail(function (e) {
         alert(e);
     });

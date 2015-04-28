@@ -207,6 +207,7 @@
     <Compile Include="Areas\Admin\Media\Services\SystemMediaDriver.cs" />
     <Compile Include="Areas\Admin\Media\ContentBlocks\NivoSliderBlock.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\PermissionsController.cs" />
+    <Compile Include="Areas\Admin\Membership\Controllers\Api\PublicUsersController.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\RolesController.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\UsersController.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\MembershipController.cs" />

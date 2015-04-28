@@ -3,7 +3,6 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using Kore.Security.Membership;
@@ -23,7 +22,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
         [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         public virtual IQueryable<KoreUser> Get()
         {
-            return Service.GetAllUsers().AsQueryable();
+            return Service.GetAllUsersAsQueryable();
         }
 
         [EnableQuery]

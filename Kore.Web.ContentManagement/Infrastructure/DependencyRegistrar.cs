@@ -20,6 +20,7 @@ using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.ContentManagement.FileSystems.Media;
 using Kore.Web.ContentManagement.Messaging;
 using Kore.Web.ContentManagement.Messaging.Services;
+using Kore.Web.Indexing;
 using Kore.Web.Indexing.Services;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
@@ -163,6 +164,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             // Indexing
             builder.RegisterType<PagesIndexingContentProvider>().As<IIndexingContentProvider>().InstancePerDependency();
+            builder.RegisterType<StandardPage>().As<ISearchFieldProvider>().SingleInstance();
         }
 
         public int Order

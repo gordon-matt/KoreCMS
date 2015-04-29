@@ -5,6 +5,10 @@ namespace Kore.Indexing.Lucene
 {
     public class LuceneSearchBlock : ContentBlockBase
     {
+        public bool RenderAsBootstrapNavbarForm { get; set; }
+
+        #region ContentBlockBase Overrides
+
         public override string Name
         {
             get { return "Lucene Search Form"; }
@@ -17,7 +21,9 @@ namespace Kore.Indexing.Lucene
 
         public override string EditorTemplatePath
         {
-            get { throw new NotSupportedException(); }
+            get { return "Kore.Indexing.Lucene.Views.Shared.EditorTemplates.LuceneSearchBlock"; }
         }
+
+        #endregion ContentBlockBase Overrides
     }
 }

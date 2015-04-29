@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Kore.Collections.Generic;
@@ -8,16 +9,20 @@ namespace Kore.Web.Indexing.Services
 {
     public interface ISearchService
     {
-        PagedList<T> Query<T>(string query, int skip, int? take, string[] searchFields, string culture, Func<ISearchHit, T> shapeResult);
+        PagedList<ISearchHit> Query(string query, string cultureCode, int pageIndex = 0, int? pageSize = null);
     }
 
     public class SearchService : ISearchService
     {
         private readonly IIndexManager indexManager;
+        private readonly Lazy<IEnumerable<ISearchFieldProvider>> searchFieldProviders;
 
-        public SearchService(IIndexManager indexManager)
+        public SearchService(
+            IIndexManager indexManager,
+            Lazy<IEnumerable<ISearchFieldProvider>> searchFieldProviders)
         {
             this.indexManager = indexManager;
+            this.searchFieldProviders = searchFieldProviders;
             T = NullLocalizer.Instance;
         }
 
@@ -30,28 +35,35 @@ namespace Kore.Web.Indexing.Services
                 : new NullSearchBuilder();
         }
 
-        PagedList<T> ISearchService.Query<T>(string query, int page, int? pageSize, string[] searchFields, string culture, Func<ISearchHit, T> shapeResult)
+        public PagedList<ISearchHit> Query(string query, string cultureCode, int pageIndex = 0, int? pageSize = null)
         {
             if (string.IsNullOrWhiteSpace(query))
-                return new PagedList<T>(Enumerable.Empty<T>());
+            {
+                return new PagedList<ISearchHit>(Enumerable.Empty<ISearchHit>());
+            }
+
+            var searchFields = searchFieldProviders.Value.SelectMany(x => x.IndexFields).ToArray();
 
             var searchBuilder = Search().Parse(searchFields, query);
 
-            if (!string.IsNullOrEmpty(culture))
+            if (!string.IsNullOrEmpty(cultureCode))
             {
-                var cultureInfo = new CultureInfo(culture);
+                var cultureInfo = new CultureInfo(cultureCode);
                 searchBuilder.WithField("culture", cultureInfo.LCID).AsFilter();
             }
 
-            var totalCount = searchBuilder.Count();
+            int totalCount = searchBuilder.Count();
+
             if (pageSize != null)
-                searchBuilder = searchBuilder
-                    .Slice((page > 0 ? page - 1 : 0) * (int)pageSize, (int)pageSize);
+            {
+                searchBuilder = searchBuilder.Slice(
+                    (pageIndex > 0 ? pageIndex - 1 : 0) * pageSize ?? 0,
+                    pageSize ?? 0);
+            }
 
             var searchResults = searchBuilder.Search();
 
-            var pageOfItems = new PagedList<T>(searchResults.Select(shapeResult), page, pageSize != null ? (int)pageSize : totalCount, totalCount);
-
+            var pageOfItems = new PagedList<ISearchHit>(searchResults, pageIndex, pageSize ?? totalCount, totalCount);
             return pageOfItems;
         }
     }

@@ -15,13 +15,11 @@ namespace Kore.Web.Areas.Admin.Indexing.Controllers
     {
         private readonly INotifier notifier;
         private readonly ISearchService searchService;
-        private readonly SearchSettings searchSettings;
 
-        public SearchController(INotifier notifier, ISearchService searchService, SearchSettings searchSettings)
+        public SearchController(INotifier notifier, ISearchService searchService)
         {
             this.notifier = notifier;
             this.searchService = searchService;
-            this.searchSettings = searchSettings;
         }
 
         [Route("")]
@@ -38,7 +36,7 @@ namespace Kore.Web.Areas.Admin.Indexing.Controllers
 
             try
             {
-                searchHits = searchService.Query(q, 0, 20, searchSettings.SearchedFields, WorkContext.CurrentCultureCode, searchHit => searchHit);
+                searchHits = searchService.Query(q, WorkContext.CurrentCultureCode, 0, 20);
             }
             catch (Exception x)
             {

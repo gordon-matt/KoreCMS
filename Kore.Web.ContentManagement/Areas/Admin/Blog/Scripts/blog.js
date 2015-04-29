@@ -6,6 +6,7 @@ var ViewModel = function () {
     self.id = ko.observable(emptyGuid);
     self.headline = ko.observable('');
     self.slug = ko.observable('');
+    self.teaserImageUrl = ko.observable(null);
     self.shortDescription = ko.observable('');
     self.fullDescription = ko.observable('');
 
@@ -15,6 +16,7 @@ var ViewModel = function () {
         self.id(emptyGuid);
         self.headline('');
         self.slug('');
+        self.teaserImageUrl(null);
         self.shortDescription('');
         self.fullDescription('');
 
@@ -34,6 +36,7 @@ var ViewModel = function () {
             self.id(json.Id);
             self.headline(json.Headline);
             self.slug(json.Slug);
+            self.teaserImageUrl(json.TeaserImageUrl);
             self.shortDescription(json.ShortDescription);
             self.fullDescription(json.FullDescription);
 
@@ -74,6 +77,7 @@ var ViewModel = function () {
             Id: self.id(),
             Headline: self.headline(),
             Slug: self.slug(),
+            TeaserImageUrl: self.teaserImageUrl(),
             ShortDescription: self.shortDescription(),
             FullDescription: self.fullDescription()
         };
@@ -132,6 +136,7 @@ var ViewModel = function () {
         rules: {
             Headline: { required: true, maxlength: 255 },
             Slug: { required: true, maxlength: 255 },
+            TeaserImageUrl: { maxlength: 255 },
             ShortDescription: { maxlength: 255 }
         }
     });

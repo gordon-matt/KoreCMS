@@ -17,6 +17,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 
         public string Slug { get; set; }
 
+        public string TeaserImageUrl { get; set; }
+
         public string ShortDescription { get; set; }
 
         public string FullDescription { get; set; }
@@ -41,6 +43,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
             Property(x => x.DateCreated).IsRequired();
             Property(x => x.Headline).HasMaxLength(128).IsRequired();
             Property(x => x.Slug).HasMaxLength(128).IsRequired();
+            Property(x => x.TeaserImageUrl).HasMaxLength(255);
             Property(x => x.ShortDescription).HasMaxLength(255).IsRequired();
             Property(x => x.FullDescription).IsMaxLength().IsRequired();
         }

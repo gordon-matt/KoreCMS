@@ -23,10 +23,20 @@
     <div id="main-section" class="row blog-section">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div data-bind="foreach: entries">
-                <article class="blog-teaser">
+                <article class="blog-teaser row">
                     <h2 class="blog-headline"><a data-bind="text: headline, click: showDetails"></a></h2>
                     <p>Posted by <span data-bind="text: userName"></span> on <span data-bind="text: dateCreated"></span></p>
-                    <p class="blog-short-desc" data-bind="html: shortDescription"></p>
+                    
+                    <div class="pull-left col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <div data-bind="if: teaserImageUrl">
+                            <img class="img-responsive" data-bind="attr: { src: teaserImageUrl }" />
+                        </div>
+                        <div data-bind="ifnot: teaserImageUrl">
+                            <img class="img-responsive" src="http://placehold.it/280x136&text=Image+Missing" />
+                        </div>
+                    </div>
+
+                    <p class="blog-short-desc  col-xs-9 col-sm-9 col-md-9 col-lg-9" data-bind="html: shortDescription"></p>
                     <hr />
                 </article>
             </div>
@@ -37,16 +47,18 @@
     </div>
     <div id="details-section" class="row blog-section" style="display:none">
         <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-           
+            <div class="pull-right">
+                <a class="btn btn-default" data-bind="click: showMain">Back</a>
+            </div>
             <h1 class="blog-headline" data-bind="text: selected().headline"></h1>
             <p>Posted by <span data-bind="text: selected().userName"></span> on <span data-bind="text: selected().dateCreated"></span></p>
             <p class="blog-full-desc" data-bind="html: selected().fullDescription"></p>
 
-            <div class="pull-right">
-                <a class="btn btn-default" data-bind="">next</a>
-            </div>
             <div class="pull-left">
-                <a class="btn btn-default" data-bind="click: showMain">Back</a>
+                <a class="btn btn-default" data-bind="click: showPrevious">Previous</a>
+            </div>
+            <div class="pull-right">
+                <a class="btn btn-default" data-bind="click: showNext">Next</a>
             </div>
         </article>
     </div>

@@ -21,6 +21,7 @@ var BlogEntryModel = function () {
     self.userId = ko.observable('');
     self.userName = ko.observable('');
     self.dateCreated = ko.observable('');
+    self.teaserImageUrl = ko.observable(null);
     self.shortDescription = ko.observable('');
     self.fullDescription = ko.observable('');
 
@@ -88,6 +89,7 @@ function getBlogs() {
             var date = moment(current.DateCreated);
             entry.dateCreated(date.format(settings.dateFormat));
 
+            entry.teaserImageUrl(current.TeaserImageUrl);
             entry.shortDescription(current.ShortDescription);
             entry.fullDescription(current.FullDescription);
             viewModel.entries.push(entry);

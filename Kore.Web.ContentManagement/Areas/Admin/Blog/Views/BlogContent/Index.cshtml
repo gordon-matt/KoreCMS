@@ -19,34 +19,38 @@
     ViewBag.Title = settings.PageTitle;
 }
 
-<div id="main-section" class="row blog-section">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div data-bind="foreach: entries">
-            <article class="blog-teaser">
-                <h2 class="blog-headline"><a data-bind="text: headline, click: showDetails"></a></h2>
-                <p>Posted by <span data-bind="text: userName"></span> on <span data-bind="text: dateCreated"></span></p>
-                <p class="blog-short-desc" data-bind="html: shortDescription"></p>
-                <hr />
-            </article>
+<div class="container">
+    <div id="main-section" class="row blog-section">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div data-bind="foreach: entries">
+                <article class="blog-teaser">
+                    <h2 class="blog-headline"><a data-bind="text: headline, click: showDetails"></a></h2>
+                    <p>Posted by <span data-bind="text: userName"></span> on <span data-bind="text: dateCreated"></span></p>
+                    <p class="blog-short-desc" data-bind="html: shortDescription"></p>
+                    <hr />
+                </article>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div id="pager"></div>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div id="pager"></div>
-    </div>
-</div>
-<div id="details-section" class="row blog-section" style="display:none">
-    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="pull-right">
-            <a class="btn btn-default" data-bind="click: showMain">Back</a>
-        </div>
-        <h1 class="blog-headline" data-bind="text: selected().headline"></h1>
-        <p class="blog-full-desc" data-bind="html: selected().fullDescription"></p>
-        <div class="pull-right">
-            <a class="btn btn-default" data-bind="click: showMain">Back</a>
-        </div>
-    </article>
-</div>
+    <div id="details-section" class="row blog-section" style="display:none">
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+           
+            <h1 class="blog-headline" data-bind="text: selected().headline"></h1>
+            <p>Posted by <span data-bind="text: selected().userName"></span> on <span data-bind="text: selected().dateCreated"></span></p>
+            <p class="blog-full-desc" data-bind="html: selected().fullDescription"></p>
 
+            <div class="pull-right">
+                <a class="btn btn-default" data-bind="">next</a>
+            </div>
+            <div class="pull-left">
+                <a class="btn btn-default" data-bind="click: showMain">Back</a>
+            </div>
+        </article>
+    </div>
+</div>
 <script type="text/javascript">
     var settings = {
         dateFormat: '@settings.DateFormat',

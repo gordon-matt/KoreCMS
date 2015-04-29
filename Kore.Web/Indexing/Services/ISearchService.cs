@@ -15,14 +15,10 @@ namespace Kore.Web.Indexing.Services
     public class SearchService : ISearchService
     {
         private readonly IIndexManager indexManager;
-        private readonly Lazy<IEnumerable<ISearchFieldProvider>> searchFieldProviders;
 
-        public SearchService(
-            IIndexManager indexManager,
-            Lazy<IEnumerable<ISearchFieldProvider>> searchFieldProviders)
+        public SearchService(IIndexManager indexManager)
         {
             this.indexManager = indexManager;
-            this.searchFieldProviders = searchFieldProviders;
             T = NullLocalizer.Instance;
         }
 
@@ -42,7 +38,10 @@ namespace Kore.Web.Indexing.Services
                 return new PagedList<ISearchHit>(Enumerable.Empty<ISearchHit>());
             }
 
-            var searchFields = searchFieldProviders.Value.SelectMany(x => x.IndexFields).ToArray();
+            var provider = indexManager.GetSearchIndexProvider();
+            var searchFields = provider.GetFields(KoreWebConstants.Indexing.DefaultIndexName)
+                .Except(new[]{ "id", "culture", "url", "description" })
+                .ToArray();
 
             var searchBuilder = Search().Parse(searchFields, query);
 

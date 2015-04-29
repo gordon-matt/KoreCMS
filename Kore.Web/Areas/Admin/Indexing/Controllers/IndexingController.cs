@@ -11,8 +11,6 @@ namespace Kore.Web.Areas.Admin.Indexing.Controllers
     [RouteArea(KoreWebConstants.Areas.Indexing)]
     public class IndexingController : KoreController
     {
-        private const string DefaultIndexName = "Search";
-
         private readonly IIndexingService indexingService;
 
         public IndexingController(IIndexingService indexingService)
@@ -34,7 +32,7 @@ namespace Kore.Web.Areas.Admin.Indexing.Controllers
 
             try
             {
-                indexEntry = indexingService.GetIndexEntry(DefaultIndexName);
+                indexEntry = indexingService.GetIndexEntry(KoreWebConstants.Indexing.DefaultIndexName);
 
                 if (indexEntry == null)
                 {
@@ -64,7 +62,7 @@ namespace Kore.Web.Areas.Admin.Indexing.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            indexingService.RebuildIndex(DefaultIndexName);
+            indexingService.RebuildIndex(KoreWebConstants.Indexing.DefaultIndexName);
 
             return RedirectToAction("Index");
         }

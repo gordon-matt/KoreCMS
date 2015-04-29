@@ -164,7 +164,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             // Indexing
             builder.RegisterType<PagesIndexingContentProvider>().As<IIndexingContentProvider>().InstancePerDependency();
-            builder.RegisterType<StandardPage>().As<ISearchFieldProvider>().SingleInstance();
         }
 
         public int Order

@@ -202,7 +202,6 @@
     <Compile Include="Fakes\FakePrincipal.cs" />
     <Compile Include="HttpContextStateProvider.cs" />
     <Compile Include="Indexing\Configuration\IndexSettings.cs" />
-    <Compile Include="Indexing\Configuration\SearchSettings.cs" />
     <Compile Include="Indexing\DefaultIndexManager.cs" />
     <Compile Include="Indexing\Extensions\StringExtensions.cs" />
     <Compile Include="Indexing\IIndexDocument.cs" />
@@ -212,6 +211,7 @@
     <Compile Include="Indexing\IndexNotifierHandler.cs" />
     <Compile Include="Indexing\ISearchBits.cs" />
     <Compile Include="Indexing\ISearchBuilder.cs" />
+    <Compile Include="Indexing\ISearchFieldProvider.cs" />
     <Compile Include="Indexing\ISearchHit.cs" />
     <Compile Include="Indexing\MetaDataExtensions.cs" />
     <Compile Include="Indexing\NullSearchBuilder.cs" />

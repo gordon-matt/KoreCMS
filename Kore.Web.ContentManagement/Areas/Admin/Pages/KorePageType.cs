@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.Indexing;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 {
-    public abstract class KorePageType
+    public abstract class KorePageType : ISearchFieldProvider
     {
         public KorePageType()
         {
@@ -28,6 +29,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
         #endregion Instance Properties
 
         public abstract void InitializeInstance(Page page);
+
+        public abstract IEnumerable<string> IndexFields { get; }
 
         public abstract void PopulateDocumentIndex(IDocumentIndex document, out string description);
 

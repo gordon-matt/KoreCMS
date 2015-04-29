@@ -37,6 +37,20 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
             BodyContent = fields.BodyContent;
         }
 
+        public override IEnumerable<string> IndexFields
+        {
+            get
+            {
+                return new[]
+                {
+                    "title",
+                    "meta_keywords",
+                    "meta_description",
+                    "body"
+                };
+            }
+        }
+
         public override void PopulateDocumentIndex(IDocumentIndex document, out string description)
         {
             document.Add("title", InstanceName).Analyze().Store();

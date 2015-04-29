@@ -10,6 +10,11 @@
             public const string ScheduledTasks = "Admin/ScheduledTasks";
         }
 
+        public static class Indexing
+        {
+            public const string DefaultIndexName = "Search";
+        }
+
         //public static class Features
         //{
         //    public const string Media = "Kore.ContentManagement.Media";

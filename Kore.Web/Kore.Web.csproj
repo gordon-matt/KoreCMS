@@ -211,7 +211,6 @@
     <Compile Include="Indexing\IndexNotifierHandler.cs" />
     <Compile Include="Indexing\ISearchBits.cs" />
     <Compile Include="Indexing\ISearchBuilder.cs" />
-    <Compile Include="Indexing\ISearchFieldProvider.cs" />
     <Compile Include="Indexing\ISearchHit.cs" />
     <Compile Include="Indexing\MetaDataExtensions.cs" />
     <Compile Include="Indexing\NullSearchBuilder.cs" />

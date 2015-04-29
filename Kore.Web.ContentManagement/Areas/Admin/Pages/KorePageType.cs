@@ -5,7 +5,7 @@ using Kore.Web.Indexing;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 {
-    public abstract class KorePageType : ISearchFieldProvider
+    public abstract class KorePageType
     {
         public KorePageType()
         {

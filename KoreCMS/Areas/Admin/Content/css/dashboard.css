@@ -15,9 +15,9 @@ body {
     padding: 8px;
 }
 
-.elfinder .elfinder-button.ui-state-disabled .fa {
-    opacity: 0.4;
-}
+    .elfinder .elfinder-button.ui-state-disabled .fa {
+        opacity: 0.4;
+    }
 
 .ui-widget-header {
     height: auto;
@@ -54,6 +54,6 @@ body {
 }
 
 .k-detail-cell > .tabstrip {
-    border-style:dashed;
-    border-width:2px;
+    border-style: dashed;
+    border-width: 2px;
 }

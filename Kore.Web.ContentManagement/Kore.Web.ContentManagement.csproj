@@ -386,6 +386,7 @@
     <EmbeddedResource Include="Areas\Admin\Blog\Views\BlogContent\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Blog\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\EditorTemplates\BlogSettings.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Media\Views\Media\BrowsePartial.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\RichTextFull.cshtml" />
@@ -409,6 +410,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Scripts\bootbox.min.js" />
     <EmbeddedResource Include="Scripts\moment.js" />
     <EmbeddedResource Include="Scripts\jquery.bootpag.min.js" />
     <EmbeddedResource Include="Areas\Admin\Messaging\Scripts\queuedEmails.js" />

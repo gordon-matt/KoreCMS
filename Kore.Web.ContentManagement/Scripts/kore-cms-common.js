@@ -41,10 +41,10 @@ var koreDefaultTinyMCEConfig = {
     //force_p_newlines: false,
     //forced_root_block: '',
     height: 400,
-    file_browser_callback: elFinderBrowser
+    file_browser_callback: elFinderBrowserTinyMCE
 };
 
-function elFinderBrowser(field_name, url, type, win) {
+function elFinderBrowserTinyMCE(field_name, url, type, win) {
     tinymce.activeEditor.windowManager.open({
         file: '/admin/media/media-library/browse',// use an absolute path!
         title: 'elFinder 2.0',
@@ -58,6 +58,85 @@ function elFinderBrowser(field_name, url, type, win) {
     });
     return false;
 }
+
+function elFinderBrowserBootBox() {
+    $.get('/admin/media/media-library/browse-partial', function (data) {
+        bootbox.dialog({
+            message: data,
+            title: "elFinder 2.0",
+            buttons: {
+                danger: {
+                    label: "Cancel",
+                    className: "btn-default",
+                    callback: function () {
+                        // Do nothing, just remember to have a imagePickerCallback(url) callback function in your own code
+                    }
+                }
+            }
+        });
+        elFinderReplaceIcons();
+    });
+};
+
+function elFinderReplaceIcons() {
+    $(".elfinder-button-icon.elfinder-button-icon-back").removeClass().addClass("fa fa-arrow-left");
+    $(".elfinder-button-icon.elfinder-button-icon-forward").removeClass().addClass("fa fa-arrow-right");
+    $(".elfinder-button-icon.elfinder-button-icon-reload").removeClass().addClass("fa fa-refresh");
+    $(".elfinder-button-icon.elfinder-button-icon-home").removeClass().addClass("fa fa-home");
+    $(".elfinder-button-icon.elfinder-button-icon-up").removeClass().addClass("fa fa-level-up");
+    $(".elfinder-button-icon.elfinder-button-icon-mkfile").removeClass().addClass("fa fa-file-o");
+    $(".elfinder-button-icon.elfinder-button-icon-upload").removeClass().addClass("fa fa-upload");
+    $(".elfinder-button-icon.elfinder-button-icon-open").removeClass().addClass("fa fa-folder-open-o");
+    $(".elfinder-button-icon.elfinder-button-icon-download").removeClass().addClass("fa fa-save");
+    $(".elfinder-button-icon.elfinder-button-icon-info").removeClass().addClass("fa fa-info");
+    $(".elfinder-button-icon.elfinder-button-icon-quicklook").removeClass().addClass("fa fa-search");
+    $(".elfinder-button-icon.elfinder-button-icon-copy").removeClass().addClass("fa fa-copy");
+    $(".elfinder-button-icon.elfinder-button-icon-cut").removeClass().addClass("fa fa-cut");
+    $(".elfinder-button-icon.elfinder-button-icon-paste").removeClass().addClass("fa fa-paste");
+    $(".elfinder-button-icon.elfinder-button-icon-rm").removeClass().addClass("fa fa-trash-o");
+    $(".elfinder-button-icon.elfinder-button-icon-duplicate").removeClass().addClass("fa fa-copy");
+    $(".elfinder-button-icon.elfinder-button-icon-edit").removeClass().addClass("fa fa-edit");
+    $(".elfinder-button-icon.elfinder-button-icon-resize").removeClass().addClass("fa fa-arrows-alt");
+    $(".elfinder-button-icon.elfinder-button-icon-view").removeClass().addClass("fa fa-th-list");
+    $(".elfinder-button-icon.elfinder-button-icon-view.elfinder-button-icon-view-list").removeClass().addClass("fa fa-list");
+    $(".elfinder-button-icon.elfinder-button-icon-sort").removeClass().addClass("fa fa-sort-alpha-asc");
+
+    $(".elfinder-button-icon.elfinder-button-icon-mkdir")
+        .removeClass()
+        .addClass("fa fa-stack-1x fa-folder-open-o")
+        .parent().addClass("fa-stack")
+        .append('<span class="fa fa-stack-1x fa-sub fa-plus text-primary"></span>');
+};
+
+function elFinderReplaceIconsLarge() {
+    $(".elfinder-button-icon.elfinder-button-icon-back").removeClass().addClass("fa fa-2x fa-arrow-left");
+    $(".elfinder-button-icon.elfinder-button-icon-forward").removeClass().addClass("fa fa-2x fa-arrow-right");
+    $(".elfinder-button-icon.elfinder-button-icon-reload").removeClass().addClass("fa fa-2x fa-refresh");
+    $(".elfinder-button-icon.elfinder-button-icon-home").removeClass().addClass("fa fa-2x fa-home");
+    $(".elfinder-button-icon.elfinder-button-icon-up").removeClass().addClass("fa fa-2x fa-level-up");
+    $(".elfinder-button-icon.elfinder-button-icon-mkfile").removeClass().addClass("fa fa-2x fa-file-o");
+    $(".elfinder-button-icon.elfinder-button-icon-upload").removeClass().addClass("fa fa-2x fa-upload");
+    $(".elfinder-button-icon.elfinder-button-icon-open").removeClass().addClass("fa fa-2x fa-folder-open-o");
+    $(".elfinder-button-icon.elfinder-button-icon-download").removeClass().addClass("fa fa-2x fa-save");
+    $(".elfinder-button-icon.elfinder-button-icon-info").removeClass().addClass("fa fa-2x fa-info");
+    $(".elfinder-button-icon.elfinder-button-icon-quicklook").removeClass().addClass("fa fa-2x fa-search");
+    $(".elfinder-button-icon.elfinder-button-icon-copy").removeClass().addClass("fa fa-2x fa-copy");
+    $(".elfinder-button-icon.elfinder-button-icon-cut").removeClass().addClass("fa fa-2x fa-cut");
+    $(".elfinder-button-icon.elfinder-button-icon-paste").removeClass().addClass("fa fa-2x fa-paste");
+    $(".elfinder-button-icon.elfinder-button-icon-rm").removeClass().addClass("fa fa-2x fa-trash-o");
+    $(".elfinder-button-icon.elfinder-button-icon-duplicate").removeClass().addClass("fa fa-2x fa-copy");
+    $(".elfinder-button-icon.elfinder-button-icon-edit").removeClass().addClass("fa fa-2x fa-edit");
+    $(".elfinder-button-icon.elfinder-button-icon-resize").removeClass().addClass("fa fa-2x fa-arrows-alt");
+    $(".elfinder-button-icon.elfinder-button-icon-view").removeClass().addClass("fa fa-2x fa-th-list");
+    $(".elfinder-button-icon.elfinder-button-icon-view.elfinder-button-icon-view-list").removeClass().addClass("fa fa-2x fa-list");
+    $(".elfinder-button-icon.elfinder-button-icon-sort").removeClass().addClass("fa fa-2x fa-sort-alpha-asc");
+
+    $(".elfinder-button-icon.elfinder-button-icon-mkdir")
+        .removeClass()
+        .addClass("fa fa-stack-2x fa-folder-open-o")
+        .parent().addClass("fa-stack fa-lg")
+        .append('<span class="fa fa-stack-1x fa-sub fa-plus text-primary"></span>');
+};
 
 if (typeof tinyMCEContentCss !== 'undefined') {
     koreDefaultTinyMCEConfig.content_css = tinyMCEContentCss;

@@ -30,8 +30,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 
         public abstract void InitializeInstance(Page page);
 
-        public abstract IEnumerable<string> IndexFields { get; }
-
         public abstract void PopulateDocumentIndex(IDocumentIndex document, out string description);
 
         public abstract void ReplaceContentTokens(Func<string, string> func);

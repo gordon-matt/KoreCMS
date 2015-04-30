@@ -19,7 +19,7 @@
     ViewBag.Title = settings.PageTitle;
 }
 
-<div class="container">
+<div class="blog-container">
     <div id="main-section" class="row blog-section">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div data-bind="foreach: entries">
@@ -54,10 +54,10 @@
             <p>Posted by <span data-bind="text: selected().userName"></span> on <span data-bind="text: selected().dateCreated"></span></p>
             <p class="blog-full-desc" data-bind="html: selected().fullDescription"></p>
 
-            <div class="pull-left">
+            <div class="pull-left" data-bind="visible: $root.canShowPrevious()">
                 <a class="btn btn-default" data-bind="click: showPrevious">Previous</a>
             </div>
-            <div class="pull-right">
+            <div class="pull-right" data-bind="visible: $root.canShowNext()">
                 <a class="btn btn-default" data-bind="click: showNext">Next</a>
             </div>
         </article>

@@ -38,6 +38,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
             return View("Kore.Web.ContentManagement.Areas.Admin.Media.Views.Media.Browse");
         }
 
+        [Route("browse-partial")]
+        public ActionResult BrowsePartial()
+        {
+            return PartialView("Kore.Web.ContentManagement.Areas.Admin.Media.Views.Media.BrowsePartial");
+        }
+
         //[HttpPost]
         [Route("connector")]
         public ActionResult Connector()

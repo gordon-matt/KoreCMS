@@ -3,9 +3,11 @@
     
     Style.IncludeBundle("jquery-ui");
     Style.IncludeBundle("elfinder");
+    
     Script.IncludeBundle("jquery-migrate");
     Script.IncludeBundle("jquery-ui");
     Script.IncludeBundle("elfinder");
+    Script.IncludeBundle("kore-cms/common");
 }
 
 <div id="elfinder"></div>
@@ -40,6 +42,10 @@
                 }
             };
             $('#elfinder').elfinder(options).elfinder('instance');
+        });
+
+        $(document).ready(function () {
+            elFinderReplaceIconsLarge();
         });
     </script>
 }

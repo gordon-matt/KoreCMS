@@ -9,6 +9,9 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
         public void Register(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/bootbox")
+                .Include("~/Scripts/Kore.Web.ContentManagement.Scripts.bootbox.min.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/common")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Scripts.kore-cms-common.js"));
 

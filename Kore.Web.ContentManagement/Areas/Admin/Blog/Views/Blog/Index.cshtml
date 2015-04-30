@@ -6,14 +6,26 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 
     Style.IncludeBundle("kendo-ui");
+    Style.IncludeBundle("jquery-ui");
+    Style.IncludeBundle("elfinder");
 
     Script.IncludeBundle("kendo-ui");
     Script.IncludeBundle("knockout");
     Script.IncludeBundle("tinymce");
     Script.IncludeBundle("notify");
+    Script.IncludeBundle("jquery-ui");
+    Script.IncludeBundle("elfinder");
 
+    Script.IncludeBundle("kore-cms/bootbox");
     Script.IncludeBundle("kore-cms/blog");
 }
+
+<style type="text/css">
+    .modal-dialog {
+        width: 800px !important;
+        height: 480px !important;
+    }
+</style>
 
 <div id="grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -53,10 +65,25 @@
                         @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: slug" })
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                    <div class="form-group">
+                        <div data-bind="if: teaserImageUrl">
+                            <img data-bind="attr: { src: teaserImageUrl }" class="img-responsive img-thumbnail" />
+                        </div>
+                        <div data-bind="ifnot: teaserImageUrl">
+                            <img src="http://placehold.it/320x240&text=Image+Missing" class="img-responsive img-thumbnail" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                     <div class="form-group">
                         @Html.Label("TeaserImageUrl", "Teaser Image", new { @class = "control-label" })
-                        @Html.TextBox("TeaserImageUrl", null, new { @class = "form-control", data_bind = "value: teaserImageUrl" })
+                        <div class="input-group">
+                            @Html.TextBox("TeaserImageUrl", null, new { @class = "form-control", data_bind = "value: teaserImageUrl" })
+                            <span class="input-group-addon">
+                                <a href="javascript:void(0);" onclick="elFinderBrowserBootBox();"><i class="fa fa-search"></i></a>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

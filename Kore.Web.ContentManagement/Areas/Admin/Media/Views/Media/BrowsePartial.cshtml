@@ -1,0 +1,76 @@
+﻿<style type="text/css">
+    .elfinder .elfinder-button {
+        cursor: pointer;
+        height: 16px !important;
+        width: 16px !important;
+        padding: 4px !important;
+    }
+
+        .elfinder .elfinder-button.ui-state-disabled .fa {
+            opacity: 0.4;
+        }
+
+    .ui-widget-header {
+        height: auto;
+    }
+
+    .ui-widget-overlay {
+        z-index: auto !important;
+    }
+
+    .fa-sub {
+        position: relative;
+        left: 0.5em;
+        width: 1em;
+        top: -0.38em;
+    }
+</style>
+
+<div id="elfinder"></div>
+
+<script type="text/javascript">
+    var FileBrowserDialogue = {
+        mySubmit: function (URL) {
+            if (bootbox) {
+                imagePickerCallback(URL);
+                bootbox.hideAll();
+                return;
+            }
+        }
+    }
+
+    $(function () {
+        var myCommands = elFinder.prototype._options.commands;
+        var disabled = ['extract', 'archive', 'help', 'select'];
+        $.each(disabled, function (i, cmd) {
+            (idx = $.inArray(cmd, myCommands)) !== -1 && myCommands.splice(idx, 1);
+        });
+        var selectedFile = null;
+        var options = {
+            url: '@Url.Action("Connector", "Media", new { area = Constants.Areas.Media })',
+            commands: myCommands,
+            lang: 'en',
+            uiOptions: {
+                toolbar: [
+                    ['back', 'forward'],
+                    ['reload'],
+                    ['home', 'up'],
+                    ['mkdir', 'mkfile', 'upload'],
+                    ['open', 'download'],
+                    ['info'],
+                    ['quicklook'],
+                    ['copy', 'cut', 'paste'],
+                    ['rm'],
+                    ['duplicate', 'rename', 'edit', 'resize'],
+                    ['view', 'sort']
+                ]
+            },
+            getFileCallback: function (file) { // editor callback
+                // file.url - commandsOptions.getfile.onlyURL = false (default)
+                // file     - commandsOptions.getfile.onlyURL = true
+                FileBrowserDialogue.mySubmit(file.url); // pass selected file path to TinyMCE
+            }
+        };
+        $('#elfinder').elfinder(options).elfinder('instance');
+    });
+</script>

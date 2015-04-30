@@ -47,6 +47,56 @@ var ViewModel = function () {
     self.showMain = function () {
         switchSection($('#main-section'));
     };
+
+    self.showPrevious = function () {
+        var selectedIndex = $.inArray(self.selected(), self.entries());
+        if (selectedIndex == 0) {
+            if (self.pageIndex() > 1) {
+                $("li[data-lp=" + (self.pageIndex() - 1) + "] > a").click();
+                setTimeout(function () {
+                    var previous = self.entries()[self.entries().length - 1];
+                    self.selected(previous);
+                }, 500);
+            }
+        }
+        else {
+            var previous = self.entries()[selectedIndex - 1];
+            self.selected(previous);
+        }
+    };
+
+    self.showNext = function () {
+        var selectedIndex = $.inArray(self.selected(), self.entries());
+        if (selectedIndex == (self.entries().length - 1)) {
+            if (self.pageIndex() < self.pageCount()) {
+                $("li[data-lp=" + (self.pageIndex() + 1) + "] > a").click();
+                setTimeout(function () {
+                    var next = self.entries()[0];
+                    self.selected(next);
+                }, 500);
+            }
+        }
+        else {
+            var next = self.entries()[selectedIndex + 1];
+            self.selected(next);
+        }
+    };
+
+    self.canShowPrevious = function () {
+        var selectedIndex = $.inArray(self.selected(), self.entries());
+        if (self.pageIndex() == 1 && selectedIndex == 0) {
+            return false;
+        }
+        return true;
+    };
+
+    self.canShowNext = function () {
+        var selectedIndex = $.inArray(self.selected(), self.entries());
+        if (self.pageIndex() == self.pageCount() && selectedIndex == (self.entries().length - 1)) {
+            return false;
+        }
+        return true;
+    };
 };
 
 breeze.config.initializeAdapterInstances({ dataService: "OData" });

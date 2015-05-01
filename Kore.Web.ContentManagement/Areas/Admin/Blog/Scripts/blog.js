@@ -140,8 +140,7 @@ var ViewModel = function () {
         rules: {
             Headline: { required: true, maxlength: 255 },
             Slug: { required: true, maxlength: 255 },
-            TeaserImageUrl: { maxlength: 255 },
-            ShortDescription: { maxlength: 255 }
+            TeaserImageUrl: { maxlength: 255 }
         }
     });
 };

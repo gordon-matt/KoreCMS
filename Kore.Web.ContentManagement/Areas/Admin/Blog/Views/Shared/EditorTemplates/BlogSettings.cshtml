@@ -5,18 +5,30 @@
 <div id="settings-content">
     <div class="form-group">
         @Html.LabelFor(m => m.PageTitle)
-        @Html.TextBox("PageTitle", null, new { @class = "form-control", data_bind = "value: pageTitle" })
+        @Html.TextBoxFor(m => m.PageTitle, new { @class = "form-control", data_bind = "value: pageTitle" })
         @Html.ValidationMessageFor(m => m.PageTitle)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.DateFormat)
-        @Html.TextBox("DateFormat", null, new { @class = "form-control", data_bind = "value: dateFormat" })
+        @Html.TextBoxFor(m => m.DateFormat, new { @class = "form-control", data_bind = "value: dateFormat" })
         @Html.ValidationMessageFor(m => m.DateFormat)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ItemsPerPage)
-        @Html.TextBox("ItemsPerPage", null, new { @class = "form-control", data_bind = "value: itemsPerPage" })
+        @Html.TextBoxFor(m => m.ItemsPerPage, new { @class = "form-control", data_bind = "value: itemsPerPage" })
         @Html.ValidationMessageFor(m => m.ItemsPerPage)
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.ShowOnMenus, new { data_bind = "checked: showOnMenus" }) Show on Menus
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.MenuPosition)
+        @Html.TextBoxFor(m => m.MenuPosition, new { @class = "form-control", data_bind = "value: menuPosition" })
+        @Html.ValidationMessageFor(m => m.MenuPosition)
     </div>
 </div>
 
@@ -25,6 +37,8 @@
         viewModel.pageTitle = ko.observable("Blog");
         viewModel.dateFormat = ko.observable("YYYY-MM-DD HH:mm:ss");
         viewModel.itemsPerPage = ko.observable(5);
+        viewModel.showOnMenus = ko.observable(true);
+        viewModel.menuPosition = ko.observable(0);
         
         if (data) {
             if (data.PageTitle) {
@@ -36,6 +50,12 @@
             if (data.ItemsPerPage) {
                 viewModel.itemsPerPage(data.ItemsPerPage);
             }
+            if (data.ShowOnMenus) {
+                viewModel.showOnMenus(data.ShowOnMenus);
+            }
+            if (data.MenuPosition) {
+                viewModel.menuPosition(data.MenuPosition);
+            }
         }
     };
 
@@ -43,13 +63,17 @@
         delete viewModel.pageTitle;
         delete viewModel.dateFormat;
         delete viewModel.itemsPerPage;
+        delete viewModel.showOnMenus;
+        delete viewModel.menuPosition;
     }
 
     function onBeforeSave() {
         var data = {
             PageTitle: viewModel.pageTitle(),
             DateFormat: viewModel.dateFormat(),
-            ItemsPerPage: viewModel.itemsPerPage()
+            ItemsPerPage: viewModel.itemsPerPage(),
+            ShowOnMenus: viewModel.showOnMenus(),
+            MenuPosition: viewModel.menuPosition()
         };
 
         viewModel.value(ko.mapping.toJSON(data));

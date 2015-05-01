@@ -2,9 +2,6 @@
 
 var currentSection = $("#main-section");
 
-var localStorageRootKey = "BlogContent_";
-var localStorageUsersKey = localStorageRootKey + "Users_";
-
 function switchSection(section) {
     if (section.attr("id") == currentSection.attr("id")) {
         return;
@@ -12,6 +9,23 @@ function switchSection(section) {
     currentSection.hide("fast");
     section.show("fast");
     currentSection = section;
+};
+
+var localStorageRootKey = "BlogContent_";
+var localStorageUsersKey = localStorageRootKey + "Users_";
+
+if (typeof String.prototype.startsWith != 'function') {
+    String.prototype.startsWith = function (str) {
+        return this.slice(0, str.length) == str;
+    };
+}
+
+function getLocalStorageKeys() {
+    var keys = [];
+    for (var i = 0; i < localStorage.length; i++) {
+        keys[i] = localStorage.key(i);
+    }
+    return keys;
 };
 
 var BlogEntryModel = function () {
@@ -107,8 +121,15 @@ var userIds = [];
 
 var viewModel;
 $(document).ready(function () {
-    //TODO: clear local storage from before... for this page only..
-    // See: http://stackoverflow.com/questions/8419354/get-html5-localstorage-keys
+    //TODO: Maybe clear this only after a certain amount of time (not very page load)?
+
+    var keys = getLocalStorageKeys();
+    for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        if (key.startsWith(localStorageUsersKey)) {
+            localStorage.removeItem(key);
+        }
+    }
 
     viewModel = new ViewModel();
     getBlogs();

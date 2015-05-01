@@ -118,7 +118,7 @@ namespace Kore.Web.ContentManagement.Controllers
 
             menuItems.AddRange(items);
 
-            if (blogSettings.Value.ShowOnMenus)
+            if (PageSecurityHelper.CheckUserHasAccessToBlog(User) && blogSettings.Value.ShowOnMenus)
             {
                 menuItems.Add(new MenuItem
                 {
@@ -179,7 +179,9 @@ namespace Kore.Web.ContentManagement.Controllers
 
             menuItems.AddRange(items);
 
-            if (currentUrlSlug == string.Empty && blogSettings.Value.ShowOnMenus)
+            if (PageSecurityHelper.CheckUserHasAccessToBlog(User) &&
+                currentUrlSlug == string.Empty &&
+                blogSettings.Value.ShowOnMenus)
             {
                 menuItems.Add(new MenuItem
                 {

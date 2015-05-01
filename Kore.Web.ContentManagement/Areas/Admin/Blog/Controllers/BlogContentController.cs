@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Kore.Data;
 using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Pages;
 using Kore.Web.Mvc;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
@@ -29,6 +30,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
         [Route("")]
         public ActionResult Index()
         {
+            // If there are access restrictions
+            if (!PageSecurityHelper.CheckUserHasAccessToBlog(User))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
             var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "Index", null);
 
             // If someone has provided a custom template (see LocationFormatProvider)
@@ -72,6 +79,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
         [Route("{slug}")]
         public ActionResult Details(string slug)
         {
+            // If there are access restrictions
+            if (!PageSecurityHelper.CheckUserHasAccessToBlog(User))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
             var model = blogRepository.Value.Table.FirstOrDefault(x => x.Slug == slug);
 
             string previousEntrySlug = null;

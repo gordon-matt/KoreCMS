@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Kore.Collections;
 using Kore.Infrastructure;
+using Kore.Web.ContentManagement.Areas.Admin.Blog;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages;
@@ -18,18 +19,34 @@ namespace Kore.Web.ContentManagement.Controllers
     [RoutePrefix("kore-cms")]
     public class FrontendController : KoreController
     {
+        public readonly Lazy<BlogSettings> blogSettings;
+
+        public FrontendController(Lazy<BlogSettings> blogSettings)
+        {
+            this.blogSettings = blogSettings;
+        }
+
         [ChildActionOnly]
         [Route("auto-breadcrumbs")]
         public ActionResult AutoBreadcrumbs(string templateViewName)
         {
+            var breadcrumbs = new List<Breadcrumb>();
+
             string currentUrlSlug = Request.Url.ToString().RightOfLastIndexOf('/');
+
+            if (currentUrlSlug == "blog")
+            {
+                breadcrumbs.Add(new Breadcrumb
+                {
+                    Text = blogSettings.Value.PageTitle
+                });
+                return View(templateViewName, breadcrumbs);
+            }
 
             var pageService = EngineContext.Current.Resolve<IPageService>();
 
             var currentPage = pageService.Repository.Table.FirstOrDefault(y => y.Slug == currentUrlSlug);
             var query = pageService.Repository.Table.Where(x => x.IsEnabled).ToHashSet();
-
-            var breadcrumbs = new List<Breadcrumb>();
 
             if (currentPage != null)
             {
@@ -89,8 +106,6 @@ namespace Kore.Web.ContentManagement.Controllers
             var authorizedPages = pages.Where(x => PageSecurityHelper.CheckUserHasAccessToPage(x, User));
 
             var items = authorizedPages
-                .OrderBy(x => x.Order)
-                .ThenBy(x => x.Name)
                 .Select((x, index) => new MenuItem
             {
                 Id = x.Id,
@@ -102,6 +117,24 @@ namespace Kore.Web.ContentManagement.Controllers
             });
 
             menuItems.AddRange(items);
+
+            if (blogSettings.Value.ShowOnMenus)
+            {
+                menuItems.Add(new MenuItem
+                {
+                    Id = menuId,
+                    Text = blogSettings.Value.PageTitle,
+                    Url = "/blog",
+                    Enabled = true,
+                    ParentId = null,
+                    Position = blogSettings.Value.MenuPosition
+                });
+            }
+
+            menuItems = menuItems
+                .OrderBy(x => x.Position)
+                .ThenBy(x => x.Text)
+                .ToList();
 
             ViewBag.MenuId = menuId;
             return View(templateViewName, menuItems);
@@ -134,8 +167,6 @@ namespace Kore.Web.ContentManagement.Controllers
             var authorizedPages = pages.Where(x => PageSecurityHelper.CheckUserHasAccessToPage(x, User));
 
             var items = authorizedPages
-                .OrderBy(x => x.Order)
-                .ThenBy(x => x.Name)
                 .Select((x, index) => new MenuItem
                 {
                     Id = x.Id,
@@ -147,6 +178,24 @@ namespace Kore.Web.ContentManagement.Controllers
                 });
 
             menuItems.AddRange(items);
+
+            if (currentUrlSlug == string.Empty && blogSettings.Value.ShowOnMenus)
+            {
+                menuItems.Add(new MenuItem
+                {
+                    Id = menuId,
+                    Text = blogSettings.Value.PageTitle,
+                    Url = "/blog",
+                    Enabled = true,
+                    ParentId = null,
+                    Position = blogSettings.Value.MenuPosition
+                });
+            }
+
+            menuItems = menuItems
+                .OrderBy(x => x.Position)
+                .ThenBy(x => x.Text)
+                .ToList();
 
             ViewBag.MenuId = menuId;
             return View(templateViewName, menuItems);

@@ -1,4 +1,5 @@
-﻿using Kore.Web.Configuration;
+﻿using System.ComponentModel.DataAnnotations;
+using Kore.Web.Configuration;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog
 {
@@ -9,13 +10,24 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog
             DateFormat = "YYYY-MM-DD HH:mm:ss";
             ItemsPerPage = 5;
             PageTitle = "Blog";
+            ShowOnMenus = true;
+            MenuPosition = 0;
         }
 
+        [Display(Name = "Page Title")]
         public string PageTitle { get; set; }
 
+        [Display(Name = "Date Format")]
         public string DateFormat { get; set; }
 
+        [Display(Name = "# Items Per Page")]
         public byte ItemsPerPage { get; set; }
+
+        [Display(Name = "Show on Menus")]
+        public bool ShowOnMenus { get; set; }
+
+        [Display(Name = "Menu Position")]
+        public byte MenuPosition { get; set; }
 
         #region ISettings Members
 

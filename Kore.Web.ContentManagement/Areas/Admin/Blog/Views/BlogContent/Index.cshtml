@@ -1,5 +1,7 @@
 ﻿@using Kore.Infrastructure
 @using Kore.Web.ContentManagement.Areas.Admin.Blog
+@using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
+@model IEnumerable<BlogEntry>
 
 @{
     if (string.IsNullOrEmpty(SiteSettings.DefaultFrontendLayoutPath))
@@ -11,61 +13,38 @@
         Layout = SiteSettings.DefaultFrontendLayoutPath;
     }
 
-    Script.IncludeBundle("breeze");
-    Script.IncludeBundle("knockout");
-    Script.IncludeBundle("kore-cms/blog-content");
-
     var settings = EngineContext.Current.Resolve<BlogSettings>();
     ViewBag.Title = settings.PageTitle;
+
+    var userNames = (IDictionary<string, string>)ViewBag.UserNames;
 }
 
 <div class="blog-container">
     <div id="main-section" class="row blog-section">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div data-bind="foreach: entries">
+            @foreach (var entry in Model)
+            {
                 <article class="blog-teaser row">
-                    <h2 class="blog-headline"><a data-bind="text: headline, click: showDetails"></a></h2>
-                    <p>Posted by <span data-bind="text: userName"></span> on <span data-bind="text: dateCreated"></span></p>
+                    <h2 class="blog-headline">
+                        @Html.ActionLink(entry.Headline, "Details", "BlogContent", new { area = string.Empty, slug = entry.Slug }, null)
+                    </h2>
+                    <p>Posted by <span>@userNames[entry.UserId]</span> on <span>@entry.DateCreated</span></p>
                     
-                    <div class="pull-left col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <div data-bind="if: teaserImageUrl">
-                            <img class="img-responsive" data-bind="attr: { src: teaserImageUrl }" />
-                        </div>
-                        <div data-bind="ifnot: teaserImageUrl">
-                            <img class="img-responsive" src="http://placehold.it/280x136&text=Image+Missing" />
-                        </div>
-                    </div>
+                    @{
+                        string teaserImageUrl = string.IsNullOrEmpty(entry.TeaserImageUrl)
+                            ? "http://placehold.it/280x136&text=Image+Missing"
+                            : entry.TeaserImageUrl;
+                    }
 
-                    <p class="blog-short-desc  col-xs-9 col-sm-9 col-md-9 col-lg-9" data-bind="html: shortDescription"></p>
+                    <img class="img-responsive" src="@teaserImageUrl" />
+
+                    <p class="blog-short-desc col-xs-9 col-sm-9 col-md-9 col-lg-9">@entry.ShortDescription</p>
                     <hr />
                 </article>
-            </div>
+            }
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div id="pager"></div>
         </div>
     </div>
-    <div id="details-section" class="row blog-section" style="display:none">
-        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="pull-right">
-                <a class="btn btn-default" data-bind="click: showMain">Back</a>
-            </div>
-            <h1 class="blog-headline" data-bind="text: selected().headline"></h1>
-            <p>Posted by <span data-bind="text: selected().userName"></span> on <span data-bind="text: selected().dateCreated"></span></p>
-            <p class="blog-full-desc" data-bind="html: selected().fullDescription"></p>
-
-            <div class="pull-left" data-bind="visible: $root.canShowPrevious()">
-                <a class="btn btn-default" data-bind="click: showPrevious">Previous</a>
-            </div>
-            <div class="pull-right" data-bind="visible: $root.canShowNext()">
-                <a class="btn btn-default" data-bind="click: showNext">Next</a>
-            </div>
-        </article>
-    </div>
 </div>
-<script type="text/javascript">
-    var settings = {
-        dateFormat: '@settings.DateFormat',
-        itemsPerPage: @settings.ItemsPerPage
-    };
-</script>

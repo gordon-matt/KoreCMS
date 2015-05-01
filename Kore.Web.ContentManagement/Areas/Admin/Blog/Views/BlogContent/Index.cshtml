@@ -13,10 +13,14 @@
         Layout = SiteSettings.DefaultFrontendLayoutPath;
     }
 
+    Script.IncludeBundle("kore-cms/bootpag");
+
     var settings = EngineContext.Current.Resolve<BlogSettings>();
     ViewBag.Title = settings.PageTitle;
 
     var userNames = (IDictionary<string, string>)ViewBag.UserNames;
+    int pageCount = ViewBag.PageCount;
+    int pageIndex = ViewBag.PageIndex;
 }
 
 <div class="blog-container">
@@ -48,3 +52,18 @@
         </div>
     </div>
 </div>
+
+@using (Script.AtFoot())
+{
+    <script type="text/javascript">
+        $('#pager').bootpag({
+            total: @pageCount,
+            page: @pageIndex,
+            maxVisible: 5,
+            leaps: true,
+            firstLastUse: true,
+        }).on("page", function (event, num) {
+            window.location.href = '@Url.Action("Index", "BlogContent", new { area = string.Empty })' + '?pageIndex=' + num;
+        });
+    </script>
+}

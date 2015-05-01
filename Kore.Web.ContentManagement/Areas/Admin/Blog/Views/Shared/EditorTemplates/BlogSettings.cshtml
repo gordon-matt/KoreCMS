@@ -30,6 +30,13 @@
         @Html.TextBoxFor(m => m.MenuPosition, new { @class = "form-control", data_bind = "value: menuPosition" })
         @Html.ValidationMessageFor(m => m.MenuPosition)
     </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.UseAjax, new { data_bind = "checked: useAjax" }) Use Ajax
+            </label>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -39,6 +46,7 @@
         viewModel.itemsPerPage = ko.observable(5);
         viewModel.showOnMenus = ko.observable(true);
         viewModel.menuPosition = ko.observable(0);
+        viewModel.useAjax = ko.observable(false);
         
         if (data) {
             if (data.PageTitle) {
@@ -56,6 +64,9 @@
             if (data.MenuPosition) {
                 viewModel.menuPosition(data.MenuPosition);
             }
+            if (data.UseAjax) {
+                viewModel.useAjax(data.UseAjax);
+            }
         }
     };
 
@@ -65,6 +76,7 @@
         delete viewModel.itemsPerPage;
         delete viewModel.showOnMenus;
         delete viewModel.menuPosition;
+        delete viewModel.useAjax;
     }
 
     function onBeforeSave() {
@@ -73,7 +85,8 @@
             DateFormat: viewModel.dateFormat(),
             ItemsPerPage: viewModel.itemsPerPage(),
             ShowOnMenus: viewModel.showOnMenus(),
-            MenuPosition: viewModel.menuPosition()
+            MenuPosition: viewModel.menuPosition(),
+            UseAjax: viewModel.useAjax()
         };
 
         viewModel.value(ko.mapping.toJSON(data));

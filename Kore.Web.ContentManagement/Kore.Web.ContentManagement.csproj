@@ -387,6 +387,8 @@
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Blog\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\EditorTemplates\BlogSettings.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Media\Views\Media\BrowsePartial.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Blog\Views\BlogContent\IndexAjax.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Blog\Views\BlogContent\Details.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\RichTextFull.cshtml" />

@@ -29,6 +29,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog
         [Display(Name = "Menu Position")]
         public byte MenuPosition { get; set; }
 
+        [Display(Name = "Use Ajax")]
+        public bool UseAjax { get; set; }
+
         #region ISettings Members
 
         public string Name

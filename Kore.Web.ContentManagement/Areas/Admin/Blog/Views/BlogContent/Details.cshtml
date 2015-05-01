@@ -1,0 +1,51 @@
+﻿@using Kore.Infrastructure
+@using Kore.Web.ContentManagement.Areas.Admin.Blog
+@using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
+@model BlogEntry
+
+@{
+    if (string.IsNullOrEmpty(SiteSettings.DefaultFrontendLayoutPath))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = SiteSettings.DefaultFrontendLayoutPath;
+    }
+
+    ViewBag.Title = Model.Headline;
+
+    string previousSlug = ViewBag.PreviousEntrySlug;
+    string nextSlug = ViewBag.NextEntrySlug;
+    string userName = ViewBag.UserName;
+}
+
+<div class="blog-container">
+    <div id="details-section" class="row blog-section">
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="pull-right">
+                @Html.ActionLink("Back", "Index", "BlogContent", new { area = string.Empty, pageIndex = 1 }, new { @class = "btn btn-default" })
+            </div>
+            <h1 class="blog-headline">
+                @Model.Headline
+            </h1>
+            <p>Posted by <span>@userName</span> on <span>@Model.DateCreated</span></p>
+            <p class="blog-full-desc">
+                @Html.Raw(Model.FullDescription)
+            </p>
+
+            @if (!string.IsNullOrEmpty(previousSlug))
+            {
+                <div class="pull-left">
+                    @Html.ActionLink("Previous", "Details", "BlogContent", new { area = string.Empty, slug = previousSlug }, new { @class = "btn btn-default" })
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(nextSlug))
+            {
+                <div class="pull-left">
+                    @Html.ActionLink("Next", "Details", "BlogContent", new { area = string.Empty, slug = nextSlug }, new { @class = "btn btn-default" })
+                </div>
+            }
+        </article>
+    </div>
+</div>

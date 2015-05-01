@@ -32,6 +32,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog
         [Display(Name = "Use Ajax")]
         public bool UseAjax { get; set; }
 
+        public string AccessRestrictions { get; set; }
+
         #region ISettings Members
 
         public string Name

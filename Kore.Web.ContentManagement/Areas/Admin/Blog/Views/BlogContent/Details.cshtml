@@ -24,7 +24,7 @@
     <div id="details-section" class="row blog-section">
         <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="pull-right">
-                @Html.ActionLink("Back", "Index", "BlogContent", new { area = string.Empty, pageIndex = 1 }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Back", "Index", "BlogContent", new { area = string.Empty }, new { @class = "btn btn-default" })
             </div>
             <h1 class="blog-headline">
                 @Model.Headline
@@ -42,7 +42,7 @@
             }
             @if (!string.IsNullOrEmpty(nextSlug))
             {
-                <div class="pull-left">
+                <div class="pull-right">
                     @Html.ActionLink("Next", "Details", "BlogContent", new { area = string.Empty, slug = nextSlug }, new { @class = "btn btn-default" })
                 </div>
             }

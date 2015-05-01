@@ -61,6 +61,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                     k => k,
                     v => membershipService.Value.GetUserById(v).UserName);
 
+            int total = blogRepository.Value.Count();
+
+            ViewBag.PageCount = (int)Math.Ceiling((double)total / blogSettings.ItemsPerPage);
             ViewBag.PageIndex = pageIndex;
             ViewBag.UserNames = userNames;
             return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.Index", model);

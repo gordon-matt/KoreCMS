@@ -233,7 +233,7 @@
     <Compile Include="Http\Dispatcher\NamespacesHttpControllerSelector.cs" />
     <Compile Include="Http\KoreDependencyResolver.cs" />
     <Compile Include="Http\OData\GenericODataController.cs" />
-    <Compile Include="IMobileDeviceHelper.cs" />
+    <Compile Include="Mobile\IMobileDeviceHelper.cs" />
     <Compile Include="Infrastructure\ConfigurationModule.cs" />
     <Compile Include="Infrastructure\DefaultLocalizableStringsProvider.cs" />
     <Compile Include="Infrastructure\DependencyManagement\AutofacRequestLifetimeHttpModule.cs" />
@@ -509,8 +509,9 @@
     <Compile Include="Areas\Admin\Plugins\PluginsNavigationProvider.cs" />
     <Compile Include="Areas\Admin\Plugins\PluginsPermissions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Membership\AccountUserProfileProvider.cs" />
     <Compile Include="Security\Membership\CurrentUserStateProvider.cs" />
-    <Compile Include="Security\Membership\MobileUserProfileProvider.cs" />
+    <Compile Include="Mobile\MobileUserProfileProvider.cs" />
     <Compile Include="Security\Membership\IUserProfileProvider.cs" />
     <Compile Include="Security\Membership\Permissions\CheckAccessContext.cs" />
     <Compile Include="Security\Membership\Permissions\IAuthorizationService.cs" />
@@ -548,6 +549,8 @@
     <EmbeddedResource Include="Views\Shared\EditorTemplates\MobileUserProfileProvider.cshtml" />
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\LocalizationUserProfileProvider.cshtml" />
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\MobileUserProfileProvider.cshtml" />
+    <EmbeddedResource Include="Views\Shared\DisplayTemplates\AccountUserProfileProvider.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\AccountUserProfileProvider.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Configuration\Scripts\" />

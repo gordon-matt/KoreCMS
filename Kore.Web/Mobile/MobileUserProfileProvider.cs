@@ -2,12 +2,16 @@
 using System.ComponentModel.DataAnnotations;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
+using Kore.Web.Security.Membership;
 
-namespace Kore.Web.Security.Membership
+namespace Kore.Web.Mobile
 {
     public class MobileUserProfileProvider : IUserProfileProvider
     {
-        public const string PropertyDontUseMobileVersion = "DontUseMobileVersion";
+        public class Fields
+        {
+            public const string DontUseMobileVersion = "DontUseMobileVersion";
+        }
 
         [Display(Name = "Don't Use Mobile Version")]
         public bool DontUseMobileVersion { get; set; }
@@ -29,18 +33,23 @@ namespace Kore.Web.Security.Membership
             get { return "Kore.Web.Views.Shared.EditorTemplates.MobileUserProfileProvider"; }
         }
 
+        public int Order
+        {
+            get { return 9999; }
+        }
+
         public IEnumerable<string> GetFieldNames()
         {
             return new[]
             {
-                PropertyDontUseMobileVersion
+                Fields.DontUseMobileVersion
             };
         }
 
         public void PopulateFields(string userId)
         {
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
-            string dontUseMobileVersion = membershipService.GetProfileEntry(userId, PropertyDontUseMobileVersion);
+            string dontUseMobileVersion = membershipService.GetProfileEntry(userId, Fields.DontUseMobileVersion);
             DontUseMobileVersion = !string.IsNullOrEmpty(dontUseMobileVersion) && bool.Parse(dontUseMobileVersion);
         }
 

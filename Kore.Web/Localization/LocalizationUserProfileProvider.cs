@@ -30,6 +30,11 @@ namespace Kore.Web.Localization
             get { return "Kore.Web.Views.Shared.EditorTemplates.LocalizationUserProfileProvider"; }
         }
 
+        public int Order
+        {
+            get { return 9999; }
+        }
+
         public IEnumerable<string> GetFieldNames()
         {
             return new[]

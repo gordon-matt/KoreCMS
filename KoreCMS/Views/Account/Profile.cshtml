@@ -10,7 +10,7 @@
 
 <h1>@ViewBag.Title</h1>
 
-@foreach (var provider in userProfileProviders.OrderBy(x => x.Name))
+@foreach (var provider in userProfileProviders.OrderBy(x => x.Order).ThenBy(x => x.Name))
 {
     provider.PopulateFields(Model);
 

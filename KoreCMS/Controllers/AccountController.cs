@@ -8,7 +8,6 @@ using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Messaging;
 using Kore.Web.ContentManagement.Messaging.Services;
 using Kore.Web.Mvc;
-using Kore.Web.Mvc.RoboUI;
 using Kore.Web.Mvc.Routing;
 using Kore.Web.Security.Membership;
 using Kore.Web.Security.Membership.Permissions;
@@ -550,113 +549,58 @@ namespace Kore.Controllers
         [Route("profile/{userId}")]
         public virtual ActionResult ViewProfile(string userId)
         {
-            return UserProfile(userId);
+            if (userId == WorkContext.CurrentUser.Id)
+            {
+                ViewBag.Title = T("My Profile");
+                ViewBag.CanEdit = true;
+            }
+            else if (CheckPermission(StandardPermissions.FullAccess))
+            {
+                var user = membershipService.GetUserById(userId);
+                ViewBag.Title = string.Format(T("Profile for '{0}'", user.UserName));
+                ViewBag.CanEdit = true;
+            }
+            else
+            {
+                var user = membershipService.GetUserById(userId);
+                ViewBag.Title = string.Format(T("Profile for '{0}'", user.UserName));
+                ViewBag.CanEdit = false;
+            }
+
+            return View("Profile", model: userId);
         }
 
         [Route("my-profile")]
         public virtual ActionResult ViewMyProfile()
         {
-            return UserProfile(WorkContext.CurrentUser.Id);
+            return ViewProfile(WorkContext.CurrentUser.Id);
         }
 
         [Route("profile/edit/{userId}/")]
         public virtual ActionResult EditProfile(string userId)
         {
-            return UserProfile(userId, true);
+            if (userId == WorkContext.CurrentUser.Id)
+            {
+                ViewBag.Title = T("Edit My Profile");
+            }
+            else if (CheckPermission(StandardPermissions.FullAccess))
+            {
+                ViewBag.Title = T("Edit Profile");
+            }
+            else
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            return View("ProfileEdit", model: userId);
         }
 
         [Route("my-profile/edit")]
         public virtual ActionResult EditMyProfile()
         {
-            return UserProfile(WorkContext.CurrentUser.Id, true);
+            return EditProfile(WorkContext.CurrentUser.Id);
         }
 
-        private ActionResult UserProfile(string userId, bool editMode = false)
-        {
-            var result = new RoboUIFormResult(ControllerContext)
-            {
-                FormActionUrl = Url.Action("UpdateProfile"),
-                SubmitButtonText = T("Save"),
-                ReadOnly = !editMode,
-                ShowCancelButton = false
-            };
-
-            string title;
-            bool onlyPublicProperties = false;
-
-            if (editMode)
-            {
-                if (userId == WorkContext.CurrentUser.Id)
-                {
-                    title = T("Edit My Profile");
-                }
-                else if (CheckPermission(StandardPermissions.FullAccess))
-                {
-                    title = T("Edit Profile");
-                }
-                else
-                {
-                    return new HttpUnauthorizedResult();
-                }
-            }
-            else
-            {
-                if (userId == WorkContext.CurrentUser.Id)
-                {
-                    title = T("My Profile");
-
-                    result.AddAction()
-                        .HasText(T("Edit"))
-                        .HasUrl(Url.Action("EditMyProfile"))
-                        .HasButtonStyle(ButtonStyle.Primary);
-                }
-                else if (CheckPermission(StandardPermissions.FullAccess))
-                {
-                    var user = membershipService.GetUserById(userId);
-                    title = string.Format(T("Profile for '{0}'", user.UserName));
-
-                    result.AddAction()
-                        .HasText(T("Edit"))
-                        .HasUrl(Url.Action("EditProfile", RouteData.Values.Merge(new { userId })))
-                        .HasButtonStyle(ButtonStyle.Primary);
-                }
-                else
-                {
-                    var user = membershipService.GetUserById(userId);
-                    title = string.Format(T("Profile for '{0}'", user.UserName));
-                    onlyPublicProperties = true;
-                }
-
-                result.CancelButtonText = T("Close");
-            }
-
-            result.Title = title;
-
-            result.AddHiddenValue("UserId", userId.ToString());
-
-            bool hasProperties = false;
-            foreach (var provider in userProfileProviders.Value)
-            {
-                var newGroup = result.AddGroupedLayout(provider.Category);
-
-                foreach (var field in provider.GetFields(userId, onlyPublicProperties))
-                {
-                    hasProperties = true;
-
-                    result.AddProperty(field.Name, field, field.Value);
-                    newGroup.Add(field.Name);
-                }
-            }
-
-            if (!hasProperties)
-            {
-                return Content(T("There is no profile available to view.").Text);
-            }
-
-            return result;
-        }
-
-        [Button("Save")]
         [HttpPost]
         [Route("update-profile")]
         [ValidateInput(false)]

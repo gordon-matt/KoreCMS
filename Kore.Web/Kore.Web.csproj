@@ -510,7 +510,7 @@
     <Compile Include="Areas\Admin\Plugins\PluginsPermissions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\Membership\CurrentUserStateProvider.cs" />
-    <Compile Include="Security\Membership\KoreWebUserProfileProvider.cs" />
+    <Compile Include="Security\Membership\MobileUserProfileProvider.cs" />
     <Compile Include="Security\Membership\IUserProfileProvider.cs" />
     <Compile Include="Security\Membership\Permissions\CheckAccessContext.cs" />
     <Compile Include="Security\Membership\Permissions\IAuthorizationService.cs" />
@@ -523,6 +523,7 @@
     <Compile Include="UI\HtmlTextWriterExtensions.cs" />
     <Compile Include="UrlBuilder.cs" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\KoreSiteSettings.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\LocalizationUserProfileProvider.cshtml" />
     <Compile Include="WebHelper.cs" />
     <Compile Include="WebWorkContext.cs" />
     <Compile Include="WorkContextExtensions.cs" />
@@ -544,6 +545,9 @@
     <EmbeddedResource Include="Views\Shared\EditorTemplates\SmtpSettings.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Plugins\Views\Plugin\Index.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\CaptchaSettings.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\MobileUserProfileProvider.cshtml" />
+    <EmbeddedResource Include="Views\Shared\DisplayTemplates\LocalizationUserProfileProvider.cshtml" />
+    <EmbeddedResource Include="Views\Shared\DisplayTemplates\MobileUserProfileProvider.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Configuration\Scripts\" />

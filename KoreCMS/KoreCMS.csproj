@@ -1685,6 +1685,8 @@
     <Content Include="Views\Shared\Breadcrumbs.cshtml" />
     <Content Include="Views\Shared\LeftMenu.cshtml" />
     <Content Include="Views\Shared\MainMenu.cshtml" />
+    <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Account\ProfileEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

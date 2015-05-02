@@ -1,0 +1,10 @@
+﻿@using Kore.Web.Localization
+@using Kore.Web.Mvc
+
+@model LocalizationUserProfileProvider
+
+<div class="form-group">
+    @Html.LabelFor(m => m.PreferredLanguage, new { @class = "control-label" })
+    @Html.Kore().LanguagesDropDownListFor(m => m.PreferredLanguage, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.PreferredLanguage)
+</div>

@@ -109,7 +109,7 @@ namespace Kore.Web
             }
 
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
-            string dontUseMobileVersion = membershipService.GetProfileEntry(_workContext.CurrentUser.Id, KoreWebUserProfileProvider.DontUseMobileVersion);
+            string dontUseMobileVersion = membershipService.GetProfileEntry(_workContext.CurrentUser.Id, MobileUserProfileProvider.PropertyDontUseMobileVersion);
             return !string.IsNullOrEmpty(dontUseMobileVersion) && bool.Parse(dontUseMobileVersion);
             //return _workContext.CurrentCustomer.GetAttribute<bool>(SystemCustomerAttributeNames.DontUseMobileVersion, _tenantContext.CurrentStore.Id);
         }

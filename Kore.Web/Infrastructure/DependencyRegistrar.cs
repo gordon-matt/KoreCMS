@@ -177,7 +177,7 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<NotifyFilter>().As<IFilterProvider>().InstancePerLifetimeScope();
 
             // user profile providers
-            builder.RegisterType<KoreWebUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
+            builder.RegisterType<MobileUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
             builder.RegisterType<LocalizationUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
         }
 

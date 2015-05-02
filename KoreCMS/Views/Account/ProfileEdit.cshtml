@@ -1,0 +1,46 @@
+﻿@using Kore.Infrastructure
+@using Kore.Web.Security.Membership
+
+@model string
+
+@{
+    var userProfileProviders = EngineContext.Current.ResolveAll<IUserProfileProvider>();
+}
+
+<h1>@ViewBag.Title</h1>
+
+@using (Html.BeginForm("UpdateProfile", "Account", FormMethod.Post))
+{
+    @Html.Hidden("UserId", Model);
+    
+    foreach (var provider in userProfileProviders)
+    {
+        provider.PopulateFields(Model);
+        <fieldset>
+            <legend>@provider.Name</legend>
+            @Html.Partial(provider.EditorTemplatePath, provider)
+        </fieldset>
+    }
+    if (Model == WorkContext.CurrentUser.Id)
+    {
+        <div class="form-group">
+            @Html.ActionLink(
+                T(KoreWebLocalizableStrings.General.Cancel),
+                "ViewMyProfile",
+                "Account",
+                new { area = string.Empty }, new { @class = "btn btn-default" })
+
+            <button type="submit" class="btn btn-primary">@T(KoreWebLocalizableStrings.General.Save)</button>
+        </div>
+    }
+    else
+    {
+        <div class="form-group">
+            @Html.ActionLink(
+                T(KoreWebLocalizableStrings.General.View),
+                "ViewProfile",
+                "Account",
+                new { area = string.Empty, userId = Model }, new { @class = "btn btn-default" })
+        </div>
+    }
+}

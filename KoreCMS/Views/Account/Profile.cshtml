@@ -1,0 +1,36 @@
+﻿@using Kore.Infrastructure
+@using Kore.Web.Security.Membership
+
+@model string
+
+@{
+    var userProfileProviders = EngineContext.Current.ResolveAll<IUserProfileProvider>();
+    bool canEdit = ViewBag.CanEdit;
+}
+
+<h1>@ViewBag.Title</h1>
+
+@foreach (var provider in userProfileProviders)
+{
+    provider.PopulateFields(Model);
+    
+    <h2>@provider.Name</h2>
+    @Html.Partial(provider.DisplayTemplatePath, provider)
+}
+
+@if (Model == WorkContext.CurrentUser.Id)
+{
+    @Html.ActionLink(
+        T(KoreWebLocalizableStrings.General.Edit),
+        "EditMyProfile",
+        "Account",
+        new { area = string.Empty }, new { @class = "btn btn-primary" })
+}
+else if (canEdit)
+{
+    @Html.ActionLink(
+        T(KoreWebLocalizableStrings.General.Edit),
+        "EditProfile",
+        "Account",
+        new { area = string.Empty, userId = Model }, new { @class = "btn btn-primary" })
+}

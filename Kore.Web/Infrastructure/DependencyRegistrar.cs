@@ -28,6 +28,7 @@ using Kore.Web.IO.FileSystems.LockFile;
 using Kore.Web.IO.FileSystems.VirtualPath;
 using Kore.Web.Localization;
 using Kore.Web.Localization.Services;
+using Kore.Web.Mobile;
 using Kore.Web.Mvc.EmbeddedViews;
 using Kore.Web.Mvc.Notify;
 using Kore.Web.Mvc.Resources;
@@ -177,8 +178,9 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<NotifyFilter>().As<IFilterProvider>().InstancePerLifetimeScope();
 
             // user profile providers
-            builder.RegisterType<MobileUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
+            builder.RegisterType<AccountUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
             builder.RegisterType<LocalizationUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
+            builder.RegisterType<MobileUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
         }
 
         private static RequestContext RequestContextFactory(IComponentContext context)

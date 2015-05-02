@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Castle.Core.Logging;
 using Kore.Infrastructure;
+using Kore.Web.Mobile;
 
 namespace Kore.Web.Mvc.Themes
 {

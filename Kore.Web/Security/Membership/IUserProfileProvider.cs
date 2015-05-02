@@ -10,6 +10,8 @@ namespace Kore.Web.Security.Membership
 
         string EditorTemplatePath { get; }
 
+        int Order { get; }
+
         IEnumerable<string> GetFieldNames();
 
         void PopulateFields(string userId);

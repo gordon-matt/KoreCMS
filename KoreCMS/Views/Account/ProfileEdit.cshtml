@@ -13,7 +13,7 @@
 {
     @Html.Hidden("UserId", Model);
     
-    foreach (var provider in userProfileProviders.OrderBy(x => x.Name))
+    foreach (var provider in userProfileProviders.OrderBy(x => x.Order).ThenBy(x => x.Name))
     {
         provider.PopulateFields(Model);
         <div class="well">

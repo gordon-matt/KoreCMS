@@ -2,11 +2,10 @@
 using System.ComponentModel.DataAnnotations;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
-using Kore.Web.Security.Membership;
 
-namespace KoreCMS.Security.Membership
+namespace Kore.Web.Security.Membership
 {
-    public class UserProfileProvider : IUserProfileProvider
+    public class AccountUserProfileProvider : IUserProfileProvider
     {
         public class Fields
         {
@@ -28,17 +27,22 @@ namespace KoreCMS.Security.Membership
 
         public string Name
         {
-            get { return "General"; }
+            get { return "Account"; }
         }
 
         public string DisplayTemplatePath
         {
-            get { return "~/Views/Shared/DisplayTemplates/UserProfileProvider.cshtml"; }
+            get { return "Kore.Web.Views.Shared.DisplayTemplates.AccountUserProfileProvider"; }
         }
 
         public string EditorTemplatePath
         {
-            get { return "~/Views/Shared/EditorTemplates/UserProfileProvider.cshtml"; }
+            get { return "Kore.Web.Views.Shared.EditorTemplates.AccountUserProfileProvider"; }
+        }
+
+        public int Order
+        {
+            get { return 0; }
         }
 
         public IEnumerable<string> GetFieldNames()

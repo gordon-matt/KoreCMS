@@ -74,6 +74,11 @@ namespace Kore.Web.ContentManagement.Controllers
                     Text = currentPage.Name
                 });
             }
+            else
+            {
+                // This is not a CMS page, so use breadcrumbs specified in controller actions...
+                breadcrumbs.AddRange(WorkContext.Breadcrumbs);
+            }
 
             return View(templateViewName, breadcrumbs);
         }

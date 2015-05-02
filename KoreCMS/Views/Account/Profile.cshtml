@@ -10,12 +10,14 @@
 
 <h1>@ViewBag.Title</h1>
 
-@foreach (var provider in userProfileProviders)
+@foreach (var provider in userProfileProviders.OrderBy(x => x.Name))
 {
     provider.PopulateFields(Model);
-    
-    <h2>@provider.Name</h2>
-    @Html.Partial(provider.DisplayTemplatePath, provider)
+
+    <div class="well">
+        <h2>@provider.Name</h2>
+        @Html.Partial(provider.DisplayTemplatePath, provider)
+    </div>
 }
 
 @if (Model == WorkContext.CurrentUser.Id)

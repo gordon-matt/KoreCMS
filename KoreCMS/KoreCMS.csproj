@@ -260,6 +260,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Membership\UserProfileProvider.cs" />
     <Compile Include="Services\IdentityMembershipService.cs" />
     <Compile Include="Services\MembershipService.cs" />
     <Compile Include="Startup.cs" />
@@ -1687,6 +1688,8 @@
     <Content Include="Views\Shared\MainMenu.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Account\ProfileEdit.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\UserProfileProvider.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\UserProfileProvider.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

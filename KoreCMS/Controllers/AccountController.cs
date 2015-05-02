@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
+using Kore.Web;
 using Kore.Web.ContentManagement.Messaging;
 using Kore.Web.ContentManagement.Messaging.Services;
 using Kore.Web.Mvc;
@@ -549,21 +550,26 @@ namespace Kore.Controllers
         [Route("profile/{userId}")]
         public virtual ActionResult ViewProfile(string userId)
         {
+            WorkContext.Breadcrumbs.Add(T("Account"));
+
             if (userId == WorkContext.CurrentUser.Id)
             {
                 ViewBag.Title = T("My Profile");
+                WorkContext.Breadcrumbs.Add(T("My Profile"));
                 ViewBag.CanEdit = true;
             }
             else if (CheckPermission(StandardPermissions.FullAccess))
             {
                 var user = membershipService.GetUserById(userId);
-                ViewBag.Title = string.Format(T("Profile for '{0}'", user.UserName));
+                ViewBag.Title = string.Format(T("Profile for '{0}'"), user.UserName);
+                WorkContext.Breadcrumbs.Add(string.Format(T("Profile for '{0}'"), user.UserName));
                 ViewBag.CanEdit = true;
             }
             else
             {
                 var user = membershipService.GetUserById(userId);
-                ViewBag.Title = string.Format(T("Profile for '{0}'", user.UserName));
+                ViewBag.Title = string.Format(T("Profile for '{0}'"), user.UserName);
+                WorkContext.Breadcrumbs.Add(string.Format(T("Profile for '{0}'"), user.UserName));
                 ViewBag.CanEdit = false;
             }
 
@@ -579,13 +585,20 @@ namespace Kore.Controllers
         [Route("profile/edit/{userId}/")]
         public virtual ActionResult EditProfile(string userId)
         {
+            WorkContext.Breadcrumbs.Add(T("Account"));
+
             if (userId == WorkContext.CurrentUser.Id)
             {
                 ViewBag.Title = T("Edit My Profile");
+                WorkContext.Breadcrumbs.Add(T("My Profile"), Url.Action("ViewMyProfile"));
+                WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.General.Edit));
             }
             else if (CheckPermission(StandardPermissions.FullAccess))
             {
                 ViewBag.Title = T("Edit Profile");
+                var user = membershipService.GetUserById(userId);
+                WorkContext.Breadcrumbs.Add(string.Format(T("Profile for '{0}'"), user.UserName), Url.Action("ViewProfile", new { userId = userId }));
+                WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.General.Edit));
             }
             else
             {

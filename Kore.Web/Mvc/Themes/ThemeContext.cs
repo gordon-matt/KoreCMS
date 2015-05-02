@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using Kore.Infrastructure;
+using Kore.Security.Membership;
 using Kore.Web.Configuration;
 
 namespace Kore.Web.Mvc.Themes
@@ -37,6 +39,22 @@ namespace Kore.Web.Mvc.Themes
                 }
 
                 string theme = string.Empty;
+
+                if (siteSettings.AllowUserToSelectTheme)
+                {
+                    var workContext = EngineContext.Current.Resolve<IWorkContext>();
+                    if (workContext.CurrentUser != null)
+                    {
+                        var membershipService = EngineContext.Current.Resolve<IMembershipService>();
+                        string userTheme = membershipService.GetProfileEntry(workContext.CurrentUser.Id, ThemeUserProfileProvider.Fields.PreferredTheme);
+
+                        if (!string.IsNullOrEmpty(userTheme))
+                        {
+                            theme = userTheme;
+                        }
+                    }
+                }
+
                 //TODO
                 //if (KoreWebConfigurationSection.WebInstance.Themes.AllowUserToSelectTheme)
                 //{
@@ -48,7 +66,6 @@ namespace Kore.Web.Mvc.Themes
                 if (string.IsNullOrEmpty(theme))
                 {
                     theme = siteSettings.DefaultDesktopTheme ?? "Default";
-                    //theme = KoreWebConfigurationSection.WebInstance.Themes.DefaultDesktopTheme;
                 }
 
                 //ensure that theme exists

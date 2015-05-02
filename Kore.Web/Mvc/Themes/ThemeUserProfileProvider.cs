@@ -4,33 +4,33 @@ using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web.Security.Membership;
 
-namespace Kore.Web.Localization
+namespace Kore.Web.Mvc.Themes
 {
-    public class LocalizationUserProfileProvider : IUserProfileProvider
+    public class ThemeUserProfileProvider : IUserProfileProvider
     {
         public class Fields
         {
-            public const string PreferredLanguage = "PreferredLanguage";
+            public const string PreferredTheme = "PreferredTheme";
         }
 
-        [Display(Name = "Preferred Language")]
-        public string PreferredLanguage { get; set; }
+        [Display(Name = "Preferred Theme")]
+        public string PreferredTheme { get; set; }
 
         #region IUserProfileProvider Members
 
         public string Name
         {
-            get { return "Localization"; }
+            get { return "Theme"; }
         }
 
         public string DisplayTemplatePath
         {
-            get { return "Kore.Web.Views.Shared.DisplayTemplates.LocalizationUserProfileProvider"; }
+            get { return "Kore.Web.Views.Shared.DisplayTemplates.ThemeUserProfileProvider"; }
         }
 
         public string EditorTemplatePath
         {
-            get { return "Kore.Web.Views.Shared.EditorTemplates.LocalizationUserProfileProvider"; }
+            get { return "Kore.Web.Views.Shared.EditorTemplates.ThemeUserProfileProvider"; }
         }
 
         public int Order
@@ -42,14 +42,14 @@ namespace Kore.Web.Localization
         {
             return new[]
             {
-                Fields.PreferredLanguage
+                Fields.PreferredTheme
             };
         }
 
         public void PopulateFields(string userId)
         {
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
-            PreferredLanguage = membershipService.GetProfileEntry(userId, Fields.PreferredLanguage);
+            PreferredTheme = membershipService.GetProfileEntry(userId, Fields.PreferredTheme);
         }
 
         #endregion IUserProfileProvider Members

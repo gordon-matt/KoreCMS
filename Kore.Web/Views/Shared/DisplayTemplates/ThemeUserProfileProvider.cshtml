@@ -1,0 +1,18 @@
+﻿@using Kore.Infrastructure
+@using Kore.Web.Configuration
+@using Kore.Web.Mvc
+@using Kore.Web.Mvc.Themes
+
+@model ThemeUserProfileProvider
+
+@{
+    var siteSettings = EngineContext.Current.Resolve<KoreSiteSettings>();
+}
+
+@if (siteSettings.AllowUserToSelectTheme)
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.PreferredTheme, new { @class = "control-label" })
+        @Html.Kore().ThemesDropDownListFor(m => m.PreferredTheme, new { @class = "form-control", disabled = "disabled" })
+    </div>
+}

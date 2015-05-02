@@ -442,6 +442,7 @@
     <Compile Include="Mvc\Themes\ThemeConfiguration.cs" />
     <Compile Include="Mvc\Themes\ThemeContext.cs" />
     <Compile Include="Mvc\Themes\ThemeProvider.cs" />
+    <Compile Include="Mvc\Themes\ThemeUserProfileProvider.cs" />
     <Compile Include="Mvc\UrlHelperExtensions.cs" />
     <Compile Include="Mvc\ViewDataContainer.cs" />
     <Compile Include="Mvc\WebViewPage.cs" />
@@ -551,6 +552,8 @@
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\MobileUserProfileProvider.cshtml" />
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\AccountUserProfileProvider.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\AccountUserProfileProvider.cshtml" />
+    <EmbeddedResource Include="Views\Shared\DisplayTemplates\ThemeUserProfileProvider.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\ThemeUserProfileProvider.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Configuration\Scripts\" />

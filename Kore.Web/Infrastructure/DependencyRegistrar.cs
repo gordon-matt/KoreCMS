@@ -181,6 +181,7 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<AccountUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
             builder.RegisterType<LocalizationUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
             builder.RegisterType<MobileUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
+            builder.RegisterType<ThemeUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
         }
 
         private static RequestContext RequestContextFactory(IComponentContext context)

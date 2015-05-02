@@ -13,13 +13,15 @@
 {
     @Html.Hidden("UserId", Model);
     
-    foreach (var provider in userProfileProviders)
+    foreach (var provider in userProfileProviders.OrderBy(x => x.Name))
     {
         provider.PopulateFields(Model);
-        <fieldset>
-            <legend>@provider.Name</legend>
-            @Html.Partial(provider.EditorTemplatePath, provider)
-        </fieldset>
+        <div class="well">
+            <fieldset>
+                <legend>@provider.Name</legend>
+                @Html.Partial(provider.EditorTemplatePath, provider)
+            </fieldset>
+        </div>
     }
     if (Model == WorkContext.CurrentUser.Id)
     {

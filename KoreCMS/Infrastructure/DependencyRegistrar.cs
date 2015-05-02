@@ -8,8 +8,10 @@ using Kore.Localization;
 using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging;
 using Kore.Web.Navigation;
+using Kore.Web.Security.Membership;
 using KoreCMS.Areas.Admin;
 using KoreCMS.Messaging;
+using KoreCMS.Security.Membership;
 using KoreCMS.Services;
 
 namespace KoreCMS.Infrastructure
@@ -45,6 +47,8 @@ namespace KoreCMS.Infrastructure
             // Messaging
             builder.RegisterType<AccountMessageTemplates>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<AccountMessageTemplateTokensProvider>().As<IMessageTemplateTokensProvider>().SingleInstance();
+
+            builder.RegisterType<UserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
         }
 
         public int Order

@@ -90,6 +90,24 @@ namespace KoreCMS.Services
             };
         }
 
+        public KoreUser GetUserByEmail(string email)
+        {
+            var user = userManager.FindByEmailAsync(email).Result;
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return new KoreUser
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                IsLockedOut = user.LockoutEnabled
+            };
+        }
+
         public KoreUser GetUserByName(string userName)
         {
             var user = userManager.FindByNameAsync(userName).Result;

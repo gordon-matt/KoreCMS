@@ -23,6 +23,8 @@ namespace Kore.Security.Membership
 
         KoreUser GetUserById(object userId);
 
+        KoreUser GetUserByEmail(string email);
+
         KoreUser GetUserByName(string userName);
 
         IEnumerable<KoreRole> GetRolesForUser(object userId);

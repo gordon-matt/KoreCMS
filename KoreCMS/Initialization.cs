@@ -5,6 +5,7 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace KoreCMS
 {
+    //TODO: Add an installation page and remove this...
     public class Initialization : IStartupTask
     {
         #region IStartupTask Members
@@ -30,12 +31,12 @@ namespace KoreCMS
                 return;
             }
 
-            var adminUser = membershipService.GetUserByName("admin@test.com");
+            var adminUser = membershipService.GetUserByEmail("admin@test.com");
 
             if (adminUser == null)
             {
                 membershipService.InsertUser(new KoreUser { UserName = "admin@test.com", Email = "admin@test.com" }, "Admin@123");
-                adminUser = membershipService.GetUserByName("admin@test.com");
+                adminUser = membershipService.GetUserByEmail("admin@test.com");
             }
 
             KoreRole administratorsRole = null;

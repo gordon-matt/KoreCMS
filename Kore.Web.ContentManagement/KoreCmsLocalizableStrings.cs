@@ -77,6 +77,12 @@
             public const string Home = "Kore.Web.ContentManagement/Navigation.Home";
         }
 
+        public static class Newsletters
+        {
+            public const string ManageNewsletters = "Kore.Web.ContentManagement/CMS.Newsletters.ManageNewsletters";
+            public const string Title = "Kore.Web.ContentManagement/CMS.Newsletters.Title";
+        }
+
         public static class Pages
         {
             public const string ConfirmRestoreVersion = "Kore.Web.ContentManagement/Pages.ConfirmRestoreVersion";

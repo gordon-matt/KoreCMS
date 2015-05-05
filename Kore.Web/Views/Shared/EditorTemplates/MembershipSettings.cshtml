@@ -1,0 +1,47 @@
+﻿@using Kore.Web.Security.Membership
+
+@model MembershipSettings
+
+<div id="settings-content">
+    <p>Generated Passwords</p>
+    <div class="form-group">
+        @Html.LabelFor(m => m.GeneratedPasswordLength)
+        @Html.TextBoxFor(m => m.GeneratedPasswordLength, new { @class = "form-control", data_bind = "value: generatedPasswordLength" })
+        @Html.ValidationMessageFor(m => m.GeneratedPasswordLength)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.GeneratedPasswordNumberOfNonAlphanumericChars)
+        @Html.TextBoxFor(m => m.GeneratedPasswordNumberOfNonAlphanumericChars, new { @class = "form-control", data_bind = "value: generatedPasswordNumberOfNonAlphanumericChars" })
+        @Html.ValidationMessageFor(m => m.GeneratedPasswordNumberOfNonAlphanumericChars)
+    </div>
+</div>
+
+<script type="text/javascript">
+    function updateModel(data) {
+        viewModel.generatedPasswordLength = ko.observable(7);
+        viewModel.generatedPasswordNumberOfNonAlphanumericChars = ko.observable(3);
+
+        if (data) {
+            if (data.GeneratedPasswordLength) {
+                viewModel.generatedPasswordLength(data.GeneratedPasswordLength);
+            }
+            if (data.GeneratedPasswordNumberOfNonAlphanumericChars) {
+                viewModel.generatedPasswordNumberOfNonAlphanumericChars(data.GeneratedPasswordNumberOfNonAlphanumericChars);
+            }
+        }
+    };
+
+    function cleanUp() {
+        delete viewModel.generatedPasswordLength;
+        delete viewModel.generatedPasswordNumberOfNonAlphanumericChars;
+    }
+
+    function onBeforeSave() {
+        var data = {
+            GeneratedPasswordLength: viewModel.generatedPasswordLength(),
+            GeneratedPasswordNumberOfNonAlphanumericChars: viewModel.generatedPasswordNumberOfNonAlphanumericChars()
+        };
+
+        viewModel.value(ko.mapping.toJSON(data));
+    };
+</script>

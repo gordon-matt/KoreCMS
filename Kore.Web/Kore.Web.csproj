@@ -514,6 +514,7 @@
     <Compile Include="Security\Membership\CurrentUserStateProvider.cs" />
     <Compile Include="Mobile\MobileUserProfileProvider.cs" />
     <Compile Include="Security\Membership\IUserProfileProvider.cs" />
+    <Compile Include="Security\Membership\MembershipSettings.cs" />
     <Compile Include="Security\Membership\Permissions\CheckAccessContext.cs" />
     <Compile Include="Security\Membership\Permissions\IAuthorizationService.cs" />
     <Compile Include="Security\Membership\Permissions\IAuthorizationServiceEventHandler.cs" />
@@ -554,6 +555,7 @@
     <EmbeddedResource Include="Views\Shared\EditorTemplates\AccountUserProfileProvider.cshtml" />
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\ThemeUserProfileProvider.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\ThemeUserProfileProvider.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\MembershipSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Configuration\Scripts\" />

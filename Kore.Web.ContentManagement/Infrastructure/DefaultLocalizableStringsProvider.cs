@@ -48,6 +48,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
                         { KoreCmsLocalizableStrings.Membership.Title, "Membership" },
                         { KoreCmsLocalizableStrings.Membership.UpdateUserRoles, "Update User Roles" },
                         { KoreCmsLocalizableStrings.Membership.Users, "Users" },
+                        { KoreCmsLocalizableStrings.Messages.CircularRelationshipError, "That action would cause a circular relationship!" },
                         { KoreCmsLocalizableStrings.Messages.ConfirmClearLocalizableStrings, "Warning! This will remove all localized strings from the database. Are you sure you want to do this?" },
                         { KoreCmsLocalizableStrings.Messages.GetTranslationError, "There was an error when retrieving the translation." },
                         { KoreCmsLocalizableStrings.Messages.UpdateTranslationError, "There was an error when saving the translation." },

@@ -60,6 +60,7 @@
                 </div>
             </div>
         </div>
+        <br />
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div id="blank-section" class="row" style="display:none">
@@ -230,7 +231,9 @@
 @section scripts {
     <script type="text/javascript">
         var translations = {
+            CircularRelationshipError: '@T(KoreCmsLocalizableStrings.Messages.CircularRelationshipError).Text',
             Create: '@T(KoreWebLocalizableStrings.General.Create).Text',
+            ContentBlocks: '@T(KoreCmsLocalizableStrings.ContentBlocks.Title).Text',
             Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
             DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.Messages.ConfirmDeleteRecord).Text',
             DeleteRecordError: '@T(KoreWebLocalizableStrings.Messages.DeleteRecordError).Text',
@@ -246,10 +249,9 @@
             UpdateRecordError: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordError).Text',
             UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text',
             UpdateTranslationError: '@T(KoreCmsLocalizableStrings.Messages.UpdateTranslationError).Text',
-            UpdateTranslationSuccess: '@T(KoreCmsLocalizableStrings.Messages.UpdateTranslationSuccess).Text',
-            ContentBlocks: '@T(KoreCmsLocalizableStrings.ContentBlocks.Title).Text'
+            UpdateTranslationSuccess: '@T(KoreCmsLocalizableStrings.Messages.UpdateTranslationSuccess).Text'
         }
-    </script>
+</script>
     <script id="treeview-template" type="text/kendo-ui-template">
         <a href="javascript:void(0)" onclick="viewModel.edit('#=item.Id#')">#= item.Name #</a>
     </script>

@@ -670,6 +670,7 @@ $(document).ready(function () {
 
     $("#treeview").kendoTreeView({
         template: kendo.template($("#treeview-template").html()),
+        dragAndDrop: true,
         dataSource: PagesDS,
         dataTextField: ["Name"],
         loadOnDemand: false,
@@ -677,6 +678,76 @@ $(document).ready(function () {
             setTimeout(function () {
                 $("#treeview").data("kendoTreeView").expand(".k-item");
             }, 20);
+        },
+        drop: function (e) {
+            var sourceDataItem = this.dataItem(e.sourceNode);
+            var sourceId = sourceDataItem.id;
+            var destinationDataItem = this.dataItem(e.destinationNode);
+            var destinationId = destinationDataItem.id;
+            var dropPosition = e.dropPosition;
+
+            var parentId = null;
+            var destinationPage = null;
+
+            if (viewModel.id() == destinationId) {
+                destinationPage = {
+                    Id: viewModel.id(),
+                    ParentId: viewModel.parentId()
+                };
+            }
+            else {
+                $.ajax({
+                    url: "/odata/kore/cms/Pages(guid'" + destinationId + "')",
+                    type: "GET",
+                    dataType: "json",
+                    async: false
+                })
+                .done(function (json) {
+                    destinationPage = {
+                        Id: json.Id,
+                        ParentId: json.ParentId
+                    };
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    $.notify(translations.GetRecordError, "error");
+                    console.log(textStatus + ': ' + errorThrown);
+                    return;
+                });
+            }
+
+            if (destinationPage.ParentId == sourceId) {
+                $.notify(translations.CircularRelationshipError, "error");
+                return;
+            }
+
+            switch (dropPosition) {
+                case 'over':
+                    parentId = destinationId;
+                    break;
+                default:
+                    parentId = destinationPage.ParentId;
+                    break;
+            }
+
+            var patch = {
+                ParentId: parentId
+            };
+
+            $.ajax({
+                url: "/odata/kore/cms/Pages(guid'" + sourceId + "')",
+                type: "PATCH",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(patch),
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                $("#treeview").data("kendoTreeView").dataSource.read();
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(translations.UpdateRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
+            });
         }
     });
 });

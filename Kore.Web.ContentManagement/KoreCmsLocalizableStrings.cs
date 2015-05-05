@@ -64,6 +64,7 @@
 
         public static class Messages
         {
+            public const string CircularRelationshipError = "Kore.Web.ContentManagement/Messages.CircularRelationshipError";
             public const string ConfirmClearLocalizableStrings = "Kore.Web.ContentManagement/Messages.ConfirmClearLocalizableStrings";
             public const string GetTranslationError = "Kore.Web.ContentManagement/Messages.GetTranslationError";
             public const string UpdateTranslationError = "Kore.Web.ContentManagement/Messages.UpdateTranslationError";

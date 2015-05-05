@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Transactions;
 using Kore;
 using Kore.Collections;
@@ -67,6 +68,13 @@ namespace KoreCMS.Services
                 Email = x.Email,
                 IsLockedOut = x.LockoutEnabled
             });
+        }
+
+        public IEnumerable<KoreUser> GetUsers(Expression<Func<KoreUser, bool>> predicate)
+        {
+            return GetAllUsersAsQueryable()
+                .Where(predicate)
+                .ToHashSet();
         }
 
         public KoreUser GetUserById(object userId)
@@ -612,6 +620,22 @@ namespace KoreCMS.Services
         {
             return userProfileRepository.Table
                 .Where(x => x.Key == key)
+                .ToHashSet()
+                .Select(x => new KoreUserProfileEntry
+                {
+                    Id = x.Id.ToString(),
+                    UserId = x.UserId,
+                    Key = x.Key,
+                    Value = x.Value
+                });
+        }
+
+        public IEnumerable<KoreUserProfileEntry> GetProfileEntriesByKeyAndValue(string key, string value)
+        {
+            return userProfileRepository.Table
+                .Where(x =>
+                    x.Key == key &&
+                    x.Value == value)
                 .ToHashSet()
                 .Select(x => new KoreUserProfileEntry
                 {

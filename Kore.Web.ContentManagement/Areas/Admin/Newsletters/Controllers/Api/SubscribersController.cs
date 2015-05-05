@@ -1,0 +1,109 @@
+﻿using System;
+using System.Linq;
+using System.Net;
+using System.Web.Http;
+using System.Web.Http.OData;
+using System.Web.Http.OData.Query;
+using Kore.Security.Membership;
+using Kore.Web.Security.Membership;
+
+namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
+{
+    public class SubscribersController : ODataController
+    {
+        private readonly IMembershipService membershipService;
+        private readonly Lazy<MembershipSettings> membershipSettings;
+
+        public SubscribersController(
+            IMembershipService membershipService,
+            Lazy<MembershipSettings> membershipSettings)
+        {
+            this.membershipService = membershipService;
+            this.membershipSettings = membershipSettings;
+        }
+
+        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        public IQueryable<Subscriber> Get()
+        {
+            var userIds = membershipService
+                .GetProfileEntriesByKeyAndValue(NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "true")
+                .Select(x => x.UserId);
+
+            return membershipService.GetUsers(x => userIds.Contains(x.Id)).Select(x => new Subscriber
+            {
+                UserId = x.Id,
+                Email = x.Email,
+                Name = x.UserName
+            }).AsQueryable();
+        }
+
+        [EnableQuery]
+        public SingleResult<Subscriber> Get([FromODataUri] string key)
+        {
+            var entity = membershipService.GetUserById(key);
+            var subscriber = new Subscriber
+            {
+                UserId = entity.Id,
+                Email = entity.Email,
+                Name = entity.UserName
+            };
+            return SingleResult.Create(new[] { subscriber }.AsQueryable());
+        }
+
+        //public IHttpActionResult Post(Subscriber entity)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    var existingUser = membershipService.GetUserByEmail(entity.Email);
+
+        //    if (existingUser != null)
+        //    {
+        //        return Conflict();
+        //    }
+
+        //    var newUser = new KoreUser
+        //    {
+        //        Email = entity.Email,
+        //        UserName = entity.Name ?? entity.Email
+        //    };
+
+        //    string password = System.Web.Security.Membership.GeneratePassword(
+        //        membershipSettings.Value.GeneratedPasswordLength,
+        //        membershipSettings.Value.GeneratedPasswordNumberOfNonAlphanumericChars);
+
+        //    membershipService.InsertUser(newUser, password);
+
+        //    var createdUser = membershipService.GetUserByEmail(entity.Email);
+        //    entity.UserId = createdUser.Id;
+
+        //    membershipService.SaveProfileEntry(createdUser.Id, NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "true");
+
+        //    return Created(entity);
+        //}
+
+        public IHttpActionResult Delete([FromODataUri] string key)
+        {
+            var entity = membershipService.GetUserById(key);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
+            membershipService.SaveProfileEntry(key, NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "false");
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+    }
+
+    public class Subscriber
+    {
+        public string UserId { get; set; }
+
+        public string Name { get; set; }
+
+        public string Email { get; set; }
+    }
+}

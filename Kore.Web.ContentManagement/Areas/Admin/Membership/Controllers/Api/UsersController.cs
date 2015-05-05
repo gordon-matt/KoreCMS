@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -6,6 +7,7 @@ using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using Kore.Security.Membership;
+using Kore.Web.Security.Membership;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
 {
@@ -13,10 +15,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
     public class UsersController : ODataController
     {
         protected IMembershipService Service { get; private set; }
+        private readonly Lazy<MembershipSettings> membershipSettings;
 
-        public UsersController(IMembershipService service)
+        public UsersController(
+            IMembershipService service,
+            Lazy<MembershipSettings> membershipSettings)
         {
             this.Service = service;
+            this.membershipSettings = membershipSettings;
         }
 
         [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
@@ -67,7 +73,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            string password = System.Web.Security.Membership.GeneratePassword(7, 3);
+            string password = System.Web.Security.Membership.GeneratePassword(
+                membershipSettings.Value.GeneratedPasswordLength,
+                membershipSettings.Value.GeneratedPasswordNumberOfNonAlphanumericChars);
 
             Service.InsertUser(entity, password);
 

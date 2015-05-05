@@ -122,6 +122,7 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<KoreSiteSettings>().As<ISettings>().SingleInstance();
             builder.RegisterType<SmtpSettings>().As<ISettings>().SingleInstance();
             builder.RegisterType<CaptchaSettings>().As<ISettings>().SingleInstance();
+            builder.RegisterType<MembershipSettings>().As<ISettings>().SingleInstance();
 
             //builder.RegisterType<SearchSettings>().As<ISettings>().SingleInstance();
 

@@ -15,6 +15,7 @@ using Kore.Web.ContentManagement.Areas.Admin.Media;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Menus;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
+using Kore.Web.ContentManagement.Areas.Admin.Newsletters;
 using Kore.Web.ContentManagement.Areas.Admin.Pages;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.ContentManagement.FileSystems.Media;
@@ -25,6 +26,7 @@ using Kore.Web.Indexing.Services;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Navigation;
+using Kore.Web.Security.Membership;
 using Kore.Web.Security.Membership.Permissions;
 using KoreCMS.Areas.Admin.Navigation;
 
@@ -88,11 +90,15 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             #region Security
 
+            // Permissions
             builder.RegisterType<ContentBlockPermissions>().As<IPermissionProvider>().SingleInstance();
             builder.RegisterType<BlogPermissions>().As<IPermissionProvider>().SingleInstance();
             builder.RegisterType<MediaPermissions>().As<IPermissionProvider>().SingleInstance();
             builder.RegisterType<MenusPermissions>().As<IPermissionProvider>().SingleInstance();
             builder.RegisterType<PagesPermissions>().As<IPermissionProvider>().SingleInstance();
+
+            // User Profile Providers
+            builder.RegisterType<NewsletterUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
 
             #endregion Security
 

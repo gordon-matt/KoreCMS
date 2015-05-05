@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Kore.Security.Membership
 {
@@ -20,6 +22,8 @@ namespace Kore.Security.Membership
         IEnumerable<KoreUser> GetAllUsers();
 
         IQueryable<KoreUser> GetAllUsersAsQueryable();
+
+        IEnumerable<KoreUser> GetUsers(Expression<Func<KoreUser, bool>> predicate);
 
         KoreUser GetUserById(object userId);
 
@@ -94,6 +98,8 @@ namespace Kore.Security.Membership
         void DeleteProfileEntry(string userId, string key);
 
         IEnumerable<KoreUserProfileEntry> GetProfileEntriesByKey(string key);
+
+        IEnumerable<KoreUserProfileEntry> GetProfileEntriesByKeyAndValue(string key, string value);
 
         #endregion Profile
     }

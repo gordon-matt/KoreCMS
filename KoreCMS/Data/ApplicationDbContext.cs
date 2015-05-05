@@ -96,6 +96,12 @@ namespace KoreCMS.Data
 
         #endregion IKoreSecurityDbContext Members
 
+        #region Others
+
+        public DbSet<UserProfileEntry> UserProfiles { get; set; }
+
+        #endregion
+
         #region ISupportSeed Members
 
         public virtual void Seed()

@@ -111,14 +111,14 @@ namespace Kore.Web.ContentManagement.Controllers
             var authorizedPages = pages.Where(x => PageSecurityHelper.CheckUserHasAccessToPage(x, User));
 
             var items = authorizedPages
-                .Select((x, index) => new MenuItem
+                .Select(x => new MenuItem
             {
                 Id = x.Id,
                 Text = x.Name,
                 Url = "/" + x.Slug,
                 Enabled = true,
                 ParentId = x.ParentId,
-                Position = index
+                Position = x.Order
             });
 
             menuItems.AddRange(items);
@@ -172,14 +172,14 @@ namespace Kore.Web.ContentManagement.Controllers
             var authorizedPages = pages.Where(x => PageSecurityHelper.CheckUserHasAccessToPage(x, User));
 
             var items = authorizedPages
-                .Select((x, index) => new MenuItem
+                .Select(x => new MenuItem
                 {
                     Id = x.Id,
                     Text = x.Name,
                     Url = "/" + x.Slug,
                     Enabled = true,
                     ParentId = x.ParentId,
-                    Position = index
+                    Position = x.Order
                 });
 
             menuItems.AddRange(items);

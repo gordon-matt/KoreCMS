@@ -41,6 +41,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Domain
         }
 
         #endregion IEntity Members
+
+        public override string ToString()
+        {
+            return Text;
+        }
     }
 
     public class MenuItemMap : EntityTypeConfiguration<MenuItem>, IEntityTypeConfiguration

@@ -43,6 +43,8 @@ namespace Kore.Security.Membership
 
         void ChangePassword(object userId, string newPassword);
 
+        string GetUserDisplayName(KoreUser user);
+
         #endregion Users
 
         #region Roles

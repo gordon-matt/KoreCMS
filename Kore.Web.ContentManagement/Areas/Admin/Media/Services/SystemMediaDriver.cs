@@ -17,9 +17,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
         private readonly IStorageProvider storageProvider;
         private readonly IMimeTypeProvider mimeTypeProvider;
         private static readonly DateTime unixOrigin = new DateTime(1970, 1, 1, 0, 0, 0);
-        private readonly Lazy<IMediaService> mediaService;
+        private readonly Lazy<IImageService> mediaService;
 
-        public SystemMediaDriver(IStorageProvider storageProvider, IMimeTypeProvider mimeTypeProvider, Lazy<IMediaService> mediaService)
+        public SystemMediaDriver(IStorageProvider storageProvider, IMimeTypeProvider mimeTypeProvider, Lazy<IImageService> mediaService)
         {
             this.storageProvider = storageProvider;
             this.mimeTypeProvider = mimeTypeProvider;

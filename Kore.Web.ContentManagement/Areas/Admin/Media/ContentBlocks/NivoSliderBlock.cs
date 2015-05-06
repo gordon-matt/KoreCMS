@@ -193,10 +193,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.ContentBlocks
             get { throw new NotImplementedException(); }
         }
 
-        public class MediaPart : IMediaPart
+        public class MediaPart : IImage
         {
+            #region IImage Members
+
             [RoboFileUpload(EnableFineUploader = true, EnableBrowse = true, ColumnWidth = 250)]
             public string Url { get; set; }
+
+            [RoboFileUpload(EnableFineUploader = true, EnableBrowse = true, ColumnWidth = 250)]
+            public string ThumbnailUrl { get; set; }
 
             [RoboText(MaxLength = 255)]
             public string Caption { get; set; }
@@ -206,6 +211,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.ContentBlocks
 
             [RoboNumeric(IsRequired = true, LabelText = "Sort Order")]
             public int SortOrder { get; set; }
+
+            #endregion
         }
     }
 }

@@ -1,0 +1,43 @@
+﻿using System.Data.Entity.ModelConfiguration;
+using Kore.Data;
+using Kore.Data.EntityFramework;
+
+namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
+{
+    public class Product : IEntity
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string Slug { get; set; }
+
+        public int CategoryId { get; set; }
+
+        public float Price { get; set; }
+
+        public string MainImageUrl { get; set; }
+
+        public string ShortDescription { get; set; }
+
+        public string FullDescription { get; set; }
+
+        #region IEntity Members
+
+        public object[] KeyValues
+        {
+            get { return new object[] { Id }; }
+        }
+
+        #endregion IEntity Members
+    }
+
+    public class ProductMap : EntityTypeConfiguration<Product>, IEntityTypeConfiguration
+    {
+        public ProductMap()
+        {
+            ToTable("Kore_Plugins_SimpleCommerce_Products");
+            HasKey(x => x.Id);
+        }
+    }
+}

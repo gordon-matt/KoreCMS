@@ -19,9 +19,9 @@ namespace Kore.Web.ContentManagement
 
         DbSet<LogEntry> Log { get; set; }
 
-        DbSet<MediaPart> MediaParts { get; set; }
+        DbSet<Image> MediaParts { get; set; }
 
-        DbSet<MediaPartType> MediaPartTypes { get; set; }
+        DbSet<ImageEntity> MediaPartTypes { get; set; }
 
         DbSet<MenuItem> MenuItems { get; set; }
 

@@ -11,9 +11,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
     public class MediaService : IMediaService
     {
         private readonly IStorageProvider storageProvider;
-        private readonly IMediaPartService mediaPartService;
+        private readonly IImageService mediaPartService;
 
-        public MediaService(IStorageProvider storageProvider, IMediaPartService mediaPartService)
+        public MediaService(IStorageProvider storageProvider, IImageService mediaPartService)
         {
             this.storageProvider = storageProvider;
             this.mediaPartService = mediaPartService;
@@ -89,16 +89,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
             return files.Select(file => BuildMediaFile(relativePath, file)).ToList();
         }
 
-        public IEnumerable<TMediaPart> GetMediaParts<TMediaPart>(IEntity entity) where TMediaPart : IMediaPart, new()
+        public IEnumerable<TMediaPart> GetMediaParts<TMediaPart>(IEntity entity) where TMediaPart : IImage, new()
         {
-            return mediaPartService.GetMediaParts<TMediaPart>(entity);
+            return mediaPartService.GetImages<TMediaPart>(entity);
         }
 
-        public void SetMediaParts(IEntity entity, IEnumerable<IMediaPart> mediaParts, string folderName)
+        public void SetMediaParts(IEntity entity, IEnumerable<IImage> mediaParts, string folderName)
         {
             MoveFiles(mediaParts, folderName);
 
-            mediaPartService.SetMediaParts(entity, mediaParts);
+            mediaPartService.SetImages(entity, mediaParts);
         }
 
         public bool FolderExists(string path)
@@ -238,7 +238,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
             storageProvider.RenameFile(currentPath, newPath);
         }
 
-        public void MoveFiles(IEnumerable<IMediaPart> mediaParts, string targetFolder)
+        public void MoveFiles(IEnumerable<IImage> mediaParts, string targetFolder)
         {
             if (mediaParts == null)
             {

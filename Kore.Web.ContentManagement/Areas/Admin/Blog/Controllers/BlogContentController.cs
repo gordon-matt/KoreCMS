@@ -36,44 +36,57 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "Index", null);
-
-            // If someone has provided a custom template (see LocationFormatProvider)
-            if (viewEngineResult.View != null)
-            {
-                return View();
-            }
-
-            // Else return default template
+            // If Use Ajax
             if (blogSettings.UseAjax)
             {
+                var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "Index", null);
+
+                // If someone has provided a custom template (see LocationFormatProvider)
+                if (viewEngineResult.View != null)
+                {
+                    return View();
+                }
+
+                // Else use default template
                 return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.IndexAjax");
             }
+            else
+            {
+                string pageIndexParam = Request.Params["pageIndex"];
+                int pageIndex = string.IsNullOrEmpty(pageIndexParam)
+                    ? 1
+                    : Convert.ToInt32(pageIndexParam);
 
-            string pageIndexParam = Request.Params["pageIndex"];
-            int pageIndex = string.IsNullOrEmpty(pageIndexParam)
-                ? 1
-                : Convert.ToInt32(pageIndexParam);
+                var model = blogRepository.Value.Table
+                    .OrderByDescending(x => x.DateCreated)
+                    .Skip((pageIndex - 1) * blogSettings.ItemsPerPage)
+                    .Take(blogSettings.ItemsPerPage)
+                    .ToList();
 
-            var model = blogRepository.Value.Table
-                .OrderByDescending(x => x.DateCreated)
-                .Skip((pageIndex - 1) * blogSettings.ItemsPerPage)
-                .Take(blogSettings.ItemsPerPage)
-                .ToList();
+                var userNames = model
+                    .Select(x => x.UserId)
+                    .Distinct()
+                    .ToDictionary(
+                        k => k,
+                        v => membershipService.Value.GetUserById(v).UserName);
 
-            var userNames = model
-                .Select(x => x.UserId)
-                .Distinct()
-                .ToDictionary(
-                    k => k,
-                    v => membershipService.Value.GetUserById(v).UserName);
+                int total = blogRepository.Value.Count();
 
-            int total = blogRepository.Value.Count();
+                ViewBag.PageCount = (int)Math.Ceiling((double)total / blogSettings.ItemsPerPage);
+                ViewBag.PageIndex = pageIndex;
+                ViewBag.UserNames = userNames;
 
-            ViewBag.PageCount = (int)Math.Ceiling((double)total / blogSettings.ItemsPerPage);
-            ViewBag.PageIndex = pageIndex;
-            ViewBag.UserNames = userNames;
-            return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.Index", model);
+                var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "Index", null);
+
+                // If someone has provided a custom template (see LocationFormatProvider)
+                if (viewEngineResult.View != null)
+                {
+                    return View(model);
+                }
+
+                // Else use default template
+                return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.Index", model);
+            }
         }
 
         [Route("{slug}")]

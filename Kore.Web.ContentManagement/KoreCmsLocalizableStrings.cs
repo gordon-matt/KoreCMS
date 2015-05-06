@@ -42,6 +42,10 @@
             public const string Title = "Kore.Web.ContentManagement/Membership.Title";
             public const string UpdateUserRoles = "Kore.Web.ContentManagement/Membership.UpdateUserRoles";
             public const string Users = "Kore.Web.ContentManagement/Membership.Users";
+
+            // Messages
+            public const string InvalidEmailAddress = "Kore.Web.ContentManagement/Membership.InvalidEmailAddress";
+            public const string UserEmailAlreadyExists = "Kore.Web.ContentManagement/Membership.UserEmailAlreadyExists";
         }
 
         public static class Menus
@@ -81,6 +85,9 @@
         {
             public const string Subscribers = "Kore.Web.ContentManagement/CMS.Newsletters.Subscribers";
             public const string Title = "Kore.Web.ContentManagement/CMS.Newsletters.Title";
+
+            // Messages
+            public const string SuccessfullySignedUp = "Kore.Web.ContentManagement/CMS.Newsletters.SuccessfullySignedUp";
         }
 
         public static class Pages

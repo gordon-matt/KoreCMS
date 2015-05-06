@@ -1,0 +1,25 @@
+﻿@using Kore.Web.ContentManagement.Areas.Admin.Newsletters.ContentBlocks
+@model NewsletterSubscriptionBlock
+
+<form id="newsletter-subscribe-form" class="form-horizontal">
+    <label for="email">Sign up for newsletters</label>
+    <input type="text" id="newsletter-block-email" class="form-control" placeholder="Input e-mail address" />
+    <input type="button" class="btn btn-primary" value="Submit" onclick="javascript: newsletterSignUp()" />
+</form>
+
+@using (Script.AtFoot())
+{
+    <script type="text/javascript">
+        function newsletterSignUp() {
+            $.ajax({
+                url: '@Url.Action("Subscribe", "Subscriber", new { area = Constants.Areas.Newsletters })',
+                data: { email: $('#newsletter-block-email').val() },
+                type: 'POST',
+                dataType: 'json',
+                success: function (result) {
+                    alert(result.Message);
+                }
+            });
+        };
+    </script>
+}

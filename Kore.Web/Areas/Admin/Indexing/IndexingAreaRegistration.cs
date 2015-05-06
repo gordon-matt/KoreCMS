@@ -1,4 +1,6 @@
 ﻿using System.Web.Mvc;
+using Kore.Infrastructure;
+using Kore.Web.Configuration;
 using Kore.Web.Mvc.RoboUI;
 
 namespace Kore.Web.Areas.Admin.Indexing
@@ -12,7 +14,7 @@ namespace Kore.Web.Areas.Admin.Indexing
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            RoboSettings.RegisterAreaLayoutPath(KoreWebConstants.Areas.Indexing, "~/Areas/Admin/Views/Shared/_Layout.cshtml");
+            RoboSettings.RegisterAreaLayoutPath(KoreWebConstants.Areas.Indexing, KoreWebConstants.DefaultAdminLayoutPath);
         }
     }
 }

@@ -32,6 +32,11 @@
                     @Html.ValidationMessageFor(m => m.DefaultFrontendLayoutPath)
                 </div>
                 <div class="form-group">
+                    @Html.LabelFor(m => m.AdminLayoutPath)
+                    @Html.TextBoxFor(m => m.AdminLayoutPath, new { @class = "form-control", data_bind = "value: adminLayoutPath" })
+                    @Html.ValidationMessageFor(m => m.AdminLayoutPath)
+                </div>
+                <div class="form-group">
                     @Html.LabelFor(m => m.DefaultGridPageSize)
                     @Html.TextBoxFor(m => m.DefaultGridPageSize, new { @class = "form-control", data_bind = "value: defaultGridPageSize" })
                     @Html.ValidationMessageFor(m => m.DefaultGridPageSize)
@@ -91,6 +96,7 @@
     function updateModel(data) {
         viewModel.siteName = ko.observable("");
         viewModel.defaultFrontendLayoutPath = ko.observable("");
+        viewModel.adminLayoutPath = ko.observable("");
         viewModel.defaultGridPageSize = ko.observable(0);
         viewModel.defaultDesktopTheme = ko.observable("");
         viewModel.defaultMobileTheme = ko.observable("");
@@ -107,6 +113,9 @@
             }
             if (data.DefaultFrontendLayoutPath) {
                 viewModel.defaultFrontendLayoutPath(data.DefaultFrontendLayoutPath);
+            }
+            if (data.AdminLayoutPath) {
+                viewModel.adminLayoutPath(data.AdminLayoutPath);
             }
             if (data.DefaultGridPageSize) {
                 viewModel.defaultGridPageSize(data.DefaultGridPageSize);
@@ -141,6 +150,7 @@
     function cleanUp() {
         delete viewModel.siteName;
         delete viewModel.defaultFrontendLayoutPath;
+        delete viewModel.adminLayoutPath;
         delete viewModel.defaultGridPageSize;
         delete viewModel.defaultDesktopTheme;
         delete viewModel.defaultMobileTheme;
@@ -156,6 +166,7 @@
         var data = {
             SiteName: viewModel.siteName(),
             DefaultFrontendLayoutPath: viewModel.defaultFrontendLayoutPath(),
+            AdminLayoutPath: viewModel.adminLayoutPath(),
             DefaultGridPageSize: viewModel.defaultGridPageSize(),
             DefaultDesktopTheme: viewModel.defaultDesktopTheme(),
             DefaultMobileTheme: viewModel.defaultMobileTheme(),

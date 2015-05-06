@@ -1,7 +1,26 @@
-﻿namespace Kore.Web
+﻿using Kore.Infrastructure;
+using Kore.Web.Configuration;
+namespace Kore.Web
 {
     public static class KoreWebConstants
     {
+        private static string defaultAdminLayoutPath = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+        public static string DefaultAdminLayoutPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(defaultAdminLayoutPath))
+                {
+                    var siteSettings = EngineContext.Current.Resolve<KoreSiteSettings>();
+
+                    string adminLayoutPath = string.IsNullOrEmpty(siteSettings.AdminLayoutPath)
+                        ? "~/Areas/Admin/Views/Shared/_Layout.cshtml"
+                        : siteSettings.AdminLayoutPath;
+                }
+                return defaultAdminLayoutPath;
+            }
+        }
+
         public static class Areas
         {
             public const string Configuration = "Admin/Configuration";

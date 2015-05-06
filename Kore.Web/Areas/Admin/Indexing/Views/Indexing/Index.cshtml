@@ -1,8 +1,9 @@
-﻿@using Kore.Web.Indexing.Services
+﻿@using Kore.Web
+@using Kore.Web.Indexing.Services
 @model IndexEntry
 
 @{
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout = KoreWebConstants.DefaultAdminLayoutPath;
     string message = ViewBag.Message;
 }
 

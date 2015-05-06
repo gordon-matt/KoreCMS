@@ -1,4 +1,6 @@
 ﻿using System.Web.Mvc;
+using Kore.Infrastructure;
+using Kore.Web.Configuration;
 using Kore.Web.Mvc.RoboUI;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Membership
@@ -12,7 +14,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            RoboSettings.RegisterAreaLayoutPath(Constants.Areas.Membership, "~/Areas/Admin/Views/Shared/_Layout.cshtml");
+            RoboSettings.RegisterAreaLayoutPath(Constants.Areas.Membership, KoreWebConstants.DefaultAdminLayoutPath);
         }
     }
 }

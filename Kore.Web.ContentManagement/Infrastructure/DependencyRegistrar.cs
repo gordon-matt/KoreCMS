@@ -84,6 +84,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.RegisterType<MembershipNavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<MenusNavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<MessagingNavigationProvider>().As<INavigationProvider>().SingleInstance();
+            builder.RegisterType<NewslettersNavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<PagesNavigationProvider>().As<INavigationProvider>().SingleInstance();
 
             #endregion Navigation

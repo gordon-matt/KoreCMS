@@ -79,7 +79,7 @@
 
         public static class Newsletters
         {
-            public const string ManageNewsletters = "Kore.Web.ContentManagement/CMS.Newsletters.ManageNewsletters";
+            public const string Subscribers = "Kore.Web.ContentManagement/CMS.Newsletters.Subscribers";
             public const string Title = "Kore.Web.ContentManagement/CMS.Newsletters.Title";
         }
 

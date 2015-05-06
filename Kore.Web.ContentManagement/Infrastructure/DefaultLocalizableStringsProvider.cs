@@ -58,7 +58,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
                         { KoreCmsLocalizableStrings.Messaging.Title, "Messaging" },
                         { KoreCmsLocalizableStrings.Navigation.CMS, "CMS" },
                         { KoreCmsLocalizableStrings.Navigation.Home, "Home" },
-                        { KoreCmsLocalizableStrings.Newsletters.ManageNewsletters, "Manage Newsletters" },
+                        { KoreCmsLocalizableStrings.Newsletters.Subscribers, "Subscribers" },
                         { KoreCmsLocalizableStrings.Newsletters.Title, "Newsletters" },
                         { KoreCmsLocalizableStrings.Pages.ConfirmRestoreVersion, "Are you sure you want to restore this version?" },
                         { KoreCmsLocalizableStrings.Pages.CreateSubPage, "Create Sub Page" },

@@ -50,6 +50,10 @@ namespace Kore.Web.ContentManagement.Infrastructure
                 .Include("~/Scripts/Kore.Web.ContentManagement.Scripts.kore-cms-common.js")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Messaging.Scripts.messageTemplates.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/newsletters/subscribers")
+                .Include("~/Scripts/Kore.Web.ContentManagement.Scripts.kore-cms-common.js")
+                .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Newsletters.Scripts.subscribers.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/pages")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Scripts.kore-cms-common.js")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Pages.Scripts.index.js"));

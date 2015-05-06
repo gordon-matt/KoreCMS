@@ -50,40 +50,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
             return SingleResult.Create(new[] { subscriber }.AsQueryable());
         }
 
-        //public IHttpActionResult Post(Subscriber entity)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    var existingUser = membershipService.GetUserByEmail(entity.Email);
-
-        //    if (existingUser != null)
-        //    {
-        //        return Conflict();
-        //    }
-
-        //    var newUser = new KoreUser
-        //    {
-        //        Email = entity.Email,
-        //        UserName = entity.Name ?? entity.Email
-        //    };
-
-        //    string password = System.Web.Security.Membership.GeneratePassword(
-        //        membershipSettings.Value.GeneratedPasswordLength,
-        //        membershipSettings.Value.GeneratedPasswordNumberOfNonAlphanumericChars);
-
-        //    membershipService.InsertUser(newUser, password);
-
-        //    var createdUser = membershipService.GetUserByEmail(entity.Email);
-        //    entity.UserId = createdUser.Id;
-
-        //    membershipService.SaveProfileEntry(createdUser.Id, NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "true");
-
-        //    return Created(entity);
-        //}
-
         public IHttpActionResult Delete([FromODataUri] string key)
         {
             var entity = membershipService.GetUserById(key);

@@ -13,6 +13,7 @@ using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 using Kore.Web.ContentManagement.Messaging.Domain;
 using Kore.Web.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api;
 
 namespace Kore.Web.ContentManagement.Infrastructure
 {
@@ -38,6 +39,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.EntitySet<KoreRole>("Roles");
             builder.EntitySet<KoreUser>("Users");
             builder.EntitySet<QueuedEmail>("QueuedEmails");
+            builder.EntitySet<Subscriber>("Subscribers");
             builder.EntitySet<Zone>("Zones");
 
             // Special

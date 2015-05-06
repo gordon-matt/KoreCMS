@@ -145,6 +145,8 @@
     <Compile Include="Areas\Admin\Blog\Domain\BlogEntry.cs" />
     <Compile Include="Areas\Admin\Newsletters\Controllers\Api\SubscribersController.cs" />
     <Compile Include="Areas\Admin\Newsletters\Controllers\SubscriberController.cs" />
+    <Compile Include="Areas\Admin\Newsletters\NewslettersAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Newsletters\NewslettersNavigationProvider.cs" />
     <Compile Include="Areas\Admin\Newsletters\NewsletterUserProfileProvider.cs" />
     <Compile Include="Areas\Admin\Localization\Controllers\Api\LanguagesController.cs" />
     <Compile Include="Areas\Admin\Localization\Controllers\Api\LocalizableStringsController.cs" />
@@ -394,7 +396,7 @@
     <EmbeddedResource Include="Areas\Admin\Blog\Views\BlogContent\Details.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Newsletters\Views\Shared\DisplayTemplates\NewsletterUserProfileProvider.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Newsletters\Views\Shared\EditorTemplates\NewsletterUserProfileProvider.cshtml" />
-    <None Include="Areas\Admin\Newsletters\Views\Subscriber\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Newsletters\Views\Subscriber\Index.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\RichTextFull.cshtml" />

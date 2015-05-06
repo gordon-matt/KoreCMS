@@ -1,7 +1,13 @@
-﻿namespace Kore.Web.ContentManagement
+﻿using System.Text.RegularExpressions;
+namespace Kore.Web.ContentManagement
 {
     public static class Constants
     {
+        public static class RegexPatterns
+        {
+            public static readonly Regex Email = new Regex("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        }
+
         public static class Areas
         {
             public const string Blog = "Admin/Blog";

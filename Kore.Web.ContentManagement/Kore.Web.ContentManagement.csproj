@@ -143,8 +143,11 @@
     <Compile Include="Areas\Admin\Blog\Controllers\BlogContentController.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\BlogController.cs" />
     <Compile Include="Areas\Admin\Blog\Domain\BlogEntry.cs" />
+    <Compile Include="Areas\Admin\Newsletters\ContentBlocks\NewsletterSubscriptionBlock.cs" />
     <Compile Include="Areas\Admin\Newsletters\Controllers\Api\SubscribersController.cs" />
     <Compile Include="Areas\Admin\Newsletters\Controllers\SubscriberController.cs" />
+    <Compile Include="Areas\Admin\Newsletters\INewsletterEventHandler.cs" />
+    <Compile Include="Areas\Admin\Newsletters\NewsletterMessageTemplates.cs" />
     <Compile Include="Areas\Admin\Newsletters\NewslettersAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Newsletters\NewslettersNavigationProvider.cs" />
     <Compile Include="Areas\Admin\Newsletters\NewsletterUserProfileProvider.cs" />
@@ -397,6 +400,7 @@
     <EmbeddedResource Include="Areas\Admin\Newsletters\Views\Shared\DisplayTemplates\NewsletterUserProfileProvider.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Newsletters\Views\Shared\EditorTemplates\NewsletterUserProfileProvider.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Newsletters\Views\Subscriber\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Newsletters\Views\Shared\DisplayTemplates\NewsletterSubscriptionBlock.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\RichTextFull.cshtml" />

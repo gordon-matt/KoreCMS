@@ -16,6 +16,7 @@ using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Menus;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Newsletters;
+using Kore.Web.ContentManagement.Areas.Admin.Newsletters.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.Pages;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.ContentManagement.FileSystems.Media;
@@ -121,6 +122,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.RegisterType<FormBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<HtmlBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<LanguageSwitchBlock>().As<IContentBlock>().InstancePerDependency();
+            builder.RegisterType<NewsletterSubscriptionBlock>().As<IContentBlock>().InstancePerDependency();
 
             // TODO: These should probably be moved to another assembly (add-ons)
             //builder.RegisterType<NivoSliderBlock>().As<IContentBlock>().InstancePerDependency();

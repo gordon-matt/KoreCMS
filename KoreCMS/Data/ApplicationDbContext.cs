@@ -70,9 +70,9 @@ namespace KoreCMS.Data
 
         public DbSet<LogEntry> Log { get; set; }
 
-        public DbSet<Image> MediaParts { get; set; }
+        public DbSet<Image> Images { get; set; }
 
-        public DbSet<ImageEntity> MediaPartTypes { get; set; }
+        public DbSet<ImageEntity> ImageEntities { get; set; }
 
         public DbSet<MenuItem> MenuItems { get; set; }
 

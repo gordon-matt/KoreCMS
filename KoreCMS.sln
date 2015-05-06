@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Widgets.Google
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Widgets.FlexSlider", "Plugins\Kore.Plugins.Widgets.FlexSlider\Kore.Plugins.Widgets.FlexSlider.csproj", "{E8F20949-BF84-4481-B678-747DEACF5D80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Ecommerce.Simple", "Plugins\Kore.Plugins.Ecommerce.Simple\Kore.Plugins.Ecommerce.Simple.csproj", "{F8E56256-C629-49C7-94B7-6A0FE551ACED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -114,6 +116,10 @@ Global
 		{E8F20949-BF84-4481-B678-747DEACF5D80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8F20949-BF84-4481-B678-747DEACF5D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8F20949-BF84-4481-B678-747DEACF5D80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8E56256-C629-49C7-94B7-6A0FE551ACED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8E56256-C629-49C7-94B7-6A0FE551ACED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8E56256-C629-49C7-94B7-6A0FE551ACED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8E56256-C629-49C7-94B7-6A0FE551ACED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -131,5 +137,6 @@ Global
 		{310DCE69-E369-41D6-8BDA-CC641FEEF9E8} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 		{CACB917B-6AAE-43D9-98BC-C919BF234DFE} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 		{E8F20949-BF84-4481-B678-747DEACF5D80} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
+		{F8E56256-C629-49C7-94B7-6A0FE551ACED} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 	EndGlobalSection
 EndGlobal

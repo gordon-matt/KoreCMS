@@ -8,6 +8,7 @@ using Kore;
 using Kore.Collections;
 using Kore.Data;
 using Kore.Security.Membership;
+using Kore.Web.Security.Membership;
 using KoreCMS.Data;
 using KoreCMS.Data.Domain;
 using Microsoft.AspNet.Identity;
@@ -175,15 +176,17 @@ namespace KoreCMS.Services
 
         public void InsertUser(KoreUser user, string password)
         {
+            string userName = (user.UserName.Contains(" ") ? user.UserName.Replace(" ", "_") : user.UserName);
+
             var appUser = new ApplicationUser
             {
-                UserName = user.UserName,
+                UserName = userName,
                 Email = user.Email,
                 LockoutEnabled = user.IsLockedOut
             };
 
-            // TODO: For some reason, if the username has a space, example: "User 1", then it doesn't insert, but there's no error. WTF?
-            //      Need to investigate further
+            // Check for spaces in UserName above, because of this:
+            // http://stackoverflow.com/questions/30078332/bug-in-asp-net-identitys-usermanager
             userManager.Create(appUser, password);
         }
 
@@ -242,6 +245,44 @@ namespace KoreCMS.Services
             //string passwordHash = userManager.PasswordHasher.HashPassword(newPassword);
             //userStore.SetPasswordHashAsync(user, passwordHash);
             //userManager.UpdateSecurityStamp(id);
+        }
+
+        public string GetUserDisplayName(KoreUser user)
+        {
+            var profile = GetProfile(user.Id);
+
+            bool hasFamilyName = profile.ContainsKey(AccountUserProfileProvider.Fields.FamilyName);
+            bool hasGivenNames = profile.ContainsKey(AccountUserProfileProvider.Fields.GivenNames);
+
+            if (hasFamilyName && hasGivenNames)
+            {
+                string familyName = profile[AccountUserProfileProvider.Fields.FamilyName];
+                string givenNames = profile[AccountUserProfileProvider.Fields.GivenNames];
+
+                if (profile.ContainsKey(AccountUserProfileProvider.Fields.ShowFamilyNameFirst))
+                {
+                    bool showFamilyNameFirst = bool.Parse(profile[AccountUserProfileProvider.Fields.ShowFamilyNameFirst]);
+
+                    if (showFamilyNameFirst)
+                    {
+                        return familyName + " " + givenNames;
+                    }
+                    return givenNames + " " + familyName;
+                }
+                return givenNames + " " + familyName;
+            }
+            else if (hasFamilyName)
+            {
+                return profile[AccountUserProfileProvider.Fields.FamilyName];
+            }
+            else if (hasGivenNames)
+            {
+                return profile[AccountUserProfileProvider.Fields.GivenNames];
+            }
+            else
+            {
+                return user.UserName;
+            }
         }
 
         #endregion Users

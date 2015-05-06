@@ -6,19 +6,21 @@ using Kore.Web.ContentManagement.Areas.Admin.Media.Models;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Media.Domain
 {
-    public class MediaPart : IEntity, IMediaPart
+    public class Image : IEntity, IImage
     {
         public Guid Id { get; set; }
 
-        public string Caption { get; set; }
+        public Guid ImageEntityId { get; set; }
+
+        public int EntityId { get; set; }
 
         public string Url { get; set; }
 
+        public string ThumbnailUrl { get; set; }
+
+        public string Caption { get; set; }
+
         public int SortOrder { get; set; }
-
-        public Guid MediaPartTypeId { get; set; }
-
-        public int ParentId { get; set; }
 
         #region IEntity Members
 
@@ -30,17 +32,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Domain
         #endregion IEntity Members
     }
 
-    public class MediaPartMap : EntityTypeConfiguration<MediaPart>, IEntityTypeConfiguration
+    public class MediaPartMap : EntityTypeConfiguration<Image>, IEntityTypeConfiguration
     {
         public MediaPartMap()
         {
             ToTable("Kore_MediaParts");
             HasKey(x => x.Id);
-            Property(x => x.Caption).HasMaxLength(255);
+            Property(x => x.ImageEntityId).IsRequired();
+            Property(x => x.EntityId).IsRequired();
             Property(x => x.Url).IsRequired().HasMaxLength(2048);
+            Property(x => x.ThumbnailUrl).HasMaxLength(2048);
+            Property(x => x.Caption).HasMaxLength(255);
             Property(x => x.SortOrder).IsRequired();
-            Property(x => x.MediaPartTypeId).IsRequired();
-            Property(x => x.ParentId).IsRequired();
         }
     }
 }

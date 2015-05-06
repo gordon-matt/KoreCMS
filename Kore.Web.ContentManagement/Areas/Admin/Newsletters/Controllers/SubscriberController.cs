@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Kore.Security.Membership;
 using Kore.Web.Events;
@@ -94,11 +95,25 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
                 membershipSettings.Value.GeneratedPasswordLength,
                 membershipSettings.Value.GeneratedPasswordNumberOfNonAlphanumericChars);
 
-            membershipService.Value.InsertUser(new KoreUser { UserName = name, Email = email }, password);
+            membershipService.Value.InsertUser(new KoreUser { UserName = email, Email = email }, password);
             var user = membershipService.Value.GetUserByEmail(email);
 
             // and sign up for newsletter, as requested.
             membershipService.Value.SaveProfileEntry(user.Id, NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, bool.TrueString);
+
+            name = name.Trim();
+            if (name.Contains(" "))
+            {
+                string[] nameArray = name.Split(' ');
+                string familyName = nameArray.Last();
+                string givenNames = name.Replace(familyName, string.Empty).Trim();
+                membershipService.Value.SaveProfileEntry(user.Id, AccountUserProfileProvider.Fields.FamilyName, familyName);
+                membershipService.Value.SaveProfileEntry(user.Id, AccountUserProfileProvider.Fields.GivenNames, givenNames);
+            }
+            else
+            {
+                membershipService.Value.SaveProfileEntry(user.Id, AccountUserProfileProvider.Fields.GivenNames, name);
+            }
 
             eventBus.Value.Notify<INewsletterEventHandler>(x => x.Subscribed(user));
 

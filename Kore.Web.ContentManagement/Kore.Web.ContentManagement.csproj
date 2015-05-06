@@ -143,6 +143,7 @@
     <Compile Include="Areas\Admin\Blog\Controllers\BlogContentController.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\BlogController.cs" />
     <Compile Include="Areas\Admin\Blog\Domain\BlogEntry.cs" />
+    <Compile Include="Areas\Admin\Media\Services\IMediaService.cs" />
     <Compile Include="Areas\Admin\Newsletters\ContentBlocks\NewsletterSubscriptionBlock.cs" />
     <Compile Include="Areas\Admin\Newsletters\Controllers\Api\SubscribersController.cs" />
     <Compile Include="Areas\Admin\Newsletters\Controllers\SubscriberController.cs" />
@@ -165,8 +166,8 @@
     <Compile Include="Areas\Admin\Media\Controllers\MediaController.cs" />
     <Compile Include="Areas\Admin\Media\Controllers\PlugoBrowserController.cs" />
     <Compile Include="Areas\Admin\Media\Controllers\UploadFilesController.cs" />
-    <Compile Include="Areas\Admin\Media\Domain\MediaPart.cs" />
-    <Compile Include="Areas\Admin\Media\Domain\MediaPartType.cs" />
+    <Compile Include="Areas\Admin\Media\Domain\Image.cs" />
+    <Compile Include="Areas\Admin\Media\Domain\ImageEntity.cs" />
     <Compile Include="Areas\Admin\Media\ElFinder\DownloadFileResult.cs" />
     <Compile Include="Areas\Admin\Media\ElFinder\DTO\DirectoryDTO.cs" />
     <Compile Include="Areas\Admin\Media\ElFinder\DTO\DTOBase.cs" />
@@ -204,14 +205,12 @@
     <Compile Include="Areas\Admin\Media\MediaPermissions.cs" />
     <Compile Include="Areas\Admin\Media\Models\FileUpload.cs" />
     <Compile Include="Areas\Admin\Media\Models\FineUpload.cs" />
-    <Compile Include="Areas\Admin\Media\Models\IMediaPart.cs" />
+    <Compile Include="Areas\Admin\Media\Models\IImage.cs" />
     <Compile Include="Areas\Admin\Media\Models\MediaFile.cs" />
     <Compile Include="Areas\Admin\Media\Models\MediaFolder.cs" />
     <Compile Include="Areas\Admin\Media\MediaNavigationProvider.cs" />
-    <Compile Include="Areas\Admin\Media\Services\IMediaDriver.cs" />
-    <Compile Include="Areas\Admin\Media\Services\IMediaPartService.cs" />
+    <Compile Include="Areas\Admin\Media\Services\IImageService.cs" />
     <Compile Include="Areas\Admin\Media\Services\IMediaPathProvider.cs" />
-    <Compile Include="Areas\Admin\Media\Services\IMediaService.cs" />
     <Compile Include="Areas\Admin\Media\Services\MediaService.cs" />
     <Compile Include="Areas\Admin\Media\Services\SystemMediaDriver.cs" />
     <Compile Include="Areas\Admin\Media\ContentBlocks\NivoSliderBlock.cs" />

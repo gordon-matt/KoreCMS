@@ -4,6 +4,7 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
+using Kore.Collections;
 using Kore.Security.Membership;
 using Kore.Web.Security.Membership;
 
@@ -29,12 +30,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
                 .GetProfileEntriesByKeyAndValue(NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "true")
                 .Select(x => x.UserId);
 
-            return membershipService.GetUsers(x => userIds.Contains(x.Id)).Select(x => new Subscriber
-            {
-                UserId = x.Id,
-                Email = x.Email,
-                Name = x.UserName
-            }).AsQueryable();
+            return membershipService.GetUsers(x => userIds.Contains(x.Id))
+                .ToHashSet()
+                .Select(x => new Subscriber
+                {
+                    UserId = x.Id,
+                    Email = x.Email,
+                    Name = membershipService.GetUserDisplayName(x)
+                })
+                .AsQueryable();
         }
 
         [EnableQuery]

@@ -21,10 +21,13 @@ namespace Kore.Plugins.Widgets.Google.Data.Domain
         [DataMember]
         public int Id { get; set; }
 
+        [DataMember]
         public Guid PageId { get; set; }
 
+        [DataMember]
         public ChangeFrequency ChangeFrequency { get; set; }
 
+        [DataMember]
         public float Priority { get; set; }
 
         #region IEntity Members

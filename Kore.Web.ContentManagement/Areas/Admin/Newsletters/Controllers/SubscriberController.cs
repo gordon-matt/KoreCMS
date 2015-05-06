@@ -46,7 +46,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
 
         [AllowAnonymous]
         [Route("subscribe")]
-        public JsonResult Subscribe(string email)
+        public JsonResult Subscribe(string email, string name)
         {
             // First check if valid email address
             if (!Constants.RegexPatterns.Email.IsMatch(email))
@@ -94,7 +94,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
                 membershipSettings.Value.GeneratedPasswordLength,
                 membershipSettings.Value.GeneratedPasswordNumberOfNonAlphanumericChars);
 
-            membershipService.Value.InsertUser(new KoreUser { UserName = email, Email = email }, password);
+            membershipService.Value.InsertUser(new KoreUser { UserName = name, Email = email }, password);
             var user = membershipService.Value.GetUserByEmail(email);
 
             // and sign up for newsletter, as requested.

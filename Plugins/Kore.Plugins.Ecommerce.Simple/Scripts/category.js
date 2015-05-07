@@ -130,9 +130,7 @@ var ViewModel = function () {
     self.validator = $("#form-section-form").validate({
         rules: {
             Name: { required: true, maxlength: 255 },
-            UniqueSeoCode: { required: true, maxlength: 10 },
-            FlagImageFileName: { maxlength: 255 },
-            SortOrder: { required: true }
+            Slug: { required: true, maxlength: 255 }
         }
     });
 };

@@ -7,6 +7,7 @@ using System.Transactions;
 using Kore;
 using Kore.Collections;
 using Kore.Data;
+using Kore.Exceptions;
 using Kore.Security.Membership;
 using Kore.Web.Security.Membership;
 using KoreCMS.Data;
@@ -187,7 +188,13 @@ namespace KoreCMS.Services
 
             // Check for spaces in UserName above, because of this:
             // http://stackoverflow.com/questions/30078332/bug-in-asp-net-identitys-usermanager
-            userManager.Create(appUser, password);
+            var result = userManager.Create(appUser, password);
+
+            if (!result.Succeeded)
+            {
+                string errorMessage = string.Join(Environment.NewLine, result.Errors);
+                throw new KoreException(errorMessage);
+            }
         }
 
         public void UpdateUser(KoreUser user)
@@ -200,7 +207,13 @@ namespace KoreCMS.Services
                 existingUser.UserName = user.UserName;
                 existingUser.Email = user.Email;
                 existingUser.LockoutEnabled = user.IsLockedOut;
-                userManager.Update(existingUser);
+                var result = userManager.Update(existingUser);
+
+                if (!result.Succeeded)
+                {
+                    string errorMessage = string.Join(Environment.NewLine, result.Errors);
+                    throw new KoreException(errorMessage);
+                }
             }
         }
 
@@ -220,7 +233,13 @@ namespace KoreCMS.Services
             {
                 foreach (string roleName in toDelete)
                 {
-                    userManager.RemoveFromRole(uId, roleName);
+                    var result = userManager.RemoveFromRole(uId, roleName);
+
+                    if (!result.Succeeded)
+                    {
+                        string errorMessage = string.Join(Environment.NewLine, result.Errors);
+                        throw new KoreException(errorMessage);
+                    }
                 }
                 cachedUserRoles.Remove(uId);
             }
@@ -229,7 +248,13 @@ namespace KoreCMS.Services
             {
                 foreach (string roleName in toAdd)
                 {
-                    userManager.AddToRole(uId, roleName);
+                    var result = userManager.AddToRole(uId, roleName);
+
+                    if (!result.Succeeded)
+                    {
+                        string errorMessage = string.Join(Environment.NewLine, result.Errors);
+                        throw new KoreException(errorMessage);
+                    }
                 }
                 cachedUserRoles.Remove(uId);
             }
@@ -239,8 +264,21 @@ namespace KoreCMS.Services
         {
             //TODO: This doesn't seem to be working very well; no errors, but can't login with the given password
             string id = userId.ToString();
-            userManager.RemovePassword(id);
-            userManager.AddPassword(id, newPassword);
+            var result = userManager.RemovePassword(id);
+
+            if (!result.Succeeded)
+            {
+                string errorMessage = string.Join(Environment.NewLine, result.Errors);
+                throw new KoreException(errorMessage);
+            }
+
+            result = userManager.AddPassword(id, newPassword);
+
+            if (!result.Succeeded)
+            {
+                string errorMessage = string.Join(Environment.NewLine, result.Errors);
+                throw new KoreException(errorMessage);
+            }
             //var user = userManager.FindById(id);
             //string passwordHash = userManager.PasswordHasher.HashPassword(newPassword);
             //userStore.SetPasswordHashAsync(user, passwordHash);
@@ -341,7 +379,13 @@ namespace KoreCMS.Services
 
         public void InsertRole(KoreRole role)
         {
-            roleManager.Create(new IdentityRole { Name = role.Name });
+            var result = roleManager.Create(new IdentityRole { Name = role.Name });
+
+            if (!result.Succeeded)
+            {
+                string errorMessage = string.Join(Environment.NewLine, result.Errors);
+                throw new KoreException(errorMessage);
+            }
         }
 
         public void UpdateRole(KoreRole role)
@@ -352,7 +396,13 @@ namespace KoreCMS.Services
             if (existingRole != null)
             {
                 existingRole.Name = role.Name;
-                roleManager.Update(existingRole);
+                var result = roleManager.Update(existingRole);
+
+                if (!result.Succeeded)
+                {
+                    string errorMessage = string.Join(Environment.NewLine, result.Errors);
+                    throw new KoreException(errorMessage);
+                }
             }
         }
 

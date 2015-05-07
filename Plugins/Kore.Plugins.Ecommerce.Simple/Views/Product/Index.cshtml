@@ -5,15 +5,28 @@
     Layout = KoreWebConstants.DefaultAdminLayoutPath;
 
     Style.IncludeBundle("kendo-ui");
+    Style.IncludeBundle("jquery-ui");
+    Style.IncludeBundle("elfinder");
 
     Script.IncludeBundle("kendo-ui");
     Script.IncludeBundle("knockout");
     Script.IncludeBundle("knockout-mapping");
+    Script.IncludeBundle("tinymce");
     Script.IncludeBundle("notify");
+    Script.IncludeBundle("jquery-ui");
+    Script.IncludeBundle("elfinder");
 
     Script.IncludeBundle("kore-cms/common");
+    Script.IncludeBundle("kore-cms/bootbox");
     Script.IncludePluginScript("product.js");
 }
+
+<style type="text/css">
+    .modal-dialog {
+        width: 800px !important;
+        height: 480px !important;
+    }
+</style>
 
 <div id="grid-section" class="row">
     <div class="col-md-12">
@@ -60,22 +73,39 @@
                         @Html.TextBox("Price", null, new { @class = "form-control", data_bind = "value: price" })
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
                     <div class="form-group">
-                        @Html.Label("MainImageUrl", "Main Image URL", new { @class = "control-label" })
-                        @Html.TextBox("MainImageUrl", null, new { @class = "form-control", data_bind = "value: mainImageUrl" })
+                        <div data-bind="if: mainImageUrl">
+                            <img data-bind="attr: { src: mainImageUrl }" class="img-responsive img-thumbnail" />
+                        </div>
+                        <div data-bind="ifnot: mainImageUrl">
+                            <img src="http://placehold.it/320x240&text=Image+Missing" class="img-responsive img-thumbnail" />
+                        </div>
                     </div>
                 </div>
+                <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                    <div class="form-group">
+                        @Html.Label("MainImageUrl", "Main Image URL", new { @class = "control-label" })
+                        <div class="input-group">
+                            @Html.TextBox("MainImageUrl", null, new { @class = "form-control", data_bind = "value: mainImageUrl" })
+                            <span class="input-group-addon">
+                                <a href="javascript:void(0);" onclick="elFinderBrowserBootBox();"><i class="fa fa-search"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         @Html.Label("ShortDescription", "Short Description", new { @class = "control-label" })
-                        @Html.TextBox("ShortDescription", null, new { @class = "form-control", data_bind = "value: shortDescription" })
+                        @Html.TextArea("ShortDescription", null, new { @class = "form-control", data_bind = "value: shortDescription" })
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         @Html.Label("FullDescription", "Full Description", new { @class = "control-label" })
-                        @Html.TextBox("FullDescription", null, new { @class = "form-control", data_bind = "value: fullDescription" })
+                        @Html.TextArea("FullDescription", null, new { @class = "form-control", data_bind = "wysiwyg: fullDescription, wysiwygConfig: tinyMCE_fullDescription" })
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

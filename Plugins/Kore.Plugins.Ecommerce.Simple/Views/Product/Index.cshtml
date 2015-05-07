@@ -1,1 +1,108 @@
-﻿
+﻿@using Kore.Plugins.Ecommerce.Simple
+@using Kore.Plugins.Ecommerce.Simple.Extensions;
+
+@{
+    Layout = KoreWebConstants.DefaultAdminLayoutPath;
+
+    Style.IncludeBundle("kendo-ui");
+
+    Script.IncludeBundle("kendo-ui");
+    Script.IncludeBundle("knockout");
+    Script.IncludeBundle("knockout-mapping");
+    Script.IncludeBundle("notify");
+
+    Script.IncludeBundle("kore-cms/common");
+    Script.IncludePluginScript("product.js");
+}
+
+<div id="grid-section" class="row">
+    <div class="col-md-12">
+        <a data-bind="click: create" class="btn btn-primary">
+            <i class="fa fa-plus"></i>
+            @T(KoreWebLocalizableStrings.General.Create)
+        </a>
+    </div>
+
+    <div class="clearfix"></div>
+    <br />
+
+    <div class="col-md-12">
+        <div id="Grid"></div>
+    </div>
+</div>
+
+<div id="form-section" class="row" style="display:none">
+    <article class="col-sm-12 col-md-12">
+        <form id="form-section-form" role="form">
+            <fieldset>
+                <legend id="form-section-legend"></legend>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        @Html.Label("Name", "Name", new { @class = "control-label" })
+                        @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        @Html.Label("Slug", "Slug", new { @class = "control-label" })
+                        @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: slug" })
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        @Html.Label("CategoryId", "Category", new { @class = "control-label" })
+                        @Html.SimpleCommerce().CategoriesDropDownList("CategoryId", htmlAttributes: new { @class = "form-control", data_bind = "value: categoryId" })
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        @Html.Label("Price", "Price", new { @class = "control-label" })
+                        @Html.TextBox("Price", null, new { @class = "form-control", data_bind = "value: price" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        @Html.Label("MainImageUrl", "Main Image URL", new { @class = "control-label" })
+                        @Html.TextBox("MainImageUrl", null, new { @class = "form-control", data_bind = "value: mainImageUrl" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        @Html.Label("ShortDescription", "Short Description", new { @class = "control-label" })
+                        @Html.TextBox("ShortDescription", null, new { @class = "form-control", data_bind = "value: shortDescription" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        @Html.Label("FullDescription", "Full Description", new { @class = "control-label" })
+                        @Html.TextBox("FullDescription", null, new { @class = "form-control", data_bind = "value: fullDescription" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group pull-right">
+                        <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                        <button type="button" class="btn btn-primary" data-bind="click: save">@T(KoreWebLocalizableStrings.General.Save)</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </article>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        var translations = {
+            Create: '@T(KoreWebLocalizableStrings.General.Create).Text',
+            Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
+            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.Messages.ConfirmDeleteRecord).Text',
+            DeleteRecordError: '@T(KoreWebLocalizableStrings.Messages.DeleteRecordError).Text',
+            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.DeleteRecordSuccess).Text',
+            Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
+            GetRecordError: '@T(KoreWebLocalizableStrings.Messages.GetRecordError).Text',
+            InsertRecordError: '@T(KoreWebLocalizableStrings.Messages.InsertRecordError).Text',
+            InsertRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.InsertRecordSuccess).Text',
+            UpdateRecordError: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordError).Text',
+            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text'
+        }
+    </script>
+}

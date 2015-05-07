@@ -45,10 +45,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.RegisterType<LanguageService>().As<ILanguageService>().InstancePerDependency();
             builder.RegisterType<LocalizableStringService>().As<ILocalizableStringService>().InstancePerDependency();
 
-            // Media
-            builder.RegisterType<ImageService>().As<IImageService>().InstancePerDependency();
-            builder.RegisterType<MediaService>().As<IImageService>().InstancePerDependency();
-
             // Menus
             builder.RegisterType<MenuService>().As<IMenuService>().InstancePerDependency();
             builder.RegisterType<MenuItemService>().As<IMenuItemService>().InstancePerDependency();
@@ -148,7 +144,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             builder.RegisterType<ConfigurationMimeTypeProvider>().As<IMimeTypeProvider>().InstancePerDependency();
             builder.RegisterType<FileSystemStorageProvider>().As<IStorageProvider>().InstancePerDependency();
-            builder.RegisterType<MediaService>().As<IImageService>().InstancePerDependency();
+            builder.RegisterType<MediaService>().As<IMediaService>().InstancePerDependency();
             builder.RegisterType<MediaPathProvider>().As<IMediaPathProvider>().InstancePerDependency();
             builder.RegisterType<ImageService>().As<IImageService>().InstancePerDependency();
             //builder.RegisterType<SystemMediaDriver>().As<IDriver>().InstancePerDependency();

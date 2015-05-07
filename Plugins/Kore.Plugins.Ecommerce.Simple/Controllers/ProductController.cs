@@ -13,5 +13,21 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
     [RoutePrefix("products")]
     public class ProductController : KoreController
     {
+        [Route("")]
+        public ActionResult Index()
+        {
+            if (!CheckPermission(SimpleCommercePermissions.ManageStore))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Store));
+            WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Products));
+
+            ViewBag.Title = T(LocalizableStrings.Store);
+            ViewBag.SubTitle = T(LocalizableStrings.Products);
+
+            return View();
+        }
     }
 }

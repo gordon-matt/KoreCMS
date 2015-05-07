@@ -21,7 +21,7 @@ namespace Kore.Web.ContentManagement
 
         DbSet<Image> Images { get; set; }
 
-        DbSet<ImageEntity> ImageEntities { get; set; }
+        DbSet<ImageEntityType> ImageEntities { get; set; }
 
         DbSet<MenuItem> MenuItems { get; set; }
 

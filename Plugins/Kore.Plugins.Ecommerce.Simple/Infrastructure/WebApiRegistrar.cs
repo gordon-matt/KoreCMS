@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using System.Web.Http.OData.Builder;
+using Kore.Plugins.Ecommerce.Simple.Data.Domain;
 using Kore.Web.Infrastructure;
 
 namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
@@ -10,22 +11,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
 
         public void Register(HttpConfiguration config)
         {
-            //ODataModelBuilder builder = new ODataConventionModelBuilder();
-            //builder.EntitySet<GoogleSitemapPageConfig>("GoogleXmlSitemap");
+            ODataModelBuilder builder = new ODataConventionModelBuilder();
+            builder.EntitySet<Category>("Categories");
+            builder.EntitySet<Product>("Products");
 
-            //var getConfigAction = builder.Entity<GoogleSitemapPageConfig>().Collection.Action("GetConfig");
-            //getConfigAction.ReturnsCollection<GoogleSitemapPageConfigModel>();
-
-            //var setConfigAction = builder.Entity<GoogleSitemapPageConfig>().Collection.Action("SetConfig");
-            //setConfigAction.Parameter<int>("id");
-            //setConfigAction.Parameter<byte>("changeFrequency");
-            //setConfigAction.Parameter<float>("priority");
-            //setConfigAction.Returns<IHttpActionResult>();
-
-            //var generateAction = builder.Entity<GoogleSitemapPageConfig>().Collection.Action("Generate");
-            //generateAction.Returns<IHttpActionResult>();
-
-            //config.Routes.MapODataRoute("OData_Kore_Plugin_Google", "odata/kore/plugins/google", builder.GetEdmModel());
+            config.Routes.MapODataRoute("OData_Kore_Plugin_SimpleCommerce", "odata/kore/plugins/simple-commerce", builder.GetEdmModel());
         }
 
         #endregion IWebApiRegistrar Members

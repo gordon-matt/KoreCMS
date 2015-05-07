@@ -37,7 +37,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
         /// <returns>The media files in the given path.</returns>
         IEnumerable<MediaFile> GetMediaFiles(string relativePath);
 
-        IEnumerable<TMediaPart> GetMediaParts<TMediaPart>(IEntity entity) where TMediaPart : IImage, new();
+        IEnumerable<TMediaPart> GetMediaParts<TMediaPart>(IEntity entity) where TMediaPart : IKoreImage, new();
 
         bool FolderExists(string path);
 
@@ -99,7 +99,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
 
         void MoveFile(string currentPath, string newPath);
 
-        void MoveFiles(IEnumerable<IImage> mediaParts, string targetFolder);
+        void MoveFiles(IEnumerable<IKoreImage> mediaParts, string targetFolder);
 
         /// <summary>
         /// Uploads a media file based on a stream.
@@ -110,6 +110,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
         /// <returns>The path to the uploaded file.</returns>
         string UploadMediaFile(string folderPath, string fileName, Stream inputStream);
 
-        void SetMediaParts(IEntity entity, IEnumerable<IImage> mediaParts, string folderName);
+        void SetMediaParts(IEntity entity, IEnumerable<IKoreImage> mediaParts, string folderName);
     }
 }

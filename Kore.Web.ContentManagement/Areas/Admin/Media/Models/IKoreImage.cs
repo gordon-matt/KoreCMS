@@ -1,6 +1,6 @@
 ﻿namespace Kore.Web.ContentManagement.Areas.Admin.Media.Models
 {
-    public interface IImage
+    public interface IKoreImage
     {
         string Url { get; set; }
 

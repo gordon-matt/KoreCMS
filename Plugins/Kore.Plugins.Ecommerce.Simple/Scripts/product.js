@@ -1,5 +1,9 @@
 ﻿'use strict'
 
+function imagePickerCallback(url) {
+    viewModel.mainImageUrl(url);
+};
+
 var ViewModel = function () {
     var self = this;
 
@@ -11,6 +15,8 @@ var ViewModel = function () {
     self.mainImageUrl = ko.observable('');
     self.shortDescription = ko.observable('');
     self.fullDescription = ko.observable('');
+
+    self.tinyMCE_fullDescription = koreDefaultTinyMCEConfig;
 
     self.create = function () {
         self.id(0);

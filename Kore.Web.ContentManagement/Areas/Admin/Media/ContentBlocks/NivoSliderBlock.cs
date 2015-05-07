@@ -193,7 +193,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.ContentBlocks
             get { throw new NotImplementedException(); }
         }
 
-        public class MediaPart : IImage
+        public class MediaPart : IKoreImage
         {
             #region IImage Members
 

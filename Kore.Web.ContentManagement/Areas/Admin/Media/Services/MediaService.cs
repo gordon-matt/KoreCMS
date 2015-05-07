@@ -89,12 +89,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
             return files.Select(file => BuildMediaFile(relativePath, file)).ToList();
         }
 
-        public IEnumerable<TMediaPart> GetMediaParts<TMediaPart>(IEntity entity) where TMediaPart : IImage, new()
+        public IEnumerable<TMediaPart> GetMediaParts<TMediaPart>(IEntity entity) where TMediaPart : IKoreImage, new()
         {
             return mediaPartService.GetImages<TMediaPart>(entity);
         }
 
-        public void SetMediaParts(IEntity entity, IEnumerable<IImage> mediaParts, string folderName)
+        public void SetMediaParts(IEntity entity, IEnumerable<IKoreImage> mediaParts, string folderName)
         {
             MoveFiles(mediaParts, folderName);
 
@@ -238,7 +238,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
             storageProvider.RenameFile(currentPath, newPath);
         }
 
-        public void MoveFiles(IEnumerable<IImage> mediaParts, string targetFolder)
+        public void MoveFiles(IEnumerable<IKoreImage> mediaParts, string targetFolder)
         {
             if (mediaParts == null)
             {

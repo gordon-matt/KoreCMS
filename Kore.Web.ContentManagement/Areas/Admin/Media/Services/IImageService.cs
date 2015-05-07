@@ -1,8 +1,8 @@
-﻿using Kore.Collections;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Kore.Caching;
+using Kore.Collections;
 using Kore.Data;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Models;
@@ -11,65 +11,63 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
 {
     public interface IImageService
     {
-        Guid GetImageEntityId(IEntity entity);
+        Guid GeEntityTypeId(IEntity entity);
 
-        IEnumerable<TImage> GetImages<TImage>(IEntity entity) where TImage : IImage, new();
+        IEnumerable<TImage> GetImages<TImage>(IEntity entity) where TImage : IKoreImage, new();
 
-        void SetImages(IEntity entity, IEnumerable<IImage> images);
+        void SetImages(IEntity entity, IEnumerable<IKoreImage> images);
     }
 
     public class ImageService : IImageService
     {
         private readonly ICacheManager cacheManager;
         private readonly IRepository<Image> imageRepository;
-        private readonly IRepository<ImageEntity> imageEntityRepository;
+        private readonly IRepository<ImageEntityType> imageEntityTypeRepository;
 
         public ImageService(
             IRepository<Image> imageRepository,
-            IRepository<ImageEntity> imageEntityRepository,
+            IRepository<ImageEntityType> imageEntityTypeRepository,
             ICacheManager cacheManager)
         {
             this.imageRepository = imageRepository;
-            this.imageEntityRepository = imageEntityRepository;
+            this.imageEntityTypeRepository = imageEntityTypeRepository;
             this.cacheManager = cacheManager;
         }
 
-        public Guid GetImageEntityId(IEntity entity)
+        public Guid GeEntityTypeId(IEntity entity)
         {
-            var imageEntities = cacheManager.Get("ImageEntities_GetAllTypes", () =>
+            var entityTypes = cacheManager.Get("ImageEntityTypes_GetAll", () =>
             {
-                return imageEntityRepository.Table.ToHashSet();
+                return imageEntityTypeRepository.Table.ToDictionary(k => k.Type, v => v.Id);
             });
 
             var type = entity.GetType();
             string typeName = string.Concat(type.FullName, ", ", type.Assembly.GetName().Name);
 
-            var imageEntity = imageEntities.FirstOrDefault(x => x.Type == typeName);
-            if (imageEntity != null)
+            if (entityTypes.ContainsKey(typeName))
             {
-                return imageEntity.Id;
+                return entityTypes[typeName];
             }
 
-            imageEntity = new ImageEntity
+            var entityType = new ImageEntityType
             {
                 Id = Guid.NewGuid(),
                 Type = typeName
             };
 
-            imageEntityRepository.Insert(imageEntity);
-            cacheManager.Remove("ImageEntities_GetAllTypes");
+            imageEntityTypeRepository.Insert(entityType);
+            cacheManager.Remove("ImageEntityTypes_GetAll");
 
-            return imageEntity.Id;
+            return entityType.Id;
         }
 
-        public IEnumerable<TImage> GetImages<TImage>(IEntity entity) where TImage : IImage, new()
+        public IEnumerable<TImage> GetImages<TImage>(IEntity entity) where TImage : IKoreImage, new()
         {
-            //TODO: THis will be a problem (key is not always int!!)
-            int entityId = (int)entity.KeyValues.First();
-            Guid imageEntityId = GetImageEntityId(entity);
+            string entityId = string.Join(",", entity.KeyValues);
+            Guid entityTypeId = GeEntityTypeId(entity);
 
             var records = imageRepository.Table
-                .Where(x => x.ImageEntityId == imageEntityId && x.EntityId == entityId)
+                .Where(x => x.EntityTypeId == entityTypeId && x.EntityId == entityId)
                 .OrderBy(x => x.SortOrder)
                 .ToHashSet();
 
@@ -82,16 +80,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
             }).ToHashSet();
         }
 
-        public void SetImages(IEntity entity, IEnumerable<IImage> images)
+        public void SetImages(IEntity entity, IEnumerable<IKoreImage> images)
         {
-            Guid imageEntityId = GetImageEntityId(entity);
-            int entityId = (int)entity.KeyValues.First();
+            string entityId = string.Join(",", entity.KeyValues);
+            Guid entityTypeId = GeEntityTypeId(entity);
 
             //TODO: Revise this delete and insert logic.. better to update instead of delete all and isnert new
 
             // Delete old media parts
             var records = imageRepository.Table
-                .Where(x => x.ImageEntityId == imageEntityId && x.EntityId == entityId)
+                .Where(x => x.EntityTypeId == entityTypeId && x.EntityId == entityId)
                 .ToHashSet();
 
             imageRepository.Delete(records);
@@ -105,16 +103,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
                     Url = image.Url,
                     Caption = image.Caption,
                     SortOrder = image.SortOrder,
-                    ImageEntityId = imageEntityId,
+                    EntityTypeId = entityTypeId,
                     EntityId = entityId
                 };
                 imageRepository.Insert(record);
             }
-        }
-
-        private static string GetFullTypeName(Type type)
-        {
-            return string.Concat(type.FullName, ", ", type.Assembly.GetName().Name);
         }
     }
 }

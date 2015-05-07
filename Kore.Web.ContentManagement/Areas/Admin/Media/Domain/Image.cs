@@ -6,13 +6,13 @@ using Kore.Web.ContentManagement.Areas.Admin.Media.Models;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Media.Domain
 {
-    public class Image : IEntity, IImage
+    public class Image : IEntity, IKoreImage
     {
         public Guid Id { get; set; }
 
-        public Guid ImageEntityId { get; set; }
+        public Guid EntityTypeId { get; set; }
 
-        public int EntityId { get; set; }
+        public string EntityId { get; set; }
 
         public string Url { get; set; }
 
@@ -38,8 +38,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Domain
         {
             ToTable("Kore_MediaParts");
             HasKey(x => x.Id);
-            Property(x => x.ImageEntityId).IsRequired();
-            Property(x => x.EntityId).IsRequired();
+            Property(x => x.EntityTypeId).IsRequired();
+            Property(x => x.EntityId).IsRequired().HasMaxLength(255);
             Property(x => x.Url).IsRequired().HasMaxLength(2048);
             Property(x => x.ThumbnailUrl).HasMaxLength(2048);
             Property(x => x.Caption).HasMaxLength(255);

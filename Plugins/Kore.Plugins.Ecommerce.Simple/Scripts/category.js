@@ -3,24 +3,16 @@
 var ViewModel = function () {
     var self = this;
 
-    self.id = ko.observable(emptyGuid);
+    self.id = ko.observable(0);
+    self.parentId = ko.observable(null);
     self.name = ko.observable('');
-    self.cultureCode = ko.observable('');
-    self.uniqueSeoCode = ko.observable('');
-    self.flagImageFileName = ko.observable('');
-    self.isRTL = ko.observable(false);
-    self.isEnabled = ko.observable(false);
-    self.sortOrder = ko.observable(0);
+    self.slug = ko.observable('');
 
     self.create = function () {
-        self.id(emptyGuid);
+        self.id(0);
+        self.parentId(null);
         self.name('');
-        self.cultureCode('');
-        self.uniqueSeoCode('');
-        self.flagImageFileName('');
-        self.isRTL(false);
-        self.isEnabled(false);
-        self.sortOrder(0);
+        self.slug('');
 
         self.validator.resetForm();
         switchSection($("#form-section"));
@@ -29,20 +21,16 @@ var ViewModel = function () {
 
     self.edit = function (id) {
         $.ajax({
-            url: "/odata/kore/cms/Languages(guid'" + id + "')",
+            url: "/odata/kore/plugins/simple-commerce/Categories(" + id + ")",
             type: "GET",
             dataType: "json",
             async: false
         })
         .done(function (json) {
             self.id(json.Id);
+            self.parentId(json.ParentId);
             self.name(json.Name);
-            self.cultureCode(json.CultureCode);
-            self.uniqueSeoCode(json.UniqueSeoCode);
-            self.flagImageFileName(json.FlagImageFileName);
-            self.isRTL(json.IsRTL);
-            self.isEnabled(json.IsEnabled);
-            self.sortOrder(json.SortOrder);
+            self.slug(json.Slug);
 
             self.validator.resetForm();
             switchSection($("#form-section"));
@@ -57,7 +45,7 @@ var ViewModel = function () {
     self.delete = function (id) {
         if (confirm(translations.DeleteRecordConfirm)) {
             $.ajax({
-                url: "/odata/kore/cms/Languages(guid'" + id + "')",
+                url: "/odata/kore/plugins/simple-commerce/Categories(" + id + ")",
                 type: "DELETE",
                 async: false
             })
@@ -80,26 +68,17 @@ var ViewModel = function () {
             return false;
         }
 
-        var cultureCode = self.cultureCode();
-        if (cultureCode == '') {
-            cultureCode = null;
-        }
-
         var record = {
             Id: self.id(),
+            ParentId: self.parentId(),
             Name: self.name(),
-            CultureCode: cultureCode,
-            UniqueSeoCode: self.uniqueSeoCode(),
-            FlagImageFileName: self.flagImageFileName(),
-            IsRTL: self.isRTL(),
-            IsEnabled: self.isEnabled(),
-            SortOrder: self.sortOrder()
+            Slug: self.slug()
         };
 
-        if (self.id() == emptyGuid) {
+        if (self.id() == 0) {
             // INSERT
             $.ajax({
-                url: "/odata/kore/cms/Languages",
+                url: "/odata/kore/plugins/simple-commerce/Categories",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -122,7 +101,7 @@ var ViewModel = function () {
         else {
             // UPDATE
             $.ajax({
-                url: "/odata/kore/cms/Languages(guid'" + self.id() + "')",
+                url: "/odata/kore/plugins/simple-commerce/Categories(" + self.id() + ")",
                 type: "PUT",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -148,20 +127,6 @@ var ViewModel = function () {
         switchSection($("#grid-section"));
     };
 
-    self.clear = function () {
-        $.ajax({
-            url: "/odata/kore/cms/Languages/ResetLocalizableStrings",
-            type: "POST"
-        })
-        .done(function (json) {
-            $.notify(translations.ResetLocalizableStringsSuccess, "success");
-        })
-        .fail(function (jqXHR, textStatus, errorThrown) {
-            $.notify(translations.ResetLocalizableStringsError, "error");
-            console.log(textStatus + ': ' + errorThrown);
-        });
-    };
-
     self.validator = $("#form-section-form").validate({
         rules: {
             Name: { required: true, maxlength: 255 },
@@ -183,7 +148,7 @@ $(document).ready(function () {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/cms/Languages",
+                    url: "/odata/kore/plugins/simple-commerce/Categories",
                     dataType: "json"
                 }
             },
@@ -196,10 +161,7 @@ $(document).ready(function () {
                 },
                 model: {
                     fields: {
-                        Name: { type: "string" },
-                        CultureCode: { type: "string" },
-                        IsEnabled: { type: "boolean" },
-                        SortOrder: { type: "number" }
+                        Name: { type: "string" }
                     }
                 }
             },
@@ -222,34 +184,15 @@ $(document).ready(function () {
             title: "Name",
             filterable: true
         }, {
-            field: "CultureCode",
-            title: "Culture Code",
-            filterable: true,
-            width: 70
-        }, {
-            field: "IsEnabled",
-            title: "Is Enabled",
-            template: '<i class="fa #=IsEnabled ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
-            attributes: { "class": "text-center" },
-            filterable: true,
-            width: 70
-        }, {
-            field: "SortOrder",
-            title: "Sort Order",
-            filterable: true,
-            width: 70
-        }, {
             field: "Id",
             title: " ",
             template:
                 '<div class="btn-group"><a onclick="viewModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
                 '<a onclick="viewModel.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
-                '<a href="/admin/localization/localizable-strings/#=Id#" class="btn btn-primary btn-xs">' + translations.Localize + '</a>' +
                 '</div>',
-                //TODO: '<a onclick="viewModel.setDefault(\'#=Id#\', #=IsEnabled#)" class="btn btn-default btn-xs">Set Default</a></div>',
             attributes: { "class": "text-center" },
             filterable: false,
-            width: 170
+            width: 150
         }]
     });
 });

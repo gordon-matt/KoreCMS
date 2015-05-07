@@ -5,7 +5,7 @@ using Kore.Data.EntityFramework;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Media.Domain
 {
-    public class ImageEntity : IEntity
+    public class ImageEntityType : IEntity
     {
         public Guid Id { get; set; }
 
@@ -21,7 +21,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Domain
         #endregion IEntity Members
     }
 
-    public class MediaPartTypeMap : EntityTypeConfiguration<ImageEntity>, IEntityTypeConfiguration
+    public class MediaPartTypeMap : EntityTypeConfiguration<ImageEntityType>, IEntityTypeConfiguration
     {
         public MediaPartTypeMap()
         {

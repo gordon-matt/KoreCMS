@@ -72,7 +72,7 @@ namespace KoreCMS.Data
 
         public DbSet<Image> Images { get; set; }
 
-        public DbSet<ImageEntity> ImageEntities { get; set; }
+        public DbSet<ImageEntityType> ImageEntities { get; set; }
 
         public DbSet<MenuItem> MenuItems { get; set; }
 

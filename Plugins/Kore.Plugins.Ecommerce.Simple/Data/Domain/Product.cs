@@ -22,6 +22,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 
         public string FullDescription { get; set; }
 
+        public virtual Category Category { get; set; }
+
         #region IEntity Members
 
         public object[] KeyValues
@@ -38,6 +40,13 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
         {
             ToTable("Kore_Plugins_SimpleCommerce_Products");
             HasKey(x => x.Id);
+            Property(x => x.Name).HasMaxLength(255).IsRequired();
+            Property(x => x.Slug).HasMaxLength(255).IsRequired();
+            Property(x => x.Price).IsRequired();
+            Property(x => x.MainImageUrl).HasMaxLength(255);
+            Property(x => x.ShortDescription).IsMaxLength().IsRequired();
+            Property(x => x.FullDescription).IsMaxLength().IsRequired();
+            HasRequired(x => x.Category).WithMany(x => x.Products).HasForeignKey(x => x.CategoryId);
         }
     }
 }

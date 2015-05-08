@@ -9,6 +9,7 @@ using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
+using Kore.Web.ContentManagement.Infrastructure;
 using Kore.Web.Mvc;
 using Kore.Web.Navigation;
 using MenuItem = Kore.Web.ContentManagement.Areas.Admin.Menus.Domain.MenuItem;
@@ -32,7 +33,7 @@ namespace Kore.Web.ContentManagement.Controllers
         {
             var breadcrumbs = new List<Breadcrumb>();
 
-            string currentUrlSlug = Request.Url.ToString().RightOfLastIndexOf('/');
+            string currentUrlSlug = Request.Url.LocalPath.TrimStart('/');
 
             if (currentUrlSlug == "blog")
             {
@@ -136,6 +137,12 @@ namespace Kore.Web.ContentManagement.Controllers
                 });
             }
 
+            var menuProviders = EngineContext.Current.ResolveAll<IAutoMenuProvider>();
+            foreach (var menuProvider in menuProviders)
+            {
+                menuItems.Add(menuProvider.GetRootMenuItem());
+            }
+
             menuItems = menuItems
                 .OrderBy(x => x.Position)
                 .ThenBy(x => x.Text)
@@ -149,7 +156,9 @@ namespace Kore.Web.ContentManagement.Controllers
         [Route("auto-sub-menu")]
         public ActionResult AutoSubMenu(string templateViewName)
         {
-            string currentUrlSlug = Request.Url.ToString().RightOfLastIndexOf('/');
+            // we need a better way to get slug, because it could be something like /store/categories/category-1/product-1
+            // and this current way would only return product-1
+            string currentUrlSlug = Request.Url.LocalPath.TrimStart('/');
 
             var pageService = EngineContext.Current.Resolve<IPageService>();
             var menuItems = new List<MenuItem>();
@@ -199,6 +208,19 @@ namespace Kore.Web.ContentManagement.Controllers
                 });
             }
 
+            var menuProviders = EngineContext.Current.ResolveAll<IAutoMenuProvider>();
+            foreach (var menuProvider in menuProviders)
+            {
+                if (string.IsNullOrEmpty(currentUrlSlug))
+                {
+                    menuItems.Add(menuProvider.GetRootMenuItem());
+                }
+                else if (currentUrlSlug.StartsWith(menuProvider.RootUrlSlug))
+                {
+                    menuItems.AddRange(menuProvider.GetSubMenuItems(currentUrlSlug));
+                }
+            }
+
             menuItems = menuItems
                 .OrderBy(x => x.Position)
                 .ThenBy(x => x.Text)
@@ -212,7 +234,7 @@ namespace Kore.Web.ContentManagement.Controllers
         [Route("menu")]
         public ActionResult Menu(string name, string templateViewName, bool filterByUrl = false)
         {
-            string currentUrlSlug = filterByUrl ? Request.Url.ToString().RightOfLastIndexOf('/') : null;
+            string currentUrlSlug = filterByUrl ? Request.Url.LocalPath.TrimStart('/') : null;
 
             var pageService = EngineContext.Current.Resolve<IPageService>();
 

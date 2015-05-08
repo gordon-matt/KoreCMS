@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Kore.Infrastructure;
 using Kore.Localization;
+using Kore.Web.ContentManagement.Infrastructure;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Navigation;
@@ -26,6 +27,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
             builder.RegisterType<LocationFormatProvider>().As<ILocationFormatProvider>().SingleInstance();
             builder.RegisterType<NavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();
+
+            builder.RegisterType<AutoMenuProvider>().As<IAutoMenuProvider>().SingleInstance();
         }
 
         public int Order

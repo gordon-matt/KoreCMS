@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kore.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -69,11 +70,13 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                 case 1:
                     {
                         var menuItems = categoryRepository.Value.Table
+                            .Where(x => x.ParentId == null)
                             .OrderBy(x => x.Name)
+                            .ToHashSet()
                             .Select((x, index) => new MenuItem
                             {
                                 Text = x.Name,
-                                Url = "/" + x.Slug,
+                                Url = "/store/categories/" + x.Slug,
                                 Enabled = true,
                                 ParentId = null,
                                 Position = index
@@ -93,10 +96,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                         var menuItems = categoryRepository.Value.Table
                             .Where(x => x.ParentId == category.Id)
                             .OrderBy(x => x.Name)
+                            .ToHashSet()
                             .Select((x, index) => new MenuItem
                             {
                                 Text = x.Name,
-                                Url = "/" + x.Slug,
+                                Url = "/store/categories/" + x.Slug,
                                 Enabled = true,
                                 ParentId = null,
                                 Position = index

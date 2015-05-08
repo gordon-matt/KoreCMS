@@ -1,0 +1,20 @@
+﻿@using Kore.Infrastructure
+@using Kore.Plugins.Ecommerce.Simple
+@using Kore.Plugins.Ecommerce.Simple.Data.Domain
+@model Product
+
+@{
+    if (string.IsNullOrEmpty(SiteSettings.DefaultFrontendLayoutPath))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = SiteSettings.DefaultFrontendLayoutPath;
+    }
+
+    var settings = EngineContext.Current.Resolve<StoreSettings>();
+    ViewBag.Title = settings.PageTitle;
+}
+
+@Model.Name

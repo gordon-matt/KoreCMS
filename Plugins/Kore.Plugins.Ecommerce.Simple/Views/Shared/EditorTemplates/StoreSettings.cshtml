@@ -1,0 +1,71 @@
+﻿@using Kore.Plugins.Ecommerce.Simple
+@using Kore.Web.Mvc
+
+@model StoreSettings
+
+<div id="settings-content">
+    <div class="form-group">
+        @Html.LabelFor(m => m.PageTitle, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.PageTitle, new { @class = "form-control", data_bind = "value: pageTitle" })
+        @Html.ValidationMessageFor(m => m.PageTitle)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.CategoriesPerPage, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.CategoriesPerPage, new { @class = "form-control", data_bind = "value: categoriesPerPage" })
+        @Html.ValidationMessageFor(m => m.CategoriesPerPage)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProductsPerPage, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.ProductsPerPage, new { @class = "form-control", data_bind = "value: productsPerPage" })
+        @Html.ValidationMessageFor(m => m.ProductsPerPage)
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.UseAjax, new { data_bind = "checked: useAjax" }) Use Ajax
+            </label>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function updateModel(data) {
+        viewModel.pageTitle = ko.observable("Store");
+        viewModel.categoriesPerPage = ko.observable(10);
+        viewModel.productsPerPage = ko.observable(25);
+        viewModel.useAjax = ko.observable(false);
+
+        if (data) {
+            if (data.PageTitle) {
+                viewModel.pageTitle(data.PageTitle);
+            }
+            if (data.CategoriesPerPage) {
+                viewModel.categoriesPerPage(data.CategoriesPerPage);
+            }
+            if (data.ProductsPerPage) {
+                viewModel.productsPerPage(data.ProductsPerPage);
+            }
+            if (data.UseAjax) {
+                viewModel.useAjax(data.UseAjax);
+            }
+        }
+    };
+
+    function cleanUp() {
+        delete viewModel.pageTitle;
+        delete viewModel.categoriesPerPage;
+        delete viewModel.productsPerPage;
+        delete viewModel.useAjax;
+    }
+
+    function onBeforeSave() {
+        var data = {
+            PageTitle: viewModel.pageTitle(),
+            CategoriesPerPage: viewModel.categoriesPerPage(),
+            ProductsPerPage: viewModel.productsPerPage(),
+            UseAjax: viewModel.useAjax()
+        };
+
+        viewModel.value(ko.mapping.toJSON(data));
+    };
+</script>

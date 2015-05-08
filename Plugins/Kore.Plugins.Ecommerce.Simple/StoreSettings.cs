@@ -8,12 +8,15 @@ namespace Kore.Plugins.Ecommerce.Simple
         public StoreSettings()
         {
             PageTitle = "Store";
+            Currency = "USD $";
             CategoriesPerPage = 10;
             ProductsPerPage = 25;
         }
 
         [Display(Name = "Page Title")]
         public string PageTitle { get; set; }
+
+        public string Currency { get; set; }
 
         [Display(Name = "Categories Per Page")]
         public byte CategoriesPerPage { get; set; }

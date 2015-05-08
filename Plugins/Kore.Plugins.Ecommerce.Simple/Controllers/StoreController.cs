@@ -28,12 +28,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Store));
-
             ViewBag.Title = T(LocalizableStrings.Store);
 
             if (storeSettings.UseAjax)
             {
+                WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Store));
                 return View();
             }
 
@@ -43,6 +42,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         [Route("categories")]
         public ActionResult Categories()
         {
+            WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Store));
+
             string pageIndexParam = Request.Params["pageIndex"];
             int pageIndex = string.IsNullOrEmpty(pageIndexParam)
                 ? 1
@@ -72,6 +73,9 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 return new HttpNotFoundResult();
             }
 
+            WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Store), Url.Action("Index"));
+            WorkContext.Breadcrumbs.Add(category.Name);
+
             string pageIndexParam = Request.Params["pageIndex"];
             int pageIndex = string.IsNullOrEmpty(pageIndexParam)
                 ? 1
@@ -98,12 +102,23 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         [Route("categories/{categorySlug}/products/{productSlug}")]
         public ActionResult Product(string categorySlug, string productSlug)
         {
+            var category = categoryRepository.Value.Table.FirstOrDefault(x => x.Slug == categorySlug);
+
+            if (category == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
             var product = productRepository.Value.Table.FirstOrDefault(x => x.Slug == productSlug);
 
             if (product == null)
             {
                 return new HttpNotFoundResult();
             }
+
+            WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Store), Url.Action("Index"));
+            WorkContext.Breadcrumbs.Add(category.Name, Url.Action("Products") + "?pageIndex=1");
+            WorkContext.Breadcrumbs.Add(product.Name);
 
             return View("Product", product);
         }

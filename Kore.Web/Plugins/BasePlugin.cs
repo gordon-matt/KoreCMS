@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Kore.Caching;
 using Kore.Data;
@@ -34,6 +35,21 @@ namespace Kore.Web.Plugins
         public virtual void Uninstall()
         {
             PluginManager.MarkPluginAsUninstalled(this.PluginDescriptor.SystemName);
+        }
+
+        protected bool CheckIfTableExists(DbContext dbContext, string tableName)
+        {
+            return dbContext.Database
+                .SqlQuery<int?>(string.Format("SELECT 1 FROM sys.tables WHERE Name = '{0}'", tableName))
+                .SingleOrDefault() != null;
+        }
+
+        protected void DropTable(DbContext dbContext, string tableName)
+        {
+            if (CheckIfTableExists(dbContext, tableName))
+            {
+                dbContext.Database.ExecuteSqlCommand(string.Format("DROP TABLE [dbo].[{0}]", tableName));
+            }
         }
 
         protected virtual void InstallLocalizableStrings<TProvider>() where TProvider : IDefaultLocalizableStringsProvider, new()

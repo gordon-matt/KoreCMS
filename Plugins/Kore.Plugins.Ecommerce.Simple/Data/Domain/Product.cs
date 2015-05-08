@@ -38,7 +38,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
     {
         public ProductMap()
         {
-            ToTable("Kore_Plugins_SimpleCommerce_Products");
+            ToTable(Constants.Tables.Products);
             HasKey(x => x.Id);
             Property(x => x.Name).HasMaxLength(255).IsRequired();
             Property(x => x.Slug).HasMaxLength(255).IsRequired();

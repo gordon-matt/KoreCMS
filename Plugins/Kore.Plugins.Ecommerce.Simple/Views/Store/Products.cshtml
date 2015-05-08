@@ -1,0 +1,66 @@
+﻿@using Kore.Infrastructure
+@using Kore.Plugins.Ecommerce.Simple
+@using Kore.Plugins.Ecommerce.Simple.Data.Domain
+@model IEnumerable<Product>
+
+@{
+    if (string.IsNullOrEmpty(SiteSettings.DefaultFrontendLayoutPath))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = SiteSettings.DefaultFrontendLayoutPath;
+    }
+
+    Script.IncludeBundle("kore-cms/bootpag");
+
+    var settings = EngineContext.Current.Resolve<StoreSettings>();
+    ViewBag.Title = settings.PageTitle;
+
+    string categorySlug = ViewBag.CategorySlug;
+    int pageCount = ViewBag.PageCount;
+    int pageIndex = ViewBag.PageIndex;
+}
+
+<div class="categories-container">
+    <div id="main-section" class="row categories-section">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            @foreach (var entry in Model)
+            {
+                <article class="row">
+                    <h2 class="categories-headline">
+                        @Html.ActionLink(entry.Name, "Product", "Store", new { area = string.Empty, categorySlug = categorySlug, productSlug = entry.Slug }, null)
+                    </h2>
+
+                    @{
+                        string imageUrl = string.IsNullOrEmpty(entry.MainImageUrl)
+                            ? "http://placehold.it/280x136&text=Image+Missing"
+                            : entry.MainImageUrl;
+                    }
+
+                    <img class="img-responsive" src="@imageUrl" />
+                    <hr />
+                </article>
+            }
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div id="pager"></div>
+        </div>
+    </div>
+</div>
+
+@using (Script.AtFoot())
+{
+    <script type="text/javascript">
+        $('#pager').bootpag({
+            total: @pageCount,
+            page: @pageIndex,
+            maxVisible: 5,
+            leaps: true,
+            firstLastUse: true,
+        }).on("page", function (event, num) {
+            window.location.href = '@Url.Action("Categories", "Store", new { area = string.Empty })' + '?pageIndex=' + num;
+        });
+    </script>
+}

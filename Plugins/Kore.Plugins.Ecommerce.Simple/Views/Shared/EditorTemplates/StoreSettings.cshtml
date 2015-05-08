@@ -27,6 +27,18 @@
     <div class="form-group">
         <div class="checkbox">
             <label>
+                @Html.CheckBoxFor(m => m.ShowOnMenus, new { data_bind = "checked: showOnMenus" }) Show on Menus
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.MenuPosition, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.MenuPosition, new { @class = "form-control", data_bind = "value: menuPosition" })
+        @Html.ValidationMessageFor(m => m.MenuPosition)
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
                 @Html.CheckBoxFor(m => m.UseAjax, new { data_bind = "checked: useAjax" }) Use Ajax
             </label>
         </div>
@@ -39,6 +51,8 @@
         viewModel.currency = ko.observable("USD $");
         viewModel.categoriesPerPage = ko.observable(10);
         viewModel.productsPerPage = ko.observable(25);
+        viewModel.showOnMenus = ko.observable(true);
+        viewModel.menuPosition = ko.observable(0);
         viewModel.useAjax = ko.observable(false);
 
         if (data) {
@@ -54,6 +68,12 @@
             if (data.ProductsPerPage) {
                 viewModel.productsPerPage(data.ProductsPerPage);
             }
+            if (data.ShowOnMenus) {
+                viewModel.showOnMenus(data.ShowOnMenus);
+            }
+            if (data.MenuPosition) {
+                viewModel.menuPosition(data.MenuPosition);
+            }
             if (data.UseAjax) {
                 viewModel.useAjax(data.UseAjax);
             }
@@ -65,6 +85,8 @@
         delete viewModel.currency;
         delete viewModel.categoriesPerPage;
         delete viewModel.productsPerPage;
+        delete viewModel.showOnMenus;
+        delete viewModel.menuPosition;
         delete viewModel.useAjax;
     }
 
@@ -74,6 +96,8 @@
             Currency: viewModel.currency(),
             CategoriesPerPage: viewModel.categoriesPerPage(),
             ProductsPerPage: viewModel.productsPerPage(),
+            ShowOnMenus: viewModel.showOnMenus(),
+            MenuPosition: viewModel.menuPosition(),
             UseAjax: viewModel.useAjax()
         };
 

@@ -11,15 +11,12 @@ namespace Kore.Plugins.Ecommerce.Simple
         public override void Install()
         {
             base.Install();
+
             InstallLocalizableStrings<DefaultLocalizableStringsProvider>();
 
             var dbContext = EngineContext.Current.Resolve<DbContext>();
 
-            bool tableExists = dbContext.Database
-                .SqlQuery<int?>(@"SELECT 1 FROM sys.tables WHERE Name = 'Kore_Plugins_SimpleCommerce_Categories'")
-                .SingleOrDefault() != null;
-
-            if (!tableExists)
+            if (!CheckIfTableExists(dbContext, Constants.Tables.Categories))
             {
                 #region CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Categories]
 
@@ -50,11 +47,7 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Categories_dbo.Kore_Plugins
                 #endregion
             }
 
-            tableExists = dbContext.Database
-                .SqlQuery<int?>(@"SELECT 1 FROM sys.tables WHERE Name = 'Kore_Plugins_SimpleCommerce_Products'")
-                .SingleOrDefault() != null;
-
-            if (!tableExists)
+            if (!CheckIfTableExists(dbContext, Constants.Tables.Products))
             {
                 #region CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Products]
 
@@ -92,12 +85,13 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Products_dbo.Kore_Plugins_S
 
         public override void Uninstall()
         {
-            base.Uninstall();
             UninstallLocalizableStrings<DefaultLocalizableStringsProvider>();
 
             var dbContext = EngineContext.Current.Resolve<DbContext>();
-            dbContext.Database.ExecuteSqlCommand("DROP TABLE [dbo].[Kore_Plugins_SimpleCommerce_Categories]");
-            dbContext.Database.ExecuteSqlCommand("DROP TABLE [dbo].[Kore_Plugins_SimpleCommerce_Products]");
+            DropTable(dbContext, Constants.Tables.Categories);
+            DropTable(dbContext, Constants.Tables.Products);
+
+            base.Uninstall();
         }
     }
 }

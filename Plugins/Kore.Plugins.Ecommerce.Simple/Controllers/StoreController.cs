@@ -63,7 +63,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return View("Categories", model);
         }
 
-        [Route("categories/{categorySlug}/products")]
+        [Route("categories/{categorySlug}")]
         public ActionResult Products(string categorySlug)
         {
             var category = categoryRepository.Value.Table.FirstOrDefault(x => x.Slug == categorySlug);
@@ -99,7 +99,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return View("Products", model);
         }
 
-        [Route("categories/{categorySlug}/products/{productSlug}")]
+        [Route("categories/{categorySlug}/{productSlug}")]
         public ActionResult Product(string categorySlug, string productSlug)
         {
             var category = categoryRepository.Value.Table.FirstOrDefault(x => x.Slug == categorySlug);

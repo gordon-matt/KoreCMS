@@ -11,6 +11,8 @@ namespace Kore.Plugins.Ecommerce.Simple
             Currency = "USD $";
             CategoriesPerPage = 10;
             ProductsPerPage = 25;
+            ShowOnMenus = true;
+            MenuPosition = 0;
         }
 
         [Display(Name = "Page Title")]
@@ -23,6 +25,12 @@ namespace Kore.Plugins.Ecommerce.Simple
 
         [Display(Name = "Products Per Page")]
         public byte ProductsPerPage { get; set; }
+
+        [Display(Name = "Show on Menus")]
+        public bool ShowOnMenus { get; set; }
+
+        [Display(Name = "Menu Position")]
+        public byte MenuPosition { get; set; }
 
         [Display(Name = "Use Ajax")]
         public bool UseAjax { get; set; }

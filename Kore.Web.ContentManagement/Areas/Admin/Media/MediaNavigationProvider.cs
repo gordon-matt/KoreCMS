@@ -18,7 +18,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media
                 menu => menu.Add(T(KoreCmsLocalizableStrings.Media.Title), "5", item => item
                     .Action("Index", "Media", new { area = Constants.Areas.Media })
                     .IconCssClass("kore-icon kore-icon-media")
-                    .Permission(MediaPermissions.ManageMedia)));
+                    .Permission(CmsPermissions.MediaRead)));
         }
     }
 }

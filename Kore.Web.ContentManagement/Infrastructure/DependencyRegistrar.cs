@@ -22,7 +22,6 @@ using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.ContentManagement.FileSystems.Media;
 using Kore.Web.ContentManagement.Messaging;
 using Kore.Web.ContentManagement.Messaging.Services;
-using Kore.Web.Indexing;
 using Kore.Web.Indexing.Services;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
@@ -89,11 +88,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             #region Security
 
             // Permissions
-            builder.RegisterType<ContentBlockPermissions>().As<IPermissionProvider>().SingleInstance();
-            builder.RegisterType<BlogPermissions>().As<IPermissionProvider>().SingleInstance();
-            builder.RegisterType<MediaPermissions>().As<IPermissionProvider>().SingleInstance();
-            builder.RegisterType<MenusPermissions>().As<IPermissionProvider>().SingleInstance();
-            builder.RegisterType<PagesPermissions>().As<IPermissionProvider>().SingleInstance();
+            builder.RegisterType<CmsPermissions>().As<IPermissionProvider>().SingleInstance();
 
             // User Profile Providers
             builder.RegisterType<NewsletterUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();

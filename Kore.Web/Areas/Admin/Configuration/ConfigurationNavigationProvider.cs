@@ -24,12 +24,12 @@ namespace Kore.Web.Areas.Admin.Configuration
             builder.Add(T(KoreWebLocalizableStrings.General.Settings), "5", item => item
                 .Action("Index", "Settings", new { area = KoreWebConstants.Areas.Configuration })
                 .IconCssClass("kore-icon kore-icon-settings")
-                .Permission(ConfigurationPermissions.ManageSettings));
+                .Permission(ConfigurationPermissions.ReadSettings));
 
             builder.Add(T(KoreWebLocalizableStrings.General.Themes), "5", item => item
                 .Action("Index", "Theme", new { area = KoreWebConstants.Areas.Configuration })
                 .IconCssClass("kore-icon kore-icon-themes")
-                .Permission(ConfigurationPermissions.ManageThemes));
+                .Permission(ConfigurationPermissions.ReadThemes));
         }
     }
 }

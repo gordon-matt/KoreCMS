@@ -23,7 +23,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(PagesPermissions.ManagePages))
+            if (!CheckPermission(CmsPermissions.PagesRead))
             {
                 return new HttpUnauthorizedResult();
             }
@@ -53,7 +53,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         [Route("{pageId}/history")]
         public ActionResult History(Guid pageId)
         {
-            if (!CheckPermission(PagesPermissions.ManagePages))
+            if (!CheckPermission(CmsPermissions.PageHistoryRead))
             {
                 return new HttpUnauthorizedResult();
             }

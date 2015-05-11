@@ -18,7 +18,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus
                 menu => menu.Add(T(KoreCmsLocalizableStrings.Menus.Title), "5", item => item
                     .Action("Index", "Menu", new { area = Constants.Areas.Menus })
                     .IconCssClass("kore-icon kore-icon-menus")
-                    .Permission(MenusPermissions.ManageMenus)));
+                    .Permission(CmsPermissions.MenusRead)));
         }
     }
 }

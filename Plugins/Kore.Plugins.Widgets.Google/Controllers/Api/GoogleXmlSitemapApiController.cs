@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.OData;
+using System.Web.Http.Results;
 using Castle.Core.Logging;
 using Kore.Collections;
 using Kore.Data;
@@ -13,6 +15,7 @@ using Kore.Plugins.Widgets.Google.Data.Domain;
 using Kore.Plugins.Widgets.Google.Models;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.Http.OData;
+using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Plugins.Widgets.Google.Controllers.Api
 {
@@ -40,12 +43,27 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
             // Do nothing
         }
 
+        protected override Permission ReadPermission
+        {
+            get { return GooglePermissions.SitemapRead; }
+        }
+
+        protected override Permission WritePermission
+        {
+            get { return GooglePermissions.SitemapWrite; }
+        }
+
         #endregion GenericODataController<GoogleSitemapPageConfig, int> Members
 
         [EnableQuery]
         [HttpPost]
         public virtual IEnumerable<GoogleSitemapPageConfigModel> GetConfig(ODataActionParameters parameters)
         {
+            if (!CheckPermission(ReadPermission))
+            {
+                return Enumerable.Empty<GoogleSitemapPageConfigModel>();
+            }
+
             // First ensure that current pages are in the config
             var config = Repository.Table.ToHashSet();
             var configPageIds = config.Select(x => x.PageId).ToHashSet();
@@ -93,6 +111,11 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
         [HttpPost]
         public virtual IHttpActionResult SetConfig(ODataActionParameters parameters)
         {
+            if (!CheckPermission(WritePermission))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
             int id = (int)parameters["id"];
             byte changeFrequency = (byte)parameters["changeFrequency"];
             float priority = (float)parameters["priority"];
@@ -128,6 +151,11 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
         [HttpPost]
         public virtual IHttpActionResult Generate(ODataActionParameters parameters)
         {
+            if (!CheckPermission(WritePermission))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
             var config = Repository.Table.ToHashSet();
             var file = new GoogleSitemapXmlFile();
 

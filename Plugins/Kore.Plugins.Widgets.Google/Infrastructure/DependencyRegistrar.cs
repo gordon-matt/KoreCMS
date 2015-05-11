@@ -7,6 +7,7 @@ using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Navigation;
 using Kore.Web.Plugins;
+using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Plugins.Widgets.Google.Infrastructure
 {
@@ -26,6 +27,7 @@ namespace Kore.Plugins.Widgets.Google.Infrastructure
             builder.RegisterType<GoogleAdSenseBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<GoogleMapBlock>().As<IContentBlock>().InstancePerDependency();
 
+            builder.RegisterType<GooglePermissions>().As<IPermissionProvider>().SingleInstance();
             builder.RegisterType<LocationFormatProvider>().As<ILocationFormatProvider>().SingleInstance();
             builder.RegisterType<NavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();

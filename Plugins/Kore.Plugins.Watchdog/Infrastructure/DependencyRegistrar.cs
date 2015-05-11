@@ -6,6 +6,7 @@ using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Navigation;
 using Kore.Web.Plugins;
+using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Plugins.Watchdog.Infrastructure
 {
@@ -25,6 +26,7 @@ namespace Kore.Plugins.Watchdog.Infrastructure
             builder.RegisterType<LocationFormatProvider>().As<ILocationFormatProvider>().SingleInstance();
             builder.RegisterType<WatchdogSettings>().As<ISettings>().SingleInstance();
             builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();
+            builder.RegisterType<WatchdogPermissions>().As<IPermissionProvider>().SingleInstance();
         }
 
         public int Order

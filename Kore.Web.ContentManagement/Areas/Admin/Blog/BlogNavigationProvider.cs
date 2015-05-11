@@ -18,7 +18,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog
                 menu => menu.Add(T(KoreCmsLocalizableStrings.Blog.Title), "5", item => item
                     .Action("Index", "Blog", new { area = Constants.Areas.Blog })
                     .IconCssClass("kore-icon kore-icon-blog")
-                    .Permission(BlogPermissions.ManageBlog)));
+                    .Permission(CmsPermissions.BlogRead)));
         }
     }
 }

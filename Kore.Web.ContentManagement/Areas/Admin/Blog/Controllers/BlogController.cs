@@ -10,7 +10,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
         [Route("")]
         public ActionResult Index(string slug)
         {
-            if (!CheckPermission(BlogPermissions.ManageBlog))
+            if (!CheckPermission(CmsPermissions.BlogRead))
             {
                 return new HttpUnauthorizedResult();
             }

@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
+using System.Web.Http.Results;
 using Kore.Collections;
+using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web.Security.Membership;
+using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
 {
@@ -26,6 +30,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
         [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         public IQueryable<Subscriber> Get()
         {
+            if (!CheckPermission(StandardPermissions.FullAccess))
+            {
+                return Enumerable.Empty<Subscriber>().AsQueryable();
+            }
+
             var userIds = membershipService
                 .GetProfileEntriesByKeyAndValue(NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "true")
                 .Select(x => x.UserId);
@@ -44,6 +53,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
         [EnableQuery]
         public SingleResult<Subscriber> Get([FromODataUri] string key)
         {
+            if (!CheckPermission(StandardPermissions.FullAccess))
+            {
+                return SingleResult.Create(Enumerable.Empty<Subscriber>().AsQueryable());
+            }
+
             var entity = membershipService.GetUserById(key);
             var subscriber = new Subscriber
             {
@@ -56,6 +70,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
 
         public IHttpActionResult Delete([FromODataUri] string key)
         {
+            if (!CheckPermission(StandardPermissions.FullAccess))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
             var entity = membershipService.GetUserById(key);
             if (entity == null)
             {
@@ -65,6 +84,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
             membershipService.SaveProfileEntry(key, NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "false");
 
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        protected static bool CheckPermission(Permission permission)
+        {
+            var authorizationService = EngineContext.Current.Resolve<IAuthorizationService>();
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            return authorizationService.TryCheckAccess(permission, workContext.CurrentUser);
         }
     }
 

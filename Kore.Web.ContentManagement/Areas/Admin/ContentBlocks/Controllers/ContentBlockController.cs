@@ -22,7 +22,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
         [Route("{pageId?}")]
         public ActionResult Index(Guid? pageId)
         {
-            if (!CheckPermission(ContentBlockPermissions.ManageContentBlocks))
+            if (!CheckPermission(CmsPermissions.ContentBlocksRead))
             {
                 return new HttpUnauthorizedResult();
             }

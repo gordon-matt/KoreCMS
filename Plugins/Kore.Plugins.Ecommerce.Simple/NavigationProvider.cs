@@ -24,12 +24,12 @@ namespace Kore.Plugins.Ecommerce.Simple
             builder.Add(T(LocalizableStrings.Categories), "5", item => item
                 .Action("Index", "Category", new { area = Constants.RouteArea })
                 .IconCssClass("kore-icon kore-icon-categories")
-                .Permission(SimpleCommercePermissions.ManageStore));
+                .Permission(SimpleCommercePermissions.ReadCategories));
 
             builder.Add(T(LocalizableStrings.Products), "5", item => item
                 .Action("Index", "Product", new { area = Constants.RouteArea })
                 .IconCssClass("kore-icon kore-icon-products")
-                .Permission(SimpleCommercePermissions.ManageStore));
+                .Permission(SimpleCommercePermissions.ReadProducts));
         }
     }
 }

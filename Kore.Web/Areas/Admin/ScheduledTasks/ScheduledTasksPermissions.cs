@@ -5,11 +5,13 @@ namespace Kore.Web.Areas.Admin.ScheduledTasks
 {
     public class ScheduledTasksPermissions : IPermissionProvider
     {
-        public static readonly Permission ManageScheduledTasks = new Permission { Name = "ManageScheduledTasks", Category = "System", Description = "Manage Scheduled Tasks" };
+        public static readonly Permission ReadScheduledTasks = new Permission { Name = "Scheduled_Tasks_Read", Category = "System", Description = "Scheduled Tasks: Read" };
+        public static readonly Permission WriteScheduledTasks = new Permission { Name = "Scheduled_Tasks_Write", Category = "System", Description = "Scheduled Tasks: Write" };
 
         public IEnumerable<Permission> GetPermissions()
         {
-            yield return ManageScheduledTasks;
+            yield return ReadScheduledTasks;
+            yield return WriteScheduledTasks;
         }
     }
 }

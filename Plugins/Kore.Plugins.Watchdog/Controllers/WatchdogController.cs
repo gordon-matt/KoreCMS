@@ -19,7 +19,7 @@ namespace Kore.Plugins.Watchdog.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(StandardPermissions.FullAccess))
+            if (!CheckPermission(WatchdogPermissions.Read))
             {
                 return new HttpUnauthorizedResult();
             }

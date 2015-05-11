@@ -16,7 +16,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(SimpleCommercePermissions.ManageStore))
+            if (!CheckPermission(SimpleCommercePermissions.ReadProducts))
             {
                 return new HttpUnauthorizedResult();
             }

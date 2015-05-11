@@ -12,7 +12,7 @@ namespace Kore.Plugins.Widgets.Google.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(StandardPermissions.FullAccess))
+            if (!CheckPermission(GooglePermissions.SitemapRead))
             {
                 return new HttpUnauthorizedResult();
             }

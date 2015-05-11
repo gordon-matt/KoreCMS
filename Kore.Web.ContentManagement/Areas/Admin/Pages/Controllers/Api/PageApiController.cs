@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.OData;
+using System.Web.Http.OData.Query;
+using System.Web.Http.Results;
 using Kore.Collections;
 using Kore.Data;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.Http.OData;
+using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 {
-    [Authorize(Roles = KoreConstants.Roles.Administrators)]
+    //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class PageApiController : GenericODataController<Page, Guid>
     {
         private readonly IRepository<HistoricPage> historicPageRepository;
@@ -24,13 +28,23 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             this.historicPageRepository = historicPageRepository;
         }
 
+        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         public override IQueryable<Page> Get()
         {
+            if (!CheckPermission(ReadPermission))
+            {
+                return Enumerable.Empty<Page>().AsQueryable();
+            }
             return Repository.Table.Where(x => x.RefId == null);
         }
 
         public override IHttpActionResult Patch([FromODataUri] Guid key, Delta<Page> patch)
         {
+            if (!CheckPermission(WritePermission))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -92,6 +106,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
         public override IHttpActionResult Put([FromODataUri] Guid key, Page entity)
         {
+            if (!CheckPermission(WritePermission))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -143,9 +162,24 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             return Updated(entity);
         }
 
+        protected override Guid GetId(Page entity)
+        {
+            return entity.Id;
+        }
+
+        protected override void SetNewId(Page entity)
+        {
+            entity.Id = Guid.NewGuid();
+        }
+
         [HttpPost]
         public EdmPage Translate(ODataActionParameters parameters)
         {
+            if (!CheckPermission(WritePermission))
+            {
+                return new EdmPage();
+            }
+
             Guid pageId = (Guid)parameters["pageId"];
             string cultureCode = (string)parameters["cultureCode"];
 
@@ -204,14 +238,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             }
         }
 
-        protected override Guid GetId(Page entity)
+        protected override Permission ReadPermission
         {
-            return entity.Id;
+            get { return CmsPermissions.PagesRead; }
         }
 
-        protected override void SetNewId(Page entity)
+        protected override Permission WritePermission
         {
-            entity.Id = Guid.NewGuid();
+            get { return CmsPermissions.PagesWrite; }
         }
     }
 

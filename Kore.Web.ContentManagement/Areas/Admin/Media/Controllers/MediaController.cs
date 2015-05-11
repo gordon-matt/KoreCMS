@@ -18,7 +18,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(MediaPermissions.ManageMedia))
+            if (!CheckPermission(CmsPermissions.MediaRead))
             {
                 return new HttpUnauthorizedResult();
             }

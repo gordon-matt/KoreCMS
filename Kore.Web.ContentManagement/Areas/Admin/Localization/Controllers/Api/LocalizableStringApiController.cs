@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.OData;
+using System.Web.Http.Results;
 using Kore.Collections;
 using Kore.Data;
 using Kore.Localization.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Localization.Models;
 using Kore.Web.Http.OData;
+using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
 {
-    [Authorize(Roles = KoreConstants.Roles.Administrators)]
+    //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class LocalizableStringApiController : GenericODataController<LocalizableString, Guid>
     {
         public LocalizableStringApiController(IRepository<LocalizableString> repository)
@@ -35,6 +38,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
         [HttpPost]
         public virtual IEnumerable<ComparitiveLocalizableString> GetComparitiveTable(ODataActionParameters parameters)
         {
+            if (!CheckPermission(ReadPermission))
+            {
+                return Enumerable.Empty<ComparitiveLocalizableString>();
+            }
+
             string cultureCode = (string)parameters["cultureCode"];
 
             var query = Repository.Table
@@ -55,6 +63,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
         [HttpPost]
         public virtual IHttpActionResult PutComparitive(ODataActionParameters parameters)
         {
+            if (!CheckPermission(WritePermission))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
             string cultureCode = (string)parameters["cultureCode"];
             string key = (string)parameters["key"];
             var entity = (ComparitiveLocalizableString)parameters["entity"];
@@ -94,6 +107,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
         [HttpPost]
         public virtual IHttpActionResult DeleteComparitive(ODataActionParameters parameters)
         {
+            if (!CheckPermission(WritePermission))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
             string cultureCode = (string)parameters["cultureCode"];
             string key = (string)parameters["key"];
 
@@ -108,6 +126,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
             //Repository.Delete(entity);
 
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        protected override Permission ReadPermission
+        {
+            get { return CmsPermissions.LocalizableStringsRead; }
+        }
+
+        protected override Permission WritePermission
+        {
+            get { return CmsPermissions.LocalizableStringsWrite; }
         }
     }
 }

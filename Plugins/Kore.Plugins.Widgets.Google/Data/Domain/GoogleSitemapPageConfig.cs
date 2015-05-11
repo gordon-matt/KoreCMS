@@ -44,7 +44,7 @@ namespace Kore.Plugins.Widgets.Google.Data.Domain
     {
         public GoogleSitemapPageConfigMap()
         {
-            ToTable("Kore_Plugins_Google_Sitemap");
+            ToTable(Constants.Tables.SitemapConfig);
             HasKey(x => x.Id);
             Property(x => x.ChangeFrequency).IsRequired();
             Property(x => x.Priority).IsRequired();

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.OData;
+using Castle.Core.Logging;
 using Kore.Collections;
 using Kore.Data;
+using Kore.Infrastructure;
 using Kore.Plugins.Widgets.Google.Data.Domain;
 using Kore.Plugins.Widgets.Google.Models;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
@@ -148,10 +151,16 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
                     removeNamespaces: false,
                     omitXmlDeclaration: false);
 
-                return Ok();
+                // For some reason, just returning Ok() with no parameter causes the following client-side error:
+                //  "unexpected end of data at line 1 column 1 of the JSON data"
+                //  TODO: Perhaps we should be returning null instead? Or perhaps we should change the method to return void
+                //  Also, we should look throughout the solution for the same issue in other controllers.
+                return Ok(string.Empty);
             }
             catch (Exception x)
             {
+                var logger = NullLogger.Instance;
+                logger.Error(x.Message, x);
                 return InternalServerError(x);
             }
         }

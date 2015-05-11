@@ -123,12 +123,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="Controllers\Api\CategoriesController.cs" />
-    <Compile Include="Controllers\Api\ProductsController.cs" />
+    <Compile Include="Controllers\Api\CategoryApiController.cs" />
+    <Compile Include="Controllers\Api\ProductApiController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Data\Domain\Category.cs" />
+    <Compile Include="Data\Domain\Order.cs" />
+    <Compile Include="Data\Domain\OrderLine.cs" />
     <Compile Include="Data\Domain\Product.cs" />
     <Compile Include="Data\Domain\ProductImage.cs" />
     <Compile Include="Extensions\ScriptRegisterExtensions.cs" />

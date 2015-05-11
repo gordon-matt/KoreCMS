@@ -14,9 +14,9 @@ using Kore.Web.Http.OData;
 namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class LocalizableStringsController : GenericODataController<LocalizableString, Guid>
+    public class LocalizableStringApiController : GenericODataController<LocalizableString, Guid>
     {
-        public LocalizableStringsController(IRepository<LocalizableString> repository)
+        public LocalizableStringApiController(IRepository<LocalizableString> repository)
             : base(repository)
         {
         }

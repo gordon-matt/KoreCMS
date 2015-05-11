@@ -3,7 +3,7 @@
 function deleteRecord(id) {
     if (confirm(translations.DeleteRecordConfirm)) {
         $.ajax({
-            url: "/odata/kore/cms/QueuedEmails(guid'" + id + "')",
+            url: "/odata/kore/cms/QueuedEmailApi(guid'" + id + "')",
             type: "DELETE",
             async: false
         })
@@ -28,7 +28,7 @@ $(document).ready(function () {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/cms/QueuedEmails",
+                    url: "/odata/kore/cms/QueuedEmailApi",
                     dataType: "json"
                 }
             },

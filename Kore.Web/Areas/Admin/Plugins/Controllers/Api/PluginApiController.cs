@@ -10,12 +10,12 @@ using Kore.Web.Plugins;
 namespace Kore.Web.Areas.Admin.Plugins.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class PluginsController : ODataController
+    public class PluginApiController : ODataController
     {
         private readonly IPluginFinder pluginFinder;
         private readonly Lazy<IWebHelper> webHelper;
 
-        public PluginsController(IPluginFinder pluginFinder, Lazy<IWebHelper> webHelper)
+        public PluginApiController(IPluginFinder pluginFinder, Lazy<IWebHelper> webHelper)
         {
             this.pluginFinder = pluginFinder;
             this.webHelper = webHelper;

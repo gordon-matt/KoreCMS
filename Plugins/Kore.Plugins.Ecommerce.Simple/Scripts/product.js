@@ -35,7 +35,7 @@ var ViewModel = function () {
 
     self.edit = function (id) {
         $.ajax({
-            url: "/odata/kore/plugins/simple-commerce/Products(" + id + ")",
+            url: "/odata/kore/plugins/simple-commerce/ProductApi(" + id + ")",
             type: "GET",
             dataType: "json",
             async: false
@@ -63,7 +63,7 @@ var ViewModel = function () {
     self.delete = function (id) {
         if (confirm(translations.DeleteRecordConfirm)) {
             $.ajax({
-                url: "/odata/kore/plugins/simple-commerce/Products(" + id + ")",
+                url: "/odata/kore/plugins/simple-commerce/ProductApi(" + id + ")",
                 type: "DELETE",
                 async: false
             })
@@ -99,7 +99,7 @@ var ViewModel = function () {
         if (self.id() == 0) {
             // INSERT
             $.ajax({
-                url: "/odata/kore/plugins/simple-commerce/Products",
+                url: "/odata/kore/plugins/simple-commerce/ProductApi",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -122,7 +122,7 @@ var ViewModel = function () {
         else {
             // UPDATE
             $.ajax({
-                url: "/odata/kore/plugins/simple-commerce/Products(" + self.id() + ")",
+                url: "/odata/kore/plugins/simple-commerce/ProductApi(" + self.id() + ")",
                 type: "PUT",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -172,7 +172,7 @@ $(document).ready(function () {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/plugins/simple-commerce/Products",
+                    url: "/odata/kore/plugins/simple-commerce/ProductApi",
                     dataType: "json"
                 }
             },

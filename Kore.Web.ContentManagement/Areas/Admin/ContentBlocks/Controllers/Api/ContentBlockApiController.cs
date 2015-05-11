@@ -15,9 +15,9 @@ using Kore.Web.Http.OData;
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class ContentBlocksController : GenericODataController<ContentBlock, Guid>
+    public class ContentBlockApiController : GenericODataController<ContentBlock, Guid>
     {
-        public ContentBlocksController(IRepository<ContentBlock> repository)
+        public ContentBlockApiController(IRepository<ContentBlock> repository)
             : base(repository)
         {
         }

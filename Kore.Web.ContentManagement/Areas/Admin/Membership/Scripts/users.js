@@ -23,7 +23,7 @@ var ChangePasswordVM = function () {
         };
 
         $.ajax({
-            url: "/odata/kore/cms/Users/ChangePassword",
+            url: "/odata/kore/cms/UserApi/ChangePassword",
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(record),
@@ -98,7 +98,7 @@ var UserVM = function () {
 
     self.edit = function (id) {
         $.ajax({
-            url: "/odata/kore/cms/Users('" + id + "')",
+            url: "/odata/kore/cms/UserApi('" + id + "')",
             type: "GET",
             dataType: "json",
             async: false
@@ -124,7 +124,7 @@ var UserVM = function () {
     self.delete = function (id) {
         if (confirm("Are you sure you want to delete this record?")) {
             $.ajax({
-                url: "/odata/kore/cms/Users('" + id + "')",
+                url: "/odata/kore/cms/UserApi('" + id + "')",
                 type: "DELETE",
                 async: false
             })
@@ -159,7 +159,7 @@ var UserVM = function () {
         if (isNew) {
             // INSERT
             $.ajax({
-                url: "/odata/kore/cms/Users",
+                url: "/odata/kore/cms/UserApi",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -182,7 +182,7 @@ var UserVM = function () {
         else {
             // UPDATE
             $.ajax({
-                url: "/odata/kore/cms/Users('" + self.id() + "')",
+                url: "/odata/kore/cms/UserApi('" + self.id() + "')",
                 type: "PUT",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -214,7 +214,7 @@ var UserVM = function () {
         self.filterRoleId(emptyGuid);
 
         $.ajax({
-            url: "/odata/kore/cms/Roles/GetRolesForUser",
+            url: "/odata/kore/cms/RoleApi/GetRolesForUser",
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ userId: id }),
@@ -247,7 +247,7 @@ var UserVM = function () {
         };
 
         $.ajax({
-            url: "/odata/kore/cms/Users/AssignUserToRoles",
+            url: "/odata/kore/cms/UserApi/AssignUserToRoles",
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
@@ -274,7 +274,7 @@ var UserVM = function () {
         var grid = $('#UsersGrid').data('kendoGrid');
 
         if (self.filterRoleId() == "") {
-            grid.dataSource.transport.options.read.url = "/odata/kore/cms/Users";
+            grid.dataSource.transport.options.read.url = "/odata/kore/cms/UserApi";
             grid.dataSource.transport.options.read.type = "GET";
             delete grid.dataSource.transport.options.read.contentType;
             grid.dataSource.transport.parameterMap = function (options, operation) {
@@ -282,7 +282,7 @@ var UserVM = function () {
             };
         }
         else {
-            //grid.dataSource.transport.options.read.url = "/odata/kore/cms/Users/GetUsersInRole";
+            //grid.dataSource.transport.options.read.url = "/odata/kore/cms/UserApi/GetUsersInRole";
 
             // For some reason, the OData query string doesn't get populated by Kendo Grid when we're using POST,
             // so we need to build it ourselves manually
@@ -323,7 +323,7 @@ var UserVM = function () {
                     });
                 }
 
-                return "/odata/kore/cms/Users/GetUsersInRole?" + queryString;
+                return "/odata/kore/cms/UserApi/GetUsersInRole?" + queryString;
             };
             grid.dataSource.transport.options.read.type = "POST";
             grid.dataSource.transport.options.read.contentType = "application/json";
@@ -377,7 +377,7 @@ var UserVM = function () {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/cms/Users",
+                    url: "/odata/kore/cms/UserApi",
                     dataType: "json"
                 }
             },

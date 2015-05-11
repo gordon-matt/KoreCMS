@@ -27,7 +27,7 @@ var ViewModel = function () {
 
     self.edit = function (id) {
         $.ajax({
-            url: "/odata/kore/cms/MessageTemplates(guid'" + id + "')",
+            url: "/odata/kore/cms/MessageTemplateApi(guid'" + id + "')",
             type: "GET",
             dataType: "json",
             async: false
@@ -45,7 +45,7 @@ var ViewModel = function () {
 
 
             $.ajax({
-                url: "/odata/kore/cms/MessageTemplates/GetTokens",
+                url: "/odata/kore/cms/MessageTemplateApi/GetTokens",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ templateName: json.Name }),
@@ -84,7 +84,7 @@ var ViewModel = function () {
     self.delete = function (id) {
         if (confirm(translations.DeleteRecordConfirm)) {
             $.ajax({
-                url: "/odata/kore/cms/MessageTemplates(guid'" + id + "')",
+                url: "/odata/kore/cms/MessageTemplateApi(guid'" + id + "')",
                 type: "DELETE",
                 async: false
             })
@@ -119,7 +119,7 @@ var ViewModel = function () {
         if (self.id() == emptyGuid) {
             // INSERT
             $.ajax({
-                url: "/odata/kore/cms/MessageTemplates",
+                url: "/odata/kore/cms/MessageTemplateApi",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -142,7 +142,7 @@ var ViewModel = function () {
         else {
             // UPDATE
             $.ajax({
-                url: "/odata/kore/cms/MessageTemplates(guid'" + self.id() + "')",
+                url: "/odata/kore/cms/MessageTemplateApi(guid'" + self.id() + "')",
                 type: "PUT",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -174,7 +174,7 @@ var ViewModel = function () {
         };
 
         $.ajax({
-            url: "/odata/kore/cms/MessageTemplates(guid'" + id + "')",
+            url: "/odata/kore/cms/MessageTemplateApi(guid'" + id + "')",
             type: "PATCH",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(patch),
@@ -215,7 +215,7 @@ $(document).ready(function () {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/cms/MessageTemplates",
+                    url: "/odata/kore/cms/MessageTemplateApi",
                     dataType: "json"
                 }
             },

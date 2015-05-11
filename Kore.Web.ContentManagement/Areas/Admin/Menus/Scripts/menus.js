@@ -34,7 +34,7 @@ var MenuItemVM = function () {
 
     self.edit = function (id) {
         $.ajax({
-            url: "/odata/kore/cms/MenuItems(guid'" + id + "')",
+            url: "/odata/kore/cms/MenuItemApi(guid'" + id + "')",
             type: "GET",
             dataType: "json",
             async: false
@@ -64,7 +64,7 @@ var MenuItemVM = function () {
     self.delete = function (id, parentId) {
         if (confirm(translations.DeleteRecordConfirm)) {
             $.ajax({
-                url: "/odata/kore/cms/MenuItems(guid'" + id + "')",
+                url: "/odata/kore/cms/MenuItemApi(guid'" + id + "')",
                 type: "DELETE",
                 dataType: "json",
                 async: false
@@ -104,7 +104,7 @@ var MenuItemVM = function () {
         if (self.id() == emptyGuid) {
             // INSERT
             $.ajax({
-                url: "/odata/kore/cms/MenuItems",
+                url: "/odata/kore/cms/MenuItemApi",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -124,7 +124,7 @@ var MenuItemVM = function () {
         else {
             // UPDATE
             $.ajax({
-                url: "/odata/kore/cms/MenuItems(guid'" + self.id() + "')",
+                url: "/odata/kore/cms/MenuItemApi(guid'" + self.id() + "')",
                 type: "PUT",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -157,7 +157,7 @@ var MenuItemVM = function () {
         };
 
         $.ajax({
-            url: "/odata/kore/cms/MenuItems(guid'" + id + "')",
+            url: "/odata/kore/cms/MenuItemApi(guid'" + id + "')",
             type: "PATCH",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(patch),
@@ -222,7 +222,7 @@ var ViewModel = function () {
 
     self.edit = function (id) {
         $.ajax({
-            url: "/odata/kore/cms/Menus(guid'" + id + "')",
+            url: "/odata/kore/cms/MenuApi(guid'" + id + "')",
             type: "GET",
             dataType: "json",
             async: false
@@ -245,7 +245,7 @@ var ViewModel = function () {
     self.delete = function (id) {
         if (confirm(translations.DeleteRecordConfirm)) {
             $.ajax({
-                url: "/odata/kore/cms/Menus(guid'" + id + "')",
+                url: "/odata/kore/cms/MenuApi(guid'" + id + "')",
                 type: "DELETE",
                 async: false
             })
@@ -277,7 +277,7 @@ var ViewModel = function () {
         if (self.id() == emptyGuid) {
             // INSERT
             $.ajax({
-                url: "/odata/kore/cms/Menus",
+                url: "/odata/kore/cms/MenuApi",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -300,7 +300,7 @@ var ViewModel = function () {
         else {
             // UPDATE
             $.ajax({
-                url: "/odata/kore/cms/Menus(guid'" + self.id() + "')",
+                url: "/odata/kore/cms/MenuApi(guid'" + self.id() + "')",
                 type: "PUT",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -359,7 +359,7 @@ $(document).ready(function () {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/cms/Menus",
+                    url: "/odata/kore/cms/MenuApi",
                     dataType: "json"
                 }
             },
@@ -426,7 +426,7 @@ $(document).ready(function () {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/cms/MenuItems",
+                    url: "/odata/kore/cms/MenuItemApi",
                     dataType: "json"
                 },
                 parameterMap: function (options, operation) {
@@ -533,7 +533,7 @@ function detailInit(e) {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/cms/MenuItems",
+                    url: "/odata/kore/cms/MenuItemApi",
                     dataType: "json"
                 },
                 parameterMap: function (options, operation) {

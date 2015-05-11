@@ -8,9 +8,9 @@ using Kore.Web.Http.OData;
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class PageTypesController : GenericODataController<PageType, Guid>
+    public class PageTypeApiController : GenericODataController<PageType, Guid>
     {
-        public PageTypesController(IRepository<PageType> repository)
+        public PageTypeApiController(IRepository<PageType> repository)
             : base(repository)
         {
         }

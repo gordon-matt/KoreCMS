@@ -159,66 +159,84 @@ namespace Kore.Web.ContentManagement.Controllers
             // we need a better way to get slug, because it could be something like /store/categories/category-1/product-1
             // and this current way would only return product-1
             string currentUrlSlug = Request.Url.LocalPath.TrimStart('/');
-
-            var pageService = EngineContext.Current.Resolve<IPageService>();
             var menuItems = new List<MenuItem>();
             var menuId = Guid.NewGuid();
 
-            var currentPage = pageService.Repository.Table.FirstOrDefault(y => y.Slug == currentUrlSlug);
-            var query = pageService.Repository.Table.Where(x => x.IsEnabled);
-
-            if (currentPage != null)
-            {
-                query = query.Where(x => x.ParentId == currentPage.Id);
-            }
-            else
-            {
-                query = query.Where(x => x.ParentId == null);
-            }
-
-            var pages = query.ToHashSet();
-
-            var authorizedPages = pages.Where(x => PageSecurityHelper.CheckUserHasAccessToPage(x, User));
-
-            var items = authorizedPages
-                .Select(x => new MenuItem
-                {
-                    Id = x.Id,
-                    Text = x.Name,
-                    Url = "/" + x.Slug,
-                    Enabled = true,
-                    ParentId = x.ParentId,
-                    Position = x.Order
-                });
-
-            menuItems.AddRange(items);
-
-            if (PageSecurityHelper.CheckUserHasAccessToBlog(User) &&
-                currentUrlSlug == string.Empty &&
-                blogSettings.Value.ShowOnMenus)
-            {
-                menuItems.Add(new MenuItem
-                {
-                    Id = menuId,
-                    Text = blogSettings.Value.PageTitle,
-                    Url = "/blog",
-                    Enabled = true,
-                    ParentId = null,
-                    Position = blogSettings.Value.MenuPosition
-                });
-            }
-
             var menuProviders = EngineContext.Current.ResolveAll<IAutoMenuProvider>();
-            foreach (var menuProvider in menuProviders)
+            if (string.IsNullOrEmpty(currentUrlSlug))
             {
-                if (string.IsNullOrEmpty(currentUrlSlug))
+                if (blogSettings.Value.ShowOnMenus &&
+                    PageSecurityHelper.CheckUserHasAccessToBlog(User))
+                {
+                    menuItems.Add(new MenuItem
+                    {
+                        Id = menuId,
+                        Text = blogSettings.Value.PageTitle,
+                        Url = "/blog",
+                        Enabled = true,
+                        ParentId = null,
+                        Position = blogSettings.Value.MenuPosition
+                    });
+                }
+
+                foreach (var menuProvider in menuProviders)
                 {
                     menuItems.Add(menuProvider.GetRootMenuItem());
                 }
-                else if (currentUrlSlug.StartsWith(menuProvider.RootUrlSlug))
+            }
+            
+            foreach (var menuProvider in menuProviders)
+            {
+                if (currentUrlSlug.StartsWith(menuProvider.RootUrlSlug))
                 {
                     menuItems.AddRange(menuProvider.GetSubMenuItems(currentUrlSlug));
                 }
+            }
+
+
+            var pageService = EngineContext.Current.Resolve<IPageService>();
+            var query = pageService.Repository.Table.Where(x => x.IsEnabled);
+
+            bool hasCmsPages = true;
+
+            // If on home page
+            if (string.IsNullOrEmpty(currentUrlSlug))
+            {
+                query = query.Where(x => x.ParentId == null);
+            }
+            else
+            {
+                var currentPage = pageService.Repository.Table.FirstOrDefault(y => y.Slug == currentUrlSlug);
+
+                // If the current page is a CMS page
+                if (currentPage != null)
+                {
+                    query = query.Where(x => x.ParentId == currentPage.Id);
+                }
+                else
+                {
+                    hasCmsPages = false;
+                }
+            }
+
+            if (hasCmsPages)
+            {
+                var pages = query.ToHashSet();
+
+                var authorizedPages = pages.Where(x => PageSecurityHelper.CheckUserHasAccessToPage(x, User));
+
+                var items = authorizedPages
+                    .Select(x => new MenuItem
+                    {
+                        Id = x.Id,
+                        Text = x.Name,
+                        Url = "/" + x.Slug,
+                        Enabled = true,
+                        ParentId = x.ParentId,
+                        Position = x.Order
+                    });
+
+                menuItems.AddRange(items);
             }
 
             menuItems = menuItems

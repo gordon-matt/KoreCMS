@@ -23,7 +23,7 @@
 
         function runNow(id) {
             $.ajax({
-                url: "/odata/kore/web/ScheduledTasks/RunNow",
+                url: "/odata/kore/web/ScheduledTaskApi/RunNow",
                 type: "POST",
                 data: JSON.stringify({
                     taskId: id
@@ -42,7 +42,7 @@
         }
 
         $(document).ready(function () {
-            var odataBaseUrl = "/odata/kore/web/ScheduledTasks";
+            var odataBaseUrl = "/odata/kore/web/ScheduledTaskApi";
 
             $("#Grid").kendoGrid({
                 dataSource: {

@@ -11,11 +11,11 @@ using Kore.Web.Http.OData;
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class BlogsController : GenericODataController<BlogEntry, Guid>
+    public class BlogApiController : GenericODataController<BlogEntry, Guid>
     {
         private readonly Lazy<IMembershipService> membershipService;
 
-        public BlogsController(
+        public BlogApiController(
             IRepository<BlogEntry> repository,
             Lazy<IMembershipService> membershipService)
             : base(repository)

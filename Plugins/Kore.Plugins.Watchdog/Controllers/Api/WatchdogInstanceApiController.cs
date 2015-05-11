@@ -14,13 +14,13 @@ using Newtonsoft.Json;
 
 namespace Kore.Plugins.Watchdog.Controllers.Api
 {
-    public class WatchdogInstancesController : GenericODataController<WatchdogInstance, int>
+    public class WatchdogInstanceApiController : GenericODataController<WatchdogInstance, int>
     {
         private const string urlFormat = "{0}/api/WatchdogApi/{1}?password={2}&name={3}";
 
         private readonly Lazy<WatchdogSettings> settings;
 
-        public WatchdogInstancesController(IRepository<WatchdogInstance> repository, Lazy<WatchdogSettings> settings)
+        public WatchdogInstanceApiController(IRepository<WatchdogInstance> repository, Lazy<WatchdogSettings> settings)
             : base(repository)
         {
             this.settings = settings;

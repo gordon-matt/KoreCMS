@@ -12,12 +12,12 @@ using Kore.Web.Security.Membership;
 namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class UsersController : ODataController
+    public class UserApiController : ODataController
     {
         protected IMembershipService Service { get; private set; }
         private readonly Lazy<MembershipSettings> membershipSettings;
 
-        public UsersController(
+        public UserApiController(
             IMembershipService service,
             Lazy<MembershipSettings> membershipSettings)
         {

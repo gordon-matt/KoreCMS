@@ -10,12 +10,12 @@ using Kore.Web.Security.Membership;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
 {
-    public class SubscribersController : ODataController
+    public class SubscriberApiController : ODataController
     {
         private readonly IMembershipService membershipService;
         private readonly Lazy<MembershipSettings> membershipSettings;
 
-        public SubscribersController(
+        public SubscriberApiController(
             IMembershipService membershipService,
             Lazy<MembershipSettings> membershipSettings)
         {

@@ -123,7 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="Controllers\Api\GoogleXmlSitemapController.cs" />
+    <Compile Include="Controllers\Api\GoogleXmlSitemapApiController.cs" />
     <Compile Include="Controllers\GoogleXmlSitemapController.cs" />
     <Compile Include="Data\Domain\ChangeFrequency.cs" />
     <Compile Include="Data\Domain\GoogleSitemapPageConfig.cs" />

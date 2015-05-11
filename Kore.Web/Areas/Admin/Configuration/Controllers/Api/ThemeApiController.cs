@@ -10,13 +10,13 @@ using Kore.Web.Mvc.Themes;
 namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class ThemesController : ODataController
+    public class ThemeApiController : ODataController
     {
         private readonly IThemeProvider themeProvider;
         private readonly KoreSiteSettings siteSettings;
         private readonly Lazy<ISettingService> settingsService;
 
-        public ThemesController(
+        public ThemeApiController(
             IThemeProvider themeProvider,
             KoreSiteSettings siteSettings,
             Lazy<ISettingService> settingsService)

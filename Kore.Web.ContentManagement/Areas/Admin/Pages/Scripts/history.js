@@ -20,7 +20,7 @@ var ViewModel = function () {
 
     self.view = function (id) {
         $.ajax({
-            url: "/odata/kore/cms/HistoricPages(guid'" + id + "')",
+            url: "/odata/kore/cms/HistoricPageApi(guid'" + id + "')",
             type: "GET",
             dataType: "json",
             async: false
@@ -51,7 +51,7 @@ var ViewModel = function () {
 
     self.restore = function () {
         $.ajax({
-            url: "/odata/kore/cms/HistoricPages(guid'" + self.id() + "')/RestoreVersion",
+            url: "/odata/kore/cms/HistoricPageApi(guid'" + self.id() + "')/RestoreVersion",
             type: "POST"
         })
         .done(function (json) {
@@ -82,7 +82,7 @@ $(document).ready(function () {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/cms/HistoricPages?$filter=PageId eq guid'" + pageId + "'",
+                    url: "/odata/kore/cms/HistoricPageApi?$filter=PageId eq guid'" + pageId + "'",
                     dataType: "json"
                 }
             },

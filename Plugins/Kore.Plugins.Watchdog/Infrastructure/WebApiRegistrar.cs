@@ -14,7 +14,7 @@ namespace Kore.Plugins.Watchdog.Infrastructure
         public void Register(HttpConfiguration config)
         {
             ODataModelBuilder builder = new ODataConventionModelBuilder();
-            builder.EntitySet<WatchdogInstance>("WatchdogInstances");
+            builder.EntitySet<WatchdogInstance>("WatchdogInstanceApi");
 
             var stopServiceAction = builder.Entity<WatchdogInstance>().Collection.Action("StopService");
             stopServiceAction.Parameter<int>("instanceId");

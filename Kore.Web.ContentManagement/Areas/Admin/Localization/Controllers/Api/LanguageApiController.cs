@@ -13,12 +13,12 @@ using LanguageEntity = Kore.Localization.Domain.Language;
 namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class LanguagesController : GenericODataController<LanguageEntity, Guid>
+    public class LanguageApiController : GenericODataController<LanguageEntity, Guid>
     {
         private readonly Lazy<ICacheManager> cacheManager;
         private readonly Lazy<IRepository<LocalizableString>> localizableStringRepository;
 
-        public LanguagesController(
+        public LanguageApiController(
             IRepository<LanguageEntity> repository,
             Lazy<IRepository<LocalizableString>> localizableStringRepository,
             Lazy<ICacheManager> cacheManager)

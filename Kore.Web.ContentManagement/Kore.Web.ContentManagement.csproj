@@ -137,13 +137,13 @@
   <ItemGroup>
     <Compile Include="Areas\Admin\Blog\BlogAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Blog\BlogNavigationProvider.cs" />
-    <Compile Include="Areas\Admin\Blog\BlogPermissions.cs" />
     <Compile Include="Areas\Admin\Blog\BlogSettings.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\Api\BlogApiController.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\BlogContentController.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\BlogController.cs" />
     <Compile Include="Areas\Admin\Blog\Domain\BlogEntry.cs" />
     <Compile Include="Areas\Admin\Media\Services\IMediaService.cs" />
+    <Compile Include="CmsPermissions.cs" />
     <Compile Include="Infrastructure\IAutoMenuProvider.cs" />
     <Compile Include="Areas\Admin\Newsletters\ContentBlocks\NewsletterSubscriptionBlock.cs" />
     <Compile Include="Areas\Admin\Newsletters\Controllers\Api\SubscriberApiController.cs" />
@@ -203,7 +203,6 @@
     <Compile Include="Areas\Admin\Media\ElFinder\Response\ThumbsResponse.cs" />
     <Compile Include="Areas\Admin\Media\ElFinder\Response\TreeResponse.cs" />
     <Compile Include="Areas\Admin\Media\MediaAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Media\MediaPermissions.cs" />
     <Compile Include="Areas\Admin\Media\Models\FileUpload.cs" />
     <Compile Include="Areas\Admin\Media\Models\FineUpload.cs" />
     <Compile Include="Areas\Admin\Media\Models\IKoreImage.cs" />
@@ -229,7 +228,6 @@
     <Compile Include="Areas\Admin\Menus\Domain\MenuItem.cs" />
     <Compile Include="Areas\Admin\Menus\MenusAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Menus\MenusNavigationProvider.cs" />
-    <Compile Include="Areas\Admin\Menus\MenusPermissions.cs" />
     <Compile Include="Areas\Admin\Menus\Models\MenuItemModel.cs" />
     <Compile Include="Areas\Admin\Menus\Models\MenuModel.cs" />
     <Compile Include="Areas\Admin\Menus\Services\IMenuItemService.cs" />
@@ -251,7 +249,6 @@
     <Compile Include="Areas\Admin\Messaging\MessageTemplatesUpdater.cs" />
     <Compile Include="Areas\Admin\Messaging\Models\ParseTemplateContext.cs" />
     <Compile Include="Areas\Admin\Messaging\MessagingNavigationProvider.cs" />
-    <Compile Include="Areas\Admin\Messaging\Permissions.cs" />
     <Compile Include="Areas\Admin\Messaging\ProcessQueuedMailTask.cs" />
     <Compile Include="Areas\Admin\Messaging\Services\IMessageService.cs" />
     <Compile Include="Areas\Admin\Messaging\Services\IMessageTemplateService.cs" />
@@ -275,7 +272,6 @@
     <Compile Include="Areas\Admin\Pages\PagesAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Pages\PageSettings.cs" />
     <Compile Include="Areas\Admin\Pages\PagesNavigationProvider.cs" />
-    <Compile Include="Areas\Admin\Pages\PagesPermissions.cs" />
     <Compile Include="Areas\Admin\Pages\Domain\PageType.cs" />
     <Compile Include="Areas\Admin\Pages\Services\IHistoricPageService.cs" />
     <Compile Include="Areas\Admin\Pages\Services\IPageService.cs" />
@@ -347,7 +343,6 @@
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\Shared\EditorTemplates\HtmlBlock.cshtml" />
     <Compile Include="Areas\Admin\ContentBlocks\ContentBlockBase.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\ContentBlockNavigationProvider.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\ContentBlockPermissions.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\ContentBlocksAreaRegistration.cs" />
     <Compile Include="CmsNavigationProvider.cs" />
     <Compile Include="Constants.cs" />

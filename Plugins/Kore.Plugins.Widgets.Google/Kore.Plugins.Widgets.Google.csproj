@@ -132,6 +132,7 @@
     <Compile Include="Data\Domain\GoogleSitemapPageConfig.cs" />
     <Compile Include="Extensions\ScriptRegisterExtensions.cs" />
     <Compile Include="Extensions\StyleRegisterExtensions.cs" />
+    <Compile Include="GooglePermissions.cs" />
     <Compile Include="Infrastructure\DefaultLocalizableStringsProvider.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="Infrastructure\LocationFormatProvider.cs" />

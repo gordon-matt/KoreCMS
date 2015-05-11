@@ -10,7 +10,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(MenusPermissions.ManageMenus))
+            if (!CheckPermission(CmsPermissions.MenusRead))
             {
                 return new HttpUnauthorizedResult();
             }

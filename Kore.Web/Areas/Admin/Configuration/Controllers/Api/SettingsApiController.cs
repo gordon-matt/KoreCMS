@@ -9,10 +9,11 @@ using Kore.Data;
 using Kore.Infrastructure;
 using Kore.Web.Configuration;
 using Kore.Web.Http.OData;
+using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
 {
-    [Authorize(Roles = KoreConstants.Roles.Administrators)]
+    //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class SettingsApiController : GenericODataController<Setting, Guid>
     {
         public SettingsApiController(IRepository<Setting> repository)
@@ -33,37 +34,17 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
         [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         public override IQueryable<Setting> Get()
         {
-            // 2015.03.04: No longer need this, since it's now being done in Kore.Web.Infrastructure.StartupTask
-            //var allSettings = EngineContext.Current.ResolveAll<ISettings>();
-
-            //var settings = allSettings.Select(x => new
-            //{
-            //    x.Name,
-            //    Type = x.GetType().FullName
-            //});
-
-            //var existing = Repository.Table.Select(x => x.Type).ToList();
-            //var newItems = settings.Where(x => !existing.Contains(x.Type));
-
-            //if (newItems.Any())
-            //{
-            //    var newRecords = newItems.Select(x => new Setting
-            //    {
-            //        Id = Guid.NewGuid(),
-            //        Name = x.Name,
-            //        Type = x.Type
-            //    }).ToList();
-
-            //    foreach (var record in newRecords)
-            //    {
-            //        var setting = allSettings.First(x => x.GetType().FullName == record.Type);
-            //        record.Value = Activator.CreateInstance(setting.GetType()).ToJson();
-            //    }
-
-            //    Repository.Insert(newRecords);
-            //}
-
             return base.Get();
+        }
+
+        protected override Permission ReadPermission
+        {
+            get { return ConfigurationPermissions.ReadSettings; }
+        }
+
+        protected override Permission WritePermission
+        {
+            get { return ConfigurationPermissions.WriteSettings; }
         }
     }
 }

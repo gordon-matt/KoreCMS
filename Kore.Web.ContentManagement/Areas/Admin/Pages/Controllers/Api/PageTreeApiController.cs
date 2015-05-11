@@ -5,11 +5,13 @@ using System.Web.Http;
 using System.Web.Http.OData;
 using Kore.Collections;
 using Kore.Data;
+using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 {
-    [Authorize(Roles = KoreConstants.Roles.Administrators)]
+    //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class PageTreeApiController : ODataController
     {
         private readonly IRepository<Page> pageRepository;
@@ -22,6 +24,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         [EnableQuery]
         public IEnumerable<PageTreeItem> Get()
         {
+            if (!CheckPermission(CmsPermissions.PagesRead))
+            {
+                return Enumerable.Empty<PageTreeItem>();
+            }
+
             var pages = pageRepository.Table.ToHashSet();
 
             var hierarchy = pages
@@ -52,6 +59,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     IsEnabled = x.IsEnabled,
                     SubPages = GetSubPages(pages, x.Id).ToList()
                 });
+        }
+
+        protected static bool CheckPermission(Permission permission)
+        {
+            var authorizationService = EngineContext.Current.Resolve<IAuthorizationService>();
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            return authorizationService.TryCheckAccess(permission, workContext.CurrentUser);
         }
     }
 

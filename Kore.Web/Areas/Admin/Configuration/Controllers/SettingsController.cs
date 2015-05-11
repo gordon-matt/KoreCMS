@@ -23,7 +23,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(ConfigurationPermissions.ManageSettings))
+            if (!CheckPermission(ConfigurationPermissions.ReadSettings))
             {
                 return new HttpUnauthorizedResult();
             }

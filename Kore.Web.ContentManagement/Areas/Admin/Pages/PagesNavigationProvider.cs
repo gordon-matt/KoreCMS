@@ -18,7 +18,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
                 menu => menu.Add(T(KoreCmsLocalizableStrings.Pages.Title), "5", item => item
                     .Action("Index", "Page", new { area = Constants.Areas.Pages })
                     .IconCssClass("kore-icon kore-icon-pages")
-                    .Permission(PagesPermissions.ManagePages)));
+                    .Permission(CmsPermissions.PagesRead)));
         }
     }
 }

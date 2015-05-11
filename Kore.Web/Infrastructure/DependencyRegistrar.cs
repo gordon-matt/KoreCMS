@@ -136,7 +136,7 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<ScheduledTasksNavigationProvider>().As<INavigationProvider>().SingleInstance();
 
             // permission providers
-            builder.RegisterType<StandardPermissions>().As<IPermissionProvider>();
+            builder.RegisterType<StandardPermissions>().As<IPermissionProvider>().SingleInstance();
             builder.RegisterType<ConfigurationPermissions>().As<IPermissionProvider>().SingleInstance();
             builder.RegisterType<ScheduledTasksPermissions>().As<IPermissionProvider>().SingleInstance();
 

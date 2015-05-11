@@ -11,7 +11,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(ConfigurationPermissions.ManageThemes))
+            if (!CheckPermission(ConfigurationPermissions.ReadThemes))
             {
                 return new HttpUnauthorizedResult();
             }

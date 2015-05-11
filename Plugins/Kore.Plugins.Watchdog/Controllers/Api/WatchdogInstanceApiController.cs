@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
+using System.Web.Http.Results;
 using Kore.Collections;
 using Kore.Data;
-using Kore.Web.Http.OData;
 using Kore.Plugins.Watchdog.Data.Domain;
 using Kore.Plugins.Watchdog.Models;
+using Kore.Web.Http.OData;
+using Kore.Web.Security.Membership.Permissions;
 using Newtonsoft.Json;
 
 namespace Kore.Plugins.Watchdog.Controllers.Api
@@ -38,12 +41,27 @@ namespace Kore.Plugins.Watchdog.Controllers.Api
             // Do nothing
         }
 
+        protected override Permission ReadPermission
+        {
+            get { return WatchdogPermissions.Read; }
+        }
+
+        protected override Permission WritePermission
+        {
+            get { return WatchdogPermissions.Write; }
+        }
+
         #endregion GenericODataController<WatchdogInstance, int> Members
 
         [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         [HttpPost]
         public IQueryable<ServiceInfoResult> GetServices(ODataActionParameters parameters)
         {
+            if (!CheckPermission(ReadPermission))
+            {
+                return Enumerable.Empty<ServiceInfoResult>().AsQueryable();
+            }
+
             int watchdogInstanceId = (int)parameters["watchdogInstanceId"];
 
             var instance = Repository.Find(watchdogInstanceId);
@@ -92,6 +110,11 @@ namespace Kore.Plugins.Watchdog.Controllers.Api
         [HttpPost]
         public ChangeStatusResult StopService(ODataActionParameters parameters)
         {
+            if (!CheckPermission(WatchdogPermissions.StartStopServices))
+            {
+                return new ChangeStatusResult { Successful = false, Message = "Unauthorized" };
+            }
+
             string serviceName = (string)parameters["name"];
             int watchdogInstanceId = (int)parameters["instanceId"];
 
@@ -115,6 +138,11 @@ namespace Kore.Plugins.Watchdog.Controllers.Api
         [HttpPost]
         public ChangeStatusResult StartService(ODataActionParameters parameters)
         {
+            if (!CheckPermission(WatchdogPermissions.StartStopServices))
+            {
+                return new ChangeStatusResult { Successful = false, Message = "Unauthorized" };
+            }
+
             string serviceName = (string)parameters["name"];
             int watchdogInstanceId = (int)parameters["instanceId"];
 
@@ -137,6 +165,11 @@ namespace Kore.Plugins.Watchdog.Controllers.Api
         [HttpPost]
         public ChangeStatusResult RestartService(ODataActionParameters parameters)
         {
+            if (!CheckPermission(WatchdogPermissions.StartStopServices))
+            {
+                return new ChangeStatusResult { Successful = false, Message = "Unauthorized" };
+            }
+
             string serviceName = (string)parameters["name"];
             int watchdogInstanceId = (int)parameters["instanceId"];
 
@@ -159,6 +192,11 @@ namespace Kore.Plugins.Watchdog.Controllers.Api
         [HttpPost]
         public IHttpActionResult AddService(ODataActionParameters parameters)
         {
+            if (!CheckPermission(WritePermission))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
             string serviceName = (string)parameters["name"];
             int watchdogInstanceId = (int)parameters["instanceId"];
 
@@ -180,6 +218,11 @@ namespace Kore.Plugins.Watchdog.Controllers.Api
         [HttpPost]
         public IHttpActionResult RemoveService(ODataActionParameters parameters)
         {
+            if (!CheckPermission(WritePermission))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
             string serviceName = (string)parameters["name"];
             int watchdogInstanceId = (int)parameters["instanceId"];
 

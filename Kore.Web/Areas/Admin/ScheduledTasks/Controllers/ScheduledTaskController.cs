@@ -10,7 +10,7 @@ namespace Kore.Web.Areas.Admin.ScheduledTasks.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(ScheduledTasksPermissions.ManageScheduledTasks))
+            if (!CheckPermission(ScheduledTasksPermissions.ReadScheduledTasks))
             {
                 return new HttpUnauthorizedResult();
             }

@@ -7,10 +7,11 @@ using System.Web.Http.OData;
 using Kore.Data;
 using Kore.Web.ContentManagement.Messaging.Domain;
 using Kore.Web.Http.OData;
+using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers.Api
 {
-    [Authorize(Roles = KoreConstants.Roles.Administrators)]
+    //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class MessageTemplateApiController : GenericODataController<MessageTemplate, Guid>
     {
         private readonly Lazy<IEnumerable<IMessageTemplateTokensProvider>> tokensProviders;
@@ -36,6 +37,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers.Api
         [HttpPost]
         public virtual IEnumerable<string> GetTokens(ODataActionParameters parameters)
         {
+            if (!CheckPermission(ReadPermission))
+            {
+                return Enumerable.Empty<string>();
+            }
+
             string templateName = (string)parameters["templateName"];
 
             return tokensProviders.Value
@@ -43,6 +49,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers.Api
                 .Distinct()
                 .OrderBy(x => x)
                 .ToList();
+        }
+
+        protected override Permission ReadPermission
+        {
+            get { return StandardPermissions.FullAccess; }
+        }
+
+        protected override Permission WritePermission
+        {
+            get { return StandardPermissions.FullAccess; }
         }
     }
 }

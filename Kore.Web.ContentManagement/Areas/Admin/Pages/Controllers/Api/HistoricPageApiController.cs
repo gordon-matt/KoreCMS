@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.OData;
+using System.Web.Http.Results;
 using Kore.Data;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.Http.OData;
+using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 {
-    [Authorize(Roles = KoreConstants.Roles.Administrators)]
+    //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class HistoricPageApiController : GenericODataController<HistoricPage, Guid>
     {
         private readonly IRepository<Page> pageRepository;
@@ -34,6 +37,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         [HttpPost]
         public IHttpActionResult RestoreVersion([FromODataUri] Guid key, ODataActionParameters parameters)
         {
+            if (!CheckPermission(CmsPermissions.PageHistoryRestore))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
             var pageToRestore = Repository.Find(key);
 
             if (pageToRestore == null)
@@ -79,6 +87,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             pageRepository.Update(page);
 
             return Ok();
+        }
+
+        protected override Permission ReadPermission
+        {
+            get { return CmsPermissions.PageHistoryRead; }
+        }
+
+        protected override Permission WritePermission
+        {
+            get { return CmsPermissions.PageHistoryWrite; }
         }
     }
 }

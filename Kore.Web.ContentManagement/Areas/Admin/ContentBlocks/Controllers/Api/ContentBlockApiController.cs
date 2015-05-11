@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
+using System.Web.Http.Results;
 using Kore.Data;
 using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 using Kore.Web.Http.OData;
+using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
 {
-    [Authorize(Roles = KoreConstants.Roles.Administrators)]
+    //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class ContentBlockApiController : GenericODataController<ContentBlock, Guid>
     {
         public ContentBlockApiController(IRepository<ContentBlock> repository)
@@ -35,6 +38,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
         [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         public override IQueryable<ContentBlock> Get()
         {
+            if (!CheckPermission(ReadPermission))
+            {
+                return Enumerable.Empty<ContentBlock>().AsQueryable();
+            }
+
             return Repository.Table.Where(x => x.PageId == null);
         }
 
@@ -42,6 +50,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
         [HttpPost]
         public virtual IQueryable<ContentBlock> GetByPageId(ODataActionParameters parameters)
         {
+            if (!CheckPermission(ReadPermission))
+            {
+                return Enumerable.Empty<ContentBlock>().AsQueryable();
+            }
+
             var pageId = (Guid)parameters["pageId"];
 
             return Repository.Table
@@ -52,6 +65,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
 
         public override IHttpActionResult Put([FromODataUri] Guid key, ContentBlock entity)
         {
+            if (!CheckPermission(WritePermission))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -80,6 +98,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
 
         public override IHttpActionResult Post(ContentBlock entity)
         {
+            if (!CheckPermission(WritePermission))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -230,6 +253,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
 
             Repository.Insert(toInsert);
             Repository.Update(toUpdate);
+        }
+
+        protected override Permission ReadPermission
+        {
+            get { return CmsPermissions.ContentBlocksRead; }
+        }
+
+        protected override Permission WritePermission
+        {
+            get { return CmsPermissions.ContentBlocksWrite; }
         }
     }
 }

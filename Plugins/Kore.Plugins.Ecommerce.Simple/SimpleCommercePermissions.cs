@@ -5,7 +5,10 @@ namespace Kore.Plugins.Ecommerce.Simple
 {
     public class SimpleCommercePermissions : IPermissionProvider
     {
-        public static readonly Permission ManageStore = new Permission { Name = "ManageStore", Category = "e-Commerce", Description = "Manage Store" };
+        public static readonly Permission ReadCategories = new Permission { Name = "Plugin_SimpleCommerce_ReadCategories", Category = "Plugin - Simple Commerce", Description = "Plugin: Simple Commerce - Read Categories" };
+        public static readonly Permission ReadProducts = new Permission { Name = "Plugin_SimpleCommerce_ReadProducts", Category = "Plugin - Simple Commerce", Description = "Plugin: Simple Commerce - Read Products" };
+        public static readonly Permission WriteCategories = new Permission { Name = "Plugin_SimpleCommerce_WriteCategories", Category = "Plugin - Simple Commerce", Description = "Plugin: Simple Commerce - Write Categories" };
+        public static readonly Permission WriteProducts = new Permission { Name = "Plugin_SimpleCommerce_WriteProducts", Category = "Plugin - Simple Commerce", Description = "Plugin: Simple Commerce - Write Products" };
 
         #region IPermissionProvider Members
 
@@ -13,7 +16,10 @@ namespace Kore.Plugins.Ecommerce.Simple
         {
             return new[]
             {
-                ManageStore
+                ReadCategories,
+                ReadProducts,
+                WriteCategories,
+                WriteProducts
             };
         }
 

@@ -7,10 +7,11 @@ using Kore.Data;
 using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
 using Kore.Web.Http.OData;
+using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 {
-    [Authorize(Roles = KoreConstants.Roles.Administrators)]
+    //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class BlogApiController : GenericODataController<BlogEntry, Guid>
     {
         private readonly Lazy<IMembershipService> membershipService;
@@ -60,6 +61,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
         protected override void SetNewId(BlogEntry entity)
         {
             entity.Id = Guid.NewGuid();
+        }
+
+        protected override Permission ReadPermission
+        {
+            get { return CmsPermissions.BlogRead; }
+        }
+
+        protected override Permission WritePermission
+        {
+            get { return CmsPermissions.BlogWrite; }
         }
     }
 }

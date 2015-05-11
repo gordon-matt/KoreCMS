@@ -2,15 +2,19 @@
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
+using System.Web.Http.Results;
+using Kore.Infrastructure;
 using Kore.Security.Membership;
+using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
 {
-    [Authorize(Roles = KoreConstants.Roles.Administrators)]
+    //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class PermissionApiController : ODataController
     {
         protected IMembershipService Service { get; private set; }
@@ -23,18 +27,31 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
         [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         public virtual IQueryable<KorePermission> Get()
         {
+            if (!CheckPermission(StandardPermissions.FullAccess))
+            {
+                return Enumerable.Empty<KorePermission>().AsQueryable();
+            }
             return Service.GetAllPermissions().AsQueryable();
         }
 
         [EnableQuery]
         public virtual SingleResult<KorePermission> Get([FromODataUri] string key)
         {
+            if (!CheckPermission(StandardPermissions.FullAccess))
+            {
+                return SingleResult.Create(Enumerable.Empty<KorePermission>().AsQueryable());
+            }
             var entity = Service.GetPermissionById(key);
             return SingleResult.Create(new[] { entity }.AsQueryable());
         }
 
         public virtual IHttpActionResult Put([FromODataUri] string key, KorePermission entity)
         {
+            if (!CheckPermission(StandardPermissions.FullAccess))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -63,6 +80,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
 
         public virtual IHttpActionResult Post(KorePermission entity)
         {
+            if (!CheckPermission(StandardPermissions.FullAccess))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -76,6 +98,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
         [AcceptVerbs("PATCH", "MERGE")]
         public virtual IHttpActionResult Patch([FromODataUri] string key, Delta<KorePermission> patch)
         {
+            if (!CheckPermission(StandardPermissions.FullAccess))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -107,6 +134,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
 
         public virtual IHttpActionResult Delete([FromODataUri] string key)
         {
+            if (!CheckPermission(StandardPermissions.FullAccess))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
             KorePermission entity = Service.GetPermissionById(key);
             if (entity == null)
             {
@@ -121,6 +153,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
         [HttpPost]
         public virtual IEnumerable<EdmKorePermission> GetPermissionsForRole(ODataActionParameters parameters)
         {
+            if (!CheckPermission(StandardPermissions.FullAccess))
+            {
+                return Enumerable.Empty<EdmKorePermission>().AsQueryable();
+            }
             string roleId = (string)parameters["roleId"];
             var role = Service.GetRoleById(roleId);
             return Service.GetPermissionsForRole(role.Name).Select(x => new EdmKorePermission
@@ -133,6 +169,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
         protected virtual bool EntityExists(string key)
         {
             return Service.GetUserById(key) != null;
+        }
+
+        protected static bool CheckPermission(Permission permission)
+        {
+            var authorizationService = EngineContext.Current.Resolve<IAuthorizationService>();
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            return authorizationService.TryCheckAccess(permission, workContext.CurrentUser);
         }
     }
 

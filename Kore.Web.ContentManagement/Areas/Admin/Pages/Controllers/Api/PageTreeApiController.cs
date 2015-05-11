@@ -10,11 +10,11 @@ using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class PageTreeController : ODataController
+    public class PageTreeApiController : ODataController
     {
         private readonly IRepository<Page> pageRepository;
 
-        public PageTreeController(IRepository<Page> pageRepository)
+        public PageTreeApiController(IRepository<Page> pageRepository)
         {
             this.pageRepository = pageRepository;
         }

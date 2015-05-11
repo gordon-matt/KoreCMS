@@ -8,9 +8,9 @@ using Kore.Web.Http.OData;
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class ZonesController : GenericODataController<Zone, Guid>
+    public class ZoneApiController : GenericODataController<Zone, Guid>
     {
-        public ZonesController(IRepository<Zone> repository)
+        public ZoneApiController(IRepository<Zone> repository)
             : base(repository)
         {
         }

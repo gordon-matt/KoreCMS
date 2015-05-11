@@ -13,9 +13,9 @@ using Kore.Web.Http.OData;
 namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class SettingsController : GenericODataController<Setting, Guid>
+    public class SettingsApiController : GenericODataController<Setting, Guid>
     {
-        public SettingsController(IRepository<Setting> repository)
+        public SettingsApiController(IRepository<Setting> repository)
             : base(repository)
         {
         }

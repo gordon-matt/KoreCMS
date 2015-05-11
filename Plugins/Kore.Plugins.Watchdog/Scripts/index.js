@@ -28,7 +28,7 @@ $(document).ready(function () {
     });
 });
 
-var baseUrl = "/odata/kore/watchdog/WatchdogInstances";
+var baseUrl = "/odata/kore/watchdog/WatchdogInstanceApi";
 
 var ViewModel = function () {
     var self = this;
@@ -279,7 +279,7 @@ $(document).ready(function () {
                         //        });
                         //    }
 
-                        //    return "/odata/kore/watchdog/WatchdogInstances/GetServices?" + queryString;
+                        //    return "/odata/kore/watchdog/WatchdogInstanceApi/GetServices?" + queryString;
                         //},
                         type: "POST",
                         contentType: "application/json; charset=utf-8",

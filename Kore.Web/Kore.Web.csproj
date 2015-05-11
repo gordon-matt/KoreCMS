@@ -150,8 +150,8 @@
     <Compile Include="Areas\Admin\Configuration\ConfigurationAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Configuration\ConfigurationNavigationProvider.cs" />
     <Compile Include="Areas\Admin\Configuration\ConfigurationPermissions.cs" />
-    <Compile Include="Areas\Admin\Configuration\Controllers\Api\SettingsController.cs" />
-    <Compile Include="Areas\Admin\Configuration\Controllers\Api\ThemesController.cs" />
+    <Compile Include="Areas\Admin\Configuration\Controllers\Api\SettingsApiController.cs" />
+    <Compile Include="Areas\Admin\Configuration\Controllers\Api\ThemeApiController.cs" />
     <Compile Include="Areas\Admin\Configuration\Controllers\SettingsController.cs" />
     <Compile Include="Areas\Admin\Configuration\Controllers\ThemeController.cs" />
     <Compile Include="Areas\Admin\Configuration\Models\EdmThemeConfiguration.cs" />
@@ -161,7 +161,7 @@
     <Compile Include="Areas\Admin\Indexing\Controllers\SearchController.cs" />
     <Compile Include="Areas\Admin\Indexing\IndexingAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Indexing\IndexingNavigationProvider.cs" />
-    <Compile Include="Areas\Admin\ScheduledTasks\Controllers\Api\ScheduledTasksController.cs" />
+    <Compile Include="Areas\Admin\ScheduledTasks\Controllers\Api\ScheduledTaskApiController.cs" />
     <Compile Include="Areas\Admin\ScheduledTasks\Controllers\ScheduledTaskController.cs" />
     <Compile Include="Areas\Admin\ScheduledTasks\Models\ScheduledTaskModel.cs" />
     <Compile Include="Areas\Admin\ScheduledTasks\ScheduledTasksNavigationProvider.cs" />
@@ -497,7 +497,7 @@
     <Compile Include="Net\Mail\Pop3\Pop3Client.cs" />
     <Compile Include="Net\Mail\SmtpSettings.cs" />
     <Compile Include="Plugins\BasePlugin.cs" />
-    <Compile Include="Areas\Admin\Plugins\Controllers\Api\PluginsController.cs" />
+    <Compile Include="Areas\Admin\Plugins\Controllers\Api\PluginApiController.cs" />
     <Compile Include="Areas\Admin\Plugins\Controllers\PluginController.cs" />
     <Compile Include="Plugins\IPlugin.cs" />
     <Compile Include="Plugins\IPluginFinder.cs" />

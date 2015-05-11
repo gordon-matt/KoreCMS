@@ -6,7 +6,7 @@ var ViewModel = function () {
     self.delete = function (id) {
         if (confirm(translations.DeleteRecordConfirm)) {
             $.ajax({
-                url: "/odata/kore/cms/Subscribers('" + id + "')",
+                url: "/odata/kore/cms/SubscriberApi('" + id + "')",
                 type: "DELETE",
                 async: false
             })
@@ -37,7 +37,7 @@ $(document).ready(function () {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/cms/Subscribers",
+                    url: "/odata/kore/cms/SubscriberApi",
                     dataType: "json"
                 }
             },

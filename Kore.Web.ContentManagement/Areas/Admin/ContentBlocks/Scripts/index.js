@@ -14,7 +14,7 @@ var ZoneModel = function () {
 
     self.edit = function (id) {
         $.ajax({
-            url: "/odata/kore/cms/Zones(guid'" + id + "')",
+            url: "/odata/kore/cms/ZoneApi(guid'" + id + "')",
             type: "GET",
             dataType: "json",
             async: false
@@ -34,7 +34,7 @@ var ZoneModel = function () {
     self.delete = function (id) {
         if (confirm(translations.DeleteRecordConfirm)) {
             $.ajax({
-                url: "/odata/kore/cms/Zones(guid'" + id + "')",
+                url: "/odata/kore/cms/ZoneApi(guid'" + id + "')",
                 type: "DELETE",
                 dataType: "json",
                 async: false
@@ -65,7 +65,7 @@ var ZoneModel = function () {
         if (self.id() == emptyGuid) {
             // INSERT
             $.ajax({
-                url: "/odata/kore/cms/Zones",
+                url: "/odata/kore/cms/ZoneApi",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -88,7 +88,7 @@ var ZoneModel = function () {
         else {
             // UPDATE
             $.ajax({
-                url: "/odata/kore/cms/Zones(guid'" + self.id() + "')",
+                url: "/odata/kore/cms/ZoneApi(guid'" + self.id() + "')",
                 type: "PUT",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -184,7 +184,7 @@ var ViewModel = function () {
 
     self.edit = function (id) {
         $.ajax({
-            url: "/odata/kore/cms/ContentBlocks(guid'" + id + "')",
+            url: "/odata/kore/cms/ContentBlockApi(guid'" + id + "')",
             type: "GET",
             //contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -274,7 +274,7 @@ var ViewModel = function () {
     self.delete = function (id) {
         if (confirm(translations.DeleteRecordConfirm)) {
             $.ajax({
-                url: "/odata/kore/cms/ContentBlocks(guid'" + id + "')",
+                url: "/odata/kore/cms/ContentBlockApi(guid'" + id + "')",
                 type: "DELETE",
                 async: false
             })
@@ -332,7 +332,7 @@ var ViewModel = function () {
 
         if (isNew) {
             $.ajax({
-                url: "/odata/kore/cms/ContentBlocks",
+                url: "/odata/kore/cms/ContentBlockApi",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -354,7 +354,7 @@ var ViewModel = function () {
         }
         else {
             $.ajax({
-                url: "/odata/kore/cms/ContentBlocks(guid'" + self.id() + "')",
+                url: "/odata/kore/cms/ContentBlockApi(guid'" + self.id() + "')",
                 type: "PUT",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -405,7 +405,7 @@ var ViewModel = function () {
         };
 
         $.ajax({
-            url: "/odata/kore/cms/ContentBlocks(guid'" + id + "')",
+            url: "/odata/kore/cms/ContentBlockApi(guid'" + id + "')",
             type: "PATCH",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(patch),
@@ -452,7 +452,7 @@ $(document).ready(function () {
         type: "odata",
         transport: {
             read: {
-                url: "/odata/kore/cms/ContentBlocks",
+                url: "/odata/kore/cms/ContentBlockApi",
                 dataType: "json"
             }
         },
@@ -481,7 +481,7 @@ $(document).ready(function () {
 
     // Override grid data source if necessary (to filter by Page ID)
     if (pageId && pageId != '') {
-        ds.transport.read.url = "/odata/kore/cms/ContentBlocks/GetByPageId";
+        ds.transport.read.url = "/odata/kore/cms/ContentBlockApi/GetByPageId";
         ds.transport.read.type = "POST";
         ds.transport.read.contentType = "application/json";
         ds.transport.parameterMap = function (options, operation) {
@@ -542,7 +542,7 @@ $(document).ready(function () {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/cms/Zones",
+                    url: "/odata/kore/cms/ZoneApi",
                     dataType: "json"
                 }
             },

@@ -14,10 +14,10 @@ namespace Kore.Web.Infrastructure
         public void Register(HttpConfiguration config)
         {
             ODataModelBuilder builder = new ODataConventionModelBuilder();
-            builder.EntitySet<EdmPluginDescriptor>("Plugins");
-            builder.EntitySet<ScheduledTask>("ScheduledTasks");
-            builder.EntitySet<Setting>("Settings");
-            builder.EntitySet<EdmThemeConfiguration>("Themes");
+            builder.EntitySet<EdmPluginDescriptor>("PluginApi");
+            builder.EntitySet<ScheduledTask>("ScheduledTaskApi");
+            builder.EntitySet<Setting>("SettingsApi");
+            builder.EntitySet<EdmThemeConfiguration>("ThemeApi");
 
             RegisterPluginODataActions(builder);
             RegisterScheduledTaskODataActions(builder);

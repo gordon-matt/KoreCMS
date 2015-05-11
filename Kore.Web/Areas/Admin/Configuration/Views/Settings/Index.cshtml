@@ -89,7 +89,7 @@
 
             self.edit = function (id) {
                 $.ajax({
-                    url: "/odata/kore/web/Settings(guid'" + id + "')",
+                    url: "/odata/kore/web/SettingsApi(guid'" + id + "')",
                     type: "GET",
                     dataType: "json",
                     async: false
@@ -177,7 +177,7 @@
                 };
 
                 $.ajax({
-                    url: "/odata/kore/web/Settings(guid'" + self.id() + "')",
+                    url: "/odata/kore/web/SettingsApi(guid'" + self.id() + "')",
                     type: "PUT",
                     crossDomain: true,
                     contentType: "application/json; charset=utf-8",
@@ -215,7 +215,7 @@
                     type: "odata",
                     transport: {
                         read: {
-                            url: "/odata/kore/web/Settings",
+                            url: "/odata/kore/web/SettingsApi",
                             dataType: "json"
                         }
                     },

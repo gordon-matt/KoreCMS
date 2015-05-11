@@ -13,11 +13,11 @@ using Kore.Web.Http.OData;
 
 namespace Kore.Plugins.Widgets.Google.Controllers.Api
 {
-    public class GoogleXmlSitemapController : GenericODataController<GoogleSitemapPageConfig, int>
+    public class GoogleXmlSitemapApiController : GenericODataController<GoogleSitemapPageConfig, int>
     {
         private IRepository<Page> pageRepository;
 
-        public GoogleXmlSitemapController(
+        public GoogleXmlSitemapApiController(
             IRepository<GoogleSitemapPageConfig> repository,
             IRepository<Page> pageRepository)
             : base(repository)

@@ -1,6 +1,6 @@
 ﻿'use strict'
 
-var odataBaseUrl = "/odata/kore/cms/LocalizableStrings/";
+var odataBaseUrl = "/odata/kore/cms/LocalizableStringApi/";
 
 $(document).ready(function () {
     $("#Grid").kendoGrid({

@@ -31,7 +31,7 @@
                     type: "odata",
                     transport: {
                         read: {
-                            url: "/odata/kore/web/Themes",
+                            url: "/odata/kore/web/ThemeApi",
                             dataType: "json"
                         }
                     },
@@ -116,7 +116,7 @@
 
         function setDesktopTheme(name) {
             $.ajax({
-                url: "/odata/kore/web/Themes/SetDesktopTheme",
+                url: "/odata/kore/web/ThemeApi/SetDesktopTheme",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ themeName: name }),
@@ -135,7 +135,7 @@
 
         function setMobileTheme(name) {
             $.ajax({
-                url: "/odata/kore/web/Themes/SetMobileTheme",
+                url: "/odata/kore/web/ThemeApi/SetMobileTheme",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ themeName: name }),

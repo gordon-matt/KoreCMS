@@ -21,7 +21,7 @@ var PermissionVM = function () {
 
     self.edit = function (id) {
         $.ajax({
-            url: "/odata/kore/cms/Permissions('" + id + "')",
+            url: "/odata/kore/cms/PermissionApi('" + id + "')",
             type: "GET",
             dataType: "json",
             async: false
@@ -45,7 +45,7 @@ var PermissionVM = function () {
     self.delete = function (id) {
         if (confirm("Are you sure you want to delete this record?")) {
             $.ajax({
-                url: "/odata/kore/cms/Permissions('" + id + "')",
+                url: "/odata/kore/cms/PermissionApi('" + id + "')",
                 type: "DELETE",
                 async: false
             })
@@ -78,7 +78,7 @@ var PermissionVM = function () {
         if (self.id() == emptyGuid) {
             // INSERT
             $.ajax({
-                url: "/odata/kore/cms/Permissions",
+                url: "/odata/kore/cms/PermissionApi",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -101,7 +101,7 @@ var PermissionVM = function () {
         else {
             // UPDATE
             $.ajax({
-                url: "/odata/kore/cms/Permissions('" + self.id() + "')",
+                url: "/odata/kore/cms/PermissionApi('" + self.id() + "')",
                 type: "PUT",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -164,7 +164,7 @@ var PermissionVM = function () {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/cms/Permissions",
+                    url: "/odata/kore/cms/PermissionApi",
                     dataType: "json"
                 }
             },

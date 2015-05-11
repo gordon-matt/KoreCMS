@@ -31,7 +31,7 @@ var ViewModel = function () {
 
     self.edit = function (id) {
         $.ajax({
-            url: "/odata/kore/cms/Blogs(guid'" + id + "')",
+            url: "/odata/kore/cms/BlogApi(guid'" + id + "')",
             type: "GET",
             dataType: "json",
             async: false
@@ -57,7 +57,7 @@ var ViewModel = function () {
     self.delete = function (id) {
         if (confirm(translations.DeleteRecordConfirm)) {
             $.ajax({
-                url: "/odata/kore/cms/Blogs(guid'" + id + "')",
+                url: "/odata/kore/cms/BlogApi(guid'" + id + "')",
                 type: "DELETE",
                 async: false
             })
@@ -88,7 +88,7 @@ var ViewModel = function () {
 
         if (isNew) {
             $.ajax({
-                url: "/odata/kore/cms/Blogs",
+                url: "/odata/kore/cms/BlogApi",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -110,7 +110,7 @@ var ViewModel = function () {
         }
         else {
             $.ajax({
-                url: "/odata/kore/cms/Blogs(guid'" + self.id() + "')",
+                url: "/odata/kore/cms/BlogApi(guid'" + self.id() + "')",
                 type: "PUT",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -158,7 +158,7 @@ $(document).ready(function () {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/cms/Blogs",
+                    url: "/odata/kore/cms/BlogApi",
                     dataType: "json"
                 }
             },

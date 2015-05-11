@@ -5,11 +5,11 @@ using Kore.Security.Membership;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
 {
-    public class PublicUsersController : ODataController
+    public class PublicUserApiController : ODataController
     {
         protected IMembershipService Service { get; private set; }
 
-        public PublicUsersController(IMembershipService service)
+        public PublicUserApiController(IMembershipService service)
         {
             this.Service = service;
         }

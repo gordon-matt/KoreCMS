@@ -12,8 +12,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
         public void Register(HttpConfiguration config)
         {
             ODataModelBuilder builder = new ODataConventionModelBuilder();
-            builder.EntitySet<Category>("Categories");
-            builder.EntitySet<Product>("Products");
+            builder.EntitySet<Category>("CategoryApi");
+            builder.EntitySet<Product>("ProductApi");
 
             config.Routes.MapODataRoute("OData_Kore_Plugin_SimpleCommerce", "odata/kore/plugins/simple-commerce", builder.GetEdmModel());
         }

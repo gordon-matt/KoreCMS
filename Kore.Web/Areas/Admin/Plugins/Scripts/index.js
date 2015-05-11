@@ -2,7 +2,7 @@
 
 //function install(systemName) {
 //    $.ajax({
-//        url: "/odata/kore/web/Plugins/Install",
+//        url: "/odata/kore/web/PluginApi/Install",
 //        type: "POST",
 //        contentType: "application/json; charset=utf-8",
 //        data: JSON.stringify({
@@ -25,7 +25,7 @@
 
 //function uninstall(systemName) {
 //    $.ajax({
-//        url: "/odata/kore/web/Plugins/Uninstall",
+//        url: "/odata/kore/web/PluginApi/Uninstall",
 //        type: "POST",
 //        contentType: "application/json; charset=utf-8",
 //        data: JSON.stringify({
@@ -54,7 +54,7 @@
 //            type: "odata",
 //            transport: {
 //                read: {
-//                    url: "/odata/kore/web/Plugins",
+//                    url: "/odata/kore/web/PluginApi",
 //                    dataType: "json"
 //                }
 //            },

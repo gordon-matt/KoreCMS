@@ -131,7 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="Controllers\Api\WatchdogInstancesController.cs" />
+    <Compile Include="Controllers\Api\WatchdogInstanceApiController.cs" />
     <Compile Include="Controllers\WatchdogController.cs" />
     <Compile Include="Data\Domain\WatchdogInstance.cs" />
     <Compile Include="Extensions\ScriptRegisterExtensions.cs" />

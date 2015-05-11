@@ -6,9 +6,9 @@ using Kore.Web.Http.OData;
 namespace Kore.Plugins.Ecommerce.Simple.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class ProductsController : GenericODataController<Product, int>
+    public class ProductApiController : GenericODataController<Product, int>
     {
-        public ProductsController(IRepository<Product> repository)
+        public ProductApiController(IRepository<Product> repository)
             : base(repository)
         {
         }

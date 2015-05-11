@@ -12,11 +12,11 @@ using Kore.Web.Http.OData;
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class PagesController : GenericODataController<Page, Guid>
+    public class PageApiController : GenericODataController<Page, Guid>
     {
         private readonly IRepository<HistoricPage> historicPageRepository;
 
-        public PagesController(
+        public PageApiController(
             IRepository<Page> repository,
             IRepository<HistoricPage> historicPageRepository)
             : base(repository)

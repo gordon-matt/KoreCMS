@@ -11,29 +11,29 @@ using Kore.Security.Membership;
 namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class PermissionsController : ODataController
+    public class RoleApiController : ODataController
     {
         protected IMembershipService Service { get; private set; }
 
-        public PermissionsController(IMembershipService service)
+        public RoleApiController(IMembershipService service)
         {
             this.Service = service;
         }
 
         [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public virtual IQueryable<KorePermission> Get()
+        public virtual IQueryable<KoreRole> Get()
         {
-            return Service.GetAllPermissions().AsQueryable();
+            return Service.GetAllRoles().AsQueryable();
         }
 
         [EnableQuery]
-        public virtual SingleResult<KorePermission> Get([FromODataUri] string key)
+        public virtual SingleResult<KoreRole> Get([FromODataUri] string key)
         {
-            var entity = Service.GetPermissionById(key);
+            var entity = Service.GetRoleById(key);
             return SingleResult.Create(new[] { entity }.AsQueryable());
         }
 
-        public virtual IHttpActionResult Put([FromODataUri] string key, KorePermission entity)
+        public virtual IHttpActionResult Put([FromODataUri] string key, KoreRole entity)
         {
             if (!ModelState.IsValid)
             {
@@ -47,7 +47,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
 
             try
             {
-                Service.UpdatePermission(entity);
+                Service.UpdateRole(entity);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -61,27 +61,27 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
             return Updated(entity);
         }
 
-        public virtual IHttpActionResult Post(KorePermission entity)
+        public virtual IHttpActionResult Post(KoreRole entity)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Service.InsertPermission(entity);
+            Service.InsertRole(entity);
 
             return Created(entity);
         }
 
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual IHttpActionResult Patch([FromODataUri] string key, Delta<KorePermission> patch)
+        public virtual IHttpActionResult Patch([FromODataUri] string key, Delta<KoreRole> patch)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            KorePermission entity = Service.GetPermissionById(key);
+            KoreRole entity = Service.GetRoleById(key);
             if (entity == null)
             {
                 return NotFound();
@@ -91,7 +91,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
 
             try
             {
-                Service.UpdatePermission(entity);
+                Service.UpdateRole(entity);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -107,27 +107,37 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
 
         public virtual IHttpActionResult Delete([FromODataUri] string key)
         {
-            KorePermission entity = Service.GetPermissionById(key);
+            KoreRole entity = Service.GetRoleById(key);
             if (entity == null)
             {
                 return NotFound();
             }
 
-            Service.DeletePermission(key);
+            Service.DeleteRole(key);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         [HttpPost]
-        public virtual IEnumerable<EdmKorePermission> GetPermissionsForRole(ODataActionParameters parameters)
+        public virtual IEnumerable<EdmKoreRole> GetRolesForUser(ODataActionParameters parameters)
         {
-            string roleId = (string)parameters["roleId"];
-            var role = Service.GetRoleById(roleId);
-            return Service.GetPermissionsForRole(role.Name).Select(x => new EdmKorePermission
+            string userId = (string)parameters["userId"];
+            return Service.GetRolesForUser(userId).Select(x => new EdmKoreRole
             {
                 Id = x.Id,
                 Name = x.Name
             });
+        }
+
+        [HttpPost]
+        public virtual IHttpActionResult AssignPermissionsToRole(ODataActionParameters parameters)
+        {
+            string roleId = (string)parameters["roleId"];
+            var permissionIds = (IEnumerable<string>)parameters["permissions"];
+
+            Service.AssignPermissionsToRole(roleId, permissionIds);
+
+            return Ok();
         }
 
         protected virtual bool EntityExists(string key)
@@ -136,7 +146,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
         }
     }
 
-    public struct EdmKorePermission
+    public struct EdmKoreRole
     {
         public string Id { get; set; }
 

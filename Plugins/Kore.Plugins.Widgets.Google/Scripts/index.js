@@ -1,6 +1,6 @@
 ﻿'use strict'
 
-var odataBaseUrl = "/odata/kore/plugins/google/GoogleXmlSitemap/";
+var odataBaseUrl = "/odata/kore/plugins/google/GoogleXmlSitemapApi/";
 
 var changeFrequencies = [
     {

@@ -24,26 +24,26 @@ namespace Kore.Web.ContentManagement.Infrastructure
         public void Register(HttpConfiguration config)
         {
             ODataModelBuilder builder = new ODataConventionModelBuilder();
-            builder.EntitySet<BlogEntry>("Blogs");
-            builder.EntitySet<ContentBlock>("ContentBlocks");
-            builder.EntitySet<Language>("Languages");
-            builder.EntitySet<LocalizableString>("LocalizableStrings");
-            builder.EntitySet<Menu>("Menus");
-            builder.EntitySet<MenuItem>("MenuItems");
-            builder.EntitySet<MessageTemplate>("MessageTemplates");
-            builder.EntitySet<HistoricPage>("HistoricPages");
-            builder.EntitySet<Page>("Pages");
-            builder.EntitySet<PageType>("PageTypes");
-            builder.EntitySet<KorePermission>("Permissions");
-            builder.EntitySet<PublicUserInfo>("PublicUsers");
-            builder.EntitySet<KoreRole>("Roles");
-            builder.EntitySet<KoreUser>("Users");
-            builder.EntitySet<QueuedEmail>("QueuedEmails");
-            builder.EntitySet<Subscriber>("Subscribers");
-            builder.EntitySet<Zone>("Zones");
+            builder.EntitySet<BlogEntry>("BlogApi");
+            builder.EntitySet<ContentBlock>("ContentBlockApi");
+            builder.EntitySet<Language>("LanguageApi");
+            builder.EntitySet<LocalizableString>("LocalizableStringApi");
+            builder.EntitySet<Menu>("MenuApi");
+            builder.EntitySet<MenuItem>("MenuItemApi");
+            builder.EntitySet<MessageTemplate>("MessageTemplateApi");
+            builder.EntitySet<HistoricPage>("HistoricPageApi");
+            builder.EntitySet<Page>("PageApi");
+            builder.EntitySet<PageType>("PageTypeApi");
+            builder.EntitySet<KorePermission>("PermissionApi");
+            builder.EntitySet<PublicUserInfo>("PublicUserApi");
+            builder.EntitySet<KoreRole>("RoleApi");
+            builder.EntitySet<KoreUser>("UserApi");
+            builder.EntitySet<QueuedEmail>("QueuedEmailApi");
+            builder.EntitySet<Subscriber>("SubscriberApi");
+            builder.EntitySet<Zone>("ZoneApi");
 
             // Special
-            builder.EntitySet<PageTreeItem>("PageTree");
+            builder.EntitySet<PageTreeItem>("PageTreeApi");
 
             // Action Configurations
             RegisterContentBlockODataActions(builder);

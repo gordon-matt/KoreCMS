@@ -11,7 +11,7 @@ var PageTypeVM = function () {
 
     self.edit = function (id) {
         $.ajax({
-            url: "/odata/kore/cms/PageTypes(guid'" + id + "')",
+            url: "/odata/kore/cms/PageTypeApi(guid'" + id + "')",
             type: "GET",
             dataType: "json",
             async: false
@@ -36,7 +36,7 @@ var PageTypeVM = function () {
     self.delete = function (id) {
         if (confirm(translations.DeleteRecordConfirm)) {
             $.ajax({
-                url: "/odata/kore/cms/PageTypes(guid'" + id + "')",
+                url: "/odata/kore/cms/PageTypeApi(guid'" + id + "')",
                 type: "DELETE",
                 async: false
             })
@@ -66,7 +66,7 @@ var PageTypeVM = function () {
 
         if (isNew) {
             $.ajax({
-                url: "/odata/kore/cms/PageTypes",
+                url: "/odata/kore/cms/PageTypeApi",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -88,7 +88,7 @@ var PageTypeVM = function () {
         }
         else {
             $.ajax({
-                url: "/odata/kore/cms/PageTypes(guid'" + self.id() + "')",
+                url: "/odata/kore/cms/PageTypeApi(guid'" + self.id() + "')",
                 type: "PUT",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -201,7 +201,7 @@ var ViewModel = function () {
 
     self.edit = function (id) {
         $.ajax({
-            url: "/odata/kore/cms/Pages(guid'" + id + "')",
+            url: "/odata/kore/cms/PageApi(guid'" + id + "')",
             type: "GET",
             dataType: "json",
             async: false
@@ -298,7 +298,7 @@ var ViewModel = function () {
     self.delete = function () {
         if (confirm(translations.DeleteRecordConfirm)) {
             $.ajax({
-                url: "/odata/kore/cms/Pages(guid'" + self.id() + "')",
+                url: "/odata/kore/cms/PageApi(guid'" + self.id() + "')",
                 type: "DELETE",
                 async: false
             })
@@ -348,7 +348,7 @@ var ViewModel = function () {
         if (self.id() == emptyGuid) {
             // INSERT
             $.ajax({
-                url: "/odata/kore/cms/Pages",
+                url: "/odata/kore/cms/PageApi",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -367,7 +367,7 @@ var ViewModel = function () {
         else {
             // UPDATE
             $.ajax({
-                url: "/odata/kore/cms/Pages(guid'" + self.id() + "')",
+                url: "/odata/kore/cms/PageApi(guid'" + self.id() + "')",
                 type: "PUT",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -415,7 +415,7 @@ var ViewModel = function () {
         };
 
         $.ajax({
-            url: "/odata/kore/cms/Pages(guid'" + self.id() + "')",
+            url: "/odata/kore/cms/PageApi(guid'" + self.id() + "')",
             type: "PATCH",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(patch),
@@ -471,7 +471,7 @@ var ViewModel = function () {
         };
 
         $.ajax({
-            url: "/odata/kore/cms/Pages/Translate",
+            url: "/odata/kore/cms/PageApi/Translate",
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
@@ -601,7 +601,7 @@ $(document).ready(function () {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/cms/PageTypes",
+                    url: "/odata/kore/cms/PageTypeApi",
                     dataType: "json"
                 }
             },
@@ -650,7 +650,7 @@ $(document).ready(function () {
         type: "odata",
         transport: {
             read: {
-                url: "/odata/kore/cms/PageTree?$expand=SubPages/SubPages",
+                url: "/odata/kore/cms/PageTreeApi?$expand=SubPages/SubPages",
                 dataType: "json"
             }
         },
@@ -697,7 +697,7 @@ $(document).ready(function () {
             }
             else {
                 $.ajax({
-                    url: "/odata/kore/cms/Pages(guid'" + destinationId + "')",
+                    url: "/odata/kore/cms/PageApi(guid'" + destinationId + "')",
                     type: "GET",
                     dataType: "json",
                     async: false
@@ -734,7 +734,7 @@ $(document).ready(function () {
             };
 
             $.ajax({
-                url: "/odata/kore/cms/Pages(guid'" + sourceId + "')",
+                url: "/odata/kore/cms/PageApi(guid'" + sourceId + "')",
                 type: "PATCH",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(patch),

@@ -8,19 +8,19 @@ using Kore.Web.Http.OData;
 namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Controllers.Api
 {
     [Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class MenuItemsController : GenericODataController<MenuItem, Guid>
+    public class MenuApiController : GenericODataController<Menu, Guid>
     {
-        public MenuItemsController(IRepository<MenuItem> repository)
+        public MenuApiController(IRepository<Menu> repository)
             : base(repository)
         {
         }
 
-        protected override Guid GetId(MenuItem entity)
+        protected override Guid GetId(Menu entity)
         {
             return entity.Id;
         }
 
-        protected override void SetNewId(MenuItem entity)
+        protected override void SetNewId(Menu entity)
         {
             entity.Id = Guid.NewGuid();
         }

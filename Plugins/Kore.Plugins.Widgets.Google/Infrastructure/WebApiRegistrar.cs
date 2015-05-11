@@ -13,7 +13,7 @@ namespace Kore.Plugins.Widgets.Google.Infrastructure
         public void Register(HttpConfiguration config)
         {
             ODataModelBuilder builder = new ODataConventionModelBuilder();
-            builder.EntitySet<GoogleSitemapPageConfig>("GoogleXmlSitemap");
+            builder.EntitySet<GoogleSitemapPageConfig>("GoogleXmlSitemapApi");
 
             var getConfigAction = builder.Entity<GoogleSitemapPageConfig>().Collection.Action("GetConfig");
             getConfigAction.ReturnsCollection<GoogleSitemapPageConfigModel>();

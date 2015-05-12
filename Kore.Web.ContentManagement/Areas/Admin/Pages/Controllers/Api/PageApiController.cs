@@ -10,6 +10,7 @@ using System.Web.Http.Results;
 using Kore.Collections;
 using Kore.Data;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -18,14 +19,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class PageApiController : GenericODataController<Page, Guid>
     {
-        private readonly IRepository<HistoricPage> historicPageRepository;
+        private readonly IHistoricPageService historicPageService;
 
         public PageApiController(
             IRepository<Page> repository,
-            IRepository<HistoricPage> historicPageRepository)
+            IHistoricPageService historicPageService)
             : base(repository)
         {
-            this.historicPageRepository = historicPageRepository;
+            this.historicPageService = historicPageService;
         }
 
         [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
@@ -81,7 +82,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     RefId = currentPage.RefId,
                     ArchivedDate = DateTime.UtcNow
                 };
-                historicPageRepository.Insert(historicPage);
+                historicPageService.Insert(historicPage);
 
                 Repository.Update(entity);
             }
@@ -144,7 +145,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     RefId = currentPage.RefId,
                     ArchivedDate = DateTime.UtcNow
                 };
-                historicPageRepository.Insert(historicPage);
+                historicPageService.Insert(historicPage);
 
                 entity.DateCreatedUtc = currentPage.DateCreatedUtc;
                 entity.DateModifiedUtc = DateTime.UtcNow;

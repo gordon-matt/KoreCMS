@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Kore.Collections;
+using System.Linq;
 using Kore.Caching;
 using Kore.Data;
 using Kore.Data.Services;
@@ -37,7 +38,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                     .Select(x => x.Id)
                     .ToList();
 
-                var pagesToDelete = pages.Where(x => !pagesToKeep.Contains(x.Id));
+                var pagesToDelete = pages.Where(x => !pagesToKeep.Contains(x.Id)).ToHashSet();
 
                 Delete(pagesToDelete);
             }

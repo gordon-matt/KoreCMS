@@ -37,6 +37,10 @@
 </div>
 
 <script type="text/javascript">
+    function stripHTML(html) {
+        return $("<div/>").html(html).text();
+    };
+
     var contentBlockModel = (function () {
         var f = {};
         f.updateModel = function () {
@@ -76,9 +80,15 @@
             delete viewModel.useAjax;
         };
         f.onBeforeSave = function () {
+
+            var thankYouMessage = viewModel.thankYouMessage();
+            if (viewModel.useAjax()) {
+                thankYouMessage = stripHTML(thankYouMessage);
+            }
+
             var data = {
                 HtmlTemplate: viewModel.htmlTemplate(),
-                ThankYouMessage: viewModel.thankYouMessage(),
+                ThankYouMessage: thankYouMessage,
                 RedirectUrl: viewModel.redirectUrl(),
                 EmailAddress: viewModel.emailAddress(),
                 UseAjax: viewModel.useAjax()

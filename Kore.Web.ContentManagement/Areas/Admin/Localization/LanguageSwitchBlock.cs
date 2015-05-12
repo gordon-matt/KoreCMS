@@ -7,8 +7,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization
     {
         public enum LanguageSwitchStyle
         {
+            BootstrapNavbarDropdown,
             Select,
-            List
+            List,
+            Custom
         }
 
         #region ContentBlockBase Overrides
@@ -35,5 +37,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization
         public bool UseUrlPrefix { get; set; }
 
         public string MessageText { get; set; }
+
+        public string CustomTemplatePath { get; set; }
     }
 }

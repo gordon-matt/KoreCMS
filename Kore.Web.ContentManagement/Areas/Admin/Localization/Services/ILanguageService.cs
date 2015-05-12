@@ -13,11 +13,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
         IEnumerable<Language> GetActiveLanguages();
 
         Language GetLanguage(string cultureCode);
+
+        bool CheckIfRightToLeft(string cultureCode);
     }
 
     public class LanguageService : GenericDataService<Language>, ILanguageService
     {
         private readonly ICacheManager cacheManager;
+
+        private static List<string> rightToLeftLanguages;
 
         public LanguageService(IRepository<Language> repository, ICacheManager cacheManager)
             : base(repository)
@@ -29,6 +33,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
         {
             int rowsAffected = base.Delete(record);
             cacheManager.Remove("Languages_All");
+            rightToLeftLanguages = null;
             return rowsAffected;
         }
 
@@ -85,6 +90,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
         {
             int rowsAffected = base.Insert(record);
             cacheManager.Remove("Languages_All");
+            rightToLeftLanguages = null;
             return rowsAffected;
         }
 
@@ -92,7 +98,21 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
         {
             int rowsAffected = base.Update(record);
             cacheManager.Remove("Languages_All");
+            rightToLeftLanguages = null;
             return rowsAffected;
+        }
+
+        public bool CheckIfRightToLeft(string cultureCode)
+        {
+            if (rightToLeftLanguages == null)
+            {
+                rightToLeftLanguages = Repository.Table
+                    .Where(x => x.IsRTL)
+                    .Select(k => k.CultureCode)
+                    .ToList();
+            }
+
+            return rightToLeftLanguages.Contains(cultureCode);
         }
     }
 }

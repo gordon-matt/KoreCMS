@@ -4,12 +4,7 @@
 @model FormBlock
 
 @{
-    bool hasCssClass = !string.IsNullOrEmpty(Model.CssClass);
-}
-
-@if (hasCssClass)
-{
-    @Html.Raw(@"<div class=""@Model.CssClass"">")
+    string formId = "form-block-" + Model.Id;
 }
 
 @if (Model.ShowTitleOnPage)
@@ -19,7 +14,7 @@
     </header>
 }
 
-<form method="post" action="@Url.Action("Save", "FormBlock", new { area = string.Empty })" enctype="multipart/form-data">
+<form id="@formId" method="post" action="@Url.Action("Save", "FormBlock", new { area = string.Empty })" enctype="multipart/form-data">
     @Html.HiddenFor(m => m.ThankYouMessage)
     @Html.HiddenFor(m => m.RedirectUrl)
     @Html.HiddenFor(m => m.EmailAddress)
@@ -47,7 +42,32 @@
     @Html.Raw(htmlTemplate)
 </form>
 
-@if (hasCssClass)
+@if (Model.UseAjax)
 {
-    @Html.Raw("</div>")
+    <script type="text/javascript">
+        if (!window.jQuery) {
+            document.write('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"><\/script>');
+        }
+    </script>
+    <script type="text/javascript">
+        $("#@formId").submit(function (e) {
+            $.ajax({
+                url: "@Url.Action("Save", "FormBlock", new { area = string.Empty })",
+                type: "POST",
+                data: $('#@formId').serialize()
+            })
+            .done(function (json) {
+                alert(json.Message);
+
+                if (json.Success) {
+                    window.location = json.RedirectUrl;
+                }
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText || textStatus + ': ' + errorThrown);
+            });
+
+            return false;
+        });
+    </script>
 }

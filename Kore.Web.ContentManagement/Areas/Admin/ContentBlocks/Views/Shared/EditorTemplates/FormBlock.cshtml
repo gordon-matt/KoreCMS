@@ -25,6 +25,15 @@
             @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", data_bind = "value: emailAddress" })
         </div>
     </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    @Html.CheckBoxFor(m => m.UseAjax, new { data_bind = "checked: useAjax" }) Use Ajax
+                </label>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -35,6 +44,7 @@
             viewModel.thankYouMessage = ko.observable("");
             viewModel.redirectUrl = ko.observable("");
             viewModel.emailAddress = ko.observable("");
+            viewModel.useAjax = ko.observable(false);
 
             var data = ko.mapping.fromJSON(viewModel.blockValues());
 
@@ -51,6 +61,9 @@
                 if (data.EmailAddress) {
                     viewModel.emailAddress(data.EmailAddress());
                 }
+                if (data.UseAjax) {
+                    viewModel.useAjax(data.UseAjax());
+                }
             }
 
             viewModel.tinyMCEConfig = koreDefaultTinyMCEConfig;
@@ -60,13 +73,15 @@
             delete viewModel.thankYouMessage;
             delete viewModel.redirectUrl;
             delete viewModel.emailAddress;
+            delete viewModel.useAjax;
         };
         f.onBeforeSave = function () {
             var data = {
                 HtmlTemplate: viewModel.htmlTemplate(),
                 ThankYouMessage: viewModel.thankYouMessage(),
                 RedirectUrl: viewModel.redirectUrl(),
-                EmailAddress: viewModel.emailAddress()
+                EmailAddress: viewModel.emailAddress(),
+                UseAjax: viewModel.useAjax()
             };
 
             viewModel.blockValues(ko.mapping.toJSON(data));

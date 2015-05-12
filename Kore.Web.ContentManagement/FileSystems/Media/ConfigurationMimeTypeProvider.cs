@@ -13,11 +13,12 @@ namespace Kore.Web.ContentManagement.FileSystems.Media
     /// </summary>
     public class ConfigurationMimeTypeProvider : IMimeTypeProvider
     {
-        private readonly ICacheManager _cacheManager;
+        private readonly ICacheManager cacheManager;
+        private const string UnknownMimeType = "application/unknown";
 
         public ConfigurationMimeTypeProvider(ICacheManager cacheManager)
         {
-            _cacheManager = cacheManager;
+            this.cacheManager = cacheManager;
         }
 
         /// <summary>
@@ -26,12 +27,13 @@ namespace Kore.Web.ContentManagement.FileSystems.Media
         public string GetMimeType(string path)
         {
             string extension = Path.GetExtension(path);
-            if (String.IsNullOrWhiteSpace(extension))
+            if (string.IsNullOrWhiteSpace(extension))
             {
-                return "application/unknown";
+                return UnknownMimeType;
             }
 
-            return _cacheManager.Get(extension, () =>
+            string cacheKey = string.Format(Constants.CacheKeys.MediaMimeType, extension);
+            return cacheManager.Get(cacheKey, () =>
             {
                 try
                 {
@@ -45,8 +47,8 @@ namespace Kore.Web.ContentManagement.FileSystems.Media
                         {
                             if (File.Exists(configFile))
                             {
-                                var xdoc = XDocument.Load(configFile);
-                                var mimeMap = xdoc.XPathSelectElements("//staticContent/mimeMap[@fileExtension='" + extension + "']").FirstOrDefault();
+                                var xDocument = XDocument.Load(configFile);
+                                var mimeMap = xDocument.XPathSelectElements("//staticContent/mimeMap[@fileExtension='" + extension + "']").FirstOrDefault();
                                 if (mimeMap != null)
                                 {
                                     var mimeType = mimeMap.Attribute("mimeType");
@@ -64,7 +66,7 @@ namespace Kore.Web.ContentManagement.FileSystems.Media
                     }
 
                     // search into the registry
-                    RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(extension.ToLower());
+                    var regKey = Registry.ClassesRoot.OpenSubKey(extension.ToLower());
                     if (regKey != null)
                     {
                         var contentType = regKey.GetValue("Content Type");
@@ -77,10 +79,10 @@ namespace Kore.Web.ContentManagement.FileSystems.Media
                 catch
                 {
                     // if an exception occured return application/unknown
-                    return "application/unknown";
+                    return UnknownMimeType;
                 }
 
-                return "application/unknown";
+                return UnknownMimeType;
             });
         }
     }

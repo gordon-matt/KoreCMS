@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using Kore.Infrastructure;
 using Kore.Web.Configuration;
-using Kore.Web.Mvc.RoboUI;
+//using Kore.Web.Mvc.RoboUI;
 
 namespace Kore.Web.Areas.Admin.Plugins
 {
@@ -14,7 +14,7 @@ namespace Kore.Web.Areas.Admin.Plugins
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            RoboSettings.RegisterAreaLayoutPath(KoreWebConstants.Areas.Plugins, KoreWebConstants.DefaultAdminLayoutPath);
+            //RoboSettings.RegisterAreaLayoutPath(KoreWebConstants.Areas.Plugins, KoreWebConstants.DefaultAdminLayoutPath);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Kore.Web.Configuration
 
         public TSettings GetSettings<TSettings>() where TSettings : ISettings, new()
         {
-            var key = typeof(TSettings).FullName;
+            string key = string.Format(KoreWebConstants.CacheKeys.SettingsByType, typeof(TSettings).FullName);
             return cacheManager.Get<TSettings>(key, () =>
             {
                 var settings = Repository.Table.Where(x => x.Type == key).FirstOrDefault();
@@ -46,7 +46,7 @@ namespace Kore.Web.Configuration
 
         public ISettings GetSettings(Type settingsType)
         {
-            var key = settingsType.FullName;
+            string key = string.Format(KoreWebConstants.CacheKeys.SettingsByType, settingsType.FullName);
             return cacheManager.Get<ISettings>(key, () =>
             {
                 var settings = Repository.Table.Where(x => x.Type == key).FirstOrDefault();

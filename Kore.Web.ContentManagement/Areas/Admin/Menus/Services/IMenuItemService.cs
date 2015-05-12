@@ -34,7 +34,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Services
 
         public IEnumerable<MenuItem> GetMenuItems(Guid menuId, bool enabledOnly = false)
         {
-            return cacheManager.Get("MenuItems_GetMenuItems" + menuId + "_" + enabledOnly, () =>
+            return cacheManager.Get(string.Format(Constants.CacheKeys.MenuItemsByMenuIdAndEnabled, menuId, enabledOnly), () =>
             {
                 return enabledOnly
                     ? Repository.Table.Where(x => x.MenuId == menuId && x.Enabled).OrderBy(x => x.Position).ThenBy(x => x.Text).ToList()

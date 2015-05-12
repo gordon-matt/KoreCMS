@@ -17,7 +17,7 @@ namespace Kore.Web.Areas.Admin.Indexing
         public void GetNavigation(NavigationBuilder builder)
         {
             builder.Add(T(KoreWebLocalizableStrings.General.Configuration),
-                menu => menu.Add(T("Search Index"), "5", item => item
+                menu => menu.Add(T(KoreWebLocalizableStrings.Indexing.Title), "5", item => item
                     .Action("Index", "Indexing", new { area = KoreWebConstants.Areas.Indexing })
                     .IconCssClass("kore-icon kore-icon-search")
                     .Permission(StandardPermissions.FullAccess)));

@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using Kore.Infrastructure;
 using Kore.Web.Configuration;
-using Kore.Web.Mvc.RoboUI;
+//using Kore.Web.Mvc.RoboUI;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Menus
 {
@@ -14,7 +14,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            RoboSettings.RegisterAreaLayoutPath(Constants.Areas.Menus, KoreWebConstants.DefaultAdminLayoutPath);
+            //RoboSettings.RegisterAreaLayoutPath(Constants.Areas.Menus, KoreWebConstants.DefaultAdminLayoutPath);
         }
     }
 }

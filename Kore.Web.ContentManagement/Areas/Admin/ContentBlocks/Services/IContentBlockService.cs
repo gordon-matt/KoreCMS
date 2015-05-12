@@ -83,7 +83,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
 
         public IEnumerable<IContentBlock> GetContentBlocks(Guid pageId)
         {
-            string key = string.Format("ContentBlocks_GetContentBlocks_{0}", pageId);
+            string key = string.Format(Constants.CacheKeys.ContentBlocksByPageId, pageId);
             return cacheManager.Get(key, () =>
             {
                 var records = Repository.Table.Where(x => x.PageId == pageId).ToList();
@@ -93,7 +93,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
 
         public IEnumerable<IContentBlock> GetContentBlocks(string zoneName, Guid? pageId = null, bool includeDisabled = false)
         {
-            string key = string.Format("ContentBlocks_GetContentBlocks_{0}_{1}_{2}", pageId, zoneName, includeDisabled);
+            string key = string.Format(Constants.CacheKeys.ContentBlocksByPageIdAndZoneAndIncDisabled, pageId, zoneName, includeDisabled);
             if (includeDisabled)
             {
                 return cacheManager.Get(key, () =>

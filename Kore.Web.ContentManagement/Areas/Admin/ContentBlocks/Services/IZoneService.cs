@@ -21,7 +21,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
 
         public override Zone Find(params object[] keyValues)
         {
-            return cacheManager.Get("Zones_GetById_" + string.Join("|", keyValues), () =>
+            string id = string.Join("|", keyValues);
+            return cacheManager.Get(string.Join(Constants.CacheKeys.ContentZoneById, id), () =>
             {
                 return base.Repository.Find(keyValues);
             });

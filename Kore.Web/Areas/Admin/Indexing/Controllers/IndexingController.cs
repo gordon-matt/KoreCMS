@@ -26,7 +26,7 @@ namespace Kore.Web.Areas.Admin.Indexing.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            WorkContext.Breadcrumbs.Add(T("Indexing"));
+            WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.Indexing.Title));
 
             IndexEntry indexEntry;
 
@@ -37,7 +37,7 @@ namespace Kore.Web.Areas.Admin.Indexing.Controllers
                 if (indexEntry == null)
                 {
                     ViewBag.Message = string.Format(
-                        "<div class=\"alert alert-info\">{0}</div>", T("This site does not have a search index to manage."));
+                        "<div class=\"alert alert-info\">{0}</div>", T(KoreWebLocalizableStrings.Indexing.NoSearchIndexToManage));
                 }
             }
             catch (Exception e)
@@ -46,10 +46,10 @@ namespace Kore.Web.Areas.Admin.Indexing.Controllers
                 Logger.ErrorFormat(e, "Search index couldn't be read.");
 
                 ViewBag.Message = string.Format(
-                    "<div class=\"alert alert-warning\">{0}</div>", T("The index might be corrupted. If you can't recover click on Rebuild."));
+                    "<div class=\"alert alert-warning\">{0}</div>", T(KoreWebLocalizableStrings.Indexing.SearchIndexMayBeCorrupted));
             }
 
-            ViewBag.Title = T("Search Index");
+            ViewBag.Title = T(KoreWebLocalizableStrings.Indexing.Title);
             return View("Kore.Web.Areas.Admin.Indexing.Views.Indexing.Index", indexEntry);
         }
 

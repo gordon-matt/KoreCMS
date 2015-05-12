@@ -55,7 +55,9 @@ namespace Kore.Localization
 
         protected virtual IDictionary<string, string> LoadCulture(string cultureCode)
         {
-            return cacheManager.Get<Dictionary<string, string>>("LocalizableStrings_" + cultureCode, () =>
+            return cacheManager.Get<Dictionary<string, string>>(
+                string.Format(KoreConstants.CacheKeys.LocalizableStringsForCultureCode, cultureCode),
+                () =>
             {
                 return LoadTranslationsForCulture(cultureCode);
             });

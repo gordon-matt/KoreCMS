@@ -21,6 +21,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
     {
         private readonly ICacheManager cacheManager;
 
+        // TODO: move this to cache?
         private static List<string> rightToLeftLanguages;
 
         public LanguageService(IRepository<Language> repository, ICacheManager cacheManager)

@@ -1,14 +1,5 @@
 ﻿@model Kore.Plugins.Widgets.Google.ContentBlocks.GoogleAdSenseBlock
 
-@{
-    bool hasCssClass = !string.IsNullOrEmpty(Model.CssClass);
-}
-
-@if (hasCssClass)
-{
-    @Html.Raw(@"<div class=""@Model.CssClass"">")
-}
-
 @if (Model.EnableLazyLoadAd)
 {
     <div class="lazyload_ad" original="http://pagead2.googlesyndication.com/pagead/show_ads.js">
@@ -31,9 +22,4 @@ else
         google_ad_height = @Model.Height;
     </script>
     <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-}
-
-@if (hasCssClass)
-{
-    @Html.Raw("</div>")
 }

@@ -26,8 +26,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
 
         string DisplayCondition { get; set; }
 
-        string CssClass { get; set; }
-
         bool IsMoveable { get; set; }
 
         string CultureCode { get; set; }

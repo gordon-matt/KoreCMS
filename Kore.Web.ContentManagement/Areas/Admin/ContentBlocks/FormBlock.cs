@@ -12,11 +12,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
 {
     public class FormBlock : ContentBlockBase
     {
-        public override string Name
-        {
-            get { return "Form Content Block"; }
-        }
-
         [AllowHtml]
         [Display(Name = "Html Template")]
         public string HtmlTemplate { get; set; }
@@ -31,15 +26,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
         [Display(Name = "Email Address")]
         public string EmailAddress { get; set; }
 
-        public override string DisplayTemplatePath
-        {
-            get { return "Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.Shared.DisplayTemplates.FormBlock"; }
-        }
-
-        public override string EditorTemplatePath
-        {
-            get { return "Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.Shared.EditorTemplates.FormBlock"; }
-        }
+        [Display(Name = "Use Ajax")]
+        public bool UseAjax { get; set; }
 
         public static string GenerateCaptcha()
         {
@@ -82,5 +70,24 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
                 return string.Format("<img src=\"data:image/jpeg;base64,{0}\" class=\"form-captcha\" /><input type=\"hidden\" name=\"captcha_challenge\" value=\"{1}\" />", base64String, hashedPassword);
             }
         }
+
+        #region ContentBlockBase Overrides
+
+        public override string Name
+        {
+            get { return "Form Content Block"; }
+        }
+
+        public override string DisplayTemplatePath
+        {
+            get { return "Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.Shared.DisplayTemplates.FormBlock"; }
+        }
+
+        public override string EditorTemplatePath
+        {
+            get { return "Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.Shared.EditorTemplates.FormBlock"; }
+        }
+
+        #endregion ContentBlockBase Overrides
     }
 }

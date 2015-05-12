@@ -117,6 +117,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
                     Message = thankYouMessage,
                     RedirectUrl = !string.IsNullOrWhiteSpace(redirectUrl) ? redirectUrl : Url.Content("~/")
                 };
+
+                if (Request.IsAjaxRequest())
+                {
+                    return Json(result);
+                }
+
                 return View("Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.FormBlock.SaveResult", result);
             }
             catch (Exception ex)
@@ -127,6 +133,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
                     Message = ex.GetBaseException().Message,
                     RedirectUrl = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.Content("~/")
                 };
+
+                if (Request.IsAjaxRequest())
+                {
+                    return Json(result);
+                }
+
                 return View("Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.FormBlock.SaveResult", result);
             }
         }

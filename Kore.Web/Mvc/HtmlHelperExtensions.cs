@@ -12,7 +12,7 @@ using Kore.Localization;
 using Kore.Security.Membership;
 using Kore.Web.Collections;
 using Kore.Web.Mvc.Controls;
-using Kore.Web.Mvc.RoboUI;
+//using Kore.Web.Mvc.RoboUI;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -581,15 +581,15 @@ namespace Kore.Web.Mvc
             return new Kore<TModel>(html);
         }
 
-        public static RoboUIFormResult<TModel> RoboForm<TModel>(this HtmlHelper htmlHelper, TModel model) where TModel : class
-        {
-            return new RoboUIFormResult<TModel>(model, htmlHelper.ViewContext);
-        }
+        //public static RoboUIFormResult<TModel> RoboForm<TModel>(this HtmlHelper htmlHelper, TModel model) where TModel : class
+        //{
+        //    return new RoboUIFormResult<TModel>(model, htmlHelper.ViewContext);
+        //}
 
-        public static RoboUIGridResult<TModel> RoboGrid<TModel>(this HtmlHelper htmlHelper, TModel model) where TModel : class
-        {
-            return new RoboUIGridResult<TModel>(htmlHelper.ViewContext);
-        }
+        //public static RoboUIGridResult<TModel> RoboGrid<TModel>(this HtmlHelper htmlHelper, TModel model) where TModel : class
+        //{
+        //    return new RoboUIGridResult<TModel>(htmlHelper.ViewContext);
+        //}
 
         /// <summary>
         /// Create an HTML tree from a recursive collection of items

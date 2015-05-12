@@ -29,6 +29,7 @@
 
         public static class Media
         {
+            public const string ManageMedia = "Kore.Web.ContentManagement/CMS.Media.ManageMedia";
             public const string Title = "Kore.Web.ContentManagement/CMS.Media.Title";
         }
 

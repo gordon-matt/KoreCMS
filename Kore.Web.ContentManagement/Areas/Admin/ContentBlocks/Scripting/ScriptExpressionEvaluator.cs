@@ -22,7 +22,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting
 
         public object Evaluate(string expression, IEnumerable<IGlobalMethodProvider> providers, object model = null)
         {
-            var expr = cacheManager.Get(expression, () =>
+            string key = string.Format(Constants.CacheKeys.ContentBlockScriptExpression, expression);
+            var expr = cacheManager.Get(key, () =>
             {
                 var ast = ParseExpression(expression);
                 return new { Tree = ast, Errors = ast.GetErrors().ToList() };
@@ -30,7 +31,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting
 
             if (expr.Errors.Any())
             {
-                throw new KoreException(T("Syntax error: {0}", expr.Errors.First().Message));
+                throw new KoreException(string.Format(T("Syntax error: {0}"), expr.Errors.First().Message));
             }
 
             var result = EvaluateExpression(expr.Tree, model, providers);

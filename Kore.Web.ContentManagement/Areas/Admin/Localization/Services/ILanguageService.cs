@@ -21,9 +21,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
     {
         private readonly ICacheManager cacheManager;
 
-        // TODO: move this to cache?
-        private static List<string> rightToLeftLanguages;
-
         public LanguageService(IRepository<Language> repository, ICacheManager cacheManager)
             : base(repository)
         {
@@ -33,14 +30,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
         public override int Delete(Language record)
         {
             int rowsAffected = base.Delete(record);
-            cacheManager.Remove("Languages_All");
-            rightToLeftLanguages = null;
+            cacheManager.Remove(Constants.CacheKeys.LanguagesAll);
+            cacheManager.Remove(string.Format(Constants.CacheKeys.LanguagesForCultureCode, record.CultureCode));
+            if (record.IsRTL)
+            {
+                cacheManager.Remove(Constants.CacheKeys.LanguagesRightToLeft);
+            }
             return rowsAffected;
         }
 
         public IEnumerable<Language> Get()
         {
-            return cacheManager.Get("Languages_All", () =>
+            return cacheManager.Get(Constants.CacheKeys.LanguagesAll, () =>
             {
                 return Repository.Table.ToList();
             });
@@ -48,7 +49,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
 
         public IEnumerable<Language> GetActiveLanguages()
         {
-            return cacheManager.Get("Languages_ActiveLanguages", () =>
+            return cacheManager.Get(Constants.CacheKeys.LanguagesActive, () =>
             {
                 return Repository.Table.Where(x => x.IsEnabled).ToList();
             });
@@ -61,7 +62,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
                 return null;
             }
 
-            return cacheManager.Get("Language_" + cultureCode, () =>
+            return cacheManager.Get(string.Format(Constants.CacheKeys.LanguagesForCultureCode, cultureCode), () =>
             {
                 var culture = Repository.Table.FirstOrDefault(x => x.CultureCode == cultureCode);
                 if (culture == null)
@@ -90,30 +91,38 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
         public override int Insert(Language record)
         {
             int rowsAffected = base.Insert(record);
-            cacheManager.Remove("Languages_All");
-            rightToLeftLanguages = null;
+            cacheManager.Remove(Constants.CacheKeys.LanguagesAll);
+            cacheManager.Remove(string.Format(Constants.CacheKeys.LanguagesForCultureCode, record.CultureCode));
+            if (record.IsRTL)
+            {
+                cacheManager.Remove(Constants.CacheKeys.LanguagesRightToLeft);
+            }
             return rowsAffected;
         }
 
         public override int Update(Language record)
         {
             int rowsAffected = base.Update(record);
-            cacheManager.Remove("Languages_All");
-            rightToLeftLanguages = null;
+            cacheManager.Remove(Constants.CacheKeys.LanguagesAll);
+            cacheManager.Remove(string.Format(Constants.CacheKeys.LanguagesForCultureCode, record.CultureCode));
+            if (record.IsRTL)
+            {
+                cacheManager.Remove(Constants.CacheKeys.LanguagesRightToLeft);
+            }
             return rowsAffected;
         }
 
         public bool CheckIfRightToLeft(string cultureCode)
         {
-            if (rightToLeftLanguages == null)
+            var rtlLanguages = cacheManager.Get(Constants.CacheKeys.LanguagesRightToLeft, () =>
             {
-                rightToLeftLanguages = Repository.Table
+                return Repository.Table
                     .Where(x => x.IsRTL)
                     .Select(k => k.CultureCode)
                     .ToList();
-            }
+            });
 
-            return rightToLeftLanguages.Contains(cultureCode);
+            return rtlLanguages.Contains(cultureCode);
         }
     }
 }

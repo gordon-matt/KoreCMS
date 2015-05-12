@@ -32,7 +32,7 @@ using Kore.Web.Mobile;
 using Kore.Web.Mvc.EmbeddedViews;
 using Kore.Web.Mvc.Notify;
 using Kore.Web.Mvc.Resources;
-using Kore.Web.Mvc.RoboUI;
+//using Kore.Web.Mvc.RoboUI;
 using Kore.Web.Mvc.Routing;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Navigation;
@@ -159,7 +159,7 @@ namespace Kore.Web.Infrastructure
             // misc
             builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();
             builder.RegisterType<DefaultEmailSender>().As<IEmailSender>().InstancePerDependency();
-            builder.RegisterType<RoboUIVirtualPathProvider>().As<IKoreVirtualPathProvider>().SingleInstance();
+            //builder.RegisterType<RoboUIVirtualPathProvider>().As<IKoreVirtualPathProvider>().SingleInstance();
 
             // file systems
             builder.RegisterType<AppDataFolder>().As<IAppDataFolder>().SingleInstance();

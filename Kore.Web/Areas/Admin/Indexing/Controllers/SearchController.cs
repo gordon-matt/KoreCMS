@@ -41,7 +41,7 @@ namespace Kore.Web.Areas.Admin.Indexing.Controllers
             catch (Exception x)
             {
                 string message = string.Format(
-                    T("Invalid search query: {0}"),
+                    T(KoreWebLocalizableStrings.Indexing.InvalidSearchQuery),
                     x.GetBaseException().Message);
 
                 Logger.Error(message);
@@ -49,7 +49,7 @@ namespace Kore.Web.Areas.Admin.Indexing.Controllers
                 searchHits = new PagedList<ISearchHit>(new ISearchHit[] { });
             }
 
-            ViewBag.Title = T("Search");
+            ViewBag.Title = T(KoreWebLocalizableStrings.General.Search);
             ViewBag.Query = q;
             return View("Kore.Web.Areas.Admin.Indexing.Views.Search.Results", searchHits);
         }

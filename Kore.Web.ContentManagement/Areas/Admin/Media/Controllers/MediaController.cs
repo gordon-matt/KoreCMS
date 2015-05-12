@@ -1,12 +1,9 @@
 ﻿using System.IO;
-using System.Text;
 using System.Web.Mvc;
 using ElFinder;
 using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
 using Kore.Web.Mvc;
-using Kore.Web.Mvc.Resources;
-using Kore.Web.Mvc.RoboUI;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
 {
@@ -24,10 +21,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
             }
 
             WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Media.Title));
-            WorkContext.Breadcrumbs.Add(T("Manage Media"));
+            WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Media.ManageMedia));
 
             ViewBag.Title = T(KoreCmsLocalizableStrings.Media.Title);
-            ViewBag.SubTitle = T("Manage Media");
+            ViewBag.SubTitle = T(KoreCmsLocalizableStrings.Media.ManageMedia);
 
             return View("Kore.Web.ContentManagement.Areas.Admin.Media.Views.Media.Index");
         }

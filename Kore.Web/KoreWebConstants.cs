@@ -29,6 +29,11 @@ namespace Kore.Web
             public const string ScheduledTasks = "Admin/ScheduledTasks";
         }
 
+        public static class CacheKeys
+        {
+            public const string SettingsByType = "Kore_Web_Settings_{0}";
+        }
+
         public static class Indexing
         {
             public const string DefaultIndexName = "Search";

@@ -113,8 +113,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\DefaultLocalizableStringsProvider.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="Infrastructure\LocationFormatProvider.cs" />
+    <Compile Include="LocalizableStrings.cs" />
     <Compile Include="Models\LuceneDocumentIndex.cs" />
     <Compile Include="Models\LuceneSearchHit.cs" />
     <Compile Include="Services\LuceneIndexProvider.cs" />

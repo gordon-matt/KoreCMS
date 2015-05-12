@@ -5,6 +5,7 @@
         public static class General
         {
             public const string Actions = "Kore.Web/General.Actions";
+            public const string Back = "Kore.Web/General.Back";
             public const string Cancel = "Kore.Web/General.Cancel";
             public const string Clear = "Kore.Web/General.Clear";
             public const string Close = "Kore.Web/General.Close";
@@ -15,6 +16,7 @@
             public const string Edit = "Kore.Web/General.Edit";
             public const string EditFormat = "Kore.Web/General.EditFormat";
             public const string Enabled = "Kore.Web/General.Enabled";
+            public const string Home = "Kore.Web/General.Home";
             public const string Miscellaneous = "Kore.Web/General.Miscellaneous";
             public const string OK = "Kore.Web/General.OK";
             public const string OnOff = "Kore.Web/General.OnOff";
@@ -29,6 +31,28 @@
             public const string Toggle = "Kore.Web/General.Toggle";
             public const string View = "Kore.Web/General.View";
             public const string ViewFormat = "Kore.Web/General.ViewFormat";
+        }
+
+        public static class Indexing
+        {
+            public const string InvalidSearchQuery = "Kore.Web/Indexing.InvalidSearchQuery";
+            public const string NoSearchIndexToManage = "Kore.Web/Indexing.NoSearchIndexToManage";
+            public const string NoSearchIndexToRebuild = "Kore.Web/Indexing.NoSearchIndexToRebuild";
+            public const string Rebuild = "Kore.Web/Indexing.Rebuild";
+            public const string RebuildForFreshStart = "Kore.Web/Indexing.RebuildForFreshStart";
+            public const string SearchIndexContainsNDocuments = "Kore.Web/Indexing.SearchIndexContainsNDocuments";
+            public const string SearchIndexContainsNoFields = "Kore.Web/Indexing.SearchIndexContainsNoFields";
+            public const string SearchIndexContainsTheseFields = "Kore.Web/Indexing.SearchIndexContainsTheseFields";
+            public const string SearchIndexCurrentlyBeingRebuilt = "Kore.Web/Indexing.SearchIndexCurrentlyBeingRebuilt";
+            public const string SearchIndexCurrentlyBeingUpdated = "Kore.Web/Indexing.SearchIndexCurrentlyBeingUpdated";
+            public const string SearchIndexLastUpdatedOn = "Kore.Web/Indexing.SearchIndexLastUpdatedOn";
+            public const string SearchIndexMayBeCorrupted = "Kore.Web/Indexing.SearchIndexMayBeCorrupted";
+            public const string SearchIndexNoDocuments = "Kore.Web/Indexing.SearchIndexNoDocuments";
+            public const string SearchIndexNotBuiltYet = "Kore.Web/Indexing.SearchIndexNotBuiltYet";
+            public const string SearchIndexRebuildFail = "Kore.Web/Indexing.SearchIndexRebuildFail";
+            public const string SearchIndexRebuilt = "Kore.Web/Indexing.SearchIndexRebuilt";
+            public const string SearchIndexUpdated = "Kore.Web/Indexing.SearchIndexUpdated";
+            public const string Title = "Kore.Web/Indexing.Title";
         }
 
         public static class Messages
@@ -54,10 +78,10 @@
 
             #region Plugins
 
-            public const string InstallPluginSuccess = "Kore.Web/Messages.InstallPluginSuccess";
             public const string InstallPluginError = "Kore.Web/Messages.InstallPluginError";
-            public const string UninstallPluginSuccess = "Kore.Web/Messages.UninstallPluginSuccess";
+            public const string InstallPluginSuccess = "Kore.Web/Messages.InstallPluginSuccess";
             public const string UninstallPluginError = "Kore.Web/Messages.UninstallPluginError";
+            public const string UninstallPluginSuccess = "Kore.Web/Messages.UninstallPluginSuccess";
 
             #endregion Plugins
 
@@ -68,7 +92,7 @@
             public const string SetMobileThemeError = "Kore.Web/Messages.SetMobileThemeError";
             public const string SetMobileThemeSuccess = "Kore.Web/Messages.SetMobileThemeSuccess";
 
-            #endregion
+            #endregion Themes
         }
 
         public static class Navigation

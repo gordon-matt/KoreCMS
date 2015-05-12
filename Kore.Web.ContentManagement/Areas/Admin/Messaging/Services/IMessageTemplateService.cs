@@ -22,7 +22,7 @@ namespace Kore.Web.ContentManagement.Messaging.Services
 
         public Domain.MessageTemplate GetTemplate(string name)
         {
-            return cacheManager.Get("GetTemplate_ByName_" + name, () =>
+            return cacheManager.Get(string.Format(Constants.CacheKeys.MessageTemplateByName, name), () =>
             {
                 return Repository.Table.FirstOrDefault(x => x.Name == name);
             });

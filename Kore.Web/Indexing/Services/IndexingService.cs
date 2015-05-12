@@ -33,18 +33,18 @@ namespace Kore.Web.Indexing.Services
         {
             if (!indexManager.HasIndexProvider())
             {
-                notifier.Warning(T("There is no search index to rebuild."));
+                notifier.Warning(T(KoreWebLocalizableStrings.Indexing.NoSearchIndexToRebuild));
                 return;
             }
 
             if (indexingTaskExecutor.DeleteIndex(indexName))
             {
-                notifier.Info(T("The index, '{0}' has been rebuilt.", indexName));
+                notifier.Info(string.Format(T(KoreWebLocalizableStrings.Indexing.SearchIndexRebuilt), indexName));
                 UpdateIndex(indexName);
             }
             else
             {
-                notifier.Warning(T("The index, '{0}' could not be rebuilt. It might already be in use. Please try again later.", indexName));
+                notifier.Warning(string.Format(T(KoreWebLocalizableStrings.Indexing.SearchIndexRebuildFail), indexName));
             }
         }
 
@@ -55,7 +55,7 @@ namespace Kore.Web.Indexing.Services
                 handler.UpdateIndex(indexName);
             }
 
-            notifier.Info(T("The search index has been updated."));
+            notifier.Info(T(KoreWebLocalizableStrings.Indexing.SearchIndexUpdated));
         }
 
         IndexEntry IIndexingService.GetIndexEntry(string indexName)

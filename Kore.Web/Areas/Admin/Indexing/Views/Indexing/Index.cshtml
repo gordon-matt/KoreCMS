@@ -1,5 +1,6 @@
 ﻿@using Kore.Web
 @using Kore.Web.Indexing.Services
+@using Kore.
 @model IndexEntry
 
 @{
@@ -16,49 +17,51 @@
 {
     if (Model.LastUpdateUtc == DateTime.MinValue)
     {
-        <div class="alert alert-info">@T("The search index has not been built yet.")</div>
+        <div class="alert alert-info">@T(KoreWebLocalizableStrings.Indexing.SearchIndexNotBuiltYet)</div>
     }
     else
     {
         if (Model.DocumentCount == 0)
         {
-            <div class="alert alert-info">@T("The search index does not contain any documents.")</div>
+            <div class="alert alert-info">@T(KoreWebLocalizableStrings.Indexing.SearchIndexNoDocuments)</div>
         }
         else
         {
             <div class="alert alert-info">
-                @string.Format(T("The search index contains {0} document/s.", Model.DocumentCount))
+                @string.Format(T(KoreWebLocalizableStrings.Indexing.SearchIndexContainsNDocuments), Model.DocumentCount))
             </div>
         }
 
         if (Model.Fields.Any())
         {
             <div class="alert alert-info">
-                @string.Format(T("The search index contains the following fields: {0}."), string.Join(", ", Model.Fields))
+                @string.Format(T(KoreWebLocalizableStrings.Indexing.SearchIndexContainsTheseFields), string.Join(", ", Model.Fields))
             </div>
         }
         else
         {
-            <div class="alert alert-info">@T("The search index does not contain any fields.")</div>
+            <div class="alert alert-info">@T(KoreWebLocalizableStrings.Indexing.SearchIndexContainsNoFields)</div>
         }
 
-        <div class="alert alert-info">@string.Format(T("The search index was last updated {0}."), Model.LastUpdateUtc)</div>
+        <div class="alert alert-info">@string.Format(T(KoreWebLocalizableStrings.Indexing.SearchIndexLastUpdatedOn), Model.LastUpdateUtc)</div>
 
         switch (Model.IndexingStatus)
         {
             case IndexingStatus.Rebuilding:
-                <div class="alert alert-info">@T("The index is currently being rebuilt.")</div>
+                <div class="alert alert-info">@T(KoreWebLocalizableStrings.Indexing.SearchIndexCurrentlyBeingRebuilt)</div>
                 break;
 
             case IndexingStatus.Updating:
-            <div class="alert alert-info">@T("The index is currently being updated.")</div>
+            <div class="alert alert-info">@T(KoreWebLocalizableStrings.Indexing.SearchIndexCurrentlyBeingUpdated)</div>
                 break;
         }
     }
     <form method="post" action="@Url.Action("Rebuild")">
         <div class="form-group">
-            <label>@T("Rebuild the search index for a fresh start:")</label><br />
-            <button class="btn btn-primary" type="submit"><i class="kore-icon kore-icon-refresh"></i>&nbsp;@T("Rebuild")</button>
+            <label>@T(KoreWebLocalizableStrings.Indexing.RebuildForFreshStart)</label><br />
+            <button class="btn btn-primary" type="submit">
+                <i class="kore-icon kore-icon-refresh"></i>&nbsp;@T(KoreWebLocalizableStrings.Indexing.Rebuild)
+            </button>
         </div>
     </form>
 }

@@ -32,6 +32,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
                         { KoreCmsLocalizableStrings.Localization.Title, "Localization" },
                         { KoreCmsLocalizableStrings.Localization.Translate, "Translate" },
                         { KoreCmsLocalizableStrings.Localization.Translations, "Translations" },
+                        { KoreCmsLocalizableStrings.Media.ManageMedia, "Manage Media" },
                         { KoreCmsLocalizableStrings.Media.Title, "Media" },
                         { KoreCmsLocalizableStrings.Menus.IsExternalUrl, "Is External Url" },
                         { KoreCmsLocalizableStrings.Menus.Items, "Items" },

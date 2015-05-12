@@ -137,7 +137,7 @@ namespace Kore.Indexing.Lucene.Models
                     break;
 
                 default:
-                    throw new KoreException(T("Unexpected index type"));
+                    throw new KoreException(T(LocalizableStrings.UnexpectedIndexType));
             }
 
             _removeTags = false;

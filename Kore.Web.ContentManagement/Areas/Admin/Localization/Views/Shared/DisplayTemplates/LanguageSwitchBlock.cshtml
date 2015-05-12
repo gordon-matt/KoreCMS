@@ -3,6 +3,12 @@
 @using Kore.Web.ContentManagement.Areas.Admin.Localization.Services
 @model LanguageSwitchBlock
 
+@if (Model.Style == LanguageSwitchBlock.LanguageSwitchStyle.Custom)
+{
+    @Html.Partial(Model.CustomTemplatePath, Model)
+    return;
+}
+
 @{
     var languages = EngineContext.Current.Resolve<ILanguageService>().GetActiveLanguages();
 }
@@ -10,6 +16,49 @@
 <div class="language-switch language-switch-@Model.Style.ToString().ToLowerInvariant()">
     @switch (Model.Style)
     {
+        case LanguageSwitchBlock.LanguageSwitchStyle.BootstrapNavbarDropdown:
+            {
+                <li class="dropdown">
+                    <a aria-expanded="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        Language
+                        <span class="caret"></span>
+                    </a>
+                    <ul role="menu" class="dropdown-menu">
+                        @if (Model.UseUrlPrefix)
+                        {
+                            foreach (var language in languages)
+                            {
+                                <li>
+                                    <a href="/@language.UniqueSeoCode">
+                                        @if (language.CultureCode == WorkContext.CurrentCultureCode)
+                                        {
+                                            <span class="glyphicon glyphicon-check"></span>
+                                        }
+                                        @language.Name
+                                    </a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            foreach (var language in languages)
+                            {
+                                <li>
+                                    <a href="#" onclick="changeLanguage('@language.CultureCode');">
+                                        @if (language.CultureCode == WorkContext.CurrentCultureCode)
+                                        {
+                                            <span class="glyphicon glyphicon-check"></span>
+                                        }
+                                        @language.Name
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </li>
+            }
+            break;
+
         case LanguageSwitchBlock.LanguageSwitchStyle.Select:
             {
                 if (!string.IsNullOrEmpty(Model.MessageText))
@@ -18,38 +67,23 @@
                     <span class="add-on">@Model.MessageText</span>
                 }
 
-                if (Model.UseUrlPrefix)
-                {
-                    <select onchange="window.location = this.value;" autocomplete="off" class="form-control">
-                        @foreach (var language in languages)
+                <select onchange="changeLanguage(this.value);" autocomplete="off" class="form-control">
+                    @foreach (var language in languages)
+                    {
+                        string languageCode = Model.UseUrlPrefix
+                            ? language.UniqueSeoCode
+                            : language.CultureCode;
+                        
+                        if (language.CultureCode == WorkContext.CurrentCultureCode)
                         {
-                            if (language.CultureCode == WorkContext.CurrentCultureCode)
-                            {
-                                <option value="@language.UniqueSeoCode" selected="selected">@language.Name</option>
-                            }
-                            else
-                            {
-                                <option value="@language.UniqueSeoCode">@language.Name</option>
-                            }
+                            <option value="@languageCode" selected="selected">@language.Name</option>
                         }
-                    </select>
-                }
-                else
-                {
-                    <select onchange="document.cookie = 'CurrentCulture=' + this.value + '; path=/'; window.location.reload();" autocomplete="off" class="form-control">
-                        @foreach (var language in languages)
+                        else
                         {
-                            if (language.CultureCode == WorkContext.CurrentCultureCode)
-                            {
-                                <option value="@language.CultureCode" selected="selected">@language.Name</option>
-                            }
-                            else
-                            {
-                                <option value="@language.CultureCode">@language.Name</option>
-                            }
+                            <option value="@languageCode">@language.Name</option>
                         }
-                    </select>
-                }
+                    }
+                </select>
 
                 if (!string.IsNullOrEmpty(Model.MessageText))
                 {
@@ -68,7 +102,7 @@
                         }
                         else
                         {
-                            <a href="javascript:void(0)" onclick="document.cookie = 'CurrentCulture=@language.CultureCode; path=/'; window.location.reload();">@language.Name</a>
+                            <a href="javascript:void(0)" onclick="changeLanguage('@language.CultureCode');">@language.Name</a>
                         }
                     </li>
                 }
@@ -76,3 +110,23 @@
             break;
     }
 </div>
+
+<script type="text/javascript">
+    @if (Model.UseUrlPrefix)
+    {
+        <text>
+        function changeLanguage(uniqueSeoCode) {
+            window.location = uniqueSeoCode;
+        }
+        </text>
+    }
+    else
+    {
+        <text>
+        function changeLanguage(cultureCode) {
+            document.cookie = 'CurrentCulture=' + cultureCode + '; path=/';
+            window.location.reload();
+        }
+        </text>
+    }
+</script>

@@ -68,17 +68,17 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
             body.Append(subject);
             body.Append("<br/>");
 
-            body.Append("<table style=\"width: 100%; border-collapse: collapse; border-spacing: 0;\">");
+            body.Append("<table style=\"font-family: 'Arial' , Source Sans Pro, sans-serif; font-size: 1.2em; padding: 7px; width: 80%; border-collapse: collapse; border-spacing: 0;\">");
 
             foreach (var value in values)
             {
                 body.Append("<tr>");
 
-                body.Append("<td style=\"border-color: #DDDDDD; border-style: solid; border-width: 1px; color: #000000; font-size: 12px; padding: 7px;\">");
+                body.Append("<td style=\"border-color: #DDDDDD; border-style: solid; border-width: 1px; color: #000000; font-size: 1.2em; padding: 7px;\">");
                 body.Append(value.Key);
                 body.Append("</td>");
 
-                body.Append("<td style=\"border-color: #DDDDDD; border-style: solid; border-width: 1px; color: #000000; font-size: 12px; padding: 7px;\">");
+                body.Append("<td style=\"border-color: #DDDDDD; border-style: solid; border-width: 1px; color: #000000; font-size: 1.2em; padding: 7px;\">");
                 body.Append(value.Value);
                 body.Append("</td>");
             }

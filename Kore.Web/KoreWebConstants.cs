@@ -31,7 +31,6 @@ namespace Kore.Web
 
         public static class CacheKeys
         {
-            public const string SettingsByType = "Kore_Web_Settings_{0}";
         }
 
         public static class Indexing

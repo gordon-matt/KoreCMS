@@ -30,7 +30,14 @@
             {
                 <article class="blog-teaser row">
                     <h2 class="blog-headline">
-                        @Html.ActionLink(entry.Headline, "Details", "BlogContent", new { area = string.Empty, slug = entry.Slug }, null)
+                        @if (entry.UseExternalLink)
+                        {
+                            @Html.Link(entry.Headline, entry.ExternalLink, PageTarget.Blank)
+                        }
+                        else
+                        {
+                            @Html.ActionLink(entry.Headline, "Details", "BlogContent", new { area = string.Empty, slug = entry.Slug }, null)
+                        }
                     </h2>
                     <p>Posted by <span>@userNames[entry.UserId]</span> on <span>@entry.DateCreated</span></p>
                     

@@ -24,7 +24,12 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div data-bind="foreach: entries">
                 <article class="blog-teaser row">
-                    <h2 class="blog-headline"><a data-bind="text: headline, click: showDetails"></a></h2>
+                    <h2 class="blog-headline" data-bind="if: useExternalLink">
+                        <a data-bind="text: headline, attr: { href: externalLink }" target="_blank"></a>
+                    </h2>
+                    <h2 class="blog-headline" data-bind="ifnot: useExternalLink">
+                        <a href="javascript:void(0);" data-bind="text: headline, click: showDetails"></a>
+                    </h2>
                     <p>Posted by <span data-bind="text: userName"></span> on <span data-bind="text: dateCreated"></span></p>
 
                     <div class="pull-left col-xs-3 col-sm-3 col-md-3 col-lg-3">

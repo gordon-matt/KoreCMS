@@ -13,6 +13,8 @@ var ViewModel = function () {
     self.teaserImageUrl = ko.observable(null);
     self.shortDescription = ko.observable('');
     self.fullDescription = ko.observable('');
+    self.useExternalLink = ko.observable(false);
+    self.externalLink = ko.observable('');
 
     self.tinyMCE_fullDescription = koreDefaultTinyMCEConfig;
 
@@ -23,6 +25,8 @@ var ViewModel = function () {
         self.teaserImageUrl(null);
         self.shortDescription('');
         self.fullDescription('');
+        self.useExternalLink(false);
+        self.externalLink('');
 
         self.validator.resetForm();
         switchSection($("#form-section"));
@@ -43,6 +47,8 @@ var ViewModel = function () {
             self.teaserImageUrl(json.TeaserImageUrl);
             self.shortDescription(json.ShortDescription);
             self.fullDescription(json.FullDescription);
+            self.useExternalLink(json.UseExternalLink);
+            self.externalLink(json.ExternalLink);
 
             self.validator.resetForm();
             switchSection($("#form-section"));
@@ -83,7 +89,9 @@ var ViewModel = function () {
             Slug: self.slug(),
             TeaserImageUrl: self.teaserImageUrl(),
             ShortDescription: self.shortDescription(),
-            FullDescription: self.fullDescription()
+            FullDescription: self.fullDescription(),
+            UseExternalLink: self.useExternalLink(),
+            ExternalLink: self.externalLink()
         };
 
         if (isNew) {
@@ -140,7 +148,8 @@ var ViewModel = function () {
         rules: {
             Headline: { required: true, maxlength: 255 },
             Slug: { required: true, maxlength: 255 },
-            TeaserImageUrl: { maxlength: 255 }
+            TeaserImageUrl: { maxlength: 255 },
+            ExternalLink: { maxlength: 255 }
         }
     });
 };
@@ -171,7 +180,8 @@ $(document).ready(function () {
                 },
                 model: {
                     fields: {
-                        Headline: { type: "string" }
+                        Headline: { type: "string" },
+                        DateCreated: { type: "date" }
                     }
                 }
             },
@@ -179,7 +189,7 @@ $(document).ready(function () {
             serverPaging: true,
             serverFiltering: true,
             serverSorting: true,
-            sort: { field: "Headline", dir: "asc" }
+            sort: { field: "DateCreated", dir: "desc" }
         },
         filterable: true,
         sortable: {
@@ -192,6 +202,10 @@ $(document).ready(function () {
         columns: [{
             field: "Headline",
             filterable: true
+        }, {
+            field: "DateCreated",
+            filterable: true,
+            format: '{0:yyyy-MM-dd}'
         }, {
             field: "Id",
             title: " ",

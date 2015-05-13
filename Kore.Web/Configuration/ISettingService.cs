@@ -31,10 +31,11 @@ namespace Kore.Web.Configuration
 
         public TSettings GetSettings<TSettings>() where TSettings : ISettings, new()
         {
-            string key = string.Format(KoreWebConstants.CacheKeys.SettingsByType, typeof(TSettings).FullName);
+            string type = typeof(TSettings).FullName;
+            string key = string.Format("Kore_Web_Settings_{0}", type);
             return cacheManager.Get<TSettings>(key, () =>
             {
-                var settings = repository.Table.Where(x => x.Type == key).FirstOrDefault();
+                var settings = repository.Table.Where(x => x.Type == type).FirstOrDefault();
                 if (settings == null || string.IsNullOrEmpty(settings.Value))
                 {
                     return new TSettings();
@@ -46,10 +47,11 @@ namespace Kore.Web.Configuration
 
         public ISettings GetSettings(Type settingsType)
         {
-            string key = string.Format(KoreWebConstants.CacheKeys.SettingsByType, settingsType.FullName);
+            string type = settingsType.FullName;
+            string key = string.Format("Kore_Web_Settings_{0}", type);
             return cacheManager.Get<ISettings>(key, () =>
             {
-                var settings = repository.Table.Where(x => x.Type == key).FirstOrDefault();
+                var settings = repository.Table.Where(x => x.Type == type).FirstOrDefault();
                 if (settings == null || string.IsNullOrEmpty(settings.Value))
                 {
                     return (ISettings)Activator.CreateInstance(settingsType);
@@ -70,12 +72,14 @@ namespace Kore.Web.Configuration
                 {
                     setting = new Setting { Name = iSettings.Name, Type = key, Value = value };
                     repository.Insert(setting);
+                    cacheManager.RemoveByPattern("Kore_Web_Settings_.*");
                 }
             }
             else
             {
                 setting.Value = value;
                 repository.Update(setting);
+                cacheManager.RemoveByPattern("Kore_Web_Settings_.*");
             }
         }
 

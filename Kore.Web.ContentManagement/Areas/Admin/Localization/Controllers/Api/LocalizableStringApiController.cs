@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using System.Web.Http.OData;
 using System.Web.Http.Results;
+using Kore.Caching;
 using Kore.Collections;
 using Kore.Data;
 using Kore.Localization.Domain;
@@ -19,9 +19,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class LocalizableStringApiController : GenericODataController<LocalizableString, Guid>
     {
-        public LocalizableStringApiController(IRepository<LocalizableString> repository)
+        private readonly ICacheManager cacheManager;
+
+        public LocalizableStringApiController(
+            IRepository<LocalizableString> repository,
+            ICacheManager cacheManager)
             : base(repository)
         {
+            this.cacheManager = cacheManager;
         }
 
         protected override Guid GetId(LocalizableString entity)
@@ -101,6 +106,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
                 Repository.Update(localizedString);
             }
 
+            cacheManager.Remove(string.Format(KoreConstants.CacheKeys.LocalizableStringsForCultureCode, cultureCode));
+
             return Updated(entity);
         }
 
@@ -124,6 +131,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
             entity.TextValue = null;
             Repository.Update(entity);
             //Repository.Delete(entity);
+
+            cacheManager.Remove(string.Format(KoreConstants.CacheKeys.LocalizableStringsForCultureCode, cultureCode));
 
             return StatusCode(HttpStatusCode.NoContent);
         }

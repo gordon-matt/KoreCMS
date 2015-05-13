@@ -26,7 +26,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            var language = languageService.Value.Find(languageId);
+            var language = languageService.Value.FindOne(languageId);
 
             WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Localization.Languages), Url.Action("Index", "Language"));
             WorkContext.Breadcrumbs.Add(language.Name);

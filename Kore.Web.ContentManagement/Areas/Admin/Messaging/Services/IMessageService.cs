@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
+using Kore.Caching;
 using Kore.Data;
 using Kore.Data.Services;
 using Kore.Web.ContentManagement.Messaging.Domain;
@@ -25,11 +26,12 @@ namespace Kore.Web.ContentManagement.Messaging.Services
         private readonly IEnumerable<IMessageTokensProvider> tokenProviders;
 
         public MessageService(
+            ICacheManager cacheManager,
             IMessageTemplateService messageTemplateService,
             IRepository<QueuedEmail> queuedEmailRepository,
             ITokenizer tokenizer,
             IEnumerable<IMessageTokensProvider> tokenProviders)
-            : base(queuedEmailRepository)
+            : base(cacheManager, queuedEmailRepository)
         {
             this.tokenizer = tokenizer;
             this.tokenProviders = tokenProviders;
@@ -38,7 +40,7 @@ namespace Kore.Web.ContentManagement.Messaging.Services
 
         public Guid SendEmailMessage(string messageTemplate, IEnumerable<Token> tokens, string toEmailAddress, string toName = null)
         {
-            var template = messageTemplateService.GetTemplate(messageTemplate);
+            var template = messageTemplateService.Find(messageTemplate);
             if (template == null || !template.Enabled)
             {
                 return Guid.Empty;
@@ -104,7 +106,8 @@ namespace Kore.Web.ContentManagement.Messaging.Services
         {
             return Repository.Table
                 .Where(x => x.SentTries < maxSendTries && x.SentOnUtc == null)
-                .OrderBy(x => x.Priority).ThenBy(x => x.CreatedOnUtc)
+                .OrderBy(x => x.Priority)
+                .ThenBy(x => x.CreatedOnUtc)
                 .Take(maxMessageItems)
                 .ToList();
         }
@@ -113,14 +116,14 @@ namespace Kore.Web.ContentManagement.Messaging.Services
         {
             var entity = (QueuedEmail)mailMessage;
             entity.SentOnUtc = DateTime.UtcNow;
-            Repository.Update(entity);
+            Update(entity);
         }
 
         public void OnSendError(IMailMessage mailMessage)
         {
             var entity = (QueuedEmail)mailMessage;
             entity.SentTries++;
-            Repository.Update(entity);
+            Update(entity);
         }
     }
 }

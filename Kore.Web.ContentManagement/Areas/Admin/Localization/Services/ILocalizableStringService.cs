@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Kore.Caching;
 using Kore.Collections;
 using Kore.Data;
 using Kore.Data.Services;
@@ -18,23 +19,22 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
 
     public class LocalizableStringService : GenericDataService<LocalizableString>, ILocalizableStringService
     {
-        private readonly IRepository<LocalizableString> repository;
-
-        public LocalizableStringService(IRepository<LocalizableString> repository)
-            : base(repository)
+        public LocalizableStringService(
+            ICacheManager cacheManager,
+            IRepository<LocalizableString> repository)
+            : base(cacheManager, repository)
         {
-            this.repository = repository;
         }
 
         public virtual IEnumerable<ComparitiveLocalizableString> GetComparitiveTable(string cultureCode, int pageIndex, int pageSize, out int totalRecords)
         {
-            totalRecords = repository.Table.Count(x => x.CultureCode == null);
+            totalRecords = Count(x => x.CultureCode == null);
 
             var table = new List<ComparitiveLocalizableString>();
 
             try
             {
-                var query = repository.Table
+                var query = Repository.Table
                     .Where(x => x.CultureCode == null || x.CultureCode == cultureCode)
                     .GroupBy(x => x.TextKey)
                     .Select(grp => new ComparitiveLocalizableString
@@ -54,7 +54,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
                 //SQLite throws error: "APPLY joins are not supported"
                 // So do it in memory instead
 
-                var query = repository.Table
+                var query = Repository.Table
                     .Where(x => x.CultureCode == null || x.CultureCode == cultureCode)
                     .ToHashSet()
                     .GroupBy(x => x.TextKey)
@@ -76,7 +76,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
 
         public virtual void Update(string cultureCode, IEnumerable<ComparitiveLocalizableString> table)
         {
-            var localizedStrings = repository.Table.Where(x => x.CultureCode == cultureCode).ToList().ToDictionary(k => k.TextKey, v => v.TextValue);
+            var localizedStrings = Repository.Table
+                .Where(x => x.CultureCode == cultureCode)
+                .ToDictionary(k => k.TextKey, v => v.TextValue);
+
             var newItems = table.Where(x => !localizedStrings.Keys.Contains(x.Key));
 
             var batchInserts = newItems.Select(item => new LocalizableString
@@ -89,13 +92,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
 
             if (batchInserts.Any())
             {
-                repository.Insert(batchInserts);
+                Insert(batchInserts);
             }
 
             var changedItems = table.Where(x => localizedStrings.Keys.Contains(x.Key) && localizedStrings[x.Key] != x.LocalizedValue).ToList();
             var changedItemKeys = changedItems.Select(x => x.Key);
 
-            var toUpdate = repository.Table
+            var toUpdate = Repository.Table
                 .Where(x =>
                     x.CultureCode == cultureCode &&
                     changedItemKeys.Contains(x.TextKey))
@@ -111,7 +114,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
 
             if (batchUpdates.Any())
             {
-                repository.Update(batchUpdates);
+                Update(batchUpdates);
             }
         }
     }

@@ -49,7 +49,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
             {
                 var document = factory(page.Id.ToString());
 
-                var pageType = pageTypeService.Find(page.PageTypeId);
+                var pageType = pageTypeService.FindOne(page.PageTypeId);
                 var korePageType = pageTypeService.GetKorePageType(pageType.Name);
                 korePageType.InstanceName = page.Name;
                 korePageType.LayoutPath = pageType.LayoutPath;

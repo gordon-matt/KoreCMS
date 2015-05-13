@@ -7,25 +7,19 @@ namespace Kore.Web.ContentManagement.Messaging.Services
 {
     public interface IMessageTemplateService : IGenericDataService<Domain.MessageTemplate>
     {
-        Domain.MessageTemplate GetTemplate(string name);
+        Domain.MessageTemplate Find(string name);
     }
 
     public class MessageTemplateService : GenericDataService<Domain.MessageTemplate>, IMessageTemplateService
     {
-        private readonly ICacheManager cacheManager;
-
-        public MessageTemplateService(IRepository<Domain.MessageTemplate> repository, ICacheManager cacheManager)
-            : base(repository)
+        public MessageTemplateService(ICacheManager cacheManager, IRepository<Domain.MessageTemplate> repository)
+            : base(cacheManager, repository)
         {
-            this.cacheManager = cacheManager;
         }
 
-        public Domain.MessageTemplate GetTemplate(string name)
+        public Domain.MessageTemplate Find(string name)
         {
-            return cacheManager.Get(string.Format(Constants.CacheKeys.MessageTemplateByName, name), () =>
-            {
-                return Repository.Table.FirstOrDefault(x => x.Name == name);
-            });
+            return Repository.Table.FirstOrDefault(x => x.Name == name);
         }
     }
 }

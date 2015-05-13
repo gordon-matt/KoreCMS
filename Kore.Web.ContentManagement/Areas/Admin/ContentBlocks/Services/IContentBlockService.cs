@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Castle.Core.Logging;
 using Kore.Caching;
 using Kore.Data;
 using Kore.Data.Services;
-using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
@@ -22,69 +22,71 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
 
     public class ContentBlockService : GenericDataService<ContentBlock>, IContentBlockService
     {
-        private readonly ICacheManager cacheManager;
         private readonly Lazy<IRepository<Zone>> zoneRepository;
 
         public ContentBlockService(
             ICacheManager cacheManager,
             IRepository<ContentBlock> repository,
             Lazy<IRepository<Zone>> zoneRepository)
-            : base(repository)
+            : base(cacheManager, repository)
         {
-            this.cacheManager = cacheManager;
             this.zoneRepository = zoneRepository;
         }
 
-        #region IContentBlockService Members
+        #region GenericDataService<ContentBlock> Overrides
 
+        //TODO: Override other Delete() methods with similar logic to this one
         public override int Delete(ContentBlock entity)
         {
             var entities = Repository.Table.Where(x => x.Id == entity.Id || x.RefId == entity.Id);
             return Delete(entities);
         }
 
+        #endregion GenericDataService<ContentBlock> Overrides
+
+        #region IContentBlockService Members
+
         public IEnumerable<IContentBlock> GetContentBlocks(IEnumerable<ContentBlock> records)
         {
-            var result = new List<IContentBlock>();
-            foreach (var record in records)
+            string ids = string.Join("|", records.Select(x => x.Id));
+            string key = string.Format("Repository_ContentBlocks_ByIds_{0}", ids);
+
+            return CacheManager.Get(key, () =>
             {
-                IContentBlock contentBlock;
-                try
+                var result = new List<IContentBlock>();
+                foreach (var record in records)
                 {
-                    var blockType = Type.GetType(record.BlockType);
-                    contentBlock = (IContentBlock)record.BlockValues.JsonDeserialize(blockType);
-                }
-                catch
-                {
-                    // TODO: Log error
-                    continue;
-                }
+                    IContentBlock contentBlock;
+                    try
+                    {
+                        var blockType = Type.GetType(record.BlockType);
+                        contentBlock = (IContentBlock)record.BlockValues.JsonDeserialize(blockType);
+                    }
+                    catch (Exception x)
+                    {
+                        NullLogger.Instance.Error(x.Message, x);
+                        continue;
+                    }
 
-                contentBlock.Id = record.Id;
-                contentBlock.Title = record.Title;
-                contentBlock.ZoneId = record.ZoneId;
-                contentBlock.PageId = record.PageId;
-                contentBlock.Order = record.Order;
-                contentBlock.Enabled = record.IsEnabled;
-                contentBlock.DisplayCondition = record.DisplayCondition;
-                contentBlock.CultureCode = record.CultureCode;
-                contentBlock.RefId = record.RefId;
-                result.Add(contentBlock);
-            }
-            return result;
-        }
-
-        public void ToggleEnabled(ContentBlock record)
-        {
-            if (record == null) return;
-            record.IsEnabled = !record.IsEnabled;
-            base.Update(record);
+                    contentBlock.Id = record.Id;
+                    contentBlock.Title = record.Title;
+                    contentBlock.ZoneId = record.ZoneId;
+                    contentBlock.PageId = record.PageId;
+                    contentBlock.Order = record.Order;
+                    contentBlock.Enabled = record.IsEnabled;
+                    contentBlock.DisplayCondition = record.DisplayCondition;
+                    contentBlock.CultureCode = record.CultureCode;
+                    contentBlock.RefId = record.RefId;
+                    result.Add(contentBlock);
+                }
+                return result;
+            });
         }
 
         public IEnumerable<IContentBlock> GetContentBlocks(Guid pageId)
         {
-            string key = string.Format(Constants.CacheKeys.ContentBlocksByPageId, pageId);
-            return cacheManager.Get(key, () =>
+            string key = string.Format("Repository_ContentBlocks_ByPageId_{0}", pageId);
+            return CacheManager.Get(key, () =>
             {
                 var records = Repository.Table.Where(x => x.PageId == pageId).ToList();
                 return GetContentBlocks(records);
@@ -93,10 +95,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
 
         public IEnumerable<IContentBlock> GetContentBlocks(string zoneName, Guid? pageId = null, bool includeDisabled = false)
         {
-            string key = string.Format(Constants.CacheKeys.ContentBlocksByPageIdAndZoneAndIncDisabled, pageId, zoneName, includeDisabled);
+            string key = string.Format("Repository_ContentBlocks_ByPageIdAndZoneAndIncDisabled_{0}_{1}_{2}", pageId, zoneName, includeDisabled);
             if (includeDisabled)
             {
-                return cacheManager.Get(key, () =>
+                return CacheManager.Get(key, () =>
                 {
                     var zone = zoneRepository.Value.Table.FirstOrDefault(x => x.Name == zoneName);
 
@@ -114,7 +116,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
             }
             else
             {
-                return cacheManager.Get(key, () =>
+                return CacheManager.Get(key, () =>
                 {
                     var zone = zoneRepository.Value.Table.FirstOrDefault(x => x.Name == zoneName);
 
@@ -133,6 +135,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
                     return GetContentBlocks(records);
                 });
             }
+        }
+
+        public void ToggleEnabled(ContentBlock record)
+        {
+            if (record == null) return;
+            record.IsEnabled = !record.IsEnabled;
+            base.Update(record);
         }
 
         // TODO: TEST THIS ONE (SIMPLIFIED)
@@ -184,5 +193,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
         //}
 
         #endregion IContentBlockService Members
+
+        protected override void ClearCache()
+        {
+            base.ClearCache();
+            CacheManager.RemoveByPattern("Repository_ContentBlocks_ByIds_.*");
+            CacheManager.RemoveByPattern("Repository_ContentBlocks_ByPageId_.*");
+            CacheManager.RemoveByPattern("Repository_ContentBlocks_ByPageIdAndZoneAndIncDisabled_.*");
+        }
     }
 }

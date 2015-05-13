@@ -1,6 +1,6 @@
-﻿using Kore.Collections;
-using System.Linq;
+﻿using System.Linq;
 using Kore.Caching;
+using Kore.Collections;
 using Kore.Data;
 using Kore.Data.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
@@ -13,16 +13,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
 
     public class HistoricPageService : GenericDataService<HistoricPage>, IHistoricPageService
     {
-        private readonly ICacheManager cacheManager;
         private readonly PageSettings pageSettings;
 
         public HistoricPageService(
-            IRepository<HistoricPage> repository,
             ICacheManager cacheManager,
+            IRepository<HistoricPage> repository,
             PageSettings pageSettings)
-            : base(repository)
+            : base(cacheManager, repository)
         {
-            this.cacheManager = cacheManager;
             this.pageSettings = pageSettings;
         }
 

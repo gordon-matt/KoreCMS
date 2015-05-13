@@ -19,40 +19,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
 
     public class LanguageService : GenericDataService<Language>, ILanguageService
     {
-        private readonly ICacheManager cacheManager;
-
-        public LanguageService(IRepository<Language> repository, ICacheManager cacheManager)
-            : base(repository)
+        public LanguageService(ICacheManager cacheManager, IRepository<Language> repository)
+            : base(cacheManager, repository)
         {
-            this.cacheManager = cacheManager;
-        }
-
-        public override int Delete(Language record)
-        {
-            int rowsAffected = base.Delete(record);
-            cacheManager.Remove(Constants.CacheKeys.LanguagesAll);
-            cacheManager.Remove(string.Format(Constants.CacheKeys.LanguagesForCultureCode, record.CultureCode));
-            if (record.IsRTL)
-            {
-                cacheManager.Remove(Constants.CacheKeys.LanguagesRightToLeft);
-            }
-            return rowsAffected;
-        }
-
-        public IEnumerable<Language> Get()
-        {
-            return cacheManager.Get(Constants.CacheKeys.LanguagesAll, () =>
-            {
-                return Repository.Table.ToList();
-            });
         }
 
         public IEnumerable<Language> GetActiveLanguages()
         {
-            return cacheManager.Get(Constants.CacheKeys.LanguagesActive, () =>
-            {
-                return Repository.Table.Where(x => x.IsEnabled).ToList();
-            });
+            return Find(x => x.IsEnabled);
         }
 
         public Language GetLanguage(string cultureCode)
@@ -62,59 +36,37 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
                 return null;
             }
 
-            return cacheManager.Get(string.Format(Constants.CacheKeys.LanguagesForCultureCode, cultureCode), () =>
+            return CacheManager.Get(string.Format(CacheKeyFiltered, cultureCode), () =>
             {
-                var culture = Repository.Table.FirstOrDefault(x => x.CultureCode == cultureCode);
-                if (culture == null)
+                var language = Repository.Table.FirstOrDefault(x => x.CultureCode == cultureCode);
+                if (language == null)
                 {
                     try
                     {
                         var parent = CultureInfo.GetCultureInfo(cultureCode);
-                        var regionalLanguages = CultureInfo.GetCultures(CultureTypes.AllCultures).Where(x => x.Parent.Equals(parent));
-                        foreach (var language in regionalLanguages)
+                        var cultures = CultureInfo.GetCultures(CultureTypes.AllCultures).Where(x => x.Parent.Equals(parent));
+                        foreach (var cultureInfo in cultures)
                         {
-                            culture = Repository.Table.FirstOrDefault(x => x.CultureCode == language.Name);
-                            if (culture == null) continue;
-                            break;
+                            language = Repository.Table.FirstOrDefault(x => x.CultureCode == cultureInfo.Name);
+                            if (language != null)
+                            {
+                                break;
+                            }
                         }
                     }
                     catch (CultureNotFoundException)
                     {
-                        culture = null;
+                        language = null;
                     }
                 }
 
-                return culture;
+                return language;
             });
-        }
-
-        public override int Insert(Language record)
-        {
-            int rowsAffected = base.Insert(record);
-            cacheManager.Remove(Constants.CacheKeys.LanguagesAll);
-            cacheManager.Remove(string.Format(Constants.CacheKeys.LanguagesForCultureCode, record.CultureCode));
-            if (record.IsRTL)
-            {
-                cacheManager.Remove(Constants.CacheKeys.LanguagesRightToLeft);
-            }
-            return rowsAffected;
-        }
-
-        public override int Update(Language record)
-        {
-            int rowsAffected = base.Update(record);
-            cacheManager.Remove(Constants.CacheKeys.LanguagesAll);
-            cacheManager.Remove(string.Format(Constants.CacheKeys.LanguagesForCultureCode, record.CultureCode));
-            if (record.IsRTL)
-            {
-                cacheManager.Remove(Constants.CacheKeys.LanguagesRightToLeft);
-            }
-            return rowsAffected;
         }
 
         public bool CheckIfRightToLeft(string cultureCode)
         {
-            var rtlLanguages = cacheManager.Get(Constants.CacheKeys.LanguagesRightToLeft, () =>
+            var rtlLanguages = CacheManager.Get("Repository_Language_RightToLeft", () =>
             {
                 return Repository.Table
                     .Where(x => x.IsRTL)
@@ -123,6 +75,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
             });
 
             return rtlLanguages.Contains(cultureCode);
+        }
+
+        protected override void ClearCache()
+        {
+            base.ClearCache();
+            CacheManager.Remove("Repository_Language_RightToLeft");
         }
     }
 }

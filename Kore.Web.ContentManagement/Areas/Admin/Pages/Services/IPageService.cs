@@ -9,35 +9,44 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
 {
     public interface IPageService : IGenericDataService<Page>
     {
+        Page GetPageByLanguage(Guid id, string cultureCode);
+
         Page GetPageBySlug(string slug);
 
         Page GetPageBySlug(string slug, string culture);
 
         void ToggleEnabled(Guid refId, bool isEnabled);
-
-        Page GetPageByLanguage(Guid id, string cultureCode);
     }
 
     public class PageService : GenericDataService<Page>, IPageService
     {
-        private readonly ICacheManager cacheManager;
-
-        public PageService(IRepository<Page> repository, ICacheManager cacheManager)
-            : base(repository)
+        public PageService(ICacheManager cacheManager, IRepository<Page> repository)
+            : base(cacheManager, repository)
         {
-            this.cacheManager = cacheManager;
-        }
-
-        public void ToggleEnabled(Guid refId, bool isEnabled)
-        {
-            Repository.Update(
-                x => x.Id == refId || x.RefId == refId,
-                x => new Page { IsEnabled = isEnabled });
         }
 
         public Page GetPageByLanguage(Guid id, string cultureCode)
         {
-            return Repository.Table.FirstOrDefault(x => x.RefId == id && x.CultureCode == cultureCode);
+            return FindOne(x => x.RefId == id && x.CultureCode == cultureCode);
+        }
+
+        public Page GetPageBySlug(string slug)
+        {
+            return FindOne(x => x.Slug == slug);
+        }
+
+        public Page GetPageBySlug(string slug, string culture)
+        {
+            return culture == null ?
+                FindOne(x => x.Slug == slug && x.CultureCode == null) :
+                FindOne(x => x.Slug == slug && x.CultureCode == culture);
+        }
+
+        public void ToggleEnabled(Guid refId, bool isEnabled)
+        {
+            Update(
+                x => x.Id == refId || x.RefId == refId,
+                x => new Page { IsEnabled = isEnabled });
         }
 
         public override int Update(Page record)
@@ -57,7 +66,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                 }
                 catch
                 {
-                    var toUpdate = Repository.Table.Where(x => x.RefId == record.Id);
+                    var toUpdate = Find(x => x.RefId == record.Id);
 
                     if (toUpdate.Any())
                     {
@@ -71,18 +80,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                 }
             }
             return 0;
-        }
-
-        public Page GetPageBySlug(string slug)
-        {
-            return Repository.Table.FirstOrDefault(x => x.Slug == slug);
-        }
-
-        public Page GetPageBySlug(string slug, string culture)
-        {
-            return culture == null ?
-                Repository.Table.FirstOrDefault(x => x.Slug == slug && x.CultureCode == null) :
-                Repository.Table.FirstOrDefault(x => x.Slug == slug && x.CultureCode == culture);
         }
     }
 }

@@ -2,15 +2,18 @@
 {
     public static class KoreCmsLocalizableStrings
     {
-        //public static class Lists
-        //{
-        //    public const string Title = "Kore.Web.ContentManagement/CMS.Lists.Title";
-        //}
-
         public static class Blog
         {
             public const string ManageBlog = "Kore.Web.ContentManagement/CMS.Blog.ManageBlog";
             public const string Title = "Kore.Web.ContentManagement/CMS.Blog.Title";
+        }
+
+        public static class ContentBlocks
+        {
+            public const string ManageContentBlocks = "Kore.Web.ContentManagement/ContentBlocks.ManageContentBlocks";
+            public const string ManageZones = "Kore.Web.ContentManagement/ContentBlocks.ManageZones";
+            public const string Title = "Kore.Web.ContentManagement/ContentBlocks.Title";
+            public const string Zones = "Kore.Web.ContentManagement/ContentBlocks.Zones";
         }
 
         public static class Localization
@@ -37,34 +40,28 @@
         {
             public const string ChangePassword = "Kore.Web.ContentManagement/Membership.ChangePassword";
             public const string EditRolePermissions = "Kore.Web.ContentManagement/Membership.EditRolePermissions";
+
+            // Messages
+            public const string InvalidEmailAddress = "Kore.Web.ContentManagement/Membership.InvalidEmailAddress";
+
             public const string IsLockedOut = "Kore.Web.ContentManagement/Membership.IsLockedOut";
             public const string Permissions = "Kore.Web.ContentManagement/Membership.Permissions";
             public const string Roles = "Kore.Web.ContentManagement/Membership.Roles";
             public const string Title = "Kore.Web.ContentManagement/Membership.Title";
             public const string UpdateUserRoles = "Kore.Web.ContentManagement/Membership.UpdateUserRoles";
-            public const string Users = "Kore.Web.ContentManagement/Membership.Users";
-
-            // Messages
-            public const string InvalidEmailAddress = "Kore.Web.ContentManagement/Membership.InvalidEmailAddress";
             public const string UserEmailAlreadyExists = "Kore.Web.ContentManagement/Membership.UserEmailAlreadyExists";
+            public const string Users = "Kore.Web.ContentManagement/Membership.Users";
         }
 
         public static class Menus
         {
             public const string IsExternalUrl = "Kore.Web.ContentManagement/CMS.Menus.IsExternalUrl";
             public const string Items = "Kore.Web.ContentManagement/CMS.Menus.Items";
-            public const string ManageMenus = "Kore.Web.ContentManagement/CMS.Menus.ManageMenus";
             public const string ManageMenuItems = "Kore.Web.ContentManagement/CMS.Menus.ManageMenuItems";
+            public const string ManageMenus = "Kore.Web.ContentManagement/CMS.Menus.ManageMenus";
             public const string MenuItems = "Kore.Web.ContentManagement/CMS.Menus.MenuItems";
             public const string NewItem = "Kore.Web.ContentManagement/CMS.Menus.NewItem";
             public const string Title = "Kore.Web.ContentManagement/CMS.Menus.Title";
-        }
-
-        public static class Messaging
-        {
-            public const string MessageTemplates = "Kore.Web.ContentManagement/CMS.Messaging.MessageTemplates";
-            public const string QueuedEmails = "Kore.Web.ContentManagement/CMS.Messaging.QueuedEmails";
-            public const string Title = "Kore.Web.ContentManagement/CMS.Messaging.Title";
         }
 
         public static class Messages
@@ -76,6 +73,13 @@
             public const string UpdateTranslationSuccess = "Kore.Web.ContentManagement/Messages.UpdateTranslationSuccess";
         }
 
+        public static class Messaging
+        {
+            public const string MessageTemplates = "Kore.Web.ContentManagement/CMS.Messaging.MessageTemplates";
+            public const string QueuedEmails = "Kore.Web.ContentManagement/CMS.Messaging.QueuedEmails";
+            public const string Title = "Kore.Web.ContentManagement/CMS.Messaging.Title";
+        }
+
         public static class Navigation
         {
             public const string CMS = "Kore.Web.ContentManagement/Navigation.CMS";
@@ -85,10 +89,11 @@
         public static class Newsletters
         {
             public const string Subscribers = "Kore.Web.ContentManagement/CMS.Newsletters.Subscribers";
-            public const string Title = "Kore.Web.ContentManagement/CMS.Newsletters.Title";
 
             // Messages
             public const string SuccessfullySignedUp = "Kore.Web.ContentManagement/CMS.Newsletters.SuccessfullySignedUp";
+
+            public const string Title = "Kore.Web.ContentManagement/CMS.Newsletters.Title";
         }
 
         public static class Pages
@@ -105,14 +110,6 @@
             public const string Tags = "Kore.Web.ContentManagement/Pages.Tags";
             public const string Title = "Kore.Web.ContentManagement/Pages.Title";
             public const string Translations = "Kore.Web.ContentManagement/Pages.Translations";
-        }
-
-        public static class ContentBlocks
-        {
-            public const string ManageContentBlocks = "Kore.Web.ContentManagement/ContentBlocks.ManageContentBlocks";
-            public const string ManageZones = "Kore.Web.ContentManagement/ContentBlocks.ManageZones";
-            public const string Title = "Kore.Web.ContentManagement/ContentBlocks.Title";
-            public const string Zones = "Kore.Web.ContentManagement/ContentBlocks.Zones";
         }
     }
 }

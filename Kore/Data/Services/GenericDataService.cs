@@ -1,30 +1,106 @@
-﻿using System;
+﻿using Kore.Collections;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
+using Kore.Caching;
 
 namespace Kore.Data.Services
 {
     public class GenericDataService<TEntity> : IGenericDataService<TEntity> where TEntity : class
     {
+        #region Private Members
+
+        private static string cacheKey;
+        private static string cacheKeyFiltered;
+        private readonly ICacheManager cacheManager;
         private readonly IRepository<TEntity> repository;
 
-        protected GenericDataService(IRepository<TEntity> repository)
+        #endregion
+
+        #region Properties
+
+        protected virtual string CacheKey
         {
-            this.repository = repository;
+            get
+            {
+                if (string.IsNullOrEmpty(cacheKey))
+                {
+                    cacheKey = string.Format("Repository_{0}", typeof(TEntity).Name);
+                }
+                return cacheKey;
+            }
         }
 
-        #region IGenericDataService<TEntity> Members
+        protected virtual string CacheKeyFiltered
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(cacheKeyFiltered))
+                {
+                    cacheKeyFiltered = string.Format("Repository_{0}_{{0}}", typeof(TEntity).Name);
+                }
+                return cacheKeyFiltered;
+            }
+        }
+
+        public ICacheManager CacheManager
+        {
+            get { return cacheManager; }
+        }
 
         public IRepository<TEntity> Repository
         {
             get { return repository; }
         }
 
-        public virtual TEntity Find(params object[] keyValues)
+        #endregion
+
+        #region Constructor
+
+        protected GenericDataService(ICacheManager cacheManager, IRepository<TEntity> repository)
+        {
+            this.cacheManager = cacheManager;
+            this.repository = repository;
+        }
+
+        #endregion
+
+        #region IGenericDataService<TEntity> Members
+
+        public virtual IEnumerable<TEntity> Find()
+        {
+            return CacheManager.Get(CacheKey, () =>
+            {
+                return repository.Table.ToHashSet();
+            });
+        }
+
+        public virtual IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> filterExpression)
+        {
+            return repository.Table.Where(filterExpression).ToHashSet();
+
+            // Ignore caching for now, since converting and Expression<T> to a string does not always result in something unique
+            //  Example: when there are variables. So, we need to find a way to get the variables translated to their values and use that
+            //  in a custom ToString() implementation.. maybe...
+            // Maybe this can help:
+            //  http://referencesource.microsoft.com/#System.Core/Microsoft/Scripting/Ast/ExpressionStringBuilder.cs#240c0ae863272266
+            //string key = string.Format(CacheKeyFiltered, filterExpression);
+            //return CacheManager.Get(key, () =>
+            //{
+            //    return repository.Table.Where(filterExpression).ToHashSet();
+            //});
+        }
+
+        public virtual TEntity FindOne(params object[] keyValues)
         {
             return repository.Find(keyValues);
+        }
+
+        public virtual TEntity FindOne(Expression<Func<TEntity, bool>> filterExpression)
+        {
+            return repository.Table.FirstOrDefault(filterExpression);
         }
 
         public virtual int Count()
@@ -39,27 +115,37 @@ namespace Kore.Data.Services
 
         public virtual int DeleteAll()
         {
-            return repository.DeleteAll();
+            int rowsAffected = repository.DeleteAll();
+            ClearCache();
+            return rowsAffected;
         }
 
         public virtual int Delete(TEntity entity)
         {
-            return repository.Delete(entity);
+            int rowsAffected = repository.Delete(entity);
+            ClearCache();
+            return rowsAffected;
         }
 
         public virtual int Delete(IEnumerable<TEntity> entities)
         {
-            return repository.Delete(entities);
+            int rowsAffected = repository.Delete(entities);
+            ClearCache();
+            return rowsAffected;
         }
 
         public virtual int Delete(Expression<Func<TEntity, bool>> filterExpression)
         {
-            return repository.Delete(filterExpression);
+            int rowsAffected = repository.Delete(filterExpression);
+            ClearCache();
+            return rowsAffected;
         }
 
         public virtual int Delete(IQueryable<TEntity> query)
         {
-            return repository.Delete(query);
+            int rowsAffected = repository.Delete(query);
+            ClearCache();
+            return rowsAffected;
         }
 
         //public virtual Task<int> DeleteAllAsync()
@@ -74,12 +160,16 @@ namespace Kore.Data.Services
 
         public virtual int Insert(TEntity entity)
         {
-            return repository.Insert(entity);
+            int rowsAffected = repository.Insert(entity);
+            ClearCache();
+            return rowsAffected;
         }
 
         public virtual int Insert(IEnumerable<TEntity> entities)
         {
-            return repository.Insert(entities);
+            int rowsAffected = repository.Insert(entities);
+            ClearCache();
+            return rowsAffected;
         }
 
         public virtual IEnumerable<TEntity> Translate(string storedProcedure, IEnumerable<DbParameter> parameters)
@@ -89,27 +179,37 @@ namespace Kore.Data.Services
 
         public virtual int Update(TEntity entity)
         {
-            return repository.Update(entity);
+            int rowsAffected = repository.Update(entity);
+            ClearCache();
+            return rowsAffected;
         }
 
         public virtual int Update(IEnumerable<TEntity> entities)
         {
-            return repository.Update(entities);
+            int rowsAffected = repository.Update(entities);
+            ClearCache();
+            return rowsAffected;
         }
 
         public virtual int Update(Expression<Func<TEntity, TEntity>> updateExpression)
         {
-            return repository.Update(updateExpression);
+            int rowsAffected = repository.Update(updateExpression);
+            ClearCache();
+            return rowsAffected;
         }
 
         public virtual int Update(Expression<Func<TEntity, bool>> filterExpression, Expression<Func<TEntity, TEntity>> updateExpression)
         {
-            return repository.Update(filterExpression, updateExpression);
+            int rowsAffected = repository.Update(filterExpression, updateExpression);
+            ClearCache();
+            return rowsAffected;
         }
 
         public virtual int Update(IQueryable<TEntity> query, Expression<Func<TEntity, TEntity>> updateExpression)
         {
-            return repository.Update(query, updateExpression);
+            int rowsAffected = repository.Update(query, updateExpression);
+            ClearCache();
+            return rowsAffected;
         }
 
         //public virtual Task<int> UpdateAsync(Expression<Func<TEntity, TEntity>> updateExpression)
@@ -123,5 +223,11 @@ namespace Kore.Data.Services
         //}
 
         #endregion IGenericDataService<TEntity> Members
+
+        protected virtual void ClearCache()
+        {
+            CacheManager.Remove(CacheKey);
+            CacheManager.RemoveByPattern(string.Format(CacheKeyFiltered, ".*"));
+        }
     }
 }

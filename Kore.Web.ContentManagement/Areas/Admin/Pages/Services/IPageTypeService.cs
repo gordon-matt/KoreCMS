@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Kore.Caching;
 using Kore.Data;
 using Kore.Data.Services;
 using Kore.Infrastructure;
@@ -19,8 +20,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
     {
         private static Lazy<IEnumerable<KorePageType>> korePageTypes;
 
-        public PageTypeService(IRepository<PageType> repository)
-            : base(repository)
+        public PageTypeService(ICacheManager cacheManager, IRepository<PageType> repository)
+            : base(cacheManager, repository)
         {
             korePageTypes = new Lazy<IEnumerable<KorePageType>>(() =>
             {

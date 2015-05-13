@@ -68,7 +68,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                 WorkContext.SetState("CurrentPageId", page.Id);
                 WorkContext.Breadcrumbs.Add(page.Name);
 
-                var pageType = pageTypeService.Find(page.PageTypeId);
+                var pageType = pageTypeService.FindOne(page.PageTypeId);
                 var korePageType = pageTypeService.GetKorePageType(pageType.Name);
                 korePageType.InstanceName = page.Name;
                 korePageType.InstanceParentId = page.ParentId;

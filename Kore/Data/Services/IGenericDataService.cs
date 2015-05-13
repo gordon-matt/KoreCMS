@@ -10,7 +10,17 @@ namespace Kore.Data.Services
     {
         IRepository<TEntity> Repository { get; }
 
-        TEntity Find(params object[] keyValues);
+        /// <summary>
+        /// Retrieve all entities
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<TEntity> Find();
+
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> filterExpression);
+
+        TEntity FindOne(params object[] keyValues);
+
+        TEntity FindOne(Expression<Func<TEntity, bool>> filterExpression);
 
         int Count();
 

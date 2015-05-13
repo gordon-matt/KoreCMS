@@ -39,8 +39,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         [Route("get-editor-ui/{pageId}")]
         public ActionResult GetEditorUI(Guid pageId)
         {
-            var page = pageService.Value.Find(pageId);
-            var pageType = pageTypeService.Value.Find(page.PageTypeId);
+            var page = pageService.Value.FindOne(pageId);
+            var pageType = pageTypeService.Value.FindOne(page.PageTypeId);
             var korePageTypes = pageTypeService.Value.GetKorePageTypes();
 
             var korePageType = pageTypeService.Value.GetKorePageType(pageType.Name);
@@ -58,7 +58,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            var page = pageService.Value.Find(pageId);
+            var page = pageService.Value.FindOne(pageId);
 
             WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Pages.Title), Url.Action("Index"));
             WorkContext.Breadcrumbs.Add(page.Name);

@@ -3,7 +3,6 @@ using System.Linq;
 using Kore.Caching;
 using Kore.Configuration.Domain;
 using Kore.Data;
-using Kore.Data.Services;
 using Kore.Infrastructure;
 
 namespace Kore.Web.Configuration
@@ -19,14 +18,15 @@ namespace Kore.Web.Configuration
         void SaveSettings<TSettings>(TSettings settings) where TSettings : ISettings;
     }
 
-    public class DefaultSettingService : GenericDataService<Setting>, ISettingService
+    public class DefaultSettingService : ISettingService
     {
         private readonly ICacheManager cacheManager;
+        private readonly IRepository<Setting> repository;
 
-        public DefaultSettingService(IRepository<Setting> repository, ICacheManager cacheManager)
-            : base(repository)
+        public DefaultSettingService(ICacheManager cacheManager, IRepository<Setting> repository)
         {
             this.cacheManager = cacheManager;
+            this.repository = repository;
         }
 
         public TSettings GetSettings<TSettings>() where TSettings : ISettings, new()
@@ -34,7 +34,7 @@ namespace Kore.Web.Configuration
             string key = string.Format(KoreWebConstants.CacheKeys.SettingsByType, typeof(TSettings).FullName);
             return cacheManager.Get<TSettings>(key, () =>
             {
-                var settings = Repository.Table.Where(x => x.Type == key).FirstOrDefault();
+                var settings = repository.Table.Where(x => x.Type == key).FirstOrDefault();
                 if (settings == null || string.IsNullOrEmpty(settings.Value))
                 {
                     return new TSettings();
@@ -49,7 +49,7 @@ namespace Kore.Web.Configuration
             string key = string.Format(KoreWebConstants.CacheKeys.SettingsByType, settingsType.FullName);
             return cacheManager.Get<ISettings>(key, () =>
             {
-                var settings = Repository.Table.Where(x => x.Type == key).FirstOrDefault();
+                var settings = repository.Table.Where(x => x.Type == key).FirstOrDefault();
                 if (settings == null || string.IsNullOrEmpty(settings.Value))
                 {
                     return (ISettings)Activator.CreateInstance(settingsType);
@@ -61,7 +61,7 @@ namespace Kore.Web.Configuration
 
         public void SaveSettings(string key, string value)
         {
-            var setting = Repository.Table.Where(x => x.Type == key).FirstOrDefault();
+            var setting = repository.Table.Where(x => x.Type == key).FirstOrDefault();
             if (setting == null)
             {
                 var iSettings = EngineContext.Current.ResolveAll<ISettings>().FirstOrDefault(x => x.GetType().FullName == key);
@@ -69,13 +69,13 @@ namespace Kore.Web.Configuration
                 if (iSettings != null)
                 {
                     setting = new Setting { Name = iSettings.Name, Type = key, Value = value };
-                    Insert(setting);
+                    repository.Insert(setting);
                 }
             }
             else
             {
                 setting.Value = value;
-                Update(setting);
+                repository.Update(setting);
             }
         }
 

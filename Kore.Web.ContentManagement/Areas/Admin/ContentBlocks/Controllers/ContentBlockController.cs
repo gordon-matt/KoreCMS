@@ -45,7 +45,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
         [Route("get-editor-ui/{contentBlockId}")]
         public ActionResult GetEditorUI(Guid contentBlockId)
         {
-            var contentBlock = contentBlockService.Value.Find(contentBlockId);
+            var contentBlock = contentBlockService.Value.FindOne(contentBlockId);
             var blockType = Type.GetType(contentBlock.BlockType);
 
             var contentBlocks = EngineContext.Current.ResolveAll<IContentBlock>();

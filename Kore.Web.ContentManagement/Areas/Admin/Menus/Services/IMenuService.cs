@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Kore.Caching;
 using Kore.Data;
 using Kore.Data.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
@@ -12,8 +13,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Services
 
     public class MenuService : GenericDataService<Menu>, IMenuService
     {
-        public MenuService(IRepository<Menu> repository)
-            : base(repository)
+        public MenuService(ICacheManager cacheManager, IRepository<Menu> repository)
+            : base(cacheManager, repository)
         {
         }
 
@@ -23,11 +24,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Services
         {
             if (string.IsNullOrEmpty(urlFilter))
             {
-                return Repository.Table.FirstOrDefault(x => x.Name == name && (x.UrlFilter == null || x.UrlFilter == ""));
+                return FindOne(x => x.Name == name && (x.UrlFilter == null || x.UrlFilter == ""));
             }
 
-            var records = Repository.Table.Where(x => x.Name == name).ToList();
-            return records.FirstOrDefault(x => x.UrlFilter.Contains(urlFilter));
+            return FindOne(x => x.Name == name && (x.UrlFilter.Contains(urlFilter)));
         }
 
         #endregion IMenuService Members

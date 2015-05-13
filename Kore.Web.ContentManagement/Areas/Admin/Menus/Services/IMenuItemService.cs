@@ -17,29 +17,40 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Services
 
     public class MenuItemService : GenericDataService<MenuItem>, IMenuItemService
     {
-        private readonly ICacheManager cacheManager;
-
-        public MenuItemService(IRepository<MenuItem> repository, ICacheManager cacheManager)
-            : base(repository)
+        public MenuItemService(ICacheManager cacheManager, IRepository<MenuItem> repository)
+            : base(cacheManager, repository)
         {
-            this.cacheManager = cacheManager;
         }
 
         public MenuItem GetMenuItemByRefId(Guid refId)
         {
             return refId == Guid.Empty
                 ? null
-                : Repository.Table.FirstOrDefault(x => x.RefId == refId);
+                : FindOne(x => x.RefId == refId);
         }
 
         public IEnumerable<MenuItem> GetMenuItems(Guid menuId, bool enabledOnly = false)
         {
-            return cacheManager.Get(string.Format(Constants.CacheKeys.MenuItemsByMenuIdAndEnabled, menuId, enabledOnly), () =>
+            return CacheManager.Get(string.Format("Repository_MenuItem_GetByMenuIdAndEnabled_{0}_{1}", menuId, enabledOnly), () =>
             {
                 return enabledOnly
-                    ? Repository.Table.Where(x => x.MenuId == menuId && x.Enabled).OrderBy(x => x.Position).ThenBy(x => x.Text).ToList()
-                    : Repository.Table.Where(x => x.MenuId == menuId).OrderBy(x => x.Position).ThenBy(x => x.Text).ToList();
+                    ? Repository.Table
+                        .Where(x => x.MenuId == menuId && x.Enabled)
+                        .OrderBy(x => x.Position)
+                        .ThenBy(x => x.Text)
+                        .ToList()
+                    : Repository.Table
+                        .Where(x => x.MenuId == menuId)
+                        .OrderBy(x => x.Position)
+                        .ThenBy(x => x.Text)
+                        .ToList();
             });
+        }
+
+        protected override void ClearCache()
+        {
+            base.ClearCache();
+            CacheManager.RemoveByPattern("Repository_MenuItem_GetByMenuIdAndEnabled_.*");
         }
     }
 }

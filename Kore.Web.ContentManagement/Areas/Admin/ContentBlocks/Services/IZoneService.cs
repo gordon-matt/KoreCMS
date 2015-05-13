@@ -11,21 +11,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
 
     public class ZoneService : GenericDataService<Zone>, IZoneService
     {
-        private readonly ICacheManager cacheManager;
-
-        public ZoneService(IRepository<Zone> repository, ICacheManager cacheManager)
-            : base(repository)
+        public ZoneService(ICacheManager cacheManager, IRepository<Zone> repository)
+            : base(cacheManager, repository)
         {
-            this.cacheManager = cacheManager;
-        }
-
-        public override Zone Find(params object[] keyValues)
-        {
-            string id = string.Join("|", keyValues);
-            return cacheManager.Get(string.Join(Constants.CacheKeys.ContentZoneById, id), () =>
-            {
-                return base.Repository.Find(keyValues);
-            });
         }
     }
 }

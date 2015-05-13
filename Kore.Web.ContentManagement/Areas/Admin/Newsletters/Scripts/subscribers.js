@@ -76,11 +76,11 @@ $(document).ready(function () {
             field: "Email",
             filterable: true
         }, {
-            field: "UserId",
+            field: "Id",
             title: " ",
             template:
                 '<div class="btn-group">' +
-                '<a onclick="viewModel.delete(\'#=UserId#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
+                '<a onclick="viewModel.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
                 '</div>',
             attributes: { "class": "text-center" },
             filterable: false,

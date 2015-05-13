@@ -38,6 +38,8 @@ var BlogEntryModel = function () {
     self.teaserImageUrl = ko.observable(null);
     self.shortDescription = ko.observable('');
     self.fullDescription = ko.observable('');
+    self.useExternalLink = ko.observable(false);
+    self.externalLink = ko.observable('');
 
     self.showDetails = function () {
         viewModel.selected(self);
@@ -140,7 +142,7 @@ function getBlogs() {
     userIds = [];
 
     var query = new breeze.EntityQuery()
-        .from("Blogs")
+        .from("BlogApi")
         .orderBy("DateCreated desc")
         .skip((viewModel.pageIndex() - 1) * viewModel.pageSize)
         .take(viewModel.pageSize)
@@ -163,6 +165,8 @@ function getBlogs() {
             entry.teaserImageUrl(current.TeaserImageUrl);
             entry.shortDescription(current.ShortDescription);
             entry.fullDescription(current.FullDescription);
+            entry.useExternalLink(current.UseExternalLink);
+            entry.externalLink(current.ExternalLink);
             viewModel.entries.push(entry);
             userIds.push(current.UserId);
         });
@@ -187,7 +191,7 @@ function getBlogs() {
 };
 
 function getUserNames() {
-    var query = new breeze.EntityQuery().from("PublicUsers");
+    var query = new breeze.EntityQuery().from("PublicUserApi");
 
     var predicate = null;
     var haveAnyNew = false;

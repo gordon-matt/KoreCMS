@@ -43,7 +43,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
                 .ToHashSet()
                 .Select(x => new Subscriber
                 {
-                    UserId = x.Id,
+                    Id = x.Id,
                     Email = x.Email,
                     Name = membershipService.GetUserDisplayName(x)
                 })
@@ -61,7 +61,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
             var entity = membershipService.GetUserById(key);
             var subscriber = new Subscriber
             {
-                UserId = entity.Id,
+                Id = entity.Id,
                 Email = entity.Email,
                 Name = entity.UserName
             };
@@ -96,7 +96,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
 
     public class Subscriber
     {
-        public string UserId { get; set; }
+        public string Id { get; set; }
 
         public string Name { get; set; }
 

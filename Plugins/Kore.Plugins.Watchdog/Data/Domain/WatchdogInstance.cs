@@ -31,7 +31,7 @@ namespace Kore.Plugins.Watchdog.Data.Domain
     {
         public WatchdogInstanceMap()
         {
-            ToTable("Kore_Maintenance_WatchdogInstances");
+            ToTable(Constants.Tables.WatchdogInstances);
             HasKey(x => x.Id);
             Property(x => x.Url).HasMaxLength(255).IsRequired();
             Property(x => x.Password).HasMaxLength(255).IsRequired();

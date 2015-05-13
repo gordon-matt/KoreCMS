@@ -19,15 +19,16 @@ namespace Kore.Plugins.Widgets.Google
                 #region CREATE TABLE [dbo].[Kore_Plugins_Google_Sitemap]
 
                 dbContext.Database.ExecuteSqlCommand(
-@"CREATE TABLE [dbo].[Kore_Plugins_Google_Sitemap](
- [Id] [int] IDENTITY(1,1) NOT NULL,
- [PageId] [uniqueidentifier] NOT NULL,
- [ChangeFrequency] [tinyint] NOT NULL,
- [Priority] [real] NOT NULL,
- CONSTRAINT [PK_dbo.Kore_Plugins_Google_Sitemap] PRIMARY KEY CLUSTERED
+@"CREATE TABLE [dbo].[Kore_Plugins_Google_Sitemap]
 (
- [Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+    [Id] [int] IDENTITY(1,1) NOT NULL,
+    [PageId] [uniqueidentifier] NOT NULL,
+    [ChangeFrequency] [tinyint] NOT NULL,
+    [Priority] [real] NOT NULL,
+    CONSTRAINT [PK_dbo.Kore_Plugins_Google_Sitemap] PRIMARY KEY CLUSTERED
+    (
+        [Id] ASC
+    ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]");
 
                 #endregion CREATE TABLE [dbo].[Kore_Plugins_Google_Sitemap]

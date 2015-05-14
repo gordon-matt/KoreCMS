@@ -4,6 +4,8 @@
     {
         public const string Mode = "Kore.Plugins.Widgets.View360/Mode";
         public const string ImagesPattern = "Kore.Plugins.Widgets.View360/ImagesPattern";
+        public const string ImagesDirectory = "Kore.Plugins.Widgets.View360/ImagesDirectory";
+        public const string FullSizeImagesDirectory = "Kore.Plugins.Widgets.View360/FullSizeImagesDirectory";
 
         public const string AutoRotate = "Kore.Plugins.Widgets.View360/AutoRotate";
         public const string AutoRotateDirection = "Kore.Plugins.Widgets.View360/AutoRotateDirection";
@@ -14,6 +16,8 @@
         public const string LoadFullSizeImagesOnFullscreen = "Kore.Plugins.Widgets.View360/LoadFullSizeImagesOnFullscreen";
         public const string Width = "Kore.Plugins.Widgets.View360/Width";
         public const string Height = "Kore.Plugins.Widgets.View360/Height";
+        public const string Rows = "Kore.Plugins.Widgets.View360/Rows";
+        public const string Columns = "Kore.Plugins.Widgets.View360/Columns";
         public const string XAxisSensitivity = "Kore.Plugins.Widgets.View360/XAxisSensitivity";
         public const string YAxisSensitivity = "Kore.Plugins.Widgets.View360/YAxisSensitivity";
         public const string InertiaConstant = "Kore.Plugins.Widgets.View360/InertiaConstant";

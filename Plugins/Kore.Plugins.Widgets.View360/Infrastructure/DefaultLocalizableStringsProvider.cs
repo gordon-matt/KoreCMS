@@ -23,6 +23,8 @@ namespace Kore.Plugins.Widgets.View360.Infrastructure
 
                         { LocalizableStrings.Mode, "Mode" },
                         { LocalizableStrings.ImagesPattern, "Images Pattern" },
+                        { LocalizableStrings.ImagesDirectory, "Images Directory" },
+                        { LocalizableStrings.FullSizeImagesDirectory, "Full Size Images Directory" },
 
                         { LocalizableStrings.AutoRotate, "Auto Rotate" },
                         { LocalizableStrings.AutoRotateDirection, "Auto Rotate: Direction" },
@@ -33,6 +35,8 @@ namespace Kore.Plugins.Widgets.View360.Infrastructure
                         { LocalizableStrings.LoadFullSizeImagesOnFullscreen, "Load Full Size Images on Fullscreen" },
                         { LocalizableStrings.Width, "Width" },
                         { LocalizableStrings.Height, "Height" },
+                        { LocalizableStrings.Rows, "Rows" },
+                        { LocalizableStrings.Columns, "Columns" },
                         { LocalizableStrings.XAxisSensitivity, "X-Axis Sensitivity" },
                         { LocalizableStrings.YAxisSensitivity, "Y-Axis Sensitivity" },
                         { LocalizableStrings.InertiaConstant, "Inertia Constant" },

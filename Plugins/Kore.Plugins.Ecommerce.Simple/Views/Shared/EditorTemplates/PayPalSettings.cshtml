@@ -22,9 +22,9 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Business, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.Business, new { @class = "form-control", data_bind = "value: business" })
-        @Html.ValidationMessageFor(m => m.Business)
+        @Html.LabelFor(m => m.Merchant, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Merchant, new { @class = "form-control", data_bind = "value: merchant" })
+        @Html.ValidationMessageFor(m => m.Merchant)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.CurrencyCode, new { @class = "control-label" })
@@ -38,7 +38,7 @@
         viewModel.productionUrl = ko.observable("https://www.sandbox.paypal.com/cgi-bin/webscr");
         viewModel.sandboxUrl = ko.observable("https://www.sandbox.paypal.com/cgi-bin/webscr");
         viewModel.useSandboxMode = ko.observable(true);
-        viewModel.business = ko.observable("");
+        viewModel.merchant = ko.observable("");
         viewModel.currencyCode = ko.observable("USD");
 
         if (data) {
@@ -51,8 +51,8 @@
             if (data.UseSandboxMode) {
                 viewModel.useSandboxMode(data.UseSandboxMode);
             }
-            if (data.Business) {
-                viewModel.business(data.Business);
+            if (data.Merchant) {
+                viewModel.merchant(data.Merchant);
             }
             if (data.CurrencyCode) {
                 viewModel.currencyCode(data.CurrencyCode);
@@ -64,7 +64,7 @@
         delete viewModel.productionUrl;
         delete viewModel.sandboxUrl;
         delete viewModel.useSandboxMode;
-        delete viewModel.business;
+        delete viewModel.merchant;
         delete viewModel.currencyCode;
     }
 
@@ -73,7 +73,7 @@
             ProductionUrl: viewModel.productionUrl(),
             SandboxUrl: viewModel.sandboxUrl(),
             UseSandboxMode: viewModel.useSandboxMode(),
-            Business: viewModel.business(),
+            Merchant: viewModel.merchant(),
             CurrencyCode: viewModel.currencyCode()
         };
 

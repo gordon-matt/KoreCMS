@@ -23,7 +23,7 @@ namespace Kore.Plugins.Ecommerce.Simple
         [Display(Name = "Use Sandbox Mode")]
         public bool UseSandboxMode { get; set; }
 
-        public string Business { get; set; }
+        public string Merchant { get; set; }
 
         [Display(Name = "Currency Code")]
         public string CurrencyCode { get; set; }

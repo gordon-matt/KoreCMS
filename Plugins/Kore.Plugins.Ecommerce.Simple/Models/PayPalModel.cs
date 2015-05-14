@@ -2,24 +2,24 @@
 {
     public class PayPalModel
     {
+        public bool UseSandboxMode { get; set; }
+
         public string ActionUrl { get; set; }
 
-        public string Command { get; set; }
+        public string Merchant { get; set; }
 
-        public string Business { get; set; }
-
-        public string NoShipping { get; set; }
-
-        public string RedirectUrl { get; set; }
-
-        public string CancelUrl { get; set; }
-
-        public string NotifyUrl { get; set; }
-
-        public string CurrencyCode { get; set; }
+        public int ProductId { get; set; }
 
         public string ProductName { get; set; }
 
+        public string CurrencyCode { get; set; }
+
         public float Amount { get; set; }
+
+        public string PaymentCompletedUrl { get; set; }
+
+        public string PaymentCancelledUrl { get; set; }
+
+        public string PaymentNotificationUrl { get; set; }
     }
 }

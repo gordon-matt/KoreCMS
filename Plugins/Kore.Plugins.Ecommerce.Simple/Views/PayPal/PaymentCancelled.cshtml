@@ -1,0 +1,23 @@
+﻿@using System.Web.Mvc
+@model FormCollection
+@{
+    Layout = KoreWebConstants.DefaultFrontendLayoutPath;
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (string key in Model.Keys)
+        {
+            <tr>
+                <td>@key</td>
+                <td>@Model[key]</td>
+            </tr>
+        }
+    </tbody>
+</table>

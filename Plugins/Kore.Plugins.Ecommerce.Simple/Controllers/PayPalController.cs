@@ -19,22 +19,25 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             this.settings = settings;
         }
 
-        [Route("redirect")]
-        public ActionResult RedirectFromPayPal(FormCollection formCollection)
+        [Route("payment-completed")]
+        public ActionResult PaymentCompleted(FormCollection formCollection)
         {
-            return View();
+            // Temporarily pass formCollection as model, to see what is available
+            return View(formCollection);
         }
 
-        [Route("cancel")]
-        public ActionResult CancelFromPayPal(FormCollection formCollection)
+        [Route("payment-cancelled")]
+        public ActionResult PaymentCancelled(FormCollection formCollection)
         {
-            return View();
+            // Temporarily pass formCollection as model, to see what is available
+            return View(formCollection);
         }
 
-        [Route("notify")]
-        public ActionResult NotifyFromPayPal(FormCollection formCollection)
+        [Route("payment-notification")]
+        public ActionResult PaymentNotification(FormCollection formCollection)
         {
-            return View();
+            // Temporarily pass formCollection as model, to see what is available
+            return View(formCollection);
         }
 
         [Route("buy-now")]
@@ -48,17 +51,18 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             var model = new PayPalModel
             {
-                ProductName = product.Name,
-                Amount = product.Price + product.Tax + product.ShippingCost,
-                Command = "_xclick",
-                Business = settings.Business,
+                UseSandboxMode = settings.UseSandboxMode,
                 ActionUrl = settings.UseSandboxMode
                     ? settings.SandboxUrl
                     : settings.ProductionUrl,
-                RedirectUrl = Url.AbsoluteAction("RedirectFromPayPal", "PayPal", null),
-                CancelUrl = Url.AbsoluteAction("CancelFromPayPal", "PayPal", null),
-                NotifyUrl = Url.AbsoluteAction("NotifyFromPayPal", "PayPal", null),
-                CurrencyCode = settings.CurrencyCode
+                Merchant = settings.Merchant,
+                ProductId = productId,
+                ProductName = product.Name,
+                CurrencyCode = settings.CurrencyCode,
+                Amount = product.Price + product.Tax + product.ShippingCost,
+                PaymentCompletedUrl = Url.AbsoluteAction("PaymentCompleted", "PayPal", null),
+                PaymentCancelledUrl = Url.AbsoluteAction("PaymentCancelled", "PayPal", null),
+                PaymentNotificationUrl = Url.AbsoluteAction("PaymentNotification", "PayPal", null)
             };
             return View(model);
         }

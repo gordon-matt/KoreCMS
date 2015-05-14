@@ -6,15 +6,20 @@
 }
 
 <form id="payment-form" action="@Model.ActionUrl" method="post">
-    @Html.Hidden("cmd", Model.Command)
-    @Html.Hidden("business", Model.Business)
-    @Html.Hidden("no_shipping", Model.NoShipping)
-    @Html.Hidden("return", Model.RedirectUrl)
-    @Html.Hidden("cancel_return", Model.CancelUrl)
-    @Html.Hidden("notify_url", Model.NotifyUrl)
-    @Html.Hidden("currency_code", Model.CurrencyCode)
+    @Html.Hidden("cmd", "_xclick")
+    @Html.Hidden("business", Model.Merchant)
+    @Html.Hidden("item_number", Model.ProductId)
     @Html.Hidden("item_name", Model.ProductName)
+    @Html.Hidden("currency_code", Model.CurrencyCode)
     @Html.Hidden("amount", Model.Amount)
+    @Html.Hidden("return", Model.PaymentCompletedUrl)
+    @Html.Hidden("cancel_return", Model.PaymentCancelledUrl)
+    @Html.Hidden("notify_url", Model.PaymentNotificationUrl)
+
+    @if (Model.UseSandboxMode)
+    {
+        @Html.Hidden("env", "www.sandbox")
+    }
 </form>
 
 <p>Connecting to PayPal, please wait...</p>

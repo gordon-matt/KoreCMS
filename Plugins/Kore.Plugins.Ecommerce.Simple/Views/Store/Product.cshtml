@@ -2,18 +2,12 @@
 @using Kore.Plugins.Ecommerce.Simple
 @using Kore.Plugins.Ecommerce.Simple.Data.Domain
 @using Kore.Web.ContentManagement
+@using StoreConstants = Kore.Plugins.Ecommerce.Simple.Constants
 
 @model Product
 
 @{
-    if (string.IsNullOrEmpty(SiteSettings.DefaultFrontendLayoutPath))
-    {
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-    else
-    {
-        Layout = SiteSettings.DefaultFrontendLayoutPath;
-    }
+    Layout = KoreWebConstants.DefaultFrontendLayoutPath;
 
     var settings = EngineContext.Current.Resolve<StoreSettings>();
     ViewBag.Title = settings.PageTitle;
@@ -26,19 +20,26 @@
         </div>
         <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
             <h1>@Model.Name</h1>
-            <p>@settings.Currency @Model.Price.ToString("N2")</p>
+            <p>Price @settings.Currency @Model.Price.ToString("N2")</p>
+            <p>Tax: @settings.Currency @Model.Tax.ToString("N2")</p>
+            <p>Shipping: @settings.Currency @Model.ShippingCost.ToString("N2")</p>
             
-            <!-- TODO: Encrypted version -->
-            <script data-env="sandbox"
+            @using (Html.BeginForm("BuyNow", "PayPal", new { area = StoreConstants.RouteArea }))
+            {
+                @Html.Hidden("ProductId", Model.Id)
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Buy Now</button>
+                </div>
+            }
+            @*<script data-env="sandbox"
                     data-callback="callback"
-                    data-tax="3.5"
-                    data-shipping=".75"
+                    data-tax="@Model.Tax"
+                    data-shipping="@Model.ShippingCost"
                     data-currency="USD"
                     data-amount="@Model.Price"
                     data-quantity="1"
                     data-name="@Model.Name"
-                    data-button="cart" src="https://www.paypalobjects.com/js/external/paypal-button-minicart.min.js?merchant=ffff" async="async"></script>
-
+                    data-button="cart" src="https://www.paypalobjects.com/js/external/paypal-button-minicart.min.js?merchant=ffff" async="async"></script>*@
         </div>
     </div>
     <div class="row">

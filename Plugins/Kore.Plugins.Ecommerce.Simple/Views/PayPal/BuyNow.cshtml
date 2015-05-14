@@ -1,0 +1,29 @@
+﻿@using Kore.Plugins.Ecommerce.Simple.Models
+@model PayPalModel
+
+@{
+    Layout = KoreWebConstants.DefaultFrontendLayoutPath;
+}
+
+<form id="payment-form" action="@Model.ActionUrl" method="post">
+    @Html.Hidden("cmd", Model.Command)
+    @Html.Hidden("business", Model.Business)
+    @Html.Hidden("no_shipping", Model.NoShipping)
+    @Html.Hidden("return", Model.RedirectUrl)
+    @Html.Hidden("cancel_return", Model.CancelUrl)
+    @Html.Hidden("notify_url", Model.NotifyUrl)
+    @Html.Hidden("currency_code", Model.CurrencyCode)
+    @Html.Hidden("item_name", Model.ProductName)
+    @Html.Hidden("amount", Model.Amount)
+</form>
+
+<p>Connecting to PayPal, please wait...</p>
+
+@using (Script.AtFoot())
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('form#payment-form').submit();
+        });
+    </script>
+}

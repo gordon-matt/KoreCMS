@@ -4,14 +4,7 @@
 @model IEnumerable<Category>
 
 @{
-    if (string.IsNullOrEmpty(SiteSettings.DefaultFrontendLayoutPath))
-    {
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-    else
-    {
-        Layout = SiteSettings.DefaultFrontendLayoutPath;
-    }
+    Layout = KoreWebConstants.DefaultFrontendLayoutPath;
 
     Script.IncludeBundle("kore-cms/bootpag");
 

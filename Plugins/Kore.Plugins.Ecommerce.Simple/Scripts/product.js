@@ -12,6 +12,8 @@ var ViewModel = function () {
     self.slug = ko.observable('');
     self.categoryId = ko.observable(0);
     self.price = ko.observable(0);
+    self.tax = ko.observable(0);
+    self.shippingCost = ko.observable(0);
     self.mainImageUrl = ko.observable('');
     self.shortDescription = ko.observable('');
     self.fullDescription = ko.observable('');
@@ -24,6 +26,8 @@ var ViewModel = function () {
         self.slug('');
         self.categoryId(0);
         self.price(0);
+        self.tax(0);
+        self.shippingCost(0);
         self.mainImageUrl('');
         self.shortDescription('');
         self.fullDescription('');
@@ -46,6 +50,8 @@ var ViewModel = function () {
             self.slug(json.Slug);
             self.categoryId(json.CategoryId);
             self.price(json.Price);
+            self.tax(json.Tax);
+            self.shippingCost(json.ShippingCost);
             self.mainImageUrl(json.MainImageUrl);
             self.shortDescription(json.ShortDescription);
             self.fullDescription(json.FullDescription);
@@ -91,6 +97,8 @@ var ViewModel = function () {
             Slug: self.slug(),
             CategoryId: self.categoryId(),
             Price: self.price(),
+            Tax: self.tax(),
+            ShippingCost: self.shippingCost(),
             MainImageUrl: self.mainImageUrl(),
             ShortDescription: self.shortDescription(),
             FullDescription: self.fullDescription()
@@ -153,7 +161,9 @@ var ViewModel = function () {
             Name: { required: true, maxlength: 255 },
             Slug: { required: true, maxlength: 255 },
             CategoryId: { required: true },
-            Price: { required: true },
+            Price: { required: true, number: true },
+            Tax: { required: true, number: true },
+            ShippingCost: { required: true, number: true },
             MainImageUrl: { maxlength: 255 },
             ShortDescription: { required: true },
             FullDescription: { required: true }

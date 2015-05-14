@@ -1,0 +1,24 @@
+﻿@using Kore.Plugins.Ecommerce.Simple.Extensions;
+
+@{
+    Layout = KoreWebConstants.DefaultAdminLayoutPath;
+
+    Style.IncludeBundle("kendo-ui");
+
+    Script.IncludeBundle("kendo-ui");
+    Script.IncludePluginScript("order.js");
+}
+
+<div id="grid-section" class="row">
+    <div class="col-md-12">
+        <div id="Grid"></div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        var translations = {
+            View: '@T(KoreWebLocalizableStrings.General.View).Text',
+        }
+    </script>
+}

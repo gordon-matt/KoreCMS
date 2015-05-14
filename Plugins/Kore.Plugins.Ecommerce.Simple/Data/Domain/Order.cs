@@ -12,7 +12,19 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 
         public int Id { get; set; }
 
+        public string UserId { get; set; }
+
+        public int BillingAddressId { get; set; }
+
+        public int ShippingAddressId { get; set; }
+
+        public float OrderTotal { get; set; }
+
+        public string IPAddress { get; set; }
+
         public DateTime OrderDateUtc { get; set; }
+
+        public OrderStatus Status { get; set; }
 
         public PaymentStatus PaymentStatus { get; set; }
 
@@ -32,19 +44,17 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
         #endregion IEntity Members
     }
 
-    public enum PaymentStatus : byte
-    {
-        Pending = 0,
-        Paid = 1
-    }
-
     public class OrderMap : EntityTypeConfiguration<Order>, IEntityTypeConfiguration
     {
         public OrderMap()
         {
             ToTable(Constants.Tables.Orders);
             HasKey(x => x.Id);
+            Property(x => x.BillingAddressId).IsRequired();
+            Property(x => x.ShippingAddressId).IsRequired();
+            Property(x => x.OrderTotal).IsRequired();
             Property(x => x.OrderDateUtc).IsRequired();
+            Property(x => x.Status).IsRequired();
             Property(x => x.PaymentStatus).IsRequired();
         }
     }

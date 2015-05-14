@@ -155,7 +155,7 @@ namespace Kore.Plugins.Widgets.View360
         /// <summary>
         /// Row change sensitivity in pixels.
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/YAxisSensitivity ")]
+        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/YAxisSensitivity")]
         public short YAxisSensitivity { get; set; }
 
         /// <summary>

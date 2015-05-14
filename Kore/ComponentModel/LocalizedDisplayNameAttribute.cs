@@ -4,9 +4,21 @@ using Kore.Localization;
 namespace Kore.ComponentModel
 {
     //TODO: Implement this with a custom DataAnnotationsModelMetadataProvider
-    public class LocalizedDisplayNameAttribute : DisplayNameAttribute, IModelAttribute
+    public class LocalizedDisplayNameAttribute : DisplayNameAttribute//, IModelAttribute
     {
-        private string resourceValue = string.Empty;
+        private static Localizer localizer;
+
+        private static Localizer T
+        {
+            get
+            {
+                if (localizer == null)
+                {
+                    localizer = LocalizationUtilities.Resolve();
+                }
+                return localizer;
+            }
+        }
 
         public LocalizedDisplayNameAttribute(string resourceKey)
             : base(resourceKey)
@@ -20,15 +32,13 @@ namespace Kore.ComponentModel
         {
             get
             {
-                var localizer = LocalizationUtilities.Resolve();
-                resourceValue = localizer(ResourceKey);
-                return resourceValue;
+                return T(ResourceKey);
             }
         }
 
-        public string Name
-        {
-            get { return "LocalizedDisplayNameAttribute"; }
-        }
+        //public string Name
+        //{
+        //    get { return "LocalizedDisplayNameAttribute"; }
+        //}
     }
 }

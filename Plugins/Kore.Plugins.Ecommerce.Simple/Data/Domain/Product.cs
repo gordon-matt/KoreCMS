@@ -16,6 +16,10 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 
         public float Price { get; set; }
 
+        public float Tax { get; set; }
+
+        public float ShippingCost { get; set; }
+
         public string MainImageUrl { get; set; }
 
         public string ShortDescription { get; set; }
@@ -43,6 +47,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             Property(x => x.Name).HasMaxLength(255).IsRequired();
             Property(x => x.Slug).HasMaxLength(255).IsRequired();
             Property(x => x.Price).IsRequired();
+            Property(x => x.Tax).IsRequired();
+            Property(x => x.ShippingCost).IsRequired();
             Property(x => x.MainImageUrl).HasMaxLength(255);
             Property(x => x.ShortDescription).IsMaxLength().IsRequired();
             Property(x => x.FullDescription).IsMaxLength().IsRequired();

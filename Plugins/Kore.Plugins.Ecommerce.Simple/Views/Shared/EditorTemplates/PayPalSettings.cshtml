@@ -1,0 +1,82 @@
+﻿@using Kore.Plugins.Ecommerce.Simple
+@using Kore.Web.Mvc
+
+@model StoreSettings
+
+<div id="settings-content">
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProductionUrl, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.ProductionUrl, new { @class = "form-control", data_bind = "value: productionUrl" })
+        @Html.ValidationMessageFor(m => m.ProductionUrl)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.SandboxUrl, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.SandboxUrl, new { @class = "form-control", data_bind = "value: sandboxUrl" })
+        @Html.ValidationMessageFor(m => m.SandboxUrl)
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.UseSandboxMode, new { data_bind = "checked: useSandboxMode" }) Use Sandbox Mode
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Business, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Business, new { @class = "form-control", data_bind = "value: business" })
+        @Html.ValidationMessageFor(m => m.Business)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.CurrencyCode, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.CurrencyCode, new { @class = "form-control", data_bind = "value: currencyCode" })
+        @Html.ValidationMessageFor(m => m.CurrencyCode)
+    </div>
+</div>
+
+<script type="text/javascript">
+    function updateModel(data) {
+        viewModel.productionUrl = ko.observable("https://www.sandbox.paypal.com/cgi-bin/webscr");
+        viewModel.sandboxUrl = ko.observable("https://www.sandbox.paypal.com/cgi-bin/webscr");
+        viewModel.useSandboxMode = ko.observable(true);
+        viewModel.business = ko.observable("");
+        viewModel.currencyCode = ko.observable("USD");
+
+        if (data) {
+            if (data.ProductionUrl) {
+                viewModel.productionUrl(data.ProductionUrl);
+            }
+            if (data.SandboxUrl) {
+                viewModel.sandboxUrl(data.SandboxUrl);
+            }
+            if (data.UseSandboxMode) {
+                viewModel.useSandboxMode(data.UseSandboxMode);
+            }
+            if (data.Business) {
+                viewModel.business(data.Business);
+            }
+            if (data.CurrencyCode) {
+                viewModel.currencyCode(data.CurrencyCode);
+            }
+        }
+    };
+
+    function cleanUp() {
+        delete viewModel.productionUrl;
+        delete viewModel.sandboxUrl;
+        delete viewModel.useSandboxMode;
+        delete viewModel.business;
+        delete viewModel.currencyCode;
+    }
+
+    function onBeforeSave() {
+        var data = {
+            ProductionUrl: viewModel.productionUrl(),
+            SandboxUrl: viewModel.sandboxUrl(),
+            UseSandboxMode: viewModel.useSandboxMode(),
+            Business: viewModel.business(),
+            CurrencyCode: viewModel.currencyCode()
+        };
+
+        viewModel.value(ko.mapping.toJSON(data));
+    };
+</script>

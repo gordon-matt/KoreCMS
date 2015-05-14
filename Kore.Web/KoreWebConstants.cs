@@ -4,7 +4,9 @@ namespace Kore.Web
 {
     public static class KoreWebConstants
     {
-        private static string defaultAdminLayoutPath = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+        private static string defaultAdminLayoutPath;
+        private static string defaultFrontendLayoutPath;
+
         public static string DefaultAdminLayoutPath
         {
             get
@@ -13,11 +15,27 @@ namespace Kore.Web
                 {
                     var siteSettings = EngineContext.Current.Resolve<KoreSiteSettings>();
 
-                    string adminLayoutPath = string.IsNullOrEmpty(siteSettings.AdminLayoutPath)
+                    defaultAdminLayoutPath = string.IsNullOrEmpty(siteSettings.AdminLayoutPath)
                         ? "~/Areas/Admin/Views/Shared/_Layout.cshtml"
                         : siteSettings.AdminLayoutPath;
                 }
                 return defaultAdminLayoutPath;
+            }
+        }
+
+        public static string DefaultFrontendLayoutPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(defaultFrontendLayoutPath))
+                {
+                    var siteSettings = EngineContext.Current.Resolve<KoreSiteSettings>();
+
+                    defaultFrontendLayoutPath = string.IsNullOrEmpty(siteSettings.AdminLayoutPath)
+                        ? "~/Views/Shared/_Layout.cshtml"
+                        : siteSettings.DefaultFrontendLayoutPath;
+                }
+                return defaultFrontendLayoutPath;
             }
         }
 

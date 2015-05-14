@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using Kore.Infrastructure;
 using Kore.Localization;
+using Kore.Plugins.Ecommerce.Simple.Services;
+using Kore.Web.Configuration;
 using Kore.Web.ContentManagement.Infrastructure;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
@@ -29,6 +31,13 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
             builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();
 
             builder.RegisterType<AutoMenuProvider>().As<IAutoMenuProvider>().SingleInstance();
+
+            builder.RegisterType<CategoryService>().As<ICategoryService>().InstancePerDependency();
+            builder.RegisterType<ProductService>().As<IProductService>().InstancePerDependency();
+            builder.RegisterType<OrderService>().As<IOrderService>().InstancePerDependency();
+
+            builder.RegisterType<PayPalSettings>().As<ISettings>().SingleInstance();
+            builder.RegisterType<StoreSettings>().As<ISettings>().SingleInstance();
         }
 
         public int Order

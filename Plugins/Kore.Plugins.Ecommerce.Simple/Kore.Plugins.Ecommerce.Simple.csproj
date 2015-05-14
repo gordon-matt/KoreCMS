@@ -59,7 +59,6 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -126,6 +125,7 @@
     <Compile Include="Controllers\Api\CategoryApiController.cs" />
     <Compile Include="Controllers\Api\ProductApiController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\PayPalController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Data\Domain\Category.cs" />
@@ -142,8 +142,13 @@
     <Compile Include="Infrastructure\LocationFormatProvider.cs" />
     <Compile Include="Infrastructure\WebApiRegistrar.cs" />
     <Compile Include="LocalizableStrings.cs" />
+    <Compile Include="Models\PayPalModel.cs" />
     <Compile Include="NavigationProvider.cs" />
+    <Compile Include="PayPalSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ICategoryService.cs" />
+    <Compile Include="Services\IOrderService.cs" />
+    <Compile Include="Services\IProductService.cs" />
     <Compile Include="SimpleCommercePermissions.cs" />
     <Compile Include="SimpleCommercePlugin.cs" />
     <Compile Include="StoreSettings.cs" />
@@ -153,9 +158,16 @@
     <None Include="Views\Category\Index.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Views\PayPal\BuyNow.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\PayPal\CancelFromPayPal.cshtml" />
+    <None Include="Views\PayPal\NotifyFromPayPal.cshtml" />
+    <None Include="Views\PayPal\RedirectFromPayPal.cshtml" />
     <None Include="Views\Product\Index.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Views\Shared\EditorTemplates\PayPalSettings.cshtml" />
     <None Include="Views\Shared\EditorTemplates\StoreSettings.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -180,8 +192,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ContentBlocks\" />
-    <Folder Include="Models\" />
-    <Folder Include="Services\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>

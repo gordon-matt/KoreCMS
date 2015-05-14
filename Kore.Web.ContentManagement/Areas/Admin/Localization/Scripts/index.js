@@ -155,6 +155,9 @@ var ViewModel = function () {
         })
         .done(function (json) {
             $.notify(translations.ResetLocalizableStringsSuccess, "success");
+            setTimeout(function () {
+                window.location.reload();
+            }, 500);
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify(translations.ResetLocalizableStringsError, "error");

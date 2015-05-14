@@ -78,6 +78,17 @@ var ZoneModel = function () {
 
                 switchSection($("#zones-grid-section"));
 
+                alert(JSON.stringify(json));
+                // Update zone drop downs
+                $('#ZoneId').append($('<option>', {
+                    value: json.Id,
+                    text: record.Name
+                }));
+                $('#Create_ZoneId').append($('<option>', {
+                    value: json.Id,
+                    text: record.Name
+                }));
+
                 $.notify(translations.InsertRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -100,6 +111,10 @@ var ZoneModel = function () {
                 $('#ZoneGrid').data('kendoGrid').refresh();
 
                 switchSection($("#zones-grid-section"));
+
+                // Update zone drop downs
+                $('#ZoneId option[value="' + record.Id + '"]').text(record.Name);
+                $('#Create_ZoneId option[value="' + record.Id + '"]').text(record.Name);
 
                 $.notify(translations.UpdateRecordSuccess, "success");
             })

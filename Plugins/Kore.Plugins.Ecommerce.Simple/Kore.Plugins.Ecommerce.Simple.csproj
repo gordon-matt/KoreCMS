@@ -161,9 +161,9 @@
     <None Include="Views\PayPal\BuyNow.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\PayPal\CancelFromPayPal.cshtml" />
-    <None Include="Views\PayPal\NotifyFromPayPal.cshtml" />
-    <None Include="Views\PayPal\RedirectFromPayPal.cshtml" />
+    <None Include="Views\PayPal\PaymentCancelled.cshtml" />
+    <None Include="Views\PayPal\PaymentNotification.cshtml" />
+    <None Include="Views\PayPal\PaymentCompleted.cshtml" />
     <None Include="Views\Product\Index.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

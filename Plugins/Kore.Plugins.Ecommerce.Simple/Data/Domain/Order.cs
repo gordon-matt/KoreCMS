@@ -14,6 +14,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 
         public DateTime OrderDateUtc { get; set; }
 
+        public PaymentStatus PaymentStatus { get; set; }
+
         public virtual ICollection<OrderLine> Lines
         {
             get { return lines ?? (lines = new List<OrderLine>()); }
@@ -30,6 +32,12 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
         #endregion IEntity Members
     }
 
+    public enum PaymentStatus : byte
+    {
+        Pending = 0,
+        Paid = 1
+    }
+
     public class OrderMap : EntityTypeConfiguration<Order>, IEntityTypeConfiguration
     {
         public OrderMap()
@@ -37,6 +45,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             ToTable(Constants.Tables.Orders);
             HasKey(x => x.Id);
             Property(x => x.OrderDateUtc).IsRequired();
+            Property(x => x.PaymentStatus).IsRequired();
         }
     }
 }

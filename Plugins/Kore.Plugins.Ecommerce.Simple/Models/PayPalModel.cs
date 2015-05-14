@@ -8,6 +8,7 @@
 
         public string Merchant { get; set; }
 
+        // TODO: Might need to change this to OrderId
         public int ProductId { get; set; }
 
         public string ProductName { get; set; }

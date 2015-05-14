@@ -75,7 +75,7 @@ namespace Kore.Web.Plugins
             localizableStringRepository.Insert(toInsert);
 
             var cacheManager = EngineContext.Current.Resolve<ICacheManager>();
-            cacheManager.Remove(KoreConstants.CacheKeys.LocalizableStringsForInvariantCultureCode);
+            cacheManager.RemoveByPattern("Kore_LocalizableStrings_.*");
         }
 
         protected virtual void UninstallLocalizableStrings<TProvider>() where TProvider : IDefaultLocalizableStringsProvider, new()
@@ -91,7 +91,7 @@ namespace Kore.Web.Plugins
             localizableStringRepository.Delete(toDelete);
 
             var cacheManager = EngineContext.Current.Resolve<ICacheManager>();
-            cacheManager.Remove(KoreConstants.CacheKeys.LocalizableStringsForInvariantCultureCode);
+            cacheManager.RemoveByPattern("Kore_LocalizableStrings_.*");
         }
     }
 }

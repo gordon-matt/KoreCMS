@@ -14,7 +14,7 @@ namespace Kore.Web.Configuration
             DefaultGridPageSize = 10;
             DefaultLanguage = "en-US";
             DefaultFrontendLayoutPath = "~/Views/Shared/_Layout.cshtml";
-            AdminLayoutPath = KoreWebConstants.DefaultAdminLayoutPath;
+            AdminLayoutPath = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
             HomePageTitle = "Home Page";
         }
 

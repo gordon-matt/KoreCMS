@@ -106,7 +106,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
                 Repository.Update(localizedString);
             }
 
-            cacheManager.Remove(string.Format(KoreConstants.CacheKeys.LocalizableStringsForCultureCode, cultureCode));
+            cacheManager.Remove(string.Concat("Kore_LocalizableStrings_", cultureCode));
 
             return Updated(entity);
         }
@@ -132,7 +132,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
             Repository.Update(entity);
             //Repository.Delete(entity);
 
-            cacheManager.Remove(string.Format(KoreConstants.CacheKeys.LocalizableStringsForCultureCode, cultureCode));
+            cacheManager.Remove(string.Concat("Kore_LocalizableStrings_", cultureCode));
 
             return StatusCode(HttpStatusCode.NoContent);
         }

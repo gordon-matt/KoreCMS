@@ -72,7 +72,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
             }
             localizableStringRepository.Value.Insert(toInsert);
 
-            cacheManager.Value.Remove(KoreConstants.CacheKeys.LocalizableStringsForInvariantCultureCode);
+            cacheManager.Value.RemoveByPattern("Kore_LocalizableStrings_.*");
 
             return Ok();
         }

@@ -15,6 +15,34 @@ namespace Kore.Plugins.Ecommerce.Simple
 
             var dbContext = EngineContext.Current.Resolve<DbContext>();
 
+            if (!CheckIfTableExists(dbContext, Constants.Tables.Addresses))
+            {
+                #region CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Addresses]
+
+                dbContext.Database.ExecuteSqlCommand(
+@"CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Addresses]
+(
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [nvarchar](max) NULL,
+	[FamilyName] [nvarchar](128) NOT NULL,
+	[GivenNames] [nvarchar](128) NOT NULL,
+	[Email] [nvarchar](255) NOT NULL,
+	[AddressLine1] [nvarchar](128) NOT NULL,
+	[AddressLine2] [nvarchar](128) NOT NULL,
+	[AddressLine3] [nvarchar](128) NOT NULL,
+	[City] [nvarchar](128) NOT NULL,
+	[PostalCode] [nvarchar](10) NOT NULL,
+	[Country] [nvarchar](50) NOT NULL,
+	[PhoneNumber] [nvarchar](25) NOT NULL,
+	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Addresses] PRIMARY KEY CLUSTERED 
+	(
+		[Id] ASC
+	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]");
+
+                #endregion CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Addresses]
+            }
+
             if (!CheckIfTableExists(dbContext, Constants.Tables.Categories))
             {
                 #region CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Categories]
@@ -51,16 +79,41 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Categories_dbo.Kore_Plugins
                 #region CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Orders]
 
                 dbContext.Database.ExecuteSqlCommand(
-@"CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Orders]
-(
+@"CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Orders](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [nvarchar](max) NULL,
+	[BillingAddressId] [int] NOT NULL,
+	[ShippingAddressId] [int] NOT NULL,
+	[OrderTotal] [real] NOT NULL,
+	[IPAddress] [nvarchar](max) NULL,
 	[OrderDateUtc] [datetime] NOT NULL,
+	[Status] [tinyint] NOT NULL,
 	[PaymentStatus] [tinyint] NOT NULL,
 	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Orders] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC
 	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]");
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]");
+
+                dbContext.Database.ExecuteSqlCommand(
+@"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_Orders] WITH CHECK
+ADD CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Orders_dbo.Kore_Plugins_SimpleCommerce_Addresses_BillingAddressId]
+FOREIGN KEY([BillingAddressId])
+REFERENCES [dbo].[Kore_Plugins_SimpleCommerce_Addresses] ([Id])");
+
+                dbContext.Database.ExecuteSqlCommand(
+@"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_Orders]
+CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Orders_dbo.Kore_Plugins_SimpleCommerce_Addresses_BillingAddressId]");
+
+                dbContext.Database.ExecuteSqlCommand(
+@"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_Orders] WITH CHECK
+ADD CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Orders_dbo.Kore_Plugins_SimpleCommerce_Addresses_ShippingAddressId]
+FOREIGN KEY([ShippingAddressId])
+REFERENCES [dbo].[Kore_Plugins_SimpleCommerce_Addresses] ([Id])");
+
+                dbContext.Database.ExecuteSqlCommand(
+@"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_Orders]
+CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Orders_dbo.Kore_Plugins_SimpleCommerce_Addresses_ShippingAddressId]");
 
                 #endregion CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Orders]
             }
@@ -120,10 +173,12 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_OrderLines_dbo.Kore_Plugins
 	[Slug] [nvarchar](255) NOT NULL,
 	[CategoryId] [int] NOT NULL,
 	[Price] [real] NOT NULL,
+	[Tax] [real] NOT NULL,
+	[ShippingCost] [real] NOT NULL,
 	[MainImageUrl] [nvarchar](255) NULL,
 	[ShortDescription] [nvarchar](max) NOT NULL,
 	[FullDescription] [nvarchar](max) NOT NULL,
-	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Products] PRIMARY KEY CLUSTERED
+	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Products] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC
 	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -132,9 +187,9 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_OrderLines_dbo.Kore_Plugins
                 dbContext.Database.ExecuteSqlCommand(
 @"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_Products] WITH CHECK
 ADD CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Products_dbo.Kore_Plugins_SimpleCommerce_Categories_CategoryId]
-	FOREIGN KEY([CategoryId])
-	REFERENCES [dbo].[Kore_Plugins_SimpleCommerce_Categories] ([Id])
-	ON DELETE CASCADE");
+FOREIGN KEY([CategoryId])
+REFERENCES [dbo].[Kore_Plugins_SimpleCommerce_Categories] ([Id])
+ON DELETE CASCADE");
 
                 dbContext.Database.ExecuteSqlCommand(
 @"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_Products]

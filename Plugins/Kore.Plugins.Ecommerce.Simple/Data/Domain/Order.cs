@@ -28,6 +28,10 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 
         public PaymentStatus PaymentStatus { get; set; }
 
+        public virtual Address BillingAddress { get; set; }
+
+        public virtual Address ShippingAddress { get; set; }
+
         public virtual ICollection<OrderLine> Lines
         {
             get { return lines ?? (lines = new List<OrderLine>()); }
@@ -56,6 +60,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             Property(x => x.OrderDateUtc).IsRequired();
             Property(x => x.Status).IsRequired();
             Property(x => x.PaymentStatus).IsRequired();
+            HasRequired(x => x.BillingAddress).WithMany().HasForeignKey(x => x.BillingAddressId).WillCascadeOnDelete(false);
+            HasRequired(x => x.ShippingAddress).WithMany().HasForeignKey(x => x.ShippingAddressId).WillCascadeOnDelete(false);
         }
     }
 }

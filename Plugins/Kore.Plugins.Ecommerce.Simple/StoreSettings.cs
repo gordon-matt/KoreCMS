@@ -39,7 +39,7 @@ namespace Kore.Plugins.Ecommerce.Simple
 
         public string Name
         {
-            get { return "Simple Commerce Settings"; }
+            get { return "Simple Commerce: Store Settings"; }
         }
 
         public string EditorTemplatePath

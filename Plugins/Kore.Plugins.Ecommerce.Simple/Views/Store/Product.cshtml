@@ -24,13 +24,17 @@
             <p>Tax: @settings.Currency @Model.Tax.ToString("N2")</p>
             <p>Shipping: @settings.Currency @Model.ShippingCost.ToString("N2")</p>
             
-            @using (Html.BeginForm("BuyNow", "PayPal", new { area = StoreConstants.RouteArea }))
+            <a href="javascript:void(0);" onclick="addToCart(@Model.Id)" class="btn btn-primary">
+                Add to Cart
+            </a>
+
+            @*@using (Html.BeginForm("BuyNow", "PayPal", new { area = StoreConstants.RouteArea }))
             {
                 @Html.Hidden("ProductId", Model.Id)
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Buy Now</button>
                 </div>
-            }
+            }*@
         </div>
     </div>
     <div class="row">
@@ -39,3 +43,26 @@
         </div>
     </div>
 </article>
+
+@using (Script.AtFoot())
+{
+    <script type="text/javascript">
+        function addToCart(productId) {
+            $.ajax({
+                url: "/store/cart/add-item-to-cart",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    productId: productId
+                }
+            })
+            .done(function (json) {
+                alert("Added to cart.");
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                alert(errorThrown);
+                console.log(textStatus + ': ' + errorThrown);
+            });
+        }
+    </script>
+}

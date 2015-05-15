@@ -2,14 +2,7 @@
 @using Kore.Web.ContentManagement.Areas.Admin.Blog
 
 @{
-    if (string.IsNullOrEmpty(SiteSettings.DefaultFrontendLayoutPath))
-    {
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-    else
-    {
-        Layout = SiteSettings.DefaultFrontendLayoutPath;
-    }
+    Layout = KoreWebConstants.DefaultFrontendLayoutPath;
 
     Script.IncludeBundle("breeze");
     Script.IncludeBundle("knockout");

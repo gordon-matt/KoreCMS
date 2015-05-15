@@ -17,6 +17,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                     LocalizedStrings = new Dictionary<string, string>
                     {
                         { LocalizableStrings.Categories, "Categories" },
+                        { LocalizableStrings.Checkout, "Checkout" },
+                        { LocalizableStrings.Orders, "Orders" },
                         { LocalizableStrings.Products, "Products" },
                         { LocalizableStrings.Store, "Store" }
                     }

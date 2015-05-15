@@ -686,6 +686,11 @@ $(document).ready(function () {
             var destinationId = destinationDataItem.id;
             var dropPosition = e.dropPosition;
 
+            if (destinationId == sourceId) {
+                // A page cannot be a parent of itself!
+                return;
+            }
+
             var parentId = null;
             var destinationPage = null;
 
@@ -717,6 +722,7 @@ $(document).ready(function () {
 
             if (destinationPage.ParentId == sourceId) {
                 $.notify(translations.CircularRelationshipError, "error");
+                $("#treeview").data("kendoTreeView").dataSource.read();
                 return;
             }
 

@@ -19,7 +19,7 @@
 
     @for (int i = 1; i <= Model.Items.Count(); i++)
     {
-        var item = Model.Items.ElementAt(i);
+        var item = Model.Items.ElementAt(i - 1);
         @Html.Hidden("item_name_" + i, item.ProductName)
         @Html.Hidden("amount_" + i, item.Price)
     }

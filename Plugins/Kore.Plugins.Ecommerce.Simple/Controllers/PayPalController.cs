@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Castle.Core.Logging;
 using Kore.Plugins.Ecommerce.Simple.Data.Domain;
 using Kore.Plugins.Ecommerce.Simple.Models;
 using Kore.Plugins.Ecommerce.Simple.Services;
@@ -28,24 +29,68 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         }
 
         [Route("payment-completed/{orderId}")]
-        public ActionResult PaymentCompleted(int orderId, FormCollection formCollection)
+        public ActionResult PaymentCompleted(int orderId)
         {
+            var order = orderService.Value.FindOne(orderId);
+
+            if (order == null)
+            {
+                Logger.ErrorFormat("Could not find order number: {0}", orderId);
+                return HttpNotFound();
+            }
+
+            order.Status = OrderStatus.Processing;
+            order.PaymentStatus = PaymentStatus.Paid;
+
+            var requestParams = Request.Params;
+            Logger.InfoFormat("PaymentCompleted() Params: ",
+                string.Join(", ", requestParams.Keys.OfType<string>().Select(x => x + ":" + requestParams[x])));
+
             // Temporarily pass formCollection as model, to see what is available
-            return View(formCollection);
+            return View(requestParams);
+            //return View(order);
         }
 
         [Route("payment-cancelled/{orderId}")]
-        public ActionResult PaymentCancelled(int orderId, FormCollection formCollection)
+        public ActionResult PaymentCancelled(int orderId)
         {
+            var order = orderService.Value.FindOne(orderId);
+
+            if (order == null)
+            {
+                Logger.ErrorFormat("Could not find order number: {0}", orderId);
+                return HttpNotFound();
+            }
+
+            order.Status = OrderStatus.Cancelled;
+
+            var requestParams = Request.Params;
+            Logger.InfoFormat("PaymentCancelled() Params: ",
+                string.Join(", ", requestParams.Keys.OfType<string>().Select(x => x + ":" + requestParams[x])));
+
             // Temporarily pass formCollection as model, to see what is available
-            return View(formCollection);
+            return View(requestParams);
+            //return View(order);
         }
 
         [Route("payment-notification/{orderId}")]
-        public ActionResult PaymentNotification(int orderId, FormCollection formCollection)
+        public ActionResult PaymentNotification(int orderId)
         {
+            var order = orderService.Value.FindOne(orderId);
+
+            if (order == null)
+            {
+                Logger.ErrorFormat("Could not find order number: {0}", orderId);
+                return HttpNotFound();
+            }
+
+            var requestParams = Request.Params;
+            Logger.InfoFormat("PaymentNotification() Params: ",
+                string.Join(", ", requestParams.Keys.OfType<string>().Select(x => x + ":" + requestParams[x])));
+
             // Temporarily pass formCollection as model, to see what is available
-            return View(formCollection);
+            return View(requestParams);
+            //return View(order);
         }
 
         [Route("buy-now")]

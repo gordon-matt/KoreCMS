@@ -8,7 +8,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Models
 
         public string ProductName { get; set; }
 
-        public int Quantity { get; set; }
+        public short Quantity { get; set; }
 
         public float Price { get; set; }
     }

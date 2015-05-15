@@ -1,6 +1,6 @@
 
 /*
- * View360 version 1.0.6
+ * Wide360 version 1.0.6
  */
  
 .View360-holder div, .View360-holder p, .View360-navigation{
@@ -14,10 +14,12 @@
 }
 
 .View360-holder{
-    background:white;
     display:inline-block;
-    position:relative;
-}
+    position:relative;    
+    border:1px solid rgba(0,0,0,0.1);
+    border-radius:10px;-o-border-radius:10px;-icab-border-radius:10px;-khtml-border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;-moz-border-radius:10px;
+    float:left;
+   }
 
 .View360-holderFullscreen{
     border:0px solid white;
@@ -66,6 +68,9 @@
     background: transparent;
     z-index: 300;
     cursor:default;
+    -webkit-transition: opacity 1s ease-in-out; -moz-transition: opacity 1s ease-in-out;  -o-transition: opacity 1s ease-in-out; transition: opacity 1s ease-in-out;
+
+
 }
 
 /*LOADER CSS*/
@@ -171,7 +176,7 @@
 /*>> LOADER*/ 
 .View360-navigationHolder{
     position:absolute;
-    bottom:10px;
+    bottom:-50px;
     left:0px;
     right:0px;
     z-index:400;
@@ -189,20 +194,20 @@
     background-size: 40px 40px;
     width:40px;
     height:40px;
-    border:1px solid rgba(0,0,0,0.5);
-    background-color: rgba(0,0,0,0.1);
+    /*border:1px solid rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.1);*/
     display: inline-block;
     margin-left: 5px;
     cursor: pointer;
 }
 
 .View360-navigationBtn:hover {
-    box-shadow: 2px 2px 4px #888888;
+    box-shadow: 2px 2px 2px #888888;
 }
 
 .View360-navigationBtn:active {
     background-position: 1px 1px; 
-    box-shadow: 2px 2px 4px #888888;
+    box-shadow: 2px 2px 2px #888888;
 }
 
 .View360-navigationPlay{

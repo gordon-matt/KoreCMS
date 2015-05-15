@@ -122,10 +122,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\Api\CartApiController.cs" />
     <Compile Include="Controllers\Api\CategoryApiController.cs" />
     <Compile Include="Controllers\Api\OrderApiController.cs" />
     <Compile Include="Controllers\Api\ProductApiController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PayPalController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -148,6 +151,7 @@
     <Compile Include="Infrastructure\WebApiRegistrar.cs" />
     <Compile Include="LocalizableStrings.cs" />
     <Compile Include="Models\PayPalModel.cs" />
+    <Compile Include="Models\ShoppingCartItem.cs" />
     <Compile Include="NavigationProvider.cs" />
     <Compile Include="PayPalSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -161,6 +165,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Views\Category\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Checkout\Index.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Views\Order\Index.cshtml">
@@ -229,6 +236,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\category.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\checkout.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\order.js">

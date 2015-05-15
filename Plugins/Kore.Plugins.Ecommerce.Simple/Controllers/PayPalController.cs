@@ -7,7 +7,7 @@ using Kore.Web.Mvc;
 namespace Kore.Plugins.Ecommerce.Simple.Controllers
 {
     [RouteArea(Constants.RouteArea)]
-    [Route("paypal")]
+    [RoutePrefix("paypal")]
     public class PayPalController : KoreController
     {
         private readonly Lazy<IProductService> productService;

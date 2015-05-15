@@ -53,7 +53,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         }
 
         [Route("update-cart-item/{productId}")]
-        public JsonResult Put(int productId, int quantity)
+        public JsonResult Put(int productId, short quantity)
         {
             var product = productService.Value.FindOne(productId);
 

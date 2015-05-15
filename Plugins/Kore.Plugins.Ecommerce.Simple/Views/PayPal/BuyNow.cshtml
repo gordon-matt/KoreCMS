@@ -6,15 +6,23 @@
 }
 
 <form id="payment-form" action="@Model.ActionUrl" method="post">
-    @Html.Hidden("cmd", "_xclick")
+    @Html.Hidden("cmd", "_cart")
+    @Html.Hidden("upload", "1")
     @Html.Hidden("business", Model.Merchant)
-    @Html.Hidden("item_number", Model.ProductId)
-    @Html.Hidden("item_name", Model.ProductName)
     @Html.Hidden("currency_code", Model.CurrencyCode)
-    @Html.Hidden("amount", Model.Amount)
+    @*@Html.Hidden("item_number", Model.ProductId)
+    @Html.Hidden("item_name", Model.ProductName)
+    @Html.Hidden("amount", Model.Amount)*@
     @Html.Hidden("return", Model.PaymentCompletedUrl)
     @Html.Hidden("cancel_return", Model.PaymentCancelledUrl)
     @Html.Hidden("notify_url", Model.PaymentNotificationUrl)
+
+    @for (int i = 1; i <= Model.Items.Count(); i++)
+    {
+        var item = Model.Items.ElementAt(i);
+        @Html.Hidden("item_name_" + i, item.ProductName)
+        @Html.Hidden("amount_" + i, item.Price)
+    }
 
     @if (Model.UseSandboxMode)
     {

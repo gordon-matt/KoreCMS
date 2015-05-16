@@ -13,103 +13,101 @@
     var languages = EngineContext.Current.Resolve<ILanguageService>().GetActiveLanguages();
 }
 
-<div class="language-switch language-switch-@Model.Style.ToString().ToLowerInvariant()">
-    @switch (Model.Style)
-    {
-        case LanguageSwitchBlock.LanguageSwitchStyle.BootstrapNavbarDropdown:
-            {
-                <li class="dropdown">
-                    <a aria-expanded="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        Language
-                        <span class="caret"></span>
-                    </a>
-                    <ul role="menu" class="dropdown-menu">
-                        @if (Model.UseUrlPrefix)
-                        {
-                            foreach (var language in languages)
-                            {
-                                <li>
-                                    <a href="/@language.UniqueSeoCode">
-                                        @if (language.CultureCode == WorkContext.CurrentCultureCode)
-                                        {
-                                            <span class="glyphicon glyphicon-check"></span>
-                                        }
-                                        @language.Name
-                                    </a>
-                                </li>
-                            }
-                        }
-                        else
-                        {
-                            foreach (var language in languages)
-                            {
-                                <li>
-                                    <a href="#" onclick="changeLanguage('@language.CultureCode');">
-                                        @if (language.CultureCode == WorkContext.CurrentCultureCode)
-                                        {
-                                            <span class="glyphicon glyphicon-check"></span>
-                                        }
-                                        @language.Name
-                                    </a>
-                                </li>
-                            }
-                        }
-                    </ul>
-                </li>
-            }
-            break;
-
-        case LanguageSwitchBlock.LanguageSwitchStyle.Select:
-            {
-                if (!string.IsNullOrEmpty(Model.MessageText))
-                {
-                    @Html.Raw("<div class=\"input-prepend\">");
-                    <span class="add-on">@Model.MessageText</span>
-                }
-
-                <select onchange="changeLanguage(this.value);" autocomplete="off" class="form-control">
-                    @foreach (var language in languages)
+@switch (Model.Style)
+{
+    case LanguageSwitchBlock.LanguageSwitchStyle.BootstrapNavbarDropdown:
+        {
+            <li class="dropdown">
+                <a aria-expanded="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    Language
+                    <span class="caret"></span>
+                </a>
+                <ul role="menu" class="dropdown-menu">
+                    @if (Model.UseUrlPrefix)
                     {
-                        string languageCode = Model.UseUrlPrefix
-                            ? language.UniqueSeoCode
-                            : language.CultureCode;
-                        
-                        if (language.CultureCode == WorkContext.CurrentCultureCode)
+                        foreach (var language in languages)
                         {
-                            <option value="@languageCode" selected="selected">@language.Name</option>
-                        }
-                        else
-                        {
-                            <option value="@languageCode">@language.Name</option>
+                            <li>
+                                <a href="/@language.UniqueSeoCode">
+                                    @if (language.CultureCode == WorkContext.CurrentCultureCode)
+                                    {
+                                        <span class="glyphicon glyphicon-check"></span>
+                                    }
+                                    @language.Name
+                                </a>
+                            </li>
                         }
                     }
-                </select>
+                    else
+                    {
+                        foreach (var language in languages)
+                        {
+                            <li>
+                                <a href="#" onclick="changeLanguage('@language.CultureCode');">
+                                    @if (language.CultureCode == WorkContext.CurrentCultureCode)
+                                    {
+                                        <span class="glyphicon glyphicon-check"></span>
+                                    }
+                                    @language.Name
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </li>
+        }
+        break;
 
-                if (!string.IsNullOrEmpty(Model.MessageText))
-                {
-                    @Html.Raw("</div>");
-                }
+    case LanguageSwitchBlock.LanguageSwitchStyle.Select:
+        {
+            if (!string.IsNullOrEmpty(Model.MessageText))
+            {
+                @Html.Raw("<div class=\"input-prepend\">");
+                <span class="add-on">@Model.MessageText</span>
             }
-            break;
-        case LanguageSwitchBlock.LanguageSwitchStyle.List:
-            <ul>
+
+            <select onchange="changeLanguage(this.value);" autocomplete="off" class="form-control">
                 @foreach (var language in languages)
                 {
-                    <li class="@language.CultureCode">
-                        @if (Model.UseUrlPrefix)
-                        {
-                            <a href="/@language.UniqueSeoCode">@language.Name</a>
-                        }
-                        else
-                        {
-                            <a href="javascript:void(0)" onclick="changeLanguage('@language.CultureCode');">@language.Name</a>
-                        }
-                    </li>
+                    string languageCode = Model.UseUrlPrefix
+                        ? language.UniqueSeoCode
+                        : language.CultureCode;
+                        
+                    if (language.CultureCode == WorkContext.CurrentCultureCode)
+                    {
+                        <option value="@languageCode" selected="selected">@language.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@languageCode">@language.Name</option>
+                    }
                 }
-            </ul>
-            break;
-    }
-</div>
+            </select>
+
+            if (!string.IsNullOrEmpty(Model.MessageText))
+            {
+                @Html.Raw("</div>");
+            }
+        }
+        break;
+    case LanguageSwitchBlock.LanguageSwitchStyle.List:
+        <ul>
+            @foreach (var language in languages)
+            {
+                <li class="@language.CultureCode">
+                    @if (Model.UseUrlPrefix)
+                    {
+                        <a href="/@language.UniqueSeoCode">@language.Name</a>
+                    }
+                    else
+                    {
+                        <a href="javascript:void(0)" onclick="changeLanguage('@language.CultureCode');">@language.Name</a>
+                    }
+                </li>
+            }
+        </ul>
+        break;
+}
 
 <script type="text/javascript">
     @if (Model.UseUrlPrefix)

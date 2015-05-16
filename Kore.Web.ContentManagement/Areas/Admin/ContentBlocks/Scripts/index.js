@@ -78,7 +78,6 @@ var ZoneModel = function () {
 
                 switchSection($("#zones-grid-section"));
 
-                alert(JSON.stringify(json));
                 // Update zone drop downs
                 $('#ZoneId').append($('<option>', {
                     value: json.Id,

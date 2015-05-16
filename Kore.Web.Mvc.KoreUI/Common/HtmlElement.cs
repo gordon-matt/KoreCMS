@@ -11,7 +11,7 @@ namespace Kore.Web.Mvc.KoreUI
         protected string tag;
 
         // Methods
-        internal HtmlElement(string tag, object htmlAttributes)
+        public HtmlElement(string tag, object htmlAttributes)
         {
             this.tag = tag;
             this.htmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);

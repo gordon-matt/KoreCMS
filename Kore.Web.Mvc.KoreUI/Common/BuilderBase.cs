@@ -12,7 +12,7 @@ namespace Kore.Web.Mvc.KoreUI
         protected readonly HtmlHelper<TModel> htmlHelper;
 
         // Methods
-        internal BuilderBase(HtmlHelper<TModel> htmlHelper, T element)
+        public BuilderBase(HtmlHelper<TModel> htmlHelper, T element)
         {
             if (element == null)
             {

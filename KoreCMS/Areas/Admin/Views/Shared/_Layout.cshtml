@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Kore.Infrastructure
 @using Kore.Web.Configuration
+@using Kore.Web.ContentManagement.Areas.Admin.Localization.Services
 
 @{
     Style.IncludeJQueryUI();
@@ -12,10 +13,20 @@
     Script.IncludeJQueryUI();
     Script.IncludeBootstrap();
     Script.IncludeJQueryValidate();
+
+    var languageService = EngineContext.Current.Resolve<ILanguageService>();
+    bool isRTL = languageService.CheckIfRightToLeft(WorkContext.CurrentCultureCode);
+    string dir = isRTL ? "rtl" : string.Empty;
+    string lang = WorkContext.CurrentCultureCode.LeftOf('-');
+    
+    if (isRTL)
+    {
+        Style.IncludeExternal("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.2.0-rc2/css/bootstrap-rtl.min.css");
+    }
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@lang">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +34,7 @@
     @RenderSection("styles", required: false)
     @RenderStyles()
 </head>
-<body>
+<body dir="@dir">
 
     @using (Html.BeginForm("LogOff", "Account", new { area = string.Empty }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
@@ -46,6 +57,7 @@
             <div class="collapse navbar-collapse" id="navbar-collapse-1">
                 @Html.Partial("AdminMenu")
                 <ul id="secondary-nav" class="nav navbar-nav navbar-right">
+                    @Html.ContentZone("AdminLanguageSwitch")
                     <li>
                         <a href="/">
                             <i class="fa fa-home"></i>
@@ -53,11 +65,11 @@
                         </a>
                     </li>
                     @*<li>
-                        <a href="@Url.Action("ViewMyProfile", "Account", new { area = KoreConstants.Areas.Security })">
-                            <i class="fa fa-user"></i>
-                            <span>@WorkContext.CurrentUser.ToString()</span>
-                        </a>
-                    </li>*@
+                            <a href="@Url.Action("ViewMyProfile", "Account", new { area = KoreConstants.Areas.Security })">
+                                <i class="fa fa-user"></i>
+                                <span>@WorkContext.CurrentUser.ToString()</span>
+                            </a>
+                        </li>*@
                     <li>
                         <a href="javascript:document.getElementById('logoutForm').submit()">
                             <i class="fa fa-power-off"></i>
@@ -83,7 +95,7 @@
             </div>*@
 
         @*<div class="clearfix"></div>
-        <br />*@
+            <br />*@
 
         @if (WorkContext.Breadcrumbs.Any())
         {
@@ -96,7 +108,7 @@
     </div>
 
     @RenderScripts()
-    
+
     <script type="text/javascript">
         @* Hack to fix problem with bundling of tiny mce *@
         var tinyMCEContentCss = "";

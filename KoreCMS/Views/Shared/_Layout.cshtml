@@ -1,12 +1,24 @@
-﻿@{
+﻿@using Kore.Infrastructure
+@using Kore.Web.ContentManagement.Areas.Admin.Localization.Services
+@{
     Script.IncludeBundle("jquery", 0);
     Script.IncludeBootstrap();
 
     string siteName = string.IsNullOrEmpty(SiteSettings.SiteName) ? "My Kore App" : SiteSettings.SiteName;
+
+    var languageService = EngineContext.Current.Resolve<ILanguageService>();
+    bool isRTL = languageService.CheckIfRightToLeft(WorkContext.CurrentCultureCode);
+    string dir = isRTL ? "rtl" : string.Empty;
+    string lang = WorkContext.CurrentCultureCode.LeftOf('-');
+
+    if (isRTL)
+    {
+        Style.IncludeExternal("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.2.0-rc2/css/bootstrap-rtl.min.css");
+    }
 }
 
 <!DOCTYPE html>
-<html>
+<html lang="@lang">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +28,7 @@
     @RenderStyles()
     @RenderSection("styles", required: false)
 </head>
-<body>
+<body dir="@dir">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -50,7 +62,7 @@
         </div>
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - My Kore Application</p>
         </footer>
     </div>
     @RenderScripts()

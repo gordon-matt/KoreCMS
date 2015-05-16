@@ -1,5 +1,3 @@
 ﻿<h1>Dashboard</h1>
 
-<p>Place your custom content here</p>
-
-@*@Html.TextArea("test", "123", new { @class = "kx-richtext" })*@
+@Html.ContentZone("DashboardWidgets", true, WidgetColumns.Two)

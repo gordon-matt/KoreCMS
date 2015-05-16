@@ -281,10 +281,25 @@ namespace Kore.Web.ContentManagement.Controllers
 
         [ChildActionOnly]
         [Route("content-blocks-by-zone")]
-        public ActionResult ContentBlocksByZone(string zoneName)
+        public ActionResult ContentBlocksByZone(string zoneName, bool renderAsWidgets = false, WidgetColumns widgetColumns = WidgetColumns.Default)
         {
             var contentBlockProviders = EngineContext.Current.ResolveAll<IContentBlockProvider>();
-            var contentBlocks = contentBlockProviders.SelectMany(x => x.GetContentBlocks(zoneName, WorkContext.CurrentCultureCode)).ToList();
+
+            var contentBlocks = contentBlockProviders
+                .SelectMany(x => x.GetContentBlocks(zoneName, WorkContext.CurrentCultureCode))
+                .ToList();
+
+            ViewBag.RenderAsWidgets = renderAsWidgets;
+            ViewBag.WidgetColumns = widgetColumns;
+
+            var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "ContentBlocksByZone", null);
+
+            // If someone has provided a custom template (see LocationFormatProvider)
+            if (viewEngineResult.View != null)
+            {
+                return View(contentBlocks);
+            }
+
             return View("Kore.Web.ContentManagement.Views.Frontend.ContentBlocksByZone", contentBlocks);
         }
     }

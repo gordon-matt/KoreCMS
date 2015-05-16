@@ -44,9 +44,15 @@ namespace Kore.Web.ContentManagement
             });
         }
 
-        public static MvcHtmlString ContentZone(this HtmlHelper html, string zoneName)
+        public static MvcHtmlString ContentZone(this HtmlHelper html, string zoneName, bool renderAsWidgets = false, WidgetColumns widgetColumns = WidgetColumns.Default)
         {
-            return html.Action("ContentBlocksByZone", "Frontend", new { area = "", zoneName = zoneName });
+            return html.Action("ContentBlocksByZone", "Frontend", new
+            {
+                area = string.Empty,
+                zoneName = zoneName,
+                renderAsWidgets = renderAsWidgets,
+                widgetColumns = widgetColumns
+            });
         }
 
         public static KoreCMS<TModel> KoreCMS<TModel>(this HtmlHelper<TModel> html) where TModel : class
@@ -64,6 +70,15 @@ namespace Kore.Web.ContentManagement
                 filterByUrl = filterByUrl
             });
         }
+    }
+
+    public enum WidgetColumns : byte
+    {
+        Default = 0,
+        One = 1,
+        Two = 2,
+        Three = 3,
+        Four = 4
     }
 
     public class KoreCMS<TModel>

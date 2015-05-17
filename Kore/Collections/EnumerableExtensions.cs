@@ -167,7 +167,7 @@ namespace Kore.Collections
         {
             var table = new DataTable(tableName) { Locale = CultureInfo.InvariantCulture };
 
-            IEnumerable<PropertyInfo> properties = typeof(T).GetProperties();
+            var properties = typeof(T).GetProperties();
 
             #region If T Is String Or Has No Properties
 
@@ -366,6 +366,112 @@ namespace Kore.Collections
                     yield return child;
                 }
             }
+        }
+
+
+
+
+
+
+
+        public static string ToCsv<T>(this IEnumerable<T> table)
+        {
+            return table.ToCsv(true);
+        }
+
+        public static string ToCsv<T>(this IEnumerable<T> table, bool outputColumnNames)
+        {
+            var sb = new StringBuilder(2000);
+
+            var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            #region Column Names
+
+            if (outputColumnNames)
+            {
+                foreach (PropertyInfo p in properties)
+                {
+                    sb.Append(p.Name);
+                    sb.Append(',');
+                }
+                sb.Remove(sb.Length - 1, 1);
+                sb.Append(System.Environment.NewLine);
+            }
+
+            #endregion Column Names
+
+            #region Rows (Data)
+
+            foreach (var row in table)
+            {
+                foreach (PropertyInfo p in properties)
+                {
+                    string value = p.GetValue(row).ToString();
+
+                    sb.Append(value.Contains(",") ? value.AddDoubleQuotes() : value);
+
+                    sb.Append(',');
+                }
+
+                //Remove Last ','
+                sb.Remove(sb.Length - 1, 1);
+                sb.Append(System.Environment.NewLine);
+            }
+
+            #endregion Rows (Data)
+
+            return sb.ToString();
+        }
+
+        public static bool ToCsv<T>(this IEnumerable<T> table, string filePath)
+        {
+            return table.ToCsv(filePath, true);
+        }
+
+        public static bool ToCsv<T>(this IEnumerable<T> table, string filePath, bool outputColumnNames)
+        {
+            var sb = new StringBuilder(2000);
+
+            var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            #region Column Names
+
+            if (outputColumnNames)
+            {
+                foreach (PropertyInfo p in properties)
+                {
+                    sb.Append(p.Name);
+                    sb.Append(',');
+                }
+                sb.Remove(sb.Length - 1, 1);
+                sb.Append(System.Environment.NewLine);
+            }
+
+            #endregion Column Names
+
+            #region Rows (Data)
+
+            foreach (var row in table)
+            {
+                foreach (PropertyInfo p in properties)
+                {
+                    string value = p.GetValue(row).ToString();
+
+                    sb.Append(value.Contains(",") ? value.AddDoubleQuotes() : value);
+
+                    sb.Append(',');
+                }
+
+                //Remove Last ','
+                sb.Remove(sb.Length - 1, 1);
+                sb.Append(System.Environment.NewLine);
+            }
+
+            #endregion Rows (Data)
+
+            bool result = sb.ToString().ToFile(filePath);
+
+            return result;
         }
     }
 }

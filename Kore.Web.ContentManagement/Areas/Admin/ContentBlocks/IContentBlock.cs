@@ -6,27 +6,21 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
     {
         Guid Id { get; set; }
 
-        string Name { get; }
-
         string Title { get; set; }
-
-        bool ShowTitleOnPage { get; set; }
-
-        bool HasTitle { get; }
-
-        Guid ZoneId { get; set; }
-
-        Guid? PageId { get; set; }
 
         int Order { get; set; }
 
         bool Enabled { get; set; }
 
-        bool Localized { get; set; }
+        string Name { get; }
+
+        Guid ZoneId { get; set; }
 
         string DisplayCondition { get; set; }
 
-        bool IsMoveable { get; set; }
+        Guid? PageId { get; set; }
+
+        bool Localized { get; set; }
 
         string CultureCode { get; set; }
 

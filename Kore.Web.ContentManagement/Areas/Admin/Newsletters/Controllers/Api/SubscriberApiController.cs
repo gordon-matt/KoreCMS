@@ -47,6 +47,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
                     Email = x.Email,
                     Name = membershipService.GetUserDisplayName(x)
                 })
+                .OrderBy(x => x.Name)
                 .AsQueryable();
         }
 

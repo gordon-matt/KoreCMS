@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
+using Kore.Collections;
+using Kore.Data;
 using Kore.Security.Membership;
 using Kore.Web.Events;
 using Kore.Web.Mvc;
@@ -122,6 +125,27 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
                 Successful = true,
                 Message = T(KoreCmsLocalizableStrings.Newsletters.SuccessfullySignedUp).Text
             });
+        }
+
+        [Route("download-csv")]
+        public FileContentResult DownloadCsv()
+        {
+            var userIds = membershipService.Value
+                .GetProfileEntriesByKeyAndValue(NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "true")
+                .Select(x => x.UserId);
+
+            var users = membershipService.Value.GetUsers(x => userIds.Contains(x.Id))
+                .ToHashSet()
+                .Select(x => new
+                {
+                    Email = x.Email,
+                    Name = membershipService.Value.GetUserDisplayName(x)
+                })
+                .OrderBy(x => x.Name);
+
+            string csv = users.ToCsv();
+            string fileName = string.Format("Subscribers_{0:yyyy_MM_dd}.csv", DateTime.Now);
+            return File(new UTF8Encoding().GetBytes(csv), "text/csv", fileName);
         }
     }
 }

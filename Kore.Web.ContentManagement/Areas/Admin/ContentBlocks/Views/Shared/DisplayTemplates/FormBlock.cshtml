@@ -7,13 +7,6 @@
     string formId = "form-block-" + Model.Id;
 }
 
-@if (Model.ShowTitleOnPage)
-{
-    <header>
-        <h3>@Model.Title</h3>
-    </header>
-}
-
 <form id="@formId" method="post" action="@Url.Action("Save", "FormBlock", new { area = string.Empty })" enctype="multipart/form-data">
     @Html.HiddenFor(m => m.ThankYouMessage)
     @Html.HiddenFor(m => m.RedirectUrl)

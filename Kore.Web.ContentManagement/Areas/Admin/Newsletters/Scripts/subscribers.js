@@ -22,6 +22,15 @@ var ViewModel = function () {
             });
         }
     };
+
+    self.downloadCsv = function () {
+        var downloadForm = $("<form>")
+            .attr("method", "POST")
+            .attr("action", "/admin/newsletters/subscribers/download-csv");
+        $("body").append(downloadForm);
+        downloadForm.submit();
+        downloadForm.remove();
+    };
 };
 
 var viewModel;

@@ -142,7 +142,7 @@ var ViewModel = function () {
     self.accessRestrictions = null; // doesn't need to be an observable
     self.cultureCode = ko.observable('');
     self.refId = ko.observable(null);
-    self.showButtons = ko.observable(false);
+    self.showToolbar = ko.observable(false);
 
     self.roles = ko.observableArray([]);
 
@@ -173,7 +173,7 @@ var ViewModel = function () {
 
         self.roles([]);
 
-        self.showButtons(false);
+        self.showToolbar(false);
 
         // Clean up from previously injected html/scripts
         if (self.pageModelStub != null && typeof self.pageModelStub.cleanUp === 'function') {
@@ -227,7 +227,7 @@ var ViewModel = function () {
                 self.roles([]);
             }
 
-            self.showButtons(true);
+            self.showToolbar(true);
 
             self.validator.resetForm();
             switchSection($("#form-section"));
@@ -406,7 +406,7 @@ var ViewModel = function () {
         $("#fields-definition").html("");
 
         switchSection($("#blank-section"));
-        self.showButtons(false);
+        self.showToolbar(false);
     };
 
     self.toggleEnabled = function () {
@@ -434,7 +434,7 @@ var ViewModel = function () {
 
     self.translate = function (id) {
         $("#CultureSelector_PageId").val(id); //TODO: make this a self variable
-        self.showButtons(false);
+        self.showToolbar(false);
         switchSection($("#culture-selector-section"));
     };
 
@@ -459,7 +459,7 @@ var ViewModel = function () {
         $("#fields-definition").html("");
 
         switchSection($("#blank-section"));
-        self.showButtons(false);
+        self.showToolbar(false);
     };
 
     self.cultureSelector_onSelected = function () {
@@ -498,7 +498,7 @@ var ViewModel = function () {
                 self.roles([]);
             }
 
-            self.showButtons(false);
+            self.showToolbar(false);
             
             self.validator.resetForm();
             switchSection($("#form-section"));
@@ -569,13 +569,13 @@ var ViewModel = function () {
     };
 
     self.showPageTypes = function () {
-        self.showButtons(false);
+        self.showToolbar(false);
         switchSection($("#page-type-grid-section"));
     };
 
     self.refresh = function () {
         switchSection($("#blank-section"));
-        self.showButtons(false);
+        self.showToolbar(false);
         $("#treeview").data("kendoTreeView").dataSource.read();
     }
 
@@ -646,7 +646,7 @@ $(document).ready(function () {
         }]
     });
 
-    var PagesDS = new kendo.data.HierarchicalDataSource({
+    var treeviewDS = new kendo.data.HierarchicalDataSource({
         type: "odata",
         transport: {
             read: {
@@ -671,7 +671,7 @@ $(document).ready(function () {
     $("#treeview").kendoTreeView({
         template: kendo.template($("#treeview-template").html()),
         dragAndDrop: true,
-        dataSource: PagesDS,
+        dataSource: treeviewDS,
         dataTextField: ["Name"],
         loadOnDemand: false,
         dataBound: function (e) {

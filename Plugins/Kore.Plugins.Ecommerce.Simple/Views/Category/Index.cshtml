@@ -1,4 +1,5 @@
-﻿@using Kore.Plugins.Ecommerce.Simple.Extensions;
+﻿@using Kore.Plugins.Ecommerce.Simple
+@using Kore.Plugins.Ecommerce.Simple.Extensions
 
 @{
     Layout = KoreWebConstants.DefaultAdminLayoutPath;
@@ -14,53 +15,88 @@
     Script.IncludePluginScript("category.js");
 }
 
-<div id="grid-section" class="row">
-    <div class="col-md-12">
-        <a data-bind="click: create" class="btn btn-primary">
-            <i class="fa fa-plus"></i>
-            @T(KoreWebLocalizableStrings.General.Create)
-        </a>
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <a data-bind="click: create" class="btn btn-primary">
+                    <i class="fa fa-plus"></i>
+                    @T(KoreWebLocalizableStrings.General.Create)
+                </a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <br />
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="well">
+                    <div id="treeview"></div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="clearfix"></div>
-    <br />
-
-    <div class="col-md-12">
-        <div id="Grid"></div>
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">
+        <div id="toolbar" class="row" data-bind="visible: showToolbar">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="btn-group pull-right">
+                    <a onclick="viewModel.delete()" class="btn btn-danger">@T(KoreWebLocalizableStrings.General.Delete).Text</a>
+                    @*<a data-bind="click: translate" class="btn btn-primary">@T(KoreCmsLocalizableStrings.Pages.Translations).Text</a>
+                    <a data-bind="click: toggleEnabled" class="btn btn-default">@T(KoreWebLocalizableStrings.General.Toggle).Text</a>*@
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div id="blank-section" class="row" style="display:none">
+                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="alert alert-info">
+                            Select a category from the left menu to begin editing.
+                        </div>
+                    </article>
+                </div>
+                <div id="form-section" class="row" style="display:none">
+                    <article class="col-sm-12 col-md-12">
+                        <form id="form-section-form" role="form">
+                            <fieldset>
+                                <legend id="form-section-legend"></legend>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("Name", "Name", new { @class = "control-label" })
+                                        @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("Slug", "Slug", new { @class = "control-label" })
+                                        @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: slug" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("Order", "Order", new { @class = "control-label" })
+                                        @Html.TextBox("Order", null, new { @class = "form-control", data_bind = "value: order" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group pull-right">
+                                        <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                        <button type="button" class="btn btn-primary" data-bind="click: save">@T(KoreWebLocalizableStrings.General.Save)</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </article>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-
-<div id="form-section" class="row" style="display:none">
-    <article class="col-sm-12 col-md-12">
-        <form id="form-section-form" role="form">
-            <fieldset>
-                <legend id="form-section-legend"></legend>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                        @Html.Label("Name", "Name", new { @class = "control-label" })
-                        @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                        @Html.Label("Slug", "Slug", new { @class = "control-label" })
-                        @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: slug" })
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group pull-right">
-                        <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                        <button type="button" class="btn btn-primary" data-bind="click: save">@T(KoreWebLocalizableStrings.General.Save)</button>
-                    </div>
-                </div>
-            </fieldset>
-        </form>
-    </article>
 </div>
 
 @section scripts {
     <script type="text/javascript">
         var translations = {
+            CircularRelationshipError: '@T(LocalizableStrings.CircularRelationshipError).Text',
             Create: '@T(KoreWebLocalizableStrings.General.Create).Text',
             Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
             DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.Messages.ConfirmDeleteRecord).Text',
@@ -73,5 +109,8 @@
             UpdateRecordError: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordError).Text',
             UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text'
         }
+    </script>
+    <script id="treeview-template" type="text/kendo-ui-template">
+        <a href="javascript:void(0)" onclick="viewModel.edit('#=item.Id#')">#= item.Name #</a>
     </script>
 }

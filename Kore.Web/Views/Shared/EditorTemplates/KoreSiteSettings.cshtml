@@ -65,11 +65,6 @@
                     @Html.Kore().LanguagesDropDownListFor(m => m.DefaultLanguage, new { @class = "form-control", data_bind = "value: defaultLanguage" })
                     @Html.ValidationMessageFor(m => m.DefaultLanguage)
                 </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.UseRightToLeft, new { data_bind = "checked: useRightToLeft" }) Use Right-to-Left Layout
-                    </label>
-                </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="SEO">
                 <div class="form-group">
@@ -102,7 +97,6 @@
         viewModel.defaultMobileTheme = ko.observable("");
         viewModel.allowUserToSelectTheme = ko.observable(false);
         viewModel.defaultLanguage = ko.observable("");
-        viewModel.useRightToLeft = ko.observable(false);
         viewModel.defaultMetaKeywords = ko.observable("");
         viewModel.defaultMetaDescription = ko.observable("");
         viewModel.homePageTitle = ko.observable("");
@@ -132,9 +126,6 @@
             if (data.DefaultLanguage) {
                 viewModel.defaultLanguage(data.DefaultLanguage);
             }
-            if (data.UseRightToLeft) {
-                viewModel.useRightToLeft(data.UseRightToLeft);
-            }
             if (data.DefaultMetaKeywords) {
                 viewModel.defaultMetaKeywords(data.DefaultMetaKeywords);
             }
@@ -156,7 +147,6 @@
         delete viewModel.defaultMobileTheme;
         delete viewModel.allowUserToSelectTheme;
         delete viewModel.defaultLanguage;
-        delete viewModel.useRightToLeft;
         delete viewModel.defaultMetaKeywords;
         delete viewModel.defaultMetaDescription;
         delete viewModel.homePageTitle;
@@ -172,7 +162,6 @@
             DefaultMobileTheme: viewModel.defaultMobileTheme(),
             AllowUserToSelectTheme: viewModel.allowUserToSelectTheme(),
             DefaultLanguage: viewModel.defaultLanguage(),
-            UseRightToLeft: viewModel.useRightToLeft(),
             DefaultMetaKeywords: viewModel.defaultMetaKeywords(),
             DefaultMetaDescription: viewModel.defaultMetaDescription(),
             HomePageTitle: viewModel.homePageTitle()

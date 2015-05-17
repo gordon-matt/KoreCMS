@@ -72,9 +72,6 @@ namespace Kore.Web.Configuration
             set { defaultLanguage = value; }
         }
 
-        [Display(Name = "Use Right-to-Left Layout")]
-        public bool UseRightToLeft { get; set; }
-
         #endregion Localization
 
         #region SEO

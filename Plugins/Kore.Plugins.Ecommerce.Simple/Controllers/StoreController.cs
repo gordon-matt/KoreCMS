@@ -50,7 +50,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 : Convert.ToInt32(pageIndexParam);
 
             var model = categoryRepository.Value.Table
-                .OrderBy(x => x.Name)
+                .OrderBy(x => x.Order)
+                .ThenBy(x => x.Name)
                 .Skip((pageIndex - 1) * storeSettings.CategoriesPerPage)
                 .Take(storeSettings.CategoriesPerPage)
                 .ToList();

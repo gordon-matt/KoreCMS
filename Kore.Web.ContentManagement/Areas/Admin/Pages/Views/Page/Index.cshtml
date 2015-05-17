@@ -18,6 +18,12 @@
     Script.IncludeBundle("kore-cms/pages");
 }
 
+@*<style type="text/css">
+    .k-treeview span.k-state-selected a {
+        color: #FFF;
+    }
+</style>*@
+
 <div class="row">
     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
         <div class="row">
@@ -43,7 +49,7 @@
         </div>
     </div>
     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">
-        <div id="page-buttons" class="row" data-bind="visible: showButtons">
+        <div id="toolbar" class="row" data-bind="visible: showToolbar">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="btn-group pull-left">
                     <a data-bind="click: createSubPage" class="btn btn-primary">
@@ -251,7 +257,7 @@
             UpdateTranslationError: '@T(KoreCmsLocalizableStrings.Messages.UpdateTranslationError).Text',
             UpdateTranslationSuccess: '@T(KoreCmsLocalizableStrings.Messages.UpdateTranslationSuccess).Text'
         }
-</script>
+    </script>
     <script id="treeview-template" type="text/kendo-ui-template">
         <a href="javascript:void(0)" onclick="viewModel.edit('#=item.Id#')">#= item.Name #</a>
     </script>

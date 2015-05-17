@@ -57,3 +57,7 @@ body {
     border-style: dashed;
     border-width: 2px;
 }
+
+.k-treeview span.k-state-selected a {
+    color: #FFF !important;
+}

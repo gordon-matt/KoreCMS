@@ -127,6 +127,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\Api\CartApiController.cs" />
     <Compile Include="Controllers\Api\CategoryApiController.cs" />
+    <Compile Include="Controllers\Api\CategoryTreeApiController.cs" />
     <Compile Include="Controllers\Api\OrderApiController.cs" />
     <Compile Include="Controllers\Api\ProductApiController.cs" />
     <Compile Include="Controllers\CartController.cs" />

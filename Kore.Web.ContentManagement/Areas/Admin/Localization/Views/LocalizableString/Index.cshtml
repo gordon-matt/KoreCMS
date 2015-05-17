@@ -24,10 +24,11 @@
 
 @section scripts {
     <script type="text/javascript">
+        var gridPageSize = @SiteSettings.DefaultGridPageSize;
         var cultureCode = '@ViewBag.CultureCode';
 
         if (cultureCode == "") {
             cultureCode = null;
         }
-    </script>
+</script>
 }

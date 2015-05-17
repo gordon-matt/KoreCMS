@@ -17,6 +17,7 @@
 
 @section scripts {
     <script type="text/javascript">
+        var gridPageSize = @SiteSettings.DefaultGridPageSize;
         var translations = {
             SetDesktopThemeError: '@T(KoreWebLocalizableStrings.Messages.SetDesktopThemeError).Text',
             SetDesktopThemeSuccess: '@T(KoreWebLocalizableStrings.Messages.SetDesktopThemeSuccess).Text',
@@ -54,7 +55,7 @@
                             }
                         }
                     },
-                    pageSize: 10,
+                    pageSize: gridPageSize,
                     serverPaging: true,
                     serverFiltering: true,
                     serverSorting: true,
@@ -151,5 +152,5 @@
                 $.notify(translations.SetMobileThemeError + ": " + jqXHR.responseText || textStatus, "error");
             });
         }
-    </script>
+</script>
 }

@@ -18,8 +18,8 @@ namespace Kore.Caching
         /// </summary>
         /// <param name="key">key</param>
         /// <param name="data">Data</param>
-        /// <param name="cacheTime">Cache time</param>
-        void Set(string key, object data, int cacheTime);
+        /// <param name="cacheTimeInMinutes">Cache time</param>
+        void Set(string key, object data, int cacheTimeInMinutes);
 
         /// <summary>
         /// Gets a value indicating whether the value associated with the specified key is cached

@@ -20,7 +20,8 @@
 @section scripts {
     <script type="text/javascript">
         'use strict'
-
+        
+        var gridPageSize = @SiteSettings.DefaultGridPageSize;
         function runNow(id) {
             $.ajax({
                 url: "/odata/kore/web/ScheduledTaskApi/RunNow",
@@ -86,7 +87,7 @@
                         }
                     },
                     batch: false,
-                    pageSize: 10,
+                    pageSize: gridPageSize,
                     serverPaging: false,
                     serverFiltering: false,
                     serverSorting: false,

@@ -80,6 +80,7 @@
 
 @section scripts {
     <script type="text/javascript">
+        var gridPageSize = @SiteSettings.DefaultGridPageSize;
         var translations = {
             AddServiceError: '@T(LocalizableStrings.AddServiceError).Text',
             AddServiceSuccess: '@T(LocalizableStrings.AddServiceSuccess).Text',
@@ -101,5 +102,5 @@
         }
         var allowAddRemove = '@ViewBag.AllowAddRemove';
         var onlyShowWatched = '@ViewBag.OnlyShowWatched';
-    </script>
+</script>
 }

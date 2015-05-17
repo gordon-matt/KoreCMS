@@ -378,7 +378,7 @@ $(document).ready(function () {
                     }
                 }
             },
-            pageSize: 10,
+            pageSize: gridPageSize,
             serverPaging: true,
             serverFiltering: true,
             serverSorting: true,
@@ -459,7 +459,7 @@ $(document).ready(function () {
                     }
                 }
             },
-            pageSize: 10,
+            pageSize: gridPageSize,
             serverPaging: true,
             serverFiltering: true,
             serverSorting: true,
@@ -566,7 +566,7 @@ function detailInit(e) {
                     }
                 }
             },
-            pageSize: 10,
+            pageSize: gridPageSize,
             //serverPaging: true,
             serverFiltering: true,
             serverSorting: true,

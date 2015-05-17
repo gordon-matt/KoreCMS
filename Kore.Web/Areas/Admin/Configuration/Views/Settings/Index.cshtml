@@ -34,6 +34,7 @@
     <script type="text/javascript">
         'use strict'
 
+        var gridPageSize = @SiteSettings.DefaultGridPageSize;
         var translations = {
             Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
             GetRecordError: '@T(KoreWebLocalizableStrings.Messages.GetRecordError).Text',
@@ -232,7 +233,7 @@
                             }
                         }
                     },
-                    pageSize: 10,
+                    pageSize: gridPageSize,
                     serverPaging: true,
                     serverFiltering: true,
                     serverSorting: true,
@@ -260,5 +261,5 @@
                 }]
             });
         });
-    </script>
+</script>
 }

@@ -73,7 +73,7 @@
 //                    }
 //                }
 //            },
-//            pageSize: 10,
+//            pageSize: gridPageSize,
 //            serverPaging: true,
 //            serverFiltering: true,
 //            serverSorting: true,

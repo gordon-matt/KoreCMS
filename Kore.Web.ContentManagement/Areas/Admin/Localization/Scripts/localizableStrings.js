@@ -111,7 +111,7 @@ $(document).ready(function () {
                 }
             },
             batch: false,
-            pageSize: 10,
+            pageSize: gridPageSize,
             serverPaging: false,
             serverFiltering: false,
             serverSorting: false,

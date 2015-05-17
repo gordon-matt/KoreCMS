@@ -12,7 +12,7 @@ namespace Kore.Caching
             return Get(cacheManager, key, 60, acquire);
         }
 
-        public static T Get<T>(this ICacheManager cacheManager, string key, int cacheTime, Func<T> acquire)
+        public static T Get<T>(this ICacheManager cacheManager, string key, int cacheTimeInMinutes, Func<T> acquire)
         {
             if (cacheManager.IsSet(key))
             {
@@ -22,7 +22,7 @@ namespace Kore.Caching
             {
                 var result = acquire();
                 //if (result != null)
-                cacheManager.Set(key, result, cacheTime);
+                cacheManager.Set(key, result, cacheTimeInMinutes);
                 return result;
             }
         }

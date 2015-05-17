@@ -95,6 +95,7 @@
 
 @section scripts {
     <script type="text/javascript">
+        var gridPageSize = @SiteSettings.DefaultGridPageSize;
         var translations = {
             CircularRelationshipError: '@T(LocalizableStrings.CircularRelationshipError).Text',
             Create: '@T(KoreWebLocalizableStrings.General.Create).Text',
@@ -109,7 +110,7 @@
             UpdateRecordError: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordError).Text',
             UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text'
         }
-    </script>
+</script>
     <script id="treeview-template" type="text/kendo-ui-template">
         <a href="javascript:void(0)" onclick="viewModel.edit('#=item.Id#')">#= item.Name #</a>
     </script>

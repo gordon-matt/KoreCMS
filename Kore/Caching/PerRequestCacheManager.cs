@@ -43,8 +43,8 @@ namespace Kore.Caching
         /// </summary>
         /// <param name="key">key</param>
         /// <param name="data">Data</param>
-        /// <param name="cacheTime">Cache time</param>
-        public virtual void Set(string key, object data, int cacheTime)
+        /// <param name="cacheTimeInMinutes">Cache time</param>
+        public virtual void Set(string key, object data, int cacheTimeInMinutes)
         {
             var items = GetItems();
             if (items == null)

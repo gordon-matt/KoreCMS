@@ -34,14 +34,14 @@ namespace Kore.Caching
         /// </summary>
         /// <param name="key">key</param>
         /// <param name="data">Data</param>
-        /// <param name="cacheTime">Cache time</param>
-        public virtual void Set(string key, object data, int cacheTime)
+        /// <param name="cacheTimeInMinutes">Cache time</param>
+        public virtual void Set(string key, object data, int cacheTimeInMinutes)
         {
             if (data == null)
                 return;
 
             var policy = new CacheItemPolicy();
-            policy.AbsoluteExpiration = DateTime.Now + TimeSpan.FromMinutes(cacheTime);
+            policy.AbsoluteExpiration = DateTime.Now + TimeSpan.FromMinutes(cacheTimeInMinutes);
             Cache.Add(new CacheItem(key, data), policy);
         }
 

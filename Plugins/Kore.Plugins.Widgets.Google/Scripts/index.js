@@ -33,8 +33,18 @@ var changeFrequencies = [
     },
 ];
 
+function getChangeFrequencyIndex(name) {
+    for (var i = 0; i < changeFrequencies.length; i++) {
+        var item = changeFrequencies[i];
+        if (item.Name == name) {
+            return i;
+        }
+    }
+    return 3;
+};
+
 function changeFrequenciesDropDownEditor(container, options) {
-    $('<input required data-text-field="Name" data-value-field="Id" data-bind="value:' + options.field + '"/>')
+    $('<input id="test" required data-text-field="Name" data-value-field="Id" data-bind="value:' + options.field + '"/>')
 		.appendTo(container)
 		.kendoDropDownList({
 		    autoBind: false,
@@ -43,6 +53,12 @@ function changeFrequenciesDropDownEditor(container, options) {
 		    }),
 		    template: "#=data.Name#"
 		});
+
+    var selectedIndex = getChangeFrequencyIndex(options.model.ChangeFrequency);
+    setTimeout(function () {
+        var dropdownlist = $("#test").data("kendoDropDownList");
+        dropdownlist.select(selectedIndex);
+    }, 200);
 }
 
 $(document).ready(function () {
@@ -92,7 +108,7 @@ $(document).ready(function () {
                         Id: { type: "number", editable: false },
                         Location: { type: "string", editable: false },
                         ChangeFrequency: { defaultValue: { Id: "3", Name: "Weekly" } },
-                        Priority: { type: "number" }
+                        Priority: { type: "number", validation: { min: 0.0, max: 1.0, step: 0.1 } }
                     }
                 }
             },
@@ -103,7 +119,7 @@ $(document).ready(function () {
                 $('#Grid').data('kendoGrid').refresh();
             },
             batch: false,
-            pageSize: 10,
+            pageSize: gridPageSize,
             serverPaging: false,
             serverFiltering: false,
             serverSorting: false,
@@ -145,8 +161,7 @@ $(document).ready(function () {
             field: "ChangeFrequency",
             title: "ChangeFrequency",
             filterable: false,
-            editor: changeFrequenciesDropDownEditor,
-            template: "#=ChangeFrequency#"
+            editor: changeFrequenciesDropDownEditor
         }, {
             field: "Priority",
             title: "Priority",

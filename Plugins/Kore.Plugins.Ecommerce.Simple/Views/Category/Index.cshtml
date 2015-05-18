@@ -5,15 +5,28 @@
     Layout = KoreWebConstants.DefaultAdminLayoutPath;
 
     Style.IncludeBundle("kendo-ui");
+    Style.IncludeBundle("jquery-ui");
+    Style.IncludeBundle("elfinder");
 
     Script.IncludeBundle("kendo-ui");
     Script.IncludeBundle("knockout");
     Script.IncludeBundle("knockout-mapping");
     Script.IncludeBundle("notify");
+    Script.IncludeBundle("tinymce");
+    Script.IncludeBundle("jquery-ui");
+    Script.IncludeBundle("elfinder");
 
     Script.IncludeBundle("kore-cms/common");
+    Script.IncludeBundle("kore-cms/bootbox");
     Script.IncludePluginScript("category.js");
 }
+
+<style type="text/css">
+    .modal-dialog {
+        width: 800px !important;
+        height: 480px !important;
+    }
+</style>
 
 <div class="row">
     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
@@ -42,6 +55,10 @@
                     <a onclick="viewModel.delete()" class="btn btn-danger">@T(KoreWebLocalizableStrings.General.Delete).Text</a>
                     @*<a data-bind="click: translate" class="btn btn-primary">@T(KoreCmsLocalizableStrings.Pages.Translations).Text</a>
                     <a data-bind="click: toggleEnabled" class="btn btn-default">@T(KoreWebLocalizableStrings.General.Toggle).Text</a>*@
+                    <a data-bind="click: showProducts" class="btn btn-default">
+                        <i class="fa fa-tags"></i>
+                        Products
+                    </a>
                 </div>
             </div>
         </div>
@@ -55,6 +72,7 @@
                         </div>
                     </article>
                 </div>
+
                 <div id="form-section" class="row" style="display:none">
                     <article class="col-sm-12 col-md-12">
                         <form id="form-section-form" role="form">
@@ -82,6 +100,103 @@
                                     <div class="form-group pull-right">
                                         <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
                                         <button type="button" class="btn btn-primary" data-bind="click: save">@T(KoreWebLocalizableStrings.General.Save)</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </article>
+                </div>
+
+                <div id="product-grid-section" class="row" style="display:none">
+                    <div class="col-md-12">
+                        <a data-bind="click: product.create" class="btn btn-primary">
+                            <i class="fa fa-plus"></i>
+                            @T(KoreWebLocalizableStrings.General.Create)
+                        </a>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <br />
+
+                    <div class="col-md-12">
+                        <div id="ProductGrid"></div>
+                    </div>
+                </div>
+
+                <div id="product-form-section" class="row" style="display:none">
+                    <article class="col-sm-12 col-md-12">
+                        <form id="product-form-section-form" role="form">
+                            <fieldset>
+                                <legend id="product-form-section-legend"></legend>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("Name", "Name", new { @class = "control-label" })
+                                        @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: product.name" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        @Html.Label("Slug", "Slug", new { @class = "control-label" })
+                                        @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: product.slug" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        @Html.Label("Price", "Price", new { @class = "control-label" })
+                                        @Html.TextBox("Price", null, new { @class = "form-control", data_bind = "value: product.price" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        @Html.Label("Tax", "Tax", new { @class = "control-label" })
+                                        @Html.TextBox("Tax", null, new { @class = "form-control", data_bind = "value: product.tax" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        @Html.Label("ShippingCost", "Shipping Cost", new { @class = "control-label" })
+                                        @Html.TextBox("ShippingCost", null, new { @class = "form-control", data_bind = "value: product.shippingCost" })
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <div data-bind="if: product.mainImageUrl">
+                                            <img data-bind="attr: { src: product.mainImageUrl }" class="img-responsive img-thumbnail" />
+                                        </div>
+                                        <div data-bind="ifnot: product.mainImageUrl">
+                                            <img src="http://placehold.it/320x240&text=Image+Missing" class="img-responsive img-thumbnail" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                                    <div class="form-group">
+                                        @Html.Label("MainImageUrl", "Main Image URL", new { @class = "control-label" })
+                                        <div class="input-group">
+                                            @Html.TextBox("MainImageUrl", null, new { @class = "form-control", data_bind = "value: product.mainImageUrl" })
+                                            <span class="input-group-addon">
+                                                <a href="javascript:void(0);" onclick="elFinderBrowserBootBox();"><i class="fa fa-search"></i></a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("ShortDescription", "Short Description", new { @class = "control-label" })
+                                        @Html.TextArea("ShortDescription", null, new { @class = "form-control", data_bind = "value: product.shortDescription" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("FullDescription", "Full Description", new { @class = "control-label" })
+                                        @Html.TextArea("FullDescription", null, new { @class = "form-control", data_bind = "wysiwyg: product.fullDescription, wysiwygConfig: product.tinyMCE_fullDescription" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group pull-right">
+                                        <button type="button" class="btn btn-default" data-bind="click: product.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                        <button type="button" class="btn btn-primary" data-bind="click: product.save">@T(KoreWebLocalizableStrings.General.Save)</button>
                                     </div>
                                 </div>
                             </fieldset>

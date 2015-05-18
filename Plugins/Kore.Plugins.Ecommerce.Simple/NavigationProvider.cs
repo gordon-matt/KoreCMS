@@ -26,10 +26,10 @@ namespace Kore.Plugins.Ecommerce.Simple
                 .IconCssClass("kore-icon kore-icon-categories")
                 .Permission(SimpleCommercePermissions.ReadCategories));
 
-            builder.Add(T(LocalizableStrings.Products), "5", item => item
-                .Action("Index", "Product", new { area = Constants.RouteArea })
-                .IconCssClass("kore-icon kore-icon-products")
-                .Permission(SimpleCommercePermissions.ReadProducts));
+            //builder.Add(T(LocalizableStrings.Products), "5", item => item
+            //    .Action("Index", "Product", new { area = Constants.RouteArea })
+            //    .IconCssClass("kore-icon kore-icon-products")
+            //    .Permission(SimpleCommercePermissions.ReadProducts));
         }
     }
 }

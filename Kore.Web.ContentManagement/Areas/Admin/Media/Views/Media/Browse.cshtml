@@ -17,7 +17,7 @@
         .elfinder .elfinder-button {
             cursor: pointer;
         }
-            .elfinder .elfinder-button.ui-state-disabled .fa {
+            .elfinder .elfinder-button.ui-state-disabled .kore-icon {
                 opacity: 0.4;
             }
         .ui-widget-header {
@@ -26,12 +26,12 @@
         .ui-widget-overlay {
             z-index: auto !important;
         }
-        .fa-sub {
+        /*.fa-sub {
             position: relative;
             left: 0.5em;
             width: 1em;
             top: -0.38em;
-        }
+        }*/
     </style>
 </head>
 <body>
@@ -93,33 +93,33 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".elfinder-button-icon.elfinder-button-icon-back").removeClass().addClass("fa fa-arrow-left");
-            $(".elfinder-button-icon.elfinder-button-icon-forward").removeClass().addClass("fa fa-arrow-right");
-            $(".elfinder-button-icon.elfinder-button-icon-reload").removeClass().addClass("fa fa-refresh");
-            $(".elfinder-button-icon.elfinder-button-icon-home").removeClass().addClass("fa fa-home");
-            $(".elfinder-button-icon.elfinder-button-icon-up").removeClass().addClass("fa fa-level-up");
-            $(".elfinder-button-icon.elfinder-button-icon-mkfile").removeClass().addClass("fa fa-file-o");
-            $(".elfinder-button-icon.elfinder-button-icon-upload").removeClass().addClass("fa fa-upload");
-            $(".elfinder-button-icon.elfinder-button-icon-open").removeClass().addClass("fa fa-folder-open-o");
-            $(".elfinder-button-icon.elfinder-button-icon-download").removeClass().addClass("fa fa-save");
-            $(".elfinder-button-icon.elfinder-button-icon-info").removeClass().addClass("fa fa-info");
-            $(".elfinder-button-icon.elfinder-button-icon-quicklook").removeClass().addClass("fa fa-search");
-            $(".elfinder-button-icon.elfinder-button-icon-copy").removeClass().addClass("fa fa-copy");
-            $(".elfinder-button-icon.elfinder-button-icon-cut").removeClass().addClass("fa fa-cut");
-            $(".elfinder-button-icon.elfinder-button-icon-paste").removeClass().addClass("fa fa-paste");
-            $(".elfinder-button-icon.elfinder-button-icon-rm").removeClass().addClass("fa fa-trash-o");
-            $(".elfinder-button-icon.elfinder-button-icon-duplicate").removeClass().addClass("fa fa-copy");
-            $(".elfinder-button-icon.elfinder-button-icon-edit").removeClass().addClass("fa fa-edit");
-            $(".elfinder-button-icon.elfinder-button-icon-resize").removeClass().addClass("fa fa-arrows-alt");
-            $(".elfinder-button-icon.elfinder-button-icon-view").removeClass().addClass("fa fa-th-list");
-            $(".elfinder-button-icon.elfinder-button-icon-view.elfinder-button-icon-view-list").removeClass().addClass("fa fa-list");
-            $(".elfinder-button-icon.elfinder-button-icon-sort").removeClass().addClass("fa fa-sort-alpha-asc");
+            $(".elfinder-button-icon.elfinder-button-icon-back").removeClass().addClass("kore-icon kore-icon-arrow-left");
+            $(".elfinder-button-icon.elfinder-button-icon-forward").removeClass().addClass("kore-icon kore-icon-arrow-right");
+            $(".elfinder-button-icon.elfinder-button-icon-reload").removeClass().addClass("kore-icon kore-icon-refresh");
+            $(".elfinder-button-icon.elfinder-button-icon-home").removeClass().addClass("kore-icon kore-icon-home");
+            $(".elfinder-button-icon.elfinder-button-icon-up").removeClass().addClass("kore-icon kore-icon-level-up");
+            $(".elfinder-button-icon.elfinder-button-icon-mkfile").removeClass().addClass("kore-icon kore-icon-file");
+            $(".elfinder-button-icon.elfinder-button-icon-upload").removeClass().addClass("kore-icon kore-icon-upload");
+            $(".elfinder-button-icon.elfinder-button-icon-open").removeClass().addClass("kore-icon kore-icon-folder-open");
+            $(".elfinder-button-icon.elfinder-button-icon-download").removeClass().addClass("kore-icon kore-icon-save");
+            $(".elfinder-button-icon.elfinder-button-icon-info").removeClass().addClass("kore-icon kore-icon-info");
+            $(".elfinder-button-icon.elfinder-button-icon-quicklook").removeClass().addClass("kore-icon kore-icon-search");
+            $(".elfinder-button-icon.elfinder-button-icon-copy").removeClass().addClass("kore-icon kore-icon-copy");
+            $(".elfinder-button-icon.elfinder-button-icon-cut").removeClass().addClass("kore-icon kore-icon-cut");
+            $(".elfinder-button-icon.elfinder-button-icon-paste").removeClass().addClass("kore-icon kore-icon-cut");
+            $(".elfinder-button-icon.elfinder-button-icon-rm").removeClass().addClass("kore-icon kore-icon-trash");
+            $(".elfinder-button-icon.elfinder-button-icon-duplicate").removeClass().addClass("kore-icon kore-icon-duplicate");
+            $(".elfinder-button-icon.elfinder-button-icon-edit").removeClass().addClass("kore-icon kore-icon-edit");
+            $(".elfinder-button-icon.elfinder-button-icon-resize").removeClass().addClass("kore-icon kore-icon-resize");
+            $(".elfinder-button-icon.elfinder-button-icon-view").removeClass().addClass("kore-icon kore-icon-th-list");
+            $(".elfinder-button-icon.elfinder-button-icon-view.elfinder-button-icon-view-list").removeClass().addClass("kore-icon kore-icon-list");
+            $(".elfinder-button-icon.elfinder-button-icon-sort").removeClass().addClass("kore-icon kore-icon-sort-alpha-asc");
 
             $(".elfinder-button-icon.elfinder-button-icon-mkdir")
                 .removeClass()
-                .addClass("fa fa-stack-1x fa-folder-open-o")
-                .parent().addClass("fa-stack")
-                .append('<span class="fa fa-stack-1x fa-sub fa-plus text-primary"></span>');
+                .addClass("kore-icon kore-icon-stack-1x kore-icon-folder-open")
+                .parent().addClass("kore-icon-stack")
+                .append('<span class="kore-icon kore-icon-stack-1x kore-icon-sub kore-icon-add text-primary"></span>');
         });
     </script>
 

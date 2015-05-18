@@ -18,7 +18,7 @@
 <div id="grid-section" class="row">
     <div class="col-md-12">
         <a data-bind="click: create" class="btn btn-primary">
-            <i class="fa fa-plus"></i>
+            <i class="kore-icon kore-icon-add"></i>
             @T(KoreWebLocalizableStrings.General.Create)
         </a>
     </div>
@@ -41,7 +41,7 @@
                         @Html.Label("Name", "Name", new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
-                                <i class="fa fa-file-o"></i>
+                                <i class="kore-icon kore-icon-file"></i>
                             </span>
                             @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
                         </div>
@@ -52,7 +52,7 @@
                         @Html.Label("UrlFilter", "URL Filter", new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
-                                <i class="fa fa-filter"></i>
+                                <i class="kore-icon kore-icon-filter"></i>
                             </span>
                             @Html.TextBox("UrlFilter", null, new { @class = "form-control", data_bind = "value: urlFilter" })
                         </div>
@@ -72,11 +72,11 @@
 <div id="items-grid-section" class="row" style="display:none">
     <div class="col-md-12">
         <a onclick="viewModel.menuItem.create(viewModel.id(), null)" class="btn btn-primary">
-            <i class="fa fa-plus"></i>
+            <i class="kore-icon kore-icon-add"></i>
             @T(KoreWebLocalizableStrings.General.Create)
         </a>
         <a onclick="viewModel.menuItem.goBack()" class="btn btn-default">
-            <i class="fa fa-arrow-left"></i>
+            <i class="kore-icon kore-icon-arrow-left"></i>
             @T(KoreWebLocalizableStrings.General.Back)
         </a>
     </div>
@@ -99,7 +99,7 @@
                         @Html.Label("Item_Text", "Text", new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
-                                <i class="fa fa-file-o"></i>
+                                <i class="kore-icon kore-icon-file"></i>
                             </span>
                             @Html.TextBox("Item_Text", null, new { @class = "form-control", data_bind = "value: menuItem.text" })
                         </div>
@@ -110,7 +110,7 @@
                         @Html.Label("Item_Url", "URL", new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
-                                <i class="fa fa-globe"></i>
+                                <i class="kore-icon kore-icon-globe"></i>
                             </span>
                             @Html.TextBox("Item_Url", null, new { @class = "form-control", data_bind = "value: menuItem.url" })
                         </div>
@@ -121,7 +121,7 @@
                         @Html.Label("Item_Description", "Description", new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
-                                <i class="fa fa-file-o"></i>
+                                <i class="kore-icon kore-icon-file"></i>
                             </span>
                             @Html.TextBox("Item_Description", null, new { @class = "form-control", data_bind = "value: menuItem.description" })
                         </div>
@@ -132,7 +132,7 @@
                         @Html.Label("Item_CssClass", "Css Class", new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
-                                <i class="fa fa-font"></i>
+                                <i class="kore-icon kore-icon-font"></i>
                             </span>
                             @Html.TextBox("Item_CssClass", null, new { @class = "form-control", data_bind = "value: menuItem.cssClass" })
                         </div>
@@ -143,7 +143,7 @@
                         @Html.Label("Item_Position", "Position", new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
-                                <i class="fa fa-sort-numeric-asc"></i>
+                                <i class="kore-icon kore-icon-sort-numeric-asc"></i>
                             </span>
                             @Html.TextBox("Item_Position", null, new { @class = "form-control", data_bind = "value: menuItem.position" })
                         </div>

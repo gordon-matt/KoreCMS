@@ -136,11 +136,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Areas\Admin\Blog\BlogAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Blog\BlogIndexingContentProvider.cs" />
     <Compile Include="Areas\Admin\Blog\BlogSettings.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\Api\BlogApiController.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\BlogContentController.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\BlogController.cs" />
     <Compile Include="Areas\Admin\Blog\Domain\BlogEntry.cs" />
+    <Compile Include="Areas\Admin\Blog\Services\IBlogService.cs" />
     <Compile Include="Areas\Admin\Media\Services\IMediaService.cs" />
     <Compile Include="CmsPermissions.cs" />
     <Compile Include="Infrastructure\IAutoMenuProvider.cs" />

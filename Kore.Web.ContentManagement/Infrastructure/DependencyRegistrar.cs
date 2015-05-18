@@ -5,6 +5,7 @@ using Kore.Localization;
 using Kore.Tasks;
 using Kore.Web.Configuration;
 using Kore.Web.ContentManagement.Areas.Admin.Blog;
+using Kore.Web.ContentManagement.Areas.Admin.Blog.Services;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.RuleEngine;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting;
@@ -36,6 +37,9 @@ namespace Kore.Web.ContentManagement.Infrastructure
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
             #region Services
+
+            // Blog
+            builder.RegisterType<BlogService>().As<IBlogService>().InstancePerDependency();
 
             // Localization
             builder.RegisterType<LanguageService>().As<ILanguageService>().InstancePerDependency();
@@ -152,6 +156,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             // Indexing
             builder.RegisterType<PagesIndexingContentProvider>().As<IIndexingContentProvider>().InstancePerDependency();
+            builder.RegisterType<BlogIndexingContentProvider>().As<IIndexingContentProvider>().InstancePerDependency();
         }
 
         public int Order

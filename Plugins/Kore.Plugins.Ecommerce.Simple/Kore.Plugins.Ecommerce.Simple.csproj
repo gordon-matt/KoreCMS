@@ -164,6 +164,7 @@
     <Compile Include="Services\IProductService.cs" />
     <Compile Include="SimpleCommercePermissions.cs" />
     <Compile Include="SimpleCommercePlugin.cs" />
+    <Compile Include="StoreProductsIndexingContentProvider.cs" />
     <Compile Include="StoreSettings.cs" />
   </ItemGroup>
   <ItemGroup>

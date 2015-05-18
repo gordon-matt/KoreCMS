@@ -4,6 +4,7 @@ using Kore.Localization;
 using Kore.Plugins.Ecommerce.Simple.Services;
 using Kore.Web.Configuration;
 using Kore.Web.ContentManagement.Infrastructure;
+using Kore.Web.Indexing.Services;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Navigation;
@@ -38,6 +39,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
 
             builder.RegisterType<PayPalSettings>().As<ISettings>().SingleInstance();
             builder.RegisterType<StoreSettings>().As<ISettings>().SingleInstance();
+
+            builder.RegisterType<StoreProductsIndexingContentProvider>().As<IIndexingContentProvider>().InstancePerDependency();
         }
 
         public int Order

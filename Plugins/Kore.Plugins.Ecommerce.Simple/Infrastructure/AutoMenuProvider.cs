@@ -63,56 +63,50 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                 return Enumerable.Empty<MenuItem>();
             }
 
-            string[] split = currentUrlSlug.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
+            //string[] split = currentUrlSlug.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
 
-            switch (split.Length)
+            if (currentUrlSlug == "store" || currentUrlSlug == "store/categories")
             {
-                case 1:
+                var menuItems = categoryRepository.Value.Table
+                    .Where(x => x.ParentId == null)
+                    .OrderBy(x => x.Name)
+                    .ToHashSet()
+                    .Select((x, index) => new MenuItem
                     {
-                        var menuItems = categoryRepository.Value.Table
-                            .Where(x => x.ParentId == null)
-                            .OrderBy(x => x.Name)
-                            .ToHashSet()
-                            .Select((x, index) => new MenuItem
-                            {
-                                Text = x.Name,
-                                Url = "/store/categories/" + x.Slug,
-                                Enabled = true,
-                                ParentId = null,
-                                Position = index
-                            });
-                        return menuItems;
-                    }
-                case 2:
-                    {
-                        string categorySlug = split[1];
-                        var category = categoryRepository.Value.Table.FirstOrDefault(x => x.Slug == categorySlug);
+                        Text = x.Name,
+                        Url = "/store/categories/" + x.Slug,
+                        Enabled = true,
+                        ParentId = null,
+                        Position = index
+                    });
+                return menuItems;
+            }
+            else
+            {
+                string categorySlug = currentUrlSlug
+                    .Replace("store/", string.Empty)
+                    .Replace("categories/", string.Empty);
 
-                        if (category == null)
-                        {
-                            return Enumerable.Empty<MenuItem>();
-                        }
+                var category = categoryRepository.Value.Table.FirstOrDefault(x => x.Slug == categorySlug);
 
-                        var menuItems = categoryRepository.Value.Table
-                            .Where(x => x.ParentId == category.Id)
-                            .OrderBy(x => x.Name)
-                            .ToHashSet()
-                            .Select((x, index) => new MenuItem
-                            {
-                                Text = x.Name,
-                                Url = "/store/categories/" + x.Slug,
-                                Enabled = true,
-                                ParentId = null,
-                                Position = index
-                            });
-                        return menuItems;
-                    }
-                case 3:
+                if (category == null)
+                {
+                    return Enumerable.Empty<MenuItem>();
+                }
+
+                var menuItems = categoryRepository.Value.Table
+                    .Where(x => x.ParentId == category.Id)
+                    .OrderBy(x => x.Name)
+                    .ToHashSet()
+                    .Select((x, index) => new MenuItem
                     {
-                        //TODO: Can we add anything here? Probably not...
-                        return Enumerable.Empty<MenuItem>();
-                    }
-                default: return Enumerable.Empty<MenuItem>();
+                        Text = x.Name,
+                        Url = "/store/categories/" + x.Slug,
+                        Enabled = true,
+                        ParentId = null,
+                        Position = index
+                    });
+                return menuItems;
             }
         }
 

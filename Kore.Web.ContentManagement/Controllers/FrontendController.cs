@@ -47,25 +47,30 @@ namespace Kore.Web.ContentManagement.Controllers
             var pageService = EngineContext.Current.Resolve<IPageService>();
 
             var currentPage = pageService.Repository.Table.FirstOrDefault(y => y.Slug == currentUrlSlug);
-            var query = pageService.Repository.Table.Where(x => x.IsEnabled).ToHashSet();
+            var allPages = pageService.Repository.Table.Where(x => x.IsEnabled).ToHashSet();
 
             if (currentPage != null)
             {
                 var parentId = currentPage.ParentId;
                 while (parentId != null)
                 {
-                    var page = query.FirstOrDefault(y => y.Id == parentId);
+                    var parentPage = allPages.FirstOrDefault(y => y.Id == parentId);
 
-                    if (PageSecurityHelper.CheckUserHasAccessToPage(page, User))
+                    if (parentPage == null)
+                    {
+                        break;
+                    }
+
+                    if (PageSecurityHelper.CheckUserHasAccessToPage(parentPage, User))
                     {
                         breadcrumbs.Add(new Breadcrumb
                         {
-                            Text = page.Name,
-                            Url = "/" + page.Slug
+                            Text = parentPage.Name,
+                            Url = "/" + parentPage.Slug
                         });
                     }
 
-                    parentId = page.ParentId;
+                    parentId = parentPage.ParentId;
                 }
 
                 breadcrumbs.Reverse();

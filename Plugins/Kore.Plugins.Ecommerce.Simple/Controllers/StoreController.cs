@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Kore.Data;
 using Kore.Plugins.Ecommerce.Simple.Data.Domain;
+using Kore.Plugins.Ecommerce.Simple.Services;
 using Kore.Web.Mvc;
+using Kore.Web.Navigation;
 
 namespace Kore.Plugins.Ecommerce.Simple.Controllers
 {
@@ -11,17 +14,17 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
     [RoutePrefix("store")]
     public class StoreController : KoreController
     {
-        private readonly Lazy<IRepository<Category>> categoryRepository;
-        private readonly Lazy<IRepository<Product>> productRepository;
+        private readonly Lazy<ICategoryService> categoryService;
+        private readonly Lazy<IProductService> productService;
         private readonly StoreSettings storeSettings;
 
         public StoreController(
-            Lazy<IRepository<Category>> categoryRepository,
-            Lazy<IRepository<Product>> productRepository,
+            Lazy<ICategoryService> categoryService,
+            Lazy<IProductService> productService,
             StoreSettings storeSettings)
         {
-            this.categoryRepository = categoryRepository;
-            this.productRepository = productRepository;
+            this.categoryService = categoryService;
+            this.productService = productService;
             this.storeSettings = storeSettings;
         }
 
@@ -40,7 +43,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         }
 
         [Route("categories")]
-        public ActionResult Categories()
+        public ActionResult Categories(int? categoryId = null)
         {
             WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Store));
 
@@ -49,14 +52,15 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 ? 1
                 : Convert.ToInt32(pageIndexParam);
 
-            var model = categoryRepository.Value.Table
+            var model = categoryService.Value.Repository.Table
+                .Where(x => x.ParentId == categoryId)
                 .OrderBy(x => x.Order)
                 .ThenBy(x => x.Name)
                 .Skip((pageIndex - 1) * storeSettings.CategoriesPerPage)
                 .Take(storeSettings.CategoriesPerPage)
                 .ToList();
 
-            int total = categoryRepository.Value.Count();
+            int total = categoryService.Value.Count();
 
             ViewBag.PageCount = (int)Math.Ceiling((double)total / storeSettings.CategoriesPerPage);
             ViewBag.PageIndex = pageIndex;
@@ -67,23 +71,57 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         [Route("categories/{categorySlug}")]
         public ActionResult Products(string categorySlug)
         {
-            var category = categoryRepository.Value.Table.FirstOrDefault(x => x.Slug == categorySlug);
+            var category = categoryService.Value.FindOne(x => x.Slug == categorySlug);
 
             if (category == null)
             {
                 return new HttpNotFoundResult();
             }
 
+            #region Breadcrumbs
+
             WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Store), Url.Action("Index"));
-            WorkContext.Breadcrumbs.Add(category.Name);
+
+            var breadcrumbs = new List<Breadcrumb>();
+            if (category != null)
+            {
+                var parentId = category.ParentId;
+                while (parentId != null)
+                {
+                    var parentCategory = categoryService.Value.FindOne(y => y.Id == parentId);
+
+                    if (parentCategory == null)
+                    {
+                        break;
+                    }
+
+                    breadcrumbs.Add(new Breadcrumb
+                    {
+                        Text = parentCategory.Name,
+                        Url = Url.Action("Products", new { categorySlug = parentCategory.Slug })
+                    });
+
+                    parentId = parentCategory.ParentId;
+                }
+
+                breadcrumbs.Reverse();
+
+                breadcrumbs.Add(new Breadcrumb
+                {
+                    Text = category.Name
+                });
+            }
+
+            WorkContext.Breadcrumbs.AddRange(breadcrumbs);
+
+            #endregion
 
             string pageIndexParam = Request.Params["pageIndex"];
             int pageIndex = string.IsNullOrEmpty(pageIndexParam)
                 ? 1
                 : Convert.ToInt32(pageIndexParam);
 
-            var query = productRepository.Value.Table
-                .Where(x => x.CategoryId == category.Id);
+            var query = productService.Value.Repository.Table.Where(x => x.CategoryId == category.Id);
 
             int total = query.Count();
 
@@ -103,23 +141,54 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         [Route("categories/{categorySlug}/{productSlug}")]
         public ActionResult Product(string categorySlug, string productSlug)
         {
-            var category = categoryRepository.Value.Table.FirstOrDefault(x => x.Slug == categorySlug);
+            var category = categoryService.Value.FindOne(x => x.Slug == categorySlug);
 
             if (category == null)
             {
                 return new HttpNotFoundResult();
             }
 
-            var product = productRepository.Value.Table.FirstOrDefault(x => x.Slug == productSlug);
+            var product = productService.Value.FindOne(x => x.Slug == productSlug);
 
             if (product == null)
             {
                 return new HttpNotFoundResult();
             }
 
+            #region Breadcrumbs
+
             WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Store), Url.Action("Index"));
-            WorkContext.Breadcrumbs.Add(category.Name, Url.Action("Products") + "?pageIndex=1");
+
+            var breadcrumbs = new List<Breadcrumb>();
+            if (category != null)
+            {
+                var parentId = category.ParentId;
+                while (parentId != null)
+                {
+                    var parentCategory = categoryService.Value.FindOne(y => y.Id == parentId);
+
+                    if (parentCategory == null)
+                    {
+                        break;
+                    }
+
+                    breadcrumbs.Add(new Breadcrumb
+                    {
+                        Text = parentCategory.Name,
+                        Url = Url.Action("Products", new { categorySlug = parentCategory.Slug })
+                    });
+
+                    parentId = parentCategory.ParentId;
+                }
+
+                breadcrumbs.Reverse();
+            }
+
+            WorkContext.Breadcrumbs.AddRange(breadcrumbs);
+            WorkContext.Breadcrumbs.Add(category.Name, Url.Action("Products"));
             WorkContext.Breadcrumbs.Add(product.Name);
+
+            #endregion
 
             return View("Product", product);
         }

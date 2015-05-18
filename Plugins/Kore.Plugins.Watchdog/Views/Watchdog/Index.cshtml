@@ -16,7 +16,7 @@
 <div id="grid-section" class="row">
     <div class="col-md-12">
         <a data-bind="click: create" class="btn btn-primary">
-            <i class="fa fa-plus"></i>
+            <i class="kore-icon kore-icon-add"></i>
             @T(KoreWebLocalizableStrings.General.Create)
         </a>
     </div>
@@ -38,7 +38,7 @@
                     @Html.Label("Url", "Url", new { @class = "control-label" })
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <i class="fa fa-globe"></i>
+                            <i class="kore-icon kore-icon-globe"></i>
                         </span>
                         @Html.TextBox("Url", null, new { @class = "form-control", data_bind = "value: url" })
                     </div>
@@ -49,7 +49,7 @@
                     @Html.Label("Password", "Password", new { @class = "control-label" })
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <i class="fa fa-key"></i>
+                            <i class="kore-icon kore-icon-password"></i>
                         </span>
                         @Html.Password("Password", null, new { @class = "form-control", data_bind = "value: password" })
                     </div>

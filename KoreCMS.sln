@@ -50,8 +50,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Widgets.FlexSl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Ecommerce.Simple", "Plugins\Kore.Plugins.Ecommerce.Simple\Kore.Plugins.Ecommerce.Simple.csproj", "{F8E56256-C629-49C7-94B7-6A0FE551ACED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Web.Mvc.KoreUI", "Kore.Web.Mvc.KoreUI\Kore.Web.Mvc.KoreUI.csproj", "{0A27759D-7D48-4828-92B6-68D296AC9F19}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -122,10 +120,6 @@ Global
 		{F8E56256-C629-49C7-94B7-6A0FE551ACED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8E56256-C629-49C7-94B7-6A0FE551ACED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8E56256-C629-49C7-94B7-6A0FE551ACED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A27759D-7D48-4828-92B6-68D296AC9F19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A27759D-7D48-4828-92B6-68D296AC9F19}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A27759D-7D48-4828-92B6-68D296AC9F19}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A27759D-7D48-4828-92B6-68D296AC9F19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

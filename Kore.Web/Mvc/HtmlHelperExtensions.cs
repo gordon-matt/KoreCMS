@@ -12,6 +12,7 @@ using Kore.Localization;
 using Kore.Security.Membership;
 using Kore.Web.Collections;
 using Kore.Web.Mvc.Controls;
+using Kore.Web.Mvc.KoreUI;
 //using Kore.Web.Mvc.RoboUI;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Security.Membership.Permissions;
@@ -579,6 +580,11 @@ namespace Kore.Web.Mvc
         public static Kore<TModel> Kore<TModel>(this HtmlHelper<TModel> html) where TModel : class
         {
             return new Kore<TModel>(html);
+        }
+
+        public static KoreUI<TModel> KoreUI<TModel>(this HtmlHelper<TModel> htmlHelper)
+        {
+            return new KoreUI<TModel>(htmlHelper);
         }
 
         //public static RoboUIFormResult<TModel> RoboForm<TModel>(this HtmlHelper htmlHelper, TModel model) where TModel : class

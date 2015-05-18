@@ -98,63 +98,63 @@ function elFinderBrowserBootBox() {
 };
 
 function elFinderReplaceIcons() {
-    $(".elfinder-button-icon.elfinder-button-icon-back").removeClass().addClass("fa fa-arrow-left");
-    $(".elfinder-button-icon.elfinder-button-icon-forward").removeClass().addClass("fa fa-arrow-right");
-    $(".elfinder-button-icon.elfinder-button-icon-reload").removeClass().addClass("fa fa-refresh");
-    $(".elfinder-button-icon.elfinder-button-icon-home").removeClass().addClass("fa fa-home");
-    $(".elfinder-button-icon.elfinder-button-icon-up").removeClass().addClass("fa fa-level-up");
-    $(".elfinder-button-icon.elfinder-button-icon-mkfile").removeClass().addClass("fa fa-file-o");
-    $(".elfinder-button-icon.elfinder-button-icon-upload").removeClass().addClass("fa fa-upload");
-    $(".elfinder-button-icon.elfinder-button-icon-open").removeClass().addClass("fa fa-folder-open-o");
-    $(".elfinder-button-icon.elfinder-button-icon-download").removeClass().addClass("fa fa-save");
-    $(".elfinder-button-icon.elfinder-button-icon-info").removeClass().addClass("fa fa-info");
-    $(".elfinder-button-icon.elfinder-button-icon-quicklook").removeClass().addClass("fa fa-search");
-    $(".elfinder-button-icon.elfinder-button-icon-copy").removeClass().addClass("fa fa-copy");
-    $(".elfinder-button-icon.elfinder-button-icon-cut").removeClass().addClass("fa fa-cut");
-    $(".elfinder-button-icon.elfinder-button-icon-paste").removeClass().addClass("fa fa-paste");
-    $(".elfinder-button-icon.elfinder-button-icon-rm").removeClass().addClass("fa fa-trash-o");
-    $(".elfinder-button-icon.elfinder-button-icon-duplicate").removeClass().addClass("fa fa-copy");
-    $(".elfinder-button-icon.elfinder-button-icon-edit").removeClass().addClass("fa fa-edit");
-    $(".elfinder-button-icon.elfinder-button-icon-resize").removeClass().addClass("fa fa-arrows-alt");
-    $(".elfinder-button-icon.elfinder-button-icon-view").removeClass().addClass("fa fa-th-list");
-    $(".elfinder-button-icon.elfinder-button-icon-view.elfinder-button-icon-view-list").removeClass().addClass("fa fa-list");
-    $(".elfinder-button-icon.elfinder-button-icon-sort").removeClass().addClass("fa fa-sort-alpha-asc");
+    $(".elfinder-button-icon.elfinder-button-icon-back").removeClass().addClass("kore-icon kore-icon-arrow-left");
+    $(".elfinder-button-icon.elfinder-button-icon-forward").removeClass().addClass("kore-icon kore-icon-arrow-right");
+    $(".elfinder-button-icon.elfinder-button-icon-reload").removeClass().addClass("kore-icon kore-icon-refresh");
+    $(".elfinder-button-icon.elfinder-button-icon-home").removeClass().addClass("kore-icon kore-icon-home");
+    $(".elfinder-button-icon.elfinder-button-icon-up").removeClass().addClass("kore-icon kore-icon-level-up");
+    $(".elfinder-button-icon.elfinder-button-icon-mkfile").removeClass().addClass("kore-icon kore-icon-file");
+    $(".elfinder-button-icon.elfinder-button-icon-upload").removeClass().addClass("kore-icon kore-icon-upload");
+    $(".elfinder-button-icon.elfinder-button-icon-open").removeClass().addClass("kore-icon kore-icon-folder-open");
+    $(".elfinder-button-icon.elfinder-button-icon-download").removeClass().addClass("kore-icon kore-icon-save");
+    $(".elfinder-button-icon.elfinder-button-icon-info").removeClass().addClass("kore-icon kore-icon-info");
+    $(".elfinder-button-icon.elfinder-button-icon-quicklook").removeClass().addClass("kore-icon kore-icon-search");
+    $(".elfinder-button-icon.elfinder-button-icon-copy").removeClass().addClass("kore-icon kore-icon-copy");
+    $(".elfinder-button-icon.elfinder-button-icon-cut").removeClass().addClass("kore-icon kore-icon-cut");
+    $(".elfinder-button-icon.elfinder-button-icon-paste").removeClass().addClass("kore-icon kore-icon-cut");
+    $(".elfinder-button-icon.elfinder-button-icon-rm").removeClass().addClass("kore-icon kore-icon-trash");
+    $(".elfinder-button-icon.elfinder-button-icon-duplicate").removeClass().addClass("kore-icon kore-icon-duplicate");
+    $(".elfinder-button-icon.elfinder-button-icon-edit").removeClass().addClass("kore-icon kore-icon-edit");
+    $(".elfinder-button-icon.elfinder-button-icon-resize").removeClass().addClass("kore-icon kore-icon-resize");
+    $(".elfinder-button-icon.elfinder-button-icon-view").removeClass().addClass("kore-icon kore-icon-th-list");
+    $(".elfinder-button-icon.elfinder-button-icon-view.elfinder-button-icon-view-list").removeClass().addClass("kore-icon kore-icon-list");
+    $(".elfinder-button-icon.elfinder-button-icon-sort").removeClass().addClass("kore-icon kore-icon-sort-alpha-asc");
 
     $(".elfinder-button-icon.elfinder-button-icon-mkdir")
         .removeClass()
-        .addClass("fa fa-stack-1x fa-folder-open-o")
-        .parent().addClass("fa-stack")
-        .append('<span class="fa fa-stack-1x fa-sub fa-plus text-primary"></span>');
+        .addClass("kore-icon kore-icon-stack-1x kore-icon-folder-open")
+        .parent().addClass("kore-icon-stack")
+        .append('<span class="kore-icon kore-icon-stack-1x kore-icon-sub kore-icon-add text-primary"></span>');
 };
 
 function elFinderReplaceIconsLarge() {
-    $(".elfinder-button-icon.elfinder-button-icon-back").removeClass().addClass("fa fa-2x fa-arrow-left");
-    $(".elfinder-button-icon.elfinder-button-icon-forward").removeClass().addClass("fa fa-2x fa-arrow-right");
-    $(".elfinder-button-icon.elfinder-button-icon-reload").removeClass().addClass("fa fa-2x fa-refresh");
-    $(".elfinder-button-icon.elfinder-button-icon-home").removeClass().addClass("fa fa-2x fa-home");
-    $(".elfinder-button-icon.elfinder-button-icon-up").removeClass().addClass("fa fa-2x fa-level-up");
-    $(".elfinder-button-icon.elfinder-button-icon-mkfile").removeClass().addClass("fa fa-2x fa-file-o");
-    $(".elfinder-button-icon.elfinder-button-icon-upload").removeClass().addClass("fa fa-2x fa-upload");
-    $(".elfinder-button-icon.elfinder-button-icon-open").removeClass().addClass("fa fa-2x fa-folder-open-o");
-    $(".elfinder-button-icon.elfinder-button-icon-download").removeClass().addClass("fa fa-2x fa-save");
-    $(".elfinder-button-icon.elfinder-button-icon-info").removeClass().addClass("fa fa-2x fa-info");
-    $(".elfinder-button-icon.elfinder-button-icon-quicklook").removeClass().addClass("fa fa-2x fa-search");
-    $(".elfinder-button-icon.elfinder-button-icon-copy").removeClass().addClass("fa fa-2x fa-copy");
-    $(".elfinder-button-icon.elfinder-button-icon-cut").removeClass().addClass("fa fa-2x fa-cut");
-    $(".elfinder-button-icon.elfinder-button-icon-paste").removeClass().addClass("fa fa-2x fa-paste");
-    $(".elfinder-button-icon.elfinder-button-icon-rm").removeClass().addClass("fa fa-2x fa-trash-o");
-    $(".elfinder-button-icon.elfinder-button-icon-duplicate").removeClass().addClass("fa fa-2x fa-copy");
-    $(".elfinder-button-icon.elfinder-button-icon-edit").removeClass().addClass("fa fa-2x fa-edit");
-    $(".elfinder-button-icon.elfinder-button-icon-resize").removeClass().addClass("fa fa-2x fa-arrows-alt");
-    $(".elfinder-button-icon.elfinder-button-icon-view").removeClass().addClass("fa fa-2x fa-th-list");
-    $(".elfinder-button-icon.elfinder-button-icon-view.elfinder-button-icon-view-list").removeClass().addClass("fa fa-2x fa-list");
-    $(".elfinder-button-icon.elfinder-button-icon-sort").removeClass().addClass("fa fa-2x fa-sort-alpha-asc");
+    $(".elfinder-button-icon.elfinder-button-icon-back").removeClass().addClass("kore-icon kore-icon-arrow-left kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-forward").removeClass().addClass("kore-icon kore-icon-arrow-right kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-reload").removeClass().addClass("kore-icon kore-icon-refresh kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-home").removeClass().addClass("kore-icon kore-icon-home kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-up").removeClass().addClass("kore-icon kore-icon-level-up kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-mkfile").removeClass().addClass("kore-icon kore-icon-file kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-upload").removeClass().addClass("kore-icon kore-icon-upload kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-open").removeClass().addClass("kore-icon kore-icon-folder-open kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-download").removeClass().addClass("kore-icon kore-icon-save kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-info").removeClass().addClass("kore-icon kore-icon-info kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-quicklook").removeClass().addClass("kore-icon kore-icon-search kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-copy").removeClass().addClass("kore-icon kore-icon-copy kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-cut").removeClass().addClass("kore-icon kore-icon-cut kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-paste").removeClass().addClass("kore-icon kore-icon-cut kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-rm").removeClass().addClass("kore-icon kore-icon-trash kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-duplicate").removeClass().addClass("kore-icon kore-icon-duplicate kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-edit").removeClass().addClass("kore-icon kore-icon-edit kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-resize").removeClass().addClass("kore-icon kore-icon-resize kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-view").removeClass().addClass("kore-icon kore-icon-th-list kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-view.elfinder-button-icon-view-list").removeClass().addClass("kore-icon kore-icon-list kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-sort").removeClass().addClass("kore-icon kore-icon-sort-alpha-asc kore-icon-2x");
 
     $(".elfinder-button-icon.elfinder-button-icon-mkdir")
         .removeClass()
-        .addClass("fa fa-stack-2x fa-folder-open-o")
-        .parent().addClass("fa-stack fa-lg")
-        .append('<span class="fa fa-stack-1x fa-sub fa-plus text-primary"></span>');
+        .addClass("kore-icon kore-icon-stack-2x kore-icon-folder-open")
+        .parent().addClass("kore-icon-stack kore-icon-lg")
+        .append('<span class="kore-icon kore-icon-stack-1x kore-icon-sub kore-icon-add text-primary"></span>');
 };
 
 if (typeof tinyMCEContentCss !== 'undefined') {

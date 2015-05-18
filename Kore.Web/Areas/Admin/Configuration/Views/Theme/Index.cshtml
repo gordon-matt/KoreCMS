@@ -82,14 +82,14 @@
                 }, {
                     field: "SupportRtl",
                     title: "Supports RTL",
-                    template: '<i class="fa #=SupportRtl ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
+                    template: '<i class="kore-icon #=SupportRtl ? \'kore-icon-ok text-success\' : \'kore-icon-no text-danger\'#"></i>',
                     attributes: { "class": "text-center" },
                     filterable: true,
                     width: 70
                 }, {
                     field: "MobileTheme",
                     title: "For Mobile?",
-                    template: '<i class="fa #=MobileTheme ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
+                    template: '<i class="kore-icon #=MobileTheme ? \'kore-icon-ok text-success\' : \'kore-icon-no text-danger\'#"></i>',
                     attributes: { "class": "text-center" },
                     filterable: true,
                     width: 70
@@ -97,7 +97,7 @@
                     field: "IsDefaultDesktopTheme",
                     title: "Default Desktop Theme",
                     template:
-                        '# if(IsDefaultDesktopTheme) {# <i class="fa fa-check-circle fa-2x text-success"></i> #} ' +
+                        '# if(IsDefaultDesktopTheme) {# <i class="kore-icon kore-icon-ok-circle kore-icon-2x text-success"></i> #} ' +
                         'else {# <a href="javascript:void(0);" onclick="setDesktopTheme(\'#=Title#\')" class="btn btn-default btn-sm">Set</a> #} #',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -106,7 +106,7 @@
                     field: "IsDefaultMobileTheme",
                     title: "Default Mobile Theme",
                     template:
-                        '# if(IsDefaultMobileTheme) {# <i class="fa fa-check-circle fa-2x text-success"></i> #} ' +
+                        '# if(IsDefaultMobileTheme) {# <i class="kore-icon kore-icon-ok-circle kore-icon-2x text-success"></i> #} ' +
                         'else {# <a href="javascript:void(0);" onclick="setMobileTheme(\'#=Title#\')" class="btn btn-default btn-sm">Set</a> #} #',
                     attributes: { "class": "text-center" },
                     filterable: false,

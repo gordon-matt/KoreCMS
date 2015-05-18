@@ -65,7 +65,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
                         { KoreCmsLocalizableStrings.Newsletters.Title, "Newsletters" },
                         { KoreCmsLocalizableStrings.Newsletters.SuccessfullySignedUp, "You have successfully signed up for newsletters." },
                         { KoreCmsLocalizableStrings.Pages.ConfirmRestoreVersion, "Are you sure you want to restore this version?" },
-                        { KoreCmsLocalizableStrings.Pages.CreateSubPage, "Create Sub Page" },
                         { KoreCmsLocalizableStrings.Pages.History, "History" },
                         { KoreCmsLocalizableStrings.Pages.ManagePages, "Manage Pages" },
                         { KoreCmsLocalizableStrings.Pages.PageHistory, "Page History" },

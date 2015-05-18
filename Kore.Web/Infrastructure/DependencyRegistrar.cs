@@ -12,15 +12,13 @@ using Kore.Localization;
 using Kore.Logging;
 using Kore.Net.Mail;
 using Kore.Tasks.Services;
+using Kore.Web.Areas.Admin;
 using Kore.Web.Areas.Admin.Configuration;
-using Kore.Web.Areas.Admin.Indexing;
-using Kore.Web.Areas.Admin.Plugins;
 using Kore.Web.Areas.Admin.ScheduledTasks;
 using Kore.Web.Configuration;
 using Kore.Web.Environment;
 using Kore.Web.Events;
 using Kore.Web.Fakes;
-using Kore.Web.Hosting;
 using Kore.Web.Indexing;
 using Kore.Web.Indexing.Services;
 using Kore.Web.IO.FileSystems.AppData;
@@ -32,7 +30,6 @@ using Kore.Web.Mobile;
 using Kore.Web.Mvc.EmbeddedViews;
 using Kore.Web.Mvc.Notify;
 using Kore.Web.Mvc.Resources;
-//using Kore.Web.Mvc.RoboUI;
 using Kore.Web.Mvc.Routing;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Navigation;
@@ -130,10 +127,7 @@ namespace Kore.Web.Infrastructure
 
             // navigation
             builder.RegisterType<NavigationManager>().As<INavigationManager>().InstancePerDependency();
-            builder.RegisterType<ConfigurationNavigationProvider>().As<INavigationProvider>().SingleInstance();
-            builder.RegisterType<IndexingNavigationProvider>().As<INavigationProvider>().SingleInstance();
-            builder.RegisterType<PluginsNavigationProvider>().As<INavigationProvider>().SingleInstance();
-            builder.RegisterType<ScheduledTasksNavigationProvider>().As<INavigationProvider>().SingleInstance();
+            builder.RegisterType<NavigationProvider>().As<INavigationProvider>().SingleInstance();
 
             // permission providers
             builder.RegisterType<StandardPermissions>().As<IPermissionProvider>().SingleInstance();

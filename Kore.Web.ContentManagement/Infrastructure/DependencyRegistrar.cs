@@ -11,9 +11,7 @@ using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Localization;
 using Kore.Web.ContentManagement.Areas.Admin.Localization.Services;
-using Kore.Web.ContentManagement.Areas.Admin.Media;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
-using Kore.Web.ContentManagement.Areas.Admin.Menus;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Newsletters;
 using Kore.Web.ContentManagement.Areas.Admin.Newsletters.ContentBlocks;
@@ -28,7 +26,6 @@ using Kore.Web.Mvc.Themes;
 using Kore.Web.Navigation;
 using Kore.Web.Security.Membership;
 using Kore.Web.Security.Membership.Permissions;
-using KoreCMS.Areas.Admin.Navigation;
 
 namespace Kore.Web.ContentManagement.Infrastructure
 {
@@ -73,15 +70,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
             #region Navigation
 
             builder.RegisterType<CmsNavigationProvider>().As<INavigationProvider>().SingleInstance();
-            builder.RegisterType<BlogNavigationProvider>().As<INavigationProvider>().SingleInstance();
-            builder.RegisterType<ContentBlockNavigationProvider>().As<INavigationProvider>().SingleInstance();
-            builder.RegisterType<LocalizationNavigationProvider>().As<INavigationProvider>().SingleInstance();
-            builder.RegisterType<MediaNavigationProvider>().As<INavigationProvider>().SingleInstance();
-            builder.RegisterType<MembershipNavigationProvider>().As<INavigationProvider>().SingleInstance();
-            builder.RegisterType<MenusNavigationProvider>().As<INavigationProvider>().SingleInstance();
-            builder.RegisterType<MessagingNavigationProvider>().As<INavigationProvider>().SingleInstance();
-            builder.RegisterType<NewslettersNavigationProvider>().As<INavigationProvider>().SingleInstance();
-            builder.RegisterType<PagesNavigationProvider>().As<INavigationProvider>().SingleInstance();
 
             #endregion Navigation
 

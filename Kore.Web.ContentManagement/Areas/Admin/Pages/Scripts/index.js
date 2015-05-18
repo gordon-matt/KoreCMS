@@ -151,16 +151,8 @@ var ViewModel = function () {
     self.pageModelStub = null;
 
     self.create = function () {
-        self.createNew(null);
-    };
-
-    self.createSubPage = function () {
-        self.createNew(self.id());
-    };
-
-    self.createNew = function (parentId) {
         self.id(emptyGuid);
-        self.parentId(parentId);
+        self.parentId(null);
         self.pageTypeId(emptyGuid);
         self.name('');
         self.slug('');

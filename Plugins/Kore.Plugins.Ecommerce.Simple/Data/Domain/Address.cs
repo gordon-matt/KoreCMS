@@ -50,8 +50,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             Property(x => x.GivenNames).IsRequired().HasMaxLength(128);
             Property(x => x.Email).IsRequired().HasMaxLength(255);
             Property(x => x.AddressLine1).IsRequired().HasMaxLength(128);
-            Property(x => x.AddressLine2).IsRequired().HasMaxLength(128);
-            Property(x => x.AddressLine3).IsRequired().HasMaxLength(128);
+            Property(x => x.AddressLine2).HasMaxLength(128);
+            Property(x => x.AddressLine3).HasMaxLength(128);
             Property(x => x.City).IsRequired().HasMaxLength(128);
             Property(x => x.PostalCode).IsRequired().HasMaxLength(10);
             Property(x => x.Country).IsRequired().HasMaxLength(50);

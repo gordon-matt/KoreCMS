@@ -140,6 +140,7 @@
     <Compile Include="Data\Domain\Category.cs" />
     <Compile Include="Data\Domain\Order.cs" />
     <Compile Include="Data\Domain\OrderLine.cs" />
+    <Compile Include="Data\Domain\OrderNote.cs" />
     <Compile Include="Data\Domain\OrderStatus.cs" />
     <Compile Include="Data\Domain\PaymentStatus.cs" />
     <Compile Include="Data\Domain\Product.cs" />
@@ -181,9 +182,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Views\PayPal\PaymentCancelled.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Views\PayPal\PaymentNotification.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Views\PayPal\PaymentCompleted.cshtml">

@@ -21,7 +21,7 @@
     {
         var item = Model.Items.ElementAt(i - 1);
         @Html.Hidden("item_name_" + i, item.ProductName)
-        @Html.Hidden("amount_" + i, item.Price)
+        @Html.Hidden("amount_" + i, item.Price + item.tax + item.ShippingCost)
     }
 
     @if (Model.UseSandboxMode)

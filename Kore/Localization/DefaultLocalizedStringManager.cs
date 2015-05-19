@@ -45,9 +45,9 @@ namespace Kore.Localization
                     return invariantResourceCache[key];
                 }
 
-                AddTranslation(null, key, key);
+                string value = AddTranslation(null, key);
 
-                invariantResourceCache.Add(key, key);
+                invariantResourceCache.Add(key, value);
             }
 
             return key;
@@ -86,8 +86,23 @@ namespace Kore.Localization
             return dictionary;
         }
 
-        protected virtual void AddTranslation(string cultureCode, string key, string value)
+        protected virtual string AddTranslation(string cultureCode, string key)
         {
+            // TODO: Consider resolving this once for better performance?
+            var providers = EngineContext.Current.ResolveAll<IDefaultLocalizableStringsProvider>();
+            var translationSets = providers.SelectMany(x => x.GetTranslations()).Where(x => x.CultureCode == null);
+
+            string value = key;
+
+            foreach (var translationSet in translationSets)
+            {
+                if (translationSet.LocalizedStrings.ContainsKey(key))
+                {
+                    value = translationSet.LocalizedStrings[key];
+                    break;
+                }
+            }
+
             var repository = EngineContext.Current.Resolve<IRepository<LocalizableString>>();
             repository.Insert(new LocalizableString
             {
@@ -96,6 +111,7 @@ namespace Kore.Localization
                 TextKey = key,
                 TextValue = value
             });
+            return value;
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Autofac;
 using Kore.Infrastructure;
-using Kore.Web.Plugins;
 
 namespace Kore.Web.Infrastructure.DependencyManagement
 {

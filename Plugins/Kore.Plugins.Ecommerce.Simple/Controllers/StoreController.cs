@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Kore.Data;
-using Kore.Plugins.Ecommerce.Simple.Data.Domain;
 using Kore.Plugins.Ecommerce.Simple.Services;
 using Kore.Web.Mvc;
 using Kore.Web.Navigation;
@@ -114,7 +112,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             WorkContext.Breadcrumbs.AddRange(breadcrumbs);
 
-            #endregion
+            #endregion Breadcrumbs
 
             string pageIndexParam = Request.Params["pageIndex"];
             int pageIndex = string.IsNullOrEmpty(pageIndexParam)
@@ -188,7 +186,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             WorkContext.Breadcrumbs.Add(category.Name, Url.Action("Products"));
             WorkContext.Breadcrumbs.Add(product.Name);
 
-            #endregion
+            #endregion Breadcrumbs
 
             return View("Product", product);
         }

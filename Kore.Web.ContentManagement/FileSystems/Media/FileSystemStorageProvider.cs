@@ -476,7 +476,7 @@ namespace Kore.Web.ContentManagement.FileSystems.Media
                 get { return directoryInfo.LastWriteTime; }
             }
 
-            #endregion
+            #endregion IStorageFolder Members
         }
     }
 }

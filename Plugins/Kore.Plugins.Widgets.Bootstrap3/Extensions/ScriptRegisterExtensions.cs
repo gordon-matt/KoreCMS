@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Kore.Web.Mvc.Resources;
+﻿using Kore.Web.Mvc.Resources;
 
 namespace Kore.Plugins.Widgets.Bootstrap3.Extensions
 {

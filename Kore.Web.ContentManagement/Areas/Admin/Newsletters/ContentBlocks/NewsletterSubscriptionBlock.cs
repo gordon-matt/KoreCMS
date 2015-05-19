@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.ContentBlocks

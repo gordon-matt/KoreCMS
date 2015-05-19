@@ -1,6 +1,5 @@
 ﻿using System.Web.Mvc;
 using Kore.Web.Mvc;
-using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Plugins.Widgets.Google.Controllers
 {

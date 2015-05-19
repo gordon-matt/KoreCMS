@@ -13,6 +13,7 @@ using Kore.Security.Membership;
 using Kore.Web.Collections;
 using Kore.Web.Mvc.Controls;
 using Kore.Web.Mvc.KoreUI;
+
 //using Kore.Web.Mvc.RoboUI;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Security.Membership.Permissions;
@@ -681,7 +682,7 @@ namespace Kore.Web.Mvc
                 }
             }
 
-            #endregion
+            #endregion First check if all permissions are in the DB
 
             var selectList = new List<ExtendedSelectListItem>();
             foreach (var categoryGroup in allPermissions.OrderBy(x => x.Category, new PermissionComparer(StringComparer.InvariantCultureIgnoreCase)).GroupBy(x => x.Category))

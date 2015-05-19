@@ -1,5 +1,3 @@
-using Kore.Localization;
-
 namespace Kore.Web.Mvc.Notify
 {
     public static class NotifierExtensions

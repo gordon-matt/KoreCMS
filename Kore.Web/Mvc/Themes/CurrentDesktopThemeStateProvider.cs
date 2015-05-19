@@ -1,6 +1,5 @@
 ﻿using System;
 using Kore.Infrastructure;
-using Kore.Web.Configuration;
 using Kore.Web.Environment;
 
 namespace Kore.Web.Mvc.Themes

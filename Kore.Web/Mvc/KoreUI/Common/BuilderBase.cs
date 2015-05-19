@@ -8,6 +8,7 @@ namespace Kore.Web.Mvc.KoreUI
     {
         // Fields
         protected readonly T element;
+
         protected readonly TextWriter textWriter;
         protected readonly HtmlHelper<TModel> htmlHelper;
 

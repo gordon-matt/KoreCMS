@@ -1,6 +1,4 @@
-﻿using Autofac;
-using Kore.Infrastructure;
-namespace Kore.Web.Plugins
+﻿namespace Kore.Web.Plugins
 {
     /// <summary>
     /// Interface denoting plug-in attributes that are displayed throughout

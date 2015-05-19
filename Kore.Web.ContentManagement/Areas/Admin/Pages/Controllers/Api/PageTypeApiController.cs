@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web.Http;
 using Kore.Data;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.Http.OData;

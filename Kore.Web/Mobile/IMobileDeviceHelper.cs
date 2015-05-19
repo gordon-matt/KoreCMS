@@ -1,9 +1,7 @@
-using System;
 using System.Web;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web.Configuration;
-using Kore.Web.Security.Membership;
 
 namespace Kore.Web.Mobile
 {
@@ -102,7 +100,6 @@ namespace Kore.Web.Mobile
         /// </summary>
         public virtual bool UserDontUseMobileVersion()
         {
-
             if (_workContext.CurrentUser == null)
             {
                 return false;

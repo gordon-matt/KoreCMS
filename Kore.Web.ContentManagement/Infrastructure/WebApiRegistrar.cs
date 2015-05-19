@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Web.Http;
 using System.Web.Http.OData.Builder;
-using Kore.Configuration.Domain;
 using Kore.Localization.Domain;
 using Kore.Security.Membership;
+using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Localization.Models;
 using Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
-using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 using Kore.Web.ContentManagement.Messaging.Domain;
 using Kore.Web.Infrastructure;
-using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
-using Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api;
 
 namespace Kore.Web.ContentManagement.Infrastructure
 {

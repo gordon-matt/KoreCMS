@@ -34,7 +34,7 @@ namespace Kore.Plugins.Ecommerce.Simple
 	[PostalCode] [nvarchar](10) NOT NULL,
 	[Country] [nvarchar](50) NOT NULL,
 	[PhoneNumber] [nvarchar](25) NOT NULL,
-	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Addresses] PRIMARY KEY CLUSTERED 
+	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Addresses] PRIMARY KEY CLUSTERED
 	(
 		[Id] ASC
 	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -89,7 +89,7 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Categories_dbo.Kore_Plugins
 	[OrderDateUtc] [datetime] NOT NULL,
 	[Status] [tinyint] NOT NULL,
 	[PaymentStatus] [tinyint] NOT NULL,
-	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Orders] PRIMARY KEY CLUSTERED 
+	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Orders] PRIMARY KEY CLUSTERED
 	(
 		[Id] ASC
 	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -130,7 +130,7 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Orders_dbo.Kore_Plugins_Sim
 	[ProductId] [int] NOT NULL,
 	[UnitPrice] [real] NOT NULL,
 	[Quantity] [smallint] NOT NULL,
-	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_OrderLines] PRIMARY KEY CLUSTERED 
+	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_OrderLines] PRIMARY KEY CLUSTERED
 	(
 		[Id] ASC
 	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -178,7 +178,7 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_OrderLines_dbo.Kore_Plugins
 	[MainImageUrl] [nvarchar](255) NULL,
 	[ShortDescription] [nvarchar](max) NOT NULL,
 	[FullDescription] [nvarchar](max) NOT NULL,
-	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Products] PRIMARY KEY CLUSTERED 
+	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Products] PRIMARY KEY CLUSTERED
 	(
 		[Id] ASC
 	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]

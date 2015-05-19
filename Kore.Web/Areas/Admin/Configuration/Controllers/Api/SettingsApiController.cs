@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Linq;
-using System.Web.Http;
-using System.Web.Http.Cors;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using Kore.Configuration.Domain;
 using Kore.Data;
-using Kore.Infrastructure;
-using Kore.Web.Configuration;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 

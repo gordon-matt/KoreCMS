@@ -27,6 +27,7 @@
 #endregion Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 namespace Kore.Serialization.Core.Xml
+
 {
     /// <summary>
     ///   These elements are used as tags during the xml serialization.

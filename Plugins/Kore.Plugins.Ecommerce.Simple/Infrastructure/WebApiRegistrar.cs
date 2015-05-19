@@ -2,7 +2,6 @@
 using System.Web.Http.OData.Builder;
 using Kore.Plugins.Ecommerce.Simple.Controllers.Api;
 using Kore.Plugins.Ecommerce.Simple.Data.Domain;
-using Kore.Plugins.Ecommerce.Simple.Models;
 using Kore.Web.Infrastructure;
 
 namespace Kore.Plugins.Ecommerce.Simple.Infrastructure

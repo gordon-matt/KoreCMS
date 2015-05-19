@@ -1,5 +1,4 @@
-﻿using System;
-using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
+﻿using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 
 namespace Kore.Indexing.Lucene
 {

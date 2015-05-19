@@ -189,7 +189,7 @@ namespace Kore.Web.ContentManagement.Controllers
                     menuItems.Add(menuProvider.GetRootMenuItem());
                 }
             }
-            
+
             foreach (var menuProvider in menuProviders)
             {
                 if (currentUrlSlug.StartsWith(menuProvider.RootUrlSlug))
@@ -197,7 +197,6 @@ namespace Kore.Web.ContentManagement.Controllers
                     menuItems.AddRange(menuProvider.GetSubMenuItems(currentUrlSlug));
                 }
             }
-
 
             var pageService = EngineContext.Current.Resolve<IPageService>();
             var query = pageService.Repository.Table.Where(x => x.IsEnabled);

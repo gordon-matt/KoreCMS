@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Castle.Core.Logging;
 using Kore.Plugins.Ecommerce.Simple.Data.Domain;
 using Kore.Plugins.Ecommerce.Simple.Models;
 using Kore.Plugins.Ecommerce.Simple.Services;

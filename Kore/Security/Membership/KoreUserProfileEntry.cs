@@ -1,5 +1,4 @@
-﻿using System;
-using Kore.Data;
+﻿using Kore.Data;
 
 namespace Kore.Security.Membership
 {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 namespace Kore.Plugins.Ecommerce.Simple.Models
 {
     public class PayPalModel

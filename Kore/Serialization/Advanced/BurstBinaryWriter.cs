@@ -27,6 +27,7 @@
 #endregion Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 using System;
+
 using System.IO;
 using System.Text;
 using Kore.Serialization.Advanced.Binary;
@@ -149,6 +150,6 @@ namespace Kore.Serialization.Advanced
             _writer.DisposeIfNotNull();
         }
 
-        #endregion
+        #endregion IDisposable Members
     }
 }

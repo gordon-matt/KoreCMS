@@ -3,7 +3,6 @@ using Kore.Indexing.Lucene.Services;
 using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.Indexing;
-using Kore.Web.Navigation;
 using Kore.Web.Plugins;
 
 namespace Kore.Indexing.Lucene.Infrastructure

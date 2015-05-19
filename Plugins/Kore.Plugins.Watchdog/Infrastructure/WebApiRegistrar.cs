@@ -1,9 +1,8 @@
 ﻿using System.Web.Http;
 using System.Web.Http.OData.Builder;
-using Kore.Web.Infrastructure;
 using Kore.Plugins.Watchdog.Data.Domain;
 using Kore.Plugins.Watchdog.Models;
-using System;
+using Kore.Web.Infrastructure;
 
 namespace Kore.Plugins.Watchdog.Infrastructure
 {

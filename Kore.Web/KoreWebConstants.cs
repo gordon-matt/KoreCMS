@@ -1,5 +1,6 @@
 ﻿using Kore.Infrastructure;
 using Kore.Web.Configuration;
+
 namespace Kore.Web
 {
     public static class KoreWebConstants

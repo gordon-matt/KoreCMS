@@ -19,6 +19,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
     public class UserApiController : ODataController
     {
         protected IMembershipService Service { get; private set; }
+
         private readonly Lazy<MembershipSettings> membershipSettings;
 
         public UserApiController(

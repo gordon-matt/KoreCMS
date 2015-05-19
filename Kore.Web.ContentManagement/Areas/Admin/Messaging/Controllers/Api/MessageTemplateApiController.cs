@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using System.Web.Http.OData;
 using Kore.Data;
 using Kore.Web.ContentManagement.Messaging.Domain;

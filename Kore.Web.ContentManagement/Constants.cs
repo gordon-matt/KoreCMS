@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+
 namespace Kore.Web.ContentManagement
 {
     public static class Constants

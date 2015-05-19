@@ -1,10 +1,10 @@
-﻿using Kore.Collections;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using Kore.Caching;
+using Kore.Collections;
 
 namespace Kore.Data.Services
 {
@@ -17,7 +17,7 @@ namespace Kore.Data.Services
         private readonly ICacheManager cacheManager;
         private readonly IRepository<TEntity> repository;
 
-        #endregion
+        #endregion Private Members
 
         #region Properties
 
@@ -55,7 +55,7 @@ namespace Kore.Data.Services
             get { return repository; }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Constructor
 
@@ -65,7 +65,7 @@ namespace Kore.Data.Services
             this.repository = repository;
         }
 
-        #endregion
+        #endregion Constructor
 
         #region IGenericDataService<TEntity> Members
 

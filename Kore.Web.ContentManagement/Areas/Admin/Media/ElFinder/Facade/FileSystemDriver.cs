@@ -167,12 +167,12 @@ namespace ElFinder
             if (string.IsNullOrEmpty(target))
             {
                 var root = _roots.FirstOrDefault(r => r.StartPath != null);
-                
+
                 if (root == null)
                 {
                     root = _roots.First();
                 }
-                
+
                 fullPath = new FullPath(root, root.StartPath ?? root.Directory);
             }
             else

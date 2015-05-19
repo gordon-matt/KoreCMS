@@ -46,6 +46,7 @@ namespace Kore.Web.Mvc.KoreUI
 <h4 class=""modal-title"">{0}</h4>", title));
                     }
                     break;
+
                 case ModalSection.Body: writer.Write(@"<div class=""modal-body"">"); break;
                 case ModalSection.Footer: writer.Write(@"<div class=""modal-footer"">"); break;
             }

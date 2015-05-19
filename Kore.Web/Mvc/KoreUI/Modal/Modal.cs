@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+
 namespace Kore.Web.Mvc.KoreUI
 {
     public class Modal : HtmlElement

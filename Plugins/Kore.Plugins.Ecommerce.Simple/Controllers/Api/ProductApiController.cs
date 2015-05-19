@@ -1,5 +1,4 @@
-﻿using System.Web.Http;
-using Kore.Data;
+﻿using Kore.Data;
 using Kore.Plugins.Ecommerce.Simple.Data.Domain;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;

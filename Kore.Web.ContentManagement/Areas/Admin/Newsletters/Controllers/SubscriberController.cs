@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Kore.Collections;
-using Kore.Data;
 using Kore.Security.Membership;
 using Kore.Web.Events;
 using Kore.Web.Mvc;

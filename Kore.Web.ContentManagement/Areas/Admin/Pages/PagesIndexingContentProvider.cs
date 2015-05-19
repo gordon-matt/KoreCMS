@@ -7,7 +7,6 @@ using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Indexing;
 using Kore.Web.Indexing.Services;
-using System.Linq;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 {

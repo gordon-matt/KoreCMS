@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Castle.Core.Logging;
-using Kore.Localization;
 
 namespace Kore.Web.Mvc.Notify
 {

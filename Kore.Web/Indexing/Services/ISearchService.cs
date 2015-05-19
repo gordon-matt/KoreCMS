@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
 using Kore.Collections.Generic;
 using Kore.Localization;
@@ -40,7 +38,7 @@ namespace Kore.Web.Indexing.Services
 
             var provider = indexManager.GetSearchIndexProvider();
             var searchFields = provider.GetFields(KoreWebConstants.Indexing.DefaultIndexName)
-                .Except(new[]{ "id", "culture", "url", "description" })
+                .Except(new[] { "id", "culture", "url", "description" })
                 .ToArray();
 
             var searchBuilder = Search().Parse(searchFields, query);

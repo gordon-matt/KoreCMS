@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Mvc;
-using System.Linq;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 {

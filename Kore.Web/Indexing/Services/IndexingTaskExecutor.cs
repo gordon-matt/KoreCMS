@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using Castle.Core.Logging;
 using Kore.Web.Configuration;
-using Kore.Web.Indexing;
 using Kore.Web.Indexing.Configuration;
-using Kore.Web.Indexing.Services;
 using Kore.Web.IO.FileSystems.AppData;
 using Kore.Web.IO.FileSystems.LockFile;
 

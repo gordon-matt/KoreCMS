@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Kore.ComponentModel;
+﻿using Kore.ComponentModel;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
 {

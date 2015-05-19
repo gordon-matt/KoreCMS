@@ -368,12 +368,6 @@ namespace Kore.Collections
             }
         }
 
-
-
-
-
-
-
         public static string ToCsv<T>(this IEnumerable<T> table)
         {
             return table.ToCsv(true);

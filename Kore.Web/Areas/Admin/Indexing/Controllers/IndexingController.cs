@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using System.Web.Mvc;
 using Kore.Web.Indexing.Services;
 using Kore.Web.Mvc;

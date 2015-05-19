@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Kore.Exceptions;
-using Kore.Web.Indexing.Extensions;
 using Kore.Localization;
 using Kore.Web.Indexing;
+using Kore.Web.Indexing.Extensions;
 using Lucene.Net.Documents;
 
 namespace Kore.Indexing.Lucene.Models

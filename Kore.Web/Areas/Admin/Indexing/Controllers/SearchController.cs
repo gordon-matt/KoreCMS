@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using Kore.Collections.Generic;
 using Kore.Web.Indexing;
-using Kore.Web.Indexing.Configuration;
 using Kore.Web.Indexing.Services;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Notify;

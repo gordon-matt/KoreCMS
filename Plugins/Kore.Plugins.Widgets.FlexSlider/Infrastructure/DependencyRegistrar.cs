@@ -3,9 +3,7 @@ using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Plugins.Widgets.FlexSlider.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
-using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
-using Kore.Web.Navigation;
 using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Widgets.FlexSlider.Infrastructure

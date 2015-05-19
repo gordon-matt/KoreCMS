@@ -1,5 +1,4 @@
 ﻿using System;
-using Kore.Localization;
 
 namespace Kore.Web.Localization
 {

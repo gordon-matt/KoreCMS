@@ -100,7 +100,7 @@ namespace KoreCMS.Data
 
         public DbSet<UserProfileEntry> UserProfiles { get; set; }
 
-        #endregion
+        #endregion Others
 
         #region ISupportSeed Members
 

@@ -27,6 +27,7 @@
 #endregion Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 using System;
+
 using Kore.Serialization.Core;
 
 namespace Kore.Serialization.Serializing

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
-using Kore.Web.ContentManagement.Areas.Admin.Localization.Services;
+﻿using System.Web.Mvc;
 using Kore.Web.Mvc;
 using Kore.Web.Security.Membership.Permissions;
 

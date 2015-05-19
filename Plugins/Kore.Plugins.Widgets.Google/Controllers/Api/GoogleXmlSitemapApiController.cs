@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Hosting;
@@ -10,7 +9,6 @@ using System.Web.Http.Results;
 using Castle.Core.Logging;
 using Kore.Collections;
 using Kore.Data;
-using Kore.Infrastructure;
 using Kore.Plugins.Widgets.Google.Data.Domain;
 using Kore.Plugins.Widgets.Google.Models;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;

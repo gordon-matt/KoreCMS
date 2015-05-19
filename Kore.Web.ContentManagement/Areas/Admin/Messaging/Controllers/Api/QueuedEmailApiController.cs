@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Web.Http;
-using System.Web.Http.Cors;
 using Kore.Data;
 using Kore.Web.ContentManagement.Messaging.Domain;
 using Kore.Web.Http.OData;

@@ -1,9 +1,8 @@
-﻿using System.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using System.Web.Compilation;
 using Kore.Infrastructure;
 
 namespace Kore.Web.Plugins
@@ -98,7 +97,7 @@ namespace Kore.Web.Plugins
         public virtual bool Installed { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="load">True to load the real assembly into the app domain</param>

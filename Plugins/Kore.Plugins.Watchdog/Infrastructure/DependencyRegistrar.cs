@@ -10,7 +10,7 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Plugins.Watchdog.Infrastructure
 {
-    public class DependencyRegistrar: IDependencyRegistrar<ContainerBuilder>
+    public class DependencyRegistrar : IDependencyRegistrar<ContainerBuilder>
     {
         #region IDependencyRegistrar<ContainerBuilder> Members
 

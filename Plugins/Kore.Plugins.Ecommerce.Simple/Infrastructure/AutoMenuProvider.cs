@@ -1,9 +1,7 @@
-﻿using Kore.Collections;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Kore.Collections;
 using Kore.Data;
 using Kore.Plugins.Ecommerce.Simple.Data.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
@@ -110,6 +108,6 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
             }
         }
 
-        #endregion
+        #endregion IAutoMenuProvider Members
     }
 }

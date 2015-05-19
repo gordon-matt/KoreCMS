@@ -1,5 +1,4 @@
-﻿using Kore.Infrastructure;
-using Kore.Web.Mvc;
+﻿using Kore.Web.Mvc;
 
 namespace KoreCMS.Controllers
 {

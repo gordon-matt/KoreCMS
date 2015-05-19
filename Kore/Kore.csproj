@@ -126,6 +126,8 @@
     <Compile Include="Collections\Generic\PowerCollections\Triple.cs" />
     <Compile Include="Collections\Generic\PowerCollections\Util.cs" />
     <Compile Include="Collections\Generic\TripleList.cs" />
+    <Compile Include="Collections\Generic\TupleHashSet.cs" />
+    <Compile Include="Collections\Generic\TupleList.cs" />
     <Compile Include="ComponentModel\IModelAttribute.cs" />
     <Compile Include="Configuration\DataConfigurationElement.cs" />
     <Compile Include="Configuration\Domain\Setting.cs" />

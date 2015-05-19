@@ -8,86 +8,100 @@ namespace Kore.Data.Common
 {
     internal static class SystemTypeConverter
     {
-        private static PairList<Type, DbType> dbTypes = new PairList<Type, DbType>();
-        private static PairList<Type, SqlDbType> sqlDbTypes = new PairList<Type, SqlDbType>();
-        private static PairList<Type, OleDbType> oleDbTypes = new PairList<Type, OleDbType>();
+        private static Lazy<TupleHashSet<Type, DbType>> dbTypes;
+        private static Lazy<TupleHashSet<Type, SqlDbType>> sqlDbTypes;
+        private static Lazy<TupleHashSet<Type, OleDbType>> oleDbTypes;
 
         static SystemTypeConverter()
         {
-            dbTypes.Add(typeof(Boolean), DbType.Boolean);
-            dbTypes.Add(typeof(Byte), DbType.Byte);
-            dbTypes.Add(typeof(Char), DbType.StringFixedLength);
-            dbTypes.Add(typeof(Int16), DbType.Int16);
-            dbTypes.Add(typeof(Int32), DbType.Int32);
-            dbTypes.Add(typeof(Int64), DbType.Int64);
-            dbTypes.Add(typeof(Decimal), DbType.Decimal);
-            dbTypes.Add(typeof(Double), DbType.Double);
-            dbTypes.Add(typeof(DateTime), DbType.DateTime);
-            dbTypes.Add(typeof(DateTimeOffset), DbType.DateTimeOffset);
-            dbTypes.Add(typeof(Guid), DbType.Guid);
-            dbTypes.Add(typeof(Single), DbType.Single);
-            dbTypes.Add(typeof(String), DbType.String);
-            dbTypes.Add(typeof(SByte), DbType.SByte);
-            dbTypes.Add(typeof(TimeSpan), DbType.Time);
-            dbTypes.Add(typeof(UInt16), DbType.UInt16);
-            dbTypes.Add(typeof(UInt32), DbType.UInt32);
-            dbTypes.Add(typeof(UInt64), DbType.UInt64);
-            dbTypes.Add(typeof(Uri), DbType.String);
+            dbTypes = new Lazy<TupleHashSet<Type, DbType>>(() =>
+            {
+                var hashSet = new TupleHashSet<Type, DbType>();
+                hashSet.Add(typeof(Boolean), DbType.Boolean);
+                hashSet.Add(typeof(Byte), DbType.Byte);
+                hashSet.Add(typeof(Char), DbType.StringFixedLength);
+                hashSet.Add(typeof(Int16), DbType.Int16);
+                hashSet.Add(typeof(Int32), DbType.Int32);
+                hashSet.Add(typeof(Int64), DbType.Int64);
+                hashSet.Add(typeof(Decimal), DbType.Decimal);
+                hashSet.Add(typeof(Double), DbType.Double);
+                hashSet.Add(typeof(DateTime), DbType.DateTime);
+                hashSet.Add(typeof(DateTimeOffset), DbType.DateTimeOffset);
+                hashSet.Add(typeof(Guid), DbType.Guid);
+                hashSet.Add(typeof(Single), DbType.Single);
+                hashSet.Add(typeof(String), DbType.String);
+                hashSet.Add(typeof(SByte), DbType.SByte);
+                hashSet.Add(typeof(TimeSpan), DbType.Time);
+                hashSet.Add(typeof(UInt16), DbType.UInt16);
+                hashSet.Add(typeof(UInt32), DbType.UInt32);
+                hashSet.Add(typeof(UInt64), DbType.UInt64);
+                hashSet.Add(typeof(Uri), DbType.String);
+                return hashSet;
+            });
+            sqlDbTypes = new Lazy<TupleHashSet<Type, SqlDbType>>(() =>
+            {
+                var hashSet = new TupleHashSet<Type, SqlDbType>();
+                hashSet.Add(typeof(Boolean), SqlDbType.Bit);
+                hashSet.Add(typeof(Byte), SqlDbType.TinyInt);
+                hashSet.Add(typeof(Char), SqlDbType.NChar);
+                hashSet.Add(typeof(Int16), SqlDbType.SmallInt);
+                hashSet.Add(typeof(Int32), SqlDbType.Int);
+                hashSet.Add(typeof(Int64), SqlDbType.BigInt);
+                hashSet.Add(typeof(Decimal), SqlDbType.Decimal);
+                hashSet.Add(typeof(Double), SqlDbType.Float);
+                hashSet.Add(typeof(DateTime), SqlDbType.DateTime);
+                hashSet.Add(typeof(DateTimeOffset), SqlDbType.DateTimeOffset);
+                hashSet.Add(typeof(Guid), SqlDbType.UniqueIdentifier);
+                hashSet.Add(typeof(Single), SqlDbType.Real);
+                hashSet.Add(typeof(String), SqlDbType.NVarChar);
+                hashSet.Add(typeof(SByte), SqlDbType.TinyInt);
+                hashSet.Add(typeof(TimeSpan), SqlDbType.Time);
+                hashSet.Add(typeof(UInt16), SqlDbType.SmallInt);
+                hashSet.Add(typeof(UInt32), SqlDbType.Int);
+                hashSet.Add(typeof(UInt64), SqlDbType.BigInt);
+                hashSet.Add(typeof(Uri), SqlDbType.NVarChar);
+                return hashSet;
+            });
 
-            sqlDbTypes.Add(typeof(Boolean), SqlDbType.Bit);
-            sqlDbTypes.Add(typeof(Byte), SqlDbType.TinyInt);
-            sqlDbTypes.Add(typeof(Char), SqlDbType.NChar);
-            sqlDbTypes.Add(typeof(Int16), SqlDbType.SmallInt);
-            sqlDbTypes.Add(typeof(Int32), SqlDbType.Int);
-            sqlDbTypes.Add(typeof(Int64), SqlDbType.BigInt);
-            sqlDbTypes.Add(typeof(Decimal), SqlDbType.Decimal);
-            sqlDbTypes.Add(typeof(Double), SqlDbType.Float);
-            sqlDbTypes.Add(typeof(DateTime), SqlDbType.DateTime);
-            sqlDbTypes.Add(typeof(DateTimeOffset), SqlDbType.DateTimeOffset);
-            sqlDbTypes.Add(typeof(Guid), SqlDbType.UniqueIdentifier);
-            sqlDbTypes.Add(typeof(Single), SqlDbType.Real);
-            sqlDbTypes.Add(typeof(String), SqlDbType.NVarChar);
-            sqlDbTypes.Add(typeof(SByte), SqlDbType.TinyInt);
-            sqlDbTypes.Add(typeof(TimeSpan), SqlDbType.Time);
-            sqlDbTypes.Add(typeof(UInt16), SqlDbType.SmallInt);
-            sqlDbTypes.Add(typeof(UInt32), SqlDbType.Int);
-            sqlDbTypes.Add(typeof(UInt64), SqlDbType.BigInt);
-            sqlDbTypes.Add(typeof(Uri), SqlDbType.NVarChar);
-
-            oleDbTypes.Add(typeof(Boolean), OleDbType.Boolean);
-            oleDbTypes.Add(typeof(Byte), OleDbType.UnsignedTinyInt);
-            oleDbTypes.Add(typeof(Char), OleDbType.Char);//check
-            oleDbTypes.Add(typeof(Int16), OleDbType.SmallInt);
-            oleDbTypes.Add(typeof(Int32), OleDbType.Integer);
-            oleDbTypes.Add(typeof(Int64), OleDbType.BigInt);
-            oleDbTypes.Add(typeof(Decimal), OleDbType.Decimal);
-            oleDbTypes.Add(typeof(Double), OleDbType.Double);
-            oleDbTypes.Add(typeof(DateTime), OleDbType.DBTimeStamp);
-            oleDbTypes.Add(typeof(DateTimeOffset), OleDbType.VarChar);
-            oleDbTypes.Add(typeof(Guid), OleDbType.Guid);
-            oleDbTypes.Add(typeof(Single), OleDbType.Single);
-            oleDbTypes.Add(typeof(String), OleDbType.VarChar);
-            oleDbTypes.Add(typeof(SByte), OleDbType.TinyInt);
-            oleDbTypes.Add(typeof(TimeSpan), OleDbType.DBTime);
-            oleDbTypes.Add(typeof(UInt16), OleDbType.UnsignedSmallInt);
-            oleDbTypes.Add(typeof(UInt32), OleDbType.UnsignedInt);
-            oleDbTypes.Add(typeof(UInt64), OleDbType.UnsignedBigInt);
-            oleDbTypes.Add(typeof(Uri), OleDbType.VarChar);
+            oleDbTypes = new Lazy<TupleHashSet<Type, OleDbType>>(() =>
+            {
+                var hashSet = new TupleHashSet<Type, OleDbType>();
+                hashSet.Add(typeof(Boolean), OleDbType.Boolean);
+                hashSet.Add(typeof(Byte), OleDbType.UnsignedTinyInt);
+                hashSet.Add(typeof(Char), OleDbType.Char);//check
+                hashSet.Add(typeof(Int16), OleDbType.SmallInt);
+                hashSet.Add(typeof(Int32), OleDbType.Integer);
+                hashSet.Add(typeof(Int64), OleDbType.BigInt);
+                hashSet.Add(typeof(Decimal), OleDbType.Decimal);
+                hashSet.Add(typeof(Double), OleDbType.Double);
+                hashSet.Add(typeof(DateTime), OleDbType.DBTimeStamp);
+                hashSet.Add(typeof(DateTimeOffset), OleDbType.VarChar);
+                hashSet.Add(typeof(Guid), OleDbType.Guid);
+                hashSet.Add(typeof(Single), OleDbType.Single);
+                hashSet.Add(typeof(String), OleDbType.VarChar);
+                hashSet.Add(typeof(SByte), OleDbType.TinyInt);
+                hashSet.Add(typeof(TimeSpan), OleDbType.DBTime);
+                hashSet.Add(typeof(UInt16), OleDbType.UnsignedSmallInt);
+                hashSet.Add(typeof(UInt32), OleDbType.UnsignedInt);
+                hashSet.Add(typeof(UInt64), OleDbType.UnsignedBigInt);
+                hashSet.Add(typeof(Uri), OleDbType.VarChar);
+                return hashSet;
+            });
         }
 
         public static DbType ToDbType(Type systemType)
         {
-            return dbTypes.SingleOrDefault(x => x.First == systemType).Second;
+            return dbTypes.Value.First(x => x.Item1 == systemType).Item2;
         }
 
         public static SqlDbType ToSqlDbType(Type systemType)
         {
-            return sqlDbTypes.SingleOrDefault(x => x.First == systemType).Second;
+            return sqlDbTypes.Value.First(x => x.Item1 == systemType).Item2;
         }
 
         public static OleDbType ToOleDbType(Type systemType)
         {
-            return oleDbTypes.SingleOrDefault(x => x.First == systemType).Second;
+            return oleDbTypes.Value.First(x => x.Item1 == systemType).Item2;
         }
     }
 }

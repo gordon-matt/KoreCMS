@@ -48,6 +48,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 
         public static bool CheckUserHasAccessToPage(Page page, IPrincipal user)
         {
+            if (!page.IsEnabled)
+            {
+                return false;
+            }
+
             if (!string.IsNullOrEmpty(page.AccessRestrictions))
             {
                 dynamic accessRestrictions = JObject.Parse(page.AccessRestrictions);

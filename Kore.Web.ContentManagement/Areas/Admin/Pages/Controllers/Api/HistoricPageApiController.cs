@@ -62,6 +62,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 Fields = page.Fields,
                 IsEnabled = page.IsEnabled,
                 Order = page.Order,
+                ShowOnMenus = page.ShowOnMenus,
                 DateCreatedUtc = page.DateCreatedUtc,
                 DateModifiedUtc = page.DateModifiedUtc,
                 CultureCode = page.CultureCode,
@@ -78,6 +79,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             page.Fields = pageToRestore.Fields;
             page.IsEnabled = pageToRestore.IsEnabled;
             page.Order = pageToRestore.Order;
+            page.ShowOnMenus = pageToRestore.ShowOnMenus;
             page.DateCreatedUtc = pageToRestore.DateCreatedUtc;
             page.DateModifiedUtc = pageToRestore.DateModifiedUtc;
             page.CultureCode = pageToRestore.CultureCode;

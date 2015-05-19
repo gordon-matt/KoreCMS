@@ -9,6 +9,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
     public class Order : IEntity
     {
         private ICollection<OrderLine> lines;
+        private ICollection<OrderNote> notes;
 
         public int Id { get; set; }
 
@@ -28,6 +29,10 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 
         public PaymentStatus PaymentStatus { get; set; }
 
+        public string AuthorizationTransactionId { get; set; }
+
+        public DateTime? DatePaidUtc { get; set; }
+
         public virtual Address BillingAddress { get; set; }
 
         public virtual Address ShippingAddress { get; set; }
@@ -36,6 +41,12 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
         {
             get { return lines ?? (lines = new List<OrderLine>()); }
             set { lines = value; }
+        }
+
+        public virtual ICollection<OrderNote> Notes
+        {
+            get { return notes ?? (notes = new List<OrderNote>()); }
+            set { notes = value; }
         }
 
         #region IEntity Members
@@ -60,6 +71,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             Property(x => x.OrderDateUtc).IsRequired();
             Property(x => x.Status).IsRequired();
             Property(x => x.PaymentStatus).IsRequired();
+            Property(x => x.AuthorizationTransactionId).HasMaxLength(255);
             HasRequired(x => x.BillingAddress).WithMany().HasForeignKey(x => x.BillingAddressId).WillCascadeOnDelete(false);
             HasRequired(x => x.ShippingAddress).WithMany().HasForeignKey(x => x.ShippingAddressId).WillCascadeOnDelete(false);
         }

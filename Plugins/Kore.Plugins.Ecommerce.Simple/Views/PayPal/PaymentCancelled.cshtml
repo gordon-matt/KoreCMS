@@ -1,26 +1,7 @@
 ﻿@using System.Web.Mvc
-@model FormCollection
+@model Kore.Plugins.Ecommerce.Simple.Data.Domain.Order
 @{
     Layout = KoreWebConstants.DefaultFrontendLayoutPath;
 }
 
-<p>Cancelled</p>
-<p>Ran: If you're seeing this page, please take a screenshot and email it to me, so I know what variables are being returned from PayPal.</p>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Key</th>
-            <th>Value</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (string key in Model.Keys)
-        {
-            <tr>
-                <td>@key</td>
-                <td>@Model[key]</td>
-            </tr>
-        }
-    </tbody>
-</table>
+You cancelled your order

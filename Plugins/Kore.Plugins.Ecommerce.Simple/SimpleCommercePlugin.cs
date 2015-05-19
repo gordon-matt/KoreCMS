@@ -28,13 +28,13 @@ namespace Kore.Plugins.Ecommerce.Simple
 	[GivenNames] [nvarchar](128) NOT NULL,
 	[Email] [nvarchar](255) NOT NULL,
 	[AddressLine1] [nvarchar](128) NOT NULL,
-	[AddressLine2] [nvarchar](128) NOT NULL,
-	[AddressLine3] [nvarchar](128) NOT NULL,
+	[AddressLine2] [nvarchar](128) NULL,
+	[AddressLine3] [nvarchar](128) NULL,
 	[City] [nvarchar](128) NOT NULL,
 	[PostalCode] [nvarchar](10) NOT NULL,
 	[Country] [nvarchar](50) NOT NULL,
 	[PhoneNumber] [nvarchar](25) NOT NULL,
-	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Addresses] PRIMARY KEY CLUSTERED
+	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Addresses] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC
 	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -55,8 +55,8 @@ namespace Kore.Plugins.Ecommerce.Simple
 	[Name] [nvarchar](255) NOT NULL,
 	[Slug] [nvarchar](255) NOT NULL,
 	[ImageUrl] [nvarchar](255) NULL,
-    [Order] int NOT NULL DEFAULT(0),
-	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Categories] PRIMARY KEY CLUSTERED
+	[Order] [int] NOT NULL,
+	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Categories] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC
 	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -65,8 +65,8 @@ namespace Kore.Plugins.Ecommerce.Simple
                 dbContext.Database.ExecuteSqlCommand(
 @"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_Categories] WITH CHECK
 ADD CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Categories_dbo.Kore_Plugins_SimpleCommerce_Categories_ParentId]
-	FOREIGN KEY([ParentId])
-	REFERENCES [dbo].[Kore_Plugins_SimpleCommerce_Categories] ([Id])");
+FOREIGN KEY([ParentId])
+REFERENCES [dbo].[Kore_Plugins_SimpleCommerce_Categories] ([Id])");
 
                 dbContext.Database.ExecuteSqlCommand(
 @"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_Categories]
@@ -80,7 +80,8 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Categories_dbo.Kore_Plugins
                 #region CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Orders]
 
                 dbContext.Database.ExecuteSqlCommand(
-@"CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Orders](
+@"CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Orders]
+(
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[UserId] [nvarchar](max) NULL,
 	[BillingAddressId] [int] NOT NULL,
@@ -90,7 +91,9 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Categories_dbo.Kore_Plugins
 	[OrderDateUtc] [datetime] NOT NULL,
 	[Status] [tinyint] NOT NULL,
 	[PaymentStatus] [tinyint] NOT NULL,
-	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Orders] PRIMARY KEY CLUSTERED
+	[AuthorizationTransactionId] [nvarchar](255) NULL,
+	[DatePaidUtc] [datetime] NULL,
+	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Orders] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC
 	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -131,7 +134,7 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Orders_dbo.Kore_Plugins_Sim
 	[ProductId] [int] NOT NULL,
 	[UnitPrice] [real] NOT NULL,
 	[Quantity] [smallint] NOT NULL,
-	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_OrderLines] PRIMARY KEY CLUSTERED
+	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_OrderLines] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC
 	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -162,6 +165,37 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_OrderLines_dbo.Kore_Plugins
                 #endregion CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_OrderLines]
             }
 
+            if (!CheckIfTableExists(dbContext, Constants.Tables.OrderNotes))
+            {
+                #region CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_OrderNotes]
+
+                dbContext.Database.ExecuteSqlCommand(
+@"CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_OrderNotes](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[OrderId] [int] NOT NULL,
+	[Text] [nvarchar](max) NOT NULL,
+	[DisplayToCustomer] [bit] NOT NULL,
+	[DateCreatedUtc] [datetime] NOT NULL,
+	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_OrderNotes] PRIMARY KEY CLUSTERED 
+	(
+		[Id] ASC
+	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]");
+
+                dbContext.Database.ExecuteSqlCommand(
+@"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_OrderNotes] WITH CHECK
+ADD CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_OrderNotes_dbo.Kore_Plugins_SimpleCommerce_Orders_OrderId]
+FOREIGN KEY([OrderId])
+REFERENCES [dbo].[Kore_Plugins_SimpleCommerce_Orders] ([Id])
+ON DELETE CASCADE");
+
+                dbContext.Database.ExecuteSqlCommand(
+@"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_OrderNotes]
+CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_OrderNotes_dbo.Kore_Plugins_SimpleCommerce_Orders_OrderId]");
+
+                #endregion CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Orders]
+            }
+
             if (!CheckIfTableExists(dbContext, Constants.Tables.Products))
             {
                 #region CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Products]
@@ -179,7 +213,7 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_OrderLines_dbo.Kore_Plugins
 	[MainImageUrl] [nvarchar](255) NULL,
 	[ShortDescription] [nvarchar](max) NOT NULL,
 	[FullDescription] [nvarchar](max) NOT NULL,
-	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Products] PRIMARY KEY CLUSTERED
+	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Products] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC
 	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -209,6 +243,7 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Products_dbo.Kore_Plugins_S
             DropTable(dbContext, Constants.Tables.Categories);
             DropTable(dbContext, Constants.Tables.Orders);
             DropTable(dbContext, Constants.Tables.OrderLines);
+            DropTable(dbContext, Constants.Tables.OrderNotes);
             DropTable(dbContext, Constants.Tables.Products);
 
             base.Uninstall();

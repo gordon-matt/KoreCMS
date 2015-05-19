@@ -66,7 +66,7 @@ namespace Kore.Web.ContentManagement.Controllers
                         breadcrumbs.Add(new Breadcrumb
                         {
                             Text = parentPage.Name,
-                            Url = "/" + parentPage.Slug
+                            Url = parentPage.IsEnabled ? "/" + parentPage.Slug : null
                         });
                     }
 
@@ -114,7 +114,7 @@ namespace Kore.Web.ContentManagement.Controllers
                 .Where(x => x.IsEnabled)
                 .ToHashSet();
 
-            var authorizedPages = pages.Where(x => PageSecurityHelper.CheckUserHasAccessToPage(x, User));
+            var authorizedPages = pages.Where(x => x.ShowOnMenus && PageSecurityHelper.CheckUserHasAccessToPage(x, User));
 
             var items = authorizedPages
                 .Select(x => new MenuItem
@@ -227,7 +227,7 @@ namespace Kore.Web.ContentManagement.Controllers
             {
                 var pages = query.ToHashSet();
 
-                var authorizedPages = pages.Where(x => PageSecurityHelper.CheckUserHasAccessToPage(x, User));
+                var authorizedPages = pages.Where(x => x.ShowOnMenus && PageSecurityHelper.CheckUserHasAccessToPage(x, User));
 
                 var items = authorizedPages
                     .Select(x => new MenuItem

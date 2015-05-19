@@ -24,6 +24,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
 
         public int Order { get; set; }
 
+        public bool ShowOnMenus { get; set; }
+
         public string AccessRestrictions { get; set; }
 
         public DateTime DateCreatedUtc { get; set; }
@@ -56,6 +58,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
             Property(x => x.Fields).IsMaxLength();
             Property(x => x.IsEnabled).IsRequired();
             Property(x => x.Order).IsRequired();
+            Property(x => x.ShowOnMenus).IsRequired();
             Property(x => x.AccessRestrictions).HasColumnType("varchar").HasMaxLength(1024);
             Property(x => x.DateCreatedUtc).IsRequired();
             Property(x => x.DateModifiedUtc).IsRequired();

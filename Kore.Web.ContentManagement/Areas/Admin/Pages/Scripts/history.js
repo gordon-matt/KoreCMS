@@ -13,6 +13,7 @@ var ViewModel = function () {
     self.fields = ko.observable('');
     self.isEnabled = ko.observable(false);
     self.order = ko.observable(0);
+    self.showOnMenus = ko.observable(true);
     self.dateCreatedUtc = ko.observable();
     self.dateModifiedUtc = ko.observable();
     self.cultureCode = ko.observable('');
@@ -36,6 +37,7 @@ var ViewModel = function () {
             self.fields(json.Fields);
             self.isEnabled(json.IsEnabled);
             self.order(json.Order);
+            self.showOnMenus(json.ShowOnMenus);
             self.dateCreatedUtc(json.DateCreatedUtc);
             self.dateModifiedUtc(json.DateModifiedUtc);
             self.cultureCode(json.CultureCode);

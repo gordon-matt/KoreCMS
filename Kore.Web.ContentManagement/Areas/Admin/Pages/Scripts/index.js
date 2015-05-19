@@ -139,6 +139,7 @@ var ViewModel = function () {
     self.fields = ko.observable('');
     self.isEnabled = ko.observable(false);
     self.order = ko.observable(0);
+    self.showOnMenus = ko.observable(true);
     self.accessRestrictions = null; // doesn't need to be an observable
     self.cultureCode = ko.observable('');
     self.refId = ko.observable(null);
@@ -159,6 +160,7 @@ var ViewModel = function () {
         self.fields('');
         self.isEnabled(false);
         self.order(0);
+        self.showOnMenus(true);
         self.accessRestrictions = null;
         self.cultureCode('');
         self.refId(null);
@@ -207,6 +209,7 @@ var ViewModel = function () {
             self.fields(json.Fields);
             self.isEnabled(json.IsEnabled);
             self.order(json.Order);
+            self.showOnMenus(json.ShowOnMenus);
             self.accessRestrictions = ko.mapping.fromJSON(json.AccessRestrictions);
             self.cultureCode(json.CultureCode);
             self.refId(json.RefId);
@@ -330,6 +333,7 @@ var ViewModel = function () {
             Fields: self.fields(),
             IsEnabled: self.isEnabled(),
             Order: self.order(),
+            ShowOnMenus: self.showOnMenus(),
             AccessRestrictions: JSON.stringify({
                 Roles: self.roles().join()
             }),
@@ -479,6 +483,7 @@ var ViewModel = function () {
             self.fields(json.Fields);
             self.isEnabled(json.IsEnabled);
             self.order(json.Order);
+            self.showOnMenus(json.ShowOnMenus);
             self.accessRestrictions = ko.mapping.fromJSON(json.AccessRestrictions);
             self.cultureCode(json.CultureCode);
             self.refId(json.RefId);

@@ -73,6 +73,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     Fields = currentPage.Fields,
                     IsEnabled = currentPage.IsEnabled,
                     Order = currentPage.Order,
+                    ShowOnMenus = currentPage.ShowOnMenus,
                     AccessRestrictions = currentPage.AccessRestrictions,
                     DateCreatedUtc = currentPage.DateCreatedUtc,
                     DateModifiedUtc = currentPage.DateModifiedUtc,
@@ -136,6 +137,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     Fields = currentPage.Fields,
                     IsEnabled = currentPage.IsEnabled,
                     Order = currentPage.Order,
+                    ShowOnMenus = currentPage.ShowOnMenus,
                     AccessRestrictions = currentPage.AccessRestrictions,
                     DateCreatedUtc = currentPage.DateCreatedUtc,
                     DateModifiedUtc = currentPage.DateModifiedUtc,
@@ -196,6 +198,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     Slug = record.Slug,
                     Fields = record.Fields,
                     Order = record.Order,
+                    ShowOnMenus = record.ShowOnMenus,
                     AccessRestrictions = record.AccessRestrictions,
                     DateCreatedUtc = DateTime.UtcNow,
                     DateModifiedUtc = DateTime.UtcNow,
@@ -214,6 +217,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     Slug = translation.Slug,
                     Fields = translation.Fields,
                     Order = translation.Order,
+                    ShowOnMenus = translation.ShowOnMenus,
                     CultureCode = translation.CultureCode,
                     RefId = translation.RefId
                 };
@@ -230,6 +234,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     Fields = record.Fields,
                     IsEnabled = record.IsEnabled,
                     Order = record.Order,
+                    ShowOnMenus = record.ShowOnMenus,
                     AccessRestrictions = record.AccessRestrictions,
                     CultureCode = record.CultureCode,
                     RefId = record.RefId
@@ -265,6 +270,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         public bool IsEnabled { get; set; }
 
         public int Order { get; set; }
+
+        public bool ShowOnMenus { get; set; }
 
         public string AccessRestrictions { get; set; }
 

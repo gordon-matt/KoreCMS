@@ -16,6 +16,13 @@ namespace KoreCMS.Infrastructure
                     CultureCode = null,
                     LocalizedStrings = new Dictionary<string, string>
                     {
+                        { LocalizableStrings.Account.ConfirmPassword, "Confirm Password" },
+                        { LocalizableStrings.Account.ConfirmNewPassword, "Confirm New Password" },
+                        { LocalizableStrings.Account.Email, "Email" },
+                        { LocalizableStrings.Account.NewPassword, "New Password" },
+                        { LocalizableStrings.Account.OldPassword, "Current Password" },
+                        { LocalizableStrings.Account.Password, "Password" },
+                        { LocalizableStrings.Account.RememberMe, "Remember Me?" },
                         { LocalizableStrings.Dashboard.Title, "Dashboard" },
                     }
                 }

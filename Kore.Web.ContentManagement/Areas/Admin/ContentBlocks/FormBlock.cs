@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -7,26 +6,27 @@ using System.Globalization;
 using System.IO;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using Kore.ComponentModel;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
 {
     public class FormBlock : ContentBlockBase
     {
         [AllowHtml]
-        [Display(Name = "Html Template")]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.FormBlock.HtmlTemplate)]
         public string HtmlTemplate { get; set; }
 
         [AllowHtml]
-        [Display(Name = "'Thank You' Message")]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.FormBlock.ThankYouMessage)]
         public string ThankYouMessage { get; set; }
 
-        [Display(Name = "Redirect Url After Submit")]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.FormBlock.RedirectUrl)]
         public string RedirectUrl { get; set; }
 
-        [Display(Name = "Email Address")]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.FormBlock.EmailAddress)]
         public string EmailAddress { get; set; }
 
-        [Display(Name = "Use Ajax")]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.FormBlock.UseAjax)]
         public bool UseAjax { get; set; }
 
         public static string GenerateCaptcha()

@@ -8,12 +8,37 @@
             public const string Title = "Kore.Web.ContentManagement/CMS.Blog.Title";
         }
 
+        public static class BlogSettings
+        {
+            public const string PageTitle = "Kore.Web.ContentManagement/CMS.BlogSettings.PageTitle";
+            public const string DateFormat = "Kore.Web.ContentManagement/CMS.BlogSettings.DateFormat";
+            public const string ItemsPerPage = "Kore.Web.ContentManagement/CMS.BlogSettings.ItemsPerPage";
+            public const string ShowOnMenus = "Kore.Web.ContentManagement/CMS.BlogSettings.ShowOnMenus";
+            public const string MenuPosition = "Kore.Web.ContentManagement/CMS.BlogSettings.MenuPosition";
+            public const string UseAjax = "Kore.Web.ContentManagement/CMS.BlogSettings.UseAjax";
+            public const string AccessRestrictions = "Kore.Web.ContentManagement/CMS.BlogSettings.AccessRestrictions";
+        }
+
         public static class ContentBlocks
         {
             public const string ManageContentBlocks = "Kore.Web.ContentManagement/ContentBlocks.ManageContentBlocks";
             public const string ManageZones = "Kore.Web.ContentManagement/ContentBlocks.ManageZones";
             public const string Title = "Kore.Web.ContentManagement/ContentBlocks.Title";
             public const string Zones = "Kore.Web.ContentManagement/ContentBlocks.Zones";
+
+            public static class FormBlock
+            {
+                public const string HtmlTemplate = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.HtmlTemplate";
+                public const string ThankYouMessage = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.ThankYouMessage";
+                public const string RedirectUrl = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.RedirectUrl";
+                public const string EmailAddress = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.EmailAddress";
+                public const string UseAjax = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.UseAjax";
+            }
+
+            public static class HtmlBlock
+            {
+                public const string BodyContent = "Kore.Web.ContentManagement/ContentBlocks.HtmlBlock.BodyContent";
+            }
         }
 
         public static class Localization
@@ -89,11 +114,13 @@
         public static class Newsletters
         {
             public const string Subscribers = "Kore.Web.ContentManagement/CMS.Newsletters.Subscribers";
-
-            // Messages
             public const string SuccessfullySignedUp = "Kore.Web.ContentManagement/CMS.Newsletters.SuccessfullySignedUp";
-
             public const string Title = "Kore.Web.ContentManagement/CMS.Newsletters.Title";
+        }
+
+        public static class NewsletterUserProfileProvider
+        {
+            public const string SubscribeToNewsletters = "Kore.Web.ContentManagement/NewsletterUserProfileProvider.SubscribeToNewsletters";
         }
 
         public static class Pages
@@ -109,6 +136,11 @@
             public const string Tags = "Kore.Web.ContentManagement/Pages.Tags";
             public const string Title = "Kore.Web.ContentManagement/Pages.Title";
             public const string Translations = "Kore.Web.ContentManagement/Pages.Translations";
+        }
+
+        public static class PageSettings
+        {
+            public const string NumberOfPageVersionsToKeep = "Kore.Web.ContentManagement/PageSettings.NumberOfPageVersionsToKeep";
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using Kore.ComponentModel;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
 
@@ -14,13 +14,13 @@ namespace Kore.Web.Security.Membership
             public const string ShowFamilyNameFirst = "ShowFamilyNameFirst";
         }
 
-        [Display(Name = "Family Name")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.AccountUserProfileProvider.FamilyName)]
         public string FamilyName { get; set; }
 
-        [Display(Name = "Given Names")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.AccountUserProfileProvider.GivenNames)]
         public string GivenNames { get; set; }
 
-        [Display(Name = "Show Family Name First")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.AccountUserProfileProvider.ShowFamilyNameFirst)]
         public bool ShowFamilyNameFirst { get; set; }
 
         #region IUserProfileProvider Members

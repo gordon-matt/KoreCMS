@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Kore.ComponentModel;
 
 namespace KoreCMS.Models
 {
@@ -6,7 +7,7 @@ namespace KoreCMS.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [LocalizedDisplayName(LocalizableStrings.Account.Email)]
         public string Email { get; set; }
     }
 
@@ -21,18 +22,18 @@ namespace KoreCMS.Models
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [LocalizedDisplayName(LocalizableStrings.Account.OldPassword)]
         public string OldPassword { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [LocalizedDisplayName(LocalizableStrings.Account.NewPassword)]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [LocalizedDisplayName(LocalizableStrings.Account.ConfirmNewPassword)]
         public string ConfirmPassword { get; set; }
     }
 
@@ -40,15 +41,15 @@ namespace KoreCMS.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [LocalizedDisplayName(LocalizableStrings.Account.Email)]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [LocalizedDisplayName(LocalizableStrings.Account.Password)]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [LocalizedDisplayName(LocalizableStrings.Account.RememberMe)]
         public bool RememberMe { get; set; }
     }
 
@@ -56,18 +57,18 @@ namespace KoreCMS.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [LocalizedDisplayName(LocalizableStrings.Account.Email)]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [LocalizedDisplayName(LocalizableStrings.Account.Password)]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [LocalizedDisplayName(LocalizableStrings.Account.ConfirmPassword)]
         public string ConfirmPassword { get; set; }
     }
 
@@ -75,18 +76,18 @@ namespace KoreCMS.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [LocalizedDisplayName(LocalizableStrings.Account.Email)]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [LocalizedDisplayName(LocalizableStrings.Account.Password)]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [LocalizedDisplayName(LocalizableStrings.Account.ConfirmPassword)]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
@@ -96,7 +97,7 @@ namespace KoreCMS.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [LocalizedDisplayName(LocalizableStrings.Account.Email)]
         public string Email { get; set; }
     }
 }

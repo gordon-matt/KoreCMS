@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using Kore.ComponentModel;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web.Security.Membership;
@@ -13,7 +13,7 @@ namespace Kore.Web.Localization
             public const string PreferredLanguage = "PreferredLanguage";
         }
 
-        [Display(Name = "Preferred Language")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.LocalizationUserProfileProvider.PreferredLanguage)]
         public string PreferredLanguage { get; set; }
 
         #region IUserProfileProvider Members

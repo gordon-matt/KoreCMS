@@ -55,6 +55,7 @@ namespace Kore.Plugins.Ecommerce.Simple
 	[Name] [nvarchar](255) NOT NULL,
 	[Slug] [nvarchar](255) NOT NULL,
 	[ImageUrl] [nvarchar](255) NULL,
+    [Order] int NOT NULL DEFAULT(0),
 	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Categories] PRIMARY KEY CLUSTERED
 	(
 		[Id] ASC
@@ -204,6 +205,7 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Products_dbo.Kore_Plugins_S
             UninstallLocalizableStrings<DefaultLocalizableStringsProvider>();
 
             var dbContext = EngineContext.Current.Resolve<DbContext>();
+            DropTable(dbContext, Constants.Tables.Addresses);
             DropTable(dbContext, Constants.Tables.Categories);
             DropTable(dbContext, Constants.Tables.Orders);
             DropTable(dbContext, Constants.Tables.OrderLines);

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using Kore.ComponentModel;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web.Security.Membership;
@@ -13,7 +13,7 @@ namespace Kore.Web.Mvc.Themes
             public const string PreferredTheme = "PreferredTheme";
         }
 
-        [Display(Name = "Preferred Theme")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.ThemeUserProfileProvider.PreferredTheme)]
         public string PreferredTheme { get; set; }
 
         #region IUserProfileProvider Members

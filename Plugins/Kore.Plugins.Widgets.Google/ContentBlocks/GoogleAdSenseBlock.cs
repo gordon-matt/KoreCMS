@@ -1,21 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Kore.ComponentModel;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 
 namespace Kore.Plugins.Widgets.Google.ContentBlocks
 {
     public class GoogleAdSenseBlock : ContentBlockBase
     {
-        [Display(Name = "Google Ad Client")]
+        [LocalizedDisplayName(LocalizableStrings.AdSenseBlock.AdClient)]
         public string AdClient { get; set; }
 
-        [Display(Name = "Google Ad Slot")]
+        [LocalizedDisplayName(LocalizableStrings.AdSenseBlock.AdSlot)]
         public string AdSlot { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.AdSenseBlock.Width)]
         public int Width { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.AdSenseBlock.Height)]
         public int Height { get; set; }
 
-        [Display(Name = "Lazy Load")]
+        [LocalizedDisplayName(LocalizableStrings.AdSenseBlock.EnableLazyLoadAd)]
         public bool EnableLazyLoadAd { get; set; }
 
         #region ContentBlockBase Overrides

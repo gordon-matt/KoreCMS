@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Kore.ComponentModel;
 using Kore.Web.Configuration;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages
@@ -23,9 +24,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
             get { return "Kore.Web.ContentManagement.Areas.Admin.Pages.Views.Shared.EditorTemplates.PageSettings"; }
         }
 
-        #endregion
+        #endregion ISettings Members
 
-        [Display(Name = "# Page Versions to Keep")]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.PageSettings.NumberOfPageVersionsToKeep)]
         public short NumberOfPageVersionsToKeep { get; set; }
     }
 }

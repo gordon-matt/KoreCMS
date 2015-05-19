@@ -49,7 +49,7 @@ namespace Kore.Plugins.Widgets.View360
         /// <summary>
         /// Sets visual appearance. Options:fixed, lightbox, fullview and responsive.
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/Mode")]
+        [LocalizedDisplayName(LocalizableStrings.Mode)]
         public Mode Mode { get; set; }
 
         /// <summary>
@@ -58,19 +58,19 @@ namespace Kore.Plugins.Widgets.View360
         ///  Imagine we have 36 images for full rotation: image-0-0.jpg, image-1-0.jpg, .... image-35-0.jpg
         ///  We can simply set pattern image-%COL-%ROW.jpg and component will auto load images without need to pass array of images names.
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/ImagesPattern")]
+        [LocalizedDisplayName(LocalizableStrings.ImagesPattern)]
         public string ImagesPattern { get; set; }
 
         /// <summary>
         /// Path to images directory.
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/ImagesDirectory")]
+        [LocalizedDisplayName(LocalizableStrings.ImagesDirectory)]
         public string ImagesDirectory { get; set; }
 
         /// <summary>
         /// Path to full sized images. Tease images will be loaded product zoom.
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/FullSizeImagesDirectory")]
+        [LocalizedDisplayName(LocalizableStrings.FullSizeImagesDirectory)]
         public string FullSizeImagesDirectory { get; set; }
 
         #endregion General
@@ -80,25 +80,25 @@ namespace Kore.Plugins.Widgets.View360
         /// <summary>
         /// auto rotate on init
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/AutoRotate")]
+        [LocalizedDisplayName(LocalizableStrings.AutoRotate)]
         public bool AutoRotate { get; set; }
 
         /// <summary>
         /// auto rotate direction
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/AutoRotateDirection")]
+        [LocalizedDisplayName(LocalizableStrings.AutoRotateDirection)]
         public AutoRotateDirection AutoRotateDirection { get; set; }
 
         /// <summary>
         /// auto rotate speed
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/AutoRotateSpeed")]
+        [LocalizedDisplayName(LocalizableStrings.AutoRotateSpeed)]
         public int AutoRotateSpeed { get; set; }
 
         /// <summary>
         /// stop auto rotation on user interaction
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/AutoRotateStopOnMove")]
+        [LocalizedDisplayName(LocalizableStrings.AutoRotateStopOnMove)]
         public bool AutoRotateStopOnMove { get; set; }
 
         //TODO: Changing this causes the viewer to be blank when zooming in and out. For now, leave the defaults until we
@@ -106,62 +106,62 @@ namespace Kore.Plugins.Widgets.View360
         ///// <summary>
         ///// array of zoom multipliers
         ///// </summary>
-        //[LocalizedDisplayName("Kore.Plugins.Widgets.View360/ZoomMultipliers")]
+        //[LocalizedDisplayName(LocalizableStrings.ZoomMultipliers)]
         //public List<float> ZoomMultipliers { get; set; }
 
         /// <summary>
         /// If set to true, full size images will be loaded on first zoom. Also this property can set to one of the vaues
         /// from zoomMultipliers array. Full size images will be loaded on certan zoom multiplier.
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/LoadFullSizeImagesOnZoom")]
+        [LocalizedDisplayName(LocalizableStrings.LoadFullSizeImagesOnZoom)]
         public bool LoadFullSizeImagesOnZoom { get; set; }
 
         /// <summary>
         /// If set to true, fullscreen button starts full size images loading.
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/LoadFullSizeImagesOnFullscreen")]
+        [LocalizedDisplayName(LocalizableStrings.LoadFullSizeImagesOnFullscreen)]
         public bool LoadFullSizeImagesOnFullscreen { get; set; }
 
         /// <summary>
         /// View width
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/Width")]
+        [LocalizedDisplayName(LocalizableStrings.Width)]
         public short Width { get; set; }
 
         /// <summary>
         /// View height
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/Height")]
+        [LocalizedDisplayName(LocalizableStrings.Height)]
         public short Height { get; set; }
 
         /// <summary>
         /// View width
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/Rows")]
+        [LocalizedDisplayName(LocalizableStrings.Rows)]
         public short Rows { get; set; }
 
         /// <summary>
         /// View height
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/Columns")]
+        [LocalizedDisplayName(LocalizableStrings.Columns)]
         public short Columns { get; set; }
 
         /// <summary>
         /// Column change sensitivity in pixels
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/XAxisSensitivity")]
+        [LocalizedDisplayName(LocalizableStrings.XAxisSensitivity)]
         public short XAxisSensitivity { get; set; }
 
         /// <summary>
         /// Row change sensitivity in pixels.
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/YAxisSensitivity")]
+        [LocalizedDisplayName(LocalizableStrings.YAxisSensitivity)]
         public short YAxisSensitivity { get; set; }
 
         /// <summary>
         /// Inertia rotation constant. Set 0 to disable.
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/InertiaConstant")]
+        [LocalizedDisplayName(LocalizableStrings.InertiaConstant)]
         public short InertiaConstant { get; set; }
 
         #endregion Main Configuration
@@ -171,49 +171,49 @@ namespace Kore.Plugins.Widgets.View360
         /// <summary>
         /// button width
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/ButtonWidth")]
+        [LocalizedDisplayName(LocalizableStrings.ButtonWidth)]
         public short ButtonWidth { get; set; }
 
         /// <summary>
         /// button height
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/ButtonHeight")]
+        [LocalizedDisplayName(LocalizableStrings.ButtonHeight)]
         public short ButtonHeight { get; set; }
 
         /// <summary>
         /// distance between buttons
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/ButtonMargin")]
+        [LocalizedDisplayName(LocalizableStrings.ButtonMargin)]
         public short ButtonMargin { get; set; }
 
         /// <summary>
         /// rotation speed for turnLeft and turnRight buttons
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/TurnSpeed")]
+        [LocalizedDisplayName(LocalizableStrings.TurnSpeed)]
         public short TurnSpeed { get; set; }
 
         /// <summary>
         /// show navigation buttons
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/ShowButtons")]
+        [LocalizedDisplayName(LocalizableStrings.ShowButtons)]
         public bool ShowButtons { get; set; }
 
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/ShowTool")]
+        [LocalizedDisplayName(LocalizableStrings.ShowTool)]
         public bool ShowTool { get; set; }
 
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/ShowPlay")]
+        [LocalizedDisplayName(LocalizableStrings.ShowPlay)]
         public bool ShowPlay { get; set; }
 
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/ShowPause")]
+        [LocalizedDisplayName(LocalizableStrings.ShowPause)]
         public bool ShowPause { get; set; }
 
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/ShowZoom")]
+        [LocalizedDisplayName(LocalizableStrings.ShowZoom)]
         public bool ShowZoom { get; set; }
 
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/ShowTurn")]
+        [LocalizedDisplayName(LocalizableStrings.ShowTurn)]
         public bool ShowTurn { get; set; }
 
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/ShowFullscreen")]
+        [LocalizedDisplayName(LocalizableStrings.ShowFullscreen)]
         public bool ShowFullscreen { get; set; }
 
         #endregion Navigation Buttons Configuration
@@ -223,58 +223,58 @@ namespace Kore.Plugins.Widgets.View360
         /// <summary>
         /// display loader info
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/DisplayLoader")]
+        [LocalizedDisplayName(LocalizableStrings.DisplayLoader)]
         public bool DisplayLoader { get; set; }
 
         /// <summary>
         /// classname for css override
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/LoaderHolderClassName")]
+        [LocalizedDisplayName(LocalizableStrings.LoaderHolderClassName)]
         public string LoaderHolderClassName { get; set; }
 
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/LoadingTitle")]
+        [LocalizedDisplayName(LocalizableStrings.LoadingTitle)]
         public string LoadingTitle { get; set; }
 
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/LoadingSubtitle")]
+        [LocalizedDisplayName(LocalizableStrings.LoadingSubtitle)]
         public string LoadingSubtitle { get; set; }
 
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/LoadingMessage")]
+        [LocalizedDisplayName(LocalizableStrings.LoadingMessage)]
         public string LoadingMessage { get; set; }
 
         /// <summary>
         /// Color of loader background
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/LoaderModalBackground")]
+        [LocalizedDisplayName(LocalizableStrings.LoaderModalBackground)]
         public string LoaderModalBackground { get; set; }
 
         /// <summary>
         /// Opacity of loader background (range between 0-1)
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/LoaderModalOpacity")]
+        [LocalizedDisplayName(LocalizableStrings.LoaderModalOpacity)]
         public float LoaderModalOpacity { get; set; }
 
         /// <summary>
         /// Loader circle width
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/LoaderCircleWidth")]
+        [LocalizedDisplayName(LocalizableStrings.LoaderCircleWidth)]
         public float LoaderCircleWidth { get; set; }
 
         /// <summary>
         /// Loader circle line width
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/LoaderCircleLineWidth")]
+        [LocalizedDisplayName(LocalizableStrings.LoaderCircleLineWidth)]
         public float LoaderCircleLineWidth { get; set; }
 
         /// <summary>
         /// Loader circle line color
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/LoaderCircleLineColor")]
+        [LocalizedDisplayName(LocalizableStrings.LoaderCircleLineColor)]
         public string LoaderCircleLineColor { get; set; }
 
         /// <summary>
         /// Loader circle background color
         /// </summary>
-        [LocalizedDisplayName("Kore.Plugins.Widgets.View360/LoaderCircleBackgroundColor")]
+        [LocalizedDisplayName(LocalizableStrings.LoaderCircleBackgroundColor)]
         public string LoaderCircleBackgroundColor { get; set; }
 
         #endregion Loader Info Config

@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using Kore.ComponentModel;
 using Kore.Web.Configuration;
 
 namespace Kore.Plugins.Ecommerce.Simple
@@ -14,18 +13,19 @@ namespace Kore.Plugins.Ecommerce.Simple
             CurrencyCode = "USD";
         }
 
-        [Display(Name = "Production URL")]
+        [LocalizedDisplayName(LocalizableStrings.PayPalSettings.ProductionUrl)]
         public string ProductionUrl { get; set; }
 
-        [Display(Name = "Sandbox URL")]
+        [LocalizedDisplayName(LocalizableStrings.PayPalSettings.SandboxUrl)]
         public string SandboxUrl { get; set; }
 
-        [Display(Name = "Use Sandbox Mode")]
+        [LocalizedDisplayName(LocalizableStrings.PayPalSettings.UseSandboxMode)]
         public bool UseSandboxMode { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.PayPalSettings.Merchant)]
         public string Merchant { get; set; }
 
-        [Display(Name = "Currency Code")]
+        [LocalizedDisplayName(LocalizableStrings.PayPalSettings.CurrencyCode)]
         public string CurrencyCode { get; set; }
 
         #region ISettings Members

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using Kore.ComponentModel;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web.Security.Membership;
@@ -13,7 +13,7 @@ namespace Kore.Web.Mobile
             public const string DontUseMobileVersion = "DontUseMobileVersion";
         }
 
-        [Display(Name = "Don't Use Mobile Version")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.MobileUserProfileProvider.DontUseMobileVersion)]
         public bool DontUseMobileVersion { get; set; }
 
         #region IUserProfileProvider Members

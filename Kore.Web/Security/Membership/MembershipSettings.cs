@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Kore.ComponentModel;
 using Kore.Web.Configuration;
 
 namespace Kore.Web.Security.Membership
@@ -11,10 +11,10 @@ namespace Kore.Web.Security.Membership
             GeneratedPasswordNumberOfNonAlphanumericChars = 3;
         }
 
-        [Display(Name = "Length")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.MembershipSettings.GeneratedPasswordLength)]
         public byte GeneratedPasswordLength { get; set; }
 
-        [Display(Name = "Number of Non-Alphanumeric Characters")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.MembershipSettings.GeneratedPasswordNumberOfNonAlphanumericChars)]
         public byte GeneratedPasswordNumberOfNonAlphanumericChars { get; set; }
 
         #region ISettings Members
@@ -29,6 +29,6 @@ namespace Kore.Web.Security.Membership
             get { return "Kore.Web.Views.Shared.EditorTemplates.MembershipSettings"; }
         }
 
-        #endregion
+        #endregion ISettings Members
     }
 }

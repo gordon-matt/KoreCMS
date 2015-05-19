@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Kore.ComponentModel;
 using Kore.Web.Configuration;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog
@@ -14,24 +14,25 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog
             MenuPosition = 0;
         }
 
-        [Display(Name = "Page Title")]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.BlogSettings.PageTitle)]
         public string PageTitle { get; set; }
 
-        [Display(Name = "Date Format")]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.BlogSettings.DateFormat)]
         public string DateFormat { get; set; }
 
-        [Display(Name = "# Items Per Page")]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.BlogSettings.ItemsPerPage)]
         public byte ItemsPerPage { get; set; }
 
-        [Display(Name = "Show on Menus")]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.BlogSettings.ShowOnMenus)]
         public bool ShowOnMenus { get; set; }
 
-        [Display(Name = "Menu Position")]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.BlogSettings.MenuPosition)]
         public byte MenuPosition { get; set; }
 
-        [Display(Name = "Use Ajax")]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.BlogSettings.UseAjax)]
         public bool UseAjax { get; set; }
 
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.BlogSettings.AccessRestrictions)]
         public string AccessRestrictions { get; set; }
 
         #region ISettings Members

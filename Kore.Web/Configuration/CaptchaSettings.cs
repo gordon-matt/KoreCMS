@@ -1,5 +1,5 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Kore.ComponentModel;
 
 namespace Kore.Web.Configuration
 {
@@ -20,12 +20,12 @@ namespace Kore.Web.Configuration
 
         #endregion ISettings Members
 
-        [Display(Name = "Public Key")]
         [Required]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.CaptchaSettings.PublicKey)]
         public string PublicKey { get; set; }
 
-        [Display(Name = "Private Key")]
         [Required]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.CaptchaSettings.PrivateKey)]
         public string PrivateKey { get; set; }
     }
 }

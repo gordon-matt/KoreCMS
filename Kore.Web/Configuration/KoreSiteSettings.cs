@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Kore.ComponentModel;
 
 namespace Kore.Web.Configuration
 {
@@ -36,36 +37,36 @@ namespace Kore.Web.Configuration
 
         #region General
 
-        [Display(Name = "Site Name")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.SiteName)]
         public string SiteName { get; set; }
 
-        [Display(Name = "Default Frontend Layout Path")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.DefaultFrontendLayoutPath)]
         public string DefaultFrontendLayoutPath { get; set; }
 
-        [Display(Name = "Admin Layout Path")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.AdminLayoutPath)]
         public string AdminLayoutPath { get; set; }
 
-        [Display(Name = "Default Grid Page Size")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.DefaultGridPageSize)]
         public int DefaultGridPageSize { get; set; }
 
         #endregion General
 
         #region Themes
 
-        [Display(Name = "Default Desktop Theme")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.DefaultDesktopTheme)]
         public string DefaultDesktopTheme { get; set; }
 
-        [Display(Name = "Default Mobile Theme")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.DefaultMobileTheme)]
         public string DefaultMobileTheme { get; set; }
 
-        [Display(Name = "Allow User To Select Theme")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.AllowUserToSelectTheme)]
         public bool AllowUserToSelectTheme { get; set; }
 
         #endregion Themes
 
         #region Localization
 
-        [Display(Name = "Default Language")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.DefaultLanguage)]
         public string DefaultLanguage
         {
             get { return string.IsNullOrEmpty(defaultLanguage) ? "en-US" : defaultLanguage; }
@@ -76,13 +77,13 @@ namespace Kore.Web.Configuration
 
         #region SEO
 
-        [Display(Name = "Default Meta Keywords")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.DefaultMetaKeywords)]
         public string DefaultMetaKeywords { get; set; }
 
-        [Display(Name = "Default Meta Description")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.DefaultMetaDescription)]
         public string DefaultMetaDescription { get; set; }
 
-        [Display(Name = "Home Page Title")]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.HomePageTitle)]
         public string HomePageTitle { get; set; }
 
         #endregion SEO

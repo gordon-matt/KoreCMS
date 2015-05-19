@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using Kore.ComponentModel;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web.Security.Membership;
@@ -13,7 +13,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters
             public const string SubscribeToNewsletters = "SubscribeToNewsletters";
         }
 
-        [Display(Name = "Subscribe to Newsletters")]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.NewsletterUserProfileProvider.SubscribeToNewsletters)]
         public bool SubscribeToNewsletters { get; set; }
 
         #region IUserProfileProvider Members

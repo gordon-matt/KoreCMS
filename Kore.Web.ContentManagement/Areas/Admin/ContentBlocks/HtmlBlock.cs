@@ -1,16 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Kore.ComponentModel;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
 {
     public class HtmlBlock : ContentBlockBase
     {
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.HtmlBlock.BodyContent)]
+        public string BodyContent { get; set; }
+
+        #region IContentBlock Members
+
         public override string Name
         {
             get { return "Html Content Block"; }
         }
-
-        [Display(Name = "Body Content")]
-        public string BodyContent { get; set; }
 
         public override string DisplayTemplatePath
         {
@@ -21,5 +24,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
         {
             get { return "Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.Shared.EditorTemplates.HtmlBlock"; }
         }
+
+        #endregion IContentBlock Members
     }
 }

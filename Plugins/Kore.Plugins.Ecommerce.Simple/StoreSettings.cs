@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Kore.ComponentModel;
 using Kore.Web.Configuration;
 
 namespace Kore.Plugins.Ecommerce.Simple
@@ -15,24 +15,25 @@ namespace Kore.Plugins.Ecommerce.Simple
             MenuPosition = 0;
         }
 
-        [Display(Name = "Page Title")]
+        [LocalizedDisplayName(LocalizableStrings.StoreSettings.PageTitle)]
         public string PageTitle { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.StoreSettings.Currency)]
         public string Currency { get; set; }
 
-        [Display(Name = "Categories Per Page")]
+        [LocalizedDisplayName(LocalizableStrings.StoreSettings.CategoriesPerPage)]
         public byte CategoriesPerPage { get; set; }
 
-        [Display(Name = "Products Per Page")]
+        [LocalizedDisplayName(LocalizableStrings.StoreSettings.ProductsPerPage)]
         public byte ProductsPerPage { get; set; }
 
-        [Display(Name = "Show on Menus")]
+        [LocalizedDisplayName(LocalizableStrings.StoreSettings.ShowOnMenus)]
         public bool ShowOnMenus { get; set; }
 
-        [Display(Name = "Menu Position")]
+        [LocalizedDisplayName(LocalizableStrings.StoreSettings.MenuPosition)]
         public byte MenuPosition { get; set; }
 
-        [Display(Name = "Use Ajax")]
+        [LocalizedDisplayName(LocalizableStrings.StoreSettings.UseAjax)]
         public bool UseAjax { get; set; }
 
         #region ISettings Members

@@ -105,6 +105,25 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 OrderDateUtc = DateTime.UtcNow,
             };
 
+            //TEMP
+            var address = new Address
+            {
+                AddressLine1 = "Line 1",
+                AddressLine2 = "Line 2",
+                AddressLine3 = "Line 3",
+                City = "Tel Aviv",
+                Country = "Israel",
+                PostalCode = "jhskaj",
+                Email = "rn@esales.co.il",
+                FamilyName = "Nissan",
+                GivenNames = "Ran",
+                PhoneNumber = "0987654321",
+            };
+
+            order.BillingAddress = address;
+            order.ShippingAddress = address;
+            //END TEMP
+
             foreach (var item in cart)
             {
                 order.Lines.Add(new OrderLine

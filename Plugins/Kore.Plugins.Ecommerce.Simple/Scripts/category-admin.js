@@ -1,7 +1,16 @@
 ﻿'use strict'
 
+var imagePickerField = 'category';
 function imagePickerCallback(url) {
-    viewModel.product.mainImageUrl(url);
+    if (imagePickerField == 'category') {
+        viewModel.imageUrl(url);
+    }
+    else if (imagePickerField == 'product') {
+        viewModel.product.mainImageUrl(url);
+    }
+    else {
+        console.log('Unknown Field: ' + imagePickerField);
+    }
 };
 
 var ProductModel = function () {
@@ -32,6 +41,8 @@ var ProductModel = function () {
         self.shortDescription('');
         self.fullDescription('');
 
+        imagePickerField = 'product';
+
         self.validator.resetForm();
         switchSection($("#product-form-section"));
         $("#product-form-section-legend").html(translations.Create);
@@ -55,6 +66,8 @@ var ProductModel = function () {
             self.mainImageUrl(json.MainImageUrl);
             self.shortDescription(json.ShortDescription);
             self.fullDescription(json.FullDescription);
+
+            imagePickerField = 'product';
 
             self.validator.resetForm();
             switchSection($("#product-form-section"));
@@ -179,6 +192,8 @@ var ViewModel = function () {
     self.name = ko.observable('');
     self.slug = ko.observable('');
     self.order = ko.observable(0);
+    self.imageUrl = ko.observable('');
+    self.description = ko.observable('');
     self.showToolbar = ko.observable(false);
 
     self.product = new ProductModel();
@@ -189,7 +204,11 @@ var ViewModel = function () {
         self.name('');
         self.slug('');
         self.order(0);
+        self.imageUrl('');
+        self.description('');
+
         self.showToolbar(false);
+        imagePickerField = 'category';
 
         self.validator.resetForm();
         switchSection($("#form-section"));
@@ -209,8 +228,11 @@ var ViewModel = function () {
             self.name(json.Name);
             self.slug(json.Slug);
             self.order(json.Order);
+            self.imageUrl(json.ImageUrl);
+            self.description(json.Description);
 
             self.showToolbar(true);
+            imagePickerField = 'category';
 
             self.validator.resetForm();
             switchSection($("#form-section"));
@@ -251,7 +273,9 @@ var ViewModel = function () {
             ParentId: self.parentId(),
             Name: self.name(),
             Slug: self.slug(),
-            Order: self.order()
+            Order: self.order(),
+            ImageUrl: self.imageUrl(),
+            Description: self.description()
         };
 
         if (self.id() == 0) {
@@ -317,7 +341,9 @@ var ViewModel = function () {
         rules: {
             Name: { required: true, maxlength: 255 },
             Slug: { required: true, maxlength: 255 },
-            Order: { required: true, number: true }
+            Order: { required: true, number: true },
+            ImageUrl: { maxlength: 255 },
+            Description: { maxlength: 255 }
         }
     });
 };

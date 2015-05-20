@@ -14,8 +14,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
         {
             ODataModelBuilder builder = new ODataConventionModelBuilder();
             //builder.EntitySet<ShoppingCartItem>("CartApi");
+            builder.EntitySet<Address>("AddressApi");
             builder.EntitySet<Category>("CategoryApi");
             builder.EntitySet<Order>("OrderApi");
+            builder.EntitySet<OrderLine>("OrderLineApi");
+            builder.EntitySet<OrderNote>("OrderNoteApi");
             builder.EntitySet<Product>("ProductApi");
 
             // Special

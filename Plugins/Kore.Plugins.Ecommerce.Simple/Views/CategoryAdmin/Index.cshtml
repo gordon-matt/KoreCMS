@@ -18,7 +18,7 @@
 
     Script.IncludeBundle("kore-cms/common");
     Script.IncludeBundle("kore-cms/bootbox");
-    Script.IncludePluginScript("category.js");
+    Script.IncludePluginScript("category-admin.js");
 
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
@@ -59,7 +59,7 @@
                     <a data-bind="click: toggleEnabled" class="btn btn-default">@T(KoreWebLocalizableStrings.General.Toggle).Text</a>*@
                     <a data-bind="click: showProducts" class="btn btn-default">
                         <i class="kore-icon kore-icon-tags"></i>
-                        Products
+                        @T(LocalizableStrings.Products)
                     </a>
                 </div>
             </div>
@@ -70,7 +70,7 @@
                 <div id="blank-section" class="row" style="display:none">
                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="alert alert-info">
-                            Select a category from the left menu to begin editing.
+                            @T(LocalizableStrings.SelectCategoryToBeginEdit)
                         </div>
                     </article>
                 </div>
@@ -96,6 +96,35 @@
                                     <div class="form-group">
                                         @Html.Label("Order", "Order", new { @class = "control-label" })
                                         @Html.TextBox("Order", null, new { @class = "form-control", data_bind = "value: order" })
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <div data-bind="if: imageUrl">
+                                            <img data-bind="attr: { src: imageUrl }" class="img-responsive img-thumbnail" />
+                                        </div>
+                                        <div data-bind="ifnot: imageUrl">
+                                            <img src="http://placehold.it/320x240&text=Image+Missing" class="img-responsive img-thumbnail" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                                    <div class="form-group">
+                                        @Html.Label("ImageUrl", "Image URL", new { @class = "control-label" })
+                                        <div class="input-group">
+                                            @Html.TextBox("ImageUrl", null, new { @class = "form-control", data_bind = "value: imageUrl" })
+                                            <span class="input-group-addon">
+                                                <a href="javascript:void(0);" onclick="elFinderBrowserBootBox();"><i class="kore-icon kore-icon-search"></i></a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("Description", "Description", new { @class = "control-label" })
+                                        @Html.TextArea("Description", null, new { @class = "form-control", data_bind = "value: description" })
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -227,7 +256,7 @@
             UpdateRecordError: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordError).Text',
             UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text'
         }
-</script>
+    </script>
     <script id="treeview-template" type="text/kendo-ui-template">
         <a href="javascript:void(0)" onclick="viewModel.edit('#=item.Id#')">#= item.Name #</a>
     </script>

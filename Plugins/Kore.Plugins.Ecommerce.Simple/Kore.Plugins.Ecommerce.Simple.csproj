@@ -125,10 +125,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\Api\AddressApiController.cs" />
     <Compile Include="Controllers\Api\CartApiController.cs" />
     <Compile Include="Controllers\Api\CategoryApiController.cs" />
     <Compile Include="Controllers\Api\CategoryTreeApiController.cs" />
     <Compile Include="Controllers\Api\OrderApiController.cs" />
+    <Compile Include="Controllers\Api\OrderLineApiController.cs" />
+    <Compile Include="Controllers\Api\OrderNoteApiController.cs" />
     <Compile Include="Controllers\Api\ProductApiController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryAdminController.cs" />
@@ -249,13 +252,13 @@
     <Content Include="Description.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\category.js">
+    <Content Include="Scripts\category-admin.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\checkout.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\order.js">
+    <Content Include="Scripts\order-admin.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\store.js">

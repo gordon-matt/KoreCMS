@@ -21,21 +21,13 @@
         </div>
         <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
             <h1>@Model.Name</h1>
-            <p>Price @settings.Currency @Model.Price.ToString("N2")</p>
-            <p>Tax: @settings.Currency @Model.Tax.ToString("N2")</p>
-            <p>Shipping: @settings.Currency @Model.ShippingCost.ToString("N2")</p>
+            <p><strong>@T(LocalizableStrings.Price)</strong> @settings.Currency @Model.Price.ToString("N2")</p>
+            <p><strong>@T(LocalizableStrings.Tax)</strong> @settings.Currency @Model.Tax.ToString("N2")</p>
+            <p><strong>@T(LocalizableStrings.Shipping)</strong> @settings.Currency @Model.ShippingCost.ToString("N2")</p>
             
             <a href="javascript:void(0);" onclick="addToCart(@Model.Id)" class="btn btn-primary">
-                Add to Cart
+                @T(LocalizableStrings.AddToCart)
             </a>
-
-            @*@using (Html.BeginForm("BuyNow", "PayPal", new { area = string.Empty }))
-            {
-                @Html.Hidden("ProductId", Model.Id)
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Buy Now</button>
-                </div>
-            }*@
         </div>
     </div>
     <div class="row">

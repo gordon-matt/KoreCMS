@@ -46,6 +46,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 PaymentStatus = PaymentStatus.Pending,
                 Status = OrderStatus.Pending,
                 OrderDateUtc = DateTime.UtcNow,
+                IPAddress = ClientIPAddress,
+                OrderTotal = cart.Sum(x => (x.Price + x.Tax + x.ShippingCost) * x.Quantity)
             };
 
             //TEMP //TODO; Remove this asap
@@ -557,17 +559,23 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             request.ContentLength = formContent.Length;
 
             using (var sw = new StreamWriter(request.GetRequestStream(), Encoding.ASCII))
+            {
                 sw.Write(formContent);
+            }
 
             response = null;
             using (var sr = new StreamReader(request.GetResponse().GetResponseStream()))
+            {
                 response = HttpUtility.UrlDecode(sr.ReadToEnd());
+            }
 
             values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            bool firstLine = true, success = false;
-            foreach (string l in response.Split('\n'))
+            bool firstLine = true;
+            bool success = false;
+
+            foreach (string s in response.Split('\n'))
             {
-                string line = l.Trim();
+                string line = s.Trim();
                 if (firstLine)
                 {
                     success = line.Equals("SUCCESS", StringComparison.OrdinalIgnoreCase);
@@ -575,9 +583,10 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 }
                 else
                 {
-                    int equalPox = line.IndexOf('=');
-                    if (equalPox >= 0)
-                        values.Add(line.Substring(0, equalPox), line.Substring(equalPox + 1));
+                    if (line.Contains('='))
+                    {
+                        values.Add(line.LeftOf('='), line.RightOf('='));
+                    }
                 }
             }
 
@@ -611,13 +620,14 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             bool verified = response.Trim().Equals("VERIFIED", StringComparison.OrdinalIgnoreCase);
 
             values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
             foreach (string s in formParams.Split('&'))
             {
                 string line = s.Trim();
-                int equalPos = line.IndexOf('=');
-                if (equalPos >= 0)
+
+                if (line.Contains('='))
                 {
-                    values.Add(line.Substring(0, equalPos), line.Substring(equalPos + 1));
+                    values.Add(line.LeftOf('='), line.RightOf('='));
                 }
             }
 

@@ -154,6 +154,7 @@
     <Compile Include="Infrastructure\LocationFormatProvider.cs" />
     <Compile Include="Infrastructure\WebApiRegistrar.cs" />
     <Compile Include="LocalizableStrings.cs" />
+    <Compile Include="Models\AddressModel.cs" />
     <Compile Include="Models\PayPalModel.cs" />
     <Compile Include="Models\ShoppingCartItem.cs" />
     <Compile Include="NavigationProvider.cs" />

@@ -9,5 +9,9 @@
         public short Quantity { get; set; }
 
         public float Price { get; set; }
+
+        public float Tax { get; set; }
+
+        public float ShippingCost { get; set; }
     }
 }

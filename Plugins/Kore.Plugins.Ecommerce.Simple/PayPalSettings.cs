@@ -7,10 +7,11 @@ namespace Kore.Plugins.Ecommerce.Simple
     {
         public PayPalSettings()
         {
-            ProductionUrl = "https://www.sandbox.paypal.com/cgi-bin/webscr";
+            ProductionUrl = "https://www.paypal.com/us/cgi-bin/webscr";
             SandboxUrl = "https://www.sandbox.paypal.com/cgi-bin/webscr";
             UseSandboxMode = true;
             CurrencyCode = "USD";
+            CancelUrlRedirectsToOrderDetailsPage = true;
         }
 
         [LocalizedDisplayName(LocalizableStrings.PayPalSettings.ProductionUrl)]
@@ -27,6 +28,12 @@ namespace Kore.Plugins.Ecommerce.Simple
 
         [LocalizedDisplayName(LocalizableStrings.PayPalSettings.CurrencyCode)]
         public string CurrencyCode { get; set; }
+
+        [LocalizedDisplayName(LocalizableStrings.PayPalSettings.CancelUrlRedirectsToOrderDetailsPage)]
+        public bool CancelUrlRedirectsToOrderDetailsPage { get; set; }
+
+        [LocalizedDisplayName(LocalizableStrings.PayPalSettings.PdtToken)]
+        public string PdtToken { get; set; }
 
         #region ISettings Members
 

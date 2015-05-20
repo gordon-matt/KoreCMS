@@ -402,6 +402,28 @@ namespace Kore.Web
             return _trustLevel.Value;
         }
 
+        ///// <summary>
+        ///// Gets query string value by name
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="name">Parameter name</param>
+        ///// <returns>Query string value</returns>
+        //public virtual T QueryString<T>(string name)
+        //{
+        //    string queryParam = null;
+        //    if (IsRequestAvailable(_httpContext) && _httpContext.Request.QueryString[name] != null)
+        //    {
+        //        queryParam = _httpContext.Request.QueryString[name];
+        //    }
+
+        //    if (!string.IsNullOrEmpty(queryParam))
+        //    {
+        //        return queryParam.ConvertTo<T>();
+        //    }
+
+        //    return default(T);
+        //}
+
         /// <summary>
         /// Restart application domain
         /// </summary>

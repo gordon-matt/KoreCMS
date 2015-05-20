@@ -16,11 +16,19 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                     CultureCode = null,
                     LocalizedStrings = new Dictionary<string, string>
                     {
+                        { LocalizableStrings.Categories, "Categories" },
+                        { LocalizableStrings.Checkout, "Checkout" },
+                        { LocalizableStrings.CircularRelationshipError, "That action would cause a circular relationship!" },
+                        { LocalizableStrings.Orders, "Orders" },
+                        { LocalizableStrings.Products, "Products" },
+                        { LocalizableStrings.Store, "Store" },
+                        { LocalizableStrings.PayPalSettings.CancelUrlRedirectsToOrderDetailsPage, "Cancel URL Redirects to Order Details Page" },
+                        { LocalizableStrings.PayPalSettings.CurrencyCode, "Currency Code" },
+                        { LocalizableStrings.PayPalSettings.Merchant, "Merchant" },
+                        { LocalizableStrings.PayPalSettings.PdtToken, "PDT Token" },
                         { LocalizableStrings.PayPalSettings.ProductionUrl, "Production URL" },
                         { LocalizableStrings.PayPalSettings.SandboxUrl, "Sandbox URL" },
                         { LocalizableStrings.PayPalSettings.UseSandboxMode, "Use Sandbox Mode" },
-                        { LocalizableStrings.PayPalSettings.Merchant, "Merchant" },
-                        { LocalizableStrings.PayPalSettings.CurrencyCode, "Currency Code" },
                         { LocalizableStrings.StoreSettings.CategoriesPerPage, "Categories Per Page" },
                         { LocalizableStrings.StoreSettings.Currency, "Currency" },
                         { LocalizableStrings.StoreSettings.MenuPosition, "Menu Position" },
@@ -28,12 +36,6 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                         { LocalizableStrings.StoreSettings.ProductsPerPage, "Products Per Page" },
                         { LocalizableStrings.StoreSettings.ShowOnMenus, "Show on Menus" },
                         { LocalizableStrings.StoreSettings.UseAjax, "Use Ajax" },
-                        { LocalizableStrings.Categories, "Categories" },
-                        { LocalizableStrings.Checkout, "Checkout" },
-                        { LocalizableStrings.CircularRelationshipError, "That action would cause a circular relationship!" },
-                        { LocalizableStrings.Orders, "Orders" },
-                        { LocalizableStrings.Products, "Products" },
-                        { LocalizableStrings.Store, "Store" }
                     }
                 }
             };

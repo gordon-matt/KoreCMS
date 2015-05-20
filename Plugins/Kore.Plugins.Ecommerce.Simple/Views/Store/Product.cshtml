@@ -29,7 +29,7 @@
                 Add to Cart
             </a>
 
-            @*@using (Html.BeginForm("BuyNow", "PayPal", new { area = StoreConstants.RouteArea }))
+            @*@using (Html.BeginForm("BuyNow", "PayPal", new { area = string.Empty }))
             {
                 @Html.Hidden("ProductId", Model.Id)
                 <div class="form-group">

@@ -15,34 +15,6 @@ namespace Kore.Plugins.Ecommerce.Simple
 
             var dbContext = EngineContext.Current.Resolve<DbContext>();
 
-            if (!CheckIfTableExists(dbContext, Constants.Tables.Addresses))
-            {
-                #region CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Addresses]
-
-                dbContext.Database.ExecuteSqlCommand(
-@"CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Addresses]
-(
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[UserId] [nvarchar](max) NULL,
-	[FamilyName] [nvarchar](128) NOT NULL,
-	[GivenNames] [nvarchar](128) NOT NULL,
-	[Email] [nvarchar](255) NOT NULL,
-	[AddressLine1] [nvarchar](128) NOT NULL,
-	[AddressLine2] [nvarchar](128) NULL,
-	[AddressLine3] [nvarchar](128) NULL,
-	[City] [nvarchar](128) NOT NULL,
-	[PostalCode] [nvarchar](10) NOT NULL,
-	[Country] [nvarchar](50) NOT NULL,
-	[PhoneNumber] [nvarchar](25) NOT NULL,
-	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Addresses] PRIMARY KEY CLUSTERED 
-	(
-		[Id] ASC
-	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]");
-
-                #endregion CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Addresses]
-            }
-
             if (!CheckIfTableExists(dbContext, Constants.Tables.Categories))
             {
                 #region CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Categories]
@@ -73,6 +45,71 @@ REFERENCES [dbo].[Kore_Plugins_SimpleCommerce_Categories] ([Id])");
 CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Categories_dbo.Kore_Plugins_SimpleCommerce_Categories_ParentId]");
 
                 #endregion CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Categories]
+            }
+
+            if (!CheckIfTableExists(dbContext, Constants.Tables.Products))
+            {
+                #region CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Products]
+
+                dbContext.Database.ExecuteSqlCommand(
+@"CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Products]
+(
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](255) NOT NULL,
+	[Slug] [nvarchar](255) NOT NULL,
+	[CategoryId] [int] NOT NULL,
+	[Price] [real] NOT NULL,
+	[Tax] [real] NOT NULL,
+	[ShippingCost] [real] NOT NULL,
+	[MainImageUrl] [nvarchar](255) NULL,
+	[ShortDescription] [nvarchar](max) NOT NULL,
+	[FullDescription] [nvarchar](max) NOT NULL,
+	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Products] PRIMARY KEY CLUSTERED 
+	(
+		[Id] ASC
+	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]");
+
+                dbContext.Database.ExecuteSqlCommand(
+@"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_Products] WITH CHECK
+ADD CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Products_dbo.Kore_Plugins_SimpleCommerce_Categories_CategoryId]
+FOREIGN KEY([CategoryId])
+REFERENCES [dbo].[Kore_Plugins_SimpleCommerce_Categories] ([Id])
+ON DELETE CASCADE");
+
+                dbContext.Database.ExecuteSqlCommand(
+@"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_Products]
+CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Products_dbo.Kore_Plugins_SimpleCommerce_Categories_CategoryId]");
+
+                #endregion CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Products]
+            }
+
+            if (!CheckIfTableExists(dbContext, Constants.Tables.Addresses))
+            {
+                #region CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Addresses]
+
+                dbContext.Database.ExecuteSqlCommand(
+@"CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Addresses]
+(
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [nvarchar](max) NULL,
+	[FamilyName] [nvarchar](128) NOT NULL,
+	[GivenNames] [nvarchar](128) NOT NULL,
+	[Email] [nvarchar](255) NOT NULL,
+	[AddressLine1] [nvarchar](128) NOT NULL,
+	[AddressLine2] [nvarchar](128) NULL,
+	[AddressLine3] [nvarchar](128) NULL,
+	[City] [nvarchar](128) NOT NULL,
+	[PostalCode] [nvarchar](10) NOT NULL,
+	[Country] [nvarchar](50) NOT NULL,
+	[PhoneNumber] [nvarchar](25) NOT NULL,
+	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Addresses] PRIMARY KEY CLUSTERED 
+	(
+		[Id] ASC
+	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]");
+
+                #endregion CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Addresses]
             }
 
             if (!CheckIfTableExists(dbContext, Constants.Tables.Orders))
@@ -195,43 +232,6 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_OrderNotes_dbo.Kore_Plugins
 
                 #endregion CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Orders]
             }
-
-            if (!CheckIfTableExists(dbContext, Constants.Tables.Products))
-            {
-                #region CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Products]
-
-                dbContext.Database.ExecuteSqlCommand(
-@"CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Products]
-(
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [nvarchar](255) NOT NULL,
-	[Slug] [nvarchar](255) NOT NULL,
-	[CategoryId] [int] NOT NULL,
-	[Price] [real] NOT NULL,
-	[Tax] [real] NOT NULL,
-	[ShippingCost] [real] NOT NULL,
-	[MainImageUrl] [nvarchar](255) NULL,
-	[ShortDescription] [nvarchar](max) NOT NULL,
-	[FullDescription] [nvarchar](max) NOT NULL,
-	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Products] PRIMARY KEY CLUSTERED 
-	(
-		[Id] ASC
-	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]");
-
-                dbContext.Database.ExecuteSqlCommand(
-@"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_Products] WITH CHECK
-ADD CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Products_dbo.Kore_Plugins_SimpleCommerce_Categories_CategoryId]
-FOREIGN KEY([CategoryId])
-REFERENCES [dbo].[Kore_Plugins_SimpleCommerce_Categories] ([Id])
-ON DELETE CASCADE");
-
-                dbContext.Database.ExecuteSqlCommand(
-@"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_Products]
-CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Products_dbo.Kore_Plugins_SimpleCommerce_Categories_CategoryId]");
-
-                #endregion CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Products]
-            }
         }
 
         public override void Uninstall()
@@ -239,12 +239,12 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Products_dbo.Kore_Plugins_S
             UninstallLocalizableStrings<DefaultLocalizableStringsProvider>();
 
             var dbContext = EngineContext.Current.Resolve<DbContext>();
-            DropTable(dbContext, Constants.Tables.Addresses);
-            DropTable(dbContext, Constants.Tables.Categories);
-            DropTable(dbContext, Constants.Tables.Orders);
-            DropTable(dbContext, Constants.Tables.OrderLines);
             DropTable(dbContext, Constants.Tables.OrderNotes);
+            DropTable(dbContext, Constants.Tables.OrderLines);
+            DropTable(dbContext, Constants.Tables.Orders);
+            DropTable(dbContext, Constants.Tables.Addresses);
             DropTable(dbContext, Constants.Tables.Products);
+            DropTable(dbContext, Constants.Tables.Categories);
 
             base.Uninstall();
         }

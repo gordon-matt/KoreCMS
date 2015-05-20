@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kore.Collections;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -87,7 +88,11 @@ namespace Kore.Web.Plugins
                 .Distinct();
 
             var localizableStringRepository = EngineContext.Current.Resolve<IRepository<LocalizableString>>();
-            var toDelete = localizableStringRepository.Table.Where(x => distinctKeys.Contains(x.TextKey));
+
+            var toDelete = localizableStringRepository.Table
+                .Where(x => distinctKeys.Contains(x.TextKey))
+                .ToHashSet();
+
             localizableStringRepository.Delete(toDelete);
 
             var cacheManager = EngineContext.Current.Resolve<ICacheManager>();

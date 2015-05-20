@@ -5,6 +5,7 @@ using System.Text;
 using System.Web.Mvc;
 using Kore.Infrastructure;
 using Kore.Localization;
+using Kore.Localization.Services;
 using Kore.Web.Configuration;
 using Kore.Web.Mvc.Resources;
 using Kore.Web.Navigation;
@@ -25,6 +26,7 @@ namespace Kore.Web.Mvc
 
     public abstract class WebViewPage<TModel> : System.Web.Mvc.WebViewPage<TModel>, IWebViewPage
     {
+        private bool? isRightToLeft;
         private bool initializationCompleted;
         private Localizer localizer = NullLocalizer.Instance;
         private IResourcesManager resourcesManager;
@@ -37,6 +39,19 @@ namespace Kore.Web.Mvc
         }
 
         public IWebWorkContext WorkContext { get; private set; }
+
+        public bool IsRightToLeft
+        {
+            get
+            {
+                if (!isRightToLeft.HasValue)
+                {
+                    var languageService = EngineContext.Current.Resolve<ILanguageService>();
+                    isRightToLeft = languageService.CheckIfRightToLeft(WorkContext.CurrentCultureCode);
+                }
+                return isRightToLeft.Value;
+            }
+        }
 
         public void AppendMeta(string name, string content, string contentSeparator)
         {

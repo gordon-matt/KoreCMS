@@ -6,9 +6,9 @@ using Kore.Collections;
 using Kore.Data;
 using Kore.Data.Services;
 using Kore.Localization.Domain;
-using Kore.Web.ContentManagement.Areas.Admin.Localization.Models;
+using Kore.Localization.Models;
 
-namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
+namespace Kore.Localization.Services
 {
     public interface ILocalizableStringService : IGenericDataService<LocalizableString>
     {

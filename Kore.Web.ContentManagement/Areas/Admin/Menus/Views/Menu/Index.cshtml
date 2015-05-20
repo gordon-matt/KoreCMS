@@ -13,6 +13,8 @@
     Script.IncludeBundle("notify");
 
     Script.IncludeBundle("kore-cms/menus");
+
+    string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
 
 <div id="grid-section" class="row">
@@ -26,7 +28,7 @@
     <div class="clearfix"></div>
     <br />
 
-    <div class="col-md-12">
+    <div class="col-md-12 @rtlClass">
         <div id="Grid"></div>
     </div>
 </div>

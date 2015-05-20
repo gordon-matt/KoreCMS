@@ -2,10 +2,10 @@
 using System.Web.Http;
 using System.Web.Http.OData.Builder;
 using Kore.Localization.Domain;
+using Kore.Localization.Models;
 using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
-using Kore.Web.ContentManagement.Areas.Admin.Localization.Models;
 using Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api;

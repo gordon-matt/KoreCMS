@@ -9,8 +9,10 @@
     Script.IncludeBundle("knockout");
     Script.IncludeBundle("knockout-mapping");
     Script.IncludeBundle("notify");
-    
+
     Script.IncludePluginScript("index.js");
+
+    string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
 
 <div id="grid-section" class="row">
@@ -24,7 +26,7 @@
     <div class="clearfix"></div>
     <br />
 
-    <div class="col-md-12">
+    <div class="col-md-12 @rtlClass">
         <div id="Grid"></div>
     </div>
 </div>

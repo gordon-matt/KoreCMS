@@ -18,6 +18,8 @@
 
     Script.IncludeBundle("kore-cms/bootbox");
     Script.IncludeBundle("kore-cms/blog");
+
+    string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
 
 <style type="text/css">
@@ -38,7 +40,7 @@
     <div class="clearfix"></div>
     <br />
 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
         <div id="Grid"></div>
     </div>
 </div>

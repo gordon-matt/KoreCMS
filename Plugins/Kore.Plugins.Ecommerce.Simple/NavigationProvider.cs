@@ -22,7 +22,7 @@ namespace Kore.Plugins.Ecommerce.Simple
             builder.IconCssClass("kore-icon kore-icon-shopping-cart");
 
             builder.Add(T(LocalizableStrings.Categories), "5", item => item
-                .Action("Index", "Category", new { area = Constants.RouteArea })
+                .Action("Index", "CategoryAdmin", new { area = Constants.RouteArea })
                 .IconCssClass("kore-icon kore-icon-categories")
                 .Permission(SimpleCommercePermissions.ReadCategories));
 

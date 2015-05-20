@@ -85,10 +85,10 @@ namespace KoreCMS
                 .Include("~/Content/jquery-ui-bootstrap.css", cssRewriteUrlTransform));
 
             bundles.Add(new StyleBundle("~/bundles/content/kendo-ui")
-                .Include("~/Content/kendo/2014.1.318/kendo.rtl.min.css", cssRewriteUrlTransform)
-                .Include("~/Content/kendo/2014.1.318/kendo.default.min.css", cssRewriteUrlTransform)
                 .Include("~/Content/kendo/2014.1.318/kendo.common.min.css", cssRewriteUrlTransform)
-                .Include("~/Content/kendo/2014.1.318/kendo.bootstrap.min.css", cssRewriteUrlTransform));
+                .Include("~/Content/kendo/2014.1.318/kendo.default.min.css", cssRewriteUrlTransform)
+                .Include("~/Content/kendo/2014.1.318/kendo.bootstrap.min.css", cssRewriteUrlTransform)
+                .Include("~/Content/kendo/2014.1.318/kendo.rtl.min.css", cssRewriteUrlTransform));
 
             bundles.Add(new StyleBundle("~/bundles/content/admin-base-css")
                 .Include("~/Content/themes/base/all.css", cssRewriteUrlTransform)

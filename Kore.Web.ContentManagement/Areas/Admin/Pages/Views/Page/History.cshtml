@@ -14,12 +14,14 @@
     Script.IncludeBundle("notify");
 
     Script.IncludeBundle("kore-cms/pages-history");
-    
+
     Guid pageId = (Guid)ViewBag.PageId;
+
+    string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
 
 <div id="grid-section" class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 @rtlClass">
         <div id="Grid"></div>
     </div>
 </div>

@@ -1,9 +1,11 @@
-﻿<div class="row">
+﻿@using Kore.Plugins.Ecommerce.Simple
+
+<div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="pull-right">
             <a href="@Url.Action("Index", "Checkout", new { area = string.Empty })" class="btn btn-success">
                 <i class="kore-icon kore-icon-shopping-cart"></i>
-                Checkout
+                @T(LocalizableStrings.Checkout)
             </a>
         </div>
     </div>

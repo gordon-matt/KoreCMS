@@ -18,9 +18,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 
         public string Slug { get; set; }
 
+        public int Order { get; set; }
+
         public string ImageUrl { get; set; }
 
-        public int Order { get; set; }
+        public string Description { get; set; }
 
         public virtual Category Parent { get; set; }
 
@@ -54,8 +56,9 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             HasKey(x => x.Id);
             Property(x => x.Name).HasMaxLength(255).IsRequired();
             Property(x => x.Slug).HasMaxLength(255).IsRequired();
-            Property(x => x.ImageUrl).HasMaxLength(255);
             Property(x => x.Order).IsRequired();
+            Property(x => x.ImageUrl).HasMaxLength(255);
+            Property(x => x.Description).HasMaxLength(255);
             HasOptional(x => x.Parent).WithMany(x => x.SubCategories).HasForeignKey(x => x.ParentId);
         }
     }

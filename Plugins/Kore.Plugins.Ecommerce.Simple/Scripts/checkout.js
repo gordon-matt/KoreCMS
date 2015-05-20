@@ -32,9 +32,7 @@ var ViewModel = function () {
         var total = 0;
         for (var i = 0; i < self.items().length; i++) {
             var item = self.items()[i];
-            total += (item.price() * item.quantity());
-            total += item.tax();
-            total += item.shippingCost();
+            total += ((item.price() + item.tax() + item.shippingCost()) * item.quantity());
         }
         return total.toFixed(2);
     });

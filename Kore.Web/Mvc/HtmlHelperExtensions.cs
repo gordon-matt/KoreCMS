@@ -73,17 +73,7 @@ namespace Kore.Web.Mvc
             return new MvcHtmlString(builder.ToString(TagRenderMode.SelfClosing));
         }
 
-        public static MvcHtmlString ImageLink(this HtmlHelper helper, string src, string alt, string href, PageTarget target = PageTarget.Default)
-        {
-            return helper.ImageLink(null, src, alt, href, null, null, target);
-        }
-
-        public static MvcHtmlString ImageLink(this HtmlHelper helper, string name, string src, string alt, string href, PageTarget target = PageTarget.Default)
-        {
-            return helper.ImageLink(name, src, alt, href, null, null, target);
-        }
-
-        public static MvcHtmlString ImageLink(this HtmlHelper helper, string name, string src, string alt, string href, object aHtmlAttributes, object imgHtmlAttributes, PageTarget target = PageTarget.Default)
+        public static MvcHtmlString ImageLink(this HtmlHelper helper, string src, string alt, string href, string name = null, object aHtmlAttributes = null, object imgHtmlAttributes = null, PageTarget target = PageTarget.Default)
         {
             var builder = new TagBuilder("a");
             builder.MergeAttribute("href", href);
@@ -110,6 +100,50 @@ namespace Kore.Web.Mvc
 
             return MvcHtmlString.Create(builder.ToString());
         }
+
+
+        //public static MvcHtmlString ImageLink(this HtmlHelper helper, string src, string alt, string href, PageTarget target = PageTarget.Default)
+        //{
+        //    return helper.ImageLink(null, src, alt, href, null, null, target);
+        //}
+
+        //public static MvcHtmlString ImageLink(this HtmlHelper helper, string src, string alt, string href, object aHtmlAttributes, object imgHtmlAttributes, PageTarget target = PageTarget.Default)
+        //{
+        //    return helper.ImageLink(null, src, alt, href, aHtmlAttributes, imgHtmlAttributes, target);
+        //}
+
+        //public static MvcHtmlString ImageLink(this HtmlHelper helper, string name, string src, string alt, string href, PageTarget target = PageTarget.Default)
+        //{
+        //    return helper.ImageLink(name, src, alt, href, null, null, target);
+        //}
+
+        //public static MvcHtmlString ImageLink(this HtmlHelper helper, string name, string src, string alt, string href, object aHtmlAttributes, object imgHtmlAttributes, PageTarget target = PageTarget.Default)
+        //{
+        //    var builder = new TagBuilder("a");
+        //    builder.MergeAttribute("href", href);
+        //    builder.GenerateId(name);
+
+        //    if (!string.IsNullOrEmpty(name))
+        //    {
+        //        builder.MergeAttribute("name", name);
+        //    }
+
+        //    switch (target)
+        //    {
+        //        case PageTarget.Blank: builder.MergeAttribute("target", "_blank"); break;
+        //        case PageTarget.Parent: builder.MergeAttribute("target", "_parent"); break;
+        //        case PageTarget.Self: builder.MergeAttribute("target", "_self"); break;
+        //        case PageTarget.Top: builder.MergeAttribute("target", "_top"); break;
+        //    }
+
+        //    builder.MergeAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(aHtmlAttributes));
+
+        //    var img = helper.Image(name + "Image", src, alt, imgHtmlAttributes);
+
+        //    builder.InnerHtml = img.ToString();
+
+        //    return MvcHtmlString.Create(builder.ToString());
+        //}
 
         public static MvcHtmlString Map(this HtmlHelper helper, string name, ImageMapHotSpot[] hotSpots)
         {

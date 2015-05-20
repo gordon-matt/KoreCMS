@@ -17,7 +17,7 @@
     <div class="form-group">
         <div class="checkbox">
             <label>
-                @Html.CheckBoxFor(m => m.UseSandboxMode, new { data_bind = "checked: useSandboxMode" }) Use Sandbox Mode
+                @Html.CheckBoxFor(m => m.UseSandboxMode, new { data_bind = "checked: useSandboxMode" }) @T(LocalizableStrings.PayPalSettings.UseSandboxMode)
             </label>
         </div>
     </div>
@@ -34,9 +34,14 @@
     <div class="form-group">
         <div class="checkbox">
             <label>
-                @Html.CheckBoxFor(m => m.CancelUrlRedirectsToOrderDetailsPage, new { data_bind = "checked: cancelUrlRedirectsToOrderDetailsPage" }) Cancel URL Redirects to Order Details Page
+                @Html.CheckBoxFor(m => m.CancelUrlRedirectsToOrderDetailsPage, new { data_bind = "checked: cancelUrlRedirectsToOrderDetailsPage" }) @T(LocalizableStrings.PayPalSettings.CancelUrlRedirectsToOrderDetailsPage)
             </label>
         </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PdtToken, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.PdtToken, new { @class = "form-control", data_bind = "value: pdtToken" })
+        @Html.ValidationMessageFor(m => m.PdtToken)
     </div>
 </div>
 
@@ -48,6 +53,7 @@
         viewModel.merchant = ko.observable("");
         viewModel.currencyCode = ko.observable("USD");
         viewModel.cancelUrlRedirectsToOrderDetailsPage = ko.observable(true);
+        viewModel.pdtToken = ko.observable("");
 
         if (data) {
             if (data.ProductionUrl) {
@@ -68,6 +74,9 @@
             if (data.CancelUrlRedirectsToOrderDetailsPage) {
                 viewModel.cancelUrlRedirectsToOrderDetailsPage(data.CancelUrlRedirectsToOrderDetailsPage);
             }
+            if (data.PdtToken) {
+                viewModel.pdtToken(data.PdtToken);
+            }
         }
     };
 
@@ -78,6 +87,7 @@
         delete viewModel.merchant;
         delete viewModel.currencyCode;
         delete viewModel.cancelUrlRedirectsToOrderDetailsPage;
+        delete viewModel.pdtToken;
     }
 
     function onBeforeSave() {
@@ -87,7 +97,8 @@
             UseSandboxMode: viewModel.useSandboxMode(),
             Merchant: viewModel.merchant(),
             CurrencyCode: viewModel.currencyCode(),
-            CancelUrlRedirectsToOrderDetailsPage: viewModel.cancelUrlRedirectsToOrderDetailsPage()
+            CancelUrlRedirectsToOrderDetailsPage: viewModel.cancelUrlRedirectsToOrderDetailsPage(),
+            PdtToken: viewModel.pdtToken()
         };
 
         viewModel.value(ko.mapping.toJSON(data));

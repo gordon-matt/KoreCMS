@@ -16,26 +16,49 @@ var CartItemModel = function () {
 
     self.productId = ko.observable(0);
     self.productName = ko.observable('');
+    self.imageUrl = ko.observable('');
+    self.description = ko.observable('');
     self.quantity = ko.observable(0);
     self.price = ko.observable(0);
+    self.tax = ko.observable(0);
+    self.shippingCost = ko.observable(0);
 };
 
 var ViewModel = function () {
     var self = this;
     self.items = ko.observableArray([]);
-    self.currencyCode = 'USD';
 
     self.totalPrice = ko.computed(function () {
         var total = 0;
         for (var i = 0; i < self.items().length; i++) {
             var item = self.items()[i];
             total += (item.price() * item.quantity());
+            total += item.tax();
+            total += item.shippingCost();
         }
         return total.toFixed(2);
     });
 
     self.removeItem = function (item) {
         self.items.remove(item);
+    };
+
+    self.updateCart = function () {
+        $.ajax({
+            url: '/store/cart/update-cart',
+            type: 'POST',
+            dataType: 'json',
+            data: ko.toJSON(self.items),
+            contentType: 'application/json; charset=utf-8',
+            async: false
+        })
+        .done(function (json) {
+            alert(json.Message);
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            alert(errorThrown);
+            console.log(textStatus + ': ' + errorThrown);
+        });
     };
 };
 
@@ -60,8 +83,12 @@ $(document).ready(function () {
             var cartItem = new CartItemModel();
             cartItem.productId(item.ProductId);
             cartItem.productName(item.ProductName);
+            cartItem.imageUrl(item.ImageUrl);
+            cartItem.description(item.Description);
             cartItem.quantity(item.Quantity);
             cartItem.price(item.Price);
+            cartItem.tax(item.Tax);
+            cartItem.shippingCost(item.ShippingCost);
             viewModel.items.push(cartItem);
         });
     })

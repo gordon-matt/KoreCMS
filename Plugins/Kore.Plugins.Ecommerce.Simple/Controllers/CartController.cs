@@ -29,6 +29,17 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         [Route("add-item-to-cart")]
         public JsonResult Post(int productId)
         {
+            var cart = GetCart();
+
+            var item = cart.FirstOrDefault(x => x.ProductId == productId);
+
+            if (item != null)
+            {
+                item.Quantity += 1;
+                UpdateCartInternal(cart);
+                return Json(new { Success = true, Message = "Quantity Updated" });
+            }
+
             var product = productService.Value.FindOne(productId);
 
             if (product == null)
@@ -36,18 +47,20 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 return Json(new { Success = false, Message = "Could not find specified product" });
             }
 
-            var cart = GetCart();
-
-            var item = new ShoppingCartItem
+            item = new ShoppingCartItem
             {
                 ProductId = product.Id,
                 ProductName = product.Name,
                 Price = product.Price,
-                Quantity = 1
+                Quantity = 1,
+                ShippingCost = product.ShippingCost,
+                Tax = product.Tax,
+                ImageUrl = product.MainImageUrl,
+                Description = product.ShortDescription.Left(255)
             };
             cart.Add(item);
 
-            UpdateCart(cart);
+            UpdateCartInternal(cart);
 
             return Json(new { Success = true, Message = "Added to Cart" });
         }
@@ -77,11 +90,15 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                     ProductId = product.Id,
                     ProductName = product.Name,
                     Price = product.Price,
-                    Quantity = quantity
+                    Quantity = quantity,
+                    ShippingCost = product.ShippingCost,
+                    Tax = product.Tax,
+                    ImageUrl = product.MainImageUrl,
+                    Description = product.ShortDescription.Left(255)
                 };
                 cart.Add(item);
             }
-            UpdateCart(cart);
+            UpdateCartInternal(cart);
 
             return Json(new { Success = true, Message = "Cart Updated" });
         }
@@ -98,9 +115,16 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             }
 
             cart.Remove(item);
-            UpdateCart(cart);
+            UpdateCartInternal(cart);
 
             return Json(new { Success = true, Message = "Item removed from cart" });
+        }
+
+        [Route("update-cart")]
+        public JsonResult UpdateCart(IEnumerable<ShoppingCartItem> items)
+        {
+            UpdateCartInternal(items.ToList());
+            return Json(new { Success = true, Message = "Successfully updated cart." });
         }
 
         private ICollection<ShoppingCartItem> GetCart()
@@ -119,7 +143,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return cart;
         }
 
-        private void UpdateCart(ICollection<ShoppingCartItem> cart)
+        private void UpdateCartInternal(ICollection<ShoppingCartItem> cart)
         {
             Session["ShoppingCart"] = cart;
         }

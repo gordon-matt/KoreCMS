@@ -6,18 +6,19 @@
     Layout = KoreWebConstants.DefaultFrontendLayoutPath;
     Script.IncludeBundle("knockout");
     Script.IncludePluginScript("checkout.js");
+    string currencyCode = ViewBag.CurrencyCode;
 }
 
 <div id="main-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="panel panel-info">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="panel-title">
                     <div class="row">
-                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8">
                             <h5><span class="kore-icon kore-icon-shopping-cart"></span> Shopping Cart</h5>
                         </div>
-                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                             <a href="@Url.Action("Index", "Store", new { area = string.Empty })" class="btn btn-primary btn-sm btn-block">
                                 <span class="kore-icon kore-icon-share"></span> Continue shopping
                             </a>
@@ -28,17 +29,19 @@
             <div class="panel-body">
                 <div data-bind="foreach: items">
                     <div class="row">
-                        @*<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                                <img class="img-responsive" src="http://placehold.it/100x70">
-                            </div>*@
-                        @*<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">*@
-                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                            <img class="img-responsive" data-bind="attr: { src: imageUrl }" src="http://placehold.it/100x70">
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                             <h4 class="product-name"><strong data-bind="text: productName"></strong></h4>
-                            @*<h4><small>Product description</small></h4>*@
+                            <h4><small data-bind="text: description"></small></h4>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
-                                <h6><strong data-bind="text: $root.currencyCode + ' ' + price()"><span class="text-muted">x</span></strong></h6>
+                                <h6>
+                                    <strong data-bind="text: currencyCode + ' ' + price().toFixed(2)"></strong>
+                                    <span class="text-muted">x</span>
+                                </h6>
                             </div>
                             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                 <input type="text" class="form-control input-sm" data-bind="value: quantity" />
@@ -58,7 +61,7 @@
                             <h6 class="text-right">Added items?</h6>
                         </div>
                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                            <button type="button" class="btn btn-default btn-sm btn-block">
+                            <button type="button" data-bind="click: updateCart" class="btn btn-default btn-sm btn-block">
                                 Update cart
                             </button>
                         </div>
@@ -80,3 +83,10 @@
         </div>
     </div>
 </div>
+
+@using (Script.AtFoot())
+{
+    <script type="text/javascript">
+        var currencyCode = '@currencyCode';
+    </script>
+}

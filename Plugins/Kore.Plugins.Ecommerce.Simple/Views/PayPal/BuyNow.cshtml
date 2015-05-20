@@ -30,19 +30,20 @@
     @if (Model.PassProductNamesAndTotals)
     {
         int i = 1;
-        @foreach(var item in Model.Items)
+        foreach(var item in Model.Items)
         {
             @Html.Hidden("item_name_" + i, item.ProductName)
-            @Html.Hidden("amount_" + i, item.Price)
+            @Html.Hidden("amount_" + i, Math.Round(item.Price))
             @Html.Hidden("quantity_" + i, item.Quantity)
             i++;
         }
         @Html.Hidden("item_name_" + i, "Shipping Fee")
-        @Html.Hidden("amount_" + i, Model.ShippingFee)
+        @Html.Hidden("amount_" + i, Math.Round(Model.ShippingFee, 2))
         @Html.Hidden("quantity_" + i, 1)
-
+        i++;
+            
         @Html.Hidden("item_name_" + i, "Sales Tax")
-        @Html.Hidden("amount_" + i, Model.SalesTax)
+        @Html.Hidden("amount_" + i, Math.Round(Model.SalesTax, 2))
         @Html.Hidden("quantity_" + i, 1)
     }
     else

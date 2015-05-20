@@ -70,8 +70,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 addressRepository.Insert(address);
             }
 
-            order.BillingAddressId = address.Id;
-            order.ShippingAddressId = address.Id;
+            order.BillingAddress = address;
+            order.ShippingAddress = address;
             //END TEMP
 
             foreach (var item in cart)

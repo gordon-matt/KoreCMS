@@ -7,6 +7,13 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
     [RoutePrefix("store/checkout")]
     public class CheckoutController : KoreController
     {
+        private readonly StoreSettings settings;
+
+        public CheckoutController(StoreSettings settings)
+        {
+            this.settings = settings;
+        }
+
         [Route("")]
         public ActionResult Index()
         {
@@ -16,6 +23,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             ViewBag.Title = T(LocalizableStrings.Store);
             ViewBag.SubTitle = T(LocalizableStrings.Checkout);
 
+            ViewBag.CurrencyCode = settings.Currency;
             return View();
         }
 

@@ -35,9 +35,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             this.settings = settings;
         }
 
-        // This gets called when the user clicks, "Return to merchant's website" link. No params are sent
-        [Route("payment-completed/{orderId}")]
-        public ActionResult PaymentCompleted(int orderId)
+        [Route("return/{orderId}")]
+        public ActionResult Return(int orderId)
         {
             var order = orderService.Value.FindOne(orderId);
 
@@ -53,9 +52,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return View(order);
         }
 
-        // This gets called when the user cancels the order on PayPal (before purchase). No params are sent
-        [Route("payment-cancelled/{orderId}")]
-        public ActionResult PaymentCancelled(int orderId)
+        [Route("cancel-return/{orderId}")]
+        public ActionResult CancelReturn(int orderId)
         {
             var order = orderService.Value.FindOne(orderId);
 
@@ -70,8 +68,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return View(order);
         }
 
-        [Route("payment-notification/{orderId}")]
-        public ActionResult PaymentNotification(int orderId)
+        [Route("notification/{orderId}")]
+        public ActionResult Notification(int orderId)
         {
             var order = orderService.Value.FindOne(orderId);
 
@@ -308,16 +306,22 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             var model = new PayPalModel
             {
+                PassProductNamesAndTotals = true,
+                Merchant = settings.Merchant,
                 UseSandboxMode = settings.UseSandboxMode,
                 ActionUrl = settings.UseSandboxMode
                     ? settings.SandboxUrl
                     : settings.ProductionUrl,
-                Merchant = settings.Merchant,
+                ReturnUrl = Url.AbsoluteAction("Return", "PayPal", new { orderId = order.Id }),
+                CancelReturnUrl = Url.AbsoluteAction("CancelReturn", "PayPal", new { orderId = order.Id }),
+                NotificationUrl = Url.AbsoluteAction("Notification", "PayPal", new { orderId = order.Id }),
                 CurrencyCode = settings.CurrencyCode,
                 Items = cart,
-                PaymentCompletedUrl = Url.AbsoluteAction("PaymentCompleted", "PayPal", new { orderId = order.Id }),
-                PaymentCancelledUrl = Url.AbsoluteAction("PaymentCancelled", "PayPal", new { orderId = order.Id }),
-                PaymentNotificationUrl = Url.AbsoluteAction("PaymentNotification", "PayPal", new { orderId = order.Id })
+                OrderId = order.Id,
+                OrderTotal = order.OrderTotal,
+                SalesTax = cart.Sum(x => x.Tax),
+                ShippingFee = cart.Sum(x => x.ShippingCost),
+                BillingAddress = order.BillingAddress
             };
             return View(model);
         }

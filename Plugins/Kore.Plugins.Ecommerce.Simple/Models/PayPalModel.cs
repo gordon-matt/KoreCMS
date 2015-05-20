@@ -4,27 +4,32 @@ namespace Kore.Plugins.Ecommerce.Simple.Models
 {
     public class PayPalModel
     {
+        public bool PassProductNamesAndTotals { get; set; }
+
+        public string Merchant { get; set; }
+
         public bool UseSandboxMode { get; set; }
 
         public string ActionUrl { get; set; }
 
-        public string Merchant { get; set; }
+        public string ReturnUrl { get; set; }
 
-        //// TODO: Might need to change this to OrderId
-        //public int ProductId { get; set; }
+        public string CancelReturnUrl { get; set; }
 
-        //public string ProductName { get; set; }
+        public string NotificationUrl { get; set; }
 
         public string CurrencyCode { get; set; }
 
-        //public float Amount { get; set; }
-
         public IEnumerable<ShoppingCartItem> Items { get; set; }
 
-        public string PaymentCompletedUrl { get; set; }
+        public int OrderId { get; set; }
 
-        public string PaymentCancelledUrl { get; set; }
+        public float OrderTotal { get; set; }
 
-        public string PaymentNotificationUrl { get; set; }
+        public float SalesTax { get; set; }
+
+        public float ShippingFee { get; set; }
+
+        public AddressModel BillingAddress { get; set; }
     }
 }

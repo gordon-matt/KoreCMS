@@ -18,5 +18,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             return View();
         }
+
+        [Route("completed/{orderId}")]
+        public ActionResult Completed(int orderId)
+        {
+            return View(orderId);
+        }
     }
 }

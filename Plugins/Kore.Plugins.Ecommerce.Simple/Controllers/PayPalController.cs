@@ -17,8 +17,8 @@ using Kore.Web.Mvc;
 
 namespace Kore.Plugins.Ecommerce.Simple.Controllers
 {
-    [RouteArea(Constants.RouteArea)]
-    [RoutePrefix("paypal")]
+    [RouteArea("")]
+    [RoutePrefix("store/paypal")]
     public class PayPalController : KoreController
     {
         private readonly Lazy<IOrderService> orderService;
@@ -35,6 +35,79 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             this.settings = settings;
         }
 
+        [Route("buy-now")]
+        public ActionResult BuyNow()
+        {
+            var cart = GetCart();
+
+            var order = new Order
+            {
+                UserId = WorkContext.CurrentUser == null ? null : WorkContext.CurrentUser.Id,
+                PaymentStatus = PaymentStatus.Pending,
+                Status = OrderStatus.Pending,
+                OrderDateUtc = DateTime.UtcNow,
+            };
+
+            //TEMP //TODO; Remove this asap
+            var addressRepository = EngineContext.Current.Resolve<IRepository<Address>>();
+            var address = addressRepository.Table.FirstOrDefault();
+
+            if (address == null)
+            {
+                address = new Address
+                {
+                    FamilyName = "Nissan",
+                    GivenNames = "Ran",
+                    AddressLine1 = "Line 1",
+                    AddressLine2 = "Line 2",
+                    AddressLine3 = "Line 3",
+                    City = "Tel Aviv",
+                    Country = "Israel",
+                    PostalCode = "11111",
+                    Email = "rn@esales.co.il",
+                    PhoneNumber = "0987654321",
+                };
+                addressRepository.Insert(address);
+            }
+
+            order.BillingAddressId = address.Id;
+            order.ShippingAddressId = address.Id;
+            //END TEMP
+
+            foreach (var item in cart)
+            {
+                order.Lines.Add(new OrderLine
+                {
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    UnitPrice = item.Price
+                });
+            }
+
+            orderService.Value.Insert(order);
+
+            var model = new PayPalModel
+            {
+                PassProductNamesAndTotals = true,
+                Merchant = settings.Merchant,
+                UseSandboxMode = settings.UseSandboxMode,
+                ActionUrl = settings.UseSandboxMode
+                    ? settings.SandboxUrl
+                    : settings.ProductionUrl,
+                ReturnUrl = Url.AbsoluteAction("Return", "PayPal", new { orderId = order.Id }),
+                CancelReturnUrl = Url.AbsoluteAction("CancelReturn", "PayPal", new { orderId = order.Id }),
+                NotificationUrl = Url.AbsoluteAction("Notification", "PayPal", new { orderId = order.Id }),
+                CurrencyCode = settings.CurrencyCode,
+                Items = cart,
+                OrderId = order.Id,
+                OrderTotal = order.OrderTotal,
+                SalesTax = cart.Sum(x => x.Tax),
+                ShippingFee = cart.Sum(x => x.ShippingCost),
+                BillingAddress = order.BillingAddress
+            };
+            return View(model);
+        }
+
         [Route("return/{orderId}")]
         public ActionResult Return(int orderId)
         {
@@ -46,10 +119,120 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 return RedirectToAction("Index", "Store", new { area = string.Empty });
             }
 
-            order.Status = OrderStatus.Processing;
-            order.PaymentStatus = PaymentStatus.Paid;
+            string tx = Request.QueryString["tx"];
 
-            return View(order);
+            Dictionary<string, string> values;
+            string response;
+
+            if (GetPDTDetails(tx, out values, out response))
+            {
+                if (order != null)
+                {
+                    decimal total = decimal.Zero;
+                    try
+                    {
+                        total = decimal.Parse(values["mc_gross"], new CultureInfo("en-US"));
+                    }
+                    catch (Exception exc)
+                    {
+                        Logger.Error("PayPal PDT. Error getting mc_gross", exc);
+                    }
+
+                    string invoice = string.Empty;
+                    string mcCurrency = string.Empty;
+                    string payerId = string.Empty;
+                    string payerStatus = string.Empty;
+                    string paymentFee = string.Empty;
+                    string paymentStatus = string.Empty;
+                    string paymentType = string.Empty;
+                    string pendingReason = string.Empty;
+                    string receiverId = string.Empty;
+                    string txnId = string.Empty;
+                    values.TryGetValue("invoice", out invoice);
+                    values.TryGetValue("mc_currency", out mcCurrency);
+                    values.TryGetValue("payer_id", out payerId);
+                    values.TryGetValue("payer_status", out payerStatus);
+                    values.TryGetValue("payment_fee", out paymentFee);
+                    values.TryGetValue("payment_status", out paymentStatus);
+                    values.TryGetValue("payment_type", out paymentType);
+                    values.TryGetValue("pending_reason", out pendingReason);
+                    values.TryGetValue("receiver_id", out receiverId);
+                    values.TryGetValue("txn_id", out txnId);
+
+                    var sb = new StringBuilder();
+                    sb.AppendLine("Paypal PDT:");
+                    sb.AppendLine("total: " + total);
+                    sb.AppendLine("Payer status: " + payerStatus);
+                    sb.AppendLine("Payment status: " + paymentStatus);
+                    sb.AppendLine("Pending reason: " + pendingReason);
+                    sb.AppendLine("mc_currency: " + mcCurrency);
+                    sb.AppendLine("txn_id: " + txnId);
+                    sb.AppendLine("payment_type: " + paymentType);
+                    sb.AppendLine("payer_id: " + payerId);
+                    sb.AppendLine("receiver_id: " + receiverId);
+                    sb.AppendLine("invoice: " + invoice);
+                    sb.AppendLine("payment_fee: " + paymentFee);
+
+                    //order note
+                    order.Notes.Add(new OrderNote()
+                    {
+                        Text = sb.ToString(),
+                        DisplayToCustomer = false,
+                        DateCreatedUtc = DateTime.UtcNow
+                    });
+                    orderService.Value.Update(order);
+
+                    ////validate order total
+                    //if (settings.PdtValidateOrderTotal && !Math.Round(total, 2).Equals(Math.Round(order.OrderTotal, 2)))
+                    //{
+                    //    Logger.Error(string.Format(
+                    //        "PayPal PDT. Returned order total {0} doesn't equal order total {1}",
+                    //        total,
+                    //        order.OrderTotal));
+
+                    //    return RedirectToAction("Index", "Store", new { area = string.Empty });
+                    //}
+
+                    //mark order as paid
+                    if (CanMarkOrderAsPaid(order))
+                    {
+                        order.AuthorizationTransactionId = txnId;
+                        orderService.Value.Update(order);
+
+                        order.PaymentStatus = PaymentStatus.Paid;
+                        order.DatePaidUtc = DateTime.UtcNow;
+
+                        //add a note
+                        order.Notes.Add(new OrderNote()
+                        {
+                            Text = "Order has been marked as paid",
+                            DisplayToCustomer = false,
+                            DateCreatedUtc = DateTime.UtcNow
+                        });
+                        orderService.Value.Update(order);
+
+                        //CheckOrderStatus(order);
+
+                        //if (order.PaymentStatus == PaymentStatus.Paid)
+                        //{
+                        //    ProcessOrderPaid(order);
+                        //}
+                    }
+                }
+                return RedirectToAction("Completed", "Checkout", new { orderId = order.Id });
+            }
+            else if (order != null)
+            {
+                //order note
+                order.Notes.Add(new OrderNote()
+                {
+                    Text = "PayPal PDT failed. " + response,
+                    DisplayToCustomer = false,
+                    DateCreatedUtc = DateTime.UtcNow
+                });
+                orderService.Value.Update(order);
+            }
+            return RedirectToAction("Index", "Store", new { area = string.Empty });
         }
 
         [Route("cancel-return/{orderId}")]
@@ -65,7 +248,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             order.Status = OrderStatus.Cancelled;
 
-            return View(order);
+            if (settings.CancelUrlRedirectsToOrderDetailsPage)
+            {
+                return View(order);
+            }
+            return RedirectToAction("Index", "Store", new { area = string.Empty });
         }
 
         [Route("notification/{orderId}")]
@@ -253,134 +440,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return new EmptyResult();
         }
 
-        [Route("buy-now")]
-        public ActionResult BuyNow()
-        {
-            var cart = GetCart();
-
-            var order = new Order
-            {
-                UserId = WorkContext.CurrentUser == null ? null : WorkContext.CurrentUser.Id,
-                PaymentStatus = PaymentStatus.Pending,
-                Status = OrderStatus.Pending,
-                OrderDateUtc = DateTime.UtcNow,
-            };
-
-            //TEMP //TODO; Remove this asap
-            var addressRepository = EngineContext.Current.Resolve<IRepository<Address>>();
-            var address = addressRepository.Table.FirstOrDefault();
-
-            if (address == null)
-            {
-                address = new Address
-                {
-                    FamilyName = "Nissan",
-                    GivenNames = "Ran",
-                    AddressLine1 = "Line 1",
-                    AddressLine2 = "Line 2",
-                    AddressLine3 = "Line 3",
-                    City = "Tel Aviv",
-                    Country = "Israel",
-                    PostalCode = "11111",
-                    Email = "rn@esales.co.il",
-                    PhoneNumber = "0987654321",
-                };
-                addressRepository.Insert(address);
-            }
-
-            order.BillingAddressId = address.Id;
-            order.ShippingAddressId = address.Id;
-            //END TEMP
-
-            foreach (var item in cart)
-            {
-                order.Lines.Add(new OrderLine
-                {
-                    ProductId = item.ProductId,
-                    Quantity = item.Quantity,
-                    UnitPrice = item.Price
-                });
-            }
-
-            orderService.Value.Insert(order);
-
-            var model = new PayPalModel
-            {
-                PassProductNamesAndTotals = true,
-                Merchant = settings.Merchant,
-                UseSandboxMode = settings.UseSandboxMode,
-                ActionUrl = settings.UseSandboxMode
-                    ? settings.SandboxUrl
-                    : settings.ProductionUrl,
-                ReturnUrl = Url.AbsoluteAction("Return", "PayPal", new { orderId = order.Id }),
-                CancelReturnUrl = Url.AbsoluteAction("CancelReturn", "PayPal", new { orderId = order.Id }),
-                NotificationUrl = Url.AbsoluteAction("Notification", "PayPal", new { orderId = order.Id }),
-                CurrencyCode = settings.CurrencyCode,
-                Items = cart,
-                OrderId = order.Id,
-                OrderTotal = order.OrderTotal,
-                SalesTax = cart.Sum(x => x.Tax),
-                ShippingFee = cart.Sum(x => x.ShippingCost),
-                BillingAddress = order.BillingAddress
-            };
-            return View(model);
-        }
-
-        private ICollection<ShoppingCartItem> GetCart()
-        {
-            ICollection<ShoppingCartItem> cart;
-
-            if (Session.Keys.OfType<string>().Contains("ShoppingCart"))
-            {
-                cart = (ICollection<ShoppingCartItem>)Session["ShoppingCart"];
-            }
-            else
-            {
-                cart = new List<ShoppingCartItem>();
-            }
-
-            return cart;
-        }
-
-        private bool VerifyIPN(string formParams, out Dictionary<string, string> values)
-        {
-            string payPalUrl = settings.UseSandboxMode
-                ? settings.SandboxUrl
-                : settings.ProductionUrl;
-
-            var request = (HttpWebRequest)WebRequest.Create(payPalUrl);
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-
-            string formContent = string.Format("{0}&cmd=_notify-validate", formParams);
-            request.ContentLength = formContent.Length;
-
-            using (var sw = new StreamWriter(request.GetRequestStream(), Encoding.ASCII))
-            {
-                sw.Write(formContent);
-            }
-
-            string response = null;
-            using (var reader = new StreamReader(request.GetResponse().GetResponseStream()))
-            {
-                response = HttpUtility.UrlDecode(reader.ReadToEnd());
-            }
-
-            bool verified = response.Trim().Equals("VERIFIED", StringComparison.OrdinalIgnoreCase);
-
-            values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            foreach (string s in formParams.Split('&'))
-            {
-                string line = s.Trim();
-                int equalPos = line.IndexOf('=');
-                if (equalPos >= 0)
-                {
-                    values.Add(line.Substring(0, equalPos), line.Substring(equalPos + 1));
-                }
-            }
-
-            return verified;
-        }
+        #region Private Methods
 
         /// <summary>
         /// Gets a payment status
@@ -466,5 +526,104 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             return true;
         }
+
+        private ICollection<ShoppingCartItem> GetCart()
+        {
+            ICollection<ShoppingCartItem> cart;
+
+            if (Session.Keys.OfType<string>().Contains("ShoppingCart"))
+            {
+                cart = (ICollection<ShoppingCartItem>)Session["ShoppingCart"];
+            }
+            else
+            {
+                cart = new List<ShoppingCartItem>();
+            }
+
+            return cart;
+        }
+
+        private bool GetPDTDetails(string tx, out Dictionary<string, string> values, out string response)
+        {
+            string payPalUrl = settings.UseSandboxMode
+                ? settings.SandboxUrl
+                : settings.ProductionUrl;
+
+            var request = (HttpWebRequest)WebRequest.Create(payPalUrl);
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+
+            string formContent = string.Format("cmd=_notify-synch&at={0}&tx={1}", settings.PdtToken, tx);
+            request.ContentLength = formContent.Length;
+
+            using (var sw = new StreamWriter(request.GetRequestStream(), Encoding.ASCII))
+                sw.Write(formContent);
+
+            response = null;
+            using (var sr = new StreamReader(request.GetResponse().GetResponseStream()))
+                response = HttpUtility.UrlDecode(sr.ReadToEnd());
+
+            values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            bool firstLine = true, success = false;
+            foreach (string l in response.Split('\n'))
+            {
+                string line = l.Trim();
+                if (firstLine)
+                {
+                    success = line.Equals("SUCCESS", StringComparison.OrdinalIgnoreCase);
+                    firstLine = false;
+                }
+                else
+                {
+                    int equalPox = line.IndexOf('=');
+                    if (equalPox >= 0)
+                        values.Add(line.Substring(0, equalPox), line.Substring(equalPox + 1));
+                }
+            }
+
+            return success;
+        }
+
+        private bool VerifyIPN(string formParams, out Dictionary<string, string> values)
+        {
+            string payPalUrl = settings.UseSandboxMode
+                ? settings.SandboxUrl
+                : settings.ProductionUrl;
+
+            var request = (HttpWebRequest)WebRequest.Create(payPalUrl);
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+
+            string formContent = string.Format("{0}&cmd=_notify-validate", formParams);
+            request.ContentLength = formContent.Length;
+
+            using (var sw = new StreamWriter(request.GetRequestStream(), Encoding.ASCII))
+            {
+                sw.Write(formContent);
+            }
+
+            string response = null;
+            using (var reader = new StreamReader(request.GetResponse().GetResponseStream()))
+            {
+                response = HttpUtility.UrlDecode(reader.ReadToEnd());
+            }
+
+            bool verified = response.Trim().Equals("VERIFIED", StringComparison.OrdinalIgnoreCase);
+
+            values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            foreach (string s in formParams.Split('&'))
+            {
+                string line = s.Trim();
+                int equalPos = line.IndexOf('=');
+                if (equalPos >= 0)
+                {
+                    values.Add(line.Substring(0, equalPos), line.Substring(equalPos + 1));
+                }
+            }
+
+            return verified;
+        }
+
+        #endregion Private Methods
     }
 }

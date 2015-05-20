@@ -131,9 +131,9 @@
     <Compile Include="Controllers\Api\OrderApiController.cs" />
     <Compile Include="Controllers\Api\ProductApiController.cs" />
     <Compile Include="Controllers\CartController.cs" />
-    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CategoryAdminController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
-    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\OrderAdminController.cs" />
     <Compile Include="Controllers\PayPalController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Data\Domain\Address.cs" />
@@ -170,13 +170,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Views\Category\Index.cshtml">
+    <None Include="Views\CategoryAdmin\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Checkout\Completed.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Views\Checkout\Index.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\Order\Index.cshtml">
+    <None Include="Views\OrderAdmin\Index.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Views\PayPal\BuyNow.cshtml">

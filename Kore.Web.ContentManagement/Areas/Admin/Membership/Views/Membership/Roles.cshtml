@@ -1,4 +1,8 @@
-﻿<div id="roles-grid-section" class="row" style="display:none">
+﻿@{
+    string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
+}
+
+<div id="roles-grid-section" class="row" style="display:none">
     <div class="col-md-12">
         <a data-bind="click: roleModel.create" class="btn btn-primary">
             <i class="kore-icon kore-icon-add"></i>
@@ -13,7 +17,7 @@
     <div class="clearfix"></div>
     <br />
 
-    <div class="col-md-12">
+    <div class="col-md-12 @rtlClass">
         <div id="RolesGrid"></div>
     </div>
 </div>

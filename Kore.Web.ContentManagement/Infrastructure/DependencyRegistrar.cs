@@ -11,7 +11,6 @@ using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.RuleEngine;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Localization;
-using Kore.Web.ContentManagement.Areas.Admin.Localization.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Newsletters;
@@ -40,10 +39,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             // Blog
             builder.RegisterType<BlogService>().As<IBlogService>().InstancePerDependency();
-
-            // Localization
-            builder.RegisterType<LanguageService>().As<ILanguageService>().InstancePerDependency();
-            builder.RegisterType<LocalizableStringService>().As<ILocalizableStringService>().InstancePerDependency();
 
             // Menus
             builder.RegisterType<MenuService>().As<IMenuService>().InstancePerDependency();

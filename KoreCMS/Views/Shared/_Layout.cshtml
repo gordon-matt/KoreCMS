@@ -1,17 +1,14 @@
 ﻿@using Kore.Infrastructure
-@using Kore.Web.ContentManagement.Areas.Admin.Localization.Services
 @{
     Script.IncludeBundle("jquery", 0);
     Script.IncludeBootstrap();
 
     string siteName = string.IsNullOrEmpty(SiteSettings.SiteName) ? "My Kore App" : SiteSettings.SiteName;
 
-    var languageService = EngineContext.Current.Resolve<ILanguageService>();
-    bool isRTL = languageService.CheckIfRightToLeft(WorkContext.CurrentCultureCode);
-    string dir = isRTL ? "rtl" : string.Empty;
+    string dir = IsRightToLeft ? "rtl" : string.Empty;
     string lang = WorkContext.CurrentCultureCode.LeftOf('-');
 
-    if (isRTL)
+    if (IsRightToLeft)
     {
         Style.IncludeExternal("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.2.0-rc2/css/bootstrap-rtl.min.css");
     }

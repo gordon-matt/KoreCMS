@@ -10,7 +10,7 @@ using Kore.Caching;
 using Kore.Collections;
 using Kore.Data;
 using Kore.Localization.Domain;
-using Kore.Web.ContentManagement.Areas.Admin.Localization.Models;
+using Kore.Localization.Models;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 

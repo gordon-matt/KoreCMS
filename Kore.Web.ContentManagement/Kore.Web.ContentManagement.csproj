@@ -159,10 +159,6 @@
     <Compile Include="Areas\Admin\Localization\Controllers\LocalizableStringController.cs" />
     <Compile Include="Areas\Admin\Localization\LanguageSwitchBlock.cs" />
     <Compile Include="Areas\Admin\Localization\LocalizationAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Localization\Models\ComparitiveLocalizableString.cs" />
-    <Compile Include="Areas\Admin\Localization\Models\LanguageModel.cs" />
-    <Compile Include="Areas\Admin\Localization\Services\ILanguageService.cs" />
-    <Compile Include="Areas\Admin\Localization\Services\ILocalizableStringService.cs" />
     <Compile Include="Areas\Admin\Media\Controllers\MediaController.cs" />
     <Compile Include="Areas\Admin\Media\Controllers\PlugoBrowserController.cs" />
     <Compile Include="Areas\Admin\Media\Controllers\UploadFilesController.cs" />

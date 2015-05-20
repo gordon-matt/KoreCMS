@@ -1,4 +1,4 @@
-﻿namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Models
+﻿namespace Kore.Localization.Models
 {
     public class ComparitiveLocalizableString
     {

@@ -226,7 +226,10 @@
     <Compile Include="ComponentModel\LocalizedDisplayNameAttribute.cs" />
     <Compile Include="Localization\LocalizedString.cs" />
     <Compile Include="Localization\Localizer.cs" />
+    <Compile Include="Localization\Models\ComparitiveLocalizableString.cs" />
     <Compile Include="Localization\NullLocalizer.cs" />
+    <Compile Include="Localization\Services\ILanguageService.cs" />
+    <Compile Include="Localization\Services\ILocalizableStringService.cs" />
     <Compile Include="Localization\StartupTask.cs" />
     <Compile Include="Localization\Text.cs" />
     <Compile Include="Logging\Domain\LogEntry.cs" />

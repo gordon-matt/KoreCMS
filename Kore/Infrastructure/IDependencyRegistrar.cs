@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Kore.Caching;
+using Kore.Localization.Services;
 using Kore.Tasks;
 
 namespace Kore.Infrastructure
@@ -18,6 +19,10 @@ namespace Kore.Infrastructure
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
             builder.RegisterType<ClearCacheTask>().As<ITask>().SingleInstance();
+
+            // Localization
+            builder.RegisterType<LanguageService>().As<ILanguageService>().InstancePerDependency();
+            builder.RegisterType<LocalizableStringService>().As<ILocalizableStringService>().InstancePerDependency();
         }
 
         public int Order

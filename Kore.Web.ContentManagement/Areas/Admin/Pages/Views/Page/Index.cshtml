@@ -16,6 +16,8 @@
     Script.IncludeBundle("notify");
 
     Script.IncludeBundle("kore-cms/pages");
+
+    string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
 
 @*<style type="text/css">
@@ -42,7 +44,7 @@
         <br />
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="well">
+                <div class="well @rtlClass">
                     <div id="treeview"></div>
                 </div>
             </div>
@@ -181,7 +183,7 @@
                     <div class="clearfix"></div>
                     <br />*@
 
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
                         <div id="PageTypesGrid"></div>
                     </div>
                 </div>

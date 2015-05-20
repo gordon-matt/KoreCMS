@@ -1,7 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Kore.Infrastructure
 @using Kore.Web.Configuration
-@using Kore.Web.ContentManagement.Areas.Admin.Localization.Services
 
 @{
     Style.IncludeJQueryUI();
@@ -14,12 +13,10 @@
     Script.IncludeBootstrap();
     Script.IncludeJQueryValidate();
 
-    var languageService = EngineContext.Current.Resolve<ILanguageService>();
-    bool isRTL = languageService.CheckIfRightToLeft(WorkContext.CurrentCultureCode);
-    string dir = isRTL ? "rtl" : string.Empty;
+    string dir = IsRightToLeft ? "rtl" : string.Empty;
     string lang = WorkContext.CurrentCultureCode.LeftOf('-');
-    
-    if (isRTL)
+
+    if (IsRightToLeft)
     {
         Style.IncludeExternal("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.2.0-rc2/css/bootstrap-rtl.min.css");
     }
@@ -33,6 +30,18 @@
     <title>@ViewBag.Title - @SiteSettings.SiteName</title>
     @RenderSection("styles", required: false)
     @RenderStyles()
+
+    @if (IsRightToLeft)
+    {
+        <style type="text/css">
+            .radio input[type="radio"],
+            .radio-inline input[type="radio"],
+            .checkbox input[type="checkbox"],
+            .checkbox-inline input[type="checkbox"] {
+              margin-right: -20px;
+            }
+        </style>
+    }
 </head>
 <body dir="@dir">
 

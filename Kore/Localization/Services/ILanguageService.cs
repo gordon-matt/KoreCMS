@@ -4,32 +4,32 @@ using System.Linq;
 using Kore.Caching;
 using Kore.Data;
 using Kore.Data.Services;
-using Kore.Localization.Domain;
+using LanguageEntity = Kore.Localization.Domain.Language;
 
-namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Services
+namespace Kore.Localization.Services
 {
-    public interface ILanguageService : IGenericDataService<Language>
+    public interface ILanguageService : IGenericDataService<LanguageEntity>
     {
-        IEnumerable<Language> GetActiveLanguages();
+        IEnumerable<LanguageEntity> GetActiveLanguages();
 
-        Language GetLanguage(string cultureCode);
+        LanguageEntity GetLanguage(string cultureCode);
 
         bool CheckIfRightToLeft(string cultureCode);
     }
 
-    public class LanguageService : GenericDataService<Language>, ILanguageService
+    public class LanguageService : GenericDataService<LanguageEntity>, ILanguageService
     {
-        public LanguageService(ICacheManager cacheManager, IRepository<Language> repository)
+        public LanguageService(ICacheManager cacheManager, IRepository<LanguageEntity> repository)
             : base(cacheManager, repository)
         {
         }
 
-        public IEnumerable<Language> GetActiveLanguages()
+        public IEnumerable<LanguageEntity> GetActiveLanguages()
         {
             return Find(x => x.IsEnabled);
         }
 
-        public Language GetLanguage(string cultureCode)
+        public LanguageEntity GetLanguage(string cultureCode)
         {
             if (string.IsNullOrEmpty(cultureCode))
             {

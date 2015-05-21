@@ -5,11 +5,23 @@
 @{
     Layout = KoreWebConstants.DefaultFrontendLayoutPath;
     Script.IncludeBundle("knockout");
+    Script.IncludeBundle("jqueryval");
     Script.IncludePluginScript("checkout.js");
     string currencyCode = ViewBag.CurrencyCode;
 }
 
-<div id="main-section" class="row">
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="pull-left" data-bind="visible: canShowPrevious()">
+            <a href="javascript:void(0);" class="btn btn-default" data-bind="click: previous">Previous</a>
+        </div>
+        <div class="pull-right" data-bind="visible: canShowNext()">
+            <a href="javascript:void(0);" class="btn btn-default" data-bind="click: next">Next</a>
+        </div>
+    </div>
+</div>
+<br />
+<div id="main-section" class="row" data-step="1">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -29,14 +41,14 @@
             <div class="panel-body">
                 <div data-bind="foreach: items">
                     <div class="row">
-                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                            <img class="img-responsive" data-bind="attr: { src: imageUrl }" src="http://placehold.it/100x70">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            <img class="img-responsive" data-bind="attr: { src: imageUrl }" />
                         </div>
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                             <h4 class="product-name"><strong data-bind="text: productName"></strong></h4>
-                            <h4><small data-bind="text: description"></small></h4>
+                            @*<h4><small data-bind="text: description"></small></h4>*@
                         </div>
-                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
                                 <h6>
                                     <strong data-bind="text: currencyCode + ' ' + price().toFixed(2)"></strong>
@@ -71,15 +83,241 @@
             <div class="panel-footer">
                 <div class="row text-center">
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                        <h6 class="text-right">@T(LocalizableStrings.SubTotal) <strong data-bind="text: currencyCode + ' ' + subTotal()"></strong></h6>
+                        <h6 class="text-right">@T(LocalizableStrings.ShippingTotal) <strong data-bind="text: currencyCode + ' ' + shippingTotal()"></strong></h6>
+                        <h6 class="text-right">@T(LocalizableStrings.TaxTotal) <strong data-bind="text: currencyCode + ' ' + taxTotal()"></strong></h6>
                         <h4 class="text-right">@T(LocalizableStrings.Total) <strong data-bind="text: currencyCode + ' ' + totalPrice()"></strong></h4>
                     </div>
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <a href="@Url.Action("BuyNow", "PayPal", new { area = string.Empty })" class="btn btn-success btn-block">
+                        @*<a href="@Url.Action("BuyNow", "PayPal", new { area = string.Empty })" class="btn btn-success btn-block">
+                            @T(LocalizableStrings.Checkout)
+                        </a>*@
+                        <a href="javascript:void(0);" class=" btn btn-success btn-block" data-bind="click: next">
                             @T(LocalizableStrings.Checkout)
                         </a>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<div id="billing-address-section" class="row" data-step="2" style="display:none">
+    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <form id="billing-address-section-form" role="form" class="form-horizontal">
+            <fieldset>
+                <legend>Billing Address</legend>
+                <div class="form-group">
+                    @Html.Label("Billing_FamilyName", "Family Name", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
+                            @Html.TextBox("Billing_FamilyName", null, new { @class = "form-control", data_bind = "value: billingAddress.familyName" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Billing_GivenNames", "Given Names", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
+                            @Html.TextBox("Billing_GivenNames", null, new { @class = "form-control", data_bind = "value: billingAddress.givenNames" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Billing_Email", "Email", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-mail"></i></span>
+                            @Html.TextBox("Billing_Email", null, new { @class = "form-control", data_bind = "value: billingAddress.email" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Billing_AddressLine1", "Address Line 1", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                            @Html.TextBox("Billing_AddressLine1", null, new { @class = "form-control", data_bind = "value: billingAddress.addressLine1" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Billing_AddressLine2", "Address Line 2", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                            @Html.TextBox("Billing_AddressLine2", null, new { @class = "form-control", data_bind = "value: billingAddress.addressLine2" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Billing_AddressLine3", "Address Line 3", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                            @Html.TextBox("Billing_AddressLine3", null, new { @class = "form-control", data_bind = "value: billingAddress.addressLine3" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Billing_City", "City", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                            @Html.TextBox("Billing_City", null, new { @class = "form-control", data_bind = "value: billingAddress.city" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Billing_PostalCode", "Postal Code", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                            @Html.TextBox("Billing_PostalCode", null, new { @class = "form-control", data_bind = "value: billingAddress.postalCode" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Billing_Country", "Country", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-globe"></i></span>
+                            @Html.TextBox("Billing_Country", null, new { @class = "form-control", data_bind = "value: billingAddress.country" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Billing_PhoneNumber", "Phone Number", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-phone"></i></span>
+                            @Html.TextBox("Billing_PhoneNumber", null, new { @class = "form-control", data_bind = "value: billingAddress.phoneNumber" })
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </article>
+</div>
+<div id="shipping-address-section" class="row" data-step="3" style="display:none">
+    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <form id="shipping-address-section-form" role="form" class="form-horizontal">
+            <fieldset>
+                <legend>Shipping Address</legend>
+
+                <div class="form-group">
+                    <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-3 col-md-offset-3 col-lg-3 col-lg-offset-3">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBox("shippingAddressIsSameAsBillingAddress", new { data_bind = "checked: shippingAddressIsSameAsBillingAddress" }) Same as Billing Address
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- ko ifnot: shippingAddressIsSameAsBillingAddress -->
+                <div class="form-group">
+                    @Html.Label("Shipping_FamilyName", "Family Name", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
+                            @Html.TextBox("Shipping_FamilyName", null, new { @class = "form-control", data_bind = "value: shippingAddress.familyName" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Shipping_GivenNames", "Given Names", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
+                            @Html.TextBox("Shipping_GivenNames", null, new { @class = "form-control", data_bind = "value: shippingAddress.givenNames" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Shipping_Email", "Email", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-mail"></i></span>
+                            @Html.TextBox("Shipping_Email", null, new { @class = "form-control", data_bind = "value: shippingAddress.email" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Shipping_AddressLine1", "Address Line 1", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                            @Html.TextBox("Shipping_AddressLine1", null, new { @class = "form-control", data_bind = "value: shippingAddress.addressLine1" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Shipping_AddressLine2", "Address Line 2", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                            @Html.TextBox("Shipping_AddressLine2", null, new { @class = "form-control", data_bind = "value: shippingAddress.addressLine2" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Shipping_AddressLine3", "Address Line 3", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                            @Html.TextBox("Shipping_AddressLine3", null, new { @class = "form-control", data_bind = "value: shippingAddress.addressLine3" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Shipping_City", "City", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                            @Html.TextBox("Shipping_City", null, new { @class = "form-control", data_bind = "value: shippingAddress.city" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Shipping_PostalCode", "Postal Code", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                            @Html.TextBox("Shipping_PostalCode", null, new { @class = "form-control", data_bind = "value: shippingAddress.postalCode" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Shipping_Country", "Country", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-globe"></i></span>
+                            @Html.TextBox("Shipping_Country", null, new { @class = "form-control", data_bind = "value: shippingAddress.country" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Shipping_PhoneNumber", "Phone Number", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-phone"></i></span>
+                            @Html.TextBox("Shipping_PhoneNumber", null, new { @class = "form-control", data_bind = "value: shippingAddress.phoneNumber" })
+                        </div>
+                    </div>
+                </div>
+                <!-- /ko -->
+            </fieldset>
+        </form>
+    </article>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="pull-left" data-bind="visible: canShowPrevious()">
+            <a href="javascript:void(0);" class="btn btn-default" data-bind="click: previous">Previous</a>
+        </div>
+        <div class="pull-right" data-bind="visible: canShowNext()">
+            <a href="javascript:void(0);" class="btn btn-default" data-bind="click: next">Next</a>
         </div>
     </div>
 </div>

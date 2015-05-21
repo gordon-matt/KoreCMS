@@ -24,8 +24,8 @@
             public const string UseAjax = "Plugins.Ecommerce.Simple/StoreSettings.UseAjax";
         }
 
-        public const string AddToCart = "Plugins.Ecommerce.Simple/AddToCart";
         public const string AddedItems = "Plugins.Ecommerce.Simple/AddedItems";
+        public const string AddToCart = "Plugins.Ecommerce.Simple/AddToCart";
         public const string Categories = "Plugins.Ecommerce.Simple/Categories";
         public const string Checkout = "Plugins.Ecommerce.Simple/Checkout";
         public const string CircularRelationshipError = "Plugins.Ecommerce.Simple/CircularRelationshipError";
@@ -35,9 +35,12 @@
         public const string Products = "Plugins.Ecommerce.Simple/Products";
         public const string SelectCategoryToBeginEdit = "Plugins.Ecommerce.Simple/SelectCategoryToBeginEdit";
         public const string Shipping = "Plugins.Ecommerce.Simple/Shipping";
+        public const string ShippingTotal = "Plugins.Ecommerce.Simple/ShippingTotal";
         public const string ShoppingCart = "Plugins.Ecommerce.Simple/ShoppingCart";
         public const string Store = "Plugins.Ecommerce.Simple/Store";
+        public const string SubTotal = "Plugins.Ecommerce.Simple/SubTotal";
         public const string Tax = "Plugins.Ecommerce.Simple/Tax";
+        public const string TaxTotal = "Plugins.Ecommerce.Simple/TaxTotal";
         public const string Total = "Plugins.Ecommerce.Simple/Total";
         public const string UpdateCart = "Plugins.Ecommerce.Simple/UpdateCart";
     }

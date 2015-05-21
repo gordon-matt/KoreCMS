@@ -1,7 +1,5 @@
 ﻿using System.Web.Mvc;
 
-//using Kore.Web.Mvc.RoboUI;
-
 namespace Kore.Web.Areas.Admin.Indexing
 {
     public class IndexingAreaRegistration : AreaRegistration
@@ -13,7 +11,6 @@ namespace Kore.Web.Areas.Admin.Indexing
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            //RoboSettings.RegisterAreaLayoutPath(KoreWebConstants.Areas.Indexing, KoreWebConstants.DefaultAdminLayoutPath);
         }
     }
 }

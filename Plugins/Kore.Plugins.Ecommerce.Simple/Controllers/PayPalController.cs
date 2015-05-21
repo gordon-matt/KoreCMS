@@ -14,6 +14,7 @@ using Kore.Plugins.Ecommerce.Simple.Data.Domain;
 using Kore.Plugins.Ecommerce.Simple.Models;
 using Kore.Plugins.Ecommerce.Simple.Services;
 using Kore.Web.Mvc;
+using System.Data.Entity;
 
 namespace Kore.Plugins.Ecommerce.Simple.Controllers
 {
@@ -21,15 +22,18 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
     [RoutePrefix("store/paypal")]
     public class PayPalController : KoreController
     {
+        private readonly Lazy<ICartService> cartService;
         private readonly Lazy<IOrderService> orderService;
         private readonly Lazy<IProductService> productService;
         private readonly PayPalSettings settings;
 
         public PayPalController(
+            Lazy<ICartService> cartService,
             Lazy<IOrderService> orderService,
             Lazy<IProductService> productService,
             PayPalSettings settings)
         {
+            this.cartService = cartService;
             this.orderService = orderService;
             this.productService = productService;
             this.settings = settings;
@@ -38,55 +42,16 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         [Route("buy-now")]
         public ActionResult BuyNow()
         {
-            var cart = GetCart();
+            var cart = cartService.Value.GetCart(this.HttpContext);
 
-            var order = new Order
+            if (!cart.OrderId.HasValue)
             {
-                UserId = WorkContext.CurrentUser == null ? null : WorkContext.CurrentUser.Id,
-                PaymentStatus = PaymentStatus.Pending,
-                Status = OrderStatus.Pending,
-                OrderDateUtc = DateTime.UtcNow,
-                IPAddress = ClientIPAddress,
-                OrderTotal = cart.Sum(x => (x.Price + x.Tax + x.ShippingCost) * x.Quantity)
-            };
-
-            //TEMP //TODO; Remove this asap
-            var addressRepository = EngineContext.Current.Resolve<IRepository<Address>>();
-            var address = addressRepository.Table.FirstOrDefault();
-
-            if (address == null)
-            {
-                address = new Address
-                {
-                    FamilyName = "Nissan",
-                    GivenNames = "Ran",
-                    AddressLine1 = "Line 1",
-                    AddressLine2 = "Line 2",
-                    AddressLine3 = "Line 3",
-                    City = "Tel Aviv",
-                    Country = "Israel",
-                    PostalCode = "11111",
-                    Email = "rn@esales.co.il",
-                    PhoneNumber = "0987654321",
-                };
-                addressRepository.Insert(address);
+                //TODO:
             }
 
-            order.BillingAddress = address;
-            order.ShippingAddress = address;
-            //END TEMP
-
-            foreach (var item in cart)
-            {
-                order.Lines.Add(new OrderLine
-                {
-                    ProductId = item.ProductId,
-                    Quantity = item.Quantity,
-                    UnitPrice = item.Price
-                });
-            }
-
-            orderService.Value.Insert(order);
+            var order = orderService.Value.Repository.Table
+                .Include(x => x.BillingAddress)
+                .FirstOrDefault(x => x.Id == cart.OrderId);
 
             var model = new PayPalModel
             {
@@ -100,11 +65,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 CancelReturnUrl = Url.AbsoluteAction("CancelReturn", "PayPal", new { orderId = order.Id }),
                 NotificationUrl = Url.AbsoluteAction("Notification", "PayPal", new { orderId = order.Id }),
                 CurrencyCode = settings.CurrencyCode,
-                Items = cart,
+                Items = cart.Items,
                 OrderId = order.Id,
                 OrderTotal = order.OrderTotal,
-                SalesTax = cart.Sum(x => x.Tax),
-                ShippingFee = cart.Sum(x => x.ShippingCost),
+                SalesTax = cart.Items.Sum(x => x.Tax),
+                ShippingFee = cart.Items.Sum(x => x.ShippingCost),
                 BillingAddress = order.BillingAddress
             };
             return View(model);
@@ -527,22 +492,6 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             }
 
             return true;
-        }
-
-        private ICollection<ShoppingCartItem> GetCart()
-        {
-            ICollection<ShoppingCartItem> cart;
-
-            if (Session.Keys.OfType<string>().Contains("ShoppingCart"))
-            {
-                cart = (ICollection<ShoppingCartItem>)Session["ShoppingCart"];
-            }
-            else
-            {
-                cart = new List<ShoppingCartItem>();
-            }
-
-            return cart;
         }
 
         private bool GetPDTDetails(string tx, out Dictionary<string, string> values, out string response)

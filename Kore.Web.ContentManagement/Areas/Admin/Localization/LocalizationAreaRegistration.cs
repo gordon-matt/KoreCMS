@@ -1,7 +1,5 @@
 ﻿using System.Web.Mvc;
 
-//using Kore.Web.Mvc.RoboUI;
-
 namespace Kore.Web.ContentManagement.Areas.Admin.Localization
 {
     public class LocalizationAreaRegistration : AreaRegistration
@@ -13,7 +11,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            //RoboSettings.RegisterAreaLayoutPath(Constants.Areas.Localization, KoreWebConstants.DefaultAdminLayoutPath);
         }
     }
 }

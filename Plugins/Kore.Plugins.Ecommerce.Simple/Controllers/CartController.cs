@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Kore.Collections;
 using Kore.Plugins.Ecommerce.Simple.Models;
 using Kore.Plugins.Ecommerce.Simple.Services;
 using Kore.Web.Mvc;
@@ -12,31 +12,35 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
     [RoutePrefix("store/cart")]
     public class CartController : KoreController
     {
+        private readonly ICartService cartService;
         private readonly Lazy<IProductService> productService;
 
-        public CartController(Lazy<IProductService> productService)
+        public CartController(
+            ICartService cartService,
+            Lazy<IProductService> productService)
         {
+            this.cartService = cartService;
             this.productService = productService;
         }
 
         [Route("get-cart")]
         public JsonResult Get()
         {
-            var cart = GetCart();
-            return Json(new { Items = cart }, JsonRequestBehavior.AllowGet);
+            var cart = cartService.GetCart(this.HttpContext);
+            return Json(new { Items = cart.Items }, JsonRequestBehavior.AllowGet);
         }
 
         [Route("add-item-to-cart")]
         public JsonResult Post(int productId)
         {
-            var cart = GetCart();
+            var cart = cartService.GetCart(this.HttpContext);
 
-            var item = cart.FirstOrDefault(x => x.ProductId == productId);
+            var item = cart.Items.FirstOrDefault(x => x.ProductId == productId);
 
             if (item != null)
             {
                 item.Quantity += 1;
-                UpdateCartInternal(cart);
+                cartService.SetCart(this.HttpContext, cart);
                 return Json(new { Success = true, Message = "Quantity Updated" });
             }
 
@@ -58,9 +62,9 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 ImageUrl = product.MainImageUrl,
                 Description = product.ShortDescription.Left(255)
             };
-            cart.Add(item);
+            cart.Items.Add(item);
 
-            UpdateCartInternal(cart);
+            cartService.SetCart(this.HttpContext, cart);
 
             return Json(new { Success = true, Message = "Added to Cart" });
         }
@@ -75,9 +79,9 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 return Json(new { Success = false, Message = "Could not find specified product" });
             }
 
-            var cart = GetCart();
+            var cart = cartService.GetCart(this.HttpContext);
 
-            var item = cart.FirstOrDefault(x => x.ProductId == productId);
+            var item = cart.Items.FirstOrDefault(x => x.ProductId == productId);
 
             if (item != null)
             {
@@ -96,9 +100,9 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                     ImageUrl = product.MainImageUrl,
                     Description = product.ShortDescription.Left(255)
                 };
-                cart.Add(item);
+                cart.Items.Add(item);
             }
-            UpdateCartInternal(cart);
+            cartService.SetCart(this.HttpContext, cart);
 
             return Json(new { Success = true, Message = "Cart Updated" });
         }
@@ -106,46 +110,33 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         [Route("delete-cart-item/{productId}")]
         public JsonResult Delete(int productId)
         {
-            var cart = GetCart();
-            var item = cart.FirstOrDefault(x => x.ProductId == productId);
+            var cart = cartService.GetCart(this.HttpContext);
+            var item = cart.Items.FirstOrDefault(x => x.ProductId == productId);
 
             if (item == null)
             {
                 return Json(new { Success = false, Message = "Could not find specified product" });
             }
 
-            cart.Remove(item);
-            UpdateCartInternal(cart);
+            cart.Items.Remove(item);
+            cartService.SetCart(this.HttpContext, cart);
 
             return Json(new { Success = true, Message = "Item removed from cart" });
         }
 
         [Route("update-cart")]
-        public JsonResult UpdateCart(IEnumerable<ShoppingCartItem> items)
+        public JsonResult UpdateCart(CartModel cart)
         {
-            UpdateCartInternal(items.ToList());
-            return Json(new { Success = true, Message = "Successfully updated cart." });
-        }
-
-        private ICollection<ShoppingCartItem> GetCart()
-        {
-            ICollection<ShoppingCartItem> cart;
-
-            if (Session.Keys.OfType<string>().Contains("ShoppingCart"))
+            if (cart.Items.IsNullOrEmpty())
             {
-                cart = (ICollection<ShoppingCartItem>)Session["ShoppingCart"];
+                cartService.SetCart(this.HttpContext, new CartModel());
             }
             else
             {
-                cart = new List<ShoppingCartItem>();
+                cartService.SetCart(this.HttpContext, cart);
             }
 
-            return cart;
-        }
-
-        private void UpdateCartInternal(ICollection<ShoppingCartItem> cart)
-        {
-            Session["ShoppingCart"] = cart;
+            return Json(new { Success = true, Message = "Successfully updated cart." });
         }
     }
 }

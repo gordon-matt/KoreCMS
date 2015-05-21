@@ -87,7 +87,6 @@ var ViewModel = function () {
 
     self.removeItem = function (item) {
         self.items.remove(item);
-        self.updateCart();
     };
 
     self.updateCart = function () {
@@ -95,7 +94,7 @@ var ViewModel = function () {
             url: '/store/cart/update-cart',
             type: 'POST',
             dataType: 'json',
-            data: ko.toJSON(self.items),
+            data: ko.toJSON({ Items: self.items }),
             contentType: 'application/json; charset=utf-8',
             async: false
         })
@@ -116,6 +115,9 @@ var ViewModel = function () {
     };
 
     self.canShowNext = function () {
+        if (self.items().length == 0) {
+            return false;
+        }
         if (self.currentStep() == 1) {
             // we show "Checkout" button on first page instead (same thing as "Next")
             return false;
@@ -149,6 +151,46 @@ var ViewModel = function () {
         var section = $('div[data-step=' + step + ']');
         switchSection(section);
         self.currentStep(step);
+    };
+
+    self.confirm = function () {
+        var data = {};
+        if (self.shippingAddressIsSameAsBillingAddress()) {
+            data = {
+                billingAddress: self.billingAddress,
+                shippingAddress: self.billingAddress
+            };
+        }
+        else {
+            data = {
+                billingAddress: self.billingAddress,
+                shippingAddress: self.shippingAddress
+            };
+        }
+
+        // first create order...
+        $.ajax({
+            url: "/store/checkout/create-order",
+            type: "POST",
+            dataType: "json",
+            data: ko.toJSON(data),
+            contentType: 'application/json; charset=utf-8',
+            async: false
+        })
+        .done(function (json) {
+            if (json.Success) {
+                // ...then, go to PayPal...
+                window.location.replace('/store/paypal/buy-now');
+            }
+            else {
+                alert(json.Message);
+            }
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            alert(errorThrown);
+            console.log(textStatus + ': ' + errorThrown);
+        });
+
     };
 
     self.billingAddressValidator = $("#billing-address-section-form").validate({

@@ -60,7 +60,7 @@
                             </div>
                             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                                 <button type="button" class="btn btn-link btn-xs" data-bind="click: $root.removeItem">
-                                    <span class="kore-icon kore-icon-trash"> </span>
+                                    <span class="kore-icon kore-icon-trash kore-icon-2x text-danger"> </span>
                                 </button>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                 <div class="row">
                     <div class="text-center">
                         <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                            <h6 class="text-right">@T(LocalizableStrings.AddedItems)</h6>
+                            <h6 class="text-right">@T(LocalizableStrings.MadeChanges)</h6>
                         </div>
                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                             <button type="button" data-bind="click: updateCart" class="btn btn-default btn-sm btn-block">
@@ -107,20 +107,20 @@
             <fieldset>
                 <legend>Billing Address</legend>
                 <div class="form-group">
-                    @Html.Label("Billing_FamilyName", "Family Name", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
-                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
-                            @Html.TextBox("Billing_FamilyName", null, new { @class = "form-control", data_bind = "value: billingAddress.familyName" })
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
                     @Html.Label("Billing_GivenNames", "Given Names", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
                             @Html.TextBox("Billing_GivenNames", null, new { @class = "form-control", data_bind = "value: billingAddress.givenNames" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Billing_FamilyName", "Family Name", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
+                            @Html.TextBox("Billing_FamilyName", null, new { @class = "form-control", data_bind = "value: billingAddress.familyName" })
                         </div>
                     </div>
                 </div>
@@ -217,20 +217,20 @@
                 </div>
                 <!-- ko ifnot: shippingAddressIsSameAsBillingAddress -->
                 <div class="form-group">
-                    @Html.Label("Shipping_FamilyName", "Family Name", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
-                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
-                            @Html.TextBox("Shipping_FamilyName", null, new { @class = "form-control", data_bind = "value: shippingAddress.familyName" })
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
                     @Html.Label("Shipping_GivenNames", "Given Names", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
                             @Html.TextBox("Shipping_GivenNames", null, new { @class = "form-control", data_bind = "value: shippingAddress.givenNames" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Shipping_FamilyName", "Family Name", new { @class = "control-label col-xs-12 col-sm-6 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
+                            @Html.TextBox("Shipping_FamilyName", null, new { @class = "form-control", data_bind = "value: shippingAddress.familyName" })
                         </div>
                     </div>
                 </div>
@@ -309,6 +309,32 @@
                 <!-- /ko -->
             </fieldset>
         </form>
+    </article>
+</div>
+<div id="confirm-section" class="row" data-step="4" style="display:none">
+    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: items">
+                <tr>
+                    <td><img class="img-responsive" data-bind="attr: { src: imageUrl }" style="max-height:180px" /></td>
+                    <td data-bind="text: productName"></td>
+                    <td data-bind="text: currencyCode + ' ' + price().toFixed(2)"></td>
+                    <td data-bind="text: quantity"></td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="javascript:void(0);" class="btn btn-success" data-bind="click: confirm">
+            <i class="kore-icon kore-icon-ok"></i>
+            Confirm
+        </a>
     </article>
 </div>
 <div class="row">

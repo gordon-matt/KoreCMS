@@ -1,7 +1,5 @@
 ﻿using System.Web.Mvc;
 
-//using Kore.Web.Mvc.RoboUI;
-
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog
 {
     public class BlogAreaRegistration : AreaRegistration
@@ -13,7 +11,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            //RoboSettings.RegisterAreaLayoutPath(Constants.Areas.Blog, KoreWebConstants.DefaultAdminLayoutPath);
         }
     }
 }

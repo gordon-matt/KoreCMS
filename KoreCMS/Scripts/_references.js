@@ -538,6 +538,15 @@
 /// <reference path="tinymce/plugins/compat3x/utils/form_utils.js" />
 /// <reference path="tinymce/plugins/compat3x/utils/mctabs.js" />
 /// <reference path="tinymce/plugins/compat3x/utils/validate.js" />
+/// <reference path="../themes/eshopper/scripts/bootstrap.min.js" />
+/// <reference path="../themes/eshopper/scripts/contact.js" />
+/// <reference path="../themes/eshopper/scripts/gmaps.js" />
+/// <reference path="../themes/eshopper/scripts/html5shiv.js" />
+/// <reference path="../themes/eshopper/scripts/jquery.js" />
+/// <reference path="../themes/eshopper/scripts/jquery.prettyphoto.js" />
+/// <reference path="../themes/eshopper/scripts/jquery.scrollup.min.js" />
+/// <reference path="../themes/eshopper/scripts/main.js" />
+/// <reference path="../themes/eshopper/scripts/price-range.js" />
  
  / / /   < r e f e r e n c e   p a t h = " b r e e z e . d e b u g . j s "   / >  
  

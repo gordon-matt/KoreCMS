@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
@@ -13,8 +14,6 @@ using Kore.Security.Membership;
 using Kore.Web.Collections;
 using Kore.Web.Mvc.Controls;
 using Kore.Web.Mvc.KoreUI;
-
-//using Kore.Web.Mvc.RoboUI;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -622,15 +621,40 @@ namespace Kore.Web.Mvc
             return new KoreUI<TModel>(htmlHelper);
         }
 
-        //public static RoboUIFormResult<TModel> RoboForm<TModel>(this HtmlHelper htmlHelper, TModel model) where TModel : class
-        //{
-        //    return new RoboUIFormResult<TModel>(model, htmlHelper.ViewContext);
-        //}
+        //TODO: Test
+        public static MvcHtmlString Table<T>(this HtmlHelper html, IEnumerable<T> items, object htmlAttributes = null)
+        {
+            var builder = new FluentTagBuilder("table")
+                .MergeAttributes(htmlAttributes)
+                .StartTag("thead")
+                    .StartTag("tr");
 
-        //public static RoboUIGridResult<TModel> RoboGrid<TModel>(this HtmlHelper htmlHelper, TModel model) where TModel : class
-        //{
-        //    return new RoboUIGridResult<TModel>(htmlHelper.ViewContext);
-        //}
+            var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var property in properties)
+            {
+                builder = builder.StartTag("th").SetInnerText(property.Name).EndTag();
+            }
+
+            builder
+                .EndTag() // </tr>
+                .EndTag() // </thead>
+                .StartTag("tbody");
+
+            foreach (var item in items)
+            {
+                builder = builder.StartTag("tr");
+                foreach (var property in properties)
+                {
+                    string value = property.GetValue(item).ToString();
+                    builder = builder.StartTag("td").SetInnerText(value).EndTag();
+                }
+                builder = builder.EndTag(); // </tr>
+            }
+            builder = builder.EndTag(); // </tbody>
+
+            return MvcHtmlString.Create(builder.ToString());
+        }
 
         /// <summary>
         /// Create an HTML tree from a recursive collection of items

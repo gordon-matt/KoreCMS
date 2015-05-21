@@ -16,7 +16,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                     CultureCode = null,
                     LocalizedStrings = new Dictionary<string, string>
                     {
-                        { LocalizableStrings.AddedItems, "Added Items?" },
+                        { LocalizableStrings.MadeChanges, "Made Changes?" },
                         { LocalizableStrings.AddToCart, "Add to Cart" },
                         { LocalizableStrings.Categories, "Categories" },
                         { LocalizableStrings.Checkout, "Checkout" },

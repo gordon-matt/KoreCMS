@@ -33,9 +33,12 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
 
             builder.RegisterType<AutoMenuProvider>().As<IAutoMenuProvider>().SingleInstance();
 
+            builder.RegisterType<AddressService>().As<IAddressService>().InstancePerDependency();
             builder.RegisterType<CategoryService>().As<ICategoryService>().InstancePerDependency();
             builder.RegisterType<ProductService>().As<IProductService>().InstancePerDependency();
             builder.RegisterType<OrderService>().As<IOrderService>().InstancePerDependency();
+
+            builder.RegisterType<CartService>().As<ICartService>().SingleInstance();
 
             builder.RegisterType<PayPalSettings>().As<ISettings>().SingleInstance();
             builder.RegisterType<StoreSettings>().As<ISettings>().SingleInstance();

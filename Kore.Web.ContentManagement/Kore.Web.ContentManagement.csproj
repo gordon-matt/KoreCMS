@@ -207,7 +207,6 @@
     <Compile Include="Areas\Admin\Media\Services\IMediaPathProvider.cs" />
     <Compile Include="Areas\Admin\Media\Services\MediaService.cs" />
     <Compile Include="Areas\Admin\Media\Services\SystemMediaDriver.cs" />
-    <Compile Include="Areas\Admin\Media\ContentBlocks\NivoSliderBlock.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\PermissionApiController.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\PublicUserApiController.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\RoleApiController.cs" />
@@ -278,8 +277,6 @@
     <Compile Include="Areas\Admin\ContentBlocks\IContentBlock.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\IContentBlockProvider.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\Models\SaveResultModel.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Models\ContentBlockModel.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Models\ZoneModel.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\RuleEngine\BuiltinRuleProvider.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\RuleEngine\DisabledRuleProvider.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\RuleEngine\IRuleManager.cs" />
@@ -434,6 +431,7 @@
     <EmbeddedResource Include="Scripts\kore-cms-localization.js" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Admin\Media\ContentBlocks\" />
     <Folder Include="Areas\Admin\Pages\Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

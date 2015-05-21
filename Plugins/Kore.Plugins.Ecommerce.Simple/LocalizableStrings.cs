@@ -24,7 +24,7 @@
             public const string UseAjax = "Plugins.Ecommerce.Simple/StoreSettings.UseAjax";
         }
 
-        public const string AddedItems = "Plugins.Ecommerce.Simple/AddedItems";
+        public const string MadeChanges = "Plugins.Ecommerce.Simple/MadeChanges";
         public const string AddToCart = "Plugins.Ecommerce.Simple/AddToCart";
         public const string Categories = "Plugins.Ecommerce.Simple/Categories";
         public const string Checkout = "Plugins.Ecommerce.Simple/Checkout";

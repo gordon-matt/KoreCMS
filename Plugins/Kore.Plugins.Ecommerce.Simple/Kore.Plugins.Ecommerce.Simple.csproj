@@ -126,7 +126,6 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\Api\AddressApiController.cs" />
-    <Compile Include="Controllers\Api\CartApiController.cs" />
     <Compile Include="Controllers\Api\CategoryApiController.cs" />
     <Compile Include="Controllers\Api\CategoryTreeApiController.cs" />
     <Compile Include="Controllers\Api\OrderApiController.cs" />
@@ -158,11 +157,15 @@
     <Compile Include="Infrastructure\WebApiRegistrar.cs" />
     <Compile Include="LocalizableStrings.cs" />
     <Compile Include="Models\AddressModel.cs" />
+    <Compile Include="Models\CartModel.cs" />
+    <Compile Include="Models\CreateOrderModel.cs" />
     <Compile Include="Models\PayPalModel.cs" />
     <Compile Include="Models\ShoppingCartItem.cs" />
     <Compile Include="NavigationProvider.cs" />
     <Compile Include="PayPalSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IAddressService.cs" />
+    <Compile Include="Services\ICartService.cs" />
     <Compile Include="Services\ICategoryService.cs" />
     <Compile Include="Services\IOrderService.cs" />
     <Compile Include="Services\IProductService.cs" />

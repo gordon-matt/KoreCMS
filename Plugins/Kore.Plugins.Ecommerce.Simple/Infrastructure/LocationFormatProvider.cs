@@ -14,16 +14,16 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                 return new[]
                 {
                     //themes
-                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Ecommerce.Simple/{1}/{0}.cshtml",
-                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Ecommerce.Simple/Shared/{0}.cshtml",
+                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Ecommerce.Simple/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Ecommerce.Simple/Shared/{0}.cshtml",
 
                     //shared
-                    "~/Areas/{2}/Views/Plugins/Plugins.Ecommerce.Simple/{1}/{0}.cshtml",
-                    "~/Areas/{2}/Views/Plugins/Plugins.Ecommerce.Simple/Shared/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Ecommerce.Simple/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Ecommerce.Simple/Shared/{0}.cshtml",
 
                     //default
-                    "~/Plugins/Plugins.Ecommerce.Simple/Areas/{2}/Views/{1}/{0}.cshtml",
-                    "~/Plugins/Plugins.Ecommerce.Simple/Areas/{2}/Views/Shared/{0}.cshtml",
+                    "~/Plugins/Ecommerce.Simple/Areas/{2}/Views/{1}/{0}.cshtml",
+                    "~/Plugins/Ecommerce.Simple/Areas/{2}/Views/Shared/{0}.cshtml",
                 };
             }
         }
@@ -35,16 +35,16 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                 return new[]
                 {
                     //themes
-                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Ecommerce.Simple/{1}/{0}.cshtml",
-                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Ecommerce.Simple/Shared/{0}.cshtml",
+                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Ecommerce.Simple/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Ecommerce.Simple/Shared/{0}.cshtml",
 
                     //shared
-                    "~/Areas/{2}/Views/Plugins/Plugins.Ecommerce.Simple/{1}/{0}.cshtml",
-                    "~/Areas/{2}/Views/Plugins/Plugins.Ecommerce.Simple/Shared/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Ecommerce.Simple/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Ecommerce.Simple/Shared/{0}.cshtml",
 
                     //default
-                    "~/Plugins/Plugins.Ecommerce.Simple/Areas/{2}/Views/{1}/{0}.cshtml",
-                    "~/Plugins/Plugins.Ecommerce.Simple/Areas/{2}/Views/Shared/{0}.cshtml",
+                    "~/Plugins/Ecommerce.Simple/Areas/{2}/Views/{1}/{0}.cshtml",
+                    "~/Plugins/Ecommerce.Simple/Areas/{2}/Views/Shared/{0}.cshtml",
                 };
             }
         }
@@ -56,16 +56,16 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                 return new[]
                 {
                     //themes
-                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Ecommerce.Simple/{1}/{0}.cshtml",
-                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Ecommerce.Simple/Shared/{0}.cshtml",
+                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Ecommerce.Simple/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Ecommerce.Simple/Shared/{0}.cshtml",
 
                     //shared
-                    "~/Areas/{2}/Views/Plugins/Plugins.Ecommerce.Simple/{1}/{0}.cshtml",
-                    "~/Areas/{2}/Views/Plugins/Plugins.Ecommerce.Simple/Shared/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Ecommerce.Simple/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Ecommerce.Simple/Shared/{0}.cshtml",
 
                     //default
-                    "~/Plugins/Plugins.Ecommerce.Simple/Areas/{2}/Views/{1}/{0}.cshtml",
-                    "~/Plugins/Plugins.Ecommerce.Simple/Areas/{2}/Views/Shared/{0}.cshtml",
+                    "~/Plugins/Ecommerce.Simple/Areas/{2}/Views/{1}/{0}.cshtml",
+                    "~/Plugins/Ecommerce.Simple/Areas/{2}/Views/Shared/{0}.cshtml",
                 };
             }
         }
@@ -77,16 +77,16 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                 return new[]
                 {
                     //themes
-                    "~/Themes/{2}/Views/Plugins/Plugins.Ecommerce.Simple/{1}/{0}.cshtml",
-                    "~/Themes/{2}/Views/Plugins/Plugins.Ecommerce.Simple/Shared/{0}.cshtml",
+                    "~/Themes/{2}/Views/Plugins/Ecommerce.Simple/{1}/{0}.cshtml",
+                    "~/Themes/{2}/Views/Plugins/Ecommerce.Simple/Shared/{0}.cshtml",
 
                     //shared
-                    "~/Views/Plugins/Plugins.Ecommerce.Simple/{1}/{0}.cshtml",
-                    "~/Views/Plugins/Plugins.Ecommerce.Simple/Shared/{0}.cshtml",
+                    "~/Views/Plugins/Ecommerce.Simple/{1}/{0}.cshtml",
+                    "~/Views/Plugins/Ecommerce.Simple/Shared/{0}.cshtml",
 
                     //default
-                    "~/Plugins/Plugins.Ecommerce.Simple/Views/{1}/{0}.cshtml",
-                    "~/Plugins/Plugins.Ecommerce.Simple/Views/Shared/{0}.cshtml",
+                    "~/Plugins/Ecommerce.Simple/Views/{1}/{0}.cshtml",
+                    "~/Plugins/Ecommerce.Simple/Views/Shared/{0}.cshtml",
                 };
             }
         }
@@ -98,16 +98,16 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                 return new[]
                 {
                     //themes
-                    "~/Themes/{2}/Views/Plugins/Plugins.Ecommerce.Simple/{1}/{0}.cshtml",
-                    "~/Themes/{2}/Views/Plugins/Plugins.Ecommerce.Simple/Shared/{0}.cshtml",
+                    "~/Themes/{2}/Views/Plugins/Ecommerce.Simple/{1}/{0}.cshtml",
+                    "~/Themes/{2}/Views/Plugins/Ecommerce.Simple/Shared/{0}.cshtml",
 
                     //shared
-                    "~/Views/Plugins/Plugins.Ecommerce.Simple/{1}/{0}.cshtml",
-                    "~/Views/Plugins/Plugins.Ecommerce.Simple/Shared/{0}.cshtml",
+                    "~/Views/Plugins/Ecommerce.Simple/{1}/{0}.cshtml",
+                    "~/Views/Plugins/Ecommerce.Simple/Shared/{0}.cshtml",
 
                     //default
-                    "~/Plugins/Plugins.Ecommerce.Simple/Views/{1}/{0}.cshtml",
-                    "~/Plugins/Plugins.Ecommerce.Simple/Views/Shared/{0}.cshtml",
+                    "~/Plugins/Ecommerce.Simple/Views/{1}/{0}.cshtml",
+                    "~/Plugins/Ecommerce.Simple/Views/Shared/{0}.cshtml",
                 };
             }
         }
@@ -119,16 +119,16 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                 return new[]
                 {
                     //themes
-                    "~/Themes/{2}/Views/Plugins/Plugins.Ecommerce.Simple/{1}/{0}.cshtml",
-                    "~/Themes/{2}/Views/Plugins/Plugins.Ecommerce.Simple/Shared/{0}.cshtml",
+                    "~/Themes/{2}/Views/Plugins/Ecommerce.Simple/{1}/{0}.cshtml",
+                    "~/Themes/{2}/Views/Plugins/Ecommerce.Simple/Shared/{0}.cshtml",
 
                     //shared
-                    "~/Views/Plugins/Plugins.Ecommerce.Simple/{1}/{0}.cshtml",
-                    "~/Views/Plugins/Plugins.Ecommerce.Simple/Shared/{0}.cshtml",
+                    "~/Views/Plugins/Ecommerce.Simple/{1}/{0}.cshtml",
+                    "~/Views/Plugins/Ecommerce.Simple/Shared/{0}.cshtml",
 
                     //default
-                    "~/Plugins/Plugins.Ecommerce.Simple/Views/{1}/{0}.cshtml",
-                    "~/Plugins/Plugins.Ecommerce.Simple/Views/Shared/{0}.cshtml",
+                    "~/Plugins/Ecommerce.Simple/Views/{1}/{0}.cshtml",
+                    "~/Plugins/Ecommerce.Simple/Views/Shared/{0}.cshtml",
                 };
             }
         }

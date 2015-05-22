@@ -14,16 +14,16 @@ namespace Kore.Plugins.Watchdog.Infrastructure
                 return new[]
                 {
                     //themes
-                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Watchdog/{1}/{0}.cshtml",
-                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Watchdog/Shared/{0}.cshtml",
+                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Maintenance.Watchdog/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Maintenance.Watchdog/Shared/{0}.cshtml",
 
                     //shared
-                    "~/Areas/{2}/Views/Plugins/Plugins.Watchdog/{1}/{0}.cshtml",
-                    "~/Areas/{2}/Views/Plugins/Plugins.Watchdog/Shared/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Maintenance.Watchdog/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Maintenance.Watchdog/Shared/{0}.cshtml",
 
                     //default
-                    "~/Plugins/Plugins.Watchdog/Areas/{2}/Views/{1}/{0}.cshtml",
-                    "~/Plugins/Plugins.Watchdog/Areas/{2}/Views/Shared/{0}.cshtml",
+                    "~/Plugins/Maintenance.Watchdog/Areas/{2}/Views/{1}/{0}.cshtml",
+                    "~/Plugins/Maintenance.Watchdog/Areas/{2}/Views/Shared/{0}.cshtml",
                 };
             }
         }
@@ -35,16 +35,16 @@ namespace Kore.Plugins.Watchdog.Infrastructure
                 return new[]
                 {
                     //themes
-                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Watchdog/{1}/{0}.cshtml",
-                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Watchdog/Shared/{0}.cshtml",
+                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Maintenance.Watchdog/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Maintenance.Watchdog/Shared/{0}.cshtml",
 
                     //shared
-                    "~/Areas/{2}/Views/Plugins/Plugins.Watchdog/{1}/{0}.cshtml",
-                    "~/Areas/{2}/Views/Plugins/Plugins.Watchdog/Shared/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Maintenance.Watchdog/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Maintenance.Watchdog/Shared/{0}.cshtml",
 
                     //default
-                    "~/Plugins/Plugins.Watchdog/Areas/{2}/Views/{1}/{0}.cshtml",
-                    "~/Plugins/Plugins.Watchdog/Areas/{2}/Views/Shared/{0}.cshtml",
+                    "~/Plugins/Maintenance.Watchdog/Areas/{2}/Views/{1}/{0}.cshtml",
+                    "~/Plugins/Maintenance.Watchdog/Areas/{2}/Views/Shared/{0}.cshtml",
                 };
             }
         }
@@ -56,16 +56,16 @@ namespace Kore.Plugins.Watchdog.Infrastructure
                 return new[]
                 {
                     //themes
-                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Watchdog/{1}/{0}.cshtml",
-                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Plugins.Watchdog/Shared/{0}.cshtml",
+                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Maintenance.Watchdog/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Themes/{3}/Views/Plugins/Maintenance.Watchdog/Shared/{0}.cshtml",
 
                     //shared
-                    "~/Areas/{2}/Views/Plugins/Plugins.Watchdog/{1}/{0}.cshtml",
-                    "~/Areas/{2}/Views/Plugins/Plugins.Watchdog/Shared/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Maintenance.Watchdog/{1}/{0}.cshtml",
+                    "~/Areas/{2}/Views/Plugins/Maintenance.Watchdog/Shared/{0}.cshtml",
 
                     //default
-                    "~/Plugins/Plugins.Watchdog/Areas/{2}/Views/{1}/{0}.cshtml",
-                    "~/Plugins/Plugins.Watchdog/Areas/{2}/Views/Shared/{0}.cshtml",
+                    "~/Plugins/Maintenance.Watchdog/Areas/{2}/Views/{1}/{0}.cshtml",
+                    "~/Plugins/Maintenance.Watchdog/Areas/{2}/Views/Shared/{0}.cshtml",
                 };
             }
         }
@@ -77,16 +77,16 @@ namespace Kore.Plugins.Watchdog.Infrastructure
                 return new[]
                 {
                     //themes
-                    "~/Themes/{2}/Views/Plugins/Plugins.Watchdog/{1}/{0}.cshtml",
-                    "~/Themes/{2}/Views/Plugins/Plugins.Watchdog/Shared/{0}.cshtml",
+                    "~/Themes/{2}/Views/Plugins/Maintenance.Watchdog/{1}/{0}.cshtml",
+                    "~/Themes/{2}/Views/Plugins/Maintenance.Watchdog/Shared/{0}.cshtml",
 
                     //shared
-                    "~/Views/Plugins/Plugins.Watchdog/{1}/{0}.cshtml",
-                    "~/Views/Plugins/Plugins.Watchdog/Shared/{0}.cshtml",
+                    "~/Views/Plugins/Maintenance.Watchdog/{1}/{0}.cshtml",
+                    "~/Views/Plugins/Maintenance.Watchdog/Shared/{0}.cshtml",
 
                     //default
-                    "~/Plugins/Plugins.Watchdog/Views/{1}/{0}.cshtml",
-                    "~/Plugins/Plugins.Watchdog/Views/Shared/{0}.cshtml",
+                    "~/Plugins/Maintenance.Watchdog/Views/{1}/{0}.cshtml",
+                    "~/Plugins/Maintenance.Watchdog/Views/Shared/{0}.cshtml",
                 };
             }
         }
@@ -98,16 +98,16 @@ namespace Kore.Plugins.Watchdog.Infrastructure
                 return new[]
                 {
                     //themes
-                    "~/Themes/{2}/Views/Plugins/Plugins.Watchdog/{1}/{0}.cshtml",
-                    "~/Themes/{2}/Views/Plugins/Plugins.Watchdog/Shared/{0}.cshtml",
+                    "~/Themes/{2}/Views/Plugins/Maintenance.Watchdog/{1}/{0}.cshtml",
+                    "~/Themes/{2}/Views/Plugins/Maintenance.Watchdog/Shared/{0}.cshtml",
 
                     //shared
-                    "~/Views/Plugins/Plugins.Watchdog/{1}/{0}.cshtml",
-                    "~/Views/Plugins/Plugins.Watchdog/Shared/{0}.cshtml",
+                    "~/Views/Plugins/Maintenance.Watchdog/{1}/{0}.cshtml",
+                    "~/Views/Plugins/Maintenance.Watchdog/Shared/{0}.cshtml",
 
                     //default
-                    "~/Plugins/Plugins.Watchdog/Views/{1}/{0}.cshtml",
-                    "~/Plugins/Plugins.Watchdog/Views/Shared/{0}.cshtml",
+                    "~/Plugins/Maintenance.Watchdog/Views/{1}/{0}.cshtml",
+                    "~/Plugins/Maintenance.Watchdog/Views/Shared/{0}.cshtml",
                 };
             }
         }
@@ -119,16 +119,16 @@ namespace Kore.Plugins.Watchdog.Infrastructure
                 return new[]
                 {
                     //themes
-                    "~/Themes/{2}/Views/Plugins/Plugins.Watchdog/{1}/{0}.cshtml",
-                    "~/Themes/{2}/Views/Plugins/Plugins.Watchdog/Shared/{0}.cshtml",
+                    "~/Themes/{2}/Views/Plugins/Maintenance.Watchdog/{1}/{0}.cshtml",
+                    "~/Themes/{2}/Views/Plugins/Maintenance.Watchdog/Shared/{0}.cshtml",
 
                     //shared
-                    "~/Views/Plugins/Plugins.Watchdog/{1}/{0}.cshtml",
-                    "~/Views/Plugins/Plugins.Watchdog/Shared/{0}.cshtml",
+                    "~/Views/Plugins/Maintenance.Watchdog/{1}/{0}.cshtml",
+                    "~/Views/Plugins/Maintenance.Watchdog/Shared/{0}.cshtml",
 
                     //default
-                    "~/Plugins/Plugins.Watchdog/Views/{1}/{0}.cshtml",
-                    "~/Plugins/Plugins.Watchdog/Views/Shared/{0}.cshtml",
+                    "~/Plugins/Maintenance.Watchdog/Views/{1}/{0}.cshtml",
+                    "~/Plugins/Maintenance.Watchdog/Views/Shared/{0}.cshtml",
                 };
             }
         }

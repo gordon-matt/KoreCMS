@@ -6,8 +6,6 @@ var ViewModel = function () {
     self.id = ko.observable(emptyGuid);
     self.name = ko.observable('');
     self.cultureCode = ko.observable('');
-    self.uniqueSeoCode = ko.observable('');
-    self.flagImageFileName = ko.observable('');
     self.isRTL = ko.observable(false);
     self.isEnabled = ko.observable(false);
     self.sortOrder = ko.observable(0);
@@ -16,8 +14,6 @@ var ViewModel = function () {
         self.id(emptyGuid);
         self.name('');
         self.cultureCode('');
-        self.uniqueSeoCode('');
-        self.flagImageFileName('');
         self.isRTL(false);
         self.isEnabled(false);
         self.sortOrder(0);
@@ -38,8 +34,6 @@ var ViewModel = function () {
             self.id(json.Id);
             self.name(json.Name);
             self.cultureCode(json.CultureCode);
-            self.uniqueSeoCode(json.UniqueSeoCode);
-            self.flagImageFileName(json.FlagImageFileName);
             self.isRTL(json.IsRTL);
             self.isEnabled(json.IsEnabled);
             self.sortOrder(json.SortOrder);
@@ -89,8 +83,6 @@ var ViewModel = function () {
             Id: self.id(),
             Name: self.name(),
             CultureCode: cultureCode,
-            UniqueSeoCode: self.uniqueSeoCode(),
-            FlagImageFileName: self.flagImageFileName(),
             IsRTL: self.isRTL(),
             IsEnabled: self.isEnabled(),
             SortOrder: self.sortOrder()
@@ -148,6 +140,11 @@ var ViewModel = function () {
         switchSection($("#grid-section"));
     };
 
+    self.onCultureCodeChanged = function () {
+        var cultureName = $('#CultureCode option:selected').text();
+        self.name(cultureName);
+    };
+
     self.clear = function () {
         $.ajax({
             url: "/odata/kore/cms/LanguageApi/ResetLocalizableStrings",
@@ -168,8 +165,6 @@ var ViewModel = function () {
     self.validator = $("#form-section-form").validate({
         rules: {
             Name: { required: true, maxlength: 255 },
-            UniqueSeoCode: { required: true, maxlength: 10 },
-            FlagImageFileName: { maxlength: 255 },
             SortOrder: { required: true }
         }
     });

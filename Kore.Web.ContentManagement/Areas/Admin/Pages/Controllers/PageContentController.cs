@@ -38,6 +38,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             this.membershipService = membershipService;
         }
 
+        //[OutputCache(Duration = 600, VaryByParam = "slug")] //TODO: Uncomment this when ready
         public ActionResult Index(string slug)
         {
             // Hack to make it search the correct path for the view

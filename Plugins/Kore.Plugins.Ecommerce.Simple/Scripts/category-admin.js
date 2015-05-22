@@ -13,6 +13,17 @@ function imagePickerCallback(url) {
     }
 };
 
+var ProductImageModel = function () {
+    var self = this;
+
+    self.id = ko.observable(0);
+    self.productId = ko.observable(0);
+    self.url = ko.observable('');
+    self.thumbnailUrl = ko.observable('');
+    self.caption = ko.observable('');
+    self.order = ko.observable(0);
+};
+
 var ProductModel = function () {
     var self = this;
 
@@ -28,6 +39,8 @@ var ProductModel = function () {
     self.fullDescription = ko.observable('');
     self.metaKeywords = ko.observable('');
     self.metaDescription = ko.observable('');
+
+    self.images = ko.observableArray([]);
 
     self.tinyMCE_fullDescription = koreDefaultTinyMCEConfig;
 

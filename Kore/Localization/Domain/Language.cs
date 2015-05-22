@@ -17,12 +17,6 @@ namespace Kore.Localization.Domain
         public string CultureCode { get; set; }
 
         [DataMember]
-        public string UniqueSeoCode { get; set; }
-
-        [DataMember]
-        public string FlagImageFileName { get; set; }
-
-        [DataMember]
         public bool IsRTL { get; set; }
 
         [DataMember]

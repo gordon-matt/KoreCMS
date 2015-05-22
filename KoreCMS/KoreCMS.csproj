@@ -1772,6 +1772,17 @@
     <Content Include="Themes\EShopper\Views\_ViewStart.cshtml" />
     <Content Include="Themes\EShopper\Views\Home\Index.cshtml" />
     <Content Include="Themes\EShopper\Views\Error\Error404.cshtml" />
+    <Content Include="Themes\EShopper\Views\Shared\Header.cshtml" />
+    <Content Include="Themes\EShopper\Views\Shared\Footer.cshtml" />
+    <Content Include="Themes\EShopper\Views\Account\Login.cshtml" />
+    <Content Include="Themes\EShopper\Views\Account\Register.cshtml" />
+    <Content Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\Store\Categories.cshtml" />
+    <Content Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\Store\Index.cshtml" />
+    <Content Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\Store\Product.cshtml" />
+    <Content Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\Store\Products.cshtml" />
+    <Content Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\Web.config" />
+    <Content Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\_ViewStart.cshtml" />
+    <Content Include="Themes\EShopper\Views\Shared\MainMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1780,6 +1791,7 @@
     <Folder Include="Themes\Default\Content\" />
     <Folder Include="Themes\Default\Views\Home\" />
     <Folder Include="Themes\Default\Views\Plugins\Kore.Web.ContentManagement\Shared\EditorTemplates\" />
+    <Folder Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\Checkout\" />
     <Folder Include="Views\Shared\DisplayTemplates\Pages\" />
     <Folder Include="Views\Shared\EditorTemplates\Pages\" />
   </ItemGroup>

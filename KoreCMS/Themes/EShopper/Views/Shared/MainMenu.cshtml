@@ -1,0 +1,55 @@
+﻿@using MenuItem = Kore.Web.ContentManagement.Areas.Admin.Menus.Domain.MenuItem
+@model IEnumerable<MenuItem>
+
+@{
+    Layout = null;
+    Guid menuId = ViewBag.MenuId;
+}
+
+@helper BuildMenuItems(MenuItem menuItem, string currentUrl, bool isFirstLevel)
+{
+    bool isCurrent = currentUrl.EndsWith(menuItem.Url);
+
+    var childItems = Model.Where(x => x.ParentId == menuItem.Id).OrderBy(x => x.Position).ThenBy(x => x.Text).ToList();
+    if (isFirstLevel && childItems.Any())
+    {
+        string url = menuItem.IsExternalUrl ? menuItem.Url : Url.Content("~/" + menuItem.Url);
+        string cssClass = (menuItem.CssClass + (isCurrent ? " active" : string.Empty)).Trim();
+
+        <li class="dropdown @cssClass">
+            <a href="#">@menuItem.Text<i class="fa fa-angle-down"></i></a>
+            <ul role="menu" class="sub-menu">
+                @if (!string.IsNullOrEmpty(url))
+                {
+                    <li class="@cssClass">
+                        <a href="@url">@menuItem.Text</a>
+                    </li>
+                }
+                @foreach (var item in childItems)
+                {
+                    @BuildMenuItems(item, currentUrl, false)
+                }
+            </ul>
+        </li>
+    }
+    else
+    {
+        string cssClass = (menuItem.CssClass + (isCurrent ? " active" : string.Empty)).Trim();
+        string url = menuItem.IsExternalUrl ? menuItem.Url : Url.Content("~/" + menuItem.Url);
+
+        <li class="@cssClass">
+            <a href="@url">@menuItem.Text</a>
+        </li>
+    }
+}
+
+<ul id="kore-menu-@menuId" class="nav navbar-nav collapse navbar-collapse">
+    @{
+        string currentUrl = Request.Url.ToString();
+
+        foreach (var menuItem in Model.Where(x => x.ParentId == null).OrderBy(x => x.Position).ThenBy(x => x.Text))
+        {
+            @BuildMenuItems(menuItem, currentUrl, true)
+        }
+    }
+</ul>

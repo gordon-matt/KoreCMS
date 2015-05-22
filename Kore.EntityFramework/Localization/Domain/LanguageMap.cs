@@ -11,8 +11,6 @@ namespace Kore.Localization.Domain
             HasKey(m => m.Id);
             Property(m => m.Name).HasMaxLength(255).IsRequired();
             Property(m => m.CultureCode).HasMaxLength(10).IsRequired();
-            Property(m => m.UniqueSeoCode).HasMaxLength(10).IsRequired();
-            Property(m => m.FlagImageFileName).HasMaxLength(255);
             Property(m => m.IsRTL).IsRequired();
             Property(m => m.IsEnabled).IsRequired();
             Property(m => m.SortOrder).IsRequired();

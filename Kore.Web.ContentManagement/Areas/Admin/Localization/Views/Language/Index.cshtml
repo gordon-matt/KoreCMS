@@ -42,7 +42,18 @@
         <form id="form-section-form" role="form">
             <fieldset>
                 <legend id="form-section-legend"></legend>
-                <div class="col-sm-6 col-md-6">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        @Html.Label("CultureCode", "Culture", new { @class = "control-label" })
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="kore-icon kore-icon-globe"></i>
+                            </span>
+                            @Html.CulturesDropDownList("CultureCode", null, new { @class = "form-control", data_bind = "value: cultureCode, event: { change: onCultureCodeChanged }" }, string.Empty)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
                         @Html.Label("Name", "Name", new { @class = "control-label" })
                         <div class="input-group">
@@ -53,48 +64,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-6">
-                    <div class="form-group">
-                        @Html.Label("CultureCode", "Culture", new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="kore-icon kore-icon-globe"></i>
-                            </span>
-                            @Html.CulturesDropDownList("CultureCode", null, new { @class = "form-control", data_bind = "value: cultureCode" }, string.Empty)
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-4">
-                    <div class="form-group">
-                        @Html.Label("UniqueSeoCode", "Unique SEO Code", new { @class = "control-label" })
-                        @Html.TextBox("UniqueSeoCode", null, new { @class = "form-control", data_bind = "value: uniqueSeoCode" })
-                    </div>
-                </div>
-                <div class="col-sm-8 col-md-8">
-                    <div class="form-group">
-                        @Html.Label("FlagImageFileName", "Flag Image", new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="kore-icon kore-icon-flag"></i>
-                            </span>
-                            @Html.TextBox("FlagImageFileName", null, new { @class = "form-control", data_bind = "value: flagImageFileName" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3 col-md-3">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
                         @Html.Label("SortOrder", "Sort Order", new { @class = "control-label" })
                         @Html.TextBox("SortOrder", null, new { @class = "form-control", data_bind = "value: sortOrder" })
                     </div>
                 </div>
-                <div class="col-sm-3 col-md-3">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     <div class="checkbox">
                         <label>
                             @Html.CheckBox("IsRTL", new { data_bind = "checked: isRTL" }) Right-to-Left
                         </label>
                     </div>
-                </div>
-                <div class="col-sm-3 col-md-3">
                     <div class="checkbox">
                         <label>
                             @Html.CheckBox("IsEnabled", new { data_bind = "checked: isEnabled" }) Enabled

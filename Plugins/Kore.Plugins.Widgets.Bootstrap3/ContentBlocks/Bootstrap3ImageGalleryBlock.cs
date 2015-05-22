@@ -32,12 +32,12 @@ namespace Kore.Plugins.Widgets.Bootstrap3.ContentBlocks
 
         public override string DisplayTemplatePath
         {
-            get { return "/Plugins/Plugins.Widgets.Bootstrap3/Views/Shared/DisplayTemplates/ImageGalleryBlock.cshtml"; }
+            get { return "/Plugins/Widgets.Bootstrap3/Views/Shared/DisplayTemplates/ImageGalleryBlock.cshtml"; }
         }
 
         public override string EditorTemplatePath
         {
-            get { return "/Plugins/Plugins.Widgets.Bootstrap3/Views/Shared/EditorTemplates/ImageGalleryBlock.cshtml"; }
+            get { return "/Plugins/Widgets.Bootstrap3/Views/Shared/EditorTemplates/ImageGalleryBlock.cshtml"; }
         }
 
         public override string Name

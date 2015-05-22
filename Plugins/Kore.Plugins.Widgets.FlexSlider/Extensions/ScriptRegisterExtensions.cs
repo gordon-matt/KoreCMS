@@ -6,7 +6,7 @@ namespace Kore.Plugins.Widgets.FlexSlider.Extensions
     {
         public static void IncludePluginScript(this ScriptRegister register, string script, int? order = null)
         {
-            string path = string.Format("/Plugins/Plugins.Widgets.FlexSlider/Scripts/{0}", script);
+            string path = string.Format("/Plugins/Widgets.FlexSlider/Scripts/{0}", script);
             register.IncludeExternal(path, order);
         }
     }

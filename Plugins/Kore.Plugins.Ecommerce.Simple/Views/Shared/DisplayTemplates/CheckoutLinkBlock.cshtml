@@ -1,0 +1,7 @@
+﻿@using Kore.Plugins.Ecommerce.Simple
+@model Kore.Plugins.Ecommerce.Simple.ContentBlocks.CheckoutLinkBlock
+
+<a href="@Url.Action("Index", "Checkout", new { area = string.Empty })" class="@Model.CssClass">
+    <i class="@Model.IconCssClass"></i>
+    @T(LocalizableStrings.Checkout)
+</a>

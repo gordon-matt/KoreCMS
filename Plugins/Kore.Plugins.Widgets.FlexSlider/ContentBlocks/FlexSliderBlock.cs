@@ -517,12 +517,12 @@ namespace Kore.Plugins.Widgets.FlexSlider.ContentBlocks
 
         public override string DisplayTemplatePath
         {
-            get { return "/Plugins/Plugins.Widgets.FlexSlider/Views/Shared/DisplayTemplates/FlexSliderBlock.cshtml"; }
+            get { return "/Plugins/Widgets.FlexSlider/Views/Shared/DisplayTemplates/FlexSliderBlock.cshtml"; }
         }
 
         public override string EditorTemplatePath
         {
-            get { return "/Plugins/Plugins.Widgets.FlexSlider/Views/Shared/EditorTemplates/FlexSliderBlock.cshtml"; }
+            get { return "/Plugins/Widgets.FlexSlider/Views/Shared/EditorTemplates/FlexSliderBlock.cshtml"; }
         }
 
         #endregion ContentBlockBase Overrides

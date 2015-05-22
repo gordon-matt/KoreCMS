@@ -44,7 +44,7 @@ namespace Kore.Plugins.Ecommerce.Simple
 
         public string EditorTemplatePath
         {
-            get { return "/Plugins/Plugins.Ecommerce.Simple/Views/Shared/EditorTemplates/PayPalSettings.cshtml"; }
+            get { return "/Plugins/Ecommerce.Simple/Views/Shared/EditorTemplates/PayPalSettings.cshtml"; }
         }
 
         #endregion ISettings Members

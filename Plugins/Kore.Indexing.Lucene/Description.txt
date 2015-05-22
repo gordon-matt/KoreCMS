@@ -1,4 +1,4 @@
-﻿Group: Kore
+﻿Group: Indexing
 FriendlyName: Lucene Search
 SystemName: Kore.Indexing.Lucene
 Version: 1.00

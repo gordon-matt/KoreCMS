@@ -6,7 +6,7 @@ namespace Kore.Plugins.Widgets.Google.Extensions
     {
         public static void IncludePluginScript(this ScriptRegister register, string script, int? order = null)
         {
-            string path = string.Format("/Plugins/Plugins.Widgets.Google/Scripts/{0}", script);
+            string path = string.Format("/Plugins/Widgets.Google/Scripts/{0}", script);
             register.IncludeExternal(path, order);
         }
     }

@@ -1,0 +1,50 @@
+﻿@model Kore.Plugins.Ecommerce.Simple.ContentBlocks.CheckoutLinkBlock
+
+<div id="block-content">
+    <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.CssClass, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.CssClass, new { @class = "form-control", data_bind = "value: cssClass" })
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.IconCssClass, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.IconCssClass, new { @class = "form-control", data_bind = "value: iconCssClass" })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var contentBlockModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.cssClass = ko.observable("btn btn-success");
+            viewModel.iconCssClass = ko.observable("kore-icon kore-icon-shopping-cart");
+
+            var data = ko.mapping.fromJSON(viewModel.blockValues());
+
+            if (data) {
+                if (data.CssClass) {
+                    viewModel.cssClass(data.CssClass());
+                }
+                if (data.IconCssClass) {
+                    viewModel.iconCssClass(data.IconCssClass());
+                }
+            }
+        };
+        f.cleanUp = function () {
+            delete viewModel.cssClass;
+            delete viewModel.iconCssClass;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                CssClass: viewModel.cssClass(),
+                IconCssClass: viewModel.iconCssClass()
+            };
+
+            viewModel.blockValues(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
+</script>

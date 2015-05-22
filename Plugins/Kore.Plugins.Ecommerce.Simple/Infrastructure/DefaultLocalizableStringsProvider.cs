@@ -35,6 +35,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                         { LocalizableStrings.TaxTotal, "Tax Total" },
                         { LocalizableStrings.Total, "Total" },
                         { LocalizableStrings.UpdateCart, "Update Cart" },
+                        { LocalizableStrings.CheckoutLinkBlock.CssClass, "CSS Class" },
+                        { LocalizableStrings.CheckoutLinkBlock.IconCssClass, "Icon CSS Class" },
                         { LocalizableStrings.PayPalSettings.CancelUrlRedirectsToOrderDetailsPage, "Cancel URL Redirects to Order Details Page" },
                         { LocalizableStrings.PayPalSettings.CurrencyCode, "Currency Code" },
                         { LocalizableStrings.PayPalSettings.Merchant, "Merchant" },

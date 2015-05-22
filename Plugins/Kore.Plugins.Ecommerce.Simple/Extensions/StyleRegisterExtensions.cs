@@ -6,7 +6,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Extensions
     {
         public static void IncludePluginStyle(this StyleRegister register, string style, int? order = null)
         {
-            string path = string.Format("/Plugins/Plugins.Ecommerce.Simple/Content/{0}", style);
+            string path = string.Format("/Plugins/Ecommerce.Simple/Content/{0}", style);
             register.IncludeExternal(path, order);
         }
     }

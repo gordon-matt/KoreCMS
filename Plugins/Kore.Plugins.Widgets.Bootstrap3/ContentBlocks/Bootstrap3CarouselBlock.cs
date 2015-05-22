@@ -64,12 +64,12 @@ namespace Kore.Plugins.Widgets.Bootstrap3.ContentBlocks
 
         public override string DisplayTemplatePath
         {
-            get { return "/Plugins/Plugins.Widgets.Bootstrap3/Views/Shared/DisplayTemplates/CarouselBlock.cshtml"; }
+            get { return "/Plugins/Widgets.Bootstrap3/Views/Shared/DisplayTemplates/CarouselBlock.cshtml"; }
         }
 
         public override string EditorTemplatePath
         {
-            get { return "/Plugins/Plugins.Widgets.Bootstrap3/Views/Shared/EditorTemplates/CarouselBlock.cshtml"; }
+            get { return "/Plugins/Widgets.Bootstrap3/Views/Shared/EditorTemplates/CarouselBlock.cshtml"; }
         }
 
         #endregion ContentBlockBase Overrides

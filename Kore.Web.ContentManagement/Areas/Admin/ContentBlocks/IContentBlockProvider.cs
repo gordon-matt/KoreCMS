@@ -56,7 +56,21 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
                 }
             }
 
-            return string.IsNullOrEmpty(contentBlock.DisplayCondition) || ruleManager.Matches(contentBlock.DisplayCondition);
+            if (string.IsNullOrEmpty(contentBlock.DisplayCondition))
+            {
+                return true;
+            }
+
+            string[] conditions = contentBlock.DisplayCondition.Split(';');
+
+            foreach (var condition in conditions)
+            {
+                if (!ruleManager.Matches(condition))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

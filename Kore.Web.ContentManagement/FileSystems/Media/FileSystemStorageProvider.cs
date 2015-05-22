@@ -90,7 +90,7 @@ namespace Kore.Web.ContentManagement.FileSystems.Media
             var fileInfo = new FileInfo(MapStorage(path));
             if (!fileInfo.Exists)
             {
-                throw new ArgumentException(T("File {0} does not exist", path).ToString());
+                throw new ArgumentException(string.Format("File {0} does not exist", path));
             }
 
             return new FileSystemStorageFile(Fix(path), fileInfo);
@@ -153,7 +153,7 @@ namespace Kore.Web.ContentManagement.FileSystems.Media
                 }
                 catch (Exception ex)
                 {
-                    throw new ArgumentException(T("The folder could not be created at path: {0}. {1}", path, ex).ToString());
+                    throw new ArgumentException(string.Format("The folder could not be created at path: {0}. {1}", path, ex));
                 }
             }
 
@@ -201,7 +201,7 @@ namespace Kore.Web.ContentManagement.FileSystems.Media
             var directoryInfo = new DirectoryInfo(MapStorage(path));
             if (directoryInfo.Exists)
             {
-                throw new ArgumentException(T("Directory {0} already exists", path).ToString());
+                throw new ArgumentException(string.Format("Directory {0} already exists", path));
             }
 
             directoryInfo = Directory.CreateDirectory(directoryInfo.FullName);
@@ -241,13 +241,13 @@ namespace Kore.Web.ContentManagement.FileSystems.Media
             var sourceDirectory = new DirectoryInfo(MapStorage(oldPath));
             if (!sourceDirectory.Exists)
             {
-                throw new ArgumentException(T("Directory {0} does not exist", oldPath).ToString());
+                throw new ArgumentException(string.Format("Directory {0} does not exist", oldPath));
             }
 
             var targetDirectory = new DirectoryInfo(MapStorage(newPath));
             if (targetDirectory.Exists)
             {
-                throw new ArgumentException(T("Directory {0} already exists", newPath).ToString());
+                throw new ArgumentException(string.Format("Directory {0} already exists", newPath));
             }
 
             Directory.Move(sourceDirectory.FullName, targetDirectory.FullName);
@@ -287,13 +287,13 @@ namespace Kore.Web.ContentManagement.FileSystems.Media
             var sourceFileInfo = new FileInfo(MapStorage(oldPath));
             if (!sourceFileInfo.Exists)
             {
-                throw new ArgumentException(T("File {0} does not exist", oldPath).ToString());
+                throw new ArgumentException(string.Format("File {0} does not exist", oldPath));
             }
 
             var targetFileInfo = new FileInfo(MapStorage(newPath));
             if (targetFileInfo.Exists)
             {
-                throw new ArgumentException(T("File {0} already exists", newPath).ToString());
+                throw new ArgumentException(string.Format("File {0} already exists", newPath));
             }
 
             File.Move(sourceFileInfo.FullName, targetFileInfo.FullName);
@@ -312,7 +312,7 @@ namespace Kore.Web.ContentManagement.FileSystems.Media
             FileInfo fileInfo = new FileInfo(MapStorage(path));
             if (fileInfo.Exists)
             {
-                throw new ArgumentException(T("File {0} already exists", fileInfo.Name).ToString());
+                throw new ArgumentException(string.Format("File {0} already exists", fileInfo.Name));
             }
 
             // ensure the directory exists

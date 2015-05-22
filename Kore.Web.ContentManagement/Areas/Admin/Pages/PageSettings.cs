@@ -26,7 +26,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 
         #endregion ISettings Members
 
-        [LocalizedDisplayName(KoreCmsLocalizableStrings.PageSettings.NumberOfPageVersionsToKeep)]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.Settings.Pages.NumberOfPageVersionsToKeep)]
         public short NumberOfPageVersionsToKeep { get; set; }
     }
 }

@@ -21,11 +21,11 @@ namespace Kore.Web.Configuration
         #endregion ISettings Members
 
         [Required]
-        [LocalizedDisplayName(KoreWebLocalizableStrings.CaptchaSettings.PublicKey)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Captcha.PublicKey)]
         public string PublicKey { get; set; }
 
         [Required]
-        [LocalizedDisplayName(KoreWebLocalizableStrings.CaptchaSettings.PrivateKey)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Captcha.PrivateKey)]
         public string PrivateKey { get; set; }
     }
 }

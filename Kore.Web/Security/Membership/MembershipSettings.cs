@@ -11,10 +11,10 @@ namespace Kore.Web.Security.Membership
             GeneratedPasswordNumberOfNonAlphanumericChars = 3;
         }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.MembershipSettings.GeneratedPasswordLength)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Membership.GeneratedPasswordLength)]
         public byte GeneratedPasswordLength { get; set; }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.MembershipSettings.GeneratedPasswordNumberOfNonAlphanumericChars)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Membership.GeneratedPasswordNumberOfNonAlphanumericChars)]
         public byte GeneratedPasswordNumberOfNonAlphanumericChars { get; set; }
 
         #region ISettings Members

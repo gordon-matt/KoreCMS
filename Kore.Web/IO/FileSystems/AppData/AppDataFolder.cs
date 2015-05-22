@@ -94,9 +94,9 @@ namespace Kore.Web.IO.FileSystems.AppData
             {
                 File.Delete(destinationFileName);
             }
-            catch (Exception e)
+            catch (Exception x)
             {
-                throw new KoreException(T("Unable to make room for file \"{0}\" in \"App_Data\" folder", destinationFileName), e);
+                throw new KoreException(string.Format("Unable to make room for file \"{0}\" in \"App_Data\" folder", destinationFileName), x);
             }
         }
 

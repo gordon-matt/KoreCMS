@@ -8,17 +8,6 @@
             public const string Title = "Kore.Web.ContentManagement/CMS.Blog.Title";
         }
 
-        public static class BlogSettings
-        {
-            public const string PageTitle = "Kore.Web.ContentManagement/CMS.BlogSettings.PageTitle";
-            public const string DateFormat = "Kore.Web.ContentManagement/CMS.BlogSettings.DateFormat";
-            public const string ItemsPerPage = "Kore.Web.ContentManagement/CMS.BlogSettings.ItemsPerPage";
-            public const string ShowOnMenus = "Kore.Web.ContentManagement/CMS.BlogSettings.ShowOnMenus";
-            public const string MenuPosition = "Kore.Web.ContentManagement/CMS.BlogSettings.MenuPosition";
-            public const string UseAjax = "Kore.Web.ContentManagement/CMS.BlogSettings.UseAjax";
-            public const string AccessRestrictions = "Kore.Web.ContentManagement/CMS.BlogSettings.AccessRestrictions";
-        }
-
         public static class ContentBlocks
         {
             public const string ManageContentBlocks = "Kore.Web.ContentManagement/ContentBlocks.ManageContentBlocks";
@@ -28,10 +17,12 @@
 
             public static class FormBlock
             {
-                public const string HtmlTemplate = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.HtmlTemplate";
-                public const string ThankYouMessage = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.ThankYouMessage";
-                public const string RedirectUrl = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.RedirectUrl";
                 public const string EmailAddress = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.EmailAddress";
+                public const string HtmlTemplate = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.HtmlTemplate";
+                public const string PleaseEnterCaptcha = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.PleaseEnterCaptcha";
+                public const string PleaseEnterCorrectCaptcha = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.PleaseEnterCorrectCaptcha";
+                public const string RedirectUrl = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.RedirectUrl";
+                public const string ThankYouMessage = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.ThankYouMessage";
                 public const string UseAjax = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.UseAjax";
             }
 
@@ -108,7 +99,6 @@
         public static class Navigation
         {
             public const string CMS = "Kore.Web.ContentManagement/Navigation.CMS";
-            public const string Home = "Kore.Web.ContentManagement/Navigation.Home";
         }
 
         public static class Newsletters
@@ -116,11 +106,6 @@
             public const string Subscribers = "Kore.Web.ContentManagement/CMS.Newsletters.Subscribers";
             public const string SuccessfullySignedUp = "Kore.Web.ContentManagement/CMS.Newsletters.SuccessfullySignedUp";
             public const string Title = "Kore.Web.ContentManagement/CMS.Newsletters.Title";
-        }
-
-        public static class NewsletterUserProfileProvider
-        {
-            public const string SubscribeToNewsletters = "Kore.Web.ContentManagement/NewsletterUserProfileProvider.SubscribeToNewsletters";
         }
 
         public static class Pages
@@ -138,9 +123,31 @@
             public const string Translations = "Kore.Web.ContentManagement/Pages.Translations";
         }
 
-        public static class PageSettings
+        public static class Settings
         {
-            public const string NumberOfPageVersionsToKeep = "Kore.Web.ContentManagement/PageSettings.NumberOfPageVersionsToKeep";
+            public static class Blog
+            {
+                public const string AccessRestrictions = "Kore.Web.ContentManagement/Settings.Blog.AccessRestrictions";
+                public const string DateFormat = "Kore.Web.ContentManagement/Settings.Blog.DateFormat";
+                public const string ItemsPerPage = "Kore.Web.ContentManagement/Settings.Blog.ItemsPerPage";
+                public const string MenuPosition = "Kore.Web.ContentManagement/Settings.Blog.MenuPosition";
+                public const string PageTitle = "Kore.Web.ContentManagement/Settings.Blog.PageTitle";
+                public const string ShowOnMenus = "Kore.Web.ContentManagement/Settings.Blog.ShowOnMenus";
+                public const string UseAjax = "Kore.Web.ContentManagement/Settings.Blog.UseAjax";
+            }
+
+            public static class Pages
+            {
+                public const string NumberOfPageVersionsToKeep = "Kore.Web.ContentManagement/Settings.Pages.NumberOfPageVersionsToKeep";
+            }
+        }
+
+        public static class UserProfile
+        {
+            public static class Newsletter
+            {
+                public const string SubscribeToNewsletters = "Kore.Web.ContentManagement/UserProfile.Newsletter.SubscribeToNewsletters";
+            }
         }
     }
 }

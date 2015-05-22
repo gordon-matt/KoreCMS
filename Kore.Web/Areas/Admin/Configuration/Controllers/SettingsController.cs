@@ -47,7 +47,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers
                 return HttpNotFound();
             }
 
-            WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.General.Settings), Url.Action("Index", new { area = "Admin" }));
+            WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.General.Settings), Url.Action("Index", new { area = KoreWebConstants.Areas.Admin }));
             WorkContext.Breadcrumbs.Add(model.Name);
             WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.General.Edit));
 

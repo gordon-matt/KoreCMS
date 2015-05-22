@@ -19,11 +19,14 @@ namespace KoreCMS.Infrastructure
                         { LocalizableStrings.Account.ConfirmPassword, "Confirm Password" },
                         { LocalizableStrings.Account.ConfirmNewPassword, "Confirm New Password" },
                         { LocalizableStrings.Account.Email, "Email" },
+                        { LocalizableStrings.Account.LogOut, "Log out" },
                         { LocalizableStrings.Account.NewPassword, "New Password" },
                         { LocalizableStrings.Account.OldPassword, "Current Password" },
                         { LocalizableStrings.Account.Password, "Password" },
                         { LocalizableStrings.Account.RememberMe, "Remember Me?" },
+                        { LocalizableStrings.Dashboard.Frontend, "Frontend" },
                         { LocalizableStrings.Dashboard.Title, "Dashboard" },
+                        { LocalizableStrings.Dashboard.ToggleNavigation, "Toggle Navigation" },
                     }
                 }
             };

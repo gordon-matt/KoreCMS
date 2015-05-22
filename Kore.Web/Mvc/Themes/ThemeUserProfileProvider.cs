@@ -13,7 +13,7 @@ namespace Kore.Web.Mvc.Themes
             public const string PreferredTheme = "PreferredTheme";
         }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.ThemeUserProfileProvider.PreferredTheme)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.UserProfile.Theme.PreferredTheme)]
         public string PreferredTheme { get; set; }
 
         #region IUserProfileProvider Members

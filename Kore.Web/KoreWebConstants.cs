@@ -42,6 +42,7 @@ namespace Kore.Web
 
         public static class Areas
         {
+            public const string Admin = "Admin";
             public const string Configuration = "Admin/Configuration";
             public const string Indexing = "Admin/Indexing";
             public const string Plugins = "Admin/Plugins";

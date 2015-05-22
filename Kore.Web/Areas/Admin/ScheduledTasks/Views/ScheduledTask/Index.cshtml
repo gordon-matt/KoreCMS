@@ -24,6 +24,22 @@
         'use strict'
         
         var gridPageSize = @SiteSettings.DefaultGridPageSize;
+
+        var translations = {
+            ExecutedTaskSuccess: '@T(KoreWebLocalizableStrings.ScheduledTasks.ExecutedTaskSuccess).Text',
+            ExecutedTaskError: '@T(KoreWebLocalizableStrings.ScheduledTasks.ExecutedTaskError).Text',
+
+            Columns: {
+                Enabled: '@T(KoreWebLocalizableStrings.Models.ScheduledTasks.Enabled).Text',
+                LastEndUtc: '@T(KoreWebLocalizableStrings.Models.ScheduledTasks.LastEndUtc).Text',
+                LastStartUtc: '@T(KoreWebLocalizableStrings.Models.ScheduledTasks.LastStartUtc).Text',
+                LastSuccessUtc: '@T(KoreWebLocalizableStrings.Models.ScheduledTasks.LastSuccessUtc).Text',
+                Name: '@T(KoreWebLocalizableStrings.Models.ScheduledTasks.Name).Text',
+                Seconds: '@T(KoreWebLocalizableStrings.Models.ScheduledTasks.Name).Seconds',
+                StopOnError: '@T(KoreWebLocalizableStrings.Models.ScheduledTasks.Name).StopOnError',
+            }
+        };
+
         function runNow(id) {
             $.ajax({
                 url: "/odata/kore/web/ScheduledTaskApi/RunNow",
@@ -36,10 +52,10 @@
             .done(function (json) {
                 $('#Grid').data('kendoGrid').dataSource.read();
                 $('#Grid').data('kendoGrid').refresh();
-                $.notify("Successfully executed task.", "success");
+                $.notify(translations.ExecutedTaskSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify("There was an error when executing the task.", "error");
+                $.notify(translations.ExecutedTaskError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         }
@@ -124,44 +140,44 @@
                 scrollable: false,
                 columns: [{
                     field: "Name",
-                    title: "Name",
+                    title: translations.Columns.Name,
                     filterable: true
                 }, {
                     field: "Seconds",
-                    title: "Seconds",
+                    title: translations.Columns.Seconds,
                     width: 70,
                     filterable: false
                 }, {
                     field: "Enabled",
-                    title: "Is Enabled",
+                    title: translations.Columns.Enabled,
                     template: '<i class="kore-icon #=Enabled ? \'kore-icon-ok text-success\' : \'kore-icon-no text-danger\'#"></i>',
                     attributes: { "class": "text-center" },
                     filterable: true,
                     width: 70
                 }, {
                     field: "StopOnError",
-                    title: "Stop On Error",
+                    title: translations.Columns.StopOnError,
                     template: '<i class="kore-icon #=StopOnError ? \'kore-icon-ok text-success\' : \'kore-icon-no text-danger\'#"></i>',
                     attributes: { "class": "text-center" },
                     filterable: true,
                     width: 70
                 }, {
                     field: "LastStartUtc",
-                    title: "Last Start Utc",
+                    title: translations.Columns.LastStartUtc,
                     width: 200,
                     type: "date",
                     format: "{0:G}",
                     filterable: false
                 }, {
                     field: "LastEndUtc",
-                    title: "Last End Utc",
+                    title: translations.Columns.LastEndUtc,
                     width: 200,
                     type: "date",
                     format: "{0:G}",
                     filterable: false
                 }, {
                     field: "LastSuccessUtc",
-                    title: "Last Success Utc",
+                    title: translations.Columns.LastSuccessUtc,
                     width: 200,
                     type: "date",
                     format: "{0:G}",

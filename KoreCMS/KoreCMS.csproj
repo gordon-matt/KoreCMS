@@ -1877,7 +1877,6 @@
     <Content Include="Themes\Simplex\Views\Shared\Head.cshtml" />
     <Content Include="Themes\Simplex\Views\Web.config" />
     <Content Include="Themes\Slate\theme.config" />
-    <Content Include="Themes\Slate\Views\Layout.cshtml" />
     <Content Include="Themes\Slate\Views\Shared\Head.cshtml" />
     <Content Include="Themes\Slate\Views\Web.config" />
     <Content Include="Themes\Small\Content\fonts\fontawesome-webfont.eot" />

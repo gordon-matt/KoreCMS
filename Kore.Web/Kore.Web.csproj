@@ -155,7 +155,6 @@
     <Compile Include="Areas\Admin\Configuration\Controllers\ThemeController.cs" />
     <Compile Include="Areas\Admin\Configuration\Models\EdmThemeConfiguration.cs" />
     <Compile Include="Areas\Admin\Configuration\Models\SettingModel.cs" />
-    <Compile Include="Areas\Admin\Configuration\Services\ISettingsService.cs" />
     <Compile Include="Areas\Admin\Indexing\Controllers\IndexingController.cs" />
     <Compile Include="Areas\Admin\Indexing\Controllers\SearchController.cs" />
     <Compile Include="Areas\Admin\Indexing\IndexingAreaRegistration.cs" />
@@ -483,7 +482,6 @@
     <EmbeddedResource Include="Views\Shared\EditorTemplates\MembershipSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Configuration\Scripts\" />
     <Folder Include="Areas\Admin\Log\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 ﻿@using Kore.Collections.Generic
 @using Kore.Infrastructure
+@using Kore.Web
 @using Kore.Web.Configuration
 @using Kore.Web.Indexing
 
@@ -14,11 +15,11 @@
     <div class="result-stats">
         @if (Model.ItemCount == 0)
         {
-            @:Your search - <strong>@q</strong> - did not match any documents.
+            @Html.Raw(string.Format(T(KoreWebLocalizableStrings.Indexing.SearchMatchedNoDocuments), q))
         }
         else
         {
-            @:Your search - <strong>@q</strong> - resulted in @Model.ItemCount documents.
+            @Html.Raw(string.Format(T(KoreWebLocalizableStrings.Indexing.SearchMatchedNDocuments), q, Model.ItemCount))
             <ul class="thumbnails search-results">
                 @foreach (var hit in Model)
                 {

@@ -30,35 +30,35 @@ namespace Kore.Net.Mail
 
         #endregion ISettings Members
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.SmtpSettings.DisplayName)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Smtp.DisplayName)]
         public string DisplayName { get; set; }
 
         [Required]
-        [LocalizedDisplayName(KoreWebLocalizableStrings.SmtpSettings.Host)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Smtp.Host)]
         public string Host { get; set; }
 
         [Required]
-        [LocalizedDisplayName(KoreWebLocalizableStrings.SmtpSettings.Port)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Smtp.Port)]
         public int Port { get; set; }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.SmtpSettings.EnableSsl)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Smtp.EnableSsl)]
         public bool EnableSsl { get; set; }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.SmtpSettings.UseDefaultCredentials)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Smtp.UseDefaultCredentials)]
         public bool UseDefaultCredentials { get; set; }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.SmtpSettings.Username)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Smtp.Username)]
         public string Username { get; set; }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.SmtpSettings.Password)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Smtp.Password)]
         public string Password { get; set; }
 
         [Required]
-        [LocalizedDisplayName(KoreWebLocalizableStrings.SmtpSettings.MaxTries)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Smtp.MaxTries)]
         public int MaxTries { get; set; }
 
         [Required]
-        [LocalizedDisplayName(KoreWebLocalizableStrings.SmtpSettings.MessagesPerBatch)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Smtp.MessagesPerBatch)]
         public int MessagesPerBatch { get; set; }
     }
 }

@@ -54,12 +54,12 @@
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
-                    <span class="sr-only">@T("Toggle navigation")</span>
+                    <span class="sr-only">@T(LocalizableStrings.Dashboard.ToggleNavigation)</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="@Url.Action("Index", "Dashboard", new { area = "Admin" })">
+                <a class="navbar-brand" href="@Url.Action("Index", "Dashboard", new { area = KoreWebConstants.Areas.Admin })">
                     @SiteSettings.SiteName
                 </a>
             </div>
@@ -70,7 +70,7 @@
                     <li>
                         <a href="/">
                             <i class="kore-icon kore-icon-home"></i>
-                            <span>@T("Frontend")</span>
+                            <span>@T(LocalizableStrings.Dashboard.Frontend)</span>
                         </a>
                     </li>
                     @*<li>
@@ -82,7 +82,7 @@
                     <li>
                         <a href="javascript:document.getElementById('logoutForm').submit()">
                             <i class="kore-icon kore-icon-power-off"></i>
-                            <span>@T("Logout")</span>
+                            <span>@T(LocalizableStrings.Account.LogOut)</span>
                         </a>
                     </li>
                 </ul>

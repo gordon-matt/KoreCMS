@@ -13,7 +13,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters
             public const string SubscribeToNewsletters = "SubscribeToNewsletters";
         }
 
-        [LocalizedDisplayName(KoreCmsLocalizableStrings.NewsletterUserProfileProvider.SubscribeToNewsletters)]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.UserProfile.Newsletter.SubscribeToNewsletters)]
         public bool SubscribeToNewsletters { get; set; }
 
         #region IUserProfileProvider Members

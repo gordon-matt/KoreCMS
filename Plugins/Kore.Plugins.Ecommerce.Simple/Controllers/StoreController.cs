@@ -26,6 +26,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             this.storeSettings = storeSettings;
         }
 
+        //[OutputCache(Duration = 600, VaryByParam = "none")] //TODO: Uncomment when ready
         [Route("")]
         public ActionResult Index()
         {
@@ -40,6 +41,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return Categories();
         }
 
+        //[OutputCache(Duration = 600, VaryByParam = "categoryId")]
         [Route("categories")]
         public ActionResult Categories(int? categoryId = null)
         {
@@ -66,6 +68,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return View("Categories", model);
         }
 
+        //[OutputCache(Duration = 600, VaryByParam = "categorySlug")]
         [Route("categories/{categorySlug}")]
         public ActionResult Products(string categorySlug)
         {
@@ -132,10 +135,13 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             ViewBag.CategorySlug = categorySlug;
             ViewBag.PageCount = (int)Math.Ceiling((double)total / storeSettings.ProductsPerPage);
             ViewBag.PageIndex = pageIndex;
+            ViewBag.MetaKeywords = category.MetaKeywords;
+            ViewBag.MetaDescription = category.MetaDescription;
 
             return View("Products", model);
         }
 
+        //[OutputCache(Duration = 600, VaryByParam = "categorySlug;productSlug")]
         [Route("categories/{categorySlug}/{productSlug}")]
         public ActionResult Product(string categorySlug, string productSlug)
         {
@@ -187,6 +193,9 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             WorkContext.Breadcrumbs.Add(product.Name);
 
             #endregion Breadcrumbs
+
+            ViewBag.MetaKeywords = product.MetaKeywords;
+            ViewBag.MetaDescription = product.MetaDescription;
 
             return View("Product", product);
         }

@@ -120,11 +120,22 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         @Html.Label("Description", "Description", new { @class = "control-label" })
                                         @Html.TextArea("Description", null, new { @class = "form-control", data_bind = "value: description" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("MetaKeywords", "Meta Keywords", new { @class = "control-label" })
+                                        @Html.TextArea("MetaKeywords", null, new { @class = "form-control", data_bind = "value: metaKeywords" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("MetaDescription", "Meta Description", new { @class = "control-label" })
+                                        @Html.TextArea("MetaDescription", null, new { @class = "form-control", data_bind = "value: metaDescription" })
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -222,6 +233,19 @@
                                     <div class="form-group">
                                         @Html.Label("FullDescription", "Full Description", new { @class = "control-label" })
                                         @Html.TextArea("FullDescription", null, new { @class = "form-control", data_bind = "wysiwyg: product.fullDescription, wysiwygConfig: product.tinyMCE_fullDescription" })
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("MetaKeywords", "Meta Keywords", new { @class = "control-label" })
+                                        @Html.TextArea("MetaKeywords", null, new { @class = "form-control", data_bind = "value: product.metaKeywords" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("MetaDescription", "Meta Description", new { @class = "control-label" })
+                                        @Html.TextArea("MetaDescription", null, new { @class = "form-control", data_bind = "value: product.metaDescription" })
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

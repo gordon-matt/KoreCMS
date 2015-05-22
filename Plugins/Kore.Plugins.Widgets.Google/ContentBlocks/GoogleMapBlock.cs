@@ -26,12 +26,12 @@ namespace Kore.Plugins.Widgets.Google.ContentBlocks
 
         public override string DisplayTemplatePath
         {
-            get { return "/Plugins/Plugins.Widgets.Google/Views/Shared/DisplayTemplates/GoogleMapBlock.cshtml"; }
+            get { return "/Plugins/Widgets.Google/Views/Shared/DisplayTemplates/GoogleMapBlock.cshtml"; }
         }
 
         public override string EditorTemplatePath
         {
-            get { return "/Plugins/Plugins.Widgets.Google/Views/Shared/EditorTemplates/GoogleMapBlock.cshtml"; }
+            get { return "/Plugins/Widgets.Google/Views/Shared/EditorTemplates/GoogleMapBlock.cshtml"; }
         }
 
         #endregion ContentBlockBase Overrides

@@ -337,7 +337,7 @@ $(document).ready(function () {
             }, {
                 field: "IsWatched",
                 title: "&nbsp;",
-                template: '# if(IsWatched) {#<img src="/Plugins/Plugins.Watchdog/Content/img/watchdog_32.png" alt="Watched" /> #} #',
+                template: '# if(IsWatched) {#<img src="/Plugins/Watchdog/Content/img/watchdog_32.png" alt="Watched" /> #} #',
                 attributes: { "class": "text-center" },
                 filterable: false,
                 width: 70

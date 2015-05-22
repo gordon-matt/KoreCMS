@@ -2,6 +2,12 @@
 {
     public static class LocalizableStrings
     {
+        public static class CheckoutLinkBlock
+        {
+            public const string CssClass = "Plugins.Ecommerce.Simple/CheckoutLinkBlock.CssClass";
+            public const string IconCssClass = "Plugins.Ecommerce.Simple/CheckoutLinkBlock.IconCssClass";
+        }
+
         public static class PayPalSettings
         {
             public const string CancelUrlRedirectsToOrderDetailsPage = "Plugins.Ecommerce.Simple/PayPalSettings.CancelUrlRedirectsToOrderDetailsPage";

@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="ContentBlocks\CheckoutLinkBlock.cs" />
     <Compile Include="Controllers\Api\AddressApiController.cs" />
     <Compile Include="Controllers\Api\CategoryApiController.cs" />
     <Compile Include="Controllers\Api\CategoryTreeApiController.cs" />
@@ -200,6 +201,12 @@
     <None Include="Views\Shared\CheckoutButton.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Views\Shared\DisplayTemplates\CheckoutLinkBlock.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Shared\EditorTemplates\CheckoutLinkBlock.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Views\Shared\EditorTemplates\PayPalSettings.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -225,10 +232,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ContentBlocks\" />
-    <Folder Include="Views\Shared\DisplayTemplates\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\Kore.EntityFramework\Kore.EntityFramework.csproj">
       <Project>{2a636196-0b16-484a-8dd8-4bab656dec08}</Project>

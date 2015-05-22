@@ -288,12 +288,12 @@ namespace Kore.Plugins.Widgets.View360
 
         public override string DisplayTemplatePath
         {
-            get { return "/Plugins/Plugins.Widgets.View360/Views/Shared/DisplayTemplates/View360Block.cshtml"; }
+            get { return "/Plugins/Widgets.View360/Views/Shared/DisplayTemplates/View360Block.cshtml"; }
         }
 
         public override string EditorTemplatePath
         {
-            get { return "/Plugins/Plugins.Widgets.View360/Views/Shared/EditorTemplates/View360Block.cshtml"; }
+            get { return "/Plugins/Widgets.View360/Views/Shared/EditorTemplates/View360Block.cshtml"; }
         }
 
         #endregion ContentBlockBase Overrides

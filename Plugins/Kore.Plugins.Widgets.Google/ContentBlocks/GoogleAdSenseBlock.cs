@@ -29,12 +29,12 @@ namespace Kore.Plugins.Widgets.Google.ContentBlocks
 
         public override string DisplayTemplatePath
         {
-            get { return "/Plugins/Plugins.Widgets.Google/Views/Shared/DisplayTemplates/GoogleAdSenseBlock.cshtml"; }
+            get { return "/Plugins/Widgets.Google/Views/Shared/DisplayTemplates/GoogleAdSenseBlock.cshtml"; }
         }
 
         public override string EditorTemplatePath
         {
-            get { return "/Plugins/Plugins.Widgets.Google/Views/Shared/EditorTemplates/GoogleAdSenseBlock.cshtml"; }
+            get { return "/Plugins/Widgets.Google/Views/Shared/EditorTemplates/GoogleAdSenseBlock.cshtml"; }
         }
 
         #endregion ContentBlockBase Overrides

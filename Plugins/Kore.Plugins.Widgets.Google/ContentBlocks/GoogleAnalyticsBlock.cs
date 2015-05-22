@@ -17,12 +17,12 @@ namespace Kore.Plugins.Widgets.Google.ContentBlocks
 
         public override string DisplayTemplatePath
         {
-            get { return "/Plugins/Plugins.Widgets.Google/Views/Shared/DisplayTemplates/GoogleAnalyticsBlock.cshtml"; }
+            get { return "/Plugins/Widgets.Google/Views/Shared/DisplayTemplates/GoogleAnalyticsBlock.cshtml"; }
         }
 
         public override string EditorTemplatePath
         {
-            get { return "/Plugins/Plugins.Widgets.Google/Views/Shared/EditorTemplates/GoogleAnalyticsBlock.cshtml"; }
+            get { return "/Plugins/Widgets.Google/Views/Shared/EditorTemplates/GoogleAnalyticsBlock.cshtml"; }
         }
 
         #endregion ContentBlockBase Overrides

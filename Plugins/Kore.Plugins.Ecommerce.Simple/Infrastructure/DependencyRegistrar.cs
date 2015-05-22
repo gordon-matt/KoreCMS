@@ -1,8 +1,10 @@
 ﻿using Autofac;
 using Kore.Infrastructure;
 using Kore.Localization;
+using Kore.Plugins.Ecommerce.Simple.ContentBlocks;
 using Kore.Plugins.Ecommerce.Simple.Services;
 using Kore.Web.Configuration;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.ContentManagement.Infrastructure;
 using Kore.Web.Indexing.Services;
 using Kore.Web.Infrastructure;
@@ -30,6 +32,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
             builder.RegisterType<LocationFormatProvider>().As<ILocationFormatProvider>().SingleInstance();
             builder.RegisterType<NavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();
+
+            builder.RegisterType<CheckoutLinkBlock>().As<IContentBlock>().InstancePerDependency();
 
             builder.RegisterType<AutoMenuProvider>().As<IAutoMenuProvider>().SingleInstance();
 

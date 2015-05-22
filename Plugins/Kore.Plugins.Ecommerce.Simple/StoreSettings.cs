@@ -45,7 +45,7 @@ namespace Kore.Plugins.Ecommerce.Simple
 
         public string EditorTemplatePath
         {
-            get { return "/Plugins/Plugins.Ecommerce.Simple/Views/Shared/EditorTemplates/StoreSettings.cshtml"; }
+            get { return "/Plugins/Ecommerce.Simple/Views/Shared/EditorTemplates/StoreSettings.cshtml"; }
         }
 
         #endregion ISettings Members

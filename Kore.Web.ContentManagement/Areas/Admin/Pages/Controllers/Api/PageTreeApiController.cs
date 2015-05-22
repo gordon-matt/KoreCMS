@@ -31,7 +31,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             var pages = pageRepository.Table.ToHashSet();
 
             var hierarchy = pages
-                .Where(x => x.ParentId == null)
+                .Where(x => x.ParentId == null && x.RefId == null)
                 .OrderBy(x => x.Order)
                 .ThenBy(x => x.Name)
                 .Select(x => new PageTreeItem

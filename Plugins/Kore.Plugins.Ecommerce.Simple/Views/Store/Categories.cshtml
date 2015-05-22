@@ -4,8 +4,6 @@
 @model IEnumerable<Category>
 
 @{
-    Layout = KoreWebConstants.DefaultFrontendLayoutPath;
-
     Script.IncludeBundle("kore-cms/bootpag");
 
     var settings = EngineContext.Current.Resolve<StoreSettings>();

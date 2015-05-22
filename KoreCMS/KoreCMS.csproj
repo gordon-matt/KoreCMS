@@ -1783,6 +1783,7 @@
     <Content Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\Web.config" />
     <Content Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\_ViewStart.cshtml" />
     <Content Include="Themes\EShopper\Views\Shared\MainMenu.cshtml" />
+    <Content Include="Views\Shared\_LayoutNoSideBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

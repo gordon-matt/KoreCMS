@@ -23,6 +23,7 @@
         {
             public const string CategoriesPerPage = "Plugins.Ecommerce.Simple/StoreSettings.CategoriesPerPage";
             public const string Currency = "Plugins.Ecommerce.Simple/StoreSettings.Currency";
+            public const string LayoutPathOverride = "Plugins.Ecommerce.Simple/StoreSettings.LayoutPathOverride";
             public const string MenuPosition = "Plugins.Ecommerce.Simple/StoreSettings.MenuPosition";
             public const string PageTitle = "Plugins.Ecommerce.Simple/StoreSettings.PageTitle";
             public const string ProductsPerPage = "Plugins.Ecommerce.Simple/StoreSettings.ProductsPerPage";

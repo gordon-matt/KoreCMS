@@ -1,10 +1,6 @@
 ﻿@using Kore.Plugins.Ecommerce.Simple.Models
 @model PayPalModel
 
-@{
-    Layout = KoreWebConstants.DefaultFrontendLayoutPath;
-}
-
 <form id="payment-form" action="@Model.ActionUrl" method="post">
     @if (Model.PassProductNamesAndTotals)
     {

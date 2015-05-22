@@ -46,6 +46,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                         { LocalizableStrings.PayPalSettings.UseSandboxMode, "Use Sandbox Mode" },
                         { LocalizableStrings.StoreSettings.CategoriesPerPage, "Categories Per Page" },
                         { LocalizableStrings.StoreSettings.Currency, "Currency" },
+                        { LocalizableStrings.StoreSettings.LayoutPathOverride, "Layout Path (Override)" },
                         { LocalizableStrings.StoreSettings.MenuPosition, "Menu Position" },
                         { LocalizableStrings.StoreSettings.PageTitle, "Page Title" },
                         { LocalizableStrings.StoreSettings.ProductsPerPage, "Products Per Page" },

@@ -43,6 +43,11 @@
             </label>
         </div>
     </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LayoutPathOverride, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.LayoutPathOverride, new { @class = "form-control", data_bind = "value: layoutPathOverride" })
+        @Html.ValidationMessageFor(m => m.LayoutPathOverride)
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -54,6 +59,7 @@
         viewModel.showOnMenus = ko.observable(true);
         viewModel.menuPosition = ko.observable(0);
         viewModel.useAjax = ko.observable(false);
+        viewModel.layoutPathOverride = ko.observable(null);
 
         if (data) {
             if (data.PageTitle) {
@@ -77,6 +83,9 @@
             if (data.UseAjax) {
                 viewModel.useAjax(data.UseAjax);
             }
+            if (data.LayoutPathOverride) {
+                viewModel.layoutPathOverride(data.LayoutPathOverride);
+            }
         }
     };
 
@@ -88,6 +97,7 @@
         delete viewModel.showOnMenus;
         delete viewModel.menuPosition;
         delete viewModel.useAjax;
+        delete viewModel.layoutPathOverride;
     }
 
     function onBeforeSave() {
@@ -98,7 +108,8 @@
             ProductsPerPage: viewModel.productsPerPage(),
             ShowOnMenus: viewModel.showOnMenus(),
             MenuPosition: viewModel.menuPosition(),
-            UseAjax: viewModel.useAjax()
+            UseAjax: viewModel.useAjax(),
+            LayoutPathOverride: viewModel.layoutPathOverride()
         };
 
         viewModel.value(ko.mapping.toJSON(data));

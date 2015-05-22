@@ -1,0 +1,92 @@
+﻿@using Kore.Infrastructure
+@{
+    Style.IncludeBundle("kore-icons");
+
+    Script.IncludeBundle("jquery", 0);
+    Script.IncludeBootstrap();
+
+    string siteName = string.IsNullOrEmpty(SiteSettings.SiteName) ? "My Kore App" : SiteSettings.SiteName;
+
+    string dir = IsRightToLeft ? "rtl" : string.Empty;
+    string lang = WorkContext.CurrentCultureCode.LeftOf('-');
+
+    if (IsRightToLeft)
+    {
+        Style.IncludeExternal("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.2.0-rc2/css/bootstrap-rtl.min.css");
+    }
+}
+
+<!DOCTYPE html>
+<html lang="@lang">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @RenderMetas()
+    <title>@ViewBag.Title - @siteName</title>
+    @Html.Partial("Head")
+    @RenderStyles()
+    @RenderSection("styles", required: false)
+</head>
+<body dir="@dir">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink(siteName, "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })
+            </div>
+            <div class="collapse navbar-collapse bs-navbar-collapse">
+                @Html.AutoMenu("MainMenu")
+                @Html.ContentZone("SearchForm")
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                @Html.AutoBreadcrumbs("Breadcrumbs")
+                <div class="pull-right">
+                    @Html.ContentZone("CheckoutLink")
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                @RenderBody()
+            </div>
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My Kore Application</p>
+        </footer>
+    </div>
+    @RenderScripts()
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        if (jQuery && jQuery.validator) {
+            jQuery.validator.setDefaults({
+                highlight: function (element) {
+                    $(element).closest('.form-group').addClass('has-error');
+                },
+                unhighlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-error');
+                },
+                errorElement: 'span',
+                errorClass: 'help-block',
+                errorPlacement: function (error, element) {
+                    if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

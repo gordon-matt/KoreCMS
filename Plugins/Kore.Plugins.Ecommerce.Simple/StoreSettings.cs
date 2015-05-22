@@ -36,6 +36,9 @@ namespace Kore.Plugins.Ecommerce.Simple
         [LocalizedDisplayName(LocalizableStrings.StoreSettings.UseAjax)]
         public bool UseAjax { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.StoreSettings.LayoutPathOverride)]
+        public string LayoutPathOverride { get; set; }
+
         #region ISettings Members
 
         public string Name

@@ -7,8 +7,6 @@
 @model Product
 
 @{
-    Layout = KoreWebConstants.DefaultFrontendLayoutPath;
-
     var settings = EngineContext.Current.Resolve<StoreSettings>();
     ViewBag.Title = settings.PageTitle;
 }

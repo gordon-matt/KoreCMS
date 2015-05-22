@@ -428,8 +428,8 @@ var ViewModel = function () {
         });
     };
 
-    self.translate = function (id) {
-        $("#CultureSelector_PageId").val(id); //TODO: make this a self variable
+    self.translate = function () {
+        $("#CultureSelector_PageId").val(self.id());
         self.showToolbar(false);
         switchSection($("#culture-selector-section"));
     };
@@ -460,6 +460,7 @@ var ViewModel = function () {
 
     self.cultureSelector_onSelected = function () {
         var pageId = $("#CultureSelector_PageId").val();
+        var cultureName = $("#CultureSelector_CultureCode option:selected").text();
 
         var data = {
             pageId: pageId,
@@ -499,7 +500,7 @@ var ViewModel = function () {
             
             self.validator.resetForm();
             switchSection($("#form-section"));
-            $("#form-section-legend").html(translations.Edit);
+            $("#form-section-legend").html(translations.Edit + ': ' + cultureName);
 
             if (self.id() != emptyGuid) {
                 $.ajax({

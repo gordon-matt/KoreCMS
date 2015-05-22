@@ -1,4 +1,5 @@
-﻿@using Kore.Web.Configuration
+﻿@using Kore.Web
+@using Kore.Web.Configuration
 @using Kore.Web.Mvc
 
 @model KoreSiteSettings
@@ -7,16 +8,16 @@
     <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active">
-                <a href="#General" aria-controls="General" role="tab" data-toggle="tab">General</a>
+                <a href="#General" aria-controls="General" role="tab" data-toggle="tab">@T(KoreWebLocalizableStrings.Settings.Site.Tabs.General)</a>
             </li>
             <li role="presentation">
-                <a href="#Themes" aria-controls="Themes" role="tab" data-toggle="tab">Themes</a>
+                <a href="#Themes" aria-controls="Themes" role="tab" data-toggle="tab">@T(KoreWebLocalizableStrings.Settings.Site.Tabs.Themes)</a>
             </li>
             <li role="presentation">
-                <a href="#Localization" aria-controls="Localization" role="tab" data-toggle="tab">Localization</a>
+                <a href="#Localization" aria-controls="Localization" role="tab" data-toggle="tab">@T(KoreWebLocalizableStrings.Settings.Site.Tabs.Localization)</a>
             </li>
             <li role="presentation">
-                <a href="#SEO" aria-controls="SEO" role="tab" data-toggle="tab">SEO</a>
+                <a href="#SEO" aria-controls="SEO" role="tab" data-toggle="tab">@T(KoreWebLocalizableStrings.Settings.Site.Tabs.SEO)</a>
             </li>
         </ul>
         <div class="tab-content">
@@ -55,7 +56,7 @@
                 </div>
                 <div class="checkbox">
                     <label>
-                        @Html.CheckBoxFor(m => m.AllowUserToSelectTheme, new { data_bind = "checked: allowUserToSelectTheme" }) Allow User To Select Theme
+                        @Html.CheckBoxFor(m => m.AllowUserToSelectTheme, new { data_bind = "checked: allowUserToSelectTheme" }) @T(KoreWebLocalizableStrings.Settings.Site.AllowUserToSelectTheme)
                     </label>
                 </div>
             </div>

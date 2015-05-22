@@ -1,10 +1,11 @@
-﻿@using Kore.Web.Mobile
+﻿@using Kore.Web
+@using Kore.Web.Mobile
 @using Kore.Web.Mvc
 
 @model MobileUserProfileProvider
 
 <div class="checkbox">
     <label>
-        @Html.CheckBoxFor(m => m.DontUseMobileVersion) Don't Use Mobile Version
+        @Html.CheckBoxFor(m => m.DontUseMobileVersion) @T(KoreWebLocalizableStrings.UserProfile.Mobile.DontUseMobileVersion)
     </label>
 </div>

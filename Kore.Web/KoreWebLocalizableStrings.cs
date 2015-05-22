@@ -163,6 +163,14 @@
 
             public static class Site
             {
+                public static class Tabs
+                {
+                    public const string General = "Kore.Web/Settings.Site.Tabs.General";
+                    public const string Localization = "Kore.Web/Settings.Site.Tabs.Localization";
+                    public const string SEO = "Kore.Web/Settings.Site.Tabs.SEO";
+                    public const string Themes = "Kore.Web/Settings.Site.Tabs.Themes";
+                }
+
                 public const string AdminLayoutPath = "Kore.Web/Settings.Site.AdminLayoutPath";
                 public const string AllowUserToSelectTheme = "Kore.Web/Settings.Site.AllowUserToSelectTheme";
                 public const string DefaultDesktopTheme = "Kore.Web/Settings.Site.DefaultDesktopTheme";

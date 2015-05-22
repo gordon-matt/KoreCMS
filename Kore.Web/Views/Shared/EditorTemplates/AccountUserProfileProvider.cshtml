@@ -1,4 +1,5 @@
-﻿@using Kore.Web.Security.Membership
+﻿@using Kore.Web
+@using Kore.Web.Security.Membership
 
 @model AccountUserProfileProvider
 
@@ -14,6 +15,6 @@
 </div>
 <div class="checkbox">
     <label>
-        @Html.CheckBoxFor(m => m.ShowFamilyNameFirst) Show Family Name First
+        @Html.CheckBoxFor(m => m.ShowFamilyNameFirst) @T(KoreWebLocalizableStrings.UserProfile.Account.ShowFamilyNameFirst)
     </label>
 </div>

@@ -40,13 +40,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 
                 if (string.IsNullOrEmpty(captchaResponse))
                 {
-                    throw new InvalidOperationException(T("Please enter captcha validation field."));
+                    throw new InvalidOperationException(T(KoreCmsLocalizableStrings.ContentBlocks.FormBlock.PleaseEnterCaptcha));
                 }
 
                 var isValidCaptcha = Crypto.VerifyHashedPassword(captchaChallenge, captchaResponse);
                 if (!isValidCaptcha)
                 {
-                    throw new InvalidOperationException(T("Please enter correct captcha validation field."));
+                    throw new InvalidOperationException(T(KoreCmsLocalizableStrings.ContentBlocks.FormBlock.PleaseEnterCorrectCaptcha));
                 }
             }
 

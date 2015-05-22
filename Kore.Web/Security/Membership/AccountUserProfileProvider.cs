@@ -14,13 +14,13 @@ namespace Kore.Web.Security.Membership
             public const string ShowFamilyNameFirst = "ShowFamilyNameFirst";
         }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.AccountUserProfileProvider.FamilyName)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.UserProfile.Account.FamilyName)]
         public string FamilyName { get; set; }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.AccountUserProfileProvider.GivenNames)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.UserProfile.Account.GivenNames)]
         public string GivenNames { get; set; }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.AccountUserProfileProvider.ShowFamilyNameFirst)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.UserProfile.Account.ShowFamilyNameFirst)]
         public bool ShowFamilyNameFirst { get; set; }
 
         #region IUserProfileProvider Members

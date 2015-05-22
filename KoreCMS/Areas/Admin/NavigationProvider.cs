@@ -1,4 +1,5 @@
 ﻿using Kore.Localization;
+using Kore.Web;
 using Kore.Web.Navigation;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -23,7 +24,7 @@ namespace KoreCMS.Areas.Admin
             builder.Permission(StandardPermissions.DashboardAccess);
 
             builder.IconCssClass("kore-icon kore-icon-dashboard")
-                .Action("Index", "Home", new { area = "Admin" });
+                .Action("Index", "Home", new { area = KoreWebConstants.Areas.Admin });
         }
     }
 }

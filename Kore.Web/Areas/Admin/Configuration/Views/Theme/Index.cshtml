@@ -21,10 +21,19 @@
     <script type="text/javascript">
         var gridPageSize = @SiteSettings.DefaultGridPageSize;
         var translations = {
+            Set: '@T(KoreWebLocalizableStrings.General.Set).Text',
             SetDesktopThemeError: '@T(KoreWebLocalizableStrings.Messages.SetDesktopThemeError).Text',
             SetDesktopThemeSuccess: '@T(KoreWebLocalizableStrings.Messages.SetDesktopThemeSuccess).Text',
             SetMobileThemeError: '@T(KoreWebLocalizableStrings.Messages.SetMobileThemeError).Text',
-            SetMobileThemeSuccess: '@T(KoreWebLocalizableStrings.Messages.SetMobileThemeSuccess).Text'
+            SetMobileThemeSuccess: '@T(KoreWebLocalizableStrings.Messages.SetMobileThemeSuccess).Text',
+
+            Columns: {
+                IsDefaultDesktopTheme: '@T(KoreWebLocalizableStrings.Models.Themes.IsDefaultDesktopTheme).Text',
+                IsDefaultMobileTheme: '@T(KoreWebLocalizableStrings.Models.Themes.IsDefaultMobileTheme).Text',
+                MobileTheme: '@T(KoreWebLocalizableStrings.Models.Themes.MobileTheme).Text',
+                PreviewImageUrl: '@T(KoreWebLocalizableStrings.Models.Themes.PreviewImageUrl).Text',
+                SupportRtl: '@T(KoreWebLocalizableStrings.Models.Themes.SupportRtl).Text'
+            }
         };
 
         $(document).ready(function () {
@@ -73,43 +82,43 @@
                 scrollable: false,
                 columns: [{
                     field: "PreviewImageUrl",
-                    title: "Preview",
+                    title: translations.Columns.PreviewImageUrl,
                     template: '<img src="#=PreviewImageUrl#" alt="#=Title#" class="thumbnail" style="max-width:200px;" />',
                     filterable: true,
                     width: 200
                 }, {
                     field: "Title",
-                    title: "Title",
+                    title: translations.Columns.Title,
                     filterable: true
                 }, {
                     field: "SupportRtl",
-                    title: "Supports RTL",
+                    title: translations.Columns.SupportRtl,
                     template: '<i class="kore-icon #=SupportRtl ? \'kore-icon-ok text-success\' : \'kore-icon-no text-danger\'#"></i>',
                     attributes: { "class": "text-center" },
                     filterable: true,
                     width: 70
                 }, {
                     field: "MobileTheme",
-                    title: "For Mobile?",
+                    title: translations.Columns.MobileTheme,
                     template: '<i class="kore-icon #=MobileTheme ? \'kore-icon-ok text-success\' : \'kore-icon-no text-danger\'#"></i>',
                     attributes: { "class": "text-center" },
                     filterable: true,
                     width: 70
                 }, {
                     field: "IsDefaultDesktopTheme",
-                    title: "Default Desktop Theme",
+                    title: translations.Columns.IsDefaultDesktopTheme,
                     template:
                         '# if(IsDefaultDesktopTheme) {# <i class="kore-icon kore-icon-ok-circle kore-icon-2x text-success"></i> #} ' +
-                        'else {# <a href="javascript:void(0);" onclick="setDesktopTheme(\'#=Title#\')" class="btn btn-default btn-sm">Set</a> #} #',
+                        'else {# <a href="javascript:void(0);" onclick="setDesktopTheme(\'#=Title#\')" class="btn btn-default btn-sm">#=translations.Set#</a> #} #',
                     attributes: { "class": "text-center" },
                     filterable: false,
                     width: 130
                 }, {
                     field: "IsDefaultMobileTheme",
-                    title: "Default Mobile Theme",
+                    title: translations.Columns.IsDefaultMobileTheme,
                     template:
                         '# if(IsDefaultMobileTheme) {# <i class="kore-icon kore-icon-ok-circle kore-icon-2x text-success"></i> #} ' +
-                        'else {# <a href="javascript:void(0);" onclick="setMobileTheme(\'#=Title#\')" class="btn btn-default btn-sm">Set</a> #} #',
+                        'else {# <a href="javascript:void(0);" onclick="setMobileTheme(\'#=Title#\')" class="btn btn-default btn-sm">#=translations.Set#</a> #} #',
                     attributes: { "class": "text-center" },
                     filterable: false,
                     width: 130

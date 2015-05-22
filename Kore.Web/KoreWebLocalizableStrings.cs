@@ -2,19 +2,6 @@
 {
     public static class KoreWebLocalizableStrings
     {
-        public static class AccountUserProfileProvider
-        {
-            public const string FamilyName = "Kore.Web/AccountUserProfileProvider.FamilyName";
-            public const string GivenNames = "Kore.Web/AccountUserProfileProvider.GivenNames";
-            public const string ShowFamilyNameFirst = "Kore.Web/AccountUserProfileProvider.ShowFamilyNameFirst";
-        }
-
-        public static class CaptchaSettings
-        {
-            public const string PrivateKey = "Kore.Web/CaptchaSettings.PrivateKey";
-            public const string PublicKey = "Kore.Web/CaptchaSettings.PublicKey";
-        }
-
         public static class General
         {
             public const string Actions = "Kore.Web/General.Actions";
@@ -30,6 +17,7 @@
             public const string EditFormat = "Kore.Web/General.EditFormat";
             public const string Enabled = "Kore.Web/General.Enabled";
             public const string Home = "Kore.Web/General.Home";
+            public const string Install = "Kore.Web/General.Install";
             public const string Miscellaneous = "Kore.Web/General.Miscellaneous";
             public const string OK = "Kore.Web/General.OK";
             public const string OnOff = "Kore.Web/General.OnOff";
@@ -37,11 +25,13 @@
             public const string Save = "Kore.Web/General.Save";
             public const string SaveAndContinue = "Kore.Web/General.SaveAndContinue";
             public const string Search = "Kore.Web/General.Search";
+            public const string Set = "Kore.Web/General.Set";
             public const string SetDefault = "Kore.Web/General.SetDefault";
             public const string Settings = "Kore.Web/General.Settings";
             public const string Submit = "Kore.Web/General.Submit";
             public const string Themes = "Kore.Web/General.Themes";
             public const string Toggle = "Kore.Web/General.Toggle";
+            public const string Uninstall = "Kore.Web/General.Uninstall";
             public const string View = "Kore.Web/General.View";
             public const string ViewFormat = "Kore.Web/General.ViewFormat";
         }
@@ -65,33 +55,9 @@
             public const string SearchIndexRebuildFail = "Kore.Web/Indexing.SearchIndexRebuildFail";
             public const string SearchIndexRebuilt = "Kore.Web/Indexing.SearchIndexRebuilt";
             public const string SearchIndexUpdated = "Kore.Web/Indexing.SearchIndexUpdated";
+            public const string SearchMatchedNDocuments = "Kore.Web/Indexing.SearchMatchedNDocuments";
+            public const string SearchMatchedNoDocuments = "Kore.Web/Indexing.SearchMatchedNoDocuments";
             public const string Title = "Kore.Web/Indexing.Title";
-        }
-
-        public static class KoreSiteSettings
-        {
-            public const string SiteName = "Kore.Web/KoreSiteSettings.SiteName";
-            public const string DefaultFrontendLayoutPath = "Kore.Web/KoreSiteSettings.DefaultFrontendLayoutPath";
-            public const string AdminLayoutPath = "Kore.Web/KoreSiteSettings.AdminLayoutPath";
-            public const string DefaultGridPageSize = "Kore.Web/KoreSiteSettings.DefaultGridPageSize";
-            public const string DefaultDesktopTheme = "Kore.Web/KoreSiteSettings.DefaultDesktopTheme";
-            public const string DefaultMobileTheme = "Kore.Web/KoreSiteSettings.DefaultMobileTheme";
-            public const string AllowUserToSelectTheme = "Kore.Web/KoreSiteSettings.AllowUserToSelectTheme";
-            public const string DefaultLanguage = "Kore.Web/KoreSiteSettings.DefaultLanguage";
-            public const string DefaultMetaKeywords = "Kore.Web/KoreSiteSettings.DefaultMetaKeywords";
-            public const string DefaultMetaDescription = "Kore.Web/KoreSiteSettings.DefaultMetaDescription";
-            public const string HomePageTitle = "Kore.Web/KoreSiteSettings.HomePageTitle";
-        }
-
-        public static class LocalizationUserProfileProvider
-        {
-            public const string PreferredLanguage = "Kore.Web/LocalizationUserProfileProvider.PreferredLanguage";
-        }
-
-        public static class MembershipSettings
-        {
-            public const string GeneratedPasswordLength = "Kore.Web/MembershipSettings.GeneratedPasswordLength";
-            public const string GeneratedPasswordNumberOfNonAlphanumericChars = "Kore.Web/MembershipSettings.GeneratedPasswordNumberOfNonAlphanumericChars";
         }
 
         public static class Messages
@@ -102,7 +68,6 @@
             #region General
 
             public const string ConfirmDeleteRecord = "Kore.Web/Messages.ConfirmDeleteRecord";
-
             public const string DeleteRecordError = "Kore.Web/Messages.DeleteRecordError";
             public const string DeleteRecordErrorFormat = "Kore.Web/Messages.DeleteRecordErrorFormat";
             public const string DeleteRecordSuccess = "Kore.Web/Messages.DeleteRecordSuccess";
@@ -134,14 +99,38 @@
             #endregion Themes
         }
 
-        public static class MobileUserProfileProvider
+        public static class Models
         {
-            public const string DontUseMobileVersion = "Kore.Web/MobileUserProfileProvider.DontUseMobileVersion";
-        }
+            public static class Plugins
+            {
+                public const string Group = "Kore.Web/Models.Plugins.Group";
+                public const string PluginInfo = "Kore.Web/Models.Plugins.PluginInfo";
+            }
 
-        public static class Navigation
-        {
-            public const string Configuration = "Kore.Web/Navigation.Configuration";
+            public static class ScheduledTasks
+            {
+                public const string Enabled = "Kore.Web/Models.ScheduledTasks.Enabled";
+                public const string LastEndUtc = "Kore.Web/Models.ScheduledTasks.LastEndUtc";
+                public const string LastStartUtc = "Kore.Web/Models.ScheduledTasks.LastStartUtc";
+                public const string LastSuccessUtc = "Kore.Web/Models.ScheduledTasks.LastSuccessUtc";
+                public const string Name = "Kore.Web/Models.ScheduledTasks.Name";
+                public const string Seconds = "Kore.Web/Models.ScheduledTasks.Seconds";
+                public const string StopOnError = "Kore.Web/Models.ScheduledTasks.StopOnError";
+            }
+
+            public static class Settings
+            {
+                public const string Name = "Kore.Web/Models.Settings.Name";
+            }
+
+            public static class Themes
+            {
+                public const string PreviewImageUrl = "Kore.Web/Models.Themes.PreviewImageUrl";
+                public const string SupportRtl = "Kore.Web/Models.Themes.SupportRtl";
+                public const string MobileTheme = "Kore.Web/Models.Themes.MobileTheme";
+                public const string IsDefaultDesktopTheme = "Kore.Web/Models.Themes.IsDefaultDesktopTheme";
+                public const string IsDefaultMobileTheme = "Kore.Web/Models.Themes.IsDefaultMobileTheme";
+            }
         }
 
         public static class Plugins
@@ -152,26 +141,78 @@
 
         public static class ScheduledTasks
         {
+            public const string ExecutedTaskError = "Kore.Web/ScheduledTasks.ExecutedTaskError";
+            public const string ExecutedTaskSuccess = "Kore.Web/ScheduledTasks.ExecutedTaskSuccess";
             public const string ManageScheduledTasks = "Kore.Web/ScheduledTasks.ManageScheduledTasks";
             public const string Title = "Kore.Web/ScheduledTasks.Title";
         }
 
-        public static class SmtpSettings
+        public static class Settings
         {
-            public const string DisplayName = "Kore.Web/SmtpSettings.DisplayName";
-            public const string Host = "Kore.Web/SmtpSettings.Host";
-            public const string Port = "Kore.Web/SmtpSettings.Port";
-            public const string EnableSsl = "Kore.Web/SmtpSettings.EnableSsl";
-            public const string UseDefaultCredentials = "Kore.Web/SmtpSettings.UseDefaultCredentials";
-            public const string Username = "Kore.Web/SmtpSettings.Username";
-            public const string Password = "Kore.Web/SmtpSettings.Password";
-            public const string MaxTries = "Kore.Web/SmtpSettings.MaxTries";
-            public const string MessagesPerBatch = "Kore.Web/SmtpSettings.MessagesPerBatch";
+            public static class Captcha
+            {
+                public const string PrivateKey = "Kore.Web/Settings.Captcha.PrivateKey";
+                public const string PublicKey = "Kore.Web/Settings.Captcha.PublicKey";
+            }
+
+            public static class Membership
+            {
+                public const string GeneratedPasswordLength = "Kore.Web/Settings.Membership.GeneratedPasswordLength";
+                public const string GeneratedPasswordNumberOfNonAlphanumericChars = "Kore.Web/Settings.Membership.GeneratedPasswordNumberOfNonAlphanumericChars";
+            }
+
+            public static class Site
+            {
+                public const string AdminLayoutPath = "Kore.Web/Settings.Site.AdminLayoutPath";
+                public const string AllowUserToSelectTheme = "Kore.Web/Settings.Site.AllowUserToSelectTheme";
+                public const string DefaultDesktopTheme = "Kore.Web/Settings.Site.DefaultDesktopTheme";
+                public const string DefaultFrontendLayoutPath = "Kore.Web/Settings.Site.DefaultFrontendLayoutPath";
+                public const string DefaultGridPageSize = "Kore.Web/Settings.Site.DefaultGridPageSize";
+                public const string DefaultLanguage = "Kore.Web/Settings.Site.DefaultLanguage";
+                public const string DefaultMetaDescription = "Kore.Web/Settings.Site.DefaultMetaDescription";
+                public const string DefaultMetaKeywords = "Kore.Web/Settings.Site.DefaultMetaKeywords";
+                public const string DefaultMobileTheme = "Kore.Web/Settings.Site.DefaultMobileTheme";
+                public const string HomePageTitle = "Kore.Web/Settings.Site.HomePageTitle";
+                public const string SiteName = "Kore.Web/Settings.Site.SiteName";
+            }
+
+            public static class Smtp
+            {
+                public const string DisplayName = "Kore.Web/Settings.Smtp.DisplayName";
+                public const string EnableSsl = "Kore.Web/Settings.Smtp.EnableSsl";
+                public const string Host = "Kore.Web/Settings.Smtp.Host";
+                public const string MaxTries = "Kore.Web/Settings.Smtp.MaxTries";
+                public const string MessagesPerBatch = "Kore.Web/Settings.Smtp.MessagesPerBatch";
+                public const string Password = "Kore.Web/Settings.Smtp.Password";
+                public const string Port = "Kore.Web/Settings.Smtp.Port";
+                public const string UseDefaultCredentials = "Kore.Web/Settings.Smtp.UseDefaultCredentials";
+                public const string Username = "Kore.Web/Settings.Smtp.Username";
+            }
         }
 
-        public static class ThemeUserProfileProvider
+        public static class UserProfile
         {
-            public const string PreferredTheme = "Kore.Web/ThemeUserProfileProvider.PreferredTheme";
+            public static class Account
+            {
+                public const string FamilyName = "Kore.Web/UserProfile.Account.FamilyName";
+                public const string GivenNames = "Kore.Web/UserProfile.Account.GivenNames";
+                public const string ShowFamilyNameFirst = "Kore.Web/UserProfile.Account.ShowFamilyNameFirst";
+            }
+
+            public static class Localization
+            {
+                public const string PreferredLanguage = "Kore.Web/UserProfile.Localization.PreferredLanguage";
+            }
+
+            public static class Mobile
+            {
+                public const string DontUseMobileVersion = "Kore.Web/UserProfile.Mobile.DontUseMobileVersion";
+            }
+
+            public static class Theme
+            {
+                public const string PreferredTheme = "Kore.Web/UserProfile.Theme.PreferredTheme";
+            }
         }
 
         public static class Validation

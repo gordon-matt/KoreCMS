@@ -13,7 +13,7 @@ namespace Kore.Web.Mobile
             public const string DontUseMobileVersion = "DontUseMobileVersion";
         }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.MobileUserProfileProvider.DontUseMobileVersion)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.UserProfile.Mobile.DontUseMobileVersion)]
         public bool DontUseMobileVersion { get; set; }
 
         #region IUserProfileProvider Members

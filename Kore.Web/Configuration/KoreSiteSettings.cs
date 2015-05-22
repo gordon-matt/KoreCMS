@@ -37,36 +37,36 @@ namespace Kore.Web.Configuration
 
         #region General
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.SiteName)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Site.SiteName)]
         public string SiteName { get; set; }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.DefaultFrontendLayoutPath)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Site.DefaultFrontendLayoutPath)]
         public string DefaultFrontendLayoutPath { get; set; }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.AdminLayoutPath)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Site.AdminLayoutPath)]
         public string AdminLayoutPath { get; set; }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.DefaultGridPageSize)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Site.DefaultGridPageSize)]
         public int DefaultGridPageSize { get; set; }
 
         #endregion General
 
         #region Themes
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.DefaultDesktopTheme)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Site.DefaultDesktopTheme)]
         public string DefaultDesktopTheme { get; set; }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.DefaultMobileTheme)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Site.DefaultMobileTheme)]
         public string DefaultMobileTheme { get; set; }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.AllowUserToSelectTheme)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Site.AllowUserToSelectTheme)]
         public bool AllowUserToSelectTheme { get; set; }
 
         #endregion Themes
 
         #region Localization
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.DefaultLanguage)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Site.DefaultLanguage)]
         public string DefaultLanguage
         {
             get { return string.IsNullOrEmpty(defaultLanguage) ? "en-US" : defaultLanguage; }
@@ -77,13 +77,13 @@ namespace Kore.Web.Configuration
 
         #region SEO
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.DefaultMetaKeywords)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Site.DefaultMetaKeywords)]
         public string DefaultMetaKeywords { get; set; }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.DefaultMetaDescription)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Site.DefaultMetaDescription)]
         public string DefaultMetaDescription { get; set; }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.KoreSiteSettings.HomePageTitle)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Site.HomePageTitle)]
         public string HomePageTitle { get; set; }
 
         #endregion SEO

@@ -34,7 +34,7 @@ namespace Kore.Web.Events
             string[] parameters = messageName.Split('.');
             if (parameters.Length != 2)
             {
-                throw new ArgumentException(T("{0} is not formatted correctly", messageName).Text);
+                throw new ArgumentException(string.Format("{0} is not formatted correctly"), messageName);
             }
             string interfaceName = parameters[0];
             string methodName = parameters[1];

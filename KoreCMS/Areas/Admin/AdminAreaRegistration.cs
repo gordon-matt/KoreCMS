@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Kore.Web;
 
 namespace KoreCMS.Areas.Admin
 {
@@ -6,10 +7,7 @@ namespace KoreCMS.Areas.Admin
     {
         public override string AreaName
         {
-            get
-            {
-                return "Admin";
-            }
+            get { return KoreWebConstants.Areas.Admin; }
         }
 
         public override void RegisterArea(AreaRegistrationContext context)

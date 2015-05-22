@@ -31,7 +31,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.RuleEngine
             var evaluator = evaluators.FirstOrDefault();
             if (evaluator == null)
             {
-                throw new KoreException(T("There are currently no scripting engines enabled."));
+                throw new KoreException("There are currently no scripting engines enabled.");
             }
 
             object result;
@@ -47,7 +47,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.RuleEngine
 
             if (result == null)
             {
-                throw new KoreException(T("Expression is not a boolean value."));
+                throw new KoreException("Expression is not a boolean value.");
             }
             return (bool)result;
         }

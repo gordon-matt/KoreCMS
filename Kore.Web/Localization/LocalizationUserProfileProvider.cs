@@ -13,7 +13,7 @@ namespace Kore.Web.Localization
             public const string PreferredLanguage = "PreferredLanguage";
         }
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.LocalizationUserProfileProvider.PreferredLanguage)]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.UserProfile.Localization.PreferredLanguage)]
         public string PreferredLanguage { get; set; }
 
         #region IUserProfileProvider Members

@@ -31,7 +31,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting
 
             if (expr.Errors.Any())
             {
-                throw new KoreException(string.Format(T("Syntax error: {0}"), expr.Errors.First().Message));
+                throw new KoreException(string.Format("Syntax error: {0}", expr.Errors.First().Message));
             }
 
             var result = EvaluateExpression(expr.Tree, model, providers);

@@ -14,25 +14,25 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog
             MenuPosition = 0;
         }
 
-        [LocalizedDisplayName(KoreCmsLocalizableStrings.BlogSettings.PageTitle)]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.Settings.Blog.PageTitle)]
         public string PageTitle { get; set; }
 
-        [LocalizedDisplayName(KoreCmsLocalizableStrings.BlogSettings.DateFormat)]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.Settings.Blog.DateFormat)]
         public string DateFormat { get; set; }
 
-        [LocalizedDisplayName(KoreCmsLocalizableStrings.BlogSettings.ItemsPerPage)]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.Settings.Blog.ItemsPerPage)]
         public byte ItemsPerPage { get; set; }
 
-        [LocalizedDisplayName(KoreCmsLocalizableStrings.BlogSettings.ShowOnMenus)]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.Settings.Blog.ShowOnMenus)]
         public bool ShowOnMenus { get; set; }
 
-        [LocalizedDisplayName(KoreCmsLocalizableStrings.BlogSettings.MenuPosition)]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.Settings.Blog.MenuPosition)]
         public byte MenuPosition { get; set; }
 
-        [LocalizedDisplayName(KoreCmsLocalizableStrings.BlogSettings.UseAjax)]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.Settings.Blog.UseAjax)]
         public bool UseAjax { get; set; }
 
-        [LocalizedDisplayName(KoreCmsLocalizableStrings.BlogSettings.AccessRestrictions)]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.Settings.Blog.AccessRestrictions)]
         public string AccessRestrictions { get; set; }
 
         #region ISettings Members

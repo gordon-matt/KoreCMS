@@ -47,7 +47,7 @@ namespace Kore.Web.ContentManagement.Controllers
             var pageService = EngineContext.Current.Resolve<IPageService>();
 
             var currentPage = pageService.Repository.Table.FirstOrDefault(y => y.Slug == currentUrlSlug);
-            var allPages = pageService.Repository.Table.Where(x => x.IsEnabled).ToHashSet();
+            var allPages = pageService.Repository.Table.Where(x => x.IsEnabled && x.RefId == null).ToHashSet();
 
             if (currentPage != null)
             {
@@ -111,10 +111,14 @@ namespace Kore.Web.ContentManagement.Controllers
             }
 
             var pages = pageService.Repository.Table
-                .Where(x => x.IsEnabled)
+                .Where(x =>
+                    x.IsEnabled &&
+                    x.RefId == null)
                 .ToHashSet();
 
-            var authorizedPages = pages.Where(x => x.ShowOnMenus && PageSecurityHelper.CheckUserHasAccessToPage(x, User));
+            var authorizedPages = pages.Where(x =>
+                x.ShowOnMenus &&
+                PageSecurityHelper.CheckUserHasAccessToPage(x, User));
 
             var items = authorizedPages
                 .Select(x => new MenuItem
@@ -199,7 +203,7 @@ namespace Kore.Web.ContentManagement.Controllers
             }
 
             var pageService = EngineContext.Current.Resolve<IPageService>();
-            var query = pageService.Repository.Table.Where(x => x.IsEnabled);
+            var query = pageService.Repository.Table.Where(x => x.IsEnabled && x.RefId == null);
 
             bool hasCmsPages = true;
 

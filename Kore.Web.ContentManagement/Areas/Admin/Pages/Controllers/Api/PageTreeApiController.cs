@@ -48,7 +48,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         private static IEnumerable<PageTreeItem> GetSubPages(IEnumerable<Page> pages, Guid parentId)
         {
             return pages
-                .Where(x => x.ParentId == parentId)
+                .Where(x => x.ParentId == parentId && x.RefId == null)
                 .OrderBy(x => x.Order)
                 .ThenBy(x => x.Name)
                 .Select(x => new PageTreeItem

@@ -1,4 +1,4 @@
-﻿Group: Kore
+﻿Group: Maintenance
 FriendlyName: Watchdog
 SystemName: Kore.Plugins.Watchdog
 Version: 1.00

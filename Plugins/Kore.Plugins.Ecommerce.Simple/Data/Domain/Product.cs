@@ -26,6 +26,10 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 
         public string FullDescription { get; set; }
 
+        public string MetaKeywords { get; set; }
+
+        public string MetaDescription { get; set; }
+
         public virtual Category Category { get; set; }
 
         #region IEntity Members
@@ -52,6 +56,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             Property(x => x.MainImageUrl).HasMaxLength(255);
             Property(x => x.ShortDescription).IsMaxLength().IsRequired();
             Property(x => x.FullDescription).IsMaxLength().IsRequired();
+            Property(x => x.MetaKeywords).HasMaxLength(255);
+            Property(x => x.MetaDescription).HasMaxLength(255);
             HasRequired(x => x.Category).WithMany(x => x.Products).HasForeignKey(x => x.CategoryId);
         }
     }

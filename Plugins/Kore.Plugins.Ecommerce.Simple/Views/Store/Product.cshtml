@@ -9,6 +9,9 @@
 @{
     var settings = EngineContext.Current.Resolve<StoreSettings>();
     ViewBag.Title = settings.PageTitle;
+
+    SetMeta("keywords", (string)ViewBag.MetaKeywords);
+    SetMeta("description", (string)ViewBag.MetaDescription);
 }
 
 <article class="product-details">

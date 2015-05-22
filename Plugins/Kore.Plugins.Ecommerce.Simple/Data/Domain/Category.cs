@@ -24,6 +24,10 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 
         public string Description { get; set; }
 
+        public string MetaKeywords { get; set; }
+
+        public string MetaDescription { get; set; }
+
         public virtual Category Parent { get; set; }
 
         public virtual ICollection<Product> Products
@@ -59,6 +63,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             Property(x => x.Order).IsRequired();
             Property(x => x.ImageUrl).HasMaxLength(255);
             Property(x => x.Description).HasMaxLength(255);
+            Property(x => x.MetaKeywords).HasMaxLength(255);
+            Property(x => x.MetaDescription).HasMaxLength(255);
             HasOptional(x => x.Parent).WithMany(x => x.SubCategories).HasForeignKey(x => x.ParentId);
         }
     }

@@ -26,6 +26,8 @@ var ProductModel = function () {
     self.mainImageUrl = ko.observable('');
     self.shortDescription = ko.observable('');
     self.fullDescription = ko.observable('');
+    self.metaKeywords = ko.observable('');
+    self.metaDescription = ko.observable('');
 
     self.tinyMCE_fullDescription = koreDefaultTinyMCEConfig;
 
@@ -40,6 +42,8 @@ var ProductModel = function () {
         self.mainImageUrl('');
         self.shortDescription('');
         self.fullDescription('');
+        self.metaKeywords('');
+        self.metaDescription('');
 
         imagePickerField = 'product';
 
@@ -66,6 +70,8 @@ var ProductModel = function () {
             self.mainImageUrl(json.MainImageUrl);
             self.shortDescription(json.ShortDescription);
             self.fullDescription(json.FullDescription);
+            self.metaKeywords(json.MetaKeywords);
+            self.metaDescription(json.MetaDescription);
 
             imagePickerField = 'product';
 
@@ -114,7 +120,9 @@ var ProductModel = function () {
             ShippingCost: self.shippingCost(),
             MainImageUrl: self.mainImageUrl(),
             ShortDescription: self.shortDescription(),
-            FullDescription: self.fullDescription()
+            FullDescription: self.fullDescription(),
+            MetaKeywords: self.metaKeywords(),
+            MetaDescription: self.metaDescription()
         };
 
         if (self.id() == 0) {
@@ -179,7 +187,9 @@ var ProductModel = function () {
             ShippingCost: { required: true, number: true },
             MainImageUrl: { maxlength: 255 },
             ShortDescription: { required: true },
-            FullDescription: { required: true }
+            FullDescription: { required: true },
+            MetaKeywords: { maxlength: 255 },
+            MetaDescription: { maxlength: 255 }
         }
     });
 };
@@ -194,6 +204,9 @@ var ViewModel = function () {
     self.order = ko.observable(0);
     self.imageUrl = ko.observable('');
     self.description = ko.observable('');
+    self.metaKeywords = ko.observable('');
+    self.metaDescription = ko.observable('');
+
     self.showToolbar = ko.observable(false);
 
     self.product = new ProductModel();
@@ -206,6 +219,8 @@ var ViewModel = function () {
         self.order(0);
         self.imageUrl('');
         self.description('');
+        self.metaKeywords('');
+        self.metaDescription('');
 
         self.showToolbar(false);
         imagePickerField = 'category';
@@ -230,6 +245,8 @@ var ViewModel = function () {
             self.order(json.Order);
             self.imageUrl(json.ImageUrl);
             self.description(json.Description);
+            self.metaKeywords(json.MetaKeywords);
+            self.metaDescription(json.MetaDescription);
 
             self.showToolbar(true);
             imagePickerField = 'category';
@@ -275,7 +292,9 @@ var ViewModel = function () {
             Slug: self.slug(),
             Order: self.order(),
             ImageUrl: self.imageUrl(),
-            Description: self.description()
+            Description: self.description(),
+            MetaKeywords: self.metaKeywords(),
+            MetaDescription: self.metaDescription()
         };
 
         if (self.id() == 0) {
@@ -343,7 +362,9 @@ var ViewModel = function () {
             Slug: { required: true, maxlength: 255 },
             Order: { required: true, number: true },
             ImageUrl: { maxlength: 255 },
-            Description: { maxlength: 255 }
+            Description: { maxlength: 255 },
+            MetaKeywords: { maxlength: 255 },
+            MetaDescription: { maxlength: 255 }
         }
     });
 };

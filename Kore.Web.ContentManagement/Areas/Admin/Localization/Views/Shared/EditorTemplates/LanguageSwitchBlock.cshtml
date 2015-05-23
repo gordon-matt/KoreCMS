@@ -16,15 +16,9 @@
         </div>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-        <div class="form-group">
-            @Html.LabelFor(m => m.MessageText, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.MessageText, new { @class = "form-control", data_bind = "value: messageText" })
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
         <div class="checkbox">
             <label>
-                @Html.CheckBoxFor(m => m.UseUrlPrefix, new { data_bind = "checked: useUrlPrefix" }) Use URL Prefix
+                @Html.CheckBoxFor(m => m.UseUrlPrefix, new { data_bind = "checked: useUrlPrefix" }) @T(KoreCmsLocalizableStrings.ContentBlocks.LanguageSwitchBlock.UseUrlPrefix)
             </label>
         </div>
     </div>
@@ -37,7 +31,6 @@
             viewModel.style = ko.observable("");
             viewModel.customTemplatePath = ko.observable("");
             viewModel.useUrlPrefix = ko.observable(false);
-            viewModel.messageText = ko.observable("");
 
             var data = ko.mapping.fromJSON(viewModel.blockValues());
 
@@ -51,23 +44,18 @@
                 if (data.UseUrlPrefix) {
                     viewModel.useUrlPrefix(data.UseUrlPrefix());
                 }
-                if (data.MessageText) {
-                    viewModel.messageText(data.MessageText());
-                }
             }
         };
         f.cleanUp = function () {
             delete viewModel.style;
             delete viewModel.customTemplatePath;
             delete viewModel.useUrlPrefix;
-            delete viewModel.messageText;
         };
         f.onBeforeSave = function () {
             var data = {
                 Style: viewModel.style(),
                 CustomTemplatePath: viewModel.customTemplatePath(),
-                UseUrlPrefix: viewModel.useUrlPrefix(),
-                MessageText: viewModel.messageText()
+                UseUrlPrefix: viewModel.useUrlPrefix()
             };
 
             viewModel.blockValues(ko.mapping.toJSON(data));

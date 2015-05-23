@@ -520,19 +520,19 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Title",
-            title: "Title",
+            title: translations.Columns.Title,
             filterable: true
         }, {
             field: "BlockName",
-            title: "Block Type",
+            title: translations.Columns.BlockType,
             filterable: true
         }, {
             field: "Order",
-            title: "Order",
+            title: translations.Columns.Order,
             filterable: false
         }, {
             field: "IsEnabled",
-            title: "Is Enabled",
+            title: translations.Columns.IsEnabled,
             template: '<i class="fa #=IsEnabled ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
             attributes: { "class": "text-center" },
             filterable: true,
@@ -589,7 +589,7 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Name",
-            title: "Name",
+            title: translations.Columns.Name,
             filterable: true
         }, {
             field: "Id",

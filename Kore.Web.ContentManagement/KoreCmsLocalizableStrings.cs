@@ -28,6 +28,21 @@
             public const string Title = "Kore.Web.ContentManagement/ContentBlocks.Title";
             public const string Zones = "Kore.Web.ContentManagement/ContentBlocks.Zones";
 
+            public static class Model
+            {
+                public const string BlockType = "Kore.Web.ContentManagement/ContentBlocks.Model.BlockType";
+                public const string DisplayCondition = "Kore.Web.ContentManagement/ContentBlocks.Model.DisplayCondition";
+                public const string IsEnabled = "Kore.Web.ContentManagement/ContentBlocks.Model.IsEnabled";
+                public const string Order = "Kore.Web.ContentManagement/ContentBlocks.Model.Order";
+                public const string Title = "Kore.Web.ContentManagement/ContentBlocks.Model.Title";
+                public const string ZoneId = "Kore.Web.ContentManagement/ContentBlocks.Model.ZoneId";
+            }
+
+            public static class ZoneModel
+            {
+                public const string Name = "Kore.Web.ContentManagement/ContentBlocks.ZoneModel.Name";
+            }
+
             public static class FormBlock
             {
                 public const string EmailAddress = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.EmailAddress";
@@ -37,16 +52,41 @@
                 public const string RedirectUrl = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.RedirectUrl";
                 public const string ThankYouMessage = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.ThankYouMessage";
                 public const string UseAjax = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.UseAjax";
+
+                public const string SaveResultIfNotRedirectPleaseClick = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.SaveResultIfNotRedirectPleaseClick";
+                public const string SaveResultRedirect = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.SaveResultRedirect";
             }
 
             public static class HtmlBlock
             {
                 public const string BodyContent = "Kore.Web.ContentManagement/ContentBlocks.HtmlBlock.BodyContent";
             }
+
+            public static class LanguageSwitchBlock
+            {
+                public const string CustomTemplatePath = "Kore.Web.ContentManagement/ContentBlocks.LanguageSwitchBlock.CustomTemplatePath";
+                public const string Style = "Kore.Web.ContentManagement/ContentBlocks.LanguageSwitchBlock.Style";
+                public const string UseUrlPrefix = "Kore.Web.ContentManagement/ContentBlocks.LanguageSwitchBlock.UseUrlPrefix";
+            }
         }
 
         public static class Localization
         {
+            public static class LanguageModel
+            {
+                public const string CultureCode = "Kore.Web.ContentManagement/Localization.LanguageModel.CultureCode";
+                public const string IsEnabled = "Kore.Web.ContentManagement/Localization.LanguageModel.IsEnabled";
+                public const string IsRTL = "Kore.Web.ContentManagement/Localization.LanguageModel.IsRTL";
+                public const string Name = "Kore.Web.ContentManagement/Localization.LanguageModel.Name";
+                public const string SortOrder = "Kore.Web.ContentManagement/Localization.LanguageModel.SortOrder";
+            }
+            public static class LocalizableStringModel
+            {
+                public const string InvariantValue = "Kore.Web.ContentManagement/Localization.LocalizableStringModel.InvariantValue";
+                public const string Key = "Kore.Web.ContentManagement/Localization.LocalizableStringModel.Key";
+                public const string LocalizedValue = "Kore.Web.ContentManagement/Localization.LocalizableStringModel.LocalizedValue";
+            }
+
             public const string IsRTL = "Kore.Web.ContentManagement/Localization.IsRTL";
             public const string Languages = "Kore.Web.ContentManagement/Localization.Languages";
             public const string LocalizableStrings = "Kore.Web.ContentManagement/Localization.LocalizableStrings";

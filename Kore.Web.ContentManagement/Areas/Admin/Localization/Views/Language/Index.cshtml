@@ -44,7 +44,7 @@
                 <legend id="form-section-legend"></legend>
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
-                        @Html.Label("CultureCode", "Culture", new { @class = "control-label" })
+                        @Html.Label("CultureCode", T(KoreCmsLocalizableStrings.Localization.LanguageModel.CultureCode), new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="kore-icon kore-icon-globe"></i>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
-                        @Html.Label("Name", "Name", new { @class = "control-label" })
+                        @Html.Label("Name", T(KoreCmsLocalizableStrings.Localization.LanguageModel.Name), new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="kore-icon kore-icon-file"></i>
@@ -66,19 +66,19 @@
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
-                        @Html.Label("SortOrder", "Sort Order", new { @class = "control-label" })
+                        @Html.Label("SortOrder", T(KoreCmsLocalizableStrings.Localization.LanguageModel.SortOrder), new { @class = "control-label" })
                         @Html.TextBox("SortOrder", null, new { @class = "form-control", data_bind = "value: sortOrder" })
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     <div class="checkbox">
                         <label>
-                            @Html.CheckBox("IsRTL", new { data_bind = "checked: isRTL" }) Right-to-Left
+                            @Html.CheckBox("IsRTL", new { data_bind = "checked: isRTL" }) @T(KoreCmsLocalizableStrings.Localization.LanguageModel.IsRTL)
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            @Html.CheckBox("IsEnabled", new { data_bind = "checked: isEnabled" }) Enabled
+                            @Html.CheckBox("IsEnabled", new { data_bind = "checked: isEnabled" }) @T(KoreCmsLocalizableStrings.Localization.LanguageModel.IsEnabled)
                         </label>
                     </div>
                 </div>
@@ -110,7 +110,14 @@
             ResetLocalizableStringsError: '@T(KoreWebLocalizableStrings.Messages.ResetLocalizableStringsError).Text',
             ResetLocalizableStringsSuccess: '@T(KoreWebLocalizableStrings.Messages.ResetLocalizableStringsSuccess).Text',
             UpdateRecordError: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordError).Text',
-            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text'
+            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text',
+
+            Columns:{
+                Name: '@T(KoreCmsLocalizableStrings.Localization.LanguageModel.Name).Text',
+                CultureCode: '@T(KoreCmsLocalizableStrings.Localization.LanguageModel.CultureCode).Text',
+                IsEnabled: '@T(KoreCmsLocalizableStrings.Localization.LanguageModel.IsEnabled).Text',
+                SortOrder: '@T(KoreCmsLocalizableStrings.Localization.LanguageModel.SortOrder).Text',
+            }
         }
 </script>
 }

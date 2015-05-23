@@ -3,8 +3,8 @@
 
 <div id="block-content" class="col-sm-12 col-md-12">
     <div class="form-group">
-        @Html.Label("BodyContent", "Body Content", new { @class = "control-label" })
-        @Html.TextArea("BodyContent", null, new { @class = "form-control", data_bind = "wysiwyg: bodyContent, wysiwygConfig: tinyMCEConfig" })
+        @Html.LabelFor(m => m.BodyContent, new { @class = "control-label" })
+        @Html.TextAreaFor(m => m.BodyContent, new { @class = "form-control", data_bind = "wysiwyg: bodyContent, wysiwygConfig: tinyMCEConfig" })
     </div>
 </div>
 

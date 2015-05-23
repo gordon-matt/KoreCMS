@@ -217,23 +217,23 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Name",
-            title: "Name",
+            title: translations.Columns.Name,
             filterable: true
         }, {
             field: "CultureCode",
-            title: "Culture Code",
+            title: translations.Columns.CultureCode,
             filterable: true,
             width: 70
         }, {
             field: "IsEnabled",
-            title: "Is Enabled",
+            title: translations.Columns.IsEnabled,
             template: '<i class="fa #=IsEnabled ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
             attributes: { "class": "text-center" },
             filterable: true,
             width: 70
         }, {
             field: "SortOrder",
-            title: "Sort Order",
+            title: translations.Columns.SortOrder,
             filterable: true,
             width: 70
         }, {

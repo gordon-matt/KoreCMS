@@ -1,4 +1,5 @@
-﻿using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
+﻿using Kore.ComponentModel;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Localization
 {
@@ -11,6 +12,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization
             List,
             Custom
         }
+
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.LanguageSwitchBlock.Style)]
+        public LanguageSwitchStyle Style { get; set; }
+
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.LanguageSwitchBlock.UseUrlPrefix)]
+        public bool UseUrlPrefix { get; set; }
+
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.LanguageSwitchBlock.CustomTemplatePath)]
+        public string CustomTemplatePath { get; set; }
 
         #region ContentBlockBase Overrides
 
@@ -30,13 +40,5 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization
         }
 
         #endregion ContentBlockBase Overrides
-
-        public LanguageSwitchStyle Style { get; set; }
-
-        public bool UseUrlPrefix { get; set; }
-
-        public string MessageText { get; set; }
-
-        public string CustomTemplatePath { get; set; }
     }
 }

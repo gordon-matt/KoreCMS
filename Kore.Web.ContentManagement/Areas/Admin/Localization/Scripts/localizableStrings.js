@@ -150,15 +150,15 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Key",
-            title: "Key",
+            title: translations.Columns.Key,
             filterable: true
         }, {
             field: "InvariantValue",
-            title: "Invariant",
+            title: translations.Columns.InvariantValue,
             filterable: true
         }, {
             field: "LocalizedValue",
-            title: "Localized",
+            title: translations.Columns.LocalizedValue,
             filterable: true
         }, {
             command: ["edit", "destroy"],

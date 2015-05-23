@@ -42,8 +42,6 @@ var ViewModel = function () {
 
             $("#tokens-list").html("");
 
-
-
             $.ajax({
                 url: "/odata/kore/cms/MessageTemplateApi/GetTokens",
                 type: "POST",
@@ -63,13 +61,9 @@ var ViewModel = function () {
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 //$.notify(translations.GetRecordError, "error");
-                $.notify("Could not get tokens", "error");
+                $.notify(translations.GetTokensError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
-
-
-
-
 
             self.validator.resetForm();
             switchSection($("#form-section"));
@@ -251,13 +245,15 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Name",
+            title: translations.Columns.Name,
             filterable: true
         }, {
             field: "Subject",
+            title: translations.Columns.Subject,
             filterable: true
         }, {
             field: "Enabled",
-            title: "Is Enabled",
+            title: translations.Columns.Enabled,
             template: '<i class="fa #=Enabled ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
             attributes: { "class": "text-center" },
             filterable: true,

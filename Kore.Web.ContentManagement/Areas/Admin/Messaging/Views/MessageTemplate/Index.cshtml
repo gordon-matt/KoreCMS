@@ -39,7 +39,7 @@
                 <legend id="form-section-legend"></legend>
                 <div class="col-sm-12 col-md-12">
                     <div class="form-group">
-                        @Html.Label("Name", "Name", new { @class = "control-label" })
+                        @Html.Label("Name", T(KoreCmsLocalizableStrings.Messaging.MessageTemplateModel.Name), new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="kore-icon kore-icon-file"></i>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-sm-12 col-md-12">
                     <div class="form-group">
-                        @Html.Label("Subject", "Subject", new { @class = "control-label" })
+                        @Html.Label("Subject", T(KoreCmsLocalizableStrings.Messaging.MessageTemplateModel.Subject), new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="kore-icon kore-icon-file"></i>
@@ -61,13 +61,13 @@
                 </div>
                 <div class="col-sm-10 col-md-10">
                     <div class="form-group">
-                        @Html.Label("Body", "Body", new { @class = "control-label" })
+                        @Html.Label("Body", T(KoreCmsLocalizableStrings.Messaging.MessageTemplateModel.Body), new { @class = "control-label" })
                         @Html.TextArea("Body", null, new { @class = "form-control", data_bind = "wysiwyg: body, wysiwygConfig: tinyMCEConfig" })
                     </div>
                 </div>
                 <div class="col-sm-2 col-md-2">
                     <div class="panel panel-default" style="margin-top:23px">
-                        <div class="panel-heading">Tokens</div>
+                        <div class="panel-heading">@T(KoreCmsLocalizableStrings.Messaging.MessageTemplateModel.Tokens)</div>
                         <div class="panel-body">
                             <ul id="tokens-list" class="list-unstyled"></ul>
                         </div>
@@ -76,7 +76,7 @@
                 <div class="col-sm-4 col-md-4">
                     <div class="checkbox">
                         <label>
-                            @Html.CheckBox("Enabled", new { data_bind = "checked: enabled" }) Enabled
+                            @Html.CheckBox("Enabled", new { data_bind = "checked: enabled" }) @T(KoreCmsLocalizableStrings.Messaging.MessageTemplateModel.Enabled)
                         </label>
                     </div>
                 </div>
@@ -102,11 +102,18 @@
             DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.DeleteRecordSuccess).Text',
             Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
             GetRecordError: '@T(KoreWebLocalizableStrings.Messages.GetRecordError).Text',
+            GetTokensError: '@T(KoreCmsLocalizableStrings.Messaging.GetTokensError).Text',
             InsertRecordError: '@T(KoreWebLocalizableStrings.Messages.InsertRecordError).Text',
             InsertRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.InsertRecordSuccess).Text',
             Toggle: '@T(KoreWebLocalizableStrings.General.Toggle).Text',
             UpdateRecordError: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordError).Text',
-            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text'
+            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text',
+
+            Columns: {
+                Name: '@T(KoreCmsLocalizableStrings.Messaging.MessageTemplateModel.Name).Text',
+                Subject: '@T(KoreCmsLocalizableStrings.Messaging.MessageTemplateModel.Subject).Text',
+                Enabled: '@T(KoreCmsLocalizableStrings.Messaging.MessageTemplateModel.Enabled).Text',
+            }
         }
 </script>
 }

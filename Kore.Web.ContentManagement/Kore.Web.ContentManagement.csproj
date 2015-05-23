@@ -219,8 +219,6 @@
     <Compile Include="Areas\Admin\Menus\Domain\Menu.cs" />
     <Compile Include="Areas\Admin\Menus\Domain\MenuItem.cs" />
     <Compile Include="Areas\Admin\Menus\MenusAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Menus\Models\MenuItemModel.cs" />
-    <Compile Include="Areas\Admin\Menus\Models\MenuModel.cs" />
     <Compile Include="Areas\Admin\Menus\Services\IMenuItemService.cs" />
     <Compile Include="Areas\Admin\Menus\Services\IMenuService.cs" />
     <Compile Include="Areas\Admin\Messaging\Controllers\Api\MessageTemplateApiController.cs" />

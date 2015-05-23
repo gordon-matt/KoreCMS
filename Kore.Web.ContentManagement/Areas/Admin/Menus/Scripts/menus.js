@@ -394,11 +394,11 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Name",
-            title: "Name",
+            title: translations.Columns.Menu.Name,
             filterable: true
         }, {
             field: "UrlFilter",
-            title: "URL Filter",
+            title: translations.Columns.Menu.UrlFilter,
             filterable: true
         }, {
             field: "Id",
@@ -482,20 +482,20 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Text",
-            title: "Text",
+            title: translations.Columns.MenuItem.Text,
             filterable: true
         }, {
             field: "Url",
-            title: "URL",
+            title: translations.Columns.MenuItem.Url,
             filterable: true
         }, {
             field: "Position",
-            title: "Position",
+            title: translations.Columns.MenuItem.Position,
             filterable: true,
             width: 70
         }, {
             field: "Enabled",
-            title: "Enabled",
+            title: translations.Columns.MenuItem.Enabled,
             template: '<i class="fa #=Enabled ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
             attributes: { "class": "text-center" },
             filterable: true,
@@ -580,20 +580,20 @@ function detailInit(e) {
         scrollable: false,
         columns: [{
             field: "Text",
-            title: "Text",
+            title: translations.Columns.MenuItem.Text,
             filterable: true
         }, {
             field: "Url",
-            title: "URL",
+            title: translations.Columns.MenuItem.Url,
             filterable: true
         }, {
             field: "Position",
-            title: "Position",
+            title: translations.Columns.MenuItem.Position,
             filterable: true,
             width: 70
         }, {
             field: "Enabled",
-            title: "Enabled",
+            title: translations.Columns.MenuItem.Enabled,
             template: '<i class="fa #=Enabled ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
             attributes: { "class": "text-center" },
             filterable: true,

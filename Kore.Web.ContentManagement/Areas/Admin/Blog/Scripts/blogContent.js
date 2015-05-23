@@ -34,7 +34,7 @@ var BlogEntryModel = function () {
     self.headline = ko.observable('');
     self.userId = ko.observable('');
     self.userName = ko.observable('');
-    self.dateCreated = ko.observable('');
+    self.dateCreatedUtc = ko.observable('');
     self.teaserImageUrl = ko.observable(null);
     self.shortDescription = ko.observable('');
     self.fullDescription = ko.observable('');
@@ -143,7 +143,7 @@ function getBlogs() {
 
     var query = new breeze.EntityQuery()
         .from("BlogApi")
-        .orderBy("DateCreated desc")
+        .orderBy("DateCreatedUtc desc")
         .skip((viewModel.pageIndex() - 1) * viewModel.pageSize)
         .take(viewModel.pageSize)
         .inlineCount();
@@ -159,8 +159,8 @@ function getBlogs() {
             entry.headline(current.Headline);
             entry.userId(current.UserId);
 
-            var date = moment(current.DateCreated);
-            entry.dateCreated(date.format(settings.dateFormat));
+            var date = moment(current.DateCreatedUtc);
+            entry.dateCreatedUtc(date.format(settings.dateFormat));
 
             entry.teaserImageUrl(current.TeaserImageUrl);
             entry.shortDescription(current.ShortDescription);

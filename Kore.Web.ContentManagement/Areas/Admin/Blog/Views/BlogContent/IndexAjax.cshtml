@@ -23,7 +23,13 @@
                     <h2 class="blog-headline" data-bind="ifnot: useExternalLink">
                         <a href="javascript:void(0);" data-bind="text: headline, click: showDetails"></a>
                     </h2>
-                    <p>Posted by <span data-bind="text: userName"></span> on <span data-bind="text: dateCreated"></span></p>
+                    <p>
+                        @Html.Raw(string.Format(
+                            T(KoreCmsLocalizableStrings.Blog.PostedByXOnX),
+                            "<span data-bind='text: userName'></span>",
+                            "<span data-bind='text: dateCreatedUtc'></span>"))
+                    </p>
+                    @*<p>Posted by <span data-bind="text: userName"></span> on <span data-bind="text: dateCreatedUtc"></span></p>*@
 
                     <div class="pull-left col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <div data-bind="if: teaserImageUrl">
@@ -46,17 +52,23 @@
     <div id="details-section" class="row blog-section" style="display:none">
         <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="pull-right">
-                <a class="btn btn-default" data-bind="click: showMain">Back</a>
+                <a class="btn btn-default" data-bind="click: showMain">@T(KoreWebLocalizableStrings.General.Back)</a>
             </div>
             <h1 class="blog-headline" data-bind="text: selected().headline"></h1>
-            <p>Posted by <span data-bind="text: selected().userName"></span> on <span data-bind="text: selected().dateCreated"></span></p>
+            <p>
+                @Html.Raw(string.Format(
+                    T(KoreCmsLocalizableStrings.Blog.PostedByXOnX),
+                    "<span data-bind='text: selected().userName'></span>",
+                    "<span data-bind='text: selected().dateCreatedUtc'></span>"))
+            </p>
+            @*<p>Posted by <span data-bind="text: selected().userName"></span> on <span data-bind="text: selected().dateCreatedUtc"></span></p>*@
             <p class="blog-full-desc" data-bind="html: selected().fullDescription"></p>
 
             <div class="pull-left" data-bind="visible: $root.canShowPrevious()">
-                <a class="btn btn-default" data-bind="click: showPrevious">Previous</a>
+                <a class="btn btn-default" data-bind="click: showPrevious">@T(KoreWebLocalizableStrings.General.Previous)</a>
             </div>
             <div class="pull-right" data-bind="visible: $root.canShowNext()">
-                <a class="btn btn-default" data-bind="click: showNext">Next</a>
+                <a class="btn btn-default" data-bind="click: showNext">@T(KoreWebLocalizableStrings.General.Next)</a>
             </div>
         </article>
     </div>

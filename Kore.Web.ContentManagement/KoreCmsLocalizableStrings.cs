@@ -4,8 +4,21 @@
     {
         public static class Blog
         {
-            public const string ManageBlog = "Kore.Web.ContentManagement/CMS.Blog.ManageBlog";
-            public const string Title = "Kore.Web.ContentManagement/CMS.Blog.Title";
+            public static class Model
+            {
+                public const string DateCreatedUtc = "Kore.Web.ContentManagement/Blog.Model.DateCreatedUtc";
+                public const string ExternalLink = "Kore.Web.ContentManagement/Blog.Model.ExternalLink";
+                public const string FullDescription = "Kore.Web.ContentManagement/Blog.Model.FullDescription";
+                public const string Headline = "Kore.Web.ContentManagement/Blog.Model.Headline";
+                public const string ShortDescription = "Kore.Web.ContentManagement/Blog.Model.ShortDescription";
+                public const string Slug = "Kore.Web.ContentManagement/Blog.Model.Slug";
+                public const string TeaserImageUrl = "Kore.Web.ContentManagement/Blog.Model.TeaserImageUrl";
+                public const string UseExternalLink = "Kore.Web.ContentManagement/Blog.Model.UseExternalLink";
+            }
+
+            public const string ManageBlog = "Kore.Web.ContentManagement/Blog.ManageBlog";
+            public const string PostedByXOnX = "Kore.Web.ContentManagement/Blog.PostedByXOnX";
+            public const string Title = "Kore.Web.ContentManagement/Blog.Title";
         }
 
         public static class ContentBlocks
@@ -48,8 +61,8 @@
 
         public static class Media
         {
-            public const string ManageMedia = "Kore.Web.ContentManagement/CMS.Media.ManageMedia";
-            public const string Title = "Kore.Web.ContentManagement/CMS.Media.Title";
+            public const string ManageMedia = "Kore.Web.ContentManagement/Media.ManageMedia";
+            public const string Title = "Kore.Web.ContentManagement/Media.Title";
         }
 
         public static class Membership
@@ -71,13 +84,13 @@
 
         public static class Menus
         {
-            public const string IsExternalUrl = "Kore.Web.ContentManagement/CMS.Menus.IsExternalUrl";
-            public const string Items = "Kore.Web.ContentManagement/CMS.Menus.Items";
-            public const string ManageMenuItems = "Kore.Web.ContentManagement/CMS.Menus.ManageMenuItems";
-            public const string ManageMenus = "Kore.Web.ContentManagement/CMS.Menus.ManageMenus";
-            public const string MenuItems = "Kore.Web.ContentManagement/CMS.Menus.MenuItems";
-            public const string NewItem = "Kore.Web.ContentManagement/CMS.Menus.NewItem";
-            public const string Title = "Kore.Web.ContentManagement/CMS.Menus.Title";
+            public const string IsExternalUrl = "Kore.Web.ContentManagement/Menus.IsExternalUrl";
+            public const string Items = "Kore.Web.ContentManagement/Menus.Items";
+            public const string ManageMenuItems = "Kore.Web.ContentManagement/Menus.ManageMenuItems";
+            public const string ManageMenus = "Kore.Web.ContentManagement/Menus.ManageMenus";
+            public const string MenuItems = "Kore.Web.ContentManagement/Menus.MenuItems";
+            public const string NewItem = "Kore.Web.ContentManagement/Menus.NewItem";
+            public const string Title = "Kore.Web.ContentManagement/Menus.Title";
         }
 
         public static class Messages
@@ -91,9 +104,9 @@
 
         public static class Messaging
         {
-            public const string MessageTemplates = "Kore.Web.ContentManagement/CMS.Messaging.MessageTemplates";
-            public const string QueuedEmails = "Kore.Web.ContentManagement/CMS.Messaging.QueuedEmails";
-            public const string Title = "Kore.Web.ContentManagement/CMS.Messaging.Title";
+            public const string MessageTemplates = "Kore.Web.ContentManagement/Messaging.MessageTemplates";
+            public const string QueuedEmails = "Kore.Web.ContentManagement/Messaging.QueuedEmails";
+            public const string Title = "Kore.Web.ContentManagement/Messaging.Title";
         }
 
         public static class Navigation
@@ -103,9 +116,9 @@
 
         public static class Newsletters
         {
-            public const string Subscribers = "Kore.Web.ContentManagement/CMS.Newsletters.Subscribers";
-            public const string SuccessfullySignedUp = "Kore.Web.ContentManagement/CMS.Newsletters.SuccessfullySignedUp";
-            public const string Title = "Kore.Web.ContentManagement/CMS.Newsletters.Title";
+            public const string Subscribers = "Kore.Web.ContentManagement/Newsletters.Subscribers";
+            public const string SuccessfullySignedUp = "Kore.Web.ContentManagement/Newsletters.SuccessfullySignedUp";
+            public const string Title = "Kore.Web.ContentManagement/Newsletters.Title";
         }
 
         public static class Pages

@@ -52,7 +52,7 @@
                 <legend id="form-section-legend"></legend>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
-                        @Html.Label("Headline", "Headline", new { @class = "control-label" })
+                        @Html.Label("Headline", T(KoreCmsLocalizableStrings.Blog.Model.Headline), new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="kore-icon kore-icon-blog"></i>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
-                        @Html.Label("Slug", "Slug", new { @class = "control-label" })
+                        @Html.Label("Slug", T(KoreCmsLocalizableStrings.Blog.Model.Slug), new { @class = "control-label" })
                         @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: slug" })
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                     <div class="form-group">
-                        @Html.Label("TeaserImageUrl", "Teaser Image", new { @class = "control-label" })
+                        @Html.Label("TeaserImageUrl", T(KoreCmsLocalizableStrings.Blog.Model.TeaserImageUrl), new { @class = "control-label" })
                         <div class="input-group">
                             @Html.TextBox("TeaserImageUrl", null, new { @class = "form-control", data_bind = "value: teaserImageUrl" })
                             <span class="input-group-addon">
@@ -90,7 +90,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
-                        @Html.Label("ShortDescription", "Short Description", new { @class = "control-label" })
+                        @Html.Label("ShortDescription", T(KoreCmsLocalizableStrings.Blog.Model.ShortDescription), new { @class = "control-label" })
                         @Html.TextArea("ShortDescription", null, new { @class = "form-control", data_bind = "value: shortDescription" })
                     </div>
                 </div>
@@ -98,20 +98,20 @@
                     <div class="form-group">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("UseExternalLink", new { data_bind = "checked: useExternalLink" }) Use External Link
+                                @Html.CheckBox("UseExternalLink", new { data_bind = "checked: useExternalLink" }) @T(KoreCmsLocalizableStrings.Blog.Model.UseExternalLink)
                             </label>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: useExternalLink() == true">
                     <div class="form-group">
-                        @Html.Label("ExternalLink", "External Link", new { @class = "control-label" })
+                        @Html.Label("ExternalLink", T(KoreCmsLocalizableStrings.Blog.Model.ExternalLink), new { @class = "control-label" })
                         @Html.TextBox("ExternalLink", null, new { @class = "form-control", data_bind = "value: externalLink" })
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: useExternalLink() == false">
                     <div class="form-group">
-                        @Html.Label("FullDescription", "Full Description", new { @class = "control-label" })
+                        @Html.Label("FullDescription", T(KoreCmsLocalizableStrings.Blog.Model.FullDescription), new { @class = "control-label" })
                         @Html.TextArea("FullDescription", null, new { @class = "form-control", data_bind = "wysiwyg: fullDescription, wysiwygConfig: tinyMCE_fullDescription" })
                     </div>
                 </div>
@@ -140,7 +140,12 @@
             InsertRecordError: '@T(KoreWebLocalizableStrings.Messages.InsertRecordError).Text',
             InsertRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.InsertRecordSuccess).Text',
             UpdateRecordError: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordError).Text',
-            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text'
+            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text',
+
+            Columns:{
+                Headline: '@T(KoreCmsLocalizableStrings.Blog.Model.Headline).Text',
+                DateCreatedUtc: '@T(KoreCmsLocalizableStrings.Blog.Model.DateCreatedUtc).Text',
+            }
         }
     </script>
 }

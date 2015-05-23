@@ -39,7 +39,12 @@
                             @Html.ActionLink(entry.Headline, "Details", "BlogContent", new { area = string.Empty, slug = entry.Slug }, null)
                         }
                     </h2>
-                    <p>Posted by <span>@userNames[entry.UserId]</span> on <span>@entry.DateCreated</span></p>
+                    <p>
+                        @Html.Raw(string.Format(
+                            T(KoreCmsLocalizableStrings.Blog.PostedByXOnX),
+                            string.Concat("<strong>", userNames[entry.UserId], "</strong>"),
+                            string.Concat("<strong>", entry.DateCreatedUtc, "</strong>")))
+                    </p>
                     
                     @{
                         string teaserImageUrl = string.IsNullOrEmpty(entry.TeaserImageUrl)

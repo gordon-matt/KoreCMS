@@ -181,7 +181,7 @@ $(document).ready(function () {
                 model: {
                     fields: {
                         Headline: { type: "string" },
-                        DateCreated: { type: "date" }
+                        DateCreatedUtc: { type: "date" }
                     }
                 }
             },
@@ -189,7 +189,7 @@ $(document).ready(function () {
             serverPaging: true,
             serverFiltering: true,
             serverSorting: true,
-            sort: { field: "DateCreated", dir: "desc" }
+            sort: { field: "DateCreatedUtc", dir: "desc" }
         },
         filterable: true,
         sortable: {
@@ -201,9 +201,11 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Headline",
+            title: translations.Columns.Headline,
             filterable: true
         }, {
-            field: "DateCreated",
+            field: "DateCreatedUtc",
+            title: translations.Columns.DateCreatedUtc,
             filterable: true,
             format: '{0:yyyy-MM-dd}'
         }, {

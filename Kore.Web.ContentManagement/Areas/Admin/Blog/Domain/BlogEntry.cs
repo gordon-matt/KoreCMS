@@ -11,7 +11,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 
         public string UserId { get; set; }
 
-        public DateTime DateCreated { get; set; }
+        public DateTime DateCreatedUtc { get; set; }
 
         public string Headline { get; set; }
 
@@ -44,7 +44,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
             ToTable("Kore_Blog");
             HasKey(x => x.Id);
             Property(x => x.UserId).HasMaxLength(255).IsRequired();
-            Property(x => x.DateCreated).IsRequired();
+            Property(x => x.DateCreatedUtc).IsRequired();
             Property(x => x.Headline).HasMaxLength(128).IsRequired();
             Property(x => x.Slug).HasMaxLength(128).IsRequired();
             Property(x => x.TeaserImageUrl).HasMaxLength(255);

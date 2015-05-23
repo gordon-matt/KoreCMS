@@ -40,7 +40,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 
         public override IHttpActionResult Post(BlogEntry entity)
         {
-            entity.DateCreated = DateTime.UtcNow;
+            entity.DateCreatedUtc = DateTime.UtcNow;
             entity.UserId = membershipService.Value.GetUserByName(User.Identity.Name).Id;
             return base.Post(entity);
         }
@@ -49,7 +49,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
         {
             var currentEntry = Repository.Find(entity.Id);
             entity.UserId = currentEntry.UserId;
-            entity.DateCreated = currentEntry.DateCreated;
+            entity.DateCreatedUtc = currentEntry.DateCreatedUtc;
             return base.Put(key, entity);
         }
 

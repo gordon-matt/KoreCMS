@@ -58,7 +58,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                     : Convert.ToInt32(pageIndexParam);
 
                 var model = blogRepository.Value.Table
-                    .OrderByDescending(x => x.DateCreated)
+                    .OrderByDescending(x => x.DateCreatedUtc)
                     .Skip((pageIndex - 1) * blogSettings.ItemsPerPage)
                     .Take(blogSettings.ItemsPerPage)
                     .ToList();
@@ -103,26 +103,26 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
             string previousEntrySlug = null;
             string nextEntrySlug = null;
 
-            bool hasPreviousEntry = blogRepository.Value.Table.Any(x => x.DateCreated < model.DateCreated);
+            bool hasPreviousEntry = blogRepository.Value.Table.Any(x => x.DateCreatedUtc < model.DateCreatedUtc);
             if (hasPreviousEntry)
             {
                 var previousEntryDate = blogRepository.Value.Table
-                    .Where(x => x.DateCreated < model.DateCreated)
-                    .Select(x => x.DateCreated)
+                    .Where(x => x.DateCreatedUtc < model.DateCreatedUtc)
+                    .Select(x => x.DateCreatedUtc)
                     .Max();
 
-                previousEntrySlug = blogRepository.Value.Table.First(x => x.DateCreated == previousEntryDate).Slug;
+                previousEntrySlug = blogRepository.Value.Table.First(x => x.DateCreatedUtc == previousEntryDate).Slug;
             }
 
-            bool hasNextEntry = blogRepository.Value.Table.Any(x => x.DateCreated > model.DateCreated);
+            bool hasNextEntry = blogRepository.Value.Table.Any(x => x.DateCreatedUtc > model.DateCreatedUtc);
             if (hasNextEntry)
             {
                 var nextEntryDate = blogRepository.Value.Table
-                    .Where(x => x.DateCreated > model.DateCreated)
-                    .Select(x => x.DateCreated)
+                    .Where(x => x.DateCreatedUtc > model.DateCreatedUtc)
+                    .Select(x => x.DateCreatedUtc)
                     .Min();
 
-                nextEntrySlug = blogRepository.Value.Table.First(x => x.DateCreated == nextEntryDate).Slug;
+                nextEntrySlug = blogRepository.Value.Table.First(x => x.DateCreatedUtc == nextEntryDate).Slug;
             }
 
             ViewBag.PreviousEntrySlug = previousEntrySlug;

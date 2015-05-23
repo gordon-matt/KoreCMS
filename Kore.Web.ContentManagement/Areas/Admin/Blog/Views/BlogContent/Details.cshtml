@@ -24,12 +24,12 @@
     <div id="details-section" class="row blog-section">
         <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="pull-right">
-                @Html.ActionLink("Back", "Index", "BlogContent", new { area = string.Empty }, new { @class = "btn btn-default" })
+                @Html.ActionLink(T(KoreWebLocalizableStrings.General.Back), "Index", "BlogContent", new { area = string.Empty }, new { @class = "btn btn-default" })
             </div>
             <h1 class="blog-headline">
                 @Model.Headline
             </h1>
-            <p>Posted by <span>@userName</span> on <span>@Model.DateCreated</span></p>
+            <p>@Html.Raw(string.Format(T(KoreCmsLocalizableStrings.Blog.PostedByXOnX), string.Concat("<strong>", userName, "</strong>"), string.Concat("<strong>", Model.DateCreatedUtc, "</strong>")))</p>
             <p class="blog-full-desc">
                 @Html.Raw(Model.FullDescription)
             </p>
@@ -37,13 +37,13 @@
             @if (!string.IsNullOrEmpty(previousSlug))
             {
                 <div class="pull-left">
-                    @Html.ActionLink("Previous", "Details", "BlogContent", new { area = string.Empty, slug = previousSlug }, new { @class = "btn btn-default" })
+                    @Html.ActionLink(T(KoreWebLocalizableStrings.General.Previous), "Details", "BlogContent", new { area = string.Empty, slug = previousSlug }, new { @class = "btn btn-default" })
                 </div>
             }
             @if (!string.IsNullOrEmpty(nextSlug))
             {
                 <div class="pull-right">
-                    @Html.ActionLink("Next", "Details", "BlogContent", new { area = string.Empty, slug = nextSlug }, new { @class = "btn btn-default" })
+                    @Html.ActionLink(T(KoreWebLocalizableStrings.General.Next), "Details", "BlogContent", new { area = string.Empty, slug = nextSlug }, new { @class = "btn btn-default" })
                 </div>
             }
         </article>

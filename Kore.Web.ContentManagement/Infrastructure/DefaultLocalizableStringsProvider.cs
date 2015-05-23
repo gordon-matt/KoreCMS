@@ -17,7 +17,16 @@ namespace Kore.Web.ContentManagement.Infrastructure
                     LocalizedStrings = new Dictionary<string, string>
                     {
                         { KoreCmsLocalizableStrings.Blog.ManageBlog, "Manage Blog" },
+                        { KoreCmsLocalizableStrings.Blog.PostedByXOnX, "Posted by {0} on {1}." },
                         { KoreCmsLocalizableStrings.Blog.Title, "Blog" },
+                        { KoreCmsLocalizableStrings.Blog.Model.DateCreatedUtc, "Date Created (UTC)" },
+                        { KoreCmsLocalizableStrings.Blog.Model.ExternalLink, "External Link" },
+                        { KoreCmsLocalizableStrings.Blog.Model.FullDescription, "Full Description" },
+                        { KoreCmsLocalizableStrings.Blog.Model.Headline, "Headline" },
+                        { KoreCmsLocalizableStrings.Blog.Model.ShortDescription, "Short Description" },
+                        { KoreCmsLocalizableStrings.Blog.Model.Slug, "Slug" },
+                        { KoreCmsLocalizableStrings.Blog.Model.TeaserImageUrl, "Teaser Image URL" },
+                        { KoreCmsLocalizableStrings.Blog.Model.UseExternalLink, "Use External Link" },
                         { KoreCmsLocalizableStrings.ContentBlocks.FormBlock.EmailAddress, "Email Address" },
                         { KoreCmsLocalizableStrings.ContentBlocks.FormBlock.HtmlTemplate, "HTML Template" },
                         { KoreCmsLocalizableStrings.ContentBlocks.FormBlock.PleaseEnterCaptcha, "Please enter captcha validation field." },

@@ -13,37 +13,29 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
         public Guid Id { get; set; }
 
         [ExcludeFromSerialization]
-        public abstract string Name { get; }
-
-        public bool Localized { get; set; }
-
-        [ExcludeFromSerialization]
         public string Title { get; set; }
 
-        [Display(Name = "Show Title On Page")]
-        public bool ShowTitleOnPage { get; set; }
+        [ExcludeFromSerialization]
+        public int Order { get; set; }
 
-        public virtual bool HasTitle { get { return true; } }
+        [ExcludeFromSerialization]
+        public bool Enabled { get; set; }
+
+        [ExcludeFromSerialization]
+        public abstract string Name { get; }
+
+        [Display(Name = "Zone")]
+        [ExcludeFromSerialization]
+        public Guid ZoneId { get; set; }
 
         [Display(Name = "Display Condition")]
         [ExcludeFromSerialization]
         public string DisplayCondition { get; set; }
 
         [ExcludeFromSerialization]
-        public bool Enabled { get; set; }
-
-        [Display(Name = "Zone")]
-        [ExcludeFromSerialization]
-        public Guid ZoneId { get; set; }
-
-        [ExcludeFromSerialization]
         public Guid? PageId { get; set; }
 
-        [ExcludeFromSerialization]
-        public int Order { get; set; }
-
-        [ExcludeFromSerialization]
-        public bool IsMoveable { get; set; }
+        public bool Localized { get; set; }
 
         [ExcludeFromSerialization]
         public string CultureCode { get; set; }

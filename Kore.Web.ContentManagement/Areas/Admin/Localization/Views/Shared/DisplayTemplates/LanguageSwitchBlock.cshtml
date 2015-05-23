@@ -60,12 +60,6 @@
 
     case LanguageSwitchBlock.LanguageSwitchStyle.Select:
         {
-            if (!string.IsNullOrEmpty(Model.MessageText))
-            {
-                @Html.Raw("<div class=\"input-prepend\">");
-                <span class="add-on">@Model.MessageText</span>
-            }
-
             <select onchange="changeLanguage(this.value);" autocomplete="off" class="form-control">
                 @foreach (var language in languages)
                 {
@@ -83,11 +77,6 @@
                     }
                 }
             </select>
-
-            if (!string.IsNullOrEmpty(Model.MessageText))
-            {
-                @Html.Raw("</div>");
-            }
         }
         break;
     case LanguageSwitchBlock.LanguageSwitchStyle.List:

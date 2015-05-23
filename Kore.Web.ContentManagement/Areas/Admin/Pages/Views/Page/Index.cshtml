@@ -1,6 +1,5 @@
 ﻿@using Kore.Web.ContentManagement
 @using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
-@using Kore.Web.ContentManagement.Extensions;
 @using Kore.Web.Mvc
 @using CMSPage = Kore.Web.ContentManagement.Areas.Admin.Pages.Domain.Page
 
@@ -36,7 +35,7 @@
                 </a>
                 <a data-bind="click: showPageTypes" class="btn btn-info">
                     <i class="kore-icon kore-icon-crop"></i>
-                    @T(KoreCmsLocalizableStrings.Pages.PageTypes)
+                    @T(KoreCmsLocalizableStrings.Pages.PageTypes.Title)
                 </a>
             </div>
         </div>
@@ -68,7 +67,7 @@
                 <div id="blank-section" class="row" style="display:none">
                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="alert alert-info">
-                            Select a page from the left menu to begin editing.
+                            @T(KoreCmsLocalizableStrings.Pages.SelectPageToBeginEdit)
                         </div>
                     </article>
                 </div>
@@ -80,13 +79,13 @@
                                 <legend id="form-section-legend"></legend>
                                 <div id="form-section-pageTypeId" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        @Html.Label("PageTypeId", "Page Type", new { @class = "control-label" })
+                                        @Html.Label("PageTypeId", T(KoreCmsLocalizableStrings.Pages.PageModel.PageTypeId), new { @class = "control-label" })
                                         @Html.KoreCMS().PageTypesDropDownList("PageTypeId", null, null, new { @class = "form-control", data_bind = "value: pageTypeId" })
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        @Html.Label("Name", "Name", new { @class = "control-label" })
+                                        @Html.Label("Name", T(KoreCmsLocalizableStrings.Pages.PageModel.Name), new { @class = "control-label" })
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="kore-icon kore-icon-file"></i>
@@ -97,13 +96,13 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        @Html.Label("Slug", "Slug", new { @class = "control-label" })
+                                        @Html.Label("Slug", T(KoreCmsLocalizableStrings.Pages.PageModel.Slug), new { @class = "control-label" })
                                         @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: slug" })
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        @Html.Label("Order", "Order", new { @class = "control-label" })
+                                        @Html.Label("Order", T(KoreCmsLocalizableStrings.Pages.PageModel.Order), new { @class = "control-label" })
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="kore-icon kore-icon-sort-amount-asc"></i>
@@ -114,21 +113,21 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        @Html.Label("Roles", "Roles", new { @class = "control-label" })
+                                        @Html.Label("Roles", T(KoreCmsLocalizableStrings.Pages.PageModel.Roles), new { @class = "control-label" })
                                         @Html.Kore().RolesCheckBoxList("Roles", null, new { @class = "checkbox" }, new { data_bind = "checked: roles" })
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                     <div class="checkbox">
                                         <label>
-                                            @Html.CheckBox("IsEnabled", new { data_bind = "checked: isEnabled" }) Enabled
+                                            @Html.CheckBox("IsEnabled", new { data_bind = "checked: isEnabled" }) @T(KoreCmsLocalizableStrings.Pages.PageModel.IsEnabled)
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                     <div class="checkbox">
                                         <label>
-                                            @Html.CheckBox("ShowOnMenus", new { data_bind = "checked: showOnMenus" }) Show on Menus
+                                            @Html.CheckBox("ShowOnMenus", new { data_bind = "checked: showOnMenus" }) @T(KoreCmsLocalizableStrings.Pages.PageModel.ShowOnMenus)
                                         </label>
                                     </div>
                                 </div>
@@ -152,7 +151,7 @@
                             @Html.Hidden("CultureSelector_PageId")
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
-                                    @Html.Label("CultureSelector_CultureCode", "Culture", new { @class = "control-label" })
+                                    @Html.Label("CultureSelector_CultureCode", T(KoreCmsLocalizableStrings.Pages.TranslatePageModel.Culture), new { @class = "control-label" })
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="kore-icon kore-icon-globe"></i>
@@ -195,30 +194,30 @@
                                 <legend id="page-type-form-section-legend"></legend>
                                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                     <div class="form-group">
-                                        @Html.Label("PageType_Name", "Name", new { @class = "control-label" })
+                                        @Html.Label("PageType_Name", T(KoreCmsLocalizableStrings.Pages.PageTypeModel.Name), new { @class = "control-label" })
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="kore-icon kore-icon-file"></i>
                                             </span>
-                                            @Html.TextBox("PageType_Name", null, new { @class = "form-control", data_bind = "value: pageType.name" })
+                                            @Html.TextBox("PageType_Name", null, new { @class = "form-control", disabled = "disabled", data_bind = "value: pageType.name" })
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        @Html.Label("PageType_LayoutPath", "Layout Path", new { @class = "control-label" })
+                                        @Html.Label("PageType_LayoutPath", T(KoreCmsLocalizableStrings.Pages.PageTypeModel.LayoutPath), new { @class = "control-label" })
                                         @Html.TextBox("PageType_LayoutPath", null, new { @class = "form-control", data_bind = "value: pageType.layoutPath" })
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        @Html.Label("PageType_DisplayTemplatePath", "Display Template Path", new { @class = "control-label" })
+                                        @Html.Label("PageType_DisplayTemplatePath", T(KoreCmsLocalizableStrings.Pages.PageTypeModel.DisplayTemplatePath), new { @class = "control-label" })
                                         @Html.TextBox("PageType_DisplayTemplatePath", null, new { @class = "form-control", data_bind = "value: pageType.displayTemplatePath" })
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        @Html.Label("PageType_EditorTemplatePath", "Editor Template Path", new { @class = "control-label" })
+                                        @Html.Label("PageType_EditorTemplatePath", T(KoreCmsLocalizableStrings.Pages.PageTypeModel.EditorTemplatePath), new { @class = "control-label" })
                                         @Html.TextBox("PageType_EditorTemplatePath", null, new { @class = "form-control", data_bind = "value: pageType.editorTemplatePath" })
                                     </div>
                                 </div>
@@ -259,7 +258,13 @@
             UpdateRecordError: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordError).Text',
             UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text',
             UpdateTranslationError: '@T(KoreCmsLocalizableStrings.Messages.UpdateTranslationError).Text',
-            UpdateTranslationSuccess: '@T(KoreCmsLocalizableStrings.Messages.UpdateTranslationSuccess).Text'
+            UpdateTranslationSuccess: '@T(KoreCmsLocalizableStrings.Messages.UpdateTranslationSuccess).Text',
+
+            Columns: {
+                PageType: {
+                    Name: '@T(KoreCmsLocalizableStrings.Pages.PageTypeModel.Name).Text',
+                }
+            }
         }
     </script>
     <script id="treeview-template" type="text/kendo-ui-template">

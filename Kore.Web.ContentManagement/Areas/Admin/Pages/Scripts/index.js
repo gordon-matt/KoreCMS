@@ -114,10 +114,6 @@ var PageTypeVM = function () {
         switchSection($("#page-type-grid-section"));
     };
 
-    //self.showPages = function () {
-    //    switchSection($("#blank-section"));
-    //};
-
     self.validator = $("#page-type-form-section-form").validate({
         rules: {
             Name: { required: true, maxlength: 255 },
@@ -140,10 +136,10 @@ var ViewModel = function () {
     self.isEnabled = ko.observable(false);
     self.order = ko.observable(0);
     self.showOnMenus = ko.observable(true);
-    self.accessRestrictions = null; // doesn't need to be an observable
     self.cultureCode = ko.observable('');
     self.refId = ko.observable(null);
     self.showToolbar = ko.observable(false);
+    self.accessRestrictions = null;
 
     self.roles = ko.observableArray([]);
 
@@ -632,6 +628,7 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Name",
+            title: translations.Columns.PageType.Name,
             filterable: true
         }, {
             field: "Id",

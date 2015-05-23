@@ -20,12 +20,11 @@
     @if (Model.HtmlTemplate.Contains("[Captcha]"))
     {
         @Html.Hidden("EnableCaptcha", true)
-        var localizer = LocalizationUtilities.Resolve();
         string captcha = FormBlock.GenerateCaptcha();
         htmlTemplate = htmlTemplate.Replace("[Captcha]", captcha);
         htmlTemplate = htmlTemplate.Replace("[CaptchaResponse]", string.Format(
             "<input type=\"text\" class=\"form-control form-captcha\" name=\"captcha_response\" data-val=\"true\" data-val-required=\"{0}\" /><span data-valmsg-for=\"captcha_response\" data-valmsg-replace=\"true\"></span>",
-            localizer(Kore.Web.KoreWebLocalizableStrings.Validation.Required)));
+            T(Kore.Web.KoreWebLocalizableStrings.Validation.Required)));
     }
     else
     {

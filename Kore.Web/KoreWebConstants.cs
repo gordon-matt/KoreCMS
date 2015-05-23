@@ -32,7 +32,7 @@ namespace Kore.Web
                 {
                     var siteSettings = EngineContext.Current.Resolve<KoreSiteSettings>();
 
-                    defaultFrontendLayoutPath = string.IsNullOrEmpty(siteSettings.AdminLayoutPath)
+                    defaultFrontendLayoutPath = string.IsNullOrEmpty(siteSettings.DefaultFrontendLayoutPath)
                         ? "~/Views/Shared/_Layout.cshtml"
                         : siteSettings.DefaultFrontendLayoutPath;
                 }

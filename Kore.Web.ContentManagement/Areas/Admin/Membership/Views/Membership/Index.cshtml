@@ -26,7 +26,64 @@
 
 @section scripts {
     <script type="text/javascript">
+        $.validator.setDefaults({
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error');
+            },
+            errorElement: 'span',
+            errorClass: 'help-block',
+            errorPlacement: function (error, element) {
+                if (element.parent('.input-group').length) {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });
+
         var gridPageSize = @SiteSettings.DefaultGridPageSize;
+
+        var translations = {
+            ChangePasswordError: '@T(KoreCmsLocalizableStrings.Membership.ChangePasswordError).Text',
+            ChangePasswordSuccess: '@T(KoreCmsLocalizableStrings.Membership.ChangePasswordSuccess).Text',
+            Create: '@T(KoreWebLocalizableStrings.General.Create).Text',
+            Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
+            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.Messages.ConfirmDeleteRecord).Text',
+            DeleteRecordError: '@T(KoreWebLocalizableStrings.Messages.DeleteRecordError).Text',
+            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.DeleteRecordSuccess).Text',
+            Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
+            GetRecordError: '@T(KoreWebLocalizableStrings.Messages.GetRecordError).Text',
+            InsertRecordError: '@T(KoreWebLocalizableStrings.Messages.InsertRecordError).Text',
+            InsertRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.InsertRecordSuccess).Text',
+            Password: '@T(KoreCmsLocalizableStrings.Membership.Password).Text',
+            Permissions: '@T(KoreCmsLocalizableStrings.Membership.Permissions).Text',
+            Roles: '@T(KoreCmsLocalizableStrings.Membership.Roles).Text',
+            SavePermissionsError: '@T(KoreCmsLocalizableStrings.Membership.SavePermissionsError).Text',
+            SavePermissionsSuccess: '@T(KoreCmsLocalizableStrings.Membership.SavePermissionsSuccess).Text',
+            SaveRolesError: '@T(KoreCmsLocalizableStrings.Membership.SaveRolesError).Text',
+            SaveRolesSuccess: '@T(KoreCmsLocalizableStrings.Membership.SaveRolesSuccess).Text',
+            UpdateRecordError: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordError).Text',
+            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text',
+
+            Columns: {
+                User: {
+                    IsActive: '@T(KoreCmsLocalizableStrings.Membership.UserModel.IsActive).Text',
+                    Roles: '@T(KoreCmsLocalizableStrings.Membership.UserModel.Roles).Text',
+                    UserName: '@T(KoreCmsLocalizableStrings.Membership.UserModel.UserName).Text',
+                },
+                Role: {
+                    Name: '@T(KoreCmsLocalizableStrings.Membership.RoleModel.Name).Text',
+                },
+                Permission: {
+                    Category: '@T(KoreCmsLocalizableStrings.Membership.PermissionModel.Category).Text',
+                    Name: '@T(KoreCmsLocalizableStrings.Membership.PermissionModel.Name).Text',
+                }
+            }
+        }
+
         var emptyGuid = '00000000-0000-0000-0000-000000000000';
         var currentSection = $("#users-grid-section");
 
@@ -39,6 +96,6 @@
         @if (initialView == "Role")
         {
             @:switchSection($("#roles-grid-section"));
-            }
+        }
     </script>
 }

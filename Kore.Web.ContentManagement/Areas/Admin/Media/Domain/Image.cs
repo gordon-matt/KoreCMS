@@ -36,7 +36,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Domain
     {
         public MediaPartMap()
         {
-            ToTable("Kore_MediaParts");
+            ToTable("Kore_Images");
             HasKey(x => x.Id);
             Property(x => x.EntityTypeId).IsRequired();
             Property(x => x.EntityId).IsRequired().HasMaxLength(255);

@@ -5,7 +5,7 @@
                 <legend>@T(KoreCmsLocalizableStrings.Membership.UpdateUserRoles)</legend>
                 <div class="col-sm-12 col-md-12">
                     <div class="form-group">
-                        @Html.Label("UserRoles", "Roles", new { @class = "control-label" })
+                        @Html.Label("UserRoles", T(KoreCmsLocalizableStrings.Membership.UserModel.Roles), new { @class = "control-label" })
                         @Html.Kore().RolesCheckBoxList("UserRoles", null, new { @class = "checkbox" }, new { data_bind = "checked: userModel.roles" })
                     </div>
                 </div>

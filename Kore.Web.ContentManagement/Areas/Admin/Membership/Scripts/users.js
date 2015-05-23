@@ -31,10 +31,10 @@ var ChangePasswordVM = function () {
         })
         .done(function (json) {
             switchSection($("#users-grid-section"));
-            $.notify("Successfully changed password.", "success");
+            $.notify(translations.ChangePasswordSuccess, "success");
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
-            $.notify("There was an error when changing the password.", "error");
+            $.notify(translations.ChangePasswordError, "error");
             console.log(textStatus + ': ' + errorThrown);
         });
     };
@@ -43,31 +43,6 @@ var ChangePasswordVM = function () {
         rules: {
             Change_Password: { required: true, maxlength: 128 },
             Change_ConfirmPassword: { required: true, maxlength: 128, equalTo: "#Change_Password" },
-        },
-        messages: {
-            Change_Password: {
-                required: "Password is required.",
-                maxlength: "Password cannot consist of more than 128 characters."
-            },
-            Change_ConfirmPassword: {
-                required: "Confirm Password is required.",
-                maxlength: "Confirm Password cannot consist of more than 128 characters."
-            }
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error');
-        },
-        unhighlight: function (element) {
-            $(element).closest('.form-group').removeClass('has-error');
-        },
-        errorElement: 'span',
-        errorClass: 'help-block',
-        errorPlacement: function (error, element) {
-            if (element.parent('.input-group').length) {
-                error.insertAfter(element.parent());
-            } else {
-                error.insertAfter(element);
-            }
         }
     });
 };
@@ -116,13 +91,13 @@ var UserVM = function () {
             switchSection($("#users-edit-form-section"));
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
-            $.notify("There was an error when retrieving the record.", "error");
+            $.notify(translations.GetRecordError, "error");
             console.log(textStatus + ': ' + errorThrown);
         });
     };
 
     self.delete = function (id) {
-        if (confirm("Are you sure you want to delete this record?")) {
+        if (confirm(translations.DeleteRecordConfirm)) {
             $.ajax({
                 url: "/odata/kore/cms/UserApi('" + id + "')",
                 type: "DELETE",
@@ -132,10 +107,10 @@ var UserVM = function () {
                 $('#UsersGrid').data('kendoGrid').dataSource.read();
                 $('#UsersGrid').data('kendoGrid').refresh();
 
-                $.notify("Successfully deleted record.", "success");
+                $.notify(translations.DeleteRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify("There was an error when deleting the record.", "error");
+                $.notify(translations.DeleteRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         }
@@ -172,10 +147,10 @@ var UserVM = function () {
 
                 switchSection($("#users-grid-section"));
 
-                $.notify("Successfully inserted record.", "success");
+                $.notify(translations.InsertRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify("There was an error when inserting the record.", "error");
+                $.notify(translations.InsertRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         }
@@ -195,10 +170,10 @@ var UserVM = function () {
 
                 switchSection($("#users-grid-section"));
 
-                $.notify("Successfully updated record.", "success");
+                $.notify(translations.UpdateRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify("There was an error when updating the record.", "error");
+                $.notify(translations.UpdateRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         }
@@ -229,7 +204,7 @@ var UserVM = function () {
             }
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
-            $.notify("There was an error when retrieving the record.", "error");
+            $.notify(translations.GetRecordError, "error");
             console.log(textStatus + ': ' + errorThrown);
         });
 
@@ -255,10 +230,10 @@ var UserVM = function () {
         })
         .done(function (json) {
             switchSection($("#users-grid-section"));
-            $.notify("Successfully saved roles.", "success");
+            $.notify(translations.SaveRolesSuccess, "success");
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
-            $.notify("There was an error when saving roles.", "error");
+            $.notify(translations.SaveRolesError, "error");
             console.log(textStatus + ': ' + errorThrown);
         });
     };
@@ -343,31 +318,6 @@ var UserVM = function () {
         rules: {
             UserName: { required: true, maxlength: 128 },
             Email: { required: true, maxlength: 255 },
-        },
-        messages: {
-            UserName: {
-                required: "UserName is required.",
-                maxlength: "UserName cannot consist of more than 128 characters."
-            },
-            Email: {
-                required: "Email is required.",
-                maxlength: "Email cannot consist of more than 255 characters."
-            }
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error');
-        },
-        unhighlight: function (element) {
-            $(element).closest('.form-group').removeClass('has-error');
-        },
-        errorElement: 'span',
-        errorClass: 'help-block',
-        errorPlacement: function (error, element) {
-            if (element.parent('.input-group').length) {
-                error.insertAfter(element.parent());
-            } else {
-                error.insertAfter(element);
-            }
         }
     });
 
@@ -412,15 +362,15 @@ var UserVM = function () {
         scrollable: false,
         columns: [{
             field: "UserName",
-            title: "User Name",
+            title: translations.Columns.User.UserName,
             filterable: true
         }, {
             field: "Email",
-            title: "E-mail",
+            title: translations.Columns.User.Email,
             filterable: true
         }, {
             field: "IsLockedOut",
-            title: "Is Active",
+            title: translations.Columns.User.IsActive,
             template: '<i class="fa #=!IsLockedOut ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
             attributes: { "class": "text-center" },
             filterable: true,
@@ -429,10 +379,10 @@ var UserVM = function () {
             field: "Id",
             title: " ",
             template:
-                '<div class="btn-group"><a onclick="viewModel.userModel.editRoles(\'#=Id#\')" class="btn btn-default btn-xs">Roles</a>' +
-                '<a onclick="viewModel.userModel.changePassword(\'#=Id#\',\'#=UserName#\')" class="btn btn-default btn-xs">Password</a>' +
-                '<a onclick="viewModel.userModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">Edit</a>' +
-                '<a onclick="viewModel.userModel.delete(\'#=Id#\')" class="btn btn-danger btn-xs">Delete</a>' +
+                '<div class="btn-group"><a onclick="viewModel.userModel.editRoles(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Roles + '</a>' +
+                '<a onclick="viewModel.userModel.changePassword(\'#=Id#\',\'#=UserName#\')" class="btn btn-default btn-xs">' + translations.Password + '</a>' +
+                '<a onclick="viewModel.userModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
+                '<a onclick="viewModel.userModel.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
                 '</div>',
             attributes: { "class": "text-center" },
             filterable: false,

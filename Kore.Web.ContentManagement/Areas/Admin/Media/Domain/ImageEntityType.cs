@@ -25,7 +25,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Domain
     {
         public MediaPartTypeMap()
         {
-            ToTable("Kore_MediaPartTypes");
+            ToTable("Kore_ImageEntityTypes");
             HasKey(x => x.Id);
             Property(x => x.Type).IsRequired().HasMaxLength(2048);
         }

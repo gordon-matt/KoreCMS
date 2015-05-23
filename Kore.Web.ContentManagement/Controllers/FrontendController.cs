@@ -102,7 +102,7 @@ namespace Kore.Web.ContentManagement.Controllers
                 menuItems.Add(new MenuItem
                 {
                     Id = menuId,
-                    Text = "Home", //TODO: Localize
+                    Text = T(KoreWebLocalizableStrings.General.Home),
                     Url = "/",
                     Enabled = true,
                     ParentId = null,

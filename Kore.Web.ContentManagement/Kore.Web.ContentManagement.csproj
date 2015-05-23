@@ -331,7 +331,6 @@
     <Compile Include="CmsNavigationProvider.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\FrontendController.cs" />
-    <Compile Include="Extensions\ScriptRegisterExtensions.cs" />
     <Compile Include="FileSystems\Media\ConfigurationMimeTypeProvider.cs" />
     <Compile Include="FileSystems\Media\FileSystemStorageProvider.cs" />
     <Compile Include="FileSystems\Media\IMimeTypeProvider.cs" />

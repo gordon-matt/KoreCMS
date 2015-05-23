@@ -66,24 +66,25 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Subject",
+            title: translations.Columns.Subject,
             filterable: true
         }, {
             field: "ToAddress",
-            title: "To Address",
+            title: translations.Columns.ToAddress,
             filterable: true
         }, {
             field: "CreatedOnUtc",
-            title: "Created On (UTC)",
+            title: translations.Columns.CreatedOnUtc,
             format: "{0:yyyy-MM-dd HH:mm:ss}",
             filterable: true
         }, {
             field: "SentOnUtc",
-            title: "Sent On (UTC)",
+            title: translations.Columns.SentOnUtc,
             format: "{0:yyyy-MM-dd HH:mm:ss}",
             filterable: true
         }, {
             field: "SentTries",
-            title: "Sent Tries",
+            title: translations.Columns.SentTries,
             filterable: true
         }, {
             field: "Id",

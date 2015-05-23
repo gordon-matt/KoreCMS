@@ -40,7 +40,7 @@
                 <legend id="form-section-legend"></legend>
                 <div class="col-sm-12 col-md-12">
                     <div class="form-group">
-                        @Html.Label("Name", "Name", new { @class = "control-label" })
+                        @Html.Label("Name", T(KoreCmsLocalizableStrings.Menus.MenuModel.Name), new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="kore-icon kore-icon-file"></i>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-sm-12 col-md-12">
                     <div class="form-group">
-                        @Html.Label("UrlFilter", "URL Filter", new { @class = "control-label" })
+                        @Html.Label("UrlFilter", T(KoreCmsLocalizableStrings.Menus.MenuModel.UrlFilter), new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="kore-icon kore-icon-filter"></i>
@@ -98,7 +98,7 @@
                 <legend id="item-edit-section-legend"></legend>
                 <div class="col-sm-6 col-md-6">
                     <div class="form-group">
-                        @Html.Label("Item_Text", "Text", new { @class = "control-label" })
+                        @Html.Label("Item_Text", T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Text), new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="kore-icon kore-icon-file"></i>
@@ -109,7 +109,7 @@
                 </div>
                 <div class="col-sm-6 col-md-6">
                     <div class="form-group">
-                        @Html.Label("Item_Url", "URL", new { @class = "control-label" })
+                        @Html.Label("Item_Url", T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Url), new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="kore-icon kore-icon-globe"></i>
@@ -120,7 +120,7 @@
                 </div>
                 <div class="col-sm-12 col-md-12">
                     <div class="form-group">
-                        @Html.Label("Item_Description", "Description", new { @class = "control-label" })
+                        @Html.Label("Item_Description", T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Description), new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="kore-icon kore-icon-file"></i>
@@ -131,7 +131,7 @@
                 </div>
                 <div class="col-sm-6 col-md-6">
                     <div class="form-group">
-                        @Html.Label("Item_CssClass", "Css Class", new { @class = "control-label" })
+                        @Html.Label("Item_CssClass", T(KoreCmsLocalizableStrings.Menus.MenuItemModel.CssClass), new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="kore-icon kore-icon-font"></i>
@@ -142,7 +142,7 @@
                 </div>
                 <div class="col-sm-6 col-md-6">
                     <div class="form-group">
-                        @Html.Label("Item_Position", "Position", new { @class = "control-label" })
+                        @Html.Label("Item_Position", T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Position), new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="kore-icon kore-icon-sort-numeric-asc"></i>
@@ -154,7 +154,7 @@
                 <div class="col-sm-3 col-md-3">
                     <div class="checkbox">
                         <label>
-                            @Html.CheckBox("Item_Enabled", new { data_bind = "checked: menuItem.enabled" }) Enabled
+                            @Html.CheckBox("Item_Enabled", new { data_bind = "checked: menuItem.enabled" }) @T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Enabled)
                         </label>
                     </div>
                 </div>
@@ -173,7 +173,7 @@
     <div class="tabstrip">
         <ul>
             <li class="k-state-active">
-                Menu Items
+                @T(KoreCmsLocalizableStrings.Menus.MenuItems)
             </li>
         </ul>
         <div>
@@ -198,7 +198,20 @@
             NewItem: '@T(KoreCmsLocalizableStrings.Menus.NewItem).Text',
             Toggle: '@T(KoreWebLocalizableStrings.General.Toggle).Text',
             UpdateRecordError: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordError).Text',
-            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text'
+            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text',
+
+            Columns: {
+                Menu: {
+                    Name: '@T(KoreCmsLocalizableStrings.Menus.MenuModel.Name).Text',
+                    UrlFilter: '@T(KoreCmsLocalizableStrings.Menus.MenuModel.UrlFilter).Text'
+                },
+                MenuItem: {
+                    Text: '@T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Text).Text',
+                    Url: '@T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Url).Text',
+                    Position: '@T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Position).Text',
+                    Enabled: '@T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Enabled).Text'
+                }
+            }
         }
     </script>
 }

@@ -80,9 +80,11 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Name",
+            title: translations.Columns.Name,
             filterable: true
         }, {
             field: "Email",
+            title: translations.Columns.Email,
             filterable: true
         }, {
             field: "Id",

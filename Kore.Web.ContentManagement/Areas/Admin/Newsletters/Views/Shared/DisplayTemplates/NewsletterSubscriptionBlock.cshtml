@@ -2,9 +2,9 @@
 @model NewsletterSubscriptionBlock
 
 <form id="newsletter-subscribe-form" class="form-horizontal">
-    <label for="email">Sign up for newsletters</label>
-    <input type="text" id="newsletter-block-email" class="form-control" placeholder="Your email address" />
-    <input type="text" id="newsletter-block-name" class="form-control" placeholder="Your Name" />
+    <label>@T(KoreCmsLocalizableStrings.ContentBlocks.NewsletterSubscriptionBlock.SignUpLabel)</label>
+    <input type="text" id="newsletter-block-email" class="form-control" placeholder="@T(KoreCmsLocalizableStrings.ContentBlocks.NewsletterSubscriptionBlock.EmailPlaceholder)" />
+    <input type="text" id="newsletter-block-name" class="form-control" placeholder="@T(KoreCmsLocalizableStrings.ContentBlocks.NewsletterSubscriptionBlock.NamePlaceholder)" />
     <input type="button" class="btn btn-primary" value="Submit" onclick="javascript: newsletterSignUp()" />
 </form>
 

@@ -68,6 +68,15 @@
                 public const string Style = "Kore.Web.ContentManagement/ContentBlocks.LanguageSwitchBlock.Style";
                 public const string UseUrlPrefix = "Kore.Web.ContentManagement/ContentBlocks.LanguageSwitchBlock.UseUrlPrefix";
             }
+
+            public static class NewsletterSubscriptionBlock
+            {
+                public const string Email = "Kore.Web.ContentManagement/ContentBlocks.NewsletterSubscriptionBlock.Email";
+                public const string EmailPlaceholder = "Kore.Web.ContentManagement/ContentBlocks.NewsletterSubscriptionBlock.EmailPlaceholder";
+                public const string Name = "Kore.Web.ContentManagement/ContentBlocks.NewsletterSubscriptionBlock.Name";
+                public const string NamePlaceholder = "Kore.Web.ContentManagement/ContentBlocks.NewsletterSubscriptionBlock.NamePlaceholder";
+                public const string SignUpLabel = "Kore.Web.ContentManagement/ContentBlocks.NewsletterSubscriptionBlock.SignUpLabel";
+            }
         }
 
         public static class Localization
@@ -154,6 +163,21 @@
 
         public static class Menus
         {
+            public static class MenuModel
+            {
+                public const string Name = "Kore.Web.ContentManagement/Menus.MenuModel.Name";
+                public const string UrlFilter = "Kore.Web.ContentManagement/Menus.MenuModel.UrlFilter";
+            }
+            public static class MenuItemModel
+            {
+                public const string CssClass = "Kore.Web.ContentManagement/Menus.MenuItemModel.CssClass";
+                public const string Description = "Kore.Web.ContentManagement/Menus.MenuItemModel.Description";
+                public const string Enabled = "Kore.Web.ContentManagement/Menus.MenuItemModel.Enabled";
+                public const string Position = "Kore.Web.ContentManagement/Menus.MenuItemModel.Position";
+                public const string Text = "Kore.Web.ContentManagement/Menus.MenuItemModel.Text";
+                public const string Url = "Kore.Web.ContentManagement/Menus.MenuItemModel.Url";
+            }
+
             public const string IsExternalUrl = "Kore.Web.ContentManagement/Menus.IsExternalUrl";
             public const string Items = "Kore.Web.ContentManagement/Menus.Items";
             public const string ManageMenuItems = "Kore.Web.ContentManagement/Menus.ManageMenuItems";
@@ -174,6 +198,24 @@
 
         public static class Messaging
         {
+            public static class MessageTemplateModel
+            {
+                public const string Body = "Kore.Web.ContentManagement/Messaging.MessageTemplateModel.Body";
+                public const string Enabled = "Kore.Web.ContentManagement/Messaging.MessageTemplateModel.Enabled";
+                public const string Name = "Kore.Web.ContentManagement/Messaging.MessageTemplateModel.Name";
+                public const string Subject = "Kore.Web.ContentManagement/Messaging.MessageTemplateModel.Subject";
+                public const string Tokens = "Kore.Web.ContentManagement/Messaging.MessageTemplateModel.Tokens";
+            }
+            public static class QueuedEmailModel
+            {
+                public const string CreatedOnUtc = "Kore.Web.ContentManagement/Messaging.QueuedEmailModel.CreatedOnUtc";
+                public const string SentOnUtc = "Kore.Web.ContentManagement/Messaging.QueuedEmailModel.SentOnUtc";
+                public const string SentTries = "Kore.Web.ContentManagement/Messaging.QueuedEmailModel.SentTries";
+                public const string Subject = "Kore.Web.ContentManagement/Messaging.QueuedEmailModel.Subject";
+                public const string ToAddress = "Kore.Web.ContentManagement/Messaging.QueuedEmailModel.ToAddress";
+            }
+
+            public const string GetTokensError = "Kore.Web.ContentManagement/Messaging.GetTokensError";
             public const string MessageTemplates = "Kore.Web.ContentManagement/Messaging.MessageTemplates";
             public const string QueuedEmails = "Kore.Web.ContentManagement/Messaging.QueuedEmails";
             public const string Title = "Kore.Web.ContentManagement/Messaging.Title";
@@ -186,6 +228,7 @@
 
         public static class Newsletters
         {
+            public const string ExportToCSV = "Kore.Web.ContentManagement/Newsletters.ExportToCSV";
             public const string Subscribers = "Kore.Web.ContentManagement/Newsletters.Subscribers";
             public const string SuccessfullySignedUp = "Kore.Web.ContentManagement/Newsletters.SuccessfullySignedUp";
             public const string Title = "Kore.Web.ContentManagement/Newsletters.Title";

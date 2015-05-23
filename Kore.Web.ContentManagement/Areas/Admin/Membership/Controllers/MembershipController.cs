@@ -42,7 +42,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers
             ViewBag.Title = T(KoreCmsLocalizableStrings.Membership.Title);
             ViewBag.SubTitle = T(KoreCmsLocalizableStrings.Membership.Users);
 
-            ViewBag.SelectList = membershipService.GetAllRoles().ToSelectList(v => v.Id.ToString(), t => t.Name, "[All Roles]");
+            ViewBag.SelectList = membershipService.GetAllRoles().ToSelectList(v => v.Id.ToString(), t => t.Name, T(KoreCmsLocalizableStrings.Membership.AllRolesSelectListOption));
 
             ViewBag.InitialView = "User";
             return View("Kore.Web.ContentManagement.Areas.Admin.Membership.Views.Membership.Index");

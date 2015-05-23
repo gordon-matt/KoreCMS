@@ -101,25 +101,55 @@
 
         public static class Media
         {
+            public const string FileBrowserTitle = "Kore.Web.ContentManagement/Media.FileBrowserTitle";
             public const string ManageMedia = "Kore.Web.ContentManagement/Media.ManageMedia";
             public const string Title = "Kore.Web.ContentManagement/Media.Title";
         }
 
         public static class Membership
         {
+            public static class ChangePasswordModel
+            {
+                public const string ConfirmPassword = "Kore.Web.ContentManagement/Membership.ChangePasswordModel.ConfirmPassword";
+                public const string Password = "Kore.Web.ContentManagement/Membership.ChangePasswordModel.Password";
+                public const string UserName = "Kore.Web.ContentManagement/Membership.ChangePasswordModel.UserName";
+            }
+            public static class PermissionModel
+            {
+                public const string Category = "Kore.Web.ContentManagement/Membership.PermissionModel.Category";
+                public const string Name = "Kore.Web.ContentManagement/Membership.PermissionModel.Name";
+            }
+            public static class RoleModel
+            {
+                public const string Name = "Kore.Web.ContentManagement/Membership.RoleModel.Name";
+            }
+            public static class UserModel
+            {
+                public const string Email = "Kore.Web.ContentManagement/Membership.UserModel.Email";
+                public const string IsActive = "Kore.Web.ContentManagement/Membership.UserModel.IsActive";
+                public const string IsLockedOut = "Kore.Web.ContentManagement/Membership.UserModel.IsLockedOut";
+                public const string UserName = "Kore.Web.ContentManagement/Membership.UserModel.UserName";
+                public const string Roles = "Kore.Web.ContentManagement/Membership.UserModel.Roles";
+            }
+
+            public const string AllRolesSelectListOption = "Kore.Web.ContentManagement/Membership.AllRolesSelectListOption";
             public const string ChangePassword = "Kore.Web.ContentManagement/Membership.ChangePassword";
             public const string EditRolePermissions = "Kore.Web.ContentManagement/Membership.EditRolePermissions";
-
-            // Messages
             public const string InvalidEmailAddress = "Kore.Web.ContentManagement/Membership.InvalidEmailAddress";
-
             public const string IsLockedOut = "Kore.Web.ContentManagement/Membership.IsLockedOut";
             public const string Permissions = "Kore.Web.ContentManagement/Membership.Permissions";
+            public const string Password = "Kore.Web.ContentManagement/Membership.Password";
             public const string Roles = "Kore.Web.ContentManagement/Membership.Roles";
             public const string Title = "Kore.Web.ContentManagement/Membership.Title";
             public const string UpdateUserRoles = "Kore.Web.ContentManagement/Membership.UpdateUserRoles";
             public const string UserEmailAlreadyExists = "Kore.Web.ContentManagement/Membership.UserEmailAlreadyExists";
             public const string Users = "Kore.Web.ContentManagement/Membership.Users";
+            public const string ChangePasswordError = "Kore.Web.ContentManagement/Membership.ChangePasswordError";
+            public const string ChangePasswordSuccess = "Kore.Web.ContentManagement/Membership.ChangePasswordSuccess";
+            public const string SavePermissionsError = "Kore.Web.ContentManagement/Membership.SavePermissionsError";
+            public const string SavePermissionsSuccess = "Kore.Web.ContentManagement/Membership.SavePermissionsSuccess";
+            public const string SaveRolesError = "Kore.Web.ContentManagement/Membership.SaveRolesError";
+            public const string SaveRolesSuccess = "Kore.Web.ContentManagement/Membership.SaveRolesSuccess";
         }
 
         public static class Menus

@@ -16,7 +16,7 @@ var PermissionVM = function () {
 
         self.validator.resetForm();
         switchSection($("#permissions-form-section"));
-        $("#permissions-form-section-legend").html("Create New");
+        $("#permissions-form-section-legend").html(translations.Create);
     };
 
     self.edit = function (id) {
@@ -34,16 +34,16 @@ var PermissionVM = function () {
 
             self.validator.resetForm();
             switchSection($("#permissions-form-section"));
-            $("#permissions-form-section-legend").html("Edit");
+            $("#permissions-form-section-legend").html(translations.Edit);
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
-            $.notify("There was an error when retrieving the record.", "error");
+            $.notify(translations.GetRecordError, "error");
             console.log(textStatus + ': ' + errorThrown);
         });
     };
 
     self.delete = function (id) {
-        if (confirm("Are you sure you want to delete this record?")) {
+        if (confirm(translations.DeleteRecordConfirm)) {
             $.ajax({
                 url: "/odata/kore/cms/PermissionApi('" + id + "')",
                 type: "DELETE",
@@ -53,10 +53,10 @@ var PermissionVM = function () {
                 $('#PermissionsGrid').data('kendoGrid').dataSource.read();
                 $('#PermissionsGrid').data('kendoGrid').refresh();
 
-                $.notify("Successfully deleted record.", "success");
+                $.notify(translations.DeleteRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify("There was an error when deleting the record.", "error");
+                $.notify(translations.DeleteRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         }
@@ -91,10 +91,10 @@ var PermissionVM = function () {
 
                 switchSection($("#permissions-grid-section"));
 
-                $.notify("Successfully inserted record.", "success");
+                $.notify(translations.InsertRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify("There was an error when inserting the record.", "error");
+                $.notify(translations.InsertRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         }
@@ -114,10 +114,10 @@ var PermissionVM = function () {
 
                 switchSection($("#permissions-grid-section"));
 
-                $.notify("Successfully updated record.", "success");
+                $.notify(translations.UpdateRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify("There was an error when updating the record.", "error");
+                $.notify(translations.UpdateRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         }
@@ -131,30 +131,6 @@ var PermissionVM = function () {
         rules: {
             Name: { required: true, maxlength: 255 },
             Category: { maxlength: 255 }
-        },
-        messages: {
-            Name: {
-                required: "Name is required.",
-                maxlength: "Name cannot consist of more than 255 characters."
-            },
-            Category: {
-                maxlength: "Category cannot consist of more than 255 characters."
-            }
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error');
-        },
-        unhighlight: function (element) {
-            $(element).closest('.form-group').removeClass('has-error');
-        },
-        errorElement: 'span',
-        errorClass: 'help-block',
-        errorPlacement: function (error, element) {
-            if (element.parent('.input-group').length) {
-                error.insertAfter(element.parent());
-            } else {
-                error.insertAfter(element);
-            }
         }
     });
 
@@ -198,18 +174,18 @@ var PermissionVM = function () {
         scrollable: false,
         columns: [{
             field: "Name",
-            title: "Name",
+            title: translations.Columns.Permission.Name,
             filterable: true
         }, {
             field: "Category",
-            title: "Category",
+            title: translations.Columns.Permission.Category,
             filterable: true
         }, {
             field: "Id",
             title: " ",
             template:
-                '<div class="btn-group"><a onclick="viewModel.permissionModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">Edit</a>' +
-                '<a onclick="viewModel.permissionModel.delete(\'#=Id#\')" class="btn btn-danger btn-xs">Delete</a>' +
+                '<div class="btn-group"><a onclick="viewModel.permissionModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
+                '<a onclick="viewModel.permissionModel.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
                 '</div>',
             attributes: { "class": "text-center" },
             filterable: false,

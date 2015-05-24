@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Kore.ComponentModel;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 
 namespace Kore.Plugins.Widgets.Bootstrap3.ContentBlocks
@@ -13,19 +14,19 @@ namespace Kore.Plugins.Widgets.Bootstrap3.ContentBlocks
             ImagesPerRowL = ImagesPerRow.Four;
         }
 
-        [DisplayName("Media Folder")]
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.ImageGalleryBlock.MediaFolder)]
         public string MediaFolder { get; set; }
 
-        [DisplayName("# Images Per Row (XS)")]
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.ImageGalleryBlock.ImagesPerRowXS)]
         public ImagesPerRow ImagesPerRowXS { get; set; }
 
-        [DisplayName("# Images Per Row (S)")]
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.ImageGalleryBlock.ImagesPerRowS)]
         public ImagesPerRow ImagesPerRowS { get; set; }
 
-        [DisplayName("# Images Per Row (M)")]
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.ImageGalleryBlock.ImagesPerRowM)]
         public ImagesPerRow ImagesPerRowM { get; set; }
 
-        [DisplayName("# Images Per Row (L)")]
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.ImageGalleryBlock.ImagesPerRowL)]
         public ImagesPerRow ImagesPerRowL { get; set; }
 
         #region ContentBlockBase Overrides

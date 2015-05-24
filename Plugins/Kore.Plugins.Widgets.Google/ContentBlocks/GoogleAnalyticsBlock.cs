@@ -1,11 +1,14 @@
-﻿using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
+﻿using Kore.ComponentModel;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 
 namespace Kore.Plugins.Widgets.Google.ContentBlocks
 {
     public class GoogleAnalyticsBlock : ContentBlockBase
     {
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.AnalyticsBlock.AccountNumber)]
         public string AccountNumber { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.AnalyticsBlock.DomainName)]
         public string DomainName { get; set; }
 
         #region ContentBlockBase Overrides

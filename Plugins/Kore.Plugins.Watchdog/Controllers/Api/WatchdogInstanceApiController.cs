@@ -9,6 +9,7 @@ using System.Web.Http.OData.Query;
 using System.Web.Http.Results;
 using Kore.Collections;
 using Kore.Data;
+using Kore.Localization;
 using Kore.Plugins.Watchdog.Data.Domain;
 using Kore.Plugins.Watchdog.Models;
 using Kore.Web.Http.OData;
@@ -23,10 +24,15 @@ namespace Kore.Plugins.Watchdog.Controllers.Api
 
         private readonly Lazy<WatchdogSettings> settings;
 
-        public WatchdogInstanceApiController(IRepository<WatchdogInstance> repository, Lazy<WatchdogSettings> settings)
+        public Localizer T { get; set; }
+
+        public WatchdogInstanceApiController(
+            IRepository<WatchdogInstance> repository,
+            Lazy<WatchdogSettings> settings)
             : base(repository)
         {
             this.settings = settings;
+            T = LocalizationUtilities.Resolve();
         }
 
         #region GenericODataController<WatchdogInstance, int> Members
@@ -112,7 +118,7 @@ namespace Kore.Plugins.Watchdog.Controllers.Api
         {
             if (!CheckPermission(WatchdogPermissions.StartStopServices))
             {
-                return new ChangeStatusResult { Successful = false, Message = "Unauthorized" };
+                return new ChangeStatusResult { Successful = false, Message = T(LocalizableStrings.Unauthorized) };
             }
 
             string serviceName = (string)parameters["name"];
@@ -140,7 +146,7 @@ namespace Kore.Plugins.Watchdog.Controllers.Api
         {
             if (!CheckPermission(WatchdogPermissions.StartStopServices))
             {
-                return new ChangeStatusResult { Successful = false, Message = "Unauthorized" };
+                return new ChangeStatusResult { Successful = false, Message = T(LocalizableStrings.Unauthorized) };
             }
 
             string serviceName = (string)parameters["name"];
@@ -167,7 +173,7 @@ namespace Kore.Plugins.Watchdog.Controllers.Api
         {
             if (!CheckPermission(WatchdogPermissions.StartStopServices))
             {
-                return new ChangeStatusResult { Successful = false, Message = "Unauthorized" };
+                return new ChangeStatusResult { Successful = false, Message = T(LocalizableStrings.Unauthorized) };
             }
 
             string serviceName = (string)parameters["name"];

@@ -41,14 +41,14 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             {
                 item.Quantity += 1;
                 cartService.SetCart(this.HttpContext, cart);
-                return Json(new { Success = true, Message = "Quantity Updated" });
+                return Json(new { Success = true, Message = T(LocalizableStrings.QuantityUpdated) });
             }
 
             var product = productService.Value.FindOne(productId);
 
             if (product == null)
             {
-                return Json(new { Success = false, Message = "Could not find specified product" });
+                return Json(new { Success = false, Message = T(LocalizableStrings.CouldNotFindProduct) });
             }
 
             item = new ShoppingCartItem
@@ -66,7 +66,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             cartService.SetCart(this.HttpContext, cart);
 
-            return Json(new { Success = true, Message = "Added to Cart" });
+            return Json(new { Success = true, Message = T(LocalizableStrings.AddToCartSuccess) });
         }
 
         [Route("update-cart-item/{productId}")]
@@ -76,7 +76,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             if (product == null)
             {
-                return Json(new { Success = false, Message = "Could not find specified product" });
+                return Json(new { Success = false, Message = T(LocalizableStrings.CouldNotFindProduct) });
             }
 
             var cart = cartService.GetCart(this.HttpContext);
@@ -104,7 +104,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             }
             cartService.SetCart(this.HttpContext, cart);
 
-            return Json(new { Success = true, Message = "Cart Updated" });
+            return Json(new { Success = true, Message = T(LocalizableStrings.CartUpdated) });
         }
 
         [Route("delete-cart-item/{productId}")]
@@ -115,13 +115,13 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             if (item == null)
             {
-                return Json(new { Success = false, Message = "Could not find specified product" });
+                return Json(new { Success = false, Message = T(LocalizableStrings.CouldNotFindProduct) });
             }
 
             cart.Items.Remove(item);
             cartService.SetCart(this.HttpContext, cart);
 
-            return Json(new { Success = true, Message = "Item removed from cart" });
+            return Json(new { Success = true, Message = T(LocalizableStrings.ItemRemovedFromCart) });
         }
 
         [Route("update-cart")]
@@ -136,7 +136,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 cartService.SetCart(this.HttpContext, cart);
             }
 
-            return Json(new { Success = true, Message = "Successfully updated cart." });
+            return Json(new { Success = true, Message = T(LocalizableStrings.CartUpdated) });
         }
     }
 }

@@ -206,7 +206,7 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Url",
-            title: "Url",
+            title: translations.Columns.Url,
             filterable: true
         }],
         detailTemplate: kendo.template($("#services-template").html()),
@@ -323,15 +323,15 @@ $(document).ready(function () {
             scrollable: false,
             columns: [{
                 field: "DisplayName",
-                title: "Display Name",
+                title: translations.Columns.DisplayName,
                 filterable: true
             }, {
                 field: "ServiceName",
-                title: "Service Name",
+                title: translations.Columns.ServiceName,
                 filterable: true
             }, {
                 field: "Status",
-                title: "Status",
+                title: translations.Columns.Status,
                 filterable: true,
                 width: 100
             }, {

@@ -34,10 +34,10 @@
 <div id="form-section" class="row" style="display:none">
     <form id="form-section-form" role="form">
         <fieldset>
-            <legend>Create</legend>
+            <legend>@T(KoreWebLocalizableStrings.General.Create)</legend>
             <div class="col-sm-6 col-md-6">
                 <div class="form-group">
-                    @Html.Label("Url", "Url", new { @class = "control-label" })
+                    @Html.Label("Url", T(LocalizableStrings.Model.Url), new { @class = "control-label" })
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="kore-icon kore-icon-globe"></i>
@@ -48,7 +48,7 @@
             </div>
             <div class="col-sm-6 col-md-6">
                 <div class="form-group">
-                    @Html.Label("Password", "Password", new { @class = "control-label" })
+                    @Html.Label("Password", T(LocalizableStrings.Model.Password), new { @class = "control-label" })
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="kore-icon kore-icon-password"></i>
@@ -71,7 +71,7 @@
     <div class="tabstrip">
         <ul>
             <li class="k-state-active">
-                Services
+                @T(LocalizableStrings.Services)
             </li>
         </ul>
         <div>
@@ -101,6 +101,14 @@
             StartServiceSuccess: '@T(LocalizableStrings.StartServiceSuccess).Text',
             StopServiceError: '@T(LocalizableStrings.StopServiceError).Text',
             StopServiceSuccess: '@T(LocalizableStrings.StopServiceSuccess).Text',
+
+            Columns: {
+                DisplayName: '@T(LocalizableStrings.Model.DisplayName).Text',
+                Password: '@T(LocalizableStrings.Model.Password).Text',
+                ServiceName: '@T(LocalizableStrings.Model.ServiceName).Text',
+                Status: '@T(LocalizableStrings.Model.Status).Text',
+                Url: '@T(LocalizableStrings.Model.Url).Text',
+            }
         }
         var allowAddRemove = '@ViewBag.AllowAddRemove';
         var onlyShowWatched = '@ViewBag.OnlyShowWatched';

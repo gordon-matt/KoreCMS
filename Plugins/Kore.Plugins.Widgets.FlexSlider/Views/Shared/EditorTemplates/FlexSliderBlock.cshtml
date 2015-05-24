@@ -1,4 +1,5 @@
-﻿@using Kore.Web.ContentManagement
+﻿@using Kore.Plugins.Widgets.FlexSlider
+@using Kore.Web.ContentManagement
 @using Kore.Plugins.Widgets.FlexSlider.ContentBlocks
 
 @model FlexSliderBlock
@@ -8,16 +9,16 @@
         <div role="tabpanel">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
-                    <a href="#General" aria-controls="General" role="tab" data-toggle="tab">General</a>
+                    <a href="#General" aria-controls="General" role="tab" data-toggle="tab">@T(LocalizableStrings.FlexSliderBlock.EditorTabs.General)</a>
                 </li>
                 <li role="presentation">
-                    <a href="#Animation" aria-controls="Themes" role="tab" data-toggle="tab">Animation</a>
+                    <a href="#Animation" aria-controls="Animation" role="tab" data-toggle="tab">@T(LocalizableStrings.FlexSliderBlock.EditorTabs.Animation)</a>
                 </li>
                 <li role="presentation">
-                    <a href="#Navigation" aria-controls="Localization" role="tab" data-toggle="tab">Navigation</a>
+                    <a href="#Navigation" aria-controls="Navigation" role="tab" data-toggle="tab">@T(LocalizableStrings.FlexSliderBlock.EditorTabs.Navigation)</a>
                 </li>
                 <li role="presentation">
-                    <a href="#Events" aria-controls="SEO" role="tab" data-toggle="tab">Events (Advanced)</a>
+                    <a href="#Events" aria-controls="Events" role="tab" data-toggle="tab">@T(LocalizableStrings.FlexSliderBlock.EditorTabs.Events)</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -49,32 +50,32 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("Randomize", new { data_bind = "checked: randomize" }) Randomize
+                                @Html.CheckBox("Randomize", new { data_bind = "checked: randomize" }) @T(LocalizableStrings.FlexSliderBlock.Randomize)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("PauseOnAction", new { data_bind = "checked: pauseOnAction" }) Pause On Action
+                                @Html.CheckBox("PauseOnAction", new { data_bind = "checked: pauseOnAction" }) @T(LocalizableStrings.FlexSliderBlock.PauseOnAction)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("PauseOnHover", new { data_bind = "checked: pauseOnHover" }) Pause On Hover
+                                @Html.CheckBox("PauseOnHover", new { data_bind = "checked: pauseOnHover" }) @T(LocalizableStrings.FlexSliderBlock.PauseOnHover)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("Touch", new { data_bind = "checked: touch" }) Touch
+                                @Html.CheckBox("Touch", new { data_bind = "checked: touch" }) @T(LocalizableStrings.FlexSliderBlock.Touch)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("Video", new { data_bind = "checked: video" }) Video
+                                @Html.CheckBox("Video", new { data_bind = "checked: video" }) @T(LocalizableStrings.FlexSliderBlock.Video)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("Slideshow", new { data_bind = "checked: slideshow" }) Slideshow
+                                @Html.CheckBox("Slideshow", new { data_bind = "checked: slideshow" }) @T(LocalizableStrings.FlexSliderBlock.Slideshow)
                             </label>
                         </div>
                     </div>
@@ -167,22 +168,22 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("Reverse", new { data_bind = "checked: reverse" }) Reverse
+                                @Html.CheckBox("Reverse", new { data_bind = "checked: reverse" }) @T(LocalizableStrings.FlexSliderBlock.Reverse)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("AnimationLoop", new { data_bind = "checked: animationLoop" }) Animation Loop
+                                @Html.CheckBox("AnimationLoop", new { data_bind = "checked: animationLoop" }) @T(LocalizableStrings.FlexSliderBlock.AnimationLoop)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("SmoothHeight", new { data_bind = "checked: smoothHeight" }) Smooth Height
+                                @Html.CheckBox("SmoothHeight", new { data_bind = "checked: smoothHeight" }) @T(LocalizableStrings.FlexSliderBlock.SmoothHeight)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("UseCSS", new { data_bind = "checked: useCSS" }) Use CSS Transitions
+                                @Html.CheckBox("UseCSS", new { data_bind = "checked: useCSS" }) @T(LocalizableStrings.FlexSliderBlock.UseCSS)
                             </label>
                         </div>
                     </div>
@@ -198,7 +199,7 @@
                         <div class="well">
                             <div class="checkbox">
                                 <label>
-                                    @Html.CheckBox("DirectionNav", new { data_bind = "checked: directionNav" }) Direction Nav
+                                    @Html.CheckBox("DirectionNav", new { data_bind = "checked: directionNav" }) @T(LocalizableStrings.FlexSliderBlock.DirectionNav)
                                 </label>
                             </div>
                             <div class="form-group">
@@ -215,7 +216,7 @@
                         <div class="well">
                             <div class="checkbox">
                                 <label>
-                                    @Html.CheckBox("PausePlay", new { data_bind = "checked: pausePlay" }) Pause/Play
+                                    @Html.CheckBox("PausePlay", new { data_bind = "checked: pausePlay" }) @T(LocalizableStrings.FlexSliderBlock.PausePlay)
                                 </label>
                             </div>
                             <div class="form-group">
@@ -243,17 +244,17 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("Keyboard", new { data_bind = "checked: keyboard" }) Keyboard
+                                @Html.CheckBox("Keyboard", new { data_bind = "checked: keyboard" }) @T(LocalizableStrings.FlexSliderBlock.Keyboard)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("MultipleKeyboard", new { data_bind = "checked: multipleKeyboard" }) Multiple Keyboard
+                                @Html.CheckBox("MultipleKeyboard", new { data_bind = "checked: multipleKeyboard" }) @T(LocalizableStrings.FlexSliderBlock.MultipleKeyboard)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("Mousewheel", new { data_bind = "checked: mousewheel" }) Mousewheel
+                                @Html.CheckBox("Mousewheel", new { data_bind = "checked: mousewheel" }) @T(LocalizableStrings.FlexSliderBlock.Mousewheel)
                             </label>
                         </div>
                     </div>

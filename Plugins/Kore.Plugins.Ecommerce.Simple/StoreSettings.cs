@@ -15,28 +15,28 @@ namespace Kore.Plugins.Ecommerce.Simple
             MenuPosition = 0;
         }
 
-        [LocalizedDisplayName(LocalizableStrings.StoreSettings.PageTitle)]
+        [LocalizedDisplayName(LocalizableStrings.Settings.Store.PageTitle)]
         public string PageTitle { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.StoreSettings.Currency)]
+        [LocalizedDisplayName(LocalizableStrings.Settings.Store.Currency)]
         public string Currency { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.StoreSettings.CategoriesPerPage)]
+        [LocalizedDisplayName(LocalizableStrings.Settings.Store.CategoriesPerPage)]
         public byte CategoriesPerPage { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.StoreSettings.ProductsPerPage)]
+        [LocalizedDisplayName(LocalizableStrings.Settings.Store.ProductsPerPage)]
         public byte ProductsPerPage { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.StoreSettings.ShowOnMenus)]
+        [LocalizedDisplayName(LocalizableStrings.Settings.Store.ShowOnMenus)]
         public bool ShowOnMenus { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.StoreSettings.MenuPosition)]
+        [LocalizedDisplayName(LocalizableStrings.Settings.Store.MenuPosition)]
         public byte MenuPosition { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.StoreSettings.UseAjax)]
+        [LocalizedDisplayName(LocalizableStrings.Settings.Store.UseAjax)]
         public bool UseAjax { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.StoreSettings.LayoutPathOverride)]
+        [LocalizedDisplayName(LocalizableStrings.Settings.Store.LayoutPathOverride)]
         public string LayoutPathOverride { get; set; }
 
         #region ISettings Members

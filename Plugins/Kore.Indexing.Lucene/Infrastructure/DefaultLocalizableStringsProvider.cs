@@ -16,6 +16,7 @@ namespace Kore.Indexing.Lucene.Infrastructure
                     CultureCode = null,
                     LocalizedStrings = new Dictionary<string, string>
                     {
+                        { LocalizableStrings.LuceneSearchBlock.RenderAsBootstrapNavbarForm, "Render as Bootstrap Navbar Form" },
                         { LocalizableStrings.UnexpectedIndexType, "Unexpected index type" },
                     }
                 }

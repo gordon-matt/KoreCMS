@@ -1,4 +1,5 @@
-﻿@using Kore.Plugins.Ecommerce.Simple.Extensions;
+﻿@using Kore.Plugins.Ecommerce.Simple
+@using Kore.Plugins.Ecommerce.Simple.Extensions;
 
 @{
     Layout = KoreWebConstants.DefaultAdminLayoutPath;
@@ -22,6 +23,14 @@
         var gridPageSize = @SiteSettings.DefaultGridPageSize;
         var translations = {
             View: '@T(KoreWebLocalizableStrings.General.View).Text',
+
+            Columns: {
+                Id: '@T(LocalizableStrings.OrderModel.Id).Text',
+                OrderDateUtc: '@T(LocalizableStrings.OrderModel.OrderDateUtc).Text',
+                OrderTotal: '@T(LocalizableStrings.OrderModel.OrderTotal).Text',
+                PaymentStatus: '@T(LocalizableStrings.OrderModel.PaymentStatus).Text',
+                Status: '@T(LocalizableStrings.OrderModel.Status).Text',
+            }
         }
-</script>
+    </script>
 }

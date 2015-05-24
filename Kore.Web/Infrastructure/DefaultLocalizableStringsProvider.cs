@@ -22,6 +22,7 @@ namespace Kore.Web.Infrastructure
                         { KoreWebLocalizableStrings.General.Clear, "Clear" },
                         { KoreWebLocalizableStrings.General.Close, "Close" },
                         { KoreWebLocalizableStrings.General.Configuration, "Configuration" },
+                        { KoreWebLocalizableStrings.General.Confirm, "Confirm" },
                         { KoreWebLocalizableStrings.General.ConfirmDeleteRecord, "Are you sure that you want to delete this record?" },
                         { KoreWebLocalizableStrings.General.Create, "Create" },
                         { KoreWebLocalizableStrings.General.CreateFormat, "Create {0}" },

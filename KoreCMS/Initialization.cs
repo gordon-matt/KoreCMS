@@ -24,6 +24,8 @@ namespace KoreCMS
 
         private static void InitializeMembership()
         {
+            // TODO: Install localization strings
+
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
 
             if (membershipService == null)

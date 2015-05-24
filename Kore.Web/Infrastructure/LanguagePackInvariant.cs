@@ -87,6 +87,8 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.Plugins.InstallPluginSuccess, "Successfully installed plugin." },
                     { KoreWebLocalizableStrings.Plugins.ManagePlugins, "Manage Plugins" },
                     { KoreWebLocalizableStrings.Plugins.Title, "Plugins" },
+                    { KoreWebLocalizableStrings.Plugins.Model.Group, "Group" },
+                    { KoreWebLocalizableStrings.Plugins.Model.PluginInfo, "Plugin Info" },
                     { KoreWebLocalizableStrings.Plugins.UninstallPluginError, "There was an error when uninstalling the plugin." },
                     { KoreWebLocalizableStrings.Plugins.UninstallPluginSuccess, "Successfully uninstalled plugin." },
                     { KoreWebLocalizableStrings.ScheduledTasks.ExecutedTaskError, "There was an error when executing the task." },

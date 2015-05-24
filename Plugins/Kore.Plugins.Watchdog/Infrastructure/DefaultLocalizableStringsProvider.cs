@@ -35,7 +35,13 @@ namespace Kore.Plugins.Watchdog.Infrastructure
                         { LocalizableStrings.StopService, "Stop Service" },
                         { LocalizableStrings.StopServiceError, "There was an error when trying to stop the service." },
                         { LocalizableStrings.StopServiceSuccess, "Successfully stopped the service." },
+                        { LocalizableStrings.Unauthorized, "Unauthorized" },
                         { LocalizableStrings.Watchdog, "Watchdog" },
+                        { LocalizableStrings.Model.DisplayName, "Display Name" },
+                        { LocalizableStrings.Model.Password, "Password" },
+                        { LocalizableStrings.Model.ServiceName, "Service Name" },
+                        { LocalizableStrings.Model.Status, "Status" },
+                        { LocalizableStrings.Model.Url, "URL" },
                     }
                 }
             };

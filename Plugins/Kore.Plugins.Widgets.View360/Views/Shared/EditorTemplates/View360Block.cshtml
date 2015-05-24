@@ -1,4 +1,5 @@
-﻿@model Kore.Plugins.Widgets.View360.View360Block
+﻿@using Kore.Plugins.Widgets.View360
+@model View360Block
 
 <div id="block-content">
     <div class="col-sm-4 col-md-4">
@@ -30,7 +31,7 @@
     <div class="col-sm-4 col-md-4">
         <div class="checkbox">
             <label>
-                @Html.CheckBox("AutoRotate", new { data_bind = "checked: autoRotate" }) Auto Rotate
+                @Html.CheckBox("AutoRotate", new { data_bind = "checked: autoRotate" }) @T(LocalizableStrings.AutoRotate)
             </label>
         </div>
     </div>
@@ -50,21 +51,21 @@
     <div class="col-sm-4 col-md-4">
         <div class="checkbox">
             <label>
-                @Html.CheckBox("AutoRotateStopOnMove", new { data_bind = "checked: autoRotateStopOnMove" }) Auto Rotate: Stop on Move
+                @Html.CheckBox("AutoRotateStopOnMove", new { data_bind = "checked: autoRotateStopOnMove" }) @T(LocalizableStrings.AutoRotateStopOnMove)
             </label>
         </div>
     </div>
     <div class="col-sm-4 col-md-4">
         <div class="checkbox">
             <label>
-                @Html.CheckBox("LoadFullSizeImagesOnZoom", new { data_bind = "checked: loadFullSizeImagesOnZoom" }) Load Full Size Images on Zoom
+                @Html.CheckBox("LoadFullSizeImagesOnZoom", new { data_bind = "checked: loadFullSizeImagesOnZoom" }) @T(LocalizableStrings.LoadFullSizeImagesOnZoom)
             </label>
         </div>
     </div>
     <div class="col-sm-4 col-md-4">
         <div class="checkbox">
             <label>
-                @Html.CheckBox("LoadFullSizeImagesOnFullscreen", new { data_bind = "checked: loadFullSizeImagesOnFullscreen" }) Load Full Size Images on Fullscreen
+                @Html.CheckBox("LoadFullSizeImagesOnFullscreen", new { data_bind = "checked: loadFullSizeImagesOnFullscreen" }) @T(LocalizableStrings.LoadFullSizeImagesOnFullscreen)
             </label>
         </div>
     </div>
@@ -143,7 +144,7 @@
     <div class="col-sm-8 col-md-8">
         <div class="checkbox">
             <label>
-                @Html.CheckBox("ShowButtons", new { data_bind = "checked: showButtons" }) Show Buttons
+                @Html.CheckBox("ShowButtons", new { data_bind = "checked: showButtons" }) @T(LocalizableStrings.ShowButtons)
             </label>
         </div>
     </div>
@@ -151,21 +152,43 @@
     <div class="col-sm-4 col-md-4">
         <div class="checkbox">
             <label>
-                @Html.CheckBox("ShowTool", new { data_bind = "checked: showTool" }) Show Tool
+                @Html.CheckBox("ShowTool", new { data_bind = "checked: showTool" }) @T(LocalizableStrings.ShowTool)
             </label>
         </div>
     </div>
     <div class="col-sm-4 col-md-4">
         <div class="checkbox">
             <label>
-                @Html.CheckBox("ShowPlay", new { data_bind = "checked: showPlay" }) Show Play
+                @Html.CheckBox("ShowPlay", new { data_bind = "checked: showPlay" }) @T(LocalizableStrings.ShowPlay)
             </label>
         </div>
     </div>
     <div class="col-sm-4 col-md-4">
         <div class="checkbox">
             <label>
-                @Html.CheckBox("ShowPause", new { data_bind = "checked: showPause" }) Show Pause
+                @Html.CheckBox("ShowPause", new { data_bind = "checked: showPause" }) @T(LocalizableStrings.ShowPause)
+            </label>
+        </div>
+    </div>
+
+    <div class="col-sm-4 col-md-4">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBox("ShowZoom", new { data_bind = "checked: showZoom" }) @T(LocalizableStrings.ShowZoom)
+            </label>
+        </div>
+    </div>
+    <div class="col-sm-4 col-md-4">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBox("ShowTurn", new { data_bind = "checked: showTurn" }) @T(LocalizableStrings.ShowTurn)
+            </label>
+        </div>
+    </div>
+    <div class="col-sm-4 col-md-4">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBox("ShowFullscreen", new { data_bind = "checked: showFullscreen" }) @T(LocalizableStrings.ShowFullscreen)
             </label>
         </div>
     </div>
@@ -173,31 +196,7 @@
     <div class="col-sm-4 col-md-4">
         <div class="checkbox">
             <label>
-                @Html.CheckBox("ShowZoom", new { data_bind = "checked: showZoom" }) Show Zoom
-            </label>
-        </div>
-    </div>
-    <div class="col-sm-4 col-md-4">
-        <div class="checkbox">
-            <label>
-                @Html.CheckBox("ShowTurn", new { data_bind = "checked: showTurn" }) Show Turn
-            </label>
-        </div>
-    </div>
-    <div class="col-sm-4 col-md-4">
-        <div class="checkbox">
-            <label>
-                @Html.CheckBox("ShowFullscreen", new { data_bind = "checked: showFullscreen" }) Show Fullscreen
-            </label>
-        </div>
-    </div>
-
-
-
-    <div class="col-sm-4 col-md-4">
-        <div class="checkbox">
-            <label>
-                @Html.CheckBox("DisplayLoader", new { data_bind = "checked: displayLoader" }) Display Loader
+                @Html.CheckBox("DisplayLoader", new { data_bind = "checked: displayLoader" }) @T(LocalizableStrings.DisplayLoader)
             </label>
         </div>
     </div>

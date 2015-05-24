@@ -1,4 +1,5 @@
-﻿@model Kore.Plugins.Widgets.Google.ContentBlocks.GoogleAdSenseBlock
+﻿@using Kore.Plugins.Widgets.Google
+@model Kore.Plugins.Widgets.Google.ContentBlocks.GoogleAdSenseBlock
 
 <div id="block-content">
     <div class="col-sm-6 col-md-6">
@@ -28,7 +29,7 @@
     <div class="col-sm-6 col-md-6">
         <div class="checkbox">
             <label>
-                @Html.CheckBoxFor(m => m.EnableLazyLoadAd, new { data_bind = "checked: enableLazyLoadAd" }) Lazy Load
+                @Html.CheckBoxFor(m => m.EnableLazyLoadAd, new { data_bind = "checked: enableLazyLoadAd" }) @T(LocalizableStrings.ContentBlocks.AdSenseBlock.EnableLazyLoadAd)
             </label>
         </div>
     </div>

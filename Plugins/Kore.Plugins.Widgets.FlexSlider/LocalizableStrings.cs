@@ -10,6 +10,14 @@
 
         public static class FlexSliderBlock
         {
+            public static class EditorTabs
+            {
+                public const string General = "Plugins.Widgets.FlexSlider/FlexSliderBlock.EditorTabs.General";
+                public const string Animation = "Plugins.Widgets.FlexSlider/FlexSliderBlock.EditorTabs.Animation";
+                public const string Navigation = "Plugins.Widgets.FlexSlider/FlexSliderBlock.EditorTabs.Navigation";
+                public const string Events = "Plugins.Widgets.FlexSlider/FlexSliderBlock.EditorTabs.Events";
+            }
+
             public const string MediaFolder = "Plugins.Widgets.FlexSlider/FlexSliderBlock.MediaFolder";
             public const string ControlId = "Plugins.Widgets.FlexSlider/FlexSliderBlock.ControlId";
             public const string Namespace = "Plugins.Widgets.FlexSlider/FlexSliderBlock.Namespace";

@@ -143,7 +143,6 @@
     <Compile Include="NavigationProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GooglePlugin.cs" />
-    <Compile Include="Services\IGoogleSitemapPageConfigService.cs" />
     <Compile Include="ContentBlocks\GoogleAdSenseBlock.cs" />
     <Compile Include="ContentBlocks\GoogleAnalyticsBlock.cs" />
     <Compile Include="ContentBlocks\GoogleMapBlock.cs" />

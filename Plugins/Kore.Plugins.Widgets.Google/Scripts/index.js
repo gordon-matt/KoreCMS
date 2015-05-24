@@ -3,34 +3,13 @@
 var odataBaseUrl = "/odata/kore/plugins/google/GoogleXmlSitemapApi/";
 
 var changeFrequencies = [
-    {
-        "Id": 0,
-        "Name": "Always"
-    },
-    {
-        "Id": 1,
-        "Name": "Hourly"
-    },
-    {
-        "Id": 2,
-        "Name": "Daily"
-    },
-    {
-        "Id": 3,
-        "Name": "Weekly"
-    },
-    {
-        "Id": 4,
-        "Name": "Monthly"
-    },
-    {
-        "Id": 5,
-        "Name": "Yearly"
-    },
-    {
-        "Id": 6,
-        "Name": "Never"
-    },
+    { "Id": 0, "Name": translations.ChangeFrequencies.Always },
+    { "Id": 1, "Name": translations.ChangeFrequencies.Hourly },
+    { "Id": 2, "Name": translations.ChangeFrequencies.Daily },
+    { "Id": 3, "Name": translations.ChangeFrequencies.Weekly },
+    { "Id": 4, "Name": translations.ChangeFrequencies.Monthly },
+    { "Id": 5, "Name": translations.ChangeFrequencies.Yearly },
+    { "Id": 6, "Name": translations.ChangeFrequencies.Never }
 ];
 
 function getChangeFrequencyIndex(name) {
@@ -151,20 +130,20 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Id",
-            title: "Id",
+            title: translations.Columns.Id,
             filterable: false
         }, {
             field: "Location",
-            title: "Location",
+            title: translations.Columns.Location,
             filterable: true
         }, {
             field: "ChangeFrequency",
-            title: "ChangeFrequency",
+            title: translations.Columns.ChangeFrequency,
             filterable: false,
             editor: changeFrequenciesDropDownEditor
         }, {
             field: "Priority",
-            title: "Priority",
+            title: translations.Columns.Priority,
             filterable: true
         }, {
             command: ["edit"],

@@ -1,4 +1,5 @@
-﻿using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
+﻿using Kore.ComponentModel;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 
 namespace Kore.Plugins.Widgets.Google.ContentBlocks
 {
@@ -9,12 +10,16 @@ namespace Kore.Plugins.Widgets.Google.ContentBlocks
             Zoom = 8;
         }
 
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.MapBlock.Latitude)]
         public float Latitude { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.MapBlock.Longitude)]
         public float Longitude { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.MapBlock.Zoom)]
         public byte Zoom { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.MapBlock.Height)]
         public short Height { get; set; }
 
         #region ContentBlockBase Overrides

@@ -5,19 +5,19 @@ namespace Kore.Plugins.Widgets.Google.ContentBlocks
 {
     public class GoogleAdSenseBlock : ContentBlockBase
     {
-        [LocalizedDisplayName(LocalizableStrings.AdSenseBlock.AdClient)]
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.AdSenseBlock.AdClient)]
         public string AdClient { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.AdSenseBlock.AdSlot)]
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.AdSenseBlock.AdSlot)]
         public string AdSlot { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.AdSenseBlock.Width)]
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.AdSenseBlock.Width)]
         public int Width { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.AdSenseBlock.Height)]
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.AdSenseBlock.Height)]
         public int Height { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.AdSenseBlock.EnableLazyLoadAd)]
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.AdSenseBlock.EnableLazyLoadAd)]
         public bool EnableLazyLoadAd { get; set; }
 
         #region ContentBlockBase Overrides

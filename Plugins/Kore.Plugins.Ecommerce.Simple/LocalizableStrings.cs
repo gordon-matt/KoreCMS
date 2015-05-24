@@ -114,5 +114,12 @@
         public const string TaxTotal = "Plugins.Ecommerce.Simple/TaxTotal";
         public const string Total = "Plugins.Ecommerce.Simple/Total";
         public const string UpdateCart = "Plugins.Ecommerce.Simple/UpdateCart";
+
+        // Cart Controller Messages
+        public const string AddToCartSuccess = "Plugins.Ecommerce.Simple/AddToCartSuccess";
+        public const string CartUpdated = "Plugins.Ecommerce.Simple/CartUpdated";
+        public const string CouldNotFindProduct = "Plugins.Ecommerce.Simple/CouldNotFindProduct";
+        public const string ItemRemovedFromCart = "Plugins.Ecommerce.Simple/AddToCartSuccess";
+        public const string QuantityUpdated = "Plugins.Ecommerce.Simple/QuantityUpdated";
     }
 }

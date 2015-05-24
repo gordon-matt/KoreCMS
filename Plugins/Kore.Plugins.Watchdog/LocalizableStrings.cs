@@ -2,6 +2,15 @@
 {
     public static class LocalizableStrings
     {
+        public static class Model
+        {
+            public const string DisplayName = "Kore.Plugins.Watchdog/Model.DisplayName";
+            public const string ServiceName = "Kore.Plugins.Watchdog/Model.ServiceName";
+            public const string Password = "Kore.Plugins.Watchdog/Model.Password";
+            public const string Status = "Kore.Plugins.Watchdog/Model.Status";
+            public const string Url = "Kore.Plugins.Watchdog/Model.Url";
+        }
+
         public const string AddService = "Kore.Plugins.Watchdog/AddService";
         public const string AddServiceError = "Kore.Plugins.Watchdog/AddServiceError";
         public const string AddServiceSuccess = "Kore.Plugins.Watchdog/AddServiceSuccess";
@@ -21,6 +30,7 @@
         public const string StopService = "Kore.Plugins.Watchdog/StopService";
         public const string StopServiceError = "Kore.Plugins.Watchdog/StopServiceError";
         public const string StopServiceSuccess = "Kore.Plugins.Watchdog/StopServiceSuccess";
+        public const string Unauthorized = "Kore.Plugins.Watchdog/Unauthorized";
         public const string Watchdog = "Kore.Plugins.Watchdog/Watchdog";
     }
 }

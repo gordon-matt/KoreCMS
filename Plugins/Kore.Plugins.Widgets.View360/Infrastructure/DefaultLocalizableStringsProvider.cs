@@ -16,11 +16,6 @@ namespace Kore.Plugins.Widgets.View360.Infrastructure
                     CultureCode = null,
                     LocalizedStrings = new Dictionary<string, string>
                     {
-                        //{ LocalizableStrings.General, "General" },
-                        //{ LocalizableStrings.MainConfig, "Main Configuration" },
-                        //{ LocalizableStrings.NavButtonsConfig, "Navigation Buttons Configuration" },
-                        //{ LocalizableStrings.LoaderInfoConfig, "Loader Info Configuration" },
-
                         { LocalizableStrings.Mode, "Mode" },
                         { LocalizableStrings.ImagesPattern, "Images Pattern" },
                         { LocalizableStrings.ImagesDirectory, "Images Directory" },

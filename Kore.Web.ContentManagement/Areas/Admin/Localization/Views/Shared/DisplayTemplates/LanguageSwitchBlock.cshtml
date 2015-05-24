@@ -28,7 +28,7 @@
                         foreach (var language in languages)
                         {
                             <li>
-                                <a href="/@language.UniqueSeoCode">
+                                <a href="/@language.CultureCode">
                                     @if (language.CultureCode == WorkContext.CurrentCultureCode)
                                     {
                                         <span class="kore-icon kore-icon-ok"></span>
@@ -63,17 +63,13 @@
             <select onchange="changeLanguage(this.value);" autocomplete="off" class="form-control">
                 @foreach (var language in languages)
                 {
-                    string languageCode = Model.UseUrlPrefix
-                        ? language.UniqueSeoCode
-                        : language.CultureCode;
-                        
                     if (language.CultureCode == WorkContext.CurrentCultureCode)
                     {
-                        <option value="@languageCode" selected="selected">@language.Name</option>
+                        <option value="@language.CultureCode" selected="selected">@language.Name</option>
                     }
                     else
                     {
-                        <option value="@languageCode">@language.Name</option>
+                        <option value="@language.CultureCode">@language.Name</option>
                     }
                 }
             </select>
@@ -83,10 +79,10 @@
         <ul>
             @foreach (var language in languages)
             {
-                <li class="@language.CultureCode">
+                <li class="lang-@language.CultureCode">
                     @if (Model.UseUrlPrefix)
                     {
-                        <a href="/@language.UniqueSeoCode">@language.Name</a>
+                        <a href="/@language.CultureCode">@language.Name</a>
                     }
                     else
                     {
@@ -102,8 +98,8 @@
     @if (Model.UseUrlPrefix)
     {
         <text>
-        function changeLanguage(uniqueSeoCode) {
-            window.location = uniqueSeoCode;
+        function changeLanguage(cultureCode) {
+            window.location = cultureCode;
         }
         </text>
     }

@@ -19,7 +19,7 @@ namespace Kore.Indexing.Lucene.Infrastructure
                 return;
             }
 
-            builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
+            builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();
 
             builder.RegisterType<LuceneIndexProvider>().As<IIndexProvider>().InstancePerDependency();
             builder.RegisterType<LuceneSearchBuilder>().As<ISearchBuilder>().InstancePerDependency();

@@ -18,7 +18,7 @@ namespace Kore.Plugins.Widgets.Bootstrap3.Infrastructure
                 return;
             }
 
-            builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
+            builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();
             builder.RegisterType<Bootstrap3CarouselBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<Bootstrap3ImageGalleryBlock>().As<IContentBlock>().InstancePerDependency();
         }

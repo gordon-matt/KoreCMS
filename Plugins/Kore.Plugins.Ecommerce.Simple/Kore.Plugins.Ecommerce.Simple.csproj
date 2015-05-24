@@ -154,7 +154,7 @@
     <Compile Include="Extensions\StyleRegisterExtensions.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="Infrastructure\AutoMenuProvider.cs" />
-    <Compile Include="Infrastructure\DefaultLocalizableStringsProvider.cs" />
+    <Compile Include="Infrastructure\LanguagePackInvariant.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="Infrastructure\LocationFormatProvider.cs" />
     <Compile Include="Infrastructure\WebApiRegistrar.cs" />

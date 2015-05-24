@@ -135,7 +135,7 @@
     <Compile Include="Controllers\WatchdogController.cs" />
     <Compile Include="Data\Domain\WatchdogInstance.cs" />
     <Compile Include="Extensions\ScriptRegisterExtensions.cs" />
-    <Compile Include="Infrastructure\DefaultLocalizableStringsProvider.cs" />
+    <Compile Include="Infrastructure\LanguagePackInvariant.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="Infrastructure\LocationFormatProvider.cs" />
     <Compile Include="Infrastructure\WebApiRegistrar.cs" />

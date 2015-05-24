@@ -37,7 +37,7 @@ namespace KoreCMS.Infrastructure
             builder.RegisterType<MembershipService>().As<IMembershipService>().InstancePerDependency();
 
             // localization
-            builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
+            builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();
 
             // navigation
             builder.RegisterType<NavigationProvider>().As<INavigationProvider>().SingleInstance();

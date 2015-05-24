@@ -142,7 +142,7 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<HttpContextStateProvider>().As<IWorkContextStateProvider>();
 
             // localization
-            builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
+            builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();
             builder.RegisterType<LanguageManager>().As<ILanguageManager>().SingleInstance();
             builder.RegisterType<DefaultLocalizedStringManager>().As<ILocalizedStringManager>().InstancePerLifetimeScope();
             builder.RegisterType<DefaultWebCultureManager>().AsImplementedInterfaces().InstancePerLifetimeScope();

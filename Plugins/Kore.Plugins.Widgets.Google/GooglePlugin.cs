@@ -10,7 +10,7 @@ namespace Kore.Plugins.Widgets.Google
         public override void Install()
         {
             base.Install();
-            InstallLocalizableStrings<DefaultLocalizableStringsProvider>();
+            InstallLanguagePack<LanguagePackInvariant>();
 
             var dbContext = EngineContext.Current.Resolve<DbContext>();
 
@@ -38,7 +38,7 @@ namespace Kore.Plugins.Widgets.Google
         public override void Uninstall()
         {
             base.Uninstall();
-            UninstallLocalizableStrings<DefaultLocalizableStringsProvider>();
+            UninstallLanguagePack<LanguagePackInvariant>();
 
             var dbContext = EngineContext.Current.Resolve<DbContext>();
             DropTable(dbContext, Constants.Tables.SitemapConfig);

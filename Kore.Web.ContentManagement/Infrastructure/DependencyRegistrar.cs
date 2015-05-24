@@ -62,7 +62,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             #region Localization
 
-            builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
+            builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();
 
             #endregion Localization
 

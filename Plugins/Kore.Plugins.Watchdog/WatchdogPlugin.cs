@@ -10,7 +10,7 @@ namespace Kore.Plugins.Watchdog
         public override void Install()
         {
             base.Install();
-            InstallLocalizableStrings<DefaultLocalizableStringsProvider>();
+            InstallLanguagePack<LanguagePackInvariant>();
 
             var dbContext = EngineContext.Current.Resolve<DbContext>();
             if (!CheckIfTableExists(dbContext, Constants.Tables.WatchdogInstances))
@@ -32,7 +32,7 @@ namespace Kore.Plugins.Watchdog
         public override void Uninstall()
         {
             base.Uninstall();
-            UninstallLocalizableStrings<DefaultLocalizableStringsProvider>();
+            UninstallLanguagePack<LanguagePackInvariant>();
             var dbContext = EngineContext.Current.Resolve<DbContext>();
             DropTable(dbContext, Constants.Tables.WatchdogInstances);
         }

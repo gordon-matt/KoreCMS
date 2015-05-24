@@ -17,7 +17,7 @@
     <div class="form-group">
         <div class="checkbox">
             <label>
-                @Html.CheckBoxFor(m => m.UseSandboxMode, new { data_bind = "checked: useSandboxMode" }) @T(LocalizableStrings.PayPalSettings.UseSandboxMode)
+                @Html.CheckBoxFor(m => m.UseSandboxMode, new { data_bind = "checked: useSandboxMode" }) @T(LocalizableStrings.Settings.PayPal.UseSandboxMode)
             </label>
         </div>
     </div>
@@ -34,7 +34,7 @@
     <div class="form-group">
         <div class="checkbox">
             <label>
-                @Html.CheckBoxFor(m => m.CancelUrlRedirectsToOrderDetailsPage, new { data_bind = "checked: cancelUrlRedirectsToOrderDetailsPage" }) @T(LocalizableStrings.PayPalSettings.CancelUrlRedirectsToOrderDetailsPage)
+                @Html.CheckBoxFor(m => m.CancelUrlRedirectsToOrderDetailsPage, new { data_bind = "checked: cancelUrlRedirectsToOrderDetailsPage" }) @T(LocalizableStrings.Settings.PayPal.CancelUrlRedirectsToOrderDetailsPage)
             </label>
         </div>
     </div>

@@ -540,11 +540,11 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Name",
-            title: "Name",
+            title: translations.Columns.Product.Name,
             filterable: true
         }, {
             field: "Price",
-            title: "Price",
+            title: translations.Columns.Product.Price,
             filterable: true,
             width: 200
         }, {

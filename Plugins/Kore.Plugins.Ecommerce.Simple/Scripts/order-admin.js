@@ -47,24 +47,24 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Id",
-            title: "Order ID",
+            title: translations.Columns.Id,
             filterable: false
         }, {
             field: "Status",
-            title: "Status",
+            title: translations.Columns.Status,
             filterable: true
         }, {
             field: "PaymentStatus",
-            title: "Payment Status",
+            title: translations.Columns.PaymentStatus,
             filterable: true
         }, {
             field: "OrderDateUtc",
-            title: "Date",
+            title: translations.Columns.OrderDateUtc,
             format: "{0:yyyy-MM-dd}",
             filterable: true
         }, {
             field: "OrderTotal",
-            title: "Total",
+            title: translations.Columns.OrderTotal,
             filterable: true
         }, {
             field: "Id",

@@ -418,7 +418,7 @@ namespace Kore.Indexing.Lucene.Services
             catch
             {
                 // index might not exist if it has been rebuilt
-                Logger.Info("Attempt to read a none existing index");
+                Logger.Info("Attempted to read a non-existing index");
                 return null;
             }
 

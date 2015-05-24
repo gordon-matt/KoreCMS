@@ -82,19 +82,19 @@
                                 <legend id="form-section-legend"></legend>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        @Html.Label("Name", "Name", new { @class = "control-label" })
+                                        @Html.Label("Name", T(LocalizableStrings.CategoryModel.Name), new { @class = "control-label" })
                                         @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        @Html.Label("Slug", "Slug", new { @class = "control-label" })
+                                        @Html.Label("Slug", T(LocalizableStrings.CategoryModel.Slug), new { @class = "control-label" })
                                         @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: slug" })
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        @Html.Label("Order", "Order", new { @class = "control-label" })
+                                        @Html.Label("Order", T(LocalizableStrings.CategoryModel.Order), new { @class = "control-label" })
                                         @Html.TextBox("Order", null, new { @class = "form-control", data_bind = "value: order" })
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                                     <div class="form-group">
-                                        @Html.Label("ImageUrl", "Image URL", new { @class = "control-label" })
+                                        @Html.Label("ImageUrl", T(LocalizableStrings.CategoryModel.ImageUrl), new { @class = "control-label" })
                                         <div class="input-group">
                                             @Html.TextBox("ImageUrl", null, new { @class = "form-control", data_bind = "value: imageUrl" })
                                             <span class="input-group-addon">
@@ -122,19 +122,19 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        @Html.Label("Description", "Description", new { @class = "control-label" })
+                                        @Html.Label("Description", T(LocalizableStrings.CategoryModel.Description), new { @class = "control-label" })
                                         @Html.TextArea("Description", null, new { @class = "form-control", data_bind = "value: description" })
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        @Html.Label("MetaKeywords", "Meta Keywords", new { @class = "control-label" })
+                                        @Html.Label("MetaKeywords", T(LocalizableStrings.CategoryModel.MetaKeywords), new { @class = "control-label" })
                                         @Html.TextArea("MetaKeywords", null, new { @class = "form-control", data_bind = "value: metaKeywords" })
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        @Html.Label("MetaDescription", "Meta Description", new { @class = "control-label" })
+                                        @Html.Label("MetaDescription", T(LocalizableStrings.CategoryModel.MetaDescription), new { @class = "control-label" })
                                         @Html.TextArea("MetaDescription", null, new { @class = "form-control", data_bind = "value: metaDescription" })
                                     </div>
                                 </div>
@@ -172,31 +172,31 @@
                                 <legend id="product-form-section-legend"></legend>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        @Html.Label("Name", "Name", new { @class = "control-label" })
+                                        @Html.Label("Name", T(LocalizableStrings.ProductModel.Name), new { @class = "control-label" })
                                         @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: product.name" })
                                     </div>
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        @Html.Label("Slug", "Slug", new { @class = "control-label" })
+                                        @Html.Label("Slug", T(LocalizableStrings.ProductModel.Slug), new { @class = "control-label" })
                                         @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: product.slug" })
                                     </div>
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        @Html.Label("Price", "Price", new { @class = "control-label" })
+                                        @Html.Label("Price", T(LocalizableStrings.ProductModel.Price), new { @class = "control-label" })
                                         @Html.TextBox("Price", null, new { @class = "form-control", data_bind = "value: product.price" })
                                     </div>
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        @Html.Label("Tax", "Tax", new { @class = "control-label" })
+                                        @Html.Label("Tax", T(LocalizableStrings.ProductModel.Tax), new { @class = "control-label" })
                                         @Html.TextBox("Tax", null, new { @class = "form-control", data_bind = "value: product.tax" })
                                     </div>
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        @Html.Label("ShippingCost", "Shipping Cost", new { @class = "control-label" })
+                                        @Html.Label("ShippingCost", T(LocalizableStrings.ProductModel.ShippingCost), new { @class = "control-label" })
                                         @Html.TextBox("ShippingCost", null, new { @class = "form-control", data_bind = "value: product.shippingCost" })
                                     </div>
                                 </div>
@@ -213,7 +213,7 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                                     <div class="form-group">
-                                        @Html.Label("MainImageUrl", "Main Image URL", new { @class = "control-label" })
+                                        @Html.Label("MainImageUrl", T(LocalizableStrings.ProductModel.MainImageUrl), new { @class = "control-label" })
                                         <div class="input-group">
                                             @Html.TextBox("MainImageUrl", null, new { @class = "form-control", data_bind = "value: product.mainImageUrl" })
                                             <span class="input-group-addon">
@@ -225,26 +225,26 @@
 
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        @Html.Label("ShortDescription", "Short Description", new { @class = "control-label" })
+                                        @Html.Label("ShortDescription", T(LocalizableStrings.ProductModel.ShortDescription), new { @class = "control-label" })
                                         @Html.TextArea("ShortDescription", null, new { @class = "form-control", data_bind = "value: product.shortDescription" })
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        @Html.Label("FullDescription", "Full Description", new { @class = "control-label" })
+                                        @Html.Label("FullDescription", T(LocalizableStrings.ProductModel.FullDescription), new { @class = "control-label" })
                                         @Html.TextArea("FullDescription", null, new { @class = "form-control", data_bind = "wysiwyg: product.fullDescription, wysiwygConfig: product.tinyMCE_fullDescription" })
                                     </div>
                                 </div>
 
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        @Html.Label("MetaKeywords", "Meta Keywords", new { @class = "control-label" })
+                                        @Html.Label("MetaKeywords", T(LocalizableStrings.ProductModel.MetaKeywords), new { @class = "control-label" })
                                         @Html.TextArea("MetaKeywords", null, new { @class = "form-control", data_bind = "value: product.metaKeywords" })
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        @Html.Label("MetaDescription", "Meta Description", new { @class = "control-label" })
+                                        @Html.Label("MetaDescription", T(LocalizableStrings.ProductModel.MetaDescription), new { @class = "control-label" })
                                         @Html.TextArea("MetaDescription", null, new { @class = "form-control", data_bind = "value: product.metaDescription" })
                                     </div>
                                 </div>
@@ -270,15 +270,22 @@
             CircularRelationshipError: '@T(LocalizableStrings.CircularRelationshipError).Text',
             Create: '@T(KoreWebLocalizableStrings.General.Create).Text',
             Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
-            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.Messages.ConfirmDeleteRecord).Text',
-            DeleteRecordError: '@T(KoreWebLocalizableStrings.Messages.DeleteRecordError).Text',
-            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.DeleteRecordSuccess).Text',
+            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
+            DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',
+            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text',
             Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
-            GetRecordError: '@T(KoreWebLocalizableStrings.Messages.GetRecordError).Text',
-            InsertRecordError: '@T(KoreWebLocalizableStrings.Messages.InsertRecordError).Text',
-            InsertRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.InsertRecordSuccess).Text',
-            UpdateRecordError: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordError).Text',
-            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.Messages.UpdateRecordSuccess).Text'
+            GetRecordError: '@T(KoreWebLocalizableStrings.General.GetRecordError).Text',
+            InsertRecordError: '@T(KoreWebLocalizableStrings.General.InsertRecordError).Text',
+            InsertRecordSuccess: '@T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text',
+            UpdateRecordError: '@T(KoreWebLocalizableStrings.General.UpdateRecordError).Text',
+            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text',
+
+            Columns: {
+                Product: {
+                    Name: '@T(LocalizableStrings.ProductModel.Name).Text',
+                    Price: '@T(LocalizableStrings.ProductModel.Price).Text'
+                }
+            }
         }
     </script>
     <script id="treeview-template" type="text/kendo-ui-template">

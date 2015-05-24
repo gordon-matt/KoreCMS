@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Kore.Indexing.Lucene.Services;
 using Kore.Infrastructure;
+using Kore.Localization;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.Indexing;
 using Kore.Web.Plugins;
@@ -17,6 +18,8 @@ namespace Kore.Indexing.Lucene.Infrastructure
             {
                 return;
             }
+
+            builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
 
             builder.RegisterType<LuceneIndexProvider>().As<IIndexProvider>().InstancePerDependency();
             builder.RegisterType<LuceneSearchBuilder>().As<ISearchBuilder>().InstancePerDependency();

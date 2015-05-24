@@ -14,25 +14,25 @@ namespace Kore.Plugins.Ecommerce.Simple
             CancelUrlRedirectsToOrderDetailsPage = true;
         }
 
-        [LocalizedDisplayName(LocalizableStrings.PayPalSettings.ProductionUrl)]
+        [LocalizedDisplayName(LocalizableStrings.Settings.PayPal.ProductionUrl)]
         public string ProductionUrl { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.PayPalSettings.SandboxUrl)]
+        [LocalizedDisplayName(LocalizableStrings.Settings.PayPal.SandboxUrl)]
         public string SandboxUrl { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.PayPalSettings.UseSandboxMode)]
+        [LocalizedDisplayName(LocalizableStrings.Settings.PayPal.UseSandboxMode)]
         public bool UseSandboxMode { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.PayPalSettings.Merchant)]
+        [LocalizedDisplayName(LocalizableStrings.Settings.PayPal.Merchant)]
         public string Merchant { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.PayPalSettings.CurrencyCode)]
+        [LocalizedDisplayName(LocalizableStrings.Settings.PayPal.CurrencyCode)]
         public string CurrencyCode { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.PayPalSettings.CancelUrlRedirectsToOrderDetailsPage)]
+        [LocalizedDisplayName(LocalizableStrings.Settings.PayPal.CancelUrlRedirectsToOrderDetailsPage)]
         public bool CancelUrlRedirectsToOrderDetailsPage { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.PayPalSettings.PdtToken)]
+        [LocalizedDisplayName(LocalizableStrings.Settings.PayPal.PdtToken)]
         public string PdtToken { get; set; }
 
         #region ISettings Members

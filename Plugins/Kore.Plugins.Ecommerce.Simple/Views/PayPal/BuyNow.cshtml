@@ -1,4 +1,5 @@
-﻿@using Kore.Plugins.Ecommerce.Simple.Models
+﻿@using Kore.Plugins.Ecommerce.Simple
+@using Kore.Plugins.Ecommerce.Simple.Models
 @model PayPalModel
 
 <form id="payment-form" action="@Model.ActionUrl" method="post">
@@ -62,7 +63,7 @@
     @Html.Hidden("email", Model.BillingAddress.Email)
 </form>
 
-<p>Connecting to PayPal, please wait...</p>
+<p>@T(LocalizableStrings.ConnectingToPayPal)</p>
 
 @using (Script.AtFoot())
 {

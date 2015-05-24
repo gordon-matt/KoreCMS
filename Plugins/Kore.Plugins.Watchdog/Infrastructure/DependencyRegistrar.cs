@@ -21,7 +21,7 @@ namespace Kore.Plugins.Watchdog.Infrastructure
                 return;
             }
 
-            builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
+            builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();
             builder.RegisterType<NavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<LocationFormatProvider>().As<ILocationFormatProvider>().SingleInstance();
             builder.RegisterType<WatchdogSettings>().As<ISettings>().SingleInstance();

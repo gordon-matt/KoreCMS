@@ -11,7 +11,7 @@ namespace Kore.Plugins.Ecommerce.Simple
         {
             base.Install();
 
-            InstallLocalizableStrings<DefaultLocalizableStringsProvider>();
+            InstallLanguagePack<LanguagePackInvariant>();
 
             var dbContext = EngineContext.Current.Resolve<DbContext>();
 
@@ -236,7 +236,7 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_OrderNotes_dbo.Kore_Plugins
 
         public override void Uninstall()
         {
-            UninstallLocalizableStrings<DefaultLocalizableStringsProvider>();
+            UninstallLanguagePack<LanguagePackInvariant>();
 
             var dbContext = EngineContext.Current.Resolve<DbContext>();
             DropTable(dbContext, Constants.Tables.OrderNotes);

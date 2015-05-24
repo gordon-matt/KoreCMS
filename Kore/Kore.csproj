@@ -216,7 +216,7 @@
     <Compile Include="Localization\Domain\Language.cs" />
     <Compile Include="Localization\Domain\LocalizableString.cs" />
     <Compile Include="Localization\ICultureManager.cs" />
-    <Compile Include="Localization\IDefaultLocalizableStringsProvider.cs" />
+    <Compile Include="Localization\ILanguagePack.cs" />
     <Compile Include="Localization\ILanguageManager.cs" />
     <Compile Include="Localization\ILocalizableEntity.cs" />
     <Compile Include="Localization\ILocalizedStringManager.cs" />

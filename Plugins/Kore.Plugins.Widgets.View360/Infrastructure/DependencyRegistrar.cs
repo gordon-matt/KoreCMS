@@ -17,7 +17,7 @@ namespace Kore.Plugins.Widgets.View360.Infrastructure
                 return;
             }
 
-            builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
+            builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();
             builder.RegisterType<View360Block>().As<IContentBlock>().InstancePerDependency();
         }
 

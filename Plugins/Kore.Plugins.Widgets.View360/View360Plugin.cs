@@ -8,13 +8,13 @@ namespace Kore.Plugins.Widgets.View360
         public override void Install()
         {
             base.Install();
-            InstallLocalizableStrings<DefaultLocalizableStringsProvider>();
+            InstallLanguagePack<LanguagePackInvariant>();
         }
 
         public override void Uninstall()
         {
             base.Uninstall();
-            UninstallLocalizableStrings<DefaultLocalizableStringsProvider>();
+            UninstallLanguagePack<LanguagePackInvariant>();
         }
     }
 }

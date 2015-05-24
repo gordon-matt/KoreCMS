@@ -89,16 +89,16 @@ namespace Kore.Localization
         protected virtual string AddTranslation(string cultureCode, string key)
         {
             // TODO: Consider resolving this once for better performance?
-            var providers = EngineContext.Current.ResolveAll<IDefaultLocalizableStringsProvider>();
-            var translationSets = providers.SelectMany(x => x.GetTranslations()).Where(x => x.CultureCode == null);
+            var providers = EngineContext.Current.ResolveAll<ILanguagePack>();
+            var languagePacks = providers.Where(x => x.CultureCode == null);
 
             string value = key;
 
-            foreach (var translationSet in translationSets)
+            foreach (var languagePack in languagePacks)
             {
-                if (translationSet.LocalizedStrings.ContainsKey(key))
+                if (languagePack.LocalizedStrings.ContainsKey(key))
                 {
-                    value = translationSet.LocalizedStrings[key];
+                    value = languagePack.LocalizedStrings[key];
                     break;
                 }
             }

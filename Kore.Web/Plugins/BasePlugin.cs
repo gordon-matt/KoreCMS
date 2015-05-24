@@ -53,23 +53,20 @@ namespace Kore.Web.Plugins
             }
         }
 
-        protected virtual void InstallLocalizableStrings<TProvider>() where TProvider : IDefaultLocalizableStringsProvider, new()
+        protected virtual void InstallLanguagePack<TLanguagePack>() where TLanguagePack : ILanguagePack, new()
         {
             var toInsert = new HashSet<LocalizableString>();
 
-            var translations = new TProvider().GetTranslations();
-            foreach (var translation in translations)
+            var languagePack = new TLanguagePack();
+            foreach (var localizedString in languagePack.LocalizedStrings)
             {
-                foreach (var localizedString in translation.LocalizedStrings)
+                toInsert.Add(new LocalizableString
                 {
-                    toInsert.Add(new LocalizableString
-                    {
-                        Id = Guid.NewGuid(),
-                        CultureCode = translation.CultureCode,
-                        TextKey = localizedString.Key,
-                        TextValue = localizedString.Value
-                    });
-                }
+                    Id = Guid.NewGuid(),
+                    CultureCode = languagePack.CultureCode,
+                    TextKey = localizedString.Key,
+                    TextValue = localizedString.Value
+                });
             }
 
             var localizableStringRepository = EngineContext.Current.Resolve<IRepository<LocalizableString>>();
@@ -79,12 +76,12 @@ namespace Kore.Web.Plugins
             cacheManager.RemoveByPattern("Kore_LocalizableStrings_.*");
         }
 
-        protected virtual void UninstallLocalizableStrings<TProvider>() where TProvider : IDefaultLocalizableStringsProvider, new()
+        protected virtual void UninstallLanguagePack<TLanguagePack>() where TLanguagePack : ILanguagePack, new()
         {
-            var translations = new TProvider().GetTranslations();
+            var languagePack = new TLanguagePack();
 
-            var distinctKeys = translations
-                .SelectMany(x => x.LocalizedStrings.Select(y => y.Key))
+            var distinctKeys = languagePack
+                .LocalizedStrings.Select(y => y.Key)
                 .Distinct();
 
             var localizableStringRepository = EngineContext.Current.Resolve<IRepository<LocalizableString>>();

@@ -250,7 +250,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\DefaultLocalizableStringsProvider.cs" />
+    <Compile Include="Infrastructure\LanguagePackInvariant.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="Initialization.cs" />
     <Compile Include="LocalizableStrings.cs" />

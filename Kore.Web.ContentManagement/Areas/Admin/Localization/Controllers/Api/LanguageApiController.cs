@@ -51,23 +51,20 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
 
             localizableStringRepository.Value.DeleteAll();
 
-            var localizedStringsProviders = EngineContext.Current.ResolveAll<IDefaultLocalizableStringsProvider>();
+            var languagePacks = EngineContext.Current.ResolveAll<ILanguagePack>();
 
             var toInsert = new HashSet<LocalizableString>();
-            foreach (var provider in localizedStringsProviders)
+            foreach (var languagePack in languagePacks)
             {
-                foreach (var translation in provider.GetTranslations())
+                foreach (var localizedString in languagePack.LocalizedStrings)
                 {
-                    foreach (var localizedString in translation.LocalizedStrings)
+                    toInsert.Add(new LocalizableString
                     {
-                        toInsert.Add(new LocalizableString
-                        {
-                            Id = Guid.NewGuid(),
-                            CultureCode = translation.CultureCode,
-                            TextKey = localizedString.Key,
-                            TextValue = localizedString.Value
-                        });
-                    }
+                        Id = Guid.NewGuid(),
+                        CultureCode = languagePack.CultureCode,
+                        TextKey = localizedString.Key,
+                        TextValue = localizedString.Value
+                    });
                 }
             }
             localizableStringRepository.Value.Insert(toInsert);

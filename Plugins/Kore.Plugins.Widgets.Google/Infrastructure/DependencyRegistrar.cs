@@ -22,7 +22,7 @@ namespace Kore.Plugins.Widgets.Google.Infrastructure
                 return;
             }
 
-            builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
+            builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();
             builder.RegisterType<GoogleAnalyticsBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<GoogleAdSenseBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<GoogleMapBlock>().As<IContentBlock>().InstancePerDependency();

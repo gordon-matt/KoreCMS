@@ -113,7 +113,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Infrastructure\DefaultLocalizableStringsProvider.cs" />
+    <Compile Include="Infrastructure\LanguagePackInvariant.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="Infrastructure\LocationFormatProvider.cs" />
     <Compile Include="LocalizableStrings.cs" />

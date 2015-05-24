@@ -232,7 +232,7 @@
     <Compile Include="Http\OData\GenericODataController.cs" />
     <Compile Include="Mobile\IMobileDeviceHelper.cs" />
     <Compile Include="Infrastructure\ConfigurationModule.cs" />
-    <Compile Include="Infrastructure\DefaultLocalizableStringsProvider.cs" />
+    <Compile Include="Infrastructure\LanguagePackInvariant.cs" />
     <Compile Include="Infrastructure\DependencyManagement\AutofacRequestLifetimeHttpModule.cs" />
     <Compile Include="Infrastructure\DependencyManagement\ContainerConfigurer.cs" />
     <Compile Include="Infrastructure\DependencyManagement\AutofacContainerManager.cs" />

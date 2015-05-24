@@ -19,7 +19,7 @@ namespace Kore.Plugins.Widgets.FlexSlider.Infrastructure
                 return;
             }
 
-            builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
+            builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();
             builder.RegisterType<FlexSliderBlock>().As<IContentBlock>().InstancePerDependency();
 
             builder.RegisterType<LocationFormatProvider>().As<ILocationFormatProvider>().SingleInstance();

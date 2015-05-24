@@ -26,7 +26,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                 return;
             }
 
-            builder.RegisterType<DefaultLocalizableStringsProvider>().As<IDefaultLocalizableStringsProvider>().SingleInstance();
+            builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();
 
             builder.RegisterType<SimpleCommercePermissions>().As<IPermissionProvider>().SingleInstance();
             builder.RegisterType<LocationFormatProvider>().As<ILocationFormatProvider>().SingleInstance();

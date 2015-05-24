@@ -82,7 +82,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Extensions\ScriptRegisterExtensions.cs" />
     <Compile Include="Extensions\StyleRegisterExtensions.cs" />
-    <Compile Include="Infrastructure\DefaultLocalizableStringsProvider.cs" />
+    <Compile Include="Infrastructure\LanguagePackInvariant.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="LocalizableStrings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

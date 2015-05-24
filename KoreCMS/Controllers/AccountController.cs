@@ -100,7 +100,7 @@ namespace Kore.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    ModelState.AddModelError("", T(LocalizableStrings.Account.InvalidUserNameOrPassword));
                 }
             }
 
@@ -147,6 +147,7 @@ namespace Kore.Controllers
 
                     messageService.SendEmailMessage(AccountMessageTemplates.Account_Registered, tokens, user.Email);
 
+                    // TODO: Make this a message template
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     return RedirectToAction("Index", "Home");
@@ -214,7 +215,7 @@ namespace Kore.Controllers
                 var user = await UserManager.FindByNameAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
-                    ModelState.AddModelError("", "The user either does not exist or is not confirmed.");
+                    ModelState.AddModelError("", T(LocalizableStrings.Account.UserDoesNotExistOrIsNotConfirmed));
                     return View();
                 }
 
@@ -222,7 +223,10 @@ namespace Kore.Controllers
                 // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+
+                // TODO: Make this a message template
                 await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -265,7 +269,7 @@ namespace Kore.Controllers
                 var user = await UserManager.FindByNameAsync(model.Email);
                 if (user == null)
                 {
-                    ModelState.AddModelError("", "No user found.");
+                    ModelState.AddModelError("", T(LocalizableStrings.Account.NoUserFound));
                     return View();
                 }
                 IdentityResult result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
@@ -328,10 +332,10 @@ namespace Kore.Controllers
         public virtual ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.Error ? "An error has occurred."
+                message == ManageMessageId.ChangePasswordSuccess ? T(LocalizableStrings.Account.ManageMessages.ChangePasswordSuccess)
+                : message == ManageMessageId.SetPasswordSuccess ? T(LocalizableStrings.Account.ManageMessages.SetPasswordSuccess)
+                : message == ManageMessageId.RemoveLoginSuccess ? T(LocalizableStrings.Account.ManageMessages.RemoveLoginSuccess)
+                : message == ManageMessageId.Error ? T(LocalizableStrings.Account.ManageMessages.Error)
                 : "";
             ViewBag.HasLocalPassword = HasPassword();
             ViewBag.ReturnUrl = Url.Action("Manage");
@@ -495,6 +499,8 @@ namespace Kore.Controllers
                         // Send an email with this link
                         string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        
+                        // TODO: Make this a message template
                         SendEmail(user.Email, callbackUrl, "Confirm your account", "Please confirm your account by clicking this link");
 
                         return RedirectToLocal(returnUrl);

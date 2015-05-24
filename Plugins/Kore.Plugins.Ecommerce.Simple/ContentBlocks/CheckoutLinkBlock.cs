@@ -11,10 +11,10 @@ namespace Kore.Plugins.Ecommerce.Simple.ContentBlocks
             IconCssClass = "kore-icon kore-icon-shopping-cart";
         }
 
-        [LocalizedDisplayName(LocalizableStrings.CheckoutLinkBlock.CssClass)]
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.CheckoutLinkBlock.CssClass)]
         public string CssClass { get; set; }
 
-        [LocalizedDisplayName(LocalizableStrings.CheckoutLinkBlock.IconCssClass)]
+        [LocalizedDisplayName(LocalizableStrings.ContentBlocks.CheckoutLinkBlock.IconCssClass)]
         public string IconCssClass { get; set; }
 
         #region ContentBlockBase Overrides

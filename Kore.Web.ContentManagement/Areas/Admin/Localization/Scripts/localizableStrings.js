@@ -170,3 +170,12 @@ $(document).ready(function () {
         editable: "inline"
     });
 });
+
+function exportFile() {
+    var downloadForm = $("<form>")
+        .attr("method", "GET")
+        .attr("action", "/admin/localization/localizable-strings/export/" + cultureCode);
+    $("body").append(downloadForm);
+    downloadForm.submit();
+    downloadForm.remove();
+};

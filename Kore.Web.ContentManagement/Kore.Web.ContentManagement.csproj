@@ -143,6 +143,7 @@
     <Compile Include="Areas\Admin\Blog\Controllers\BlogController.cs" />
     <Compile Include="Areas\Admin\Blog\Domain\BlogEntry.cs" />
     <Compile Include="Areas\Admin\Blog\Services\IBlogService.cs" />
+    <Compile Include="Areas\Admin\Localization\Models\LanguagePackFile.cs" />
     <Compile Include="Areas\Admin\Media\Services\IMediaService.cs" />
     <Compile Include="CmsPermissions.cs" />
     <Compile Include="Infrastructure\IAutoMenuProvider.cs" />

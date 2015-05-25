@@ -1399,6 +1399,8 @@
     <Content Include="Themes\Cosmo\thumbnail.png" />
     <Content Include="Themes\Cyborg\Content\bootstrap.min.css" />
     <Content Include="Themes\Cyborg\thumbnail.png" />
+    <Content Include="Themes\Darkly\Content\bootstrap.min.css" />
+    <Content Include="Themes\Darkly\thumbnail.png" />
     <Content Include="Themes\EShopper\Content\css\animate.css" />
     <Content Include="Themes\EShopper\Content\css\bootstrap.min.css" />
     <Content Include="Themes\EShopper\Content\css\font-awesome.min.css" />
@@ -1553,6 +1555,8 @@
     <Content Include="Themes\Link\Views\portfolio.html" />
     <Content Include="Themes\Link\Views\services.html" />
     <Content Include="Themes\Link\Views\singleproject.html" />
+    <Content Include="Themes\Lumen\Content\bootstrap.min.css" />
+    <Content Include="Themes\Lumen\thumbnail.png" />
     <Content Include="Themes\Minimal\Content\css\bootstrap.css" />
     <Content Include="Themes\Minimal\Content\css\font-awesome.min.css" />
     <Content Include="Themes\Minimal\Content\css\main.css" />
@@ -1627,8 +1631,12 @@
     <Content Include="Themes\Munter\Scripts\script.js" />
     <Content Include="Themes\Munter\thumbnail.png" />
     <Content Include="Themes\Munter\Views\index.html" />
+    <Content Include="Themes\Paper\Content\bootstrap.min.css" />
+    <Content Include="Themes\Paper\thumbnail.png" />
     <Content Include="Themes\Readable\Content\bootstrap.min.css" />
     <Content Include="Themes\Readable\thumbnail.png" />
+    <Content Include="Themes\Sandstone\Content\bootstrap.min.css" />
+    <Content Include="Themes\Sandstone\thumbnail.png" />
     <Content Include="Themes\Simplex\Content\bootstrap.min.css" />
     <Content Include="Themes\Simplex\thumbnail.png" />
     <Content Include="Themes\Slate\Content\bootstrap.min.css" />
@@ -1685,6 +1693,8 @@
     <Content Include="Themes\Spot\Views\index.html" />
     <Content Include="Themes\Spot\Views\services.html" />
     <Content Include="Themes\Spot\Views\works.html" />
+    <Content Include="Themes\Superhero\Content\bootstrap.min.css" />
+    <Content Include="Themes\Superhero\thumbnail.png" />
     <Content Include="Themes\United\Content\bootstrap.min.css" />
     <Content Include="Themes\United\thumbnail.png" />
     <Content Include="Themes\Victoria\Content\css\bootstrap.css" />
@@ -1783,6 +1793,21 @@
     <Content Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\_ViewStart.cshtml" />
     <Content Include="Themes\EShopper\Views\Shared\MainMenu.cshtml" />
     <Content Include="Views\Shared\_LayoutNoSideBar.cshtml" />
+    <Content Include="Themes\Darkly\theme.config" />
+    <Content Include="Themes\Darkly\Views\Shared\Head.cshtml" />
+    <Content Include="Themes\Darkly\Views\Web.config" />
+    <Content Include="Themes\Lumen\theme.config" />
+    <Content Include="Themes\Lumen\Views\Shared\Head.cshtml" />
+    <Content Include="Themes\Lumen\Views\Web.config" />
+    <Content Include="Themes\Paper\theme.config" />
+    <Content Include="Themes\Paper\Views\Shared\Head.cshtml" />
+    <Content Include="Themes\Paper\Views\Web.config" />
+    <Content Include="Themes\Sandstone\theme.config" />
+    <Content Include="Themes\Sandstone\Views\Shared\Head.cshtml" />
+    <Content Include="Themes\Sandstone\Views\Web.config" />
+    <Content Include="Themes\Superhero\theme.config" />
+    <Content Include="Themes\Superhero\Views\Shared\Head.cshtml" />
+    <Content Include="Themes\Superhero\Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

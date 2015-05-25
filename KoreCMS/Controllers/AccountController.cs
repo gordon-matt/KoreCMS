@@ -336,7 +336,7 @@ namespace Kore.Controllers
                 : message == ManageMessageId.SetPasswordSuccess ? T(LocalizableStrings.Account.ManageMessages.SetPasswordSuccess)
                 : message == ManageMessageId.RemoveLoginSuccess ? T(LocalizableStrings.Account.ManageMessages.RemoveLoginSuccess)
                 : message == ManageMessageId.Error ? T(LocalizableStrings.Account.ManageMessages.Error)
-                : "";
+                : string.Empty;
             ViewBag.HasLocalPassword = HasPassword();
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();

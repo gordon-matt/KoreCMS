@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace Kore.Web
 {
@@ -10,12 +10,14 @@ namespace Kore.Web
     {
         public static T JsonDeserialize<T>(this string json)
         {
-            return new JavaScriptSerializer().Deserialize<T>(json);
+            return JsonConvert.DeserializeObject<T>(json);
+            //return new JavaScriptSerializer().Deserialize<T>(json);
         }
 
         public static object JsonDeserialize(this string json, Type targetType)
         {
-            return new JavaScriptSerializer().Deserialize(json, targetType);
+            return JsonConvert.DeserializeObject(json, targetType);
+            //return new JavaScriptSerializer().Deserialize(json, targetType);
         }
 
         public static string ToSlugUrl(this string value)

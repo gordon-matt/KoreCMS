@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Dynamic;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace Kore.Web
 {
@@ -9,7 +9,8 @@ namespace Kore.Web
     {
         public static string ToJson<T>(this T item)
         {
-            return new JavaScriptSerializer().Serialize(item);
+            return JsonConvert.SerializeObject(item);
+            //return new JavaScriptSerializer().Serialize(item);
         }
 
         public static IDictionary<string, object> ToDictionary(this object obj)

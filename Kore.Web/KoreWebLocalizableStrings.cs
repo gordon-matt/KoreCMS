@@ -17,7 +17,9 @@
             public const string Edit = "Kore.Web/General.Edit";
             public const string EditFormat = "Kore.Web/General.EditFormat";
             public const string Enabled = "Kore.Web/General.Enabled";
+            public const string Export = "Kore.Web/General.Export";
             public const string Home = "Kore.Web/General.Home";
+            public const string Import = "Kore.Web/General.Import";
             public const string Install = "Kore.Web/General.Install";
             public const string Miscellaneous = "Kore.Web/General.Miscellaneous";
             public const string Next = "Kore.Web/General.Next";

@@ -8,13 +8,13 @@ namespace KoreCMS.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            //FOR TEST ONLY
-            using (var db = new ApplicationDbContext())
-            {
-                db.Database.ExecuteSqlCommand("TRUNCATE TABLE Kore_LocalizableStrings");
-                db.Seed();
-            }
-            //END TEST
+            ////FOR TEST ONLY
+            //using (var db = new ApplicationDbContext())
+            //{
+            //    db.Database.ExecuteSqlCommand("TRUNCATE TABLE Kore_LocalizableStrings");
+            //    db.Seed();
+            //}
+            ////END TEST
 
             return View();
         }

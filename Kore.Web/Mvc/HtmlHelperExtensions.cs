@@ -33,51 +33,29 @@ namespace Kore.Web.Mvc
     {
         #region Images
 
-        public static MvcHtmlString EmbeddedImage(this HtmlHelper helper, Assembly assembly, string resourceName, string alt)
+        public static MvcHtmlString EmbeddedImage(this HtmlHelper helper, Assembly assembly, string resourceName, string alt, object htmlAttributes = null)
         {
+            string base64 = string.Empty;
             using (var resourceStream = assembly.GetManifestResourceStream(resourceName))
             using (var memoryStream = new MemoryStream())
             {
                 resourceStream.CopyTo(memoryStream);
                 memoryStream.Seek(0, SeekOrigin.Begin);
-                string base64 = Convert.ToBase64String(memoryStream.ToArray());
-                return new MvcHtmlString(string.Format("<img src='data:image/jpg;base64,{0}' alt='{1}' />", base64, alt));
+                base64 = Convert.ToBase64String(memoryStream.ToArray());
             }
+
+            return Image(helper, string.Concat("data:image/jpg;base64,", base64), alt, htmlAttributes);
         }
 
-        public static MvcHtmlString Image(this HtmlHelper helper, string src, string alt)
-        {
-            return Image(helper, null, src, alt, null);
-        }
-
-        public static MvcHtmlString Image(this HtmlHelper helper, string name, string src, string alt)
-        {
-            return Image(helper, name, src, alt, null);
-        }
-
-        public static MvcHtmlString Image(this HtmlHelper helper, string name, string src, string alt, object htmlAttributes)
-        {
-            return helper.Image(name, src, alt, null, htmlAttributes);
-        }
-
-        public static MvcHtmlString Image(this HtmlHelper helper, string name, string src, string alt, string usemap, object htmlAttributes)
+        public static MvcHtmlString Image(this HtmlHelper helper, string src, string alt, object htmlAttributes = null)
         {
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
             var builder = new TagBuilder("img");
-            builder.GenerateId(name);
             builder.MergeAttribute("src", urlHelper.Content(src));
 
             if (!string.IsNullOrEmpty(alt))
             {
                 builder.MergeAttribute("alt", alt);
-            }
-            if (!string.IsNullOrEmpty(name))
-            {
-                builder.MergeAttribute("name", name);
-            }
-            if (!string.IsNullOrEmpty(usemap))
-            {
-                builder.MergeAttribute("usemap", usemap);
             }
 
             builder.MergeAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
@@ -85,16 +63,10 @@ namespace Kore.Web.Mvc
             return new MvcHtmlString(builder.ToString(TagRenderMode.SelfClosing));
         }
 
-        public static MvcHtmlString ImageLink(this HtmlHelper helper, string src, string alt, string href, string name = null, object aHtmlAttributes = null, object imgHtmlAttributes = null, PageTarget target = PageTarget.Default)
+        public static MvcHtmlString ImageLink(this HtmlHelper helper, string src, string alt, string href, object aHtmlAttributes = null, object imgHtmlAttributes = null, PageTarget target = PageTarget.Default)
         {
             var builder = new TagBuilder("a");
             builder.MergeAttribute("href", href);
-            builder.GenerateId(name);
-
-            if (!string.IsNullOrEmpty(name))
-            {
-                builder.MergeAttribute("name", name);
-            }
 
             switch (target)
             {
@@ -106,55 +78,12 @@ namespace Kore.Web.Mvc
 
             builder.MergeAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(aHtmlAttributes));
 
-            var img = helper.Image(name + "Image", src, alt, imgHtmlAttributes);
+            var img = helper.Image(src, alt, imgHtmlAttributes);
 
             builder.InnerHtml = img.ToString();
 
             return MvcHtmlString.Create(builder.ToString());
         }
-
-        //public static MvcHtmlString ImageLink(this HtmlHelper helper, string src, string alt, string href, PageTarget target = PageTarget.Default)
-        //{
-        //    return helper.ImageLink(null, src, alt, href, null, null, target);
-        //}
-
-        //public static MvcHtmlString ImageLink(this HtmlHelper helper, string src, string alt, string href, object aHtmlAttributes, object imgHtmlAttributes, PageTarget target = PageTarget.Default)
-        //{
-        //    return helper.ImageLink(null, src, alt, href, aHtmlAttributes, imgHtmlAttributes, target);
-        //}
-
-        //public static MvcHtmlString ImageLink(this HtmlHelper helper, string name, string src, string alt, string href, PageTarget target = PageTarget.Default)
-        //{
-        //    return helper.ImageLink(name, src, alt, href, null, null, target);
-        //}
-
-        //public static MvcHtmlString ImageLink(this HtmlHelper helper, string name, string src, string alt, string href, object aHtmlAttributes, object imgHtmlAttributes, PageTarget target = PageTarget.Default)
-        //{
-        //    var builder = new TagBuilder("a");
-        //    builder.MergeAttribute("href", href);
-        //    builder.GenerateId(name);
-
-        //    if (!string.IsNullOrEmpty(name))
-        //    {
-        //        builder.MergeAttribute("name", name);
-        //    }
-
-        //    switch (target)
-        //    {
-        //        case PageTarget.Blank: builder.MergeAttribute("target", "_blank"); break;
-        //        case PageTarget.Parent: builder.MergeAttribute("target", "_parent"); break;
-        //        case PageTarget.Self: builder.MergeAttribute("target", "_self"); break;
-        //        case PageTarget.Top: builder.MergeAttribute("target", "_top"); break;
-        //    }
-
-        //    builder.MergeAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(aHtmlAttributes));
-
-        //    var img = helper.Image(name + "Image", src, alt, imgHtmlAttributes);
-
-        //    builder.InnerHtml = img.ToString();
-
-        //    return MvcHtmlString.Create(builder.ToString());
-        //}
 
         public static MvcHtmlString Map(this HtmlHelper helper, string name, ImageMapHotSpot[] hotSpots)
         {

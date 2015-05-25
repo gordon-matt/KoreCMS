@@ -216,6 +216,9 @@
     <None Include="Views\Shared\EditorTemplates\StoreSettings.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Views\Shared\Filter.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Views\Store\Categories.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

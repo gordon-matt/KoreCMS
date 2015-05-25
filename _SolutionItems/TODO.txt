@@ -1,0 +1,205 @@
+============================================================================================
+CURRENT NOTES
+============================================================================================
+PAGES:
+- put history on same page
+- make blank section look nicer
+- show icons on tree (inc. for enabled/disabled)
+- remove "Create Sub Page" button after 3 levels
+- move Page Types to separate page? Alternatively, make it more intuitive..
+- use smartadmin jarvis widget for forms?
+- make custom tinymce config (cant have widget zones in other editors- its for pages only)
+- Delete sub pages when delete page (or move those subpages up 1 level)?
+
+- MAKE HISTOIRC PAGES BETTER & also localize it (inc the kendo grid in script)
+
+LOCALIZATION:
+- Allow editing of invariant culture strings
+- how to localize strings in StringLengthAttribute, etc?
+- localize blog entries
+- localize message templates
+- localizable routes?
+- localizable enums?
+- localize accoutn views
+- localize error pages (404, etc)
+- import/export language packs (from localized strings table)
+
+FORM BUILDER:
+- At least use markitup or something instead of wysiwyg.
+	- Helpful links:
+		- http://www.layoutit.com/build?r=11468473
+		- http://bootsnipp.com/forms
+		- http://formoid.com/
+		- http://www.jformer.com/
+		- http://www.jotform.com/
+		- http://getfuelux.com/formbuilder.html
+
+CACHE
+- Improve caching:
+	- Trigger clearing of cache results when appropriate
+	- Allow for Redis or other provider via interface
+- Store Cache Keys as contants
+- make api controllers use services insstead of repositories to get caching
+
+MEMBERSHIP:
+- Move membership controllers from CMS to Kore.Web?
+
+OTHER
+- Provide overloads for AutoMenu(), AutoSubmenu() and AutoBreadcrumbs() that don't require any template (just generate it for Bootstrap by default)
+- admin theme settings (left or top menu, which SmartAdmin colors etc)
+- need some way to provide descriptions/tooltips using an [Attribute] of some kind for widget properties (and page type properties too)..
+- LOG FILE SETTINGS
+- new sitemap html page (see nop for example)
+- Video Content Block
+- Make moment.js part of Kore? Can have ISettings for it.. etc. Same for TinyMCE and more.
+- allowing email as username is a problem in cases like Blog!
+- slugify automaticlly
+- reusable image picker (Html Helper?)
+
+- ensure proper logging everywhere
+- scheduled task to auto shrink log file?
+
+- review all TODO notes
+
+- table names to constants
+-remove media entities?
+- Make sure jquery validation working everywhere!!!!!!!!!
+- KoreUI: Icons
+- deal with common scripts (move to central, shared location)
+- Content Blocks: Localization
+- Content Blocks: override template path (for display only)
+- dashboard widgets
+- blog, store, etc for google sitemap
+- show log entries in admin
+- add meta keywords and desc for blog entries and products, categories, etc..
+- uninstall plugin should remove permissions
+  
+- SIMPLE ECOMMERCE
+  - comments/reviews
+  - star ratings?
+  - product images
+  - need a filter
+  - product attributes (filter widget based on this + generic fields like price, etc)
+ - make it more secure (PayPal) by removing BuyNow.cshtml and replacing it with c# code only (use HttpClient)
+
+  - regions, TODO: hihglight hotspots like: http://davidlynch.org/projects/maphilight/docs/
+  -    Also, add some button for importing common public data files (liek MaxMind)
+  
+   - admin page for blocking some IPs (inc. import IP block list files)
+  
+  - use ajax pages for logged in users! gr8 idea!!! that way, keep good SEO and then have incentive for users to sign up as well
+  
+ -- NEED LOAD TESTING!!!!!!!!!!!!!!
+  
+  - TO CHECK: if multiple libs ref 1 shared lib, does that shared lib's dependencies get loaded multiple times? If yes, set a static variable to check whether its already loaded
+  
+  - REVISE AUTO CACHE KEYS IN Generic Service!! Because they might conflict (not unique) if have 2 entities with same name in diff library
+  
+- thin arrow for treeview sub items?
+
+- consider making all odata actions return IHttpActionResult
+
+- HTML Helpers for generic ui layout (can have bootstrap provider, kendo provider, foundation provider, etc)...
+
+- use output caching more
+- plugins should be published along with site
+
+TO TEST:
+LocationFormatProvider can probably be used to make View() work without providing embedded view name. example:
+
+return new[]
+{
+	"~/Themes/{3}/Kore.Web.ContentManagement/Areas/{2}/Views/{1}/{0}.cshtml",
+	"~/Themes/{3}/Kore.Web.ContentManagement/Areas/{2}/Views/Shared/{0}.cshtml",
+	"~/Areas/{2}/Views/Kore.Web.ContentManagement/{1}/{0}.cshtml",
+	"~/Areas/{2}/Views/Kore.Web.ContentManagement/Shared/{0}.cshtml",
+	"Kore.Web.ContentManagement.Areas.{2}.Views.{1}.{0}",
+	"Kore.Web.ContentManagement.Areas.{2}.Views.Shared.{0}",
+};
+
+// probelm with this is area names have a slash.. example:  Admin/Pages (how to translate to Admin.Pages ?)
+
+GOOGLE:
+- add translate widget?
+
+============================================================================================
+OLDER NOTES
+============================================================================================
+TODO:
+- CMS
+	- Lists
+	- SEO (Later)
+	- Backups (Later)
+	- Aliases (Later)
+- Razor intellisense not working for class libraries
+
+TODO: change from page history to page versioning instead (keep all pages in page version table - including current..)
+
+Learn more about "contenteditable" attribute:
+http://html5doctor.com/the-contenteditable-attribute/
+
+- investigate RequireJS ( see Durandal)
+
+BUGS:
+- captcha settings
+
+if normal view, use breadcrumbs.. not needed if only partial view
+
+- don't load dependencies from web dll.. instead, provide a static class which can do that (call it from main app) if the dev wants (default) or else they can override the registrations with their own in the main app
+- minification & bundling for script and style registers (do we even need these registers?)
+
+- HTML/CSS framework builder: interface, so can use bootstrap, foundation, etc (HTML Helpers)
+
+95% DONE:
+- CMS:
+	- (DONE) Localization (In progress)
+	- (DONE) Media
+	- (DONE) Menus
+	- (DONE) Messaging (Message Templates)
+	- (DONE) Widgets (In progress)
+	- (DONE) Pages
+- (DONE) Localization: Use some kind of interface so that any storage medium can be used (DB, XML, even RESX, etc)
+		NOTE: Might convert to NOP Localization or merge some of their ideas (like Localized Routes)
+- (DONE) Logging  (Needs TESTING)
+- (DONE) Caching  (Needs TESTING - especially in WinForms)- UPDATE 2014.09.11: Check if it supports distributed caching
+- (DONE) Events  (Needs TESTING)
+- (DONE) Plugin System  (Needs TESTING)
+- Customizable Membership Service  (Needs TESTING)
+	TODO:
+	- implement change password for user management
+- (DONE) Resources (Needs TESTING & Need to implement bundling)
+- (DONE) jqGrid HTML Helper
+	TODO:
+	- Implement JQColumnAttribute class for models.. then user just needs to do: .AddColumnFor(m=> m.ColumnName)
+- web api security (its protected so only logged on users can use it, but we may need to make changes to have it open for mobile, etc.. later)
+- Admin UI (using SmartAdmin)
+- Custom page types
+	
+
+FUTURE:
+- Tenants (FUTURE VERSION - NOT INITIAL RELEASE)
+- IOC Container (DI)... make it so can use any.. Autofac, Ninject, etc..
+- Features System
+- jqGrid HTML Helper: SubGrid
+- Installation Page
+- Logs Table (if logging to DB)
+
+
+- forums plugin,
+- wiki plugin (roadkill?)
+- Visitor Groups
+- virtual path providers
+- content builder
+- responsive file manager
+
+IMPORTANT: Keep note of licenses for all references!
+
+Interesting:
+http://www.barebonescoder.com/2013/11/dapper-vs-ef-6-part-1-setting-up-dapper/
+
+
+- features system (enable/disable things.. dont load everything)
+- manage themes/features
+
+IPlugin: a list of features can go here
+

@@ -16,42 +16,47 @@
     int loopCount = 1;
 }
 
-<div class="categories-container">
-    @foreach (var entry in Model)
-    {
-        if (loopCount == 1)
+<div class="row">
+    <div id="store-filter" class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        @Html.Action("Filter", "Store", new { area = string.Empty })
+    </div>
+    <div id="categories-container" class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+        @foreach (var entry in Model)
         {
-            @Html.Raw(@"<div class=""row"">")
-        }
+            if (loopCount == 1)
+            {
+                @Html.Raw(@"<div class=""row"">")
+            }
 
-        string imageUrl = string.IsNullOrEmpty(entry.ImageUrl)
-            ? "http://placehold.it/280x136&text=Image+Missing"
-            : entry.ImageUrl;
+            string imageUrl = string.IsNullOrEmpty(entry.ImageUrl)
+                ? "http://placehold.it/280x136&text=Image+Missing"
+                : entry.ImageUrl;
 
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <div class="thumbnail">
-                <img src="@imageUrl" alt="@entry.Name" />
-                <div class="caption">
-                    <h3>@Html.ActionLink(entry.Name, "Products", "Store", new { area = string.Empty, categorySlug = entry.Slug }, null)</h3>
-                    <p>@entry.Description.Left(128)</p>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="thumbnail">
+                        <img src="@imageUrl" alt="@entry.Name" />
+                        <div class="caption">
+                            <h3>@Html.ActionLink(entry.Name, "Products", "Store", new { area = string.Empty, categorySlug = entry.Slug }, null)</h3>
+                            <p>@entry.Description.Left(128)</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        if (loopCount == 3 || index == (Model.Count()))
-        {
-            @Html.Raw("</div>")
-            <div class="clearfix"></div>
-            loopCount = 1;
+            if (loopCount == 3 || index == (Model.Count()))
+            {
+                @Html.Raw("</div>")
+                <div class="clearfix"></div>
+                loopCount = 1;
+                index++;
+                continue;
+            }
+
             index++;
-            continue;
+            loopCount++;
         }
-
-        index++;
-        loopCount++;
-    }
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div id="pager"></div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div id="pager"></div>
+        </div>
     </div>
 </div>
 

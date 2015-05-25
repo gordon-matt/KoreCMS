@@ -18,7 +18,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Domain
 
         public string CountryCode { get; set; }
 
-        public bool? HasStates { get; set; }
+        public bool HasStates { get; set; }
 
         public string StateCode { get; set; }
 
@@ -47,6 +47,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Domain
             Property(m => m.Name).IsRequired().HasMaxLength(255);
             Property(m => m.RegionType).IsRequired();
             Property(m => m.CountryCode).HasMaxLength(10);
+            Property(m => m.HasStates).IsRequired();
             Property(m => m.StateCode).HasMaxLength(10);
             HasOptional(p => p.Parent).WithMany(p => p.Children).HasForeignKey(x => x.ParentId).WillCascadeOnDelete(false);
         }

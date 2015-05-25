@@ -18,7 +18,14 @@ namespace Kore.Web.Common.Infrastructure
             {
                 return new Dictionary<string, string>
                 {
+                    { LocalizableStrings.Regions.Cities, "Cities" },
+                    { LocalizableStrings.Regions.States, "States" },
                     { LocalizableStrings.Regions.Title, "Regions" },
+                    { LocalizableStrings.Regions.Model.CountryCode, "Country Code" },
+                    { LocalizableStrings.Regions.Model.HasStates, "Has States" },
+                    { LocalizableStrings.Regions.Model.Name, "Name" },
+                    { LocalizableStrings.Regions.Model.RegionType, "Region Type" },
+                    { LocalizableStrings.Regions.Model.StateCode, "State Code" },
                 };
             }
         }

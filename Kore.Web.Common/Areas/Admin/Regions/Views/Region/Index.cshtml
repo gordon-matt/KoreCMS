@@ -1,6 +1,10 @@
 ﻿@using Kore.Web.Mvc
 @using Kore.Web.Common.Areas.Admin.Regions.Models
-@*@model IEnumerable<RegionModel>*@
+
+@{
+    Layout = KoreWebConstants.DefaultAdminLayoutPath;
+    var assembly = System.Reflection.Assembly.GetAssembly(typeof(Kore.Web.Common.Constants));
+}
 
 <div class="box">
     <div class="box-header">
@@ -8,12 +12,7 @@
     </div>
     <div class="box-content text-center">
         <div id="world-map">
-            @*@Html.Image("map", "Kore.Web.Common.Areas.Admin.Regions.Content.Images.WorldMap", "World Map", "#worldMap", null)*@
-
-            @{
-                var assembly = System.Reflection.Assembly.GetAssembly(typeof (Kore.Web.Common.Constants));
-            }
-            @Html.EmbeddedImage(assembly, "Kore.Web.Common.Areas.Admin.Regions.Content.Images.WorldMap.jpg", "World Map")
+            @Html.EmbeddedImage(assembly, "Kore.Web.Common.Areas.Admin.Regions.Content.Images.WorldMap.jpg", "World Map", new { usemap = "#WorldMap", @class = "img-thumbnail" })
 
             <map id="WorldMap" name="WorldMap">
                 <area shape="poly" coords="130,176,124,177,111,165,100,158,92,157,79,149,73,141,63,129,62,115,57,102,66,84,66,76,63,72,66,66,66,60,58,57,49,59,42,64,37,65,13,69,27,61,21,56,32,48,38,43,46,41,46,36,72,31,94,35,113,32,127,24,143,22,157,18,172,18,185,13,223,12,219,16,189,27,199,35,202,42,196,47,191,52,192,63,197,68,196,75,198,86,188,85,173,93,165,95,160,100,151,106,148,112,134,121,135,132,135,136,143,142,152,145,160,150,131,152,129,145,122,141,126,133,125,127,107,127,101,142,118,138,119,146,116,152,125,155" href="@Url.Action("Continent", "Region", new { id = 256 })" alt="North America" />

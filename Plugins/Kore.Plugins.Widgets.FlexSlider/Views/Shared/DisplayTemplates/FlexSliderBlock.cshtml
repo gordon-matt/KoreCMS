@@ -26,14 +26,14 @@
                 {
                     string thumbPath = slide.MediaPath.Replace("/Media/", "/Media/.tmb_Media/");//TODO: Use thumb Hash
                     <li data-thumb="@thumbPath">
-                        @Html.Image(null, slide.MediaPath, slide.Name)
+                        @Html.Image(slide.MediaPath, slide.Name)
                         @*<p class="flex-caption">@slide.Caption</p>*@
                     </li>
                 }
                 else
                 {
                     <li>
-                        @Html.Image(null, slide.MediaPath, slide.Name)
+                        @Html.Image(slide.MediaPath, slide.Name)
                         @*<p class="flex-caption">@slide.Caption</p>*@
                     </li>
                 }

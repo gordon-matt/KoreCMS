@@ -18,7 +18,7 @@ namespace Kore.Web.Common.Infrastructure
             {
                 return new Dictionary<string, string>
                 {
-                    //{ LocalizableStrings.Blog.ManageBlog, "Manage Blog" },
+                    { LocalizableStrings.Regions.Title, "Regions" },
                 };
             }
         }

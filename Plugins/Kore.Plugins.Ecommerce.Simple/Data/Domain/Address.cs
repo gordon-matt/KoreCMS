@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Web.Common.Areas.Admin.Regions.Domain;
 
 namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 {
@@ -26,9 +27,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 
         public string PostalCode { get; set; }
 
-        public string Country { get; set; }
+        public int CountryId { get; set; }
 
         public string PhoneNumber { get; set; }
+
+        public virtual Region Country { get; set; }
 
         #region IEntity Members
 
@@ -54,7 +57,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             Property(x => x.AddressLine3).HasMaxLength(128);
             Property(x => x.City).IsRequired().HasMaxLength(128);
             Property(x => x.PostalCode).IsRequired().HasMaxLength(10);
-            Property(x => x.Country).IsRequired().HasMaxLength(50);
+            Property(x => x.CountryId).IsRequired();
             Property(x => x.PhoneNumber).IsRequired().HasMaxLength(25);
         }
     }

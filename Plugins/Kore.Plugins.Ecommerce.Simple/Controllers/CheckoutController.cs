@@ -70,7 +70,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                         AddressLine3 = model.BillingAddress.AddressLine3,
                         City = model.BillingAddress.City,
                         PostalCode = model.BillingAddress.PostalCode,
-                        Country = model.BillingAddress.Country
+                        CountryId = model.BillingAddress.CountryId
                     },
                     ShippingAddress = new Address
                     {
@@ -84,7 +84,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                         AddressLine3 = model.ShippingAddress.AddressLine3,
                         City = model.ShippingAddress.City,
                         PostalCode = model.ShippingAddress.PostalCode,
-                        Country = model.ShippingAddress.Country
+                        CountryId = model.ShippingAddress.CountryId
                     }
                 };
 

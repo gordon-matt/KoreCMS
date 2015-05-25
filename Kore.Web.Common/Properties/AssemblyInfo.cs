@@ -6,11 +6,11 @@ using System.Resources;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Kore.Web.Mvc.KendoUI")]
+[assembly: AssemblyTitle("Kore.Web.Common")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Kore.Web.Mvc.KendoUI")]
+[assembly: AssemblyProduct("Kore.Web.Common")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -21,7 +21,7 @@ using System.Resources;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d9ef12f3-92b4-494f-9bc7-d9f894b1ab10")]
+[assembly: Guid("C9E54396-2D70-481F-B68B-46A7966602A1")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -24,7 +24,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Models
 
         public string PostalCode { get; set; }
 
-        public string Country { get; set; }
+        public int CountryId { get; set; }
 
         public string PhoneNumber { get; set; }
 
@@ -42,7 +42,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Models
                 AddressLine3 = other.AddressLine3,
                 City = other.City,
                 PostalCode = other.PostalCode,
-                Country = other.Country,
+                CountryId = other.CountryId,
                 PhoneNumber = other.PhoneNumber
             };
         }

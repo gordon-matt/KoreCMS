@@ -147,6 +147,13 @@ var CountryModel = function () {
         //TODO: Filter states grid
         viewModel.selectedCountryId(countryId);
         viewModel.selectedStateId(0);
+
+        var grid = $('#StateGrid').data('kendoGrid');
+        grid.dataSource.transport.options.read.url = "/odata/kore/common/RegionApi?$filter=RegionType eq 'State' and ParentId eq " + countryId;
+        grid.dataSource.page(1);
+        //grid.dataSource.read();
+        //grid.refresh();
+
         switchSection($("#state-grid-section"));
     };
 
@@ -154,6 +161,13 @@ var CountryModel = function () {
         //TODO: Filter states grid
         viewModel.selectedCountryId(countryId);
         viewModel.selectedStateId(0);
+
+        var grid = $('#CityGrid').data('kendoGrid');
+        grid.dataSource.transport.options.read.url = "/odata/kore/common/RegionApi?$filter=RegionType eq 'City' and ParentId eq " + countryId;
+        grid.dataSource.page(1);
+        //grid.dataSource.read();
+        //grid.refresh();
+
         switchSection($("#city-grid-section"));
     };
 
@@ -174,10 +188,10 @@ var StateModel = function () {
     self.parentId = ko.observable(null);
 
     self.create = function () {
-        self.state.id(0);
-        self.state.name('');
-        self.state.stateCode('');
-        self.state.parentId(viewModel.selectedCountryId());
+        self.id(0);
+        self.name('');
+        self.stateCode('');
+        self.parentId(viewModel.selectedCountryId());
 
         self.validator.resetForm();
         switchSection($("#state-form-section"));
@@ -296,6 +310,13 @@ var StateModel = function () {
     self.showCities = function (stateId) {
         //TODO: Filter states grid
         viewModel.selectedStateId(stateId);
+
+        var grid = $('#CityGrid').data('kendoGrid');
+        grid.dataSource.transport.options.read.url = "/odata/kore/common/RegionApi?$filter=RegionType eq 'City' and ParentId eq " + stateId;
+        grid.dataSource.page(1);
+        //grid.dataSource.read();
+        //grid.refresh();
+
         switchSection($("#city-grid-section"));
     };
 
@@ -315,14 +336,14 @@ var CityModel = function () {
     self.parentId = ko.observable(null);
 
     self.create = function () {
-        self.city.id(0);
-        self.city.name('');
+        self.id(0);
+        self.name('');
 
         if (viewModel.selectedStateId()) {
-            self.city.parentId(viewModel.selectedStateId());
+            self.parentId(viewModel.selectedStateId());
         }
         else {
-            self.city.parentId(viewModel.selectedCountryId());
+            self.parentId(viewModel.selectedCountryId());
         }
 
         self.validator.resetForm();
@@ -463,9 +484,10 @@ var ViewModel = function () {
         self.selectedContinentId(continentId);
 
         var grid = $('#CountryGrid').data('kendoGrid');
-        grid.dataSource.transport.options.read.url = "/odata/kore/common/RegionApi?$filter=ParentId eq " + continentId;
-        grid.dataSource.read();
-        grid.refresh();
+        grid.dataSource.transport.options.read.url = "/odata/kore/common/RegionApi?$filter=RegionType eq 'Country' and ParentId eq " + continentId;
+        grid.dataSource.page(1);
+        //grid.dataSource.read();
+        //grid.refresh();
 
         switchSection($("#country-grid-section"));
     };
@@ -474,6 +496,7 @@ var ViewModel = function () {
 var viewModel;
 $(document).ready(function () {
     viewModel = new ViewModel();
+    ko.applyBindings(viewModel);
 
     switchSection($("#main-section"));
 
@@ -483,7 +506,7 @@ $(document).ready(function () {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/common/RegionApi",
+                    url: "/odata/kore/common/RegionApi?$filter=RegionType eq 'Country'",
                     dataType: "json"
                 }
             },
@@ -523,10 +546,10 @@ $(document).ready(function () {
             title: " ",
             template:
                 '<div class="btn-group">' +
-                '<a onclick="viewModel.country.showStates(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.States + '</a>' +
-                '<a onclick="viewModel.country.showCities(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Cities + '</a>' +
-                '<a onclick="viewModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
-                '<a onclick="viewModel.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
+                '# if(HasStates) {# <a onclick="viewModel.country.showStates(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.States + '</a> #} ' +
+                'else {# <a onclick="viewModel.country.showCities(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Cities + '</a> #} # ' +
+                '<a onclick="viewModel.country.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
+                '<a onclick="viewModel.country.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
                 '</div>',
             attributes: { "class": "text-center" },
             filterable: false,
@@ -534,5 +557,114 @@ $(document).ready(function () {
         }]
     });
 
-    ko.applyBindings(viewModel);
+    $("#StateGrid").kendoGrid({
+        data: null,
+        dataSource: {
+            type: "odata",
+            transport: {
+                read: {
+                    url: "/odata/kore/common/RegionApi?$filter=RegionType eq 'State'",
+                    dataType: "json"
+                }
+            },
+            schema: {
+                data: function (data) {
+                    return data.value;
+                },
+                total: function (data) {
+                    return data["odata.count"];
+                },
+                model: {
+                    fields: {
+                        Name: { type: "string" }
+                    }
+                }
+            },
+            pageSize: gridPageSize,
+            serverPaging: true,
+            serverFiltering: true,
+            serverSorting: true,
+            sort: { field: "Name", dir: "asc" }
+        },
+        filterable: true,
+        sortable: {
+            allowUnsort: false
+        },
+        pageable: {
+            refresh: true
+        },
+        scrollable: false,
+        columns: [{
+            field: "Name",
+            title: translations.Columns.Name,
+            filterable: true
+        }, {
+            field: "Id",
+            title: " ",
+            template:
+                '<div class="btn-group">' +
+                '<a onclick="viewModel.state.showCities(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Cities + '</a>' +
+                '<a onclick="viewModel.state.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
+                '<a onclick="viewModel.state.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
+                '</div>',
+            attributes: { "class": "text-center" },
+            filterable: false,
+            width: 180
+        }]
+    });
+
+    $("#CityGrid").kendoGrid({
+        data: null,
+        dataSource: {
+            type: "odata",
+            transport: {
+                read: {
+                    url: "/odata/kore/common/RegionApi?$filter=RegionType eq 'City'",
+                    dataType: "json"
+                }
+            },
+            schema: {
+                data: function (data) {
+                    return data.value;
+                },
+                total: function (data) {
+                    return data["odata.count"];
+                },
+                model: {
+                    fields: {
+                        Name: { type: "string" }
+                    }
+                }
+            },
+            pageSize: gridPageSize,
+            serverPaging: true,
+            serverFiltering: true,
+            serverSorting: true,
+            sort: { field: "Name", dir: "asc" }
+        },
+        filterable: true,
+        sortable: {
+            allowUnsort: false
+        },
+        pageable: {
+            refresh: true
+        },
+        scrollable: false,
+        columns: [{
+            field: "Name",
+            title: translations.Columns.Name,
+            filterable: true
+        }, {
+            field: "Id",
+            title: " ",
+            template:
+                '<div class="btn-group">' +
+                '<a onclick="viewModel.city.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
+                '<a onclick="viewModel.city.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
+                '</div>',
+            attributes: { "class": "text-center" },
+            filterable: false,
+            width: 180
+        }]
+    });
 });

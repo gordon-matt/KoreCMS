@@ -22,7 +22,7 @@ var AddressModel = function () {
     self.addressLine3 = ko.observable(null);
     self.city = ko.observable('');
     self.postalCode = ko.observable('');
-    self.country = ko.observable('');
+    self.countryId = ko.observable(0);
     self.phoneNumber = ko.observable('');
 };
 

@@ -1,6 +1,8 @@
 ﻿@using Kore.Plugins.Ecommerce.Simple
 @using Kore.Plugins.Ecommerce.Simple.Extensions
 @using Kore.Plugins.Ecommerce.Simple.Models
+@using Kore.Web.Common
+@using LocalizableStrings = Kore.Plugins.Ecommerce.Simple.LocalizableStrings
 
 @{
     Script.IncludeBundle("knockout");
@@ -182,7 +184,8 @@
                     <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="kore-icon kore-icon-globe"></i></span>
-                            @Html.TextBox("Billing_Country", null, new { @class = "form-control", data_bind = "value: billingAddress.country" })
+                            @Html.KoreCommon().CountryDropDownList("Billing_Country", htmlAttributes: new { @class = "form-control", data_bind = "value: billingAddress.country" })
+                            @*@Html.TextBox("Billing_Country", null, new { @class = "form-control", data_bind = "value: billingAddress.country" })*@
                         </div>
                     </div>
                 </div>
@@ -292,7 +295,8 @@
                     <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="kore-icon kore-icon-globe"></i></span>
-                            @Html.TextBox("Shipping_Country", null, new { @class = "form-control", data_bind = "value: shippingAddress.country" })
+                            @Html.KoreCommon().CountryDropDownList("Shipping_Country", htmlAttributes: new { @class = "form-control", data_bind = "value: shippingAddress.country" })
+                            @*@Html.TextBox("Shipping_Country", null, new { @class = "form-control", data_bind = "value: shippingAddress.country" })*@
                         </div>
                     </div>
                 </div>

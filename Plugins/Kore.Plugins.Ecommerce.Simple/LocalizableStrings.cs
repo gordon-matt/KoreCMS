@@ -91,6 +91,11 @@
             public const string Quantity = "Plugins.Ecommerce.Simple/CheckoutTable.Quantity";
         }
 
+        public static class Filter
+        {
+            public const string AllCategoryFormat = "Plugins.Ecommerce.Simple/Filter.AllCategoryFormat";
+        }
+
         public const string AddToCart = "Plugins.Ecommerce.Simple/AddToCart";
         public const string BillingAddress = "Plugins.Ecommerce.Simple/BillingAddress";
         public const string Categories = "Plugins.Ecommerce.Simple/Categories";

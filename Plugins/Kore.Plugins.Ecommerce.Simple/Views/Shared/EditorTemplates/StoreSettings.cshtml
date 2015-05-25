@@ -36,13 +36,13 @@
         @Html.TextBoxFor(m => m.MenuPosition, new { @class = "form-control", data_bind = "value: menuPosition" })
         @Html.ValidationMessageFor(m => m.MenuPosition)
     </div>
-    <div class="form-group">
+    @*<div class="form-group">
         <div class="checkbox">
             <label>
                 @Html.CheckBoxFor(m => m.UseAjax, new { data_bind = "checked: useAjax" }) @T(LocalizableStrings.Settings.Store.UseAjax)
             </label>
         </div>
-    </div>
+    </div>*@
     <div class="form-group">
         @Html.LabelFor(m => m.LayoutPathOverride, new { @class = "control-label" })
         @Html.TextBoxFor(m => m.LayoutPathOverride, new { @class = "form-control", data_bind = "value: layoutPathOverride" })

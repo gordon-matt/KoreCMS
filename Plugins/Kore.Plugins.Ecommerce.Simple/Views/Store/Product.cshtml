@@ -14,28 +14,33 @@
     SetMeta("description", (string)ViewBag.MetaDescription);
 }
 
-<article class="product-details">
-    <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-            <img src="@Model.MainImageUrl" alt="@Model.Name" class="img-responsive" />
+<div class="row">
+    <div id="store-filter" class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        @Html.Action("Filter", "Store", new { area = string.Empty })
+    </div>
+    <div id="product-details" class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <img src="@Model.MainImageUrl" alt="@Model.Name" class="img-responsive" />
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+                <h1>@Model.Name</h1>
+                <p><strong>@T(LocalizableStrings.Price)</strong> @settings.Currency @Model.Price.ToString("N2")</p>
+                <p><strong>@T(LocalizableStrings.Tax)</strong> @settings.Currency @Model.Tax.ToString("N2")</p>
+                <p><strong>@T(LocalizableStrings.Shipping)</strong> @settings.Currency @Model.ShippingCost.ToString("N2")</p>
+
+                <a href="javascript:void(0);" onclick="addToCart(@Model.Id)" class="btn btn-primary">
+                    @T(LocalizableStrings.AddToCart)
+                </a>
+            </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
-            <h1>@Model.Name</h1>
-            <p><strong>@T(LocalizableStrings.Price)</strong> @settings.Currency @Model.Price.ToString("N2")</p>
-            <p><strong>@T(LocalizableStrings.Tax)</strong> @settings.Currency @Model.Tax.ToString("N2")</p>
-            <p><strong>@T(LocalizableStrings.Shipping)</strong> @settings.Currency @Model.ShippingCost.ToString("N2")</p>
-            
-            <a href="javascript:void(0);" onclick="addToCart(@Model.Id)" class="btn btn-primary">
-                @T(LocalizableStrings.AddToCart)
-            </a>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                @Html.Raw(Model.FullDescription)
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            @Html.Raw(Model.FullDescription)
-        </div>
-    </div>
-</article>
+</div>
 
 @using (Script.AtFoot())
 {

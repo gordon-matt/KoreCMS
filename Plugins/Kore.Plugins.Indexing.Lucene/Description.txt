@@ -1,0 +1,8 @@
+﻿Group: Indexing
+FriendlyName: Lucene Search
+SystemName: Kore.Plugins.Indexing.Lucene
+Version: 1.00
+SupportedVersions: 1.00
+Author: Matt Gordon
+DisplayOrder: 1
+FileName: Kore.Plugins.Indexing.Lucene.dll

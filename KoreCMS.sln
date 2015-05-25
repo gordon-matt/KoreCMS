@@ -28,13 +28,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{D0FF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Optional", "Optional", "{001E2261-DC34-436C-9CC4-BE1561154E54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Watchdog", "Plugins\Kore.Plugins.Watchdog\Kore.Plugins.Watchdog.csproj", "{A1401A4D-AE43-4254-935A-23A4C11D6185}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Maintenance.Watchdog", "Plugins\Kore.Plugins.Maintenance.Watchdog\Kore.Plugins.Maintenance.Watchdog.csproj", "{A1401A4D-AE43-4254-935A-23A4C11D6185}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.WatchdogService", "Plugins\Kore.WatchdogService\Kore.WatchdogService.csproj", "{D1E6545C-2DDB-4A1D-B38B-48E2DC597AC4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Widgets.View360", "Plugins\Kore.Plugins.Widgets.View360\Kore.Plugins.Widgets.View360.csproj", "{FA85EB00-0F20-4642-8F02-D92D6160514E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Indexing.Lucene", "Plugins\Kore.Indexing.Lucene\Kore.Indexing.Lucene.csproj", "{CB0AA58B-F2B9-4EDB-9D4A-A8B438E1A830}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Indexing.Lucene", "Plugins\Kore.Plugins.Indexing.Lucene\Kore.Plugins.Indexing.Lucene.csproj", "{CB0AA58B-F2B9-4EDB-9D4A-A8B438E1A830}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Builds", "_Builds", "{2ED43291-13A7-4774-818A-379C7A1EC8EE}"
 EndProject

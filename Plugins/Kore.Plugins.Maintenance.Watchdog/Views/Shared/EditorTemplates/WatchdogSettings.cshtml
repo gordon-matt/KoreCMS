@@ -1,0 +1,51 @@
+﻿@using Kore.Plugins.Maintenance.Watchdog
+@using Kore.Web.Mvc
+
+@model WatchdogSettings
+
+<div id="settings-content">
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.OnlyShowWatched, new { data_bind = "checked: onlyShowWatched" }) @T(LocalizableStrings.Settings.OnlyShowWatched)
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.AllowAddRemove, new { data_bind = "checked: allowAddRemove" }) @T(LocalizableStrings.Settings.AllowAddRemove)
+            </label>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function updateModel(data) {
+        viewModel.onlyShowWatched = ko.observable(false);
+        viewModel.allowAddRemove = ko.observable(true);
+
+        if (data) {
+            if (data.OnlyShowWatched) {
+                viewModel.onlyShowWatched(data.OnlyShowWatched);
+            }
+            if (data.AllowAddRemove) {
+                viewModel.allowAddRemove(data.AllowAddRemove);
+            }
+        }
+    };
+
+    function cleanUp() {
+        delete viewModel.onlyShowWatched;
+        delete viewModel.allowAddRemove;
+    }
+
+    function onBeforeSave() {
+        var data = {
+            OnlyShowWatched: viewModel.onlyShowWatched(),
+            AllowAddRemove: viewModel.allowAddRemove()
+        };
+
+        viewModel.value(ko.mapping.toJSON(data));
+    };
+</script>

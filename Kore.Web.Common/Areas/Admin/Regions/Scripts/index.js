@@ -25,7 +25,7 @@ var CountryModel = function () {
         self.name('');
         self.countryCode('');
         self.hasStates(false);
-        self.parentId(viewModel.continentId());
+        self.parentId(viewModel.selectedContinentId());
 
         self.validator.resetForm();
         switchSection($("#country-form-section"));
@@ -77,11 +77,12 @@ var CountryModel = function () {
     };
 
     self.save = function () {
-        var isNew = (self.id() == emptyGuid);
+        var isNew = (self.id() == 0);
 
         var record = {
             Id: self.id(),
             Name: self.name(),
+            RegionType: 'Country',
             CountryCode: self.countryCode(),
             HasStates: self.hasStates(),
             ParentId: self.parentId()
@@ -138,16 +139,21 @@ var CountryModel = function () {
     };
 
     self.goBack = function () {
+        viewModel.selectedCountryId(0);
         switchSection($("#main-section"));
     };
 
     self.showStates = function (countryId) {
         //TODO: Filter states grid
+        viewModel.selectedCountryId(countryId);
+        viewModel.selectedStateId(0);
         switchSection($("#state-grid-section"));
     };
 
     self.showCities = function (countryId) {
         //TODO: Filter states grid
+        viewModel.selectedCountryId(countryId);
+        viewModel.selectedStateId(0);
         switchSection($("#city-grid-section"));
     };
 
@@ -171,7 +177,7 @@ var StateModel = function () {
         self.state.id(0);
         self.state.name('');
         self.state.stateCode('');
-        self.state.parentId(viewModel.continentId());
+        self.state.parentId(viewModel.selectedCountryId());
 
         self.validator.resetForm();
         switchSection($("#state-form-section"));
@@ -222,11 +228,12 @@ var StateModel = function () {
     };
 
     self.save = function () {
-        var isNew = (self.id() == emptyGuid);
+        var isNew = (self.id() == 0);
 
         var record = {
             Id: self.id(),
             Name: self.name(),
+            RegionType: 'State',
             StateCode: self.stateCode(),
             ParentId: self.parentId()
         };
@@ -282,11 +289,13 @@ var StateModel = function () {
     };
 
     self.goBack = function () {
+        viewModel.selectedStateId(0);
         switchSection($("#country-grid-section"));
     };
 
     self.showCities = function (stateId) {
         //TODO: Filter states grid
+        viewModel.selectedStateId(stateId);
         switchSection($("#city-grid-section"));
     };
 
@@ -308,7 +317,13 @@ var CityModel = function () {
     self.create = function () {
         self.city.id(0);
         self.city.name('');
-        self.city.parentId(viewModel.continentId());
+
+        if (viewModel.selectedStateId()) {
+            self.city.parentId(viewModel.selectedStateId());
+        }
+        else {
+            self.city.parentId(viewModel.selectedCountryId());
+        }
 
         self.validator.resetForm();
         switchSection($("#city-form-section"));
@@ -358,11 +373,12 @@ var CityModel = function () {
     };
 
     self.save = function () {
-        var isNew = (self.id() == emptyGuid);
+        var isNew = (self.id() == 0);
 
         var record = {
             Id: self.id(),
             Name: self.name(),
+            RegionType: 'City',
             ParentId: self.parentId()
         };
 
@@ -417,7 +433,12 @@ var CityModel = function () {
     };
 
     self.goBack = function () {
-        switchSection($("#state-grid-section"));
+        if (viewModel.selectedStateId()) {
+            switchSection($("#state-grid-section"));
+        }
+        else {
+            switchSection($("#country-grid-section"));
+        }
     };
 
     self.validator = $("#city-form-section-form").validate({
@@ -430,15 +451,22 @@ var CityModel = function () {
 var ViewModel = function () {
     var self = this;
 
-    self.continentId = ko.observable(0);
+    self.selectedContinentId = ko.observable(0);
+    self.selectedCountryId = ko.observable(0);
+    self.selectedStateId = ko.observable(0);
+
     self.country = new CountryModel();
     self.state = new StateModel();
     self.city = new CityModel();
 
     self.showCountries = function (continentId) {
-        self.continentId(continentId);
+        self.selectedContinentId(continentId);
 
-        // TODO: Filter the CountryGrid here
+        var grid = $('#CountryGrid').data('kendoGrid');
+        grid.dataSource.transport.options.read.url = "/odata/kore/common/RegionApi?$filter=ParentId eq " + continentId;
+        grid.dataSource.read();
+        grid.refresh();
+
         switchSection($("#country-grid-section"));
     };
 };
@@ -446,7 +474,6 @@ var ViewModel = function () {
 var viewModel;
 $(document).ready(function () {
     viewModel = new ViewModel();
-    ko.applyBindings(viewModel);
 
     switchSection($("#main-section"));
 
@@ -506,4 +533,6 @@ $(document).ready(function () {
             width: 180
         }]
     });
+
+    ko.applyBindings(viewModel);
 });

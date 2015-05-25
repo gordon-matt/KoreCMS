@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -31,6 +32,18 @@ namespace Kore.Web.Mvc
     public static class HtmlHelperExtensions
     {
         #region Images
+
+        public static MvcHtmlString EmbeddedImage(this HtmlHelper helper, Assembly assembly, string resourceName, string alt)
+        {
+            using (var resourceStream = assembly.GetManifestResourceStream(resourceName))
+            using (var memoryStream = new MemoryStream())
+            {
+                resourceStream.CopyTo(memoryStream);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                string base64 = Convert.ToBase64String(memoryStream.ToArray());
+                return new MvcHtmlString(string.Format("<img src='data:image/jpg;base64,{0}' alt='{1}' />", base64, alt));
+            }
+        }
 
         public static MvcHtmlString Image(this HtmlHelper helper, string src, string alt)
         {
@@ -99,7 +112,6 @@ namespace Kore.Web.Mvc
 
             return MvcHtmlString.Create(builder.ToString());
         }
-
 
         //public static MvcHtmlString ImageLink(this HtmlHelper helper, string src, string alt, string href, PageTarget target = PageTarget.Default)
         //{

@@ -2,8 +2,10 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Web;
 using System.Web.Hosting;
+using Castle.Core.Logging;
 using Kore.Exceptions;
 
 namespace Kore.Web
@@ -14,14 +16,17 @@ namespace Kore.Web
     public partial class WebHelper : IWebHelper
     {
         private readonly HttpContextBase _httpContext;
+        private readonly Lazy<ILogger> logger;
 
         /// <summary>
         /// Ctor
         /// </summary>
         /// <param name="httpContext">HTTP context</param>
-        public WebHelper(HttpContextBase httpContext)
+        public WebHelper(
+            HttpContextBase httpContext)
         {
             this._httpContext = httpContext;
+            this.logger = logger;
         }
 
         /// <summary>
@@ -328,9 +333,9 @@ namespace Kore.Web
                     //result = regEx.Match(request.UserAgent).Success;
                 }
             }
-            catch (Exception exc)
+            catch (Exception x)
             {
-                Debug.WriteLine(exc);
+                logger.Value.Error(x.Message, x);
             }
             return result;
         }
@@ -393,7 +398,7 @@ namespace Kore.Web
                         _trustLevel = trustLevel;
                         break; //we've set the highest permission we can
                     }
-                    catch (System.Security.SecurityException)
+                    catch (SecurityException x)
                     {
                         continue;
                     }

@@ -11,28 +11,28 @@ namespace Kore.Web.Navigation
 {
     public class NavigationManager : INavigationManager
     {
-        private readonly IEnumerable<INavigationProvider> providers;
-        private readonly UrlHelper urlHelper;
-        private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IAuthorizationService authorizationService;
+        private readonly IEnumerable<INavigationProvider> providers;
+        private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IWebWorkContext workContext;
+        private readonly Lazy<ILogger> logger;
+        private readonly UrlHelper urlHelper;
 
         public NavigationManager(
             IEnumerable<INavigationProvider> providers,
-            UrlHelper urlHelper,
             IHttpContextAccessor httpContextAccessor,
             IWebWorkContext workContext,
+            Lazy<ILogger> logger,
+            UrlHelper urlHelper,
             IAuthorizationService authorizationService = null)
         {
+            this.authorizationService = authorizationService;
+            this.httpContextAccessor = httpContextAccessor;
+            this.logger = logger;
             this.providers = providers;
             this.urlHelper = urlHelper;
-            this.httpContextAccessor = httpContextAccessor;
-            this.authorizationService = authorizationService;
             this.workContext = workContext;
-            Logger = NullLogger.Instance;
         }
-
-        public ILogger Logger { get; set; }
 
         #region INavigationManager Members
 
@@ -55,9 +55,9 @@ namespace Kore.Web.Navigation
                     provider.GetNavigation(builder);
                     items = builder.Build();
                 }
-                catch (Exception ex)
+                catch (Exception x)
                 {
-                    Logger.ErrorFormat(ex, "Unexpected error while querying a navigation provider. It was ignored. The menu provided by the provider may not be complete.");
+                    logger.Value.Error("Unexpected error while querying a navigation provider. It was ignored. The menu provided by the provider may not be complete.", x);
                 }
 
                 if (items != null)

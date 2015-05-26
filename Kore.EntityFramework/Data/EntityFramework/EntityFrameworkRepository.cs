@@ -8,10 +8,12 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Linq.Expressions;
+using Castle.Core.Logging;
 using EntityFramework.BulkInsert.Extensions;
 using EntityFramework.Extensions;
 using Kore.Collections;
 using Kore.Exceptions;
+using Kore.Logging;
 
 namespace Kore.Data.EntityFramework
 {
@@ -20,6 +22,8 @@ namespace Kore.Data.EntityFramework
     {
         private readonly DbContext context;
         private IDbSet<TEntity> entities;
+
+        private ILogger logger;
 
         public DbContext Context
         {
@@ -34,6 +38,7 @@ namespace Kore.Data.EntityFramework
         public EntityFrameworkRepository(DbContext context)
         {
             this.context = context;
+            this.logger = LoggingUtilities.Resolve();
         }
 
         #region IRepository<TEntity> Members
@@ -181,13 +186,15 @@ namespace Kore.Data.EntityFramework
 
                 return context.SaveChanges();
             }
-            catch (DbEntityValidationException dbEx)
+            catch (DbEntityValidationException x)
             {
-                var msg = dbEx.EntityValidationErrors
+                var msg = x.EntityValidationErrors
                     .SelectMany(validationErrors => validationErrors.ValidationErrors)
                     .Aggregate(string.Empty, (current, validationError) => current + (System.Environment.NewLine + string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage)));
 
-                throw new KoreException(msg, dbEx);
+                logger.Error(msg, x);
+
+                throw new KoreException(msg, x);
             }
         }
 
@@ -223,13 +230,15 @@ namespace Kore.Data.EntityFramework
                 }
                 return context.SaveChanges();
             }
-            catch (DbEntityValidationException dbEx)
+            catch (DbEntityValidationException x)
             {
-                var msg = dbEx.EntityValidationErrors
+                var msg = x.EntityValidationErrors
                     .SelectMany(validationErrors => validationErrors.ValidationErrors)
                     .Aggregate(string.Empty, (current, validationError) => current + (System.Environment.NewLine + string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage)));
 
-                throw new KoreException(msg, dbEx);
+                logger.Error(msg, x);
+
+                throw new KoreException(msg, x);
             }
         }
 

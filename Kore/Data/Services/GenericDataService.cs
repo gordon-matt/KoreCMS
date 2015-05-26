@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
+using Castle.Core.Logging;
 using Kore.Caching;
 using Kore.Collections;
+using Kore.Logging;
 
 namespace Kore.Data.Services
 {
@@ -50,6 +52,8 @@ namespace Kore.Data.Services
             get { return cacheManager; }
         }
 
+        public ILogger Logger { get; private set; }
+
         public IRepository<TEntity> Repository
         {
             get { return repository; }
@@ -63,6 +67,7 @@ namespace Kore.Data.Services
         {
             this.cacheManager = cacheManager;
             this.repository = repository;
+            this.Logger = LoggingUtilities.Resolve();
         }
 
         #endregion Constructor

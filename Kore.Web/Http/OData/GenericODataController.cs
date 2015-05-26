@@ -7,8 +7,10 @@ using System.Web.Http.ModelBinding;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using System.Web.Http.Results;
+using Castle.Core.Logging;
 using Kore.Data;
 using Kore.Infrastructure;
+using Kore.Logging;
 using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.Http.OData
@@ -17,9 +19,12 @@ namespace Kore.Web.Http.OData
     {
         protected IRepository<TEntity> Repository { get; private set; }
 
+        protected ILogger Logger { get; private set; }
+
         public GenericODataController(IRepository<TEntity> repository)
         {
             this.Repository = repository;
+            this.Logger = LoggingUtilities.Resolve();
         }
 
         // GET: odata/<Entity>
@@ -69,8 +74,10 @@ namespace Kore.Web.Http.OData
                 Repository.Update(entity);
                 OnAfterSave(entity);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException x)
             {
+                Logger.Error(x.Message, x);
+
                 if (!EntityExists(key))
                 {
                     return NotFound();
@@ -130,8 +137,10 @@ namespace Kore.Web.Http.OData
                 Repository.Update(entity);
                 //db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException x)
             {
+                Logger.Error(x.Message, x);
+
                 if (!EntityExists(key))
                 {
                     return NotFound();

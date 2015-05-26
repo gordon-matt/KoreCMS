@@ -6,6 +6,7 @@ using Castle.Core.Logging;
 using Kore.Caching;
 using Kore.Exceptions;
 using Kore.Localization;
+using Kore.Logging;
 using Kore.Web.IO.FileSystems.VirtualPath;
 
 namespace Kore.Web.IO.FileSystems.AppData
@@ -20,7 +21,7 @@ namespace Kore.Web.IO.FileSystems.AppData
             _root = root;
             _virtualPathMonitor = virtualPathMonitor;
             T = NullLocalizer.Instance;
-            Logger = NullLogger.Instance;
+            Logger = LoggingUtilities.Resolve();
         }
 
         public Localizer T { get; set; }

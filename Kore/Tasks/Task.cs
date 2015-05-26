@@ -92,7 +92,7 @@ namespace Kore.Tasks
                     this.LastEndUtc = this.LastSuccessUtc = DateTime.UtcNow;
                 }
             }
-            catch (Exception exc)
+            catch (Exception x)
             {
                 this.Enabled = !this.StopOnError;
                 this.LastEndUtc = DateTime.UtcNow;
@@ -100,7 +100,7 @@ namespace Kore.Tasks
                 //log error
                 //var logger = EngineContext.Current.ContainerManager.Resolve<ILogger>("", scope);
                 var logger = EngineContext.Current.ContainerManager.Resolve<ILogger>();
-                logger.Error(string.Format("Error while running the '{0}' schedule task. {1}", this.Name, exc.Message), exc);
+                logger.Error(string.Format("Error while running the '{0}' scheduled task. {1}", this.Name, x.Message), x);
                 if (throwException)
                     throw;
             }

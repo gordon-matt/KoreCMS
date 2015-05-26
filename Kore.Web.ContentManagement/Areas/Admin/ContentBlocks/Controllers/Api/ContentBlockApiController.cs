@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using System.Web.Http.Results;
+using Castle.Core.Logging;
 using Kore.Data;
 using Kore.Infrastructure;
 using Kore.Localization;
@@ -83,8 +84,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
             {
                 Save(entity);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException x)
             {
+                Logger.Error(x.Message, x);
+
                 if (!EntityExists(key))
                 {
                     return NotFound();

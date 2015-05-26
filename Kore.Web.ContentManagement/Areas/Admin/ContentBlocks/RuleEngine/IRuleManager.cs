@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Castle.Core.Logging;
 using Kore.Exceptions;
 using Kore.Localization;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting;
@@ -14,14 +15,19 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.RuleEngine
 
     public class RuleManager : IRuleManager
     {
+        private readonly Lazy<ILogger> logger;
         private readonly IEnumerable<IRuleProvider> ruleProviders;
         private readonly IEnumerable<IScriptExpressionEvaluator> evaluators;
 
-        public RuleManager(IEnumerable<IRuleProvider> ruleProviders, IEnumerable<IScriptExpressionEvaluator> evaluators)
+        public RuleManager(
+            Lazy<ILogger> logger,
+            IEnumerable<IRuleProvider> ruleProviders,
+            IEnumerable<IScriptExpressionEvaluator> evaluators)
         {
             this.ruleProviders = ruleProviders;
             this.evaluators = evaluators;
             T = NullLocalizer.Instance;
+            this.logger = logger;
         }
 
         public Localizer T { get; set; }
@@ -40,13 +46,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.RuleEngine
             {
                 result = evaluator.Evaluate(expression, new List<IGlobalMethodProvider> { new GlobalMethodProvider(this) }, model);
             }
-            catch (Exception)
+            catch
             {
                 return false;
             }
 
             if (result == null)
             {
+                logger.Value.Error("Expression is not a boolean value: " + expression);
                 throw new KoreException("Expression is not a boolean value.");
             }
             return (bool)result;

@@ -8,6 +8,7 @@ using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using System.Web.Http.Results;
+using Castle.Core.Logging;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web.Security.Membership;
@@ -18,16 +19,20 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class UserApiController : ODataController
     {
+        private readonly Lazy<ILogger> logger;
+
         protected IMembershipService Service { get; private set; }
 
         private readonly Lazy<MembershipSettings> membershipSettings;
 
         public UserApiController(
             IMembershipService service,
-            Lazy<MembershipSettings> membershipSettings)
+            Lazy<MembershipSettings> membershipSettings,
+            Lazy<ILogger> logger)
         {
             this.Service = service;
             this.membershipSettings = membershipSettings;
+            this.logger = logger;
         }
 
         [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
@@ -72,8 +77,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
             {
                 Service.UpdateUser(entity);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException x)
             {
+                logger.Value.Error(x.Message, x);
+
                 if (!EntityExists(key))
                 {
                     return NotFound();
@@ -130,8 +137,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
             {
                 Service.UpdateUser(entity);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException x)
             {
+                logger.Value.Error(x.Message, x);
+
                 if (!EntityExists(key))
                 {
                     return NotFound();

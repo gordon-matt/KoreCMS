@@ -25,13 +25,18 @@ namespace Kore.Plugins.Indexing.Lucene.Services
     /// </summary>
     public class LuceneIndexProvider : IIndexProvider
     {
-        private readonly IAppDataFolder _appDataFolder;
-        public static readonly Version LuceneVersion = Version.LUCENE_29;
         private readonly Analyzer _analyzer;
+        private readonly IAppDataFolder _appDataFolder;
+        private readonly Lazy<ILogger> logger;
         private readonly string _basePath;
-        public static readonly DateTime DefaultMinDateTime = new DateTime(1980, 1, 1);
 
-        public LuceneIndexProvider(IAppDataFolder appDataFolder, KoreSiteSettings shellSettings)
+        public static readonly DateTime DefaultMinDateTime = new DateTime(1980, 1, 1);
+        public static readonly Version LuceneVersion = Version.LUCENE_29;
+
+        public LuceneIndexProvider(
+            IAppDataFolder appDataFolder,
+            KoreSiteSettings shellSettings,
+            Lazy<ILogger> logger)
         {
             _appDataFolder = appDataFolder;
             _analyzer = CreateAnalyzer();
@@ -39,18 +44,15 @@ namespace Kore.Plugins.Indexing.Lucene.Services
             // TODO: (sebros) Find a common way to get where tenant's specific files should go. "Sites/Tenant" is hard coded in multiple places
             _basePath = _appDataFolder.Combine("Sites", shellSettings.SiteName, "Indexes");
 
-            Logger = NullLogger.Instance;
+            this.logger = logger;
 
             // Ensures the directory exists
             EnsureDirectoryExists();
 
             T = NullLocalizer.Instance;
-            Logger = NullLogger.Instance;
         }
 
         public Localizer T { get; set; }
-
-        public ILogger Logger { get; set; }
 
         public static Analyzer CreateAnalyzer()
         {
@@ -163,7 +165,7 @@ namespace Kore.Plugins.Indexing.Lucene.Services
                     var doc = CreateDocument(indexDocument);
 
                     writer.AddDocument(doc);
-                    Logger.DebugFormat("Document [{0}] indexed", indexDocument.ContentItemId);
+                    logger.Value.DebugFormat("Document [{0}] indexed", indexDocument.ContentItemId);
                 }
             }
         }
@@ -197,7 +199,7 @@ namespace Kore.Plugins.Indexing.Lucene.Services
                 }
                 catch (Exception ex)
                 {
-                    Logger.ErrorFormat(ex, "An unexpected error occured while removing the documents [{0}] from the index [{1}].", string.Join(", ", documentIds), indexName);
+                    logger.Value.ErrorFormat(ex, "An unexpected error occured while removing the documents [{0}] from the index [{1}].", string.Join(", ", documentIds), indexName);
                 }
             }
         }
@@ -209,7 +211,7 @@ namespace Kore.Plugins.Indexing.Lucene.Services
 
         public ISearchBuilder CreateSearchBuilder(string indexName)
         {
-            return new LuceneSearchBuilder(GetDirectory(indexName)) { Logger = Logger };
+            return new LuceneSearchBuilder(GetDirectory(indexName)) { Logger = logger.Value };
         }
 
         public IEnumerable<string> GetFields(string indexName)

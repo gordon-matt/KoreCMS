@@ -10,30 +10,30 @@ namespace Kore.Web.Indexing.Services
 {
     public class IndexingTaskExecutor : IIndexingTaskExecutor, IIndexStatisticsProvider
     {
-        private readonly ILockFileManager lockFileManager;
-        private readonly IIndexManager indexManager;
-        private readonly IAppDataFolder appDataFolder;
-        private readonly KoreSiteSettings siteSettings;
         private IIndexProvider indexProvider;
-        private readonly IEnumerable<IIndexingContentProvider> contentProviders;
         private IndexingStatus indexingStatus = IndexingStatus.Idle;
+        private readonly IAppDataFolder appDataFolder;
+        private readonly IEnumerable<IIndexingContentProvider> contentProviders;
+        private readonly IIndexManager indexManager;
+        private readonly ILockFileManager lockFileManager;
+        private readonly KoreSiteSettings siteSettings;
+        private readonly Lazy<ILogger> logger;
 
         public IndexingTaskExecutor(
-            ILockFileManager lockFileManager,
-            IIndexManager indexManager,
             IAppDataFolder appDataFolder,
+            IEnumerable<IIndexingContentProvider> contentProviders,
+            IIndexManager indexManager,
+            ILockFileManager lockFileManager,
             KoreSiteSettings siteSettings,
-            IEnumerable<IIndexingContentProvider> contentProviders)
+            Lazy<ILogger> logger)
         {
-            this.lockFileManager = lockFileManager;
-            this.indexManager = indexManager;
             this.appDataFolder = appDataFolder;
-            this.siteSettings = siteSettings;
             this.contentProviders = contentProviders;
-            Logger = NullLogger.Instance;
+            this.indexManager = indexManager;
+            this.lockFileManager = lockFileManager;
+            this.logger = logger;
+            this.siteSettings = siteSettings;
         }
-
-        public ILogger Logger { get; set; }
 
         public bool DeleteIndex(string indexName)
         {
@@ -44,7 +44,7 @@ namespace Kore.Web.Indexing.Services
             // acquire a lock file on the index
             if (!lockFileManager.TryAcquireLock(lockFilename, ref lockFile))
             {
-                Logger.Info("Could not delete the index. Already in use.");
+                logger.Value.Info("Could not delete the index. Already in use.");
                 return false;
             }
 
@@ -76,7 +76,7 @@ namespace Kore.Web.Indexing.Services
             // acquire a lock file on the index
             if (!lockFileManager.TryAcquireLock(lockFilename, ref lockFile))
             {
-                Logger.Info("Index was requested but is already running");
+                logger.Value.Info("Index was requested but is already running");
                 return false;
             }
 
@@ -102,7 +102,7 @@ namespace Kore.Web.Indexing.Services
             var addToIndex = new List<IDocumentIndex>();
 
             // Rebuilding the inde
-            Logger.Info("Rebuilding index");
+            logger.Value.Info("Rebuilding index");
             indexingStatus = IndexingStatus.Rebuilding;
 
             foreach (var contentProvider in contentProviders)
@@ -123,7 +123,7 @@ namespace Kore.Web.Indexing.Services
 
             // save new and updated documents to the index
             indexProvider.Store(indexName, addToIndex);
-            Logger.InfoFormat("Added documents to index: {0}", addToIndex.Count);
+            logger.Value.InfoFormat("Added documents to index: {0}", addToIndex.Count);
 
             return true;
         }

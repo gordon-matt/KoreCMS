@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Castle.Core.Logging;
 using Kore.Infrastructure;
+using Kore.Logging;
 using Kore.Web.Mobile;
 
 namespace Kore.Web.Mvc.Themes
@@ -246,7 +247,8 @@ namespace Kore.Web.Mvc.Themes
             //  problem on that 1 production server only.
             if (viewPathSearchLocations == null)
             {
-                NullLogger.Instance.Error(
+                var logger = LoggingUtilities.Resolve();
+                logger.Error(
                     string.Format(
                         "Could not find locations for:{0}ViewName: {1}{0}MasterName: {2}",
                         System.Environment.NewLine,

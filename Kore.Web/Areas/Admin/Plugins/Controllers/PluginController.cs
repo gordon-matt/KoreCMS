@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Castle.Core.Logging;
 using Kore.Web.Mvc;
 using Kore.Web.Plugins;
 using Kore.Web.Security.Membership.Permissions;
@@ -69,8 +70,10 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
                 //restart application
                 webHelper.Value.RestartAppDomain();
             }
-            catch
+            catch (Exception x)
             {
+                Logger.Error(x.Message, x);
+
                 //TODO
                 //ErrorNotification(x);
             }
@@ -111,8 +114,10 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
                 //restart application
                 webHelper.Value.RestartAppDomain();
             }
-            catch
+            catch (Exception x)
             {
+                Logger.Error(x.Message, x);
+
                 //TODO
                 //ErrorNotification(x);
             }

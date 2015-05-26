@@ -245,11 +245,6 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
                 decimal total = decimal.Zero;
                 decimal.TryParse(values["mc_gross"], NumberStyles.Any, new CultureInfo("en-US"), out total);
-                //try
-                //{
-                //    total = decimal.Parse(values["mc_gross"], new CultureInfo("en-US"));
-                //}
-                //catch { }
 
                 string invoice = string.Empty;
                 string mcCurrency = string.Empty;

@@ -5,6 +5,7 @@ using System.Web.Caching;
 using System.Web.Hosting;
 using Castle.Core.Logging;
 using Kore.Caching;
+using Kore.Logging;
 
 namespace Kore.Web.IO.FileSystems.VirtualPath
 {
@@ -19,7 +20,7 @@ namespace Kore.Web.IO.FileSystems.VirtualPath
         {
             _clock = clock;
             _thunk = new Thunk(this);
-            Logger = NullLogger.Instance;
+            Logger = LoggingUtilities.Resolve();
         }
 
         public ILogger Logger { get; set; }

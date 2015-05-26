@@ -4,6 +4,8 @@ using System.IO.Compression;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using Castle.Core.Logging;
+using Kore.Logging;
 using Microsoft.VisualBasic.FileIO;
 
 namespace Kore.IO
@@ -185,13 +187,13 @@ namespace Kore.IO
 
         public static DataTable ReadCsv(this FileInfo fileInfo, bool hasHeaderRow, params string[] delimeters)
         {
-            using (TextFieldParser parser = new TextFieldParser(fileInfo.FullName))
+            using (var parser = new TextFieldParser(fileInfo.FullName))
             {
                 parser.TextFieldType = FieldType.Delimited;
                 parser.SetDelimiters(delimeters);
                 parser.HasFieldsEnclosedInQuotes = false;
 
-                DataTable table = new DataTable(Path.GetFileNameWithoutExtension(fileInfo.Name));
+                var table = new DataTable(Path.GetFileNameWithoutExtension(fileInfo.Name));
 
                 int lineNumber = 1;
                 while (!parser.EndOfData)
@@ -201,9 +203,10 @@ namespace Kore.IO
                     {
                         fields = parser.ReadFields();
                     }
-                    catch (MalformedLineException)
+                    catch (MalformedLineException x)
                     {
-                        //TODO: Log?
+                        var logger = LoggingUtilities.Resolve();
+                        logger.Error("Error when reading CSV file: " + fileInfo.FullName, x);
                         continue;
                     }
 
@@ -227,7 +230,7 @@ namespace Kore.IO
                     }
                     else
                     {
-                        DataRow row = table.NewRow();
+                        var row = table.NewRow();
                         for (int i = 0; i < table.Columns.Count; i++)
                         {
                             row[i] = fields[i];

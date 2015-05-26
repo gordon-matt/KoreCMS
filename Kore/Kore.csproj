@@ -233,6 +233,7 @@
     <Compile Include="Localization\StartupTask.cs" />
     <Compile Include="Localization\Text.cs" />
     <Compile Include="Logging\Domain\LogEntry.cs" />
+    <Compile Include="Logging\LoggingUtilities.cs" />
     <Compile Include="Logging\NLogLoggerFactory.cs" />
     <Compile Include="Logging\LoggingModule.cs" />
     <Compile Include="Logging\NLogFilteredLogger.cs" />

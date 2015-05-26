@@ -27,53 +27,55 @@
 
 <div id="details-section" class="row" style="display:none">
     <article class="col-sm-12 col-md-12">
-        <table class="table table-bordered table-condensed">
-            <tbody>
-                <tr>
-                    <th>Page Type</th>
-                    <td><span data-bind="html: pageTypeId"></span></td>
-                </tr>
-                <tr>
-                    <th>Name</th>
-                    <td><span data-bind="html: name"></span></td>
-                </tr>
-                <tr>
-                    <th>Slug</th>
-                    <td><span data-bind="html: slug"></span></td>
-                </tr>
-                <tr>
-                    <th>Enabled</th>
-                    <td><span data-bind="html: isEnabled"></span></td>
-                </tr>
-                <tr>
-                    <th>Order</th>
-                    <td><span data-bind="html: order"></span></td>
-                </tr>
-                <tr>
-                    <th>Show on Menus</th>
-                    <td><span data-bind="html: showOnMenus"></span></td>
-                </tr>
-                <tr>
-                    <th>Date Created (UTC)</th>
-                    <td><span data-bind="html: dateCreatedUtc"></span></td>
-                </tr>
-                <tr>
-                    <th>Date Modified (UTC)</th>
-                    <td><span data-bind="html: dateModifiedUtc"></span></td>
-                </tr>
-                <tr>
-                    <th>CultureCode</th>
-                    <td><span data-bind="html: cultureCode"></span></td>
-                </tr>
-            </tbody>
-        </table>
-        <p>Fields</p>
-        <div id="Fields" data-bind="html: fields"></div>
-
         <div class="pull-right">
             <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
             <button type="button" class="btn btn-warning" data-bind="click: restore">@T(KoreCmsLocalizableStrings.Pages.RestoreVersion)</button>
         </div>
+        <div class="clearfix"></div>
+        <br />
+        <table class="table table-bordered table-striped table-condensed">
+            <tbody>
+                @*<tr>
+                    <th>Page Type</th>
+                    <td><span data-bind="html: pageTypeId"></span></td>
+                </tr>*@
+                <tr>
+                    <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.Name)</th>
+                    <td><span data-bind="html: name"></span></td>
+                </tr>
+                <tr>
+                    <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.Slug)</th>
+                    <td><span data-bind="html: slug"></span></td>
+                </tr>
+                <tr>
+                    <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.IsEnabled)</th>
+                    <td><span data-bind="html: isEnabled"></span></td>
+                </tr>
+                <tr>
+                    <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.Order)</th>
+                    <td><span data-bind="html: order"></span></td>
+                </tr>
+                <tr>
+                    <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.ShowOnMenus)</th>
+                    <td><span data-bind="html: showOnMenus"></span></td>
+                </tr>
+                <tr>
+                    <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.DateCreated)</th>
+                    <td><span data-bind="html: dateCreatedUtc"></span></td>
+                </tr>
+                <tr>
+                    <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.DateModified)</th>
+                    <td><span data-bind="html: dateModifiedUtc"></span></td>
+                </tr>
+                <tr>
+                    <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.CultureCode)</th>
+                    <td><span data-bind="html: cultureCode"></span></td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>@T(KoreWebLocalizableStrings.General.Preview)</h2>
+        <hr />
+        <div id="page-preview"></div>
     </article>
 </div>
 
@@ -83,9 +85,15 @@
         var gridPageSize = @SiteSettings.DefaultGridPageSize;
         var translations = {
             GetRecordError: '@T(KoreWebLocalizableStrings.General.GetRecordError).Text',
+            PageHistoryRestoreConfirm: '@T(KoreCmsLocalizableStrings.Pages.PageHistoryRestoreConfirm).Text',
             PageHistoryRestoreError: '@T(KoreCmsLocalizableStrings.Pages.PageHistoryRestoreError).Text',
             PageHistoryRestoreSuccess: '@T(KoreCmsLocalizableStrings.Pages.PageHistoryRestoreSuccess).Text',
-            View: '@T(KoreWebLocalizableStrings.General.View).Text'
+            View: '@T(KoreWebLocalizableStrings.General.View).Text',
+
+            Columns: {
+                Name: '@T(KoreCmsLocalizableStrings.Pages.PageModel.Name).Text',
+                ArchivedDate: '@T(KoreCmsLocalizableStrings.Pages.HistoricPageModel.ArchivedDate).Text',
+            }
         }
     </script>
 }

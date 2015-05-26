@@ -245,6 +245,7 @@
             public const string History = "Kore.Web.ContentManagement/Pages.History";
             public const string ManagePages = "Kore.Web.ContentManagement/Pages.ManagePages";
             public const string PageHistory = "Kore.Web.ContentManagement/Pages.PageHistory";
+            public const string PageHistoryRestoreConfirm = "Kore.Web.ContentManagement/Pages.PageHistoryRestoreConfirm";
             public const string PageHistoryRestoreError = "Kore.Web.ContentManagement/Pages.PageHistoryRestoreError";
             public const string PageHistoryRestoreSuccess = "Kore.Web.ContentManagement/Pages.PageHistoryRestoreSuccess";
             public const string RestoreVersion = "Kore.Web.ContentManagement/Pages.RestoreVersion";
@@ -253,8 +254,16 @@
             public const string Title = "Kore.Web.ContentManagement/Pages.Title";
             public const string Translations = "Kore.Web.ContentManagement/Pages.Translations";
 
+            public static class HistoricPageModel
+            {
+                public const string ArchivedDate = "Kore.Web.ContentManagement/Pages.HistoricPageModel.ArchivedDate";
+            }
+
             public static class PageModel
             {
+                public const string CultureCode = "Kore.Web.ContentManagement/Pages.PageModel.CultureCode";
+                public const string DateCreated = "Kore.Web.ContentManagement/Pages.PageModel.DateCreated";
+                public const string DateModified = "Kore.Web.ContentManagement/Pages.PageModel.DateModified";
                 public const string IsEnabled = "Kore.Web.ContentManagement/Pages.PageModel.IsEnabled";
                 public const string Name = "Kore.Web.ContentManagement/Pages.PageModel.Name";
                 public const string Order = "Kore.Web.ContentManagement/Pages.PageModel.Order";

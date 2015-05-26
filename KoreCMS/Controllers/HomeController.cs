@@ -8,7 +8,6 @@ namespace KoreCMS.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            Logger.Info("test log");
             return View();
         }
 

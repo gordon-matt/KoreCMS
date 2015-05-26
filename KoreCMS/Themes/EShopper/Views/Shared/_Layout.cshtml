@@ -39,6 +39,13 @@
     <title>@ViewBag.Title - @siteName</title>
     @RenderStyles()
     @RenderSection("styles", required: false)
+
+    <style type="text/css">
+        .input-group-btn button.btn-primary {
+            margin-top: 0px !important;
+        }
+    </style>
+
     <!--[if lt IE 9]>
     <script src="/Themes/EShopper/Scripts/html5shiv.js"></script>
     <script src="/Themes/EShopper/Scripts/respond.min.js"></script>

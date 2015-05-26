@@ -10,6 +10,7 @@ namespace Kore.Web.Common.Infrastructure
         public void Register(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/js/kore-common/regions")
+                .Include("~/Scripts/Kore.Web.Common.Areas.Admin.Regions.Scripts.jquery.maphilight.min.js")
                 .Include("~/Scripts/Kore.Web.Common.Areas.Admin.Regions.Scripts.index.js"));
         }
 

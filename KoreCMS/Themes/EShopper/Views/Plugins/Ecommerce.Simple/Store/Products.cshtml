@@ -78,8 +78,8 @@
                                             imageUrl,
                                             entry.Name,
                                             Url.Action("Product", "Store", new { area = string.Empty, categorySlug = categorySlug, productSlug = entry.Slug }))
-                                        <h2>@price</h2>
-                                        <p>@entry.Name</p>
+                                        <h2>@entry.Name</h2>
+                                        <p>@price</p>
                                         <a class="btn btn-default add-to-cart" href="javascript:void(0);" onclick="addToCart(@entry.Id)">
                                             <i class="fa fa-shopping-cart"></i>
                                             @T(StoreLocalizableStrings.AddToCart)
@@ -87,8 +87,8 @@
                                     </div>
                                     <div class="product-overlay">
                                         <div class="overlay-content">
-                                            <h2>@Html.ActionLink(price, "Product", "Store", new { area = string.Empty, categorySlug = categorySlug, productSlug = entry.Slug }, null)</h2>
-                                            <p>@entry.Name</p>
+                                            <h2>@Html.ActionLink(entry.Name, "Product", "Store", new { area = string.Empty, categorySlug = categorySlug, productSlug = entry.Slug }, null)</h2>
+                                            <p>@price</p>
                                             <a class="btn btn-default add-to-cart" href="javascript:void(0);" onclick="addToCart(@entry.Id)">
                                                 <i class="fa fa-shopping-cart"></i>
                                                 @T(StoreLocalizableStrings.AddToCart)

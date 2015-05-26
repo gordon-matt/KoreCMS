@@ -2,16 +2,6 @@
 
 var odataBaseUrl = "/odata/kore/plugins/google/GoogleXmlSitemapApi/";
 
-var changeFrequencies = [
-    { "Id": 0, "Name": translations.ChangeFrequencies.Always },
-    { "Id": 1, "Name": translations.ChangeFrequencies.Hourly },
-    { "Id": 2, "Name": translations.ChangeFrequencies.Daily },
-    { "Id": 3, "Name": translations.ChangeFrequencies.Weekly },
-    { "Id": 4, "Name": translations.ChangeFrequencies.Monthly },
-    { "Id": 5, "Name": translations.ChangeFrequencies.Yearly },
-    { "Id": 6, "Name": translations.ChangeFrequencies.Never }
-];
-
 function getChangeFrequencyIndex(name) {
     for (var i = 0; i < changeFrequencies.length; i++) {
         var item = changeFrequencies[i];

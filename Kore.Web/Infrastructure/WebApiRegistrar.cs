@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using System.Web.Http.OData.Builder;
 using Kore.Configuration.Domain;
+using Kore.Logging.Domain;
 using Kore.Tasks.Domain;
 using Kore.Web.Areas.Admin.Configuration.Models;
 using Kore.Web.Areas.Admin.Plugins.Models;
@@ -14,6 +15,7 @@ namespace Kore.Web.Infrastructure
         public void Register(HttpConfiguration config)
         {
             ODataModelBuilder builder = new ODataConventionModelBuilder();
+            builder.EntitySet<LogEntry>("LogApi");
             builder.EntitySet<EdmPluginDescriptor>("PluginApi");
             builder.EntitySet<ScheduledTask>("ScheduledTaskApi");
             builder.EntitySet<Setting>("SettingsApi");

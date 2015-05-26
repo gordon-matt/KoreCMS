@@ -1,0 +1,38 @@
+﻿@using Kore.Web
+@{
+    Layout = KoreWebConstants.DefaultAdminLayoutPath;
+
+    Style.IncludeBundle("kendo-ui");
+
+    Script.IncludeBundle("kendo-ui");
+    Script.IncludeBundle("knockout");
+    Script.IncludeBundle("notify");
+
+    Script.IncludeBundle("kore-web/log");
+
+    string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
+}
+
+<div id="grid-section" class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
+        <div id="Grid"></div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        var gridPageSize = @SiteSettings.DefaultGridPageSize;
+        var translations = {
+            Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
+            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
+            DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',
+            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text',
+
+            Columns: {
+                EventLevel: '@T(KoreWebLocalizableStrings.Log.Model.EventLevel).Text',
+                ErrorMessage: '@T(KoreWebLocalizableStrings.Log.Model.ErrorMessage).Text',
+                EventDateTime: '@T(KoreWebLocalizableStrings.Log.Model.EventDateTime).Text'
+            }
+        }
+    </script>
+}

@@ -158,6 +158,10 @@
     <Compile Include="Areas\Admin\Indexing\Controllers\IndexingController.cs" />
     <Compile Include="Areas\Admin\Indexing\Controllers\SearchController.cs" />
     <Compile Include="Areas\Admin\Indexing\IndexingAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Log\Controllers\Api\LogApiController.cs" />
+    <Compile Include="Areas\Admin\Log\Controllers\LogController.cs" />
+    <Compile Include="Areas\Admin\Log\LogAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Log\Services\ILogService.cs" />
     <Compile Include="Areas\Admin\NavigationProvider.cs" />
     <Compile Include="Areas\Admin\ScheduledTasks\Controllers\Api\ScheduledTaskApiController.cs" />
     <Compile Include="Areas\Admin\ScheduledTasks\Controllers\ScheduledTaskController.cs" />
@@ -221,6 +225,7 @@
     <Compile Include="Indexing\Services\IndexingStatus.cs" />
     <Compile Include="Indexing\Services\IndexingTaskExecutor.cs" />
     <Compile Include="Indexing\Services\ISearchService.cs" />
+    <Compile Include="Infrastructure\ResourceBundleRegistrar.cs" />
     <Compile Include="IO\FileSystems\AppData\AppDataFolder.cs" />
     <Compile Include="IO\FileSystems\AppData\IAppDataFolder.cs" />
     <Compile Include="IO\FileSystems\AppData\IAppDataFolderRoot.cs" />
@@ -468,6 +473,7 @@
     <EmbeddedResource Include="Areas\Admin\Indexing\Views\Indexing\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Indexing\Views\Search\Results.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Configuration\Views\Theme\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Log\Views\Log\Index.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\SmtpSettings.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Plugins\Views\Plugin\Index.cshtml" />
@@ -481,11 +487,12 @@
     <EmbeddedResource Include="Views\Shared\EditorTemplates\ThemeUserProfileProvider.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\MembershipSettings.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Log\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Plugins\Scripts\index.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\Admin\Log\Scripts\index.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

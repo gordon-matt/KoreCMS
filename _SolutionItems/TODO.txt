@@ -24,6 +24,7 @@ LOCALIZATION:
 - localize accoutn views
 - localize error pages (404, etc)
 - import/export language packs (from localized strings table)
+- use {0:G} date format in all kendo grids?
 
 FORM BUILDER:
 - At least use markitup or something instead of wysiwyg.

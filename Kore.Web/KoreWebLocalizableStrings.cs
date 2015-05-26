@@ -82,6 +82,25 @@
             public const string ResetLocalizableStringsSuccess = "Kore.Web/Localization.ResetLocalizableStringsSuccess";
         }
 
+        public static class Log
+        {
+            public static class Model
+            {
+                public const string ErrorClass = "Kore.Web/Log.Model.ErrorClass";
+                public const string ErrorMessage = "Kore.Web/Log.Model.ErrorMessage";
+                public const string ErrorMethod = "Kore.Web/Log.Model.ErrorMethod";
+                public const string ErrorSource = "Kore.Web/Log.Model.ErrorSource";
+                public const string EventDateTime = "Kore.Web/Log.Model.EventDateTime";
+                public const string EventLevel = "Kore.Web/Log.Model.EventLevel";
+                public const string EventMessage = "Kore.Web/Log.Model.EventMessage";
+                public const string InnerErrorMessage = "Kore.Web/Log.Model.InnerErrorMessage";
+                public const string MachineName = "Kore.Web/Log.Model.MachineName";
+                public const string UserName = "Kore.Web/Log.Model.UserName";
+            }
+
+            public const string Title = "Kore.Web/Log.Title";
+        }
+
         public static class Plugins
         {
             public static class Model

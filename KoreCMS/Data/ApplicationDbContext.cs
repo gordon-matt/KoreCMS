@@ -34,11 +34,7 @@ namespace KoreCMS.Data
 
         static ApplicationDbContext()
         {
-#if DEBUG
-            Database.SetInitializer<ApplicationDbContext>(new DropCreateSeedDatabaseIfModelChanges<ApplicationDbContext>());
-#else
-            Database.SetInitializer<ApplicationDbContext>(new CreateSeedDatabaseIfNotExists<ApplicationDbContext>());
-#endif
+            Database.SetInitializer<ApplicationDbContext>(null);
         }
 
         public ApplicationDbContext()

@@ -15,6 +15,7 @@ using Kore.Net.Mail;
 using Kore.Tasks.Services;
 using Kore.Web.Areas.Admin;
 using Kore.Web.Areas.Admin.Configuration;
+using Kore.Web.Areas.Admin.Log.Services;
 using Kore.Web.Areas.Admin.ScheduledTasks;
 using Kore.Web.Configuration;
 using Kore.Web.Environment;
@@ -122,6 +123,8 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<CaptchaSettings>().As<ISettings>().SingleInstance();
             builder.RegisterType<MembershipSettings>().As<ISettings>().SingleInstance();
 
+            builder.RegisterType<ResourceBundleRegistrar>().As<IResourceBundleRegistrar>().SingleInstance();
+
             //builder.RegisterType<SearchSettings>().As<ISettings>().SingleInstance();
 
             builder.RegisterModule<LoggingModule>();
@@ -181,6 +184,8 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<LocalizationUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
             builder.RegisterType<MobileUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
             builder.RegisterType<ThemeUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
+
+            builder.RegisterType<LogService>().As<ILogService>().InstancePerDependency();
         }
 
         private static RequestContext RequestContextFactory(IComponentContext context)

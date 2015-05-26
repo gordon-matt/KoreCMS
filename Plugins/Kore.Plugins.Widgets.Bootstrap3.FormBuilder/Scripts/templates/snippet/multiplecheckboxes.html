@@ -1,0 +1,13 @@
+<!-- Multiple Checkboxes -->
+<div class="form-group">
+  <label class="col-md-3 control-label" for="<%= name %>"><%= label %></label>
+  <div class="col-lg-6"><% _.each(checkboxes, function(checkbox, i){ %>
+    <div class="checkbox">
+    <label for="<%= name+'-'+i %>">
+      <input type="checkbox" name="<%= name %>" id="<%= name+'-'+i %>" value="<%= checkbox %>">
+      <%= checkbox %>
+    </label>
+    </div>
+    <% }); %>
+  </div>
+</div>

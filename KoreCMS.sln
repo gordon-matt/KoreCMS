@@ -53,6 +53,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Ecommerce.Simp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Web.Common", "Kore.Web.Common\Kore.Web.Common.csproj", "{1DB0850E-9FA5-41DB-9C6A-7F43D37FDE8F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Widgets.Bootstrap3.FormBuilder", "Plugins\Kore.Plugins.Widgets.Bootstrap3.FormBuilder\Kore.Plugins.Widgets.Bootstrap3.FormBuilder.csproj", "{5021B13C-A775-4F80-BA03-C1FD5C7DE4DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -127,6 +129,10 @@ Global
 		{1DB0850E-9FA5-41DB-9C6A-7F43D37FDE8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DB0850E-9FA5-41DB-9C6A-7F43D37FDE8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DB0850E-9FA5-41DB-9C6A-7F43D37FDE8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5021B13C-A775-4F80-BA03-C1FD5C7DE4DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5021B13C-A775-4F80-BA03-C1FD5C7DE4DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5021B13C-A775-4F80-BA03-C1FD5C7DE4DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5021B13C-A775-4F80-BA03-C1FD5C7DE4DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -145,5 +151,6 @@ Global
 		{CACB917B-6AAE-43D9-98BC-C919BF234DFE} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 		{E8F20949-BF84-4481-B678-747DEACF5D80} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 		{F8E56256-C629-49C7-94B7-6A0FE551ACED} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
+		{5021B13C-A775-4F80-BA03-C1FD5C7DE4DB} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,137 @@
+﻿@using Kore.Plugins.Widgets.Bootstrap3.FormBuilder
+@using Kore.Plugins.Widgets.Bootstrap3.FormBuilder.ContentBlocks
+@model FormBuilderBlock
+
+<link href="/Plugins/Widgets.Bootstrap3.FormBuilder/Content/custom.css?v=2" rel="stylesheet" />
+
+<div id="block-content">
+    <div class="col-sm-12 col-md-12">
+        
+        <div class="panel panel-default">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="clearfix">
+                        <h2>Your Form</h2>
+                        <hr>
+                        <div id="build">
+                            <form id="target" class="form-horizontal"></form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h2>Drag & Drop components</h2>
+                    <hr>
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs" id="formtabs">
+                        </ul>
+                        <form id="components" class="form-horizontal">
+                            <fieldset>
+                                <div class="tab-content">
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-12 col-md-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.ThankYouMessage, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.ThankYouMessage, new { @class = "form-control", data_bind = "wysiwyg: thankYouMessage, wysiwygConfig: tinyMCEConfig" })
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.RedirectUrl, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.RedirectUrl, new { @class = "form-control", data_bind = "value: redirectUrl" })
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.EmailAddress, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", data_bind = "value: emailAddress" })
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    @Html.CheckBoxFor(m => m.UseAjax, new { data_bind = "checked: useAjax" }) @T(LocalizableStrings.ContentBlocks.FormBuilderBlock.UseAjax)
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"
+        data-main="/Plugins/Widgets.Bootstrap3.FormBuilder/Scripts/main-built.js"
+        src="/Plugins/Widgets.Bootstrap3.FormBuilder/Scripts/lib/require.js?v=3">
+</script>
+<script type="text/javascript">
+    function stripHTML(html) {
+        return $("<div/>").html(html).text();
+    };
+
+    var contentBlockModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.htmlTemplate = ko.observable("");
+            viewModel.thankYouMessage = ko.observable("");
+            viewModel.redirectUrl = ko.observable("");
+            viewModel.emailAddress = ko.observable("");
+            viewModel.useAjax = ko.observable(false);
+
+            var data = ko.mapping.fromJSON(viewModel.blockValues());
+
+            if (data) {
+                if (data.HtmlTemplate) {
+                    viewModel.htmlTemplate(data.HtmlTemplate());
+                }
+                if (data.ThankYouMessage) {
+                    viewModel.thankYouMessage(data.ThankYouMessage());
+                }
+                if (data.RedirectUrl) {
+                    viewModel.redirectUrl(data.RedirectUrl());
+                }
+                if (data.EmailAddress) {
+                    viewModel.emailAddress(data.EmailAddress());
+                }
+                if (data.UseAjax) {
+                    viewModel.useAjax(data.UseAjax());
+                }
+            }
+
+            viewModel.tinyMCEConfig = koreDefaultTinyMCEConfig;
+        };
+        f.cleanUp = function () {
+            delete viewModel.htmlTemplate;
+            delete viewModel.thankYouMessage;
+            delete viewModel.redirectUrl;
+            delete viewModel.emailAddress;
+            delete viewModel.useAjax;
+        };
+        f.onBeforeSave = function () {
+
+            var renderedForm = $('#render').val();
+            viewModel.htmlTemplate(renderedForm);
+
+            var thankYouMessage = viewModel.thankYouMessage();
+            if (viewModel.useAjax()) {
+                thankYouMessage = stripHTML(thankYouMessage);
+            }
+
+            var data = {
+                HtmlTemplate: viewModel.htmlTemplate(),
+                ThankYouMessage: thankYouMessage,
+                RedirectUrl: viewModel.redirectUrl(),
+                EmailAddress: viewModel.emailAddress(),
+                UseAjax: viewModel.useAjax()
+            };
+
+            viewModel.blockValues(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
+</script>

@@ -1,5 +1,7 @@
 ﻿'use strict'
 
+var emptyGuid = '00000000-0000-0000-0000-000000000000';
+
 var currentSection = $("#grid-section");
 
 function switchSection(section) {
@@ -10,6 +12,18 @@ function switchSection(section) {
 
 var ViewModel = function () {
     var self = this;
+
+    self.id = ko.observable(emptyGuid);
+    self.eventDateTime = ko.observable('');
+    self.eventLevel = ko.observable('');
+    self.userName = ko.observable('');
+    self.machineName = ko.observable('');
+    self.eventMessage = ko.observable('');
+    self.errorSource = ko.observable('');
+    self.errorClass = ko.observable('');
+    self.errorMethod = ko.observable('');
+    self.errorMessage = ko.observable('');
+    self.innerErrorMessage = ko.observable('');
 
     self.delete = function (id) {
         if (confirm(translations.DeleteRecordConfirm)) {
@@ -29,6 +43,38 @@ var ViewModel = function () {
                 console.log(textStatus + ': ' + errorThrown);
             });
         }
+    };
+
+    self.view = function (id) {
+        $.ajax({
+            url: "/odata/kore/web/LogApi(guid'" + id + "')",
+            type: "GET",
+            dataType: "json",
+            async: false
+        })
+        .done(function (json) {
+            self.id(json.Id);
+            self.eventDateTime(json.EventDateTime);
+            self.eventLevel(json.EventLevel);
+            self.userName(json.UserName);
+            self.machineName(json.MachineName);
+            self.eventMessage(json.EventMessage);
+            self.errorSource(json.ErrorSource);
+            self.errorClass(json.ErrorClass);
+            self.errorMethod(json.ErrorMethod);
+            self.errorMessage(json.ErrorMessage);
+            self.innerErrorMessage(json.InnerErrorMessage);
+
+            switchSection($("#details-section"));
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            $.notify(translations.GetRecordError, "error");
+            console.log(textStatus + ': ' + errorThrown);
+        });
+    };
+
+    self.cancel = function () {
+        switchSection($("#grid-section"));
     };
 };
 
@@ -59,7 +105,7 @@ $(document).ready(function () {
                 model: {
                     fields: {
                         EventLevel: { type: "string" },
-                        ErrorMessage: { type: "string" },
+                        EventMessage: { type: "string" },
                         EventDateTime: { type: "date" }
                     }
                 }
@@ -83,8 +129,8 @@ $(document).ready(function () {
             title: translations.Columns.EventLevel,
             filterable: true
         }, {
-            field: "ErrorMessage",
-            title: translations.Columns.ErrorMessage,
+            field: "EventMessage",
+            title: translations.Columns.EventMessage,
             filterable: true
         }, {
             field: "EventDateTime",
@@ -96,6 +142,7 @@ $(document).ready(function () {
             title: " ",
             template:
                 '<div class="btn-group">' +
+                '<a onclick="viewModel.view(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.View + '</a>' +
                 '<a onclick="viewModel.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
                 '</div>',
             attributes: { "class": "text-center" },

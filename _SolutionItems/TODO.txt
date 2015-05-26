@@ -78,12 +78,10 @@ OTHER
   - comments/reviews
   - star ratings?
   - product images
-  - need a filter
   - product attributes (filter widget based on this + generic fields like price, etc)
  - make it more secure (PayPal) by removing BuyNow.cshtml and replacing it with c# code only (use HttpClient)
 
-  - regions, TODO: hihglight hotspots like: http://davidlynch.org/projects/maphilight/docs/
-  -    Also, add some button for importing common public data files (liek MaxMind)
+  - regions: add some button for importing common public data files (liek MaxMind)
   
    - admin page for blocking some IPs (inc. import IP block list files)
   

@@ -1,12 +1,26 @@
-﻿<header id="header">
+﻿@using Microsoft.AspNet.Identity
+
+@{
+    bool isAuthenticated = Request.IsAuthenticated;
+}
+
+@if (isAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", new { area = string.Empty }, FormMethod.Post, new { id = "logoutForm" }))
+    {
+        @Html.AntiForgeryToken()
+    }
+}
+
+<header id="header">
     <div class="header_top">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
                     <div class="contactinfo">
                         <ul class="nav nav-pills">
-                            <li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
-                            <li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
+                            <li><a href="callto:+2 95 01 88 821"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
+                            <li><a href="mailto:info@domain.com"><i class="fa fa-envelope"></i> info@domain.com</a></li>
                         </ul>
                     </div>
                 </div>
@@ -30,9 +44,9 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="index.html"><img src="/Themes/EShopper/Content/images/home/logo.png" alt="" /></a>
+                        <a href="/"><img src="/Themes/EShopper/Content/images/home/logo.png" alt="Logo" /></a>
                     </div>
-                    <div class="btn-group pull-right">
+                    @*<div class="btn-group pull-right">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
                                 USA
@@ -54,16 +68,26 @@
                                 <li><a href="#">Pound</a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
-                            <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
-                            <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
-                            <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                            <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                            <li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
+                            @if (isAuthenticated)
+                            {
+                                <li><a href="@Url.Action("ViewMyProfile", "Account", new { area = string.Empty })"><i class="fa fa-user"></i> Account</a></li>
+                            }
+                            @*<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>*@
+                            <li><a href="/store/checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                            <li><a href="/store/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            @if (isAuthenticated)
+                            {
+                                <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-lock"></i> @T(LocalizableStrings.Account.LogOut)</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="@Url.Action("Login", "Account", new { area = string.Empty })"><i class="fa fa-lock"></i> Login</a></li>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -77,7 +101,7 @@
                 <div class="col-sm-9">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
+                            <span class="sr-only">@T(LocalizableStrings.Dashboard.ToggleNavigation)</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -88,9 +112,10 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <div class="search_box pull-right">
+                    @Html.ContentZone("SearchForm")
+                    @*<div class="search_box pull-right">
                         <input type="text" placeholder="Search" />
-                    </div>
+                    </div>*@
                 </div>
             </div>
         </div>

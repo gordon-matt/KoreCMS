@@ -498,6 +498,10 @@ $(document).ready(function () {
     viewModel = new ViewModel();
     ko.applyBindings(viewModel);
 
+    $('#map').maphilight({
+        fade: false
+    });
+
     switchSection($("#main-section"));
 
     $("#CountryGrid").kendoGrid({

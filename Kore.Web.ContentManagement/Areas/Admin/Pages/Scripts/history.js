@@ -43,6 +43,10 @@ var ViewModel = function () {
             self.cultureCode(json.CultureCode);
             self.refId(json.RefId);
 
+            $.get("/admin/pages/preview/" + id + '/true', function (data) {
+                $("#page-preview").html(data);
+            });
+
             switchSection($("#details-section"));
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
@@ -52,23 +56,26 @@ var ViewModel = function () {
     };
 
     self.restore = function () {
-        $.ajax({
-            url: "/odata/kore/cms/HistoricPageApi(guid'" + self.id() + "')/RestoreVersion",
-            type: "POST"
-        })
-        .done(function (json) {
-            $('#Grid').data('kendoGrid').dataSource.read();
-            $('#Grid').data('kendoGrid').refresh();
-            switchSection($("#grid-section"));
-            $.notify(translations.PageHistoryRestoreSuccess, "success");
-        })
-        .fail(function (jqXHR, textStatus, errorThrown) {
-            $.notify(translations.PageHistoryRestoreError, "error");
-            console.log(textStatus + ': ' + errorThrown);
-        });
+        if (confirm(translations.PageHistoryRestoreConfirm)) {
+            $.ajax({
+                url: "/odata/kore/cms/HistoricPageApi(guid'" + self.id() + "')/RestoreVersion",
+                type: "POST"
+            })
+            .done(function (json) {
+                $('#Grid').data('kendoGrid').dataSource.read();
+                $('#Grid').data('kendoGrid').refresh();
+                switchSection($("#grid-section"));
+                $.notify(translations.PageHistoryRestoreSuccess, "success");
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(translations.PageHistoryRestoreError, "error");
+                console.log(textStatus + ': ' + errorThrown);
+            });
+        };
     };
 
     self.cancel = function () {
+        $('#page-preview').html('');
         switchSection($("#grid-section"));
     };;
 };
@@ -119,11 +126,11 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Name",
-            title: "Name",
+            title: translations.Columns.Name,
             template: '<a href="/#=Slug#" target="_blank">#=Name#</a>',
         }, {
             field: "ArchivedDate",
-            title: "Archived Date",
+            title: translations.Columns.ArchivedDate,
             format: "{0:yyyy-MM-dd HH:mm:ss}",
             width: 150
         }, {

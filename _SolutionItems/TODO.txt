@@ -10,6 +10,7 @@ PAGES:
 - use smartadmin jarvis widget for forms?
 - make custom tinymce config (cant have widget zones in other editors- its for pages only)
 - Delete sub pages when delete page (or move those subpages up 1 level)?
+- Page Types: should editortemplatepath be overridable? maybe only display template?
 
 - MAKE HISTOIRC PAGES BETTER & also localize it (inc the kendo grid in script)
 

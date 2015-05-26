@@ -11,6 +11,8 @@ PAGES:
 - make custom tinymce config (cant have widget zones in other editors- its for pages only)
 - Delete sub pages when delete page (or move those subpages up 1 level)?
 - Page Types: should editortemplatepath be overridable? maybe only display template?
+TODO: change from page history to page versioning instead (keep all pages in page version table - including current..)
+-    then: we can make page preview work with unsaved versions of pages
 
 - MAKE HISTOIRC PAGES BETTER & also localize it (inc the kendo grid in script)
 
@@ -132,7 +134,6 @@ TODO:
 	- Aliases (Later)
 - Razor intellisense not working for class libraries
 
-TODO: change from page history to page versioning instead (keep all pages in page version table - including current..)
 
 Learn more about "contenteditable" attribute:
 http://html5doctor.com/the-contenteditable-attribute/

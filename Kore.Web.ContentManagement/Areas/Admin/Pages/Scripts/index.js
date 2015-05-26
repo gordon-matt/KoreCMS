@@ -571,7 +571,17 @@ var ViewModel = function () {
         switchSection($("#blank-section"));
         self.showToolbar(false);
         $("#treeview").data("kendoTreeView").dataSource.read();
-    }
+    };
+
+    self.preview = function () {
+        var win = window.open('/admin/pages/preview/' + self.id() + '/false', '_blank');
+        if (win) {
+            win.focus();
+        } else {
+            alert('Please allow popups for this site');
+        }
+        return false;
+    };
 
     self.validator = $("#form-section-form").validate({
         rules: {

@@ -64,7 +64,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
                     }
                     catch (Exception x)
                     {
-                        NullLogger.Instance.Error(x.Message, x);
+                        Logger.Error(x.Message, x);
                         continue;
                     }
 

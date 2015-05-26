@@ -1,7 +1,19 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
+﻿@using Castle.Core.Logging;
+@using Kore.Logging;
+
+@model System.Web.Mvc.HandleErrorInfo
 
 @{
     ViewBag.Title = "Error";
+    
+    string msg = string.Format(
+        "Error in Controller: {0}, Action: {1} - {2}",
+        Model.ControllerName,
+        Model.ActionName,
+        Model.Exception.Message);
+
+    var logger = LoggingUtilities.Resolve();
+    logger.Error(msg, Model.Exception);
 }
 
 <div id="content">

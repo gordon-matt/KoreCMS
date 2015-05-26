@@ -64,8 +64,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                         Slug = record.Slug
                     });
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Logger.Error(ex.Message, ex);
+
                     var toUpdate = Find(x => x.RefId == record.Id);
 
                     if (toUpdate.Any())

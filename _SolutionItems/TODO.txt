@@ -7,18 +7,16 @@ PAGES:
 - show icons on tree (inc. for enabled/disabled)
 - remove "Create Sub Page" button after 3 levels
 - move Page Types to separate page? Alternatively, make it more intuitive..
-- use smartadmin jarvis widget for forms?
 - make custom tinymce config (cant have widget zones in other editors- its for pages only)
 - Delete sub pages when delete page (or move those subpages up 1 level)?
 - Page Types: should editortemplatepath be overridable? maybe only display template?
 TODO: change from page history to page versioning instead (keep all pages in page version table - including current..)
 -    then: we can make page preview work with unsaved versions of pages
 
-- MAKE HISTOIRC PAGES BETTER & also localize it (inc the kendo grid in script)
-
 LOCALIZATION:
 - Allow editing of invariant culture strings
 - how to localize strings in StringLengthAttribute, etc?
+- localize content blocks
 - localize blog entries
 - localize message templates
 - localizable routes?
@@ -48,6 +46,7 @@ MEMBERSHIP:
 - Move membership controllers from CMS to Kore.Web?
 
 OTHER
+- why are tasks not showing anymore?
 - Provide overloads for AutoMenu(), AutoSubmenu() and AutoBreadcrumbs() that don't require any template (just generate it for Bootstrap by default)
 - admin theme settings (left or top menu, which SmartAdmin colors etc)
 - need some way to provide descriptions/tooltips using an [Attribute] of some kind for widget properties (and page type properties too)..
@@ -59,6 +58,7 @@ OTHER
 - slugify automaticlly
 - reusable image picker (Html Helper?)
 
+- use smartadmin jarvis widget for forms?
 - ensure proper logging everywhere
 - scheduled task to auto shrink log file?
 

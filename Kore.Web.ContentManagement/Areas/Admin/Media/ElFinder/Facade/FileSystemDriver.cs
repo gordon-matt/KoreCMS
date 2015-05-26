@@ -4,8 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using Castle.Core.Logging;
 using ElFinder.DTO;
 using ElFinder.Response;
+using Kore.Logging;
 
 namespace ElFinder
 {
@@ -444,7 +446,11 @@ namespace ElFinder
                             file.SaveAs(tmpPath);
                             uploaded = true;
                         }
-                        catch { }
+                        catch (Exception x)
+                        {
+                            var logger = LoggingUtilities.Resolve();
+                            logger.Error(x.Message, x);
+                        }
                         finally
                         {
                             if (uploaded)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -7,6 +8,7 @@ using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using System.Web.Http.Results;
+using Castle.Core.Logging;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web.Security.Membership.Permissions;
@@ -16,11 +18,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class PermissionApiController : ODataController
     {
+        private readonly Lazy<ILogger> logger;
+
         protected IMembershipService Service { get; private set; }
 
-        public PermissionApiController(IMembershipService service)
+        public PermissionApiController(IMembershipService service, Lazy<ILogger> logger)
         {
             this.Service = service;
+            this.logger = logger;
         }
 
         [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
@@ -65,8 +70,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
             {
                 Service.UpdatePermission(entity);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException x)
             {
+                logger.Value.Error(x.Message, x);
+
                 if (!EntityExists(key))
                 {
                     return NotFound();
@@ -119,8 +126,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
             {
                 Service.UpdatePermission(entity);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException x)
             {
+                logger.Value.Error(x.Message, x);
+
                 if (!EntityExists(key))
                 {
                     return NotFound();

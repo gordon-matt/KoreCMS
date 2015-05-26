@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Castle.Core.Logging;
+using Kore.Logging;
 using Kore.Plugins.Indexing.Lucene.Models;
 using Kore.Web.Indexing;
 using Lucene.Net.Analysis;
@@ -43,7 +44,7 @@ namespace Kore.Plugins.Indexing.Lucene.Services
         public LuceneSearchBuilder(Directory directory)
         {
             _directory = directory;
-            Logger = NullLogger.Instance;
+            Logger = LoggingUtilities.Resolve();
 
             _count = MaxResults;
             _skip = 0;

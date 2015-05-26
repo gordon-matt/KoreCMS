@@ -9,6 +9,8 @@ using System.Threading;
 using System.Web;
 using System.Web.Compilation;
 using System.Web.Hosting;
+using Castle.Core.Logging;
+using Kore.Logging;
 using Kore.Web.Plugins;
 
 //Contributor: Umbraco (http://www.umbraco.com). Thanks a lot!
@@ -21,7 +23,7 @@ namespace Kore.Web.Plugins
     /// <summary>
     /// Sets the application up for the plugin referencing
     /// </summary>
-    public class PluginManager
+    public static class PluginManager
     {
         #region Const
 
@@ -38,6 +40,13 @@ namespace Kore.Web.Plugins
         private static bool _clearShadowDirectoryOnStartup;
 
         #endregion Fields
+
+        private static ILogger Logger;
+
+        static PluginManager()
+        {
+            Logger = LoggingUtilities.Resolve();
+        }
 
         #region Methods
 
@@ -90,9 +99,10 @@ namespace Kore.Web.Plugins
                         {
                             File.Delete(f.FullName);
                         }
-                        catch (Exception exc)
+                        catch (Exception x)
                         {
-                            Debug.WriteLine("Error deleting file " + f.Name + ". Exception: " + exc);
+                            Logger.Error("Error deleting file " + f.Name, x);
+                            Debug.WriteLine("Error deleting file " + f.Name + ". Exception: " + x);
                         }
                     }
                 }
@@ -165,30 +175,32 @@ namespace Kore.Web.Plugins
 
                         referencedPlugins.Add(pluginDescriptor);
                     }
-                    catch (ReflectionTypeLoadException ex)
+                    catch (ReflectionTypeLoadException x)
                     {
                         var msg = string.Empty;
-                        foreach (var e in ex.LoaderExceptions)
+                        foreach (var e in x.LoaderExceptions)
                         {
                             msg += e.Message + System.Environment.NewLine;
                         }
 
-                        var fail = new Exception(msg, ex);
+                        var fail = new Exception(msg, x);
+                        Logger.Error(fail.Message, fail);
                         Debug.WriteLine(fail.Message, fail);
 
                         throw fail;
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception x)
             {
                 var msg = string.Empty;
-                for (var e = ex; e != null; e = e.InnerException)
+                for (var e = x; e != null; e = e.InnerException)
                 {
                     msg += e.Message + System.Environment.NewLine;
                 }
 
-                var fail = new Exception(msg, ex);
+                var fail = new Exception(msg, x);
+                Logger.Error(fail.Message, fail);
                 Debug.WriteLine(fail.Message, fail);
 
                 throw fail;
@@ -351,9 +363,10 @@ namespace Kore.Web.Plugins
                         return true;
                 }
             }
-            catch (Exception exc)
+            catch (Exception x)
             {
-                Debug.WriteLine("Cannot validate whether an assembly is already loaded. " + exc);
+                Logger.Error("Cannot validate whether an assembly is already loaded.", x);
+                Debug.WriteLine("Cannot validate whether an assembly is already loaded. " + x);
             }
             return false;
         }
@@ -412,9 +425,11 @@ namespace Kore.Web.Plugins
             {
                 File.Copy(plug.FullName, shadowCopiedPlug.FullName, true);
             }
-            catch (IOException)
+            catch (IOException x)
             {
-                Debug.WriteLine(shadowCopiedPlug.FullName + " is locked, attempting to rename");
+                string msg = shadowCopiedPlug.FullName + " is locked, attempting to rename.";
+                Logger.Error(msg, x);
+                Debug.WriteLine(msg);
                 //this occurs when the files are locked,
                 //for some reason devenv locks plugin files some times and for another crazy reason you are allowed to rename them
                 //which releases the lock, so that it what we are doing here, once it's renamed, we can re-shadow copy
@@ -423,9 +438,11 @@ namespace Kore.Web.Plugins
                     var oldFile = shadowCopiedPlug.FullName + Guid.NewGuid().ToString("N") + ".old";
                     File.Move(shadowCopiedPlug.FullName, oldFile);
                 }
-                catch (IOException exc)
+                catch (IOException x2)
                 {
-                    throw new IOException(shadowCopiedPlug.FullName + " rename failed, cannot initialize plugin", exc);
+                    msg = shadowCopiedPlug.FullName + " rename failed, cannot initialize plugin.";
+                    Logger.Error(msg, x);
+                    throw new IOException(msg, x2);
                 }
                 //ok, we've made it this far, now retry the shadow copy
                 File.Copy(plug.FullName, shadowCopiedPlug.FullName, true);
@@ -470,9 +487,11 @@ namespace Kore.Web.Plugins
                 {
                     File.Copy(plug.FullName, shadowCopiedPlug.FullName, true);
                 }
-                catch (IOException)
+                catch (IOException x)
                 {
-                    Debug.WriteLine(shadowCopiedPlug.FullName + " is locked, attempting to rename");
+                    string msg = shadowCopiedPlug.FullName + " is locked, attempting to rename.";
+                    Logger.Error(msg, x);
+                    Debug.WriteLine(msg);
                     //this occurs when the files are locked,
                     //for some reason devenv locks plugin files some times and for another crazy reason you are allowed to rename them
                     //which releases the lock, so that it what we are doing here, once it's renamed, we can re-shadow copy
@@ -481,9 +500,11 @@ namespace Kore.Web.Plugins
                         var oldFile = shadowCopiedPlug.FullName + Guid.NewGuid().ToString("N") + ".old";
                         File.Move(shadowCopiedPlug.FullName, oldFile);
                     }
-                    catch (IOException exc)
+                    catch (IOException x2)
                     {
-                        throw new IOException(shadowCopiedPlug.FullName + " rename failed, cannot initialize plugin", exc);
+                        msg = shadowCopiedPlug.FullName + " rename failed, cannot initialize plugin.";
+                        Logger.Error(msg, x2);
+                        throw new IOException(msg, x2);
                     }
                     //ok, we've made it this far, now retry the shadow copy
                     File.Copy(plug.FullName, shadowCopiedPlug.FullName, true);

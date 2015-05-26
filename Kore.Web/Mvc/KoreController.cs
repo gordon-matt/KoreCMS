@@ -5,7 +5,7 @@ using System.Web.Mvc;
 using Castle.Core.Logging;
 using Kore.Infrastructure;
 using Kore.Localization;
-
+using Kore.Logging;
 //using Kore.Web.Mvc.Controls.Grid;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -52,7 +52,8 @@ namespace Kore.Web.Mvc
         {
             WorkContext = EngineContext.Current.Resolve<IWebWorkContext>();
             T = LocalizationUtilities.Resolve();
-            Logger = NullLogger.Instance;
+            Logger = LoggingUtilities.Resolve();
+            //Logger = NullLogger.Instance;
         }
 
         #region Authorize

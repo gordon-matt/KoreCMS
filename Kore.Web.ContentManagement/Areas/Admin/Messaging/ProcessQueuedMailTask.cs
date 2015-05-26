@@ -3,6 +3,7 @@ using System.Linq;
 using Autofac;
 using Castle.Core.Logging;
 using Kore.Infrastructure;
+using Kore.Logging;
 using Kore.Net.Mail;
 using Kore.Tasks;
 
@@ -41,10 +42,10 @@ namespace Kore.Web.ContentManagement.Messaging
 
             var emailSender = EngineContext.Current.Resolve<IEmailSender>();
             var providers = EngineContext.Current.ResolveAll<IQueuedMessageProvider>();
-            //var logger = EngineContext.Current.Resolve<ILogger>();
 
-            var componentContext = EngineContext.Current.Resolve<IComponentContext>();
-            var logger = componentContext.Resolve<ILogger>(new TypedParameter(typeof(Type), typeof(ProcessQueuedMailTask)));
+            //var componentContext = EngineContext.Current.Resolve<IComponentContext>();
+            //var logger = componentContext.Resolve<ILogger>(new TypedParameter(typeof(Type), typeof(ProcessQueuedMailTask)));
+            var logger = LoggingUtilities.Resolve();
 
             foreach (var provider in providers)
             {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Castle.Core.Logging;
+using Kore.Logging;
 
 namespace Kore.Web.Mvc.Notify
 {
@@ -28,12 +29,12 @@ namespace Kore.Web.Mvc.Notify
 
     public class Notifier : INotifier
     {
-        private readonly IList<NotifyEntry> _entries;
+        private readonly ICollection<NotifyEntry> entries;
 
         public Notifier()
         {
-            Logger = NullLogger.Instance;
-            _entries = new List<NotifyEntry>();
+            Logger = LoggingUtilities.Resolve();
+            entries = new List<NotifyEntry>();
         }
 
         public ILogger Logger { get; set; }
@@ -41,12 +42,12 @@ namespace Kore.Web.Mvc.Notify
         public void Add(NotifyType type, string message)
         {
             //Logger.InfoFormat("Notification {0} message: {1}", type, message);
-            _entries.Add(new NotifyEntry { Type = type, Message = message });
+            entries.Add(new NotifyEntry { Type = type, Message = message });
         }
 
         public IEnumerable<NotifyEntry> List()
         {
-            return _entries;
+            return entries;
         }
     }
 }

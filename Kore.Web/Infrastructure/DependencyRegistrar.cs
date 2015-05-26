@@ -6,6 +6,7 @@ using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
+using Castle.Core.Logging;
 using Kore.Caching;
 using Kore.Infrastructure;
 using Kore.Localization;
@@ -123,7 +124,11 @@ namespace Kore.Web.Infrastructure
 
             //builder.RegisterType<SearchSettings>().As<ISettings>().SingleInstance();
 
-            builder.RegisterModule<LoggingModule>();
+            //builder.RegisterModule<LoggingModule>();
+
+            builder.RegisterType<NLogFilteredLogger>()
+               .As<ILogger>()
+               .WithParameter("name", "defaultLogger");
 
             // navigation
             builder.RegisterType<NavigationManager>().As<INavigationManager>().InstancePerDependency();

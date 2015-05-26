@@ -4,6 +4,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using Castle.Core.Logging;
 using Kore.Net.Mail;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Models;
 using Kore.Web.Mvc;
@@ -125,12 +126,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 
                 return View("Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.FormBlock.SaveResult", result);
             }
-            catch (Exception ex)
+            catch (Exception x)
             {
+                Logger.Error(x.Message, x);
+
                 var result = new SaveResultModel
                 {
                     Success = false,
-                    Message = ex.GetBaseException().Message,
+                    Message = x.GetBaseException().Message,
                     RedirectUrl = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.Content("~/")
                 };
 

@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using System.Web.Http.Results;
+using Castle.Core.Logging;
 using Kore.Data;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
@@ -85,8 +86,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
                 Repository.Update(entity);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException x)
             {
+                Logger.Error(x.Message, x);
+
                 if (!EntityExists(key))
                 {
                     return NotFound();
@@ -151,8 +154,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 entity.DateModifiedUtc = DateTime.UtcNow;
                 Repository.Update(entity);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException x)
             {
+                Logger.Error(x.Message, x);
+
                 if (!EntityExists(key))
                 {
                     return NotFound();

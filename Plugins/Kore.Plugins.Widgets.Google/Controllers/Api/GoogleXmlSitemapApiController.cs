@@ -185,8 +185,7 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
             }
             catch (Exception x)
             {
-                var logger = NullLogger.Instance;
-                logger.Error(x.Message, x);
+                Logger.Error(x.Message, x);
                 return InternalServerError(x);
             }
         }

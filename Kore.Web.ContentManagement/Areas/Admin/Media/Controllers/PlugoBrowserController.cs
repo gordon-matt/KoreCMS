@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Web.Mvc;
+using Castle.Core.Logging;
 using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
 using Kore.Web.ContentManagement.FileSystems.Media;
@@ -159,9 +160,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
                 mediaService.Value.CreateFolder(dir, name);
                 return Json(new { result = true, path = parent }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception x)
             {
-                return Json(new { result = false }, JsonRequestBehavior.AllowGet);
+                Logger.Error(x.Message, x);
+                return Json(new { result = false, Message = x.GetBaseException().Message }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -173,9 +175,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
                 mediaService.Value.DeleteFolder(path);
                 return Json(new { result = true }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception x)
             {
-                return Json(new { result = false }, JsonRequestBehavior.AllowGet);
+                Logger.Error(x.Message, x);
+                return Json(new { result = false, Message = x.GetBaseException().Message }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -187,9 +190,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
                 mediaService.Value.DeleteFile(path);
                 return Json(new { result = true }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception x)
             {
-                return Json(new { result = false }, JsonRequestBehavior.AllowGet);
+                Logger.Error(x.Message, x);
+                return Json(new { result = false, Message = x.GetBaseException().Message }, JsonRequestBehavior.AllowGet);
             }
         }
     }

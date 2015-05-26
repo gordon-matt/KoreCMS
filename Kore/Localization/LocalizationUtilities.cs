@@ -3,7 +3,7 @@ using Kore.Infrastructure;
 
 namespace Kore.Localization
 {
-    public class LocalizationUtilities
+    public static class LocalizationUtilities
     {
         public static Localizer Resolve(string scope = "defaultLocalizer")
         {

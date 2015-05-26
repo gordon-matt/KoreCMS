@@ -12,7 +12,7 @@ using Kore.Web.Security.Membership.Permissions;
 namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
 {
     [Authorize]
-    [RouteArea(Constants.Areas.Newsletters)]
+    [RouteArea(CmsConstants.Areas.Newsletters)]
     [RoutePrefix("subscribers")]
     public class SubscriberController : KoreController
     {
@@ -52,7 +52,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
         public JsonResult Subscribe(string email, string name)
         {
             // First check if valid email address
-            if (!Constants.RegexPatterns.Email.IsMatch(email))
+            if (!CmsConstants.RegexPatterns.Email.IsMatch(email))
             {
                 return Json(new
                 {

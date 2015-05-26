@@ -8,7 +8,7 @@ using Kore.Web.Mvc;
 namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
 {
     [Authorize]
-    [RouteArea(Constants.Areas.Media)]
+    [RouteArea(CmsConstants.Areas.Media)]
     [RoutePrefix("media-library")]
     public class MediaController : KoreController
     {

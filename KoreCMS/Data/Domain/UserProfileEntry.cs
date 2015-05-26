@@ -28,7 +28,7 @@ namespace KoreCMS.Data.Domain
     {
         public UserProfileEntryMap()
         {
-            ToTable("Kore_UserProfiles");
+            ToTable(Constants.Tables.UserProfiles);
             HasKey(x => x.Id);
             Property(x => x.UserId).IsRequired();
             Property(x => x.Key).HasMaxLength(255).IsRequired();

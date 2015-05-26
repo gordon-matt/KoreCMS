@@ -46,7 +46,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
     {
         public ContentBlockMap()
         {
-            ToTable("Kore_ContentBlocks");
+            ToTable(CmsConstants.Tables.ContentBlocks);
             HasKey(x => x.Id);
             Property(x => x.Title).HasMaxLength(255).IsRequired();
             Property(x => x.BlockName).HasMaxLength(255).IsRequired();

@@ -48,7 +48,7 @@ namespace Kore.Web.ContentManagement.Messaging.Domain
     {
         public MessageTemplateMap()
         {
-            ToTable("Kore_MessageTemplates");
+            ToTable(CmsConstants.Tables.MessageTemplates);
             HasKey(x => x.Id);
             Property(x => x.Name).HasMaxLength(255).IsRequired();
             Property(x => x.Subject).HasMaxLength(255).IsRequired();

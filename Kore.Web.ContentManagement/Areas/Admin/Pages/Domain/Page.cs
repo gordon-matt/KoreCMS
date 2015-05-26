@@ -50,7 +50,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
     {
         public PageMap()
         {
-            ToTable("Kore_Pages");
+            ToTable(CmsConstants.Tables.Pages);
             HasKey(x => x.Id);
             Property(x => x.PageTypeId).IsRequired();
             Property(x => x.Name).IsRequired().HasMaxLength(255);

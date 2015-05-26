@@ -60,7 +60,6 @@ OTHER
 - reusable image picker (Html Helper?)
 
 - use smartadmin jarvis widget for forms?
-- ensure proper logging everywhere
 - scheduled task to auto shrink log file?
 
 - review all TODO notes
@@ -74,7 +73,7 @@ OTHER
 - Content Blocks: override template path (for display only)
 - dashboard widgets
 - blog, store, etc for google sitemap
-- show log entries in admin
+- log: make a button to clear all entires
 - add meta keywords and desc for blog entries and products, categories, etc..
 - uninstall plugin should remove permissions
   
@@ -164,17 +163,10 @@ if normal view, use breadcrumbs.. not needed if only partial view
 - (DONE) Logging  (Needs TESTING)
 - (DONE) Caching  (Needs TESTING - especially in WinForms)- UPDATE 2014.09.11: Check if it supports distributed caching
 - (DONE) Events  (Needs TESTING)
-- (DONE) Plugin System  (Needs TESTING)
 - Customizable Membership Service  (Needs TESTING)
-	TODO:
-	- implement change password for user management
-- (DONE) Resources (Needs TESTING & Need to implement bundling)
-- (DONE) jqGrid HTML Helper
 	TODO:
 	- Implement JQColumnAttribute class for models.. then user just needs to do: .AddColumnFor(m=> m.ColumnName)
 - web api security (its protected so only logged on users can use it, but we may need to make changes to have it open for mobile, etc.. later)
-- Admin UI (using SmartAdmin)
-- Custom page types
 	
 
 FUTURE:
@@ -183,14 +175,12 @@ FUTURE:
 - Features System
 - jqGrid HTML Helper: SubGrid
 - Installation Page
-- Logs Table (if logging to DB)
 
 
 - forums plugin,
 - wiki plugin (roadkill?)
 - Visitor Groups
 - virtual path providers
-- content builder
 - responsive file manager
 
 IMPORTANT: Keep note of licenses for all references!
@@ -200,7 +190,7 @@ http://www.barebonescoder.com/2013/11/dapper-vs-ef-6-part-1-setting-up-dapper/
 
 
 - features system (enable/disable things.. dont load everything)
-- manage themes/features
+- manage features
 
 IPlugin: a list of features can go here
 

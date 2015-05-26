@@ -12,7 +12,7 @@ using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 {
     [Authorize]
-    [RouteArea(Constants.Areas.Pages)]
+    [RouteArea(CmsConstants.Areas.Pages)]
     public class PageController : KoreController
     {
         protected static Regex ContentZonePattern = new Regex(@"\[\[ContentZone:(?<Zone>.*)\]\]", RegexOptions.Compiled);

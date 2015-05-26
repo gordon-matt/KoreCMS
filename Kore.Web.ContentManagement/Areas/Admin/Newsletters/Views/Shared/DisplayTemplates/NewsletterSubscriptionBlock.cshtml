@@ -13,7 +13,7 @@
     <script type="text/javascript">
         function newsletterSignUp() {
             $.ajax({
-                url: '@Url.Action("Subscribe", "Subscriber", new { area = Constants.Areas.Newsletters })',
+                url: '@Url.Action("Subscribe", "Subscriber", new { area = CmsConstants.Areas.Newsletters })',
                 data: {
                     email: $('#newsletter-block-email').val(),
                     name: $('#newsletter-block-name').val()

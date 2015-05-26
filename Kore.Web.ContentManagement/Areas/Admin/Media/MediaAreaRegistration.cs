@@ -6,7 +6,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media
     {
         public override string AreaName
         {
-            get { return Constants.Areas.Media; }
+            get { return CmsConstants.Areas.Media; }
         }
 
         public override void RegisterArea(AreaRegistrationContext context)

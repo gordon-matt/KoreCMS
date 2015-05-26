@@ -54,7 +54,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
     {
         public HistoricPageMap()
         {
-            ToTable("Kore_HistoricPages");
+            ToTable(CmsConstants.Tables.HistoricPages);
             HasKey(x => x.Id);
             Property(x => x.PageId).IsRequired();
             Property(x => x.PageTypeId).IsRequired();

@@ -6,7 +6,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization
     {
         public override string AreaName
         {
-            get { return Constants.Areas.Localization; }
+            get { return CmsConstants.Areas.Localization; }
         }
 
         public override void RegisterArea(AreaRegistrationContext context)

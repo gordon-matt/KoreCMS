@@ -4,7 +4,7 @@ using Kore.Web.Mvc;
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
 {
     [Authorize]
-    [RouteArea(Constants.Areas.Blog)]
+    [RouteArea(CmsConstants.Areas.Blog)]
     public class BlogController : KoreController
     {
         [Route("")]

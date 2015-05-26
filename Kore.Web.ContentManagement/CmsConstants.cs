@@ -2,7 +2,7 @@
 
 namespace Kore.Web.ContentManagement
 {
-    public static class Constants
+    public static class CmsConstants
     {
         public static class RegexPatterns
         {
@@ -27,6 +27,23 @@ namespace Kore.Web.ContentManagement
             public const string ContentBlockScriptExpression = "Kore_CMS_Blocks_ScriptExpression_{0}";
             public const string MediaMimeType = "Kore_CMS_Media_MimType_{0}";
             public const string MediaImageEntityTypesAll = "Kore_CMS_Media_ImageEntityTypes_All";
+        }
+
+        internal static class Tables
+        {
+            internal const string Blog = "Kore_Blog";
+            internal const string ContentBlocks = "Kore_ContentBlocks";
+            internal const string HistoricPages = "Kore_HistoricPages";
+            internal const string ImageEntityTypes = "Kore_ImageEntityTypes";
+            internal const string Images = "Kore_Images";
+            internal const string MenuItems = "Kore_MenuItems";
+            internal const string Menus = "Kore_Menus";
+            internal const string MessageTemplates = "Kore_MessageTemplates";
+            internal const string Pages = "Kore_Pages";
+            internal const string PageTypes = "Kore_PageTypes";
+            internal const string QueuedEmails = "Kore_QueuedEmails";
+            internal const string QueuedSMS = "Kore_QueuedSMS";
+            internal const string Zones = "Kore_Zones";
         }
     }
 }

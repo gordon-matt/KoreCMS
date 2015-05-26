@@ -6,7 +6,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters
     {
         public override string AreaName
         {
-            get { return Constants.Areas.Newsletters; }
+            get { return CmsConstants.Areas.Newsletters; }
         }
 
         public override void RegisterArea(AreaRegistrationContext context)

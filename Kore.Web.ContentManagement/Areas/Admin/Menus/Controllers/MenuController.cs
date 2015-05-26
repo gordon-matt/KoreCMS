@@ -4,7 +4,7 @@ using Kore.Web.Mvc;
 namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Controllers
 {
     [Authorize]
-    [RouteArea(Constants.Areas.Menus)]
+    [RouteArea(CmsConstants.Areas.Menus)]
     public class MenuController : KoreController
     {
         [Route("")]

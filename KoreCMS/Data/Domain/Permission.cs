@@ -32,7 +32,7 @@ namespace KoreCMS.Data.Domain
     {
         public PermissionMap()
         {
-            ToTable("Permissions");
+            ToTable(Constants.Tables.Permissions);
             HasKey(x => x.Id);
             Property(x => x.Name).HasMaxLength(50).IsRequired();
             Property(x => x.Category).HasMaxLength(50).IsRequired();

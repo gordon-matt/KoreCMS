@@ -21,28 +21,28 @@ namespace Kore.Web.ContentManagement
             // Blog
             builder.Add(T(KoreCmsLocalizableStrings.Navigation.CMS),
                 menu => menu.Add(T(KoreCmsLocalizableStrings.Blog.Title), "5", item => item
-                    .Action("Index", "Blog", new { area = Constants.Areas.Blog })
+                    .Action("Index", "Blog", new { area = CmsConstants.Areas.Blog })
                     .IconCssClass("kore-icon kore-icon-blog")
                     .Permission(CmsPermissions.BlogRead)));
 
             // Content Blocks
             builder.Add(T(KoreCmsLocalizableStrings.Navigation.CMS),
                 menu => menu.Add(T(KoreCmsLocalizableStrings.ContentBlocks.Title), "5", item => item
-                    .Action("Index", "ContentBlock", new { area = Constants.Areas.ContentBlocks, pageId = UrlParameter.Optional })
+                    .Action("Index", "ContentBlock", new { area = CmsConstants.Areas.ContentBlocks, pageId = UrlParameter.Optional })
                     .IconCssClass("kore-icon kore-icon-content-blocks")
                     .Permission(CmsPermissions.ContentBlocksRead)));
 
             // Localization
             builder.Add(T(KoreCmsLocalizableStrings.Navigation.CMS),
                 menu => menu.Add(T(KoreCmsLocalizableStrings.Localization.Title), "5", item => item
-                    .Action("Index", "Language", new { area = Constants.Areas.Localization })
+                    .Action("Index", "Language", new { area = CmsConstants.Areas.Localization })
                     .IconCssClass("kore-icon kore-icon-localization")
                     .Permission(StandardPermissions.FullAccess)));
 
             // Media
             builder.Add(T(KoreCmsLocalizableStrings.Navigation.CMS),
                 menu => menu.Add(T(KoreCmsLocalizableStrings.Media.Title), "5", item => item
-                    .Action("Index", "Media", new { area = Constants.Areas.Media })
+                    .Action("Index", "Media", new { area = CmsConstants.Areas.Media })
                     .IconCssClass("kore-icon kore-icon-media")
                     .Permission(CmsPermissions.MediaRead)));
 
@@ -52,34 +52,34 @@ namespace Kore.Web.ContentManagement
             // Menus
             builder.Add(T(KoreCmsLocalizableStrings.Navigation.CMS),
                 menu => menu.Add(T(KoreCmsLocalizableStrings.Menus.Title), "5", item => item
-                    .Action("Index", "Menu", new { area = Constants.Areas.Menus })
+                    .Action("Index", "Menu", new { area = CmsConstants.Areas.Menus })
                     .IconCssClass("kore-icon kore-icon-menus")
                     .Permission(CmsPermissions.MenusRead)));
 
             // Messaging
             builder.Add(T(KoreCmsLocalizableStrings.Navigation.CMS),
                 menu => menu.Add(T(KoreCmsLocalizableStrings.Messaging.MessageTemplates), "5", item => item
-                    .Action("Index", "MessageTemplate", new { area = Constants.Areas.Messaging })
+                    .Action("Index", "MessageTemplate", new { area = CmsConstants.Areas.Messaging })
                     .IconCssClass("kore-icon kore-icon-message-templates")
                     .Permission(CmsPermissions.MessageTemplatesRead)));
 
             builder.Add(T(KoreCmsLocalizableStrings.Navigation.CMS),
                 menu => menu.Add(T(KoreCmsLocalizableStrings.Messaging.QueuedEmails), "5", item => item
-                    .Action("Index", "QueuedEmail", new { area = Constants.Areas.Messaging })
+                    .Action("Index", "QueuedEmail", new { area = CmsConstants.Areas.Messaging })
                     .IconCssClass("kore-icon kore-icon-message-queue")
                     .Permission(CmsPermissions.QueuedEmailsRead)));
 
             // Newsletters
             builder.Add(T(KoreCmsLocalizableStrings.Navigation.CMS),
                 menu => menu.Add(T(KoreCmsLocalizableStrings.Newsletters.Subscribers), "5", item => item
-                    .Action("Index", "Subscriber", new { area = Constants.Areas.Newsletters })
+                    .Action("Index", "Subscriber", new { area = CmsConstants.Areas.Newsletters })
                     .IconCssClass("kore-icon kore-icon-subscribers")
                     .Permission(StandardPermissions.FullAccess)));
 
             // Pages
             builder.Add(T(KoreCmsLocalizableStrings.Navigation.CMS),
                 menu => menu.Add(T(KoreCmsLocalizableStrings.Pages.Title), "5", item => item
-                    .Action("Index", "Page", new { area = Constants.Areas.Pages })
+                    .Action("Index", "Page", new { area = CmsConstants.Areas.Pages })
                     .IconCssClass("kore-icon kore-icon-pages")
                     .Permission(CmsPermissions.PagesRead)));
         }
@@ -89,11 +89,11 @@ namespace Kore.Web.ContentManagement
             builder.IconCssClass("kore-icon kore-icon-membership");
             builder.Permission(StandardPermissions.FullAccess);
 
-            builder.Add(T(KoreCmsLocalizableStrings.Membership.Users), "1", item => item.Action("Users", "Membership", new { area = Constants.Areas.Membership })
+            builder.Add(T(KoreCmsLocalizableStrings.Membership.Users), "1", item => item.Action("Users", "Membership", new { area = CmsConstants.Areas.Membership })
                 .IconCssClass("kore-icon kore-icon-users")
                 .Permission(StandardPermissions.FullAccess));
 
-            builder.Add(T(KoreCmsLocalizableStrings.Membership.Roles), "2", item => item.Action("Roles", "Membership", new { area = Constants.Areas.Membership })
+            builder.Add(T(KoreCmsLocalizableStrings.Membership.Roles), "2", item => item.Action("Roles", "Membership", new { area = CmsConstants.Areas.Membership })
                 .IconCssClass("kore-icon kore-icon-roles")
                 .Permission(StandardPermissions.FullAccess));
         }

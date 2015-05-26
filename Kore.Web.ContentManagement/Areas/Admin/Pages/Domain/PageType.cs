@@ -31,7 +31,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
     {
         public PageTypeMap()
         {
-            ToTable("Kore_PageTypes");
+            ToTable(CmsConstants.Tables.PageTypes);
             HasKey(x => x.Id);
             Property(x => x.Name).HasMaxLength(255).IsRequired();
             Property(x => x.LayoutPath).IsRequired().HasMaxLength(255);

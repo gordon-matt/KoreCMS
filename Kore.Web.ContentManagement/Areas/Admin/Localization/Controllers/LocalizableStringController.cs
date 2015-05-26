@@ -11,7 +11,7 @@ using Kore.Web.Security.Membership.Permissions;
 namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
 {
     [Authorize]
-    [RouteArea(Constants.Areas.Localization)]
+    [RouteArea(CmsConstants.Areas.Localization)]
     [RoutePrefix("localizable-strings")]
     public class LocalizableStringController : KoreController
     {

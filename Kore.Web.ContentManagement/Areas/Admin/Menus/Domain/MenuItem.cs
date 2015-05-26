@@ -52,7 +52,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Domain
     {
         public MenuItemMap()
         {
-            ToTable("Kore_MenuItems");
+            ToTable(CmsConstants.Tables.MenuItems);
             HasKey(x => x.Id);
             Property(x => x.MenuId).IsRequired();
             Property(x => x.Text).IsRequired().HasMaxLength(255);

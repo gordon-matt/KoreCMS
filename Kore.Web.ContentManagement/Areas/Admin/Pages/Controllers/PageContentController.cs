@@ -13,7 +13,7 @@ using Kore.Web.Mvc;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 {
-    [RouteArea(Constants.Areas.Pages)]
+    [RouteArea(CmsConstants.Areas.Pages)]
     public class PageContentController : KoreController
     {
         protected static Regex ContentZonePattern = new Regex(@"\[\[ContentZone:(?<Zone>.*)\]\]", RegexOptions.Compiled);
@@ -44,7 +44,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             // Hack to make it search the correct path for the view
             if (!this.ControllerContext.RouteData.DataTokens.ContainsKey("area"))
             {
-                this.ControllerContext.RouteData.DataTokens.Add("area", Constants.Areas.Pages);
+                this.ControllerContext.RouteData.DataTokens.Add("area", CmsConstants.Areas.Pages);
             }
 
             var currentCulture = WorkContext.CurrentCultureCode;

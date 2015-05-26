@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
 {
     [Authorize]
-    [RouteArea(Constants.Areas.Media)]
+    [RouteArea(CmsConstants.Areas.Media)]
     [RoutePrefix("media-library/upload-files")]
     public class UploadFilesController : Controller
     {

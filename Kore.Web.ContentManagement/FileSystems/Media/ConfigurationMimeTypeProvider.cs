@@ -31,7 +31,7 @@ namespace Kore.Web.ContentManagement.FileSystems.Media
                 return UnknownMimeType;
             }
 
-            string cacheKey = string.Format(Constants.CacheKeys.MediaMimeType, extension);
+            string cacheKey = string.Format(CmsConstants.CacheKeys.MediaMimeType, extension);
             return cacheManager.Get(cacheKey, () =>
             {
                 try

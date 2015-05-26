@@ -58,7 +58,7 @@ namespace Kore.Web.ContentManagement.Messaging.Domain
     {
         public QueuedSmsMap()
         {
-            ToTable("Kore_QueuedSMS");
+            ToTable(CmsConstants.Tables.QueuedSMS);
             HasKey(x => x.Id);
             Property(x => x.Priority).IsRequired();
             Property(x => x.FromNumber).HasMaxLength(30);

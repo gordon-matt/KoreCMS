@@ -9,7 +9,7 @@ using Kore.Web.Mvc;
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 {
     [Authorize]
-    [RouteArea(Constants.Areas.ContentBlocks)]
+    [RouteArea(CmsConstants.Areas.ContentBlocks)]
     public class ContentBlockController : KoreController
     {
         private readonly Lazy<IContentBlockService> contentBlockService;
@@ -34,7 +34,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 
             if (pageId.HasValue)
             {
-                WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Pages.ManagePages), Url.Action("Index", "Page", new { area = Constants.Areas.Pages }));
+                WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Pages.ManagePages), Url.Action("Index", "Page", new { area = CmsConstants.Areas.Pages }));
             }
 
             ViewBag.PageId = pageId;

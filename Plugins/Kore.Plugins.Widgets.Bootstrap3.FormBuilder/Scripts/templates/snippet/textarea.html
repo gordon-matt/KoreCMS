@@ -1,0 +1,7 @@
+<!-- Textarea -->
+<div class="form-group<% if(required) {%> required-control<% } %>">
+  <label class="col-md-3 control-label" for ="<%= id %>"><%= label %></label>
+  <div class="<%= inputsize %>">
+    <textarea id="<%= id %>" name="<%= id %>" <% if(required) {%> required <% } %> class="form-control <%= inputheight %>"><%= textarea %></textarea>
+  </div>
+</div>

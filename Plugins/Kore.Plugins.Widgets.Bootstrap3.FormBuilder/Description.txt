@@ -1,0 +1,8 @@
+﻿Group: Widgets
+FriendlyName: Bootstrap 3: Form Builder
+SystemName: Kore.Plugins.Widgets.Bootstrap3.FormBuilder
+Version: 1.00
+SupportedVersions: 1.00
+Author: Adam Moore / Widecommerce
+DisplayOrder: 1
+FileName: Kore.Plugins.Widgets.Bootstrap3.FormBuilder.dll

@@ -1,0 +1,11 @@
+<!-- Multiple Radios -->
+<div class="form-group">
+  <label  class="col-md-3 control-label" for="<%= name %>"><%= label %></label>
+  <div class="col-lg-6"><% _.each(radios, function(radio, i){ %>
+  <div class="radio">
+    <label for="<%= name+'-'+i %>">
+      <input type="radio" name="<%= name %>" id="<%= name+'-'+i %>" value="<%= radio %>"  <% if (i < 1) { %> checked="checked" <% } %>>
+      <%= radio %>
+    </label></div><% }); %>
+  </div>
+</div>

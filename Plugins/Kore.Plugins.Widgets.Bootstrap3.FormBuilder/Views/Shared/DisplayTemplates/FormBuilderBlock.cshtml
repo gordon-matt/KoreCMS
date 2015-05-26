@@ -1,0 +1,65 @@
+﻿@using Kore.Localization
+@using Kore.Plugins.Widgets.Bootstrap3.FormBuilder.ContentBlocks
+
+@model FormBuilderBlock
+
+@{
+    string formId = "form-block-" + Model.Id;
+}
+
+<form id="@formId" method="post" action="@Url.Action("Save", "FormBlock", new { area = string.Empty })" enctype="multipart/form-data">
+    @Html.HiddenFor(m => m.ThankYouMessage)
+    @Html.HiddenFor(m => m.RedirectUrl)
+    @Html.HiddenFor(m => m.EmailAddress)
+    @Html.Hidden("ContentBlockTitle", Model.Title)
+
+    @{
+        string htmlTemplate = Model.HtmlTemplate;
+    }
+
+    @if (Model.HtmlTemplate.Contains("[Captcha]"))
+    {
+        @Html.Hidden("EnableCaptcha", true)
+        string captcha = FormBuilderBlock.GenerateCaptcha();
+        htmlTemplate = htmlTemplate.Replace("[Captcha]", captcha);
+        htmlTemplate = htmlTemplate.Replace("[CaptchaResponse]", string.Format(
+            "<input type=\"text\" class=\"form-control form-captcha\" name=\"captcha_response\" data-val=\"true\" data-val-required=\"{0}\" /><span data-valmsg-for=\"captcha_response\" data-valmsg-replace=\"true\"></span>",
+            T(Kore.Web.KoreWebLocalizableStrings.Validation.Required)));
+    }
+    else
+    {
+        @Html.Hidden("EnableCaptcha", false)
+    }
+
+    @Html.Raw(htmlTemplate)
+</form>
+
+@if (Model.UseAjax)
+{
+    <script type="text/javascript">
+        if (!window.jQuery) {
+            document.write('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"><\/script>');
+        }
+    </script>
+    <script type="text/javascript">
+        $("#@formId").submit(function (e) {
+            $.ajax({
+                url: "@Url.Action("Save", "FormBlock", new { area = string.Empty })",
+                type: "POST",
+                data: $('#@formId').serialize()
+            })
+            .done(function (json) {
+                alert(json.Message);
+
+                if (json.Success) {
+                    window.location = json.RedirectUrl;
+                }
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText || textStatus + ': ' + errorThrown);
+            });
+
+            return false;
+        });
+    </script>
+}

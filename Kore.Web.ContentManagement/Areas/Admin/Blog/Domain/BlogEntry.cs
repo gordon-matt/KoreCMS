@@ -41,7 +41,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
     {
         public BlogEntryMap()
         {
-            ToTable("Kore_Blog");
+            ToTable(CmsConstants.Tables.Blog);
             HasKey(x => x.Id);
             Property(x => x.UserId).HasMaxLength(255).IsRequired();
             Property(x => x.DateCreatedUtc).IsRequired();

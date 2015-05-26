@@ -27,7 +27,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Domain
     {
         public MenuMap()
         {
-            ToTable("Kore_Menus");
+            ToTable(CmsConstants.Tables.Menus);
             HasKey(x => x.Id);
             Property(x => x.Name).HasMaxLength(255).IsRequired();
             Property(x => x.UrlFilter).HasMaxLength(255);

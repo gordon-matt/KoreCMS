@@ -36,7 +36,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
 
         public Guid GeEntityTypeId(IEntity entity)
         {
-            var entityTypes = cacheManager.Get(Constants.CacheKeys.MediaImageEntityTypesAll, () =>
+            var entityTypes = cacheManager.Get(CmsConstants.CacheKeys.MediaImageEntityTypesAll, () =>
             {
                 return imageEntityTypeRepository.Table.ToDictionary(k => k.Type, v => v.Id);
             });
@@ -56,7 +56,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
             };
 
             imageEntityTypeRepository.Insert(entityType);
-            cacheManager.Remove(Constants.CacheKeys.MediaImageEntityTypesAll);
+            cacheManager.Remove(CmsConstants.CacheKeys.MediaImageEntityTypesAll);
 
             return entityType.Id;
         }

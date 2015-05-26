@@ -25,7 +25,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
     {
         public ZoneMap()
         {
-            ToTable("Kore_Zones");
+            ToTable(CmsConstants.Tables.Zones);
             HasKey(x => x.Id);
             Property(x => x.Name).HasMaxLength(255).IsRequired();
         }

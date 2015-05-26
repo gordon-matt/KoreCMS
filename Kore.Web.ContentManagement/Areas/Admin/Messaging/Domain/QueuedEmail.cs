@@ -77,7 +77,7 @@ namespace Kore.Web.ContentManagement.Messaging.Domain
     {
         public QueuedEmailMap()
         {
-            ToTable("Kore_QueuedEmails");
+            ToTable(CmsConstants.Tables.QueuedEmails);
             HasKey(x => x.Id);
             Property(x => x.Priority).IsRequired();
             Property(x => x.FromAddress).HasMaxLength(255);

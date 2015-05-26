@@ -22,7 +22,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting
 
         public object Evaluate(string expression, IEnumerable<IGlobalMethodProvider> providers, object model = null)
         {
-            string key = string.Format(Constants.CacheKeys.ContentBlockScriptExpression, expression);
+            string key = string.Format(CmsConstants.CacheKeys.ContentBlockScriptExpression, expression);
             var expr = cacheManager.Get(key, () =>
             {
                 var ast = ParseExpression(expression);

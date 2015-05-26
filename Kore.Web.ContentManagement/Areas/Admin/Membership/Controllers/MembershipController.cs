@@ -8,7 +8,7 @@ using Kore.Web.Security.Membership.Permissions;
 namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers
 {
     [Authorize]
-    [RouteArea(Constants.Areas.Membership)]
+    [RouteArea(CmsConstants.Areas.Membership)]
     public class MembershipController : KoreController
     {
         private readonly IMembershipService membershipService;

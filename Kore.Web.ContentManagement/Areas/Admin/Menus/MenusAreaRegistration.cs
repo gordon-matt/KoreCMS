@@ -6,7 +6,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus
     {
         public override string AreaName
         {
-            get { return Constants.Areas.Menus; }
+            get { return CmsConstants.Areas.Menus; }
         }
 
         public override void RegisterArea(AreaRegistrationContext context)

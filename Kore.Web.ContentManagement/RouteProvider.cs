@@ -12,7 +12,7 @@ namespace Kore.Web.ContentManagement
             routes.MapRoute(
                 name: "CmsRoute",
                 url: "{*slug}",
-                defaults: new { controller = "PageContent", action = "Index", area = Constants.Areas.Pages, slug = string.Empty }
+                defaults: new { controller = "PageContent", action = "Index", area = CmsConstants.Areas.Pages, slug = string.Empty }
                 //constraints: new { slug = new CmsRouteConstraint() }
             );
         }

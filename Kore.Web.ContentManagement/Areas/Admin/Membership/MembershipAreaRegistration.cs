@@ -6,7 +6,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership
     {
         public override string AreaName
         {
-            get { return Constants.Areas.Membership; }
+            get { return CmsConstants.Areas.Membership; }
         }
 
         public override void RegisterArea(AreaRegistrationContext context)

@@ -330,7 +330,7 @@
     <Compile Include="Areas\Admin\ContentBlocks\ContentBlockBase.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\ContentBlocksAreaRegistration.cs" />
     <Compile Include="CmsNavigationProvider.cs" />
-    <Compile Include="Constants.cs" />
+    <Compile Include="CmsConstants.cs" />
     <Compile Include="Controllers\FrontendController.cs" />
     <Compile Include="FileSystems\Media\ConfigurationMimeTypeProvider.cs" />
     <Compile Include="FileSystems\Media\FileSystemStorageProvider.cs" />

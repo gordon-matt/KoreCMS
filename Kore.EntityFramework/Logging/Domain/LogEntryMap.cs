@@ -1,8 +1,7 @@
 ﻿using System.Data.Entity.ModelConfiguration;
 using Kore.Data.EntityFramework;
-using Kore.Logging.Domain;
 
-namespace Kore.EntityFramework.Logging.Domain
+namespace Kore.Logging.Domain
 {
     public class LogEntryMap : EntityTypeConfiguration<LogEntry>, IEntityTypeConfiguration
     {

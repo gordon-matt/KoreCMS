@@ -5,7 +5,7 @@ using Kore.Web.Security.Membership.Permissions;
 namespace Kore.Web.ContentManagement.Messaging.Controllers
 {
     [Authorize]
-    [RouteArea(Constants.Areas.Messaging)]
+    [RouteArea(CmsConstants.Areas.Messaging)]
     [RoutePrefix("queued-email")]
     public class QueuedEmailController : KoreController
     {

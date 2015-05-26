@@ -675,7 +675,9 @@
     <Content Include="Areas\Admin\Content\fonts\fontawesome-webfont.woff" />
     <Content Include="Areas\Admin\Content\fonts\FontAwesome.otf" />
     <Content Include="Areas\Admin\Content\less\icons.less" />
-    <Content Include="NLog.config" />
+    <Content Include="NLog.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

@@ -124,8 +124,7 @@ namespace Kore.Web.Infrastructure
 
             //builder.RegisterType<SearchSettings>().As<ISettings>().SingleInstance();
 
-            //builder.RegisterModule<LoggingModule>();
-
+            builder.RegisterModule<LoggingModule>();
             builder.RegisterType<NLogFilteredLogger>()
                .As<ILogger>()
                .WithParameter("name", "defaultLogger");

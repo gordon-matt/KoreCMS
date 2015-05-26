@@ -53,11 +53,12 @@
         <div id="toolbar" class="row" data-bind="visible: showToolbar">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="btn-group pull-right">
-                    <a onclick="viewModel.delete()" class="btn btn-danger">@T(KoreWebLocalizableStrings.General.Delete).Text</a>
-                    <a data-bind="attr: { href: '/admin/pages/' + id() + '/history' }" class="btn btn-warning">@T(KoreCmsLocalizableStrings.Pages.History).Text</a>
-                    <a data-bind="click: translate" class="btn btn-primary">@T(KoreCmsLocalizableStrings.Pages.Translations).Text</a>
-                    <a data-bind="attr: { href: '/admin/contentBlocks/' + id() }" class="btn btn-info">@T(KoreCmsLocalizableStrings.ContentBlocks.Title).Text</a>
-                    <a data-bind="click: toggleEnabled" class="btn btn-default">@T(KoreWebLocalizableStrings.General.Toggle).Text</a>
+                    <a onclick="viewModel.delete()" class="btn btn-danger"><i class="kore-icon kore-icon-trash"></i> @T(KoreWebLocalizableStrings.General.Delete).Text</a>
+                    <a data-bind="attr: { href: '/admin/pages/' + id() + '/history' }" class="btn btn-warning"><i class="kore-icon kore-icon-history"></i> @T(KoreCmsLocalizableStrings.Pages.History).Text</a>
+                    <a data-bind="click: translate" class="btn btn-primary"><i class="kore-icon kore-icon-globe"></i> @T(KoreCmsLocalizableStrings.Pages.Translations).Text</a>
+                    <a data-bind="click: preview" class="btn btn-success"><i class="kore-icon kore-icon-preview"></i> @T(KoreWebLocalizableStrings.General.Preview).Text</a>
+                    <a data-bind="attr: { href: '/admin/contentBlocks/' + id() }" class="btn btn-info"><i class="kore-icon kore-icon-content-blocks"></i> @T(KoreCmsLocalizableStrings.ContentBlocks.Title).Text</a>
+                    <a data-bind="click: toggleEnabled" class="btn btn-default"><i class="kore-icon kore-icon-toggle-on"></i> @T(KoreWebLocalizableStrings.General.Toggle).Text</a>
                 </div>
             </div>
         </div>

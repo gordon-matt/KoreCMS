@@ -92,7 +92,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 
 
         [Route("preview/{pageId}/{isHistoricPage}")]
-        public ActionResult Preview(Guid pageId, bool isHistoricPage = false)
+        public ActionResult Preview(Guid pageId, bool isHistoricPage)
         {
             var currentCulture = WorkContext.CurrentCultureCode;
 
@@ -123,6 +123,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             {
                 page = pageService.Value.FindOne(pageId);
             }
+
+            page.IsEnabled = true; // Override here to make sure it passes the check here: PageSecurityHelper.CheckUserHasAccessToPage
 
             //if (page != null && page.IsEnabled)
             if (page != null)

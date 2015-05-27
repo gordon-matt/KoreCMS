@@ -15,7 +15,7 @@ namespace Kore.Web.CommonResources.Infrastructure
             bundles.Add(new ScriptBundle("~/bundles/js/kore/elfinder")
                 .Include("~/Scripts/Kore.Web.CommonResources.Scripts.kore-elfinder.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/kore/jqval")
+            bundles.Add(new ScriptBundle("~/bundles/js/kore/jqueryval")
                 .Include("~/Scripts/Kore.Web.CommonResources.Scripts.kore-jqval.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/kore/section-switching")

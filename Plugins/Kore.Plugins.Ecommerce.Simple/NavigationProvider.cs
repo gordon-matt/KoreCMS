@@ -14,10 +14,10 @@ namespace Kore.Plugins.Ecommerce.Simple
 
         public void GetNavigation(NavigationBuilder builder)
         {
-            builder.Add(T(LocalizableStrings.Store), "99", BuildGoogleMenu);
+            builder.Add(T(LocalizableStrings.Store), "99", BuildEcommerceMenu);
         }
 
-        private void BuildGoogleMenu(NavigationItemBuilder builder)
+        private void BuildEcommerceMenu(NavigationItemBuilder builder)
         {
             builder.IconCssClass("kore-icon kore-icon-shopping-cart");
 
@@ -30,11 +30,6 @@ namespace Kore.Plugins.Ecommerce.Simple
                 .Action("Index", "OrderAdmin", new { area = Constants.RouteArea })
                 .IconCssClass("kore-icon kore-icon-orders")
                 .Permission(SimpleCommercePermissions.ReadOrders));
-
-            //builder.Add(T(LocalizableStrings.Products), "5", item => item
-            //    .Action("Index", "Product", new { area = Constants.RouteArea })
-            //    .IconCssClass("kore-icon kore-icon-products")
-            //    .Permission(SimpleCommercePermissions.ReadProducts));
         }
     }
 }

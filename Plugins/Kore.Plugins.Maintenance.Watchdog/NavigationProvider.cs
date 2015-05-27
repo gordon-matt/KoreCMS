@@ -15,7 +15,7 @@ namespace Kore.Plugins.Maintenance.Watchdog
 
         public void GetNavigation(NavigationBuilder builder)
         {
-            builder.Add(T(Kore.Web.KoreWebLocalizableStrings.General.Configuration),
+            builder.Add(T(Kore.Web.KoreWebLocalizableStrings.Maintenance.Title),
                 menu => menu.Add(T(LocalizableStrings.Services), "5", item => item
                     .Action("Index", "Watchdog", new { area = Constants.RouteArea })
                     .IconCssClass("kore-icon kore-icon-services")

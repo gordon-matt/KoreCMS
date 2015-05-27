@@ -18,8 +18,8 @@ namespace Kore.Web.Areas.Admin
         public void GetNavigation(NavigationBuilder builder)
         {
             // Configuration
-            builder.Add(T(KoreWebLocalizableStrings.General.Configuration), "99", BuildConfigurationMenu);
-            builder.Add(T(KoreWebLocalizableStrings.Maintenance.Title), "99", BuildMaintenanceMenu);
+            builder.Add(T(KoreWebLocalizableStrings.General.Configuration), "3", BuildConfigurationMenu);
+            builder.Add(T(KoreWebLocalizableStrings.Maintenance.Title), "4", BuildMaintenanceMenu);
         }
 
         private void BuildConfigurationMenu(NavigationItemBuilder builder)
@@ -37,12 +37,6 @@ namespace Kore.Web.Areas.Admin
                 .Action("Index", "Plugin", new { area = KoreWebConstants.Areas.Plugins })
                 .IconCssClass("kore-icon kore-icon-plugins")
                 .Permission(StandardPermissions.FullAccess));
-
-            // Scheduled Tasks
-            builder.Add(T(KoreWebLocalizableStrings.ScheduledTasks.Title), "5", item => item
-                .Action("Index", "ScheduledTask", new { area = KoreWebConstants.Areas.ScheduledTasks })
-                .IconCssClass("kore-icon kore-icon-schedule-tasks")
-                .Permission(ScheduledTasksPermissions.ReadScheduledTasks));
 
             // Settings
             builder.Add(T(KoreWebLocalizableStrings.General.Settings), "5", item => item
@@ -65,6 +59,12 @@ namespace Kore.Web.Areas.Admin
                 .Action("Index", "Log", new { area = KoreWebConstants.Areas.Log })
                 .IconCssClass("kore-icon kore-icon-log")
                 .Permission(StandardPermissions.FullAccess));
+
+            // Scheduled Tasks
+            builder.Add(T(KoreWebLocalizableStrings.ScheduledTasks.Title), "5", item => item
+                .Action("Index", "ScheduledTask", new { area = KoreWebConstants.Areas.ScheduledTasks })
+                .IconCssClass("kore-icon kore-icon-schedule-tasks")
+                .Permission(ScheduledTasksPermissions.ReadScheduledTasks));
         }
     }
 }

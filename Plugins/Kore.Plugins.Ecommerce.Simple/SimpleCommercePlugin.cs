@@ -28,6 +28,9 @@ namespace Kore.Plugins.Ecommerce.Simple
 	[Slug] [nvarchar](255) NOT NULL,
 	[ImageUrl] [nvarchar](255) NULL,
 	[Order] [int] NOT NULL,
+	[Description] [nvarchar](255) NULL,
+	[MetaKeywords] [nvarchar](255) NULL,
+	[MetaDescription] [nvarchar](255) NULL,
 	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Categories] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC
@@ -64,6 +67,8 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Categories_dbo.Kore_Plugins
 	[MainImageUrl] [nvarchar](255) NULL,
 	[ShortDescription] [nvarchar](max) NOT NULL,
 	[FullDescription] [nvarchar](max) NOT NULL,
+	[MetaKeywords] [nvarchar](255) NULL,
+	[MetaDescription] [nvarchar](255) NULL,
 	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Products] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC

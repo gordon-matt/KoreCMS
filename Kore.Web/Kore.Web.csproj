@@ -487,12 +487,18 @@
     <EmbeddedResource Include="Views\Shared\EditorTemplates\ThemeUserProfileProvider.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\MembershipSettings.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\Admin\Configuration\Scripts\settings.js" />
+    <EmbeddedResource Include="Areas\Admin\Configuration\Scripts\themes.js" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Plugins\Scripts\index.js" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Log\Scripts\index.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\Admin\ScheduledTasks\Scripts\index.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

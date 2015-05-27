@@ -393,6 +393,11 @@
       <Project>{2a636196-0b16-484a-8dd8-4bab656dec08}</Project>
       <Name>Kore.EntityFramework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Kore.Web.CommonResources\Kore.Web.CommonResources.csproj">
+      <Project>{c6ec3993-2d25-4758-a816-34603fc33ff5}</Project>
+      <Name>Kore.Web.CommonResources</Name>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\Kore.Web\Kore.Web.csproj">
       <Project>{36e2f817-e6e3-4942-9714-22547a68f79d}</Project>
       <Name>Kore.Web</Name>
@@ -425,7 +430,6 @@
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Scripts\index.js" />
     <EmbeddedResource Include="Scripts\jquery.dom.form_params.min.js" />
     <EmbeddedResource Include="Scripts\jquery.form-extension.js" />
-    <EmbeddedResource Include="Scripts\kore-cms-common.js" />
     <EmbeddedResource Include="Scripts\kore-cms-localization.js" />
   </ItemGroup>
   <ItemGroup>

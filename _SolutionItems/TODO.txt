@@ -13,6 +13,9 @@ PAGES:
 TODO: change from page history to page versioning instead (keep all pages in page version table - including current..)
 -    then: we can make page preview work with unsaved versions of pages
 
+CONTENT BLOCK ERROR: TinyMCE should not be included by default and should be loaded from specific blocks that need it..
+	this will also affect other libs..!
+
 LOCALIZATION:
 - Allow editing of invariant culture strings
 - how to localize strings in StringLengthAttribute, etc?
@@ -75,6 +78,9 @@ OTHER
 - blog, store, etc for google sitemap
 - add meta keywords and desc for blog entries and products, categories, etc..
 - uninstall plugin should remove permissions
+
+- implement this: http://plugins.krajee.com/file-input/demo#advanced-usage
+	- for product images, import lang pack, etc..
   
 - SIMPLE ECOMMERCE
   - comments/reviews

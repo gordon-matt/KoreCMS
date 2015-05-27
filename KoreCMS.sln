@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Web.Common", "Kore.Web
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Widgets.Bootstrap3.FormBuilder", "Plugins\Kore.Plugins.Widgets.Bootstrap3.FormBuilder\Kore.Plugins.Widgets.Bootstrap3.FormBuilder.csproj", "{5021B13C-A775-4F80-BA03-C1FD5C7DE4DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Web.CommonResources", "Kore.Web.CommonResources\Kore.Web.CommonResources.csproj", "{C6EC3993-2D25-4758-A816-34603FC33FF5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -133,6 +135,10 @@ Global
 		{5021B13C-A775-4F80-BA03-C1FD5C7DE4DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5021B13C-A775-4F80-BA03-C1FD5C7DE4DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5021B13C-A775-4F80-BA03-C1FD5C7DE4DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6EC3993-2D25-4758-A816-34603FC33FF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6EC3993-2D25-4758-A816-34603FC33FF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6EC3993-2D25-4758-A816-34603FC33FF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6EC3993-2D25-4758-A816-34603FC33FF5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

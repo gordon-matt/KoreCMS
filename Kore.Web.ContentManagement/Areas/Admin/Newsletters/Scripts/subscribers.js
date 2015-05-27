@@ -38,8 +38,6 @@ $(document).ready(function () {
     viewModel = new ViewModel();
     ko.applyBindings(viewModel);
 
-    switchSection($("#grid-section"));
-
     $("#Grid").kendoGrid({
         data: null,
         dataSource: {

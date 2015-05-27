@@ -1972,6 +1972,10 @@
       <Project>{2a636196-0b16-484a-8dd8-4bab656dec08}</Project>
       <Name>Kore.EntityFramework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Kore.Web.CommonResources\Kore.Web.CommonResources.csproj">
+      <Project>{c6ec3993-2d25-4758-a816-34603fc33ff5}</Project>
+      <Name>Kore.Web.CommonResources</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Kore.Web.ContentManagement\Kore.Web.ContentManagement.csproj">
       <Project>{90ec17f4-d7c5-454f-9e56-947978525e88}</Project>
       <Name>Kore.Web.ContentManagement</Name>

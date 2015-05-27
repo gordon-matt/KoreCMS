@@ -73,7 +73,6 @@ OTHER
 - Content Blocks: override template path (for display only)
 - dashboard widgets
 - blog, store, etc for google sitemap
-- log: make a button to clear all entires
 - add meta keywords and desc for blog entries and products, categories, etc..
 - uninstall plugin should remove permissions
   

@@ -98,7 +98,15 @@
                 public const string UserName = "Kore.Web/Log.Model.UserName";
             }
 
+            public const string ClearConfirm = "Kore.Web/Log.ClearConfirm";
+            public const string ClearError = "Kore.Web/Log.ClearError";
+            public const string ClearSuccess = "Kore.Web/Log.ClearSuccess";
             public const string Title = "Kore.Web/Log.Title";
+        }
+
+        public static class Maintenance
+        {
+            public const string Title = "Kore.Web/Maintenance.Title";
         }
 
         public static class Plugins

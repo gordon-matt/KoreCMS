@@ -1,32 +1,7 @@
 ﻿'use strict'
 
-var currentSection = $("#main-section");
-
-function switchSection(section) {
-    if (section.attr("id") == currentSection.attr("id")) {
-        return;
-    }
-    currentSection.hide("fast");
-    section.show("fast");
-    currentSection = section;
-};
-
 var localStorageRootKey = "BlogContent_";
 var localStorageUsersKey = localStorageRootKey + "Users_";
-
-if (typeof String.prototype.startsWith != 'function') {
-    String.prototype.startsWith = function (str) {
-        return this.slice(0, str.length) == str;
-    };
-}
-
-function getLocalStorageKeys() {
-    var keys = [];
-    for (var i = 0; i < localStorage.length; i++) {
-        keys[i] = localStorage.key(i);
-    }
-    return keys;
-};
 
 var BlogEntryModel = function () {
     var self = this;

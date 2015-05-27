@@ -6,6 +6,8 @@
 
     Script.IncludeBundle("breeze");
     Script.IncludeBundle("knockout");
+    Script.IncludeBundle("kore/common");
+    Script.IncludeBundle("kore/section-switching");
     Script.IncludeBundle("kore-cms/blog-content");
 
     var settings = EngineContext.Current.Resolve<BlogSettings>();
@@ -78,4 +80,8 @@
         dateFormat: '@settings.DateFormat',
         itemsPerPage: @settings.ItemsPerPage
     };
+
+    $(document).ready(function() {
+        currentSection = $("#main-section");
+    });
 </script>

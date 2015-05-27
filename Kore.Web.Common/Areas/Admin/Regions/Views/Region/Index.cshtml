@@ -12,6 +12,9 @@
     Script.IncludeBundle("knockout");
     Script.IncludeBundle("knockout-mapping");
     Script.IncludeBundle("notify");
+    
+    Script.IncludeBundle("kore/jqueryval");
+    Script.IncludeBundle("kore/section-switching");
     Script.IncludeBundle("kore-common/regions");
 
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
@@ -207,5 +210,9 @@
                 Name: '@T(LocalizableStrings.Regions.Model.Name).Text',
             }
         }
+
+        $(document).ready(function() {
+            currentSection = $("#main-section");
+        });
     </script>
 }

@@ -1,16 +1,5 @@
 ﻿'use strict'
 
-var currentSection = $("#main-section");
-
-function switchSection(section) {
-    if (section.attr("id") == currentSection.attr("id")) {
-        return;
-    }
-    currentSection.hide("fast");
-    section.show("fast");
-    currentSection = section;
-};
-
 var CountryModel = function () {
     var self = this;
 

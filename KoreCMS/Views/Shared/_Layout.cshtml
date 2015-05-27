@@ -4,6 +4,8 @@
     
     Script.IncludeBundle("jquery", 0);
     Script.IncludeBootstrap();
+    Script.IncludeBundle("jqueryval");
+    Script.IncludeBundle("kore/jqueryval");
 
     string siteName = string.IsNullOrEmpty(SiteSettings.SiteName) ? "My Kore App" : SiteSettings.SiteName;
 
@@ -69,27 +71,5 @@
     </div>
     @RenderScripts()
     @RenderSection("scripts", required: false)
-
-    <script type="text/javascript">
-        if (jQuery && jQuery.validator) {
-            jQuery.validator.setDefaults({
-                highlight: function (element) {
-                    $(element).closest('.form-group').addClass('has-error');
-                },
-                unhighlight: function (element) {
-                    $(element).closest('.form-group').removeClass('has-error');
-                },
-                errorElement: 'span',
-                errorClass: 'help-block',
-                errorPlacement: function (error, element) {
-                    if (element.parent('.input-group').length) {
-                        error.insertAfter(element.parent());
-                    } else {
-                        error.insertAfter(element);
-                    }
-                }
-            });
-        }
-    </script>
 </body>
 </html>

@@ -1,15 +1,5 @@
 ﻿'use strict'
 
-var emptyGuid = '00000000-0000-0000-0000-000000000000';
-
-var currentSection = $("#grid-section");
-
-function switchSection(section) {
-    currentSection.hide("fast");
-    section.show("fast");
-    currentSection = section;
-};
-
 var ViewModel = function () {
     var self = this;
 

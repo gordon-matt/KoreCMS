@@ -11,7 +11,7 @@
     Script.IncludeBundle("notify");
 
     Script.IncludeBundle("kore/common");
-    Script.IncludeBundle("kore/jqval");
+    Script.IncludeBundle("kore/jqueryval");
     Script.IncludeBundle("kore/section-switching");
     Script.IncludeBundle("kore-cms/membership");
 
@@ -28,24 +28,6 @@
 
 @section scripts {
     <script type="text/javascript">
-        $.validator.setDefaults({
-            highlight: function (element) {
-                $(element).closest('.form-group').addClass('has-error');
-            },
-            unhighlight: function (element) {
-                $(element).closest('.form-group').removeClass('has-error');
-            },
-            errorElement: 'span',
-            errorClass: 'help-block',
-            errorPlacement: function (error, element) {
-                if (element.parent('.input-group').length) {
-                    error.insertAfter(element.parent());
-                } else {
-                    error.insertAfter(element);
-                }
-            }
-        });
-
         var gridPageSize = @SiteSettings.DefaultGridPageSize;
 
         var translations = {
@@ -86,14 +68,7 @@
             }
         }
 
-        var emptyGuid = '00000000-0000-0000-0000-000000000000';
-        var currentSection = $("#users-grid-section");
-
-        function switchSection(section) {
-            currentSection.hide("fast");
-            section.show("fast");
-            currentSection = section;
-        };
+        currentSection = $("#users-grid-section");
 
         @if (initialView == "Role")
         {

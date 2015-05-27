@@ -76,6 +76,25 @@ var ViewModel = function () {
     self.cancel = function () {
         switchSection($("#grid-section"));
     };
+
+    self.clear = function () {
+        if (confirm(translations.ClearConfirm)) {
+            $.ajax({
+                url: "/odata/kore/web/LogApi/Clear",
+                type: "POST"
+            })
+            .done(function (json) {
+                $.notify(translations.ClearSuccess, "success");
+                setTimeout(function () {
+                    window.location.reload();
+                }, 500);
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(translations.ClearError, "error");
+                console.log(textStatus + ': ' + errorThrown);
+            });
+        }
+    };
 };
 
 var viewModel;

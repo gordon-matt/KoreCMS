@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Net.Http.Headers;
+using System.Web.Http;
+using System.Web.Http.OData;
+using System.Web.Http.Results;
 using Kore.Data;
 using Kore.Logging.Domain;
 using Kore.Web.Http.OData;
@@ -31,6 +35,19 @@ namespace Kore.Web.Areas.Admin.Log.Controllers.Api
         protected override Permission WritePermission
         {
             get { return StandardPermissions.FullAccess; }
+        }
+
+        [HttpPost]
+        public virtual IHttpActionResult Clear(ODataActionParameters parameters)
+        {
+            if (!CheckPermission(WritePermission))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
+            Repository.DeleteAll();
+
+            return Ok();
         }
     }
 }

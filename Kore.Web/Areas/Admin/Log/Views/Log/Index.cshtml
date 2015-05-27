@@ -14,6 +14,16 @@
 }
 
 <div id="grid-section" class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <a data-bind="click: clear" class="btn btn-warning">
+            <i class="kore-icon kore-icon-warning"></i>
+            @T(KoreWebLocalizableStrings.General.Clear)
+        </a>
+    </div>
+
+    <div class="clearfix"></div>
+    <br />
+
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
         <div id="Grid"></div>
     </div>
@@ -74,6 +84,9 @@
     <script type="text/javascript">
         var gridPageSize = @SiteSettings.DefaultGridPageSize;
         var translations = {
+            ClearConfirm: '@T(KoreWebLocalizableStrings.Log.ClearConfirm).Text',
+            ClearError: '@T(KoreWebLocalizableStrings.Log.ClearError).Text',
+            ClearSuccess: '@T(KoreWebLocalizableStrings.Log.ClearSuccess).Text',
             Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
             DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
             DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',

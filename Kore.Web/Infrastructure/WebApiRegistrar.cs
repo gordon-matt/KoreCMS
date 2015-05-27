@@ -21,6 +21,7 @@ namespace Kore.Web.Infrastructure
             builder.EntitySet<Setting>("SettingsApi");
             builder.EntitySet<EdmThemeConfiguration>("ThemeApi");
 
+            RegisterLogODataActions(builder);
             RegisterPluginODataActions(builder);
             RegisterScheduledTaskODataActions(builder);
             RegisterThemeODataActions(builder);
@@ -29,6 +30,12 @@ namespace Kore.Web.Infrastructure
         }
 
         #endregion IWebApiRegistrar Members
+
+        private static void RegisterLogODataActions(ODataModelBuilder builder)
+        {
+            var clearAction = builder.Entity<LogEntry>().Collection.Action("Clear");
+            clearAction.Returns<IHttpActionResult>();
+        }
 
         private static void RegisterPluginODataActions(ODataModelBuilder builder)
         {

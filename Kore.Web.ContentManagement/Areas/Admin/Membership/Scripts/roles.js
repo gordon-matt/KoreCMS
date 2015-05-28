@@ -4,7 +4,7 @@ var RoleVM = function () {
     var self = this;
 
     self.id = ko.observable(emptyGuid);
-    self.name = ko.observable('');
+    self.name = ko.observable(null);
 
     self.permissions = ko.observableArray([]);
 

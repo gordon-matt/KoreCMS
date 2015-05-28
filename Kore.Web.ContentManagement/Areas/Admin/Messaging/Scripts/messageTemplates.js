@@ -4,10 +4,10 @@ var ViewModel = function () {
     var self = this;
 
     self.id = ko.observable(emptyGuid);
-    self.name = ko.observable('');
+    self.name = ko.observable(null);
     self.ownerId = ko.observable(null);
-    self.subject = ko.observable('');
-    self.body = ko.observable('');
+    self.subject = ko.observable(null);
+    self.body = ko.observable(null);
     self.enabled = ko.observable(false);
 
     self.create = function () {

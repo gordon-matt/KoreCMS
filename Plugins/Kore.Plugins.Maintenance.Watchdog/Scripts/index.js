@@ -4,8 +4,8 @@ var baseUrl = "/odata/kore/watchdog/WatchdogInstanceApi";
 
 var ViewModel = function () {
     var self = this;
-    self.url = ko.observable('');
-    self.password = ko.observable('');
+    self.url = ko.observable(null);
+    self.password = ko.observable(null);
 
     self.create = function () {
         self.url('');

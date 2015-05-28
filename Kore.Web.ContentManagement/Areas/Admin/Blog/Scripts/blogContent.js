@@ -6,15 +6,15 @@ var localStorageUsersKey = localStorageRootKey + "Users_";
 var BlogEntryModel = function () {
     var self = this;
 
-    self.headline = ko.observable('');
-    self.userId = ko.observable('');
-    self.userName = ko.observable('');
-    self.dateCreatedUtc = ko.observable('');
+    self.headline = ko.observable(null);
+    self.userId = ko.observable(null);
+    self.userName = ko.observable(null);
+    self.dateCreatedUtc = ko.observable(null);
     self.teaserImageUrl = ko.observable(null);
-    self.shortDescription = ko.observable('');
-    self.fullDescription = ko.observable('');
+    self.shortDescription = ko.observable(null);
+    self.fullDescription = ko.observable(null);
     self.useExternalLink = ko.observable(false);
-    self.externalLink = ko.observable('');
+    self.externalLink = ko.observable(null);
 
     self.showDetails = function () {
         viewModel.selected(self);

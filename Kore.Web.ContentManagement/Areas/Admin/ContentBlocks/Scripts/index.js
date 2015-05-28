@@ -3,11 +3,11 @@
 var ZoneModel = function () {
     var self = this;
     self.id = ko.observable(emptyGuid);
-    self.name = ko.observable('');
+    self.name = ko.observable(null);
 
     self.create = function () {
         self.id(emptyGuid);
-        self.name('');
+        self.name(null);
         self.validator.resetForm();
         switchSection($("#zones-edit-section"));
     };
@@ -134,7 +134,7 @@ var ZoneModel = function () {
 
     self.validator = $("#zone-edit-section-form").validate({
         rules: {
-            Name: { required: true, maxlength: 255 }
+            Zone_Name: { required: true, maxlength: 255 }
         }
     });
 };
@@ -143,16 +143,16 @@ var ViewModel = function () {
     var self = this;
 
     self.id = ko.observable(emptyGuid);
-    self.title = ko.observable('');
+    self.title = ko.observable(null);
     self.order = ko.observable(0);
     self.isEnabled = ko.observable(false);
-    self.blockName = ko.observable('');
-    self.blockType = ko.observable('');
+    self.blockName = ko.observable(null);
+    self.blockType = ko.observable(null);
     self.zoneId = ko.observable(emptyGuid);
-    self.displayCondition = ko.observable('');
-    self.blockValues = ko.observable('');
+    self.displayCondition = ko.observable(null);
+    self.blockValues = ko.observable(null);
     self.pageId = ko.observable(null);
-    self.cultureCode = ko.observable('');
+    self.cultureCode = ko.observable(null);
     self.refId = ko.observable(null);
 
     self.contentBlockModelStub = null;
@@ -444,7 +444,7 @@ var ViewModel = function () {
 
     self.createFormValidator = $("#create-section-form").validate({
         rules: {
-            Title: { required: true, maxlength: 255 }
+            Create_Title: { required: true, maxlength: 255 }
         }
     });
 

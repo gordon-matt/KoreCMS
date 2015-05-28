@@ -5,7 +5,6 @@ var ViewModel = function () {
 
     self.userModel = new UserVM();
     self.roleModel = new RoleVM();
-    self.permissionModel = new PermissionVM();
     self.changePasswordModel = new ChangePasswordVM();
 
     self.viewUsers = function () {
@@ -24,5 +23,4 @@ $(document).ready(function () {
 
     $("#UsersGrid").kendoGrid(viewModel.userModel.gridConfig);
     $("#RolesGrid").kendoGrid(viewModel.roleModel.gridConfig);
-    $("#PermissionsGrid").kendoGrid(viewModel.permissionModel.gridConfig);
 });

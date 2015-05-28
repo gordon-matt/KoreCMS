@@ -14,7 +14,10 @@
                     {
                         @Html.AntiForgeryToken()
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        <br />
                         <span>
                             @Html.CheckBoxFor(m => m.RememberMe)
                             Keep me signed in

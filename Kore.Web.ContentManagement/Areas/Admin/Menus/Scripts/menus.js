@@ -5,10 +5,10 @@ var MenuItemVM = function () {
 
     self.id = ko.observable(emptyGuid);
     self.menuId = ko.observable(emptyGuid);
-    self.text = ko.observable('');
-    self.description = ko.observable('');
-    self.url = ko.observable('');
-    self.cssClass = ko.observable('');
+    self.text = ko.observable(null);
+    self.description = ko.observable(null);
+    self.url = ko.observable(null);
+    self.cssClass = ko.observable(null);
     self.position = ko.observable(0);
     self.parentId = ko.observable(null);
     self.enabled = ko.observable(false);
@@ -205,8 +205,8 @@ var ViewModel = function () {
     var self = this;
 
     self.id = ko.observable(emptyGuid);
-    self.name = ko.observable('');
-    self.urlFilter = ko.observable('');
+    self.name = ko.observable(null);
+    self.urlFilter = ko.observable(null);
 
     self.menuItem = new MenuItemVM();
 

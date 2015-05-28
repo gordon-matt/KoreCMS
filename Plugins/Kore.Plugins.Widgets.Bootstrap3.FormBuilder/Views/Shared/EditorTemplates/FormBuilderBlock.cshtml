@@ -5,7 +5,7 @@
 <link href="/Plugins/Widgets.Bootstrap3.FormBuilder/Content/custom.css?v=2" rel="stylesheet" />
 
 <div id="block-content">
-    <div class="col-sm-12 col-md-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         
         <div class="panel panel-default">
             <div class="row">
@@ -36,25 +36,25 @@
         </div>
 
     </div>
-    <div class="col-sm-12 col-md-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="form-group">
             @Html.LabelFor(m => m.ThankYouMessage, new { @class = "control-label" })
             @Html.TextAreaFor(m => m.ThankYouMessage, new { @class = "form-control", data_bind = "wysiwyg: thankYouMessage, wysiwygConfig: tinyMCEConfig" })
         </div>
     </div>
-    <div class="col-sm-6 col-md-6">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
             @Html.LabelFor(m => m.RedirectUrl, new { @class = "control-label" })
             @Html.TextBoxFor(m => m.RedirectUrl, new { @class = "form-control", data_bind = "value: redirectUrl" })
         </div>
     </div>
-    <div class="col-sm-6 col-md-6">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
             @Html.LabelFor(m => m.EmailAddress, new { @class = "control-label" })
             @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", data_bind = "value: emailAddress" })
         </div>
     </div>
-    <div class="col-sm-6 col-md-6">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
             <div class="checkbox">
                 <label>

@@ -4,8 +4,8 @@ var CountryModel = function () {
     var self = this;
 
     self.id = ko.observable(0);
-    self.name = ko.observable('');
-    self.countryCode = ko.observable('');
+    self.name = ko.observable(null);
+    self.countryCode = ko.observable(null);
     self.hasStates = ko.observable(false);
     self.parentId = ko.observable(null);
 
@@ -67,6 +67,10 @@ var CountryModel = function () {
 
     self.save = function () {
         var isNew = (self.id() == 0);
+
+        if (!$("#country-form-section-form").valid()) {
+            return false;
+        }
 
         var record = {
             Id: self.id(),
@@ -172,8 +176,8 @@ var StateModel = function () {
     var self = this;
 
     self.id = ko.observable(0);
-    self.name = ko.observable('');
-    self.stateCode = ko.observable('');
+    self.name = ko.observable(null);
+    self.stateCode = ko.observable(null);
     self.parentId = ko.observable(null);
 
     self.create = function () {
@@ -232,6 +236,10 @@ var StateModel = function () {
 
     self.save = function () {
         var isNew = (self.id() == 0);
+
+        if (!$("#state-form-section-form").valid()) {
+            return false;
+        }
 
         var record = {
             Id: self.id(),
@@ -321,7 +329,7 @@ var CityModel = function () {
     var self = this;
 
     self.id = ko.observable(0);
-    self.name = ko.observable('');
+    self.name = ko.observable(null);
     self.parentId = ko.observable(null);
 
     self.create = function () {
@@ -384,6 +392,10 @@ var CityModel = function () {
 
     self.save = function () {
         var isNew = (self.id() == 0);
+
+        if (!$("#city-form-section-form").valid()) {
+            return false;
+        }
 
         var record = {
             Id: self.id(),

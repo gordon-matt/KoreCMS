@@ -4,16 +4,16 @@ var ViewModel = function () {
     var self = this;
 
     self.id = ko.observable(emptyGuid);
-    self.eventDateTime = ko.observable('');
-    self.eventLevel = ko.observable('');
-    self.userName = ko.observable('');
-    self.machineName = ko.observable('');
-    self.eventMessage = ko.observable('');
-    self.errorSource = ko.observable('');
-    self.errorClass = ko.observable('');
-    self.errorMethod = ko.observable('');
-    self.errorMessage = ko.observable('');
-    self.innerErrorMessage = ko.observable('');
+    self.eventDateTime = ko.observable(null);
+    self.eventLevel = ko.observable(null);
+    self.userName = ko.observable(null);
+    self.machineName = ko.observable(null);
+    self.eventMessage = ko.observable(null);
+    self.errorSource = ko.observable(null);
+    self.errorClass = ko.observable(null);
+    self.errorMethod = ko.observable(null);
+    self.errorMessage = ko.observable(null);
+    self.innerErrorMessage = ko.observable(null);
 
     self.delete = function (id) {
         if (confirm(translations.DeleteRecordConfirm)) {

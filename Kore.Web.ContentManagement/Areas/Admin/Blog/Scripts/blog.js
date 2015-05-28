@@ -8,13 +8,13 @@ var ViewModel = function () {
     var self = this;
 
     self.id = ko.observable(emptyGuid);
-    self.headline = ko.observable('');
-    self.slug = ko.observable('');
+    self.headline = ko.observable(null);
+    self.slug = ko.observable(null);
     self.teaserImageUrl = ko.observable(null);
-    self.shortDescription = ko.observable('');
-    self.fullDescription = ko.observable('');
+    self.shortDescription = ko.observable(null);
+    self.fullDescription = ko.observable(null);
     self.useExternalLink = ko.observable(false);
-    self.externalLink = ko.observable('');
+    self.externalLink = ko.observable(null);
 
     self.tinyMCE_fullDescription = koreDefaultTinyMCEConfig;
 
@@ -82,6 +82,10 @@ var ViewModel = function () {
 
     self.save = function () {
         var isNew = (self.id() == emptyGuid);
+
+        if (!$("#form-section-form").valid()) {
+            return false;
+        }
 
         var record = {
             Id: self.id(),

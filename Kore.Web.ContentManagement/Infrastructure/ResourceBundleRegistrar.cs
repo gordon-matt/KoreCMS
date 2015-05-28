@@ -34,7 +34,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/membership")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Membership.Scripts.membership.js")
-                .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Membership.Scripts.permissions.js")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Membership.Scripts.roles.js")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Membership.Scripts.users.js"));
 

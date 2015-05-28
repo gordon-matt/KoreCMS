@@ -4,9 +4,9 @@ var ChangePasswordVM = function () {
     var self = this;
 
     self.id = ko.observable(emptyGuid);
-    self.userName = ko.observable('');
-    self.password = ko.observable('');
-    self.confirmPassword = ko.observable('');
+    self.userName = ko.observable(null);
+    self.password = ko.observable(null);
+    self.confirmPassword = ko.observable(null);
 
     self.cancel = function () {
         switchSection($("#users-grid-section"));
@@ -51,8 +51,8 @@ var UserVM = function () {
     var self = this;
 
     self.id = ko.observable(emptyGuid);
-    self.userName = ko.observable('');
-    self.email = ko.observable('');
+    self.userName = ko.observable(null);
+    self.email = ko.observable(null);
     self.isLockedOut = ko.observable(false);
 
     self.roles = ko.observableArray([]);

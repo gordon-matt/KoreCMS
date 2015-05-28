@@ -4,10 +4,10 @@ var PageTypeVM = function () {
     var self = this;
 
     self.id = ko.observable(emptyGuid);
-    self.name = ko.observable('');
-    self.layoutPath = ko.observable('');
-    self.displayTemplatePath = ko.observable('');
-    self.editorTemplatePath = ko.observable('');
+    self.name = ko.observable(null);
+    self.layoutPath = ko.observable(null);
+    self.displayTemplatePath = ko.observable(null);
+    self.editorTemplatePath = ko.observable(null);
 
     self.edit = function (id) {
         $.ajax({
@@ -55,6 +55,10 @@ var PageTypeVM = function () {
 
     self.save = function () {
         var isNew = (self.id() == emptyGuid);
+
+        if (!$("#page-type-form-section-form").valid()) {
+            return false;
+        }
 
         var record = {
             Id: self.id(),
@@ -130,13 +134,13 @@ var ViewModel = function () {
     self.id = ko.observable(emptyGuid);
     self.parentId = ko.observable(null);
     self.pageTypeId = ko.observable(emptyGuid);
-    self.name = ko.observable('');
-    self.slug = ko.observable('');
-    self.fields = ko.observable('');
+    self.name = ko.observable(null);
+    self.slug = ko.observable(null);
+    self.fields = ko.observable(null);
     self.isEnabled = ko.observable(false);
     self.order = ko.observable(0);
     self.showOnMenus = ko.observable(true);
-    self.cultureCode = ko.observable('');
+    self.cultureCode = ko.observable(null);
     self.refId = ko.observable(null);
     self.showToolbar = ko.observable(false);
     self.accessRestrictions = null;

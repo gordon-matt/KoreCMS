@@ -18,9 +18,9 @@ var ProductImageModel = function () {
 
     self.id = ko.observable(0);
     self.productId = ko.observable(0);
-    self.url = ko.observable('');
-    self.thumbnailUrl = ko.observable('');
-    self.caption = ko.observable('');
+    self.url = ko.observable(null);
+    self.thumbnailUrl = ko.observable(null);
+    self.caption = ko.observable(null);
     self.order = ko.observable(0);
 };
 
@@ -28,17 +28,17 @@ var ProductModel = function () {
     var self = this;
 
     self.id = ko.observable(0);
-    self.name = ko.observable('');
-    self.slug = ko.observable('');
+    self.name = ko.observable(null);
+    self.slug = ko.observable(null);
     self.categoryId = ko.observable(0);
     self.price = ko.observable(0);
     self.tax = ko.observable(0);
     self.shippingCost = ko.observable(0);
-    self.mainImageUrl = ko.observable('');
-    self.shortDescription = ko.observable('');
-    self.fullDescription = ko.observable('');
-    self.metaKeywords = ko.observable('');
-    self.metaDescription = ko.observable('');
+    self.mainImageUrl = ko.observable(null);
+    self.shortDescription = ko.observable(null);
+    self.fullDescription = ko.observable(null);
+    self.metaKeywords = ko.observable(null);
+    self.metaDescription = ko.observable(null);
 
     self.images = ko.observableArray([]);
 
@@ -212,13 +212,13 @@ var ViewModel = function () {
 
     self.id = ko.observable(0);
     self.parentId = ko.observable(null);
-    self.name = ko.observable('');
-    self.slug = ko.observable('');
+    self.name = ko.observable(null);
+    self.slug = ko.observable(null);
     self.order = ko.observable(0);
-    self.imageUrl = ko.observable('');
-    self.description = ko.observable('');
-    self.metaKeywords = ko.observable('');
-    self.metaDescription = ko.observable('');
+    self.imageUrl = ko.observable(null);
+    self.description = ko.observable(null);
+    self.metaKeywords = ko.observable(null);
+    self.metaDescription = ko.observable(null);
 
     self.showToolbar = ko.observable(false);
 

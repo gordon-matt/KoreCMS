@@ -3,31 +3,31 @@
 @model Kore.Plugins.Widgets.Bootstrap3.ContentBlocks.Bootstrap3ImageGalleryBlock
 
 <div id="block-content">
-    <div class="col-sm-12 col-md-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="form-group">
             @Html.LabelFor(m => m.MediaFolder, new { @class = "control-label" })
             @Html.KoreCMS().MediaFoldersDropDownListFor(m => m.MediaFolder, new { @class = "form-control", data_bind = "value: mediaFolder" })
         </div>
     </div>
-    <div class="col-sm-6 col-md-6">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
             @Html.LabelFor(m => m.ImagesPerRowXS, new { @class = "control-label" })
             @Html.EnumDropDownListFor(m => m.ImagesPerRowXS, new { @class = "form-control", data_bind = "value: imagesPerRowXS" })
         </div>
     </div>
-    <div class="col-sm-6 col-md-6">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
             @Html.LabelFor(m => m.ImagesPerRowS, new { @class = "control-label" })
             @Html.EnumDropDownListFor(m => m.ImagesPerRowS, new { @class = "form-control", data_bind = "value: imagesPerRowS" })
         </div>
     </div>
-    <div class="col-sm-6 col-md-6">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
             @Html.LabelFor(m => m.ImagesPerRowM, new { @class = "control-label" })
             @Html.EnumDropDownListFor(m => m.ImagesPerRowM, new { @class = "form-control", data_bind = "value: imagesPerRowM" })
         </div>
     </div>
-    <div class="col-sm-6 col-md-6">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
             @Html.LabelFor(m => m.ImagesPerRowL, new { @class = "control-label" })
             @Html.EnumDropDownListFor(m => m.ImagesPerRowL, new { @class = "form-control", data_bind = "value: imagesPerRowL" })

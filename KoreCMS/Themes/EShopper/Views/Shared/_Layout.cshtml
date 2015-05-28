@@ -17,6 +17,9 @@
     Script.Include("jquery.prettyPhoto.js", true);
     Script.Include("main.js", true);
 
+    Script.IncludeBundle("jqueryval");
+    Script.IncludeBundle("kore/jqueryval");
+    
     string siteName = string.IsNullOrEmpty(SiteSettings.SiteName) ? "My Kore App" : SiteSettings.SiteName;
 
     string dir = IsRightToLeft ? "rtl" : string.Empty;

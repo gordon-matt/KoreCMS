@@ -3,25 +3,25 @@
 @model Kore.Plugins.Widgets.Google.ContentBlocks.GoogleMapBlock
 
 <div id="block-content">
-    <div class="col-sm-6 col-md-6">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
             @Html.LabelFor(m => m.Latitude, new { @class = "control-label" })
             @Html.TextBoxFor(m => m.Latitude, new { @class = "form-control", data_bind = "value: latitude" })
         </div>
     </div>
-    <div class="col-sm-6 col-md-6">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
             @Html.LabelFor(m => m.Longitude, new { @class = "control-label" })
             @Html.TextBoxFor(m => m.Longitude, new { @class = "form-control", data_bind = "value: longitude" })
         </div>
     </div>
-    <div class="col-sm-6 col-md-6">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
             @Html.LabelFor(m => m.Zoom, new { @class = "control-label" })
             @Html.TextBoxFor(m => m.Zoom, new { @class = "form-control", data_bind = "value: zoom" })
         </div>
     </div>
-    <div class="col-sm-6 col-md-6">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
             @Html.LabelFor(m => m.Height, new { @class = "control-label" })
             @Html.TextBoxFor(m => m.Height, new { @class = "form-control", data_bind = "value: height" })

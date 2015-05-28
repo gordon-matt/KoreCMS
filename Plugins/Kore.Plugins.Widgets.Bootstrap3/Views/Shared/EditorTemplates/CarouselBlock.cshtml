@@ -4,52 +4,52 @@
 @model Kore.Plugins.Widgets.Bootstrap3.ContentBlocks.Bootstrap3CarouselBlock
 
 <div id="block-content">
-    <div class="col-sm-12 col-md-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="form-group">
             @Html.LabelFor(m => m.MediaFolder, new { @class = "control-label" })
             @Html.KoreCMS().MediaFoldersDropDownListFor(m => m.MediaFolder, new { @class = "form-control", data_bind = "value: mediaFolder" })
         </div>
     </div>
-    <div class="col-sm-6 col-md-6">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
             @Html.LabelFor(m => m.Interval, new { @class = "control-label" })
             @Html.TextBoxFor(m => m.Interval, new { @class = "form-control", data_bind = "value: interval" })
         </div>
     </div>
-    <div class="col-sm-6 col-md-6">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
             @Html.LabelFor(m => m.StartIndex, new { @class = "control-label" })
             @Html.TextBoxFor(m => m.StartIndex, new { @class = "form-control", data_bind = "value: startIndex" })
         </div>
     </div>
-    <div class="col-sm-4 col-md-4">
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <div class="checkbox">
             <label>
                 @Html.CheckBox("Keyboard", new { data_bind = "checked: keyboard" }) @T(LocalizableStrings.ContentBlocks.CarouselBlock.Keyboard)
             </label>
         </div>
     </div>
-    <div class="col-sm-4 col-md-4">
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <div class="checkbox">
             <label>
                 @Html.CheckBox("PauseOnHover", new { data_bind = "checked: pauseOnHover" }) @T(LocalizableStrings.ContentBlocks.CarouselBlock.PauseOnHover)
             </label>
         </div>
     </div>
-    <div class="col-sm-4 col-md-4">
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <div class="checkbox">
             <label>
                 @Html.CheckBox("Wrap", new { data_bind = "checked: wrap" }) @T(LocalizableStrings.ContentBlocks.CarouselBlock.Wrap)
             </label>
         </div>
     </div>
-    <div class="col-sm-6 col-md-6">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
             @Html.LabelFor(m => m.OnSlideEvent, new { @class = "control-label" })
             @Html.TextBoxFor(m => m.OnSlideEvent, new { @class = "form-control", data_bind = "value: onSlideEvent" })
         </div>
     </div>
-    <div class="col-sm-6 col-md-6">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
             @Html.LabelFor(m => m.OnSlidEvent, new { @class = "control-label" })
             @Html.TextBoxFor(m => m.OnSlidEvent, new { @class = "form-control", data_bind = "value: onSlidEvent" })

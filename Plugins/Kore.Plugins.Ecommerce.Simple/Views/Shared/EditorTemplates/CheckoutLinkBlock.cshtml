@@ -1,13 +1,13 @@
 ﻿@model Kore.Plugins.Ecommerce.Simple.ContentBlocks.CheckoutLinkBlock
 
 <div id="block-content">
-    <div class="col-sm-6 col-md-6">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
             @Html.LabelFor(m => m.CssClass, new { @class = "control-label" })
             @Html.TextBoxFor(m => m.CssClass, new { @class = "form-control", data_bind = "value: cssClass" })
         </div>
     </div>
-    <div class="col-sm-6 col-md-6">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
             @Html.LabelFor(m => m.IconCssClass, new { @class = "control-label" })
             @Html.TextBoxFor(m => m.IconCssClass, new { @class = "form-control", data_bind = "value: iconCssClass" })

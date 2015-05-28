@@ -13,6 +13,12 @@ PAGES:
 TODO: change from page history to page versioning instead (keep all pages in page version table - including current..)
 -    then: we can make page preview work with unsaved versions of pages
 
+
+- do we need a different default frontend layout path for mobile theme? probably...
+
+- read through security guidlines as requested by Ran
+- page types: have a "List" template? To show all records (for that type) in a grid, for example?
+
 CONTENT BLOCK ERROR: TinyMCE should not be included by default and should be loaded from specific blocks that need it..
 	this will also affect other libs..!
 
@@ -67,15 +73,21 @@ OTHER
 
 - review all TODO notes
 
+VALIDATION ISSUES:
+- Blog
+- Content Blocks
+- Zones
+- 
+
 - table names to constants
 -remove media entities?
 - Make sure jquery validation working everywhere!!!!!!!!!
 - KoreUI: Icons
-- deal with common scripts (move to central, shared location)
 - Content Blocks: Localization
 - Content Blocks: override template path (for display only)
 - dashboard widgets
-- blog, store, etc for google sitemap
+- move sitemap to Kore.Web!!!
+- blog, store, etc for google sitemap (some kind of IPageProvider that can be used commongly for sitemap and also auto menus?)
 - add meta keywords and desc for blog entries and products, categories, etc..
 - uninstall plugin should remove permissions
 

@@ -4,8 +4,8 @@ var ViewModel = function () {
     var self = this;
 
     self.id = ko.observable(emptyGuid);
-    self.name = ko.observable('');
-    self.cultureCode = ko.observable('');
+    self.name = ko.observable(null);
+    self.cultureCode = ko.observable(null);
     self.isRTL = ko.observable(false);
     self.isEnabled = ko.observable(false);
     self.sortOrder = ko.observable(0);
@@ -165,6 +165,7 @@ var ViewModel = function () {
     self.validator = $("#form-section-form").validate({
         rules: {
             Name: { required: true, maxlength: 255 },
+            CultureCode: { required: true, maxlength: 10 },
             SortOrder: { required: true }
         }
     });

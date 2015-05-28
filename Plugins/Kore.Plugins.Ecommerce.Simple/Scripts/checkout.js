@@ -3,25 +3,25 @@
 var AddressModel = function () {
     var self = this;
 
-    self.familyName = ko.observable('');
-    self.givenNames = ko.observable('');
-    self.email = ko.observable('');
-    self.addressLine1 = ko.observable('');
+    self.familyName = ko.observable(null);
+    self.givenNames = ko.observable(null);
+    self.email = ko.observable(null);
+    self.addressLine1 = ko.observable(null);
     self.addressLine2 = ko.observable(null);
     self.addressLine3 = ko.observable(null);
-    self.city = ko.observable('');
-    self.postalCode = ko.observable('');
+    self.city = ko.observable(null);
+    self.postalCode = ko.observable(null);
     self.countryId = ko.observable(0);
-    self.phoneNumber = ko.observable('');
+    self.phoneNumber = ko.observable(null);
 };
 
 var CartItemModel = function () {
     var self = this;
 
     self.productId = ko.observable(0);
-    self.productName = ko.observable('');
+    self.productName = ko.observable(null);
     self.imageUrl = ko.observable('http://placehold.it/100x70');
-    self.description = ko.observable('');
+    self.description = ko.observable(null);
     self.quantity = ko.observable(0);
     self.price = ko.observable(0);
     self.tax = ko.observable(0);

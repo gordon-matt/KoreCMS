@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using Kore.ComponentModel;
 using Kore.Data;
 using Kore.Serialization;
 
@@ -24,11 +24,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
         [ExcludeFromSerialization]
         public abstract string Name { get; }
 
-        [Display(Name = "Zone")]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.Model.ZoneId)]
         [ExcludeFromSerialization]
         public Guid ZoneId { get; set; }
 
-        [Display(Name = "Display Condition")]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.Model.DisplayCondition)]
         [ExcludeFromSerialization]
         public string DisplayCondition { get; set; }
 
@@ -47,6 +47,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
 
         public abstract string EditorTemplatePath { get; }
 
+        #endregion IContentBlock Members
+
         #region IEntity Members
 
         public object[] KeyValues
@@ -55,7 +57,5 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
         }
 
         #endregion IEntity Members
-
-        #endregion IContentBlock Members
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Kore.Collections;
+using Kore.ComponentModel;
 
 namespace Kore
 {
@@ -102,21 +103,33 @@ namespace Kore
                 return value.ToString();
             }
 
-            var displayAttribute = typeof(T).GetField(value.ToString()).GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault();
+            var field = typeof(T).GetField(value.ToString());
+
+            var localizedDisplayNameAttribute = field.GetCustomAttributes(typeof(LocalizedDisplayNameAttribute), false).FirstOrDefault();
+            if (localizedDisplayNameAttribute != null)
+            {
+                var attribute = (LocalizedDisplayNameAttribute)localizedDisplayNameAttribute;
+
+                string displayName = attribute.DisplayName;
+                if (!string.IsNullOrEmpty(displayName))
+                {
+                    return displayName;
+                }
+            }
+
+            var displayAttribute = field.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault();
             if (displayAttribute != null)
             {
                 var attribute = (DisplayAttribute)displayAttribute;
 
                 string displayName = attribute.Name;
-                if (string.IsNullOrEmpty(displayName))
+                if (!string.IsNullOrEmpty(displayName))
                 {
-                    return value.ToString().SpacePascal();
+                    return displayName;
                 }
-
-                return displayName;
             }
 
-            return value.ToString();
+            return value.ToString().SpacePascal();
         }
 
         public static string GetDisplayName<T>(T value, out int order)
@@ -127,7 +140,22 @@ namespace Kore
                 return value.ToString();
             }
 
-            var displayAttribute = typeof(T).GetField(value.ToString()).GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault();
+            var field = typeof(T).GetField(value.ToString());
+
+            var localizedDisplayNameAttribute = field.GetCustomAttributes(typeof(LocalizedDisplayNameAttribute), false).FirstOrDefault();
+            if (localizedDisplayNameAttribute != null)
+            {
+                var attribute = (LocalizedDisplayNameAttribute)localizedDisplayNameAttribute;
+
+                string displayName = attribute.DisplayName;
+                if (!string.IsNullOrEmpty(displayName))
+                {
+                    order = 0;
+                    return displayName;
+                }
+            }
+
+            var displayAttribute = field.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault();
             if (displayAttribute != null)
             {
                 var attribute = (DisplayAttribute)displayAttribute;
@@ -136,15 +164,13 @@ namespace Kore
                 order = displayOrder ?? 0;
 
                 string displayName = attribute.Name;
-                if (string.IsNullOrEmpty(displayName))
+                if (!string.IsNullOrEmpty(displayName))
                 {
-                    return value.ToString().SpacePascal();
+                    return displayName;
                 }
-
-                return displayName;
             }
 
-            return value.ToString();
+            return value.ToString().SpacePascal();
         }
     }
 }

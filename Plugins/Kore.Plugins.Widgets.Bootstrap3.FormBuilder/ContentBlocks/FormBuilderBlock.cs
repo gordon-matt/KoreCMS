@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.IO;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Kore.ComponentModel;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 

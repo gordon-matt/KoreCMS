@@ -60,23 +60,23 @@ namespace Kore.Web.ContentManagement
                 .IconCssClass("kore-icon kore-icon-message-templates")
                 .Permission(CmsPermissions.MessageTemplatesRead));
 
+            // Pages
+            builder.Add(T(KoreCmsLocalizableStrings.Pages.Title), "5", item => item
+                .Action("Index", "Page", new { area = CmsConstants.Areas.Pages })
+                .IconCssClass("kore-icon kore-icon-pages")
+                .Permission(CmsPermissions.PagesRead));
+
             // Queued Emails
             builder.Add(T(KoreCmsLocalizableStrings.Messaging.QueuedEmails), "5", item => item
                 .Action("Index", "QueuedEmail", new { area = CmsConstants.Areas.Messaging })
                 .IconCssClass("kore-icon kore-icon-message-queue")
                 .Permission(CmsPermissions.QueuedEmailsRead));
 
-            // Newsletters
+            // Subscribers
             builder.Add(T(KoreCmsLocalizableStrings.Newsletters.Subscribers), "5", item => item
                 .Action("Index", "Subscriber", new { area = CmsConstants.Areas.Newsletters })
                 .IconCssClass("kore-icon kore-icon-subscribers")
                 .Permission(StandardPermissions.FullAccess));
-
-            // Pages
-            builder.Add(T(KoreCmsLocalizableStrings.Pages.Title), "5", item => item
-                .Action("Index", "Page", new { area = CmsConstants.Areas.Pages })
-                .IconCssClass("kore-icon kore-icon-pages")
-                .Permission(CmsPermissions.PagesRead));
         }
 
         private void BuildMembershipMenu(NavigationItemBuilder builder)

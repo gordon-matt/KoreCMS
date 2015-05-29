@@ -23,6 +23,12 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             this.productService = productService;
         }
 
+        [Route("")]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         [Route("get-cart")]
         public JsonResult Get()
         {

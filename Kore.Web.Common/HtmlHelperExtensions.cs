@@ -28,13 +28,13 @@ namespace Kore.Web.Common
             this.html = html;
         }
 
-        public MvcHtmlString CountryDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
+        public MvcHtmlString CountryDropDownList(string name, int? selectedValue = null, string emptyText = null, object htmlAttributes = null)
         {
             var selectList = GetCountries(selectedValue, emptyText);
             return html.DropDownList(name, selectList, htmlAttributes);
         }
 
-        public MvcHtmlString CountryDropDownListFor(Expression<Func<TModel, string>> expression, object htmlAttributes = null, string emptyText = null)
+        public MvcHtmlString CountryDropDownListFor(Expression<Func<TModel, int>> expression, object htmlAttributes = null, string emptyText = null)
         {
             var func = expression.Compile();
             var selectedValue = func(html.ViewData.Model);
@@ -43,7 +43,7 @@ namespace Kore.Web.Common
             return html.DropDownListFor(expression, selectList, htmlAttributes);
         }
 
-        private static IEnumerable<SelectListItem> GetCountries(string selectedValue = null, string emptyText = null)
+        private static IEnumerable<SelectListItem> GetCountries(int? selectedValue = null, string emptyText = null)
         {
             var service = EngineContext.Current.Resolve<IRegionService>();
 

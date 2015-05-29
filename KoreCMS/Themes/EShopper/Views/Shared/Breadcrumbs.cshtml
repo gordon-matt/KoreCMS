@@ -1,0 +1,41 @@
+﻿@using Breadcrumb = Kore.Web.Navigation.Breadcrumb
+@model IEnumerable<Breadcrumb>
+
+@{
+    Layout = null;
+}
+
+<div class="breadcrumbs">
+    <ol class="breadcrumb">
+        <li>
+            <a href="@Url.Action("Index", "Home", new { area = string.Empty })" title="Go to Home">
+                @T(KoreWebLocalizableStrings.General.Home)
+            </a>
+        </li>
+
+        @if (!Model.IsNullOrEmpty())
+        {
+            int numberOfItems = Model.Count();
+            for (int i = 0; i < numberOfItems; i++)
+            {
+                var item = Model.ElementAt(i);
+                
+                string activeClass = string.Empty;
+
+                if (i == (numberOfItems - 1))
+                {
+                    activeClass = "active";
+                }
+                
+                if (!string.IsNullOrEmpty(item.Url))
+                {
+                    <li class="@activeClass"><a href="@item.Url"><i class="@item.Icon"></i>@item.Text</a><span class="divider"></span></li>
+                }
+                else
+                {
+                    <li class="@activeClass"><i class="@item.Icon"></i>@item.Text<span class="divider"></span></li>
+                }
+            }
+        }
+    </ol>
+</div>

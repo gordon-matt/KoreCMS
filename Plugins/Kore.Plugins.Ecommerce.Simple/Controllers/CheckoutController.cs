@@ -39,40 +39,95 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             ViewBag.SubTitle = T(LocalizableStrings.Checkout);
 
             ViewBag.CurrencyCode = settings.Currency;
-            return View();
+
+            var model = new CheckoutModel
+            {
+                Cart = cartService.Value.GetCart(this.HttpContext)
+            };
+
+            return View(model);
         }
 
         [HttpPost]
-        [Route("create-order")]
-        public JsonResult CreateOrder(CreateOrderModel model)
+        [Route("confirm")]
+        public ActionResult Confirm(CheckoutModel model)
         {
-            try
-            {
-                var cart = cartService.Value.GetCart(this.HttpContext);
+            var cart = cartService.Value.GetCart(this.HttpContext);
 
-                var order = new Order
+            Address billingAddress;
+            Address shippingAddress;
+
+            #region Get Billing Address
+
+            billingAddress = addressService.Value.FindOne(x =>
+                x.FamilyName == model.BillingAddress.FamilyName &&
+                x.GivenNames == model.BillingAddress.GivenNames &&
+                x.Email == model.BillingAddress.Email &&
+                x.AddressLine1 == model.BillingAddress.AddressLine1 &&
+                x.AddressLine2 == model.BillingAddress.AddressLine2 &&
+                x.AddressLine3 == model.BillingAddress.AddressLine3 &&
+                x.City == model.BillingAddress.City &&
+                x.PostalCode == model.BillingAddress.PostalCode &&
+                x.CountryId == model.BillingAddress.CountryId);
+
+            if (billingAddress == null)
+            {
+                billingAddress = new Address
                 {
-                    UserId = WorkContext.CurrentUser == null ? null : WorkContext.CurrentUser.Id,
-                    PaymentStatus = PaymentStatus.Pending,
-                    Status = OrderStatus.Pending,
-                    OrderDateUtc = DateTime.UtcNow,
-                    IPAddress = ClientIPAddress,
-                    OrderTotal = cart.Items.Sum(x => (x.Price + x.Tax + x.ShippingCost) * x.Quantity),
-                    BillingAddress = new Address
-                    {
-                        FamilyName = model.BillingAddress.FamilyName,
-                        GivenNames = model.BillingAddress.GivenNames,
-                        UserId = model.BillingAddress.UserId,
-                        Email = model.BillingAddress.Email,
-                        PhoneNumber = model.BillingAddress.PhoneNumber,
-                        AddressLine1 = model.BillingAddress.AddressLine1,
-                        AddressLine2 = model.BillingAddress.AddressLine2,
-                        AddressLine3 = model.BillingAddress.AddressLine3,
-                        City = model.BillingAddress.City,
-                        PostalCode = model.BillingAddress.PostalCode,
-                        CountryId = model.BillingAddress.CountryId
-                    },
-                    ShippingAddress = new Address
+                    FamilyName = model.BillingAddress.FamilyName,
+                    GivenNames = model.BillingAddress.GivenNames,
+                    UserId = model.BillingAddress.UserId,
+                    Email = model.BillingAddress.Email,
+                    PhoneNumber = model.BillingAddress.PhoneNumber,
+                    AddressLine1 = model.BillingAddress.AddressLine1,
+                    AddressLine2 = model.BillingAddress.AddressLine2,
+                    AddressLine3 = model.BillingAddress.AddressLine3,
+                    City = model.BillingAddress.City,
+                    PostalCode = model.BillingAddress.PostalCode,
+                    CountryId = model.BillingAddress.CountryId
+                };
+
+                if (WorkContext.CurrentUser != null)
+                {
+                    billingAddress.UserId = WorkContext.CurrentUser.Id;
+                }
+
+                addressService.Value.Insert(billingAddress);
+            }
+            else
+            {
+                // User may have been anonymous before, but logged in now.. so we can add UserId.
+                if (string.IsNullOrEmpty(billingAddress.UserId) && WorkContext.CurrentUser != null)
+                {
+                    billingAddress.UserId = WorkContext.CurrentUser.Id;
+                    addressService.Value.Update(billingAddress);
+                }
+            }
+
+            #endregion Get Billing Address
+
+            #region Get Shipping Address
+
+            if (model.ShippingAddressIsSameAsBillingAddress)
+            {
+                shippingAddress = billingAddress;
+            }
+            else
+            {
+                shippingAddress = addressService.Value.FindOne(x =>
+                    x.FamilyName == model.ShippingAddress.FamilyName &&
+                    x.GivenNames == model.ShippingAddress.GivenNames &&
+                    x.Email == model.ShippingAddress.Email &&
+                    x.AddressLine1 == model.ShippingAddress.AddressLine1 &&
+                    x.AddressLine2 == model.ShippingAddress.AddressLine2 &&
+                    x.AddressLine3 == model.ShippingAddress.AddressLine3 &&
+                    x.City == model.ShippingAddress.City &&
+                    x.PostalCode == model.ShippingAddress.PostalCode &&
+                    x.CountryId == model.ShippingAddress.CountryId);
+
+                if (shippingAddress == null)
+                {
+                    shippingAddress = new Address
                     {
                         FamilyName = model.ShippingAddress.FamilyName,
                         GivenNames = model.ShippingAddress.GivenNames,
@@ -85,30 +140,46 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                         City = model.ShippingAddress.City,
                         PostalCode = model.ShippingAddress.PostalCode,
                         CountryId = model.ShippingAddress.CountryId
-                    }
-                };
+                    };
 
-                foreach (var item in cart.Items)
-                {
-                    order.Lines.Add(new OrderLine
+                    if (WorkContext.CurrentUser != null)
                     {
-                        ProductId = item.ProductId,
-                        Quantity = item.Quantity,
-                        UnitPrice = item.Price
-                    });
+                        shippingAddress.UserId = WorkContext.CurrentUser.Id;
+                    }
+
+                    addressService.Value.Insert(shippingAddress);
                 }
-                orderService.Value.Insert(order);
-
-                cart.OrderId = order.Id;
-                cartService.Value.SetCart(this.HttpContext, cart);
-
-                return Json(new { Success = true });
             }
-            catch (Exception x)
+
+            #endregion Get Shipping Address
+
+            var order = new Order
             {
-                Logger.Error(x.Message, x);
-                return Json(new { Success = false, Message = x.Message });
+                UserId = WorkContext.CurrentUser == null ? null : WorkContext.CurrentUser.Id,
+                PaymentStatus = PaymentStatus.Pending,
+                Status = OrderStatus.Pending,
+                OrderDateUtc = DateTime.UtcNow,
+                IPAddress = ClientIPAddress,
+                OrderTotal = cart.Items.Sum(x => (x.Price + x.Tax + x.ShippingCost) * x.Quantity),
+                BillingAddressId = billingAddress.Id,
+                ShippingAddressId = shippingAddress.Id
+            };
+
+            foreach (var item in cart.Items)
+            {
+                order.Lines.Add(new OrderLine
+                {
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    UnitPrice = item.Price
+                });
             }
+            orderService.Value.Insert(order);
+
+            cart.OrderId = order.Id;
+            cartService.Value.SetCart(this.HttpContext, cart);
+
+            return RedirectToAction("BuyNow", "PayPal", new { area = string.Empty });
         }
 
         [Route("completed/{orderId}")]

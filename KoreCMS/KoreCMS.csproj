@@ -1812,6 +1812,7 @@
     <Content Include="Themes\Superhero\Views\Shared\Head.cshtml" />
     <Content Include="Themes\Superhero\Views\Web.config" />
     <Content Include="Themes\EShopper\Views\Shared\DisplayTemplates\StandardPage.cshtml" />
+    <Content Include="Themes\EShopper\Views\Shared\Breadcrumbs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

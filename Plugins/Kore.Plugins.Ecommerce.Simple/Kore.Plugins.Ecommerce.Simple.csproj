@@ -161,7 +161,7 @@
     <Compile Include="LocalizableStrings.cs" />
     <Compile Include="Models\AddressModel.cs" />
     <Compile Include="Models\CartModel.cs" />
-    <Compile Include="Models\CreateOrderModel.cs" />
+    <Compile Include="Models\CheckoutModel.cs" />
     <Compile Include="Models\PayPalModel.cs" />
     <Compile Include="Models\ShoppingCartItem.cs" />
     <Compile Include="NavigationProvider.cs" />
@@ -180,6 +180,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Views\Cart\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Views\CategoryAdmin\Index.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -195,10 +198,10 @@
     <None Include="Views\PayPal\BuyNow.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\PayPal\PaymentCancelled.cshtml">
+    <None Include="Views\PayPal\CancelReturn.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\PayPal\PaymentCompleted.cshtml">
+    <None Include="Views\PayPal\Return.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Views\Shared\CheckoutButton.cshtml">
@@ -269,6 +272,7 @@
     <Content Include="Description.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\cart.js" />
     <Content Include="Scripts\category-admin.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

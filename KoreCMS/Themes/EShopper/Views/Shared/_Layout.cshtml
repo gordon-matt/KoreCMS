@@ -9,17 +9,18 @@
     Style.Include("css/animate.css", true);
     Style.Include("css/main.css", true);
     Style.Include("css/responsive.css", true);
-    
-    Script.Include("jquery.js", true, 0);
-    Script.Include("bootstrap.min.js", true);
-    Script.Include("jquery.scrollUp.min.js", true);
-    Script.Include("price-range.js", true);
-    Script.Include("jquery.prettyPhoto.js", true);
-    Script.Include("main.js", true);
+    Style.Include("css/custom.css", true);
 
+    //Script.Include("jquery.js", true, 0);
+    Script.IncludeBundle("jquery", 0);
     Script.IncludeBundle("jqueryval");
     Script.IncludeBundle("kore/jqueryval");
-    
+    //Script.Include("bootstrap.min.js", true);
+   // Script.Include("jquery.scrollUp.min.js", true);
+    //Script.Include("price-range.js", true);
+    //Script.Include("jquery.prettyPhoto.js", true);
+    //Script.Include("main.js", true);
+
     string siteName = string.IsNullOrEmpty(SiteSettings.SiteName) ? "My Kore App" : SiteSettings.SiteName;
 
     string dir = IsRightToLeft ? "rtl" : string.Empty;

@@ -128,6 +128,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
             ViewBag.PreviousEntrySlug = previousEntrySlug;
             ViewBag.NextEntrySlug = nextEntrySlug;
             ViewBag.UserName = membershipService.Value.GetUserById(model.UserId).UserName;
+
+            var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "Details", null);
+
+            // If someone has provided a custom template (see LocationFormatProvider)
+            if (viewEngineResult.View != null)
+            {
+                return View(model);
+            }
+
+            // Else use default template
             return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.Details", model);
         }
     }

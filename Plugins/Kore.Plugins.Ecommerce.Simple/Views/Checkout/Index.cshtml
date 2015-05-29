@@ -3,12 +3,13 @@
 @using Kore.Plugins.Ecommerce.Simple.Models
 @using Kore.Web.Common
 @using Kore.Web.Mvc.KoreUI
-
 @using LocalizableStrings = Kore.Plugins.Ecommerce.Simple.LocalizableStrings
+
 @model CheckoutModel
 
 @{
     Script.IncludeBundle("jqueryval");
+    Script.IncludeBundle("kore/jqueryval");
     string currencyCode = ViewBag.CurrencyCode;
 }
 

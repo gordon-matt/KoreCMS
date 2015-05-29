@@ -1406,6 +1406,7 @@
     <Content Include="Themes\Darkly\thumbnail.png" />
     <Content Include="Themes\EShopper\Content\css\animate.css" />
     <Content Include="Themes\EShopper\Content\css\bootstrap.min.css" />
+    <Content Include="Themes\EShopper\Content\css\custom.css" />
     <Content Include="Themes\EShopper\Content\css\font-awesome.min.css" />
     <Content Include="Themes\EShopper\Content\css\main.css" />
     <Content Include="Themes\EShopper\Content\css\prettyPhoto.css" />
@@ -1480,6 +1481,9 @@
     <Content Include="Themes\EShopper\Scripts\jquery.scrollUp.min.js" />
     <Content Include="Themes\EShopper\Scripts\main.js" />
     <Content Include="Themes\EShopper\Scripts\price-range.js" />
+    <Content Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\Checkout\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Themes\Flatly\Content\bootstrap.min.css" />
     <Content Include="Themes\Flatly\thumbnail.png" />
     <Content Include="Themes\Flatty\Content\css\bootstrap.css" />
@@ -1813,6 +1817,10 @@
     <Content Include="Themes\Superhero\Views\Web.config" />
     <Content Include="Themes\EShopper\Views\Shared\DisplayTemplates\StandardPage.cshtml" />
     <Content Include="Themes\EShopper\Views\Shared\Breadcrumbs.cshtml" />
+    <Content Include="Themes\EShopper\Views\Kore.Web.ContentManagement\BlogContent\Details.cshtml" />
+    <Content Include="Themes\EShopper\Views\Kore.Web.ContentManagement\BlogContent\Index.cshtml" />
+    <Content Include="Themes\EShopper\Views\Kore.Web.ContentManagement\Web.config" />
+    <Content Include="Themes\EShopper\Views\Kore.Web.ContentManagement\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1822,7 +1830,6 @@
     <Folder Include="Themes\Default\Content\" />
     <Folder Include="Themes\Default\Views\Home\" />
     <Folder Include="Themes\Default\Views\Plugins\Kore.Web.ContentManagement\Shared\EditorTemplates\" />
-    <Folder Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\Checkout\" />
     <Folder Include="Views\Shared\DisplayTemplates\Pages\" />
     <Folder Include="Views\Shared\EditorTemplates\Pages\" />
   </ItemGroup>

@@ -13,8 +13,8 @@ namespace Kore.Web.Common.Infrastructure
             {
                 return new[]
                 {
-                    "~/Themes/{3}/Kore.Web.Common/Areas/{2}/Views/{1}/{0}.cshtml",
-                    "~/Themes/{3}/Kore.Web.Common/Areas/{2}/Views/Shared/{0}.cshtml",
+                    "~/Themes/{3}/Areas/{2}/Views/Kore.Web.Common/{1}/{0}.cshtml",
+                    "~/Themes/{3}/Areas/{2}/Views/Kore.Web.Common/Shared/{0}.cshtml",
                     "~/Areas/{2}/Views/Kore.Web.Common/{1}/{0}.cshtml",
                     "~/Areas/{2}/Views/Kore.Web.Common/Shared/{0}.cshtml",
                 };
@@ -27,8 +27,8 @@ namespace Kore.Web.Common.Infrastructure
             {
                 return new[]
                 {
-                    "~/Themes/{3}/Kore.Web.Common/Areas/{2}/Views/{1}/{0}.cshtml",
-                    "~/Themes/{3}/Kore.Web.Common/Areas/{2}/Views/Shared/{0}.cshtml",
+                    "~/Themes/{3}/Areas/{2}/Views/Kore.Web.Common/{1}/{0}.cshtml",
+                    "~/Themes/{3}/Areas/{2}/Views/Kore.Web.Common/Shared/{0}.cshtml",
                     "~/Areas/{2}/Views/Kore.Web.Common/{1}/{0}.cshtml",
                     "~/Areas/{2}/Views/Kore.Web.Common/Shared/{0}.cshtml",
                 };
@@ -41,8 +41,8 @@ namespace Kore.Web.Common.Infrastructure
             {
                 return new[]
                 {
-                    "~/Themes/{3}/Kore.Web.Common/Areas/{2}/Views/{1}/{0}.cshtml",
-                    "~/Themes/{3}/Kore.Web.Common/Areas/{2}/Views/Shared/{0}.cshtml",
+                    "~/Themes/{3}/Areas/{2}/Views/Kore.Web.Common/{1}/{0}.cshtml",
+                    "~/Themes/{3}/Areas/{2}/Views/Kore.Web.Common/Shared/{0}.cshtml",
                     "~/Areas/{2}/Views/Kore.Web.Common/{1}/{0}.cshtml",
                     "~/Areas/{2}/Views/Kore.Web.Common/Shared/{0}.cshtml",
                 };
@@ -55,8 +55,8 @@ namespace Kore.Web.Common.Infrastructure
             {
                 return new[]
                 {
-                    "~/Themes/{2}/Kore.Web.Common/Views/{1}/{0}.cshtml",
-                    "~/Themes/{2}/Kore.Web.Common/Views/Shared/{0}.cshtml",
+                    "~/Themes/{2}/Views/Kore.Web.Common/{1}/{0}.cshtml",
+                    "~/Themes/{2}/Views/Kore.Web.Common/Shared/{0}.cshtml",
                     "~/Views/Kore.Web.Common/{1}/{0}.cshtml",
                     "~/Views/Kore.Web.Common/Shared/{0}.cshtml",
                 };
@@ -69,8 +69,8 @@ namespace Kore.Web.Common.Infrastructure
             {
                 return new[]
                 {
-                    "~/Themes/{2}/Kore.Web.Common/Views/{1}/{0}.cshtml",
-                    "~/Themes/{2}/Kore.Web.Common/Views/Shared/{0}.cshtml",
+                    "~/Themes/{2}/Views/Kore.Web.Common/{1}/{0}.cshtml",
+                    "~/Themes/{2}/Views/Kore.Web.Common/Shared/{0}.cshtml",
                     "~/Views/Kore.Web.Common/{1}/{0}.cshtml",
                     "~/Views/Kore.Web.Common/Shared/{0}.cshtml",
                 };
@@ -83,8 +83,8 @@ namespace Kore.Web.Common.Infrastructure
             {
                 return new[]
                 {
-                    "~/Themes/{2}/Kore.Web.Common/Views/{1}/{0}.cshtml",
-                    "~/Themes/{2}/Kore.Web.Common/Views/Shared/{0}.cshtml",
+                    "~/Themes/{2}/Views/Kore.Web.Common/{1}/{0}.cshtml",
+                    "~/Themes/{2}/Views/Kore.Web.Common/Shared/{0}.cshtml",
                     "~/Views/Kore.Web.Common/{1}/{0}.cshtml",
                     "~/Views/Kore.Web.Common/Shared/{0}.cshtml",
                 };

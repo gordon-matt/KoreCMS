@@ -215,10 +215,6 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             order.Status = OrderStatus.Cancelled;
 
-            if (settings.CancelUrlRedirectsToOrderDetailsPage)
-            {
-                return View(order);
-            }
             return RedirectToAction("Index", "Store", new { area = string.Empty });
         }
 

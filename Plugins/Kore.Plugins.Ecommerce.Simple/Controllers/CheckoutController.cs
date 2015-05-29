@@ -32,7 +32,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Store));
+            WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Store), Url.Action("Index", "Store", new { area = string.Empty }));
             WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Checkout));
 
             ViewBag.Title = T(LocalizableStrings.Store);
@@ -185,7 +185,12 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         [Route("completed/{orderId}")]
         public ActionResult Completed(int orderId)
         {
-            return View(orderId);
+            WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Store), Url.Action("Index", "Store", new { area = string.Empty }));
+            WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Checkout));
+            WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Completed));
+
+            var order = orderService.Value.FindOne(orderId);
+            return View(order);
         }
     }
 }

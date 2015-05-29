@@ -1,4 +1,6 @@
-﻿@using Kore.Plugins.Ecommerce.Simple.Models
+﻿@using Kore.Plugins.Ecommerce.Simple
+@using Kore.Plugins.Ecommerce.Simple.Extensions
+@using Kore.Plugins.Ecommerce.Simple.Models
 @using LocalizableStrings = Kore.Plugins.Ecommerce.Simple.LocalizableStrings
 
 @{
@@ -85,3 +87,10 @@
         </div>
     </div>
 </div>
+
+@using (Script.AtFoot())
+{
+    <script type="text/javascript">
+        var currencyCode = '@currencyCode';
+    </script>
+}

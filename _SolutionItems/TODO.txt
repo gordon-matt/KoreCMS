@@ -14,6 +14,11 @@ TODO: change from page history to page versioning instead (keep all pages in pag
 -    then: we can make page preview work with unsaved versions of pages
 
 
+- plugin idea: live chat
+- dont load entityType configurations if plugin not loaded..
+
+- do validation for settings
+
 - do we need a different default frontend layout path for mobile theme? probably...
 
 - read through security guidlines as requested by Ran
@@ -73,15 +78,7 @@ OTHER
 
 - review all TODO notes
 
-VALIDATION ISSUES:
-- Blog
-- Content Blocks
-- Zones
-- 
-
-- table names to constants
 -remove media entities?
-- Make sure jquery validation working everywhere!!!!!!!!!
 - KoreUI: Icons
 - Content Blocks: Localization
 - Content Blocks: override template path (for display only)
@@ -121,6 +118,8 @@ VALIDATION ISSUES:
 
 - use output caching more
 - plugins should be published along with site
+
+- Use HTML5 semantic tags properly everywhere
 
 TO TEST:
 LocationFormatProvider can probably be used to make View() work without providing embedded view name. example:

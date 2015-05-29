@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="ContentBlocks\CartLinkBlock.cs" />
     <Compile Include="ContentBlocks\CheckoutLinkBlock.cs" />
     <Compile Include="Controllers\Api\AddressApiController.cs" />
     <Compile Include="Controllers\Api\CategoryApiController.cs" />
@@ -198,16 +199,16 @@
     <None Include="Views\PayPal\BuyNow.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\PayPal\CancelReturn.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Views\PayPal\Return.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Views\Shared\CheckoutButton.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Views\Shared\DisplayTemplates\CartLinkBlock.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Views\Shared\DisplayTemplates\CheckoutLinkBlock.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Shared\EditorTemplates\CartLinkBlock.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Views\Shared\EditorTemplates\CheckoutLinkBlock.cshtml">
@@ -272,7 +273,9 @@
     <Content Include="Description.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\cart.js" />
+    <Content Include="Scripts\cart.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\category-admin.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

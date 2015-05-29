@@ -12,10 +12,10 @@
     string currencyCode = ViewBag.CurrencyCode;
 }
 
-@using (Html.BeginForm("Confirm", "Checkout", new { area = string.Empty }, FormMethod.Post, new { id = "checkout-form" }))
+@using (Html.BeginForm("Confirm", "Checkout", new { area = string.Empty }, FormMethod.Post, new { id = "checkout-form", @class = "form-horizontal" }))
 {
     <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">@T(LocalizableStrings.BillingAddress)</h3>
@@ -27,89 +27,109 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.BillingAddress.GivenNames, new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
-                            @Html.TextBoxFor(m => m.BillingAddress.GivenNames, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.BillingAddress.GivenNames, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
+                                @Html.TextBoxFor(m => m.BillingAddress.GivenNames, new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.BillingAddress.GivenNames)
                         </div>
-                        @Html.ValidationMessageFor(m => m.BillingAddress.GivenNames)
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.BillingAddress.FamilyName, new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
-                            @Html.TextBoxFor(m => m.BillingAddress.FamilyName, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.BillingAddress.FamilyName, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
+                                @Html.TextBoxFor(m => m.BillingAddress.FamilyName, new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.BillingAddress.FamilyName)
                         </div>
-                        @Html.ValidationMessageFor(m => m.BillingAddress.FamilyName)
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.BillingAddress.Email, new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="kore-icon kore-icon-mail"></i></span>
-                            @Html.TextBoxFor(m => m.BillingAddress.Email, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.BillingAddress.Email, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="kore-icon kore-icon-mail"></i></span>
+                                @Html.TextBoxFor(m => m.BillingAddress.Email, new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.BillingAddress.Email)
                         </div>
-                        @Html.ValidationMessageFor(m => m.BillingAddress.Email)
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.BillingAddress.AddressLine1, new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
-                            @Html.TextBoxFor(m => m.BillingAddress.AddressLine1, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.BillingAddress.AddressLine1, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                                @Html.TextBoxFor(m => m.BillingAddress.AddressLine1, new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.BillingAddress.AddressLine1)
                         </div>
-                        @Html.ValidationMessageFor(m => m.BillingAddress.AddressLine1)
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.BillingAddress.AddressLine2, new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
-                            @Html.TextBoxFor(m => m.BillingAddress.AddressLine2, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.BillingAddress.AddressLine2, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                                @Html.TextBoxFor(m => m.BillingAddress.AddressLine2, new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.BillingAddress.AddressLine2)
                         </div>
-                        @Html.ValidationMessageFor(m => m.BillingAddress.AddressLine2)
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.BillingAddress.AddressLine3, new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
-                            @Html.TextBoxFor(m => m.BillingAddress.AddressLine3, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.BillingAddress.AddressLine3, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                                @Html.TextBoxFor(m => m.BillingAddress.AddressLine3, new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.BillingAddress.AddressLine3)
                         </div>
-                        @Html.ValidationMessageFor(m => m.BillingAddress.AddressLine3)
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.BillingAddress.City, new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
-                            @Html.TextBoxFor(m => m.BillingAddress.City, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.BillingAddress.City, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                                @Html.TextBoxFor(m => m.BillingAddress.City, new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.BillingAddress.City)
                         </div>
-                        @Html.ValidationMessageFor(m => m.BillingAddress.City)
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.BillingAddress.PostalCode, new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
-                            @Html.TextBoxFor(m => m.BillingAddress.PostalCode, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.BillingAddress.PostalCode, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                                @Html.TextBoxFor(m => m.BillingAddress.PostalCode, new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.BillingAddress.PostalCode)
                         </div>
-                        @Html.ValidationMessageFor(m => m.BillingAddress.PostalCode)
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.BillingAddress.CountryId, new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="kore-icon kore-icon-globe"></i></span>
-                            @Html.KoreCommon().CountryDropDownListFor(m => m.BillingAddress.CountryId, htmlAttributes: new { @class = "form-control" })
+                        @Html.LabelFor(m => m.BillingAddress.CountryId, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="kore-icon kore-icon-globe"></i></span>
+                                @Html.KoreCommon().CountryDropDownListFor(m => m.BillingAddress.CountryId, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.BillingAddress.CountryId)
                         </div>
-                        @Html.ValidationMessageFor(m => m.BillingAddress.CountryId)
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.BillingAddress.PhoneNumber, new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="kore-icon kore-icon-phone"></i></span>
-                            @Html.TextBoxFor(m => m.BillingAddress.PhoneNumber, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.BillingAddress.PhoneNumber, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="kore-icon kore-icon-phone"></i></span>
+                                @Html.TextBoxFor(m => m.BillingAddress.PhoneNumber, new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.BillingAddress.PhoneNumber)
                         </div>
-                        @Html.ValidationMessageFor(m => m.BillingAddress.PhoneNumber)
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">@T(LocalizableStrings.ShippingAddress)</h3>
@@ -117,91 +137,114 @@
                 <div class="panel-body">
                     <div class="form-group">
                         <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(m => m.ShippingAddressIsSameAsBillingAddress, new { onclick = "toggleShippingAddressSection();" }) @T(LocalizableStrings.ShippingAddressSameAsBillingAddress)
-                            </label>
+                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3"></div>
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <label>
+                                    @Html.CheckBoxFor(m => m.ShippingAddressIsSameAsBillingAddress, new { onclick = "toggleShippingAddressSection();" }) @T(LocalizableStrings.ShippingAddressSameAsBillingAddress)
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div id="shipping-address">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.ShippingAddress.GivenNames, new { @class = "control-label" })
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
-                                @Html.TextBoxFor(m => m.ShippingAddress.GivenNames, new { @class = "form-control" })
+                            @Html.LabelFor(m => m.ShippingAddress.GivenNames, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
+                                    @Html.TextBoxFor(m => m.ShippingAddress.GivenNames, new { @class = "form-control" })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.ShippingAddress.GivenNames)
                             </div>
-                            @Html.ValidationMessageFor(m => m.ShippingAddress.GivenNames)
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.ShippingAddress.FamilyName, new { @class = "control-label" })
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
-                                @Html.TextBoxFor(m => m.ShippingAddress.FamilyName, new { @class = "form-control" })
+                            @Html.LabelFor(m => m.ShippingAddress.FamilyName, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="kore-icon kore-icon-user"></i></span>
+                                    @Html.TextBoxFor(m => m.ShippingAddress.FamilyName, new { @class = "form-control" })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.ShippingAddress.FamilyName)
                             </div>
-                            @Html.ValidationMessageFor(m => m.ShippingAddress.FamilyName)
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.ShippingAddress.Email, new { @class = "control-label" })
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="kore-icon kore-icon-mail"></i></span>
-                                @Html.TextBoxFor(m => m.ShippingAddress.Email, new { @class = "form-control" })
+                            @Html.LabelFor(m => m.ShippingAddress.Email, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="kore-icon kore-icon-mail"></i></span>
+                                    @Html.TextBoxFor(m => m.ShippingAddress.Email, new { @class = "form-control" })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.ShippingAddress.Email)
                             </div>
-                            @Html.ValidationMessageFor(m => m.ShippingAddress.Email)
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.ShippingAddress.AddressLine1, new { @class = "control-label" })
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
-                                @Html.TextBoxFor(m => m.ShippingAddress.AddressLine1, new { @class = "form-control" })
+                            @Html.LabelFor(m => m.ShippingAddress.AddressLine1, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                                    @Html.TextBoxFor(m => m.ShippingAddress.AddressLine1, new { @class = "form-control" })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.ShippingAddress.AddressLine1)
                             </div>
-                            @Html.ValidationMessageFor(m => m.ShippingAddress.AddressLine1)
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.ShippingAddress.AddressLine2, new { @class = "control-label" })
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
-                                @Html.TextBoxFor(m => m.ShippingAddress.AddressLine2, new { @class = "form-control" })
+                            @Html.LabelFor(m => m.ShippingAddress.AddressLine2, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                                    @Html.TextBoxFor(m => m.ShippingAddress.AddressLine2, new { @class = "form-control" })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.ShippingAddress.AddressLine2)
                             </div>
-                            @Html.ValidationMessageFor(m => m.ShippingAddress.AddressLine2)
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.ShippingAddress.AddressLine3, new { @class = "control-label" })
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
-                                @Html.TextBoxFor(m => m.ShippingAddress.AddressLine3, new { @class = "form-control" })
+                            @Html.LabelFor(m => m.ShippingAddress.AddressLine3, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                                    @Html.TextBoxFor(m => m.ShippingAddress.AddressLine3, new { @class = "form-control" })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.ShippingAddress.AddressLine3)
                             </div>
-                            @Html.ValidationMessageFor(m => m.ShippingAddress.AddressLine3)
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.ShippingAddress.City, new { @class = "control-label" })
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
-                                @Html.TextBoxFor(m => m.ShippingAddress.City, new { @class = "form-control" })
+                            @Html.LabelFor(m => m.ShippingAddress.City, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                                    @Html.TextBoxFor(m => m.ShippingAddress.City, new { @class = "form-control" })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.ShippingAddress.City)
                             </div>
-                            @Html.ValidationMessageFor(m => m.ShippingAddress.City)
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.ShippingAddress.PostalCode, new { @class = "control-label" })
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
-                                @Html.TextBoxFor(m => m.ShippingAddress.PostalCode, new { @class = "form-control" })
+                            @Html.LabelFor(m => m.ShippingAddress.PostalCode, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="kore-icon kore-icon-road"></i></span>
+                                    @Html.TextBoxFor(m => m.ShippingAddress.PostalCode, new { @class = "form-control" })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.ShippingAddress.PostalCode)
                             </div>
-                            @Html.ValidationMessageFor(m => m.ShippingAddress.PostalCode)
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.ShippingAddress.CountryId, new { @class = "control-label" })
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="kore-icon kore-icon-globe"></i></span>
-                                @Html.KoreCommon().CountryDropDownListFor(m => m.ShippingAddress.CountryId, htmlAttributes: new { @class = "form-control" })
+                            @Html.LabelFor(m => m.ShippingAddress.CountryId, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="kore-icon kore-icon-globe"></i></span>
+                                    @Html.KoreCommon().CountryDropDownListFor(m => m.ShippingAddress.CountryId, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.ShippingAddress.CountryId)
                             </div>
-                            @Html.ValidationMessageFor(m => m.ShippingAddress.CountryId)
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.ShippingAddress.PhoneNumber, new { @class = "control-label" })
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="kore-icon kore-icon-phone"></i></span>
-                                @Html.TextBoxFor(m => m.ShippingAddress.PhoneNumber, new { @class = "form-control" })
+                            @Html.LabelFor(m => m.ShippingAddress.PhoneNumber, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
+                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="kore-icon kore-icon-phone"></i></span>
+                                    @Html.TextBoxFor(m => m.ShippingAddress.PhoneNumber, new { @class = "form-control" })
+                                </div>
+                                @Html.ValidationMessageFor(m => m.ShippingAddress.PhoneNumber)
                             </div>
-                            @Html.ValidationMessageFor(m => m.ShippingAddress.PhoneNumber)
                         </div>
                     </div>
                 </div>
@@ -254,21 +297,6 @@
         $(document).ready(function () {
             var checkbox = $('#ShippingAddressIsSameAsBillingAddress');
             toggleShippingAddressSection(checkbox);
-
-            //$("#checkout-form").submit(function (event) {
-            //    if ($('#ShippingAddressIsSameAsBillingAddress').checked) {
-            //        $('#BillingAddress_GivenNames').val($('#ShippingAddress_GivenNames').val());
-            //        $('#BillingAddress_FamilyName').val($('#ShippingAddress_FamilyName').val());
-            //        $('#BillingAddress_Email').val($('#ShippingAddress_Email').val());
-            //        $('#BillingAddress_AddressLine1').val($('#ShippingAddress_AddressLine1').val());
-            //        $('#BillingAddress_AddressLine2').val($('#ShippingAddress_AddressLine2').val());
-            //        $('#BillingAddress_AddressLine3').val($('#ShippingAddress_AddressLine3').val());
-            //        $('#BillingAddress_City').val($('#ShippingAddress_City').val());
-            //        $('#BillingAddress_PostalCode').val($('#ShippingAddress_PostalCode').val());
-            //        $('#BillingAddress_CountryId').val($('#ShippingAddress_CountryId').val());
-            //        $('#BillingAddress_PhoneNumber').val($('#ShippingAddress_PhoneNumber').val());
-            //    }
-            //});
 
             $("#checkout-form").validate({
                 rules: {

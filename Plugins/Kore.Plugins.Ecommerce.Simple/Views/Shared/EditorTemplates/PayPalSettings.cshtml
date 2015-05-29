@@ -32,13 +32,6 @@
         @Html.ValidationMessageFor(m => m.CurrencyCode)
     </div>
     <div class="form-group">
-        <div class="checkbox">
-            <label>
-                @Html.CheckBoxFor(m => m.CancelUrlRedirectsToOrderDetailsPage, new { data_bind = "checked: cancelUrlRedirectsToOrderDetailsPage" }) @T(LocalizableStrings.Settings.PayPal.CancelUrlRedirectsToOrderDetailsPage)
-            </label>
-        </div>
-    </div>
-    <div class="form-group">
         @Html.LabelFor(m => m.PdtToken, new { @class = "control-label" })
         @Html.TextBoxFor(m => m.PdtToken, new { @class = "form-control", data_bind = "value: pdtToken" })
         @Html.ValidationMessageFor(m => m.PdtToken)
@@ -52,7 +45,6 @@
         viewModel.useSandboxMode = ko.observable(true);
         viewModel.merchant = ko.observable("");
         viewModel.currencyCode = ko.observable("USD");
-        viewModel.cancelUrlRedirectsToOrderDetailsPage = ko.observable(true);
         viewModel.pdtToken = ko.observable("");
 
         if (data) {
@@ -71,9 +63,6 @@
             if (data.CurrencyCode) {
                 viewModel.currencyCode(data.CurrencyCode);
             }
-            if (data.CancelUrlRedirectsToOrderDetailsPage) {
-                viewModel.cancelUrlRedirectsToOrderDetailsPage(data.CancelUrlRedirectsToOrderDetailsPage);
-            }
             if (data.PdtToken) {
                 viewModel.pdtToken(data.PdtToken);
             }
@@ -86,7 +75,6 @@
         delete viewModel.useSandboxMode;
         delete viewModel.merchant;
         delete viewModel.currencyCode;
-        delete viewModel.cancelUrlRedirectsToOrderDetailsPage;
         delete viewModel.pdtToken;
     }
 
@@ -97,7 +85,6 @@
             UseSandboxMode: viewModel.useSandboxMode(),
             Merchant: viewModel.merchant(),
             CurrencyCode: viewModel.currencyCode(),
-            CancelUrlRedirectsToOrderDetailsPage: viewModel.cancelUrlRedirectsToOrderDetailsPage(),
             PdtToken: viewModel.pdtToken()
         };
 

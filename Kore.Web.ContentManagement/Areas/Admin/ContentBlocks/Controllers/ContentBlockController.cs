@@ -45,18 +45,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
         [Route("get-editor-ui/{contentBlockId}")]
         public ActionResult GetEditorUI(Guid contentBlockId)
         {
-            var contentBlock = contentBlockService.Value.FindOne(contentBlockId);
-            var blockType = Type.GetType(contentBlock.BlockType);
+            var blockEntity = contentBlockService.Value.FindOne(contentBlockId);
+            var blockType = Type.GetType(blockEntity.BlockType);
 
-            var contentBlocks = EngineContext.Current.ResolveAll<IContentBlock>();
-            var iContentBlock = contentBlocks.First(x => x.GetType() == blockType);
+            var blocks = EngineContext.Current.ResolveAll<IContentBlock>();
+            var block = blocks.First(x => x.GetType() == blockType);
 
             string content;
 
             try
             {
                 // TODO: See if we can make EditorTemplatePath not so specific a path (just the name), so we can override it in themes, etc
-                content = RenderRazorPartialViewToString(iContentBlock.EditorTemplatePath, iContentBlock);
+                content = RenderRazorPartialViewToString(block.EditorTemplatePath, block);
             }
             catch (NotSupportedException)
             {

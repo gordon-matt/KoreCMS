@@ -4,7 +4,7 @@
     Layout = null;
 }
 
-@foreach (var contentBlock in Model.OrderBy(x => x.Order))
+@foreach (var block in Model.OrderBy(x => x.Order))
 {
-    @Html.Partial(contentBlock.DisplayTemplatePath, contentBlock)
+    @Html.Partial(block.DisplayTemplatePath, block)
 }

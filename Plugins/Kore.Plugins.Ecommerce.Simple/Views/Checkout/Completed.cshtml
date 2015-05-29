@@ -1,1 +1,11 @@
-﻿
+﻿@using System.Web.Mvc
+@using Kore.Plugins.Ecommerce.Simple
+@using Kore.Plugins.Ecommerce.Simple.Data.Domain
+
+@model Order
+
+<section>
+    <h1>@T(LocalizableStrings.CheckoutCompleted.Title)</h1>
+    <p>@string.Format(T(LocalizableStrings.CheckoutCompleted.ThankYouMessage), Model.Id)</p>
+    <p>@Html.ActionLink(T(LocalizableStrings.CheckoutCompleted.ReturnButtonText), "Index", "Store", new { area = string.Empty }, new { @class = "btn btn-primary" })</p>
+</section>

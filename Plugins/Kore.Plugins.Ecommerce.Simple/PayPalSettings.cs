@@ -11,7 +11,6 @@ namespace Kore.Plugins.Ecommerce.Simple
             SandboxUrl = "https://www.sandbox.paypal.com/cgi-bin/webscr";
             UseSandboxMode = true;
             CurrencyCode = "USD";
-            CancelUrlRedirectsToOrderDetailsPage = true;
         }
 
         [LocalizedDisplayName(LocalizableStrings.Settings.PayPal.ProductionUrl)]
@@ -28,9 +27,6 @@ namespace Kore.Plugins.Ecommerce.Simple
 
         [LocalizedDisplayName(LocalizableStrings.Settings.PayPal.CurrencyCode)]
         public string CurrencyCode { get; set; }
-
-        [LocalizedDisplayName(LocalizableStrings.Settings.PayPal.CancelUrlRedirectsToOrderDetailsPage)]
-        public bool CancelUrlRedirectsToOrderDetailsPage { get; set; }
 
         [LocalizedDisplayName(LocalizableStrings.Settings.PayPal.PdtToken)]
         public string PdtToken { get; set; }

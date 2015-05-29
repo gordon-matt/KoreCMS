@@ -33,6 +33,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
             builder.RegisterType<NavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();
 
+            builder.RegisterType<CartLinkBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<CheckoutLinkBlock>().As<IContentBlock>().InstancePerDependency();
 
             builder.RegisterType<CartService>().As<ICartService>().SingleInstance();

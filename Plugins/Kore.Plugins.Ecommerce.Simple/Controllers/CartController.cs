@@ -14,18 +14,25 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
     {
         private readonly ICartService cartService;
         private readonly Lazy<IProductService> productService;
+        private readonly Lazy<StoreSettings> settings;
 
         public CartController(
             ICartService cartService,
-            Lazy<IProductService> productService)
+            Lazy<IProductService> productService,
+            Lazy<StoreSettings> settings)
         {
             this.cartService = cartService;
             this.productService = productService;
+            this.settings = settings;
         }
 
         [Route("")]
         public ActionResult Index()
         {
+            WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Store), Url.Action("Index", "Store", new { area = string.Empty }));
+            WorkContext.Breadcrumbs.Add(T(LocalizableStrings.ShoppingCart));
+
+            ViewBag.CurrencyCode = settings.Value.Currency;
             return View();
         }
 
@@ -47,14 +54,14 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             {
                 item.Quantity += 1;
                 cartService.SetCart(this.HttpContext, cart);
-                return Json(new { Success = true, Message = T(LocalizableStrings.QuantityUpdated) });
+                return Json(new { Success = true, Message = T(LocalizableStrings.QuantityUpdated).Text });
             }
 
             var product = productService.Value.FindOne(productId);
 
             if (product == null)
             {
-                return Json(new { Success = false, Message = T(LocalizableStrings.CouldNotFindProduct) });
+                return Json(new { Success = false, Message = T(LocalizableStrings.CouldNotFindProduct).Text });
             }
 
             item = new ShoppingCartItem
@@ -72,7 +79,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             cartService.SetCart(this.HttpContext, cart);
 
-            return Json(new { Success = true, Message = T(LocalizableStrings.AddToCartSuccess) });
+            return Json(new { Success = true, Message = T(LocalizableStrings.AddToCartSuccess).Text });
         }
 
         [Route("update-cart-item/{productId}")]
@@ -82,7 +89,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             if (product == null)
             {
-                return Json(new { Success = false, Message = T(LocalizableStrings.CouldNotFindProduct) });
+                return Json(new { Success = false, Message = T(LocalizableStrings.CouldNotFindProduct).Text });
             }
 
             var cart = cartService.GetCart(this.HttpContext);
@@ -110,7 +117,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             }
             cartService.SetCart(this.HttpContext, cart);
 
-            return Json(new { Success = true, Message = T(LocalizableStrings.CartUpdated) });
+            return Json(new { Success = true, Message = T(LocalizableStrings.CartUpdated).Text });
         }
 
         [Route("delete-cart-item/{productId}")]
@@ -121,13 +128,13 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             if (item == null)
             {
-                return Json(new { Success = false, Message = T(LocalizableStrings.CouldNotFindProduct) });
+                return Json(new { Success = false, Message = T(LocalizableStrings.CouldNotFindProduct).Text });
             }
 
             cart.Items.Remove(item);
             cartService.SetCart(this.HttpContext, cart);
 
-            return Json(new { Success = true, Message = T(LocalizableStrings.ItemRemovedFromCart) });
+            return Json(new { Success = true, Message = T(LocalizableStrings.ItemRemovedFromCart).Text });
         }
 
         [Route("update-cart")]
@@ -142,7 +149,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 cartService.SetCart(this.HttpContext, cart);
             }
 
-            return Json(new { Success = true, Message = T(LocalizableStrings.CartUpdated) });
+            return Json(new { Success = true, Message = T(LocalizableStrings.CartUpdated).Text });
         }
     }
 }

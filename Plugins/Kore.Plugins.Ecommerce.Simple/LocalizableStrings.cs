@@ -4,6 +4,12 @@
     {
         public static class ContentBlocks
         {
+            public static class CartLinkBlock
+            {
+                public const string CssClass = "Plugins.Ecommerce.Simple/ContentBlocks.CartLinkBlock.CssClass";
+                public const string IconCssClass = "Plugins.Ecommerce.Simple/ContentBlocks.CartLinkBlock.IconCssClass";
+            }
+
             public static class CheckoutLinkBlock
             {
                 public const string CssClass = "Plugins.Ecommerce.Simple/ContentBlocks.CheckoutLinkBlock.CssClass";
@@ -15,7 +21,6 @@
         {
             public static class PayPal
             {
-                public const string CancelUrlRedirectsToOrderDetailsPage = "Plugins.Ecommerce.Simple/Settings.PayPal.CancelUrlRedirectsToOrderDetailsPage";
                 public const string CurrencyCode = "Plugins.Ecommerce.Simple/Settings.PayPal.CurrencyCode";
                 public const string Merchant = "Plugins.Ecommerce.Simple/Settings.PayPal.Merchant";
                 public const string PdtToken = "Plugins.Ecommerce.Simple/Settings.PayPal.PdtToken";
@@ -96,11 +101,19 @@
             public const string AllCategoryFormat = "Plugins.Ecommerce.Simple/Filter.AllCategoryFormat";
         }
 
+        public static class CheckoutCompleted
+        {
+            public const string ReturnButtonText = "Plugins.Ecommerce.Simple/CheckoutCompleted.ReturnButtonText";
+            public const string Title = "Plugins.Ecommerce.Simple/CheckoutCompleted.Title";
+            public const string ThankYouMessage = "Plugins.Ecommerce.Simple/CheckoutCompleted.ThankYouMessage";
+        }
+
         public const string AddToCart = "Plugins.Ecommerce.Simple/AddToCart";
         public const string BillingAddress = "Plugins.Ecommerce.Simple/BillingAddress";
         public const string Categories = "Plugins.Ecommerce.Simple/Categories";
         public const string Checkout = "Plugins.Ecommerce.Simple/Checkout";
         public const string CircularRelationshipError = "Plugins.Ecommerce.Simple/CircularRelationshipError";
+        public const string Completed = "Plugins.Ecommerce.Simple/Completed";
         public const string ConnectingToPayPal = "Plugins.Ecommerce.Simple/ConnectingToPayPal";
         public const string ContinueShopping = "Plugins.Ecommerce.Simple/ContinueShopping";
         public const string MadeChanges = "Plugins.Ecommerce.Simple/MadeChanges";

@@ -118,7 +118,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
         {
             if (!CheckPermission(WatchdogPermissions.StartStopServices))
             {
-                return new ChangeStatusResult { Successful = false, Message = T(LocalizableStrings.Unauthorized) };
+                return new ChangeStatusResult { Successful = false, Message = T(LocalizableStrings.Unauthorized).Text };
             }
 
             string serviceName = (string)parameters["name"];
@@ -146,7 +146,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
         {
             if (!CheckPermission(WatchdogPermissions.StartStopServices))
             {
-                return new ChangeStatusResult { Successful = false, Message = T(LocalizableStrings.Unauthorized) };
+                return new ChangeStatusResult { Successful = false, Message = T(LocalizableStrings.Unauthorized).Text };
             }
 
             string serviceName = (string)parameters["name"];
@@ -173,7 +173,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
         {
             if (!CheckPermission(WatchdogPermissions.StartStopServices))
             {
-                return new ChangeStatusResult { Successful = false, Message = T(LocalizableStrings.Unauthorized) };
+                return new ChangeStatusResult { Successful = false, Message = T(LocalizableStrings.Unauthorized).Text };
             }
 
             string serviceName = (string)parameters["name"];

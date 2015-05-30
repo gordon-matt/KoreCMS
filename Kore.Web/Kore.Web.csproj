@@ -323,6 +323,11 @@
     <Compile Include="Mvc\KoreUI\Modal\Modal.cs" />
     <Compile Include="Mvc\KoreUI\Modal\ModalBuilder.cs" />
     <Compile Include="Mvc\KoreUI\Modal\ModalSectionPanel.cs" />
+    <Compile Include="Mvc\KoreUI\Panel\Bootstrap3PanelProvider.cs" />
+    <Compile Include="Mvc\KoreUI\Panel\Panel.cs" />
+    <Compile Include="Mvc\KoreUI\Panel\IPanelProvider.cs" />
+    <Compile Include="Mvc\KoreUI\Panel\PanelBuilder.cs" />
+    <Compile Include="Mvc\KoreUI\Panel\PanelSection.cs" />
     <Compile Include="Mvc\KoreUI\Providers\BaseUIProvider.cs" />
     <Compile Include="Mvc\KoreUI\Providers\Bootstrap3UIProvider.cs" />
     <Compile Include="Mvc\KoreUI\Providers\IKoreUIProvider.cs" />

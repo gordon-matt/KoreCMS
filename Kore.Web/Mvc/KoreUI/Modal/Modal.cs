@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 
 namespace Kore.Web.Mvc.KoreUI
 {
@@ -21,7 +22,7 @@ namespace Kore.Web.Mvc.KoreUI
         {
             if (string.IsNullOrEmpty(id))
             {
-                id = "modal";
+                id = "modal-" + Guid.NewGuid();
             }
             this.Id = HtmlHelper.GenerateIdFromName(id);
             EnsureHtmlAttribute("id", this.Id);

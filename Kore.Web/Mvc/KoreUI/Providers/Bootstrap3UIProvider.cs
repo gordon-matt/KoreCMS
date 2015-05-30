@@ -8,6 +8,7 @@ namespace Kore.Web.Mvc.KoreUI.Providers
     {
         private IAccordionProvider accordionProvider;
         private IModalProvider modalProvider;
+        private IPanelProvider panelProvider;
         private ITabsProvider tabsProvider;
         private IThumbnailProvider thumbnailProvider;
         private IToolbarProvider toolbarProvider;
@@ -151,6 +152,11 @@ namespace Kore.Web.Mvc.KoreUI.Providers
         public override IModalProvider ModalProvider
         {
             get { return modalProvider ?? (modalProvider = new Bootstrap3ModalProvider()); }
+        }
+
+        public override IPanelProvider PanelProvider
+        {
+            get { return panelProvider ?? (panelProvider = new Bootstrap3PanelProvider()); }
         }
 
         public override ITabsProvider TabsProvider

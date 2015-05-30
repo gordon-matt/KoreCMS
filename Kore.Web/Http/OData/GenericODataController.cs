@@ -8,7 +8,9 @@ using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using System.Web.Http.Results;
 using Castle.Core.Logging;
+using Kore.Caching;
 using Kore.Data;
+using Kore.Data.Services;
 using Kore.Infrastructure;
 using Kore.Logging;
 using Kore.Web.Security.Membership.Permissions;
@@ -17,13 +19,20 @@ namespace Kore.Web.Http.OData
 {
     public abstract class GenericODataController<TEntity, TKey> : ODataController where TEntity : class
     {
-        protected IRepository<TEntity> Repository { get; private set; }
+        protected IGenericDataService<TEntity> Service { get; private set; }
 
         protected ILogger Logger { get; private set; }
 
+        public GenericODataController(IGenericDataService<TEntity> service)
+        {
+            this.Service = service;
+            this.Logger = LoggingUtilities.Resolve();
+        }
+
         public GenericODataController(IRepository<TEntity> repository)
         {
-            this.Repository = repository;
+            var cacheManager = EngineContext.Current.Resolve<ICacheManager>();
+            this.Service = new GenericDataService<TEntity>(cacheManager, repository);
             this.Logger = LoggingUtilities.Resolve();
         }
 
@@ -35,7 +44,7 @@ namespace Kore.Web.Http.OData
             {
                 return Enumerable.Empty<TEntity>().AsQueryable();
             }
-            return Repository.Table;
+            return Service.Repository.Table;
         }
 
         // GET: odata/<Entity>(5)
@@ -46,7 +55,7 @@ namespace Kore.Web.Http.OData
             {
                 return SingleResult.Create(Enumerable.Empty<TEntity>().AsQueryable());
             }
-            var entity = Repository.Find(key);
+            var entity = Service.FindOne(key);
             return SingleResult.Create(new[] { entity }.AsQueryable());
         }
 
@@ -71,7 +80,7 @@ namespace Kore.Web.Http.OData
             try
             {
                 OnBeforeSave(entity);
-                Repository.Update(entity);
+                Service.Update(entity);
                 OnAfterSave(entity);
             }
             catch (DbUpdateConcurrencyException x)
@@ -104,7 +113,7 @@ namespace Kore.Web.Http.OData
             SetNewId(entity);
 
             OnBeforeSave(entity);
-            Repository.Insert(entity);
+            Service.Insert(entity);
             OnAfterSave(entity);
 
             return Created(entity);
@@ -124,7 +133,7 @@ namespace Kore.Web.Http.OData
                 return BadRequest(ModelState);
             }
 
-            TEntity entity = Repository.Find(key);
+            TEntity entity = Service.FindOne(key);
             if (entity == null)
             {
                 return NotFound();
@@ -134,7 +143,7 @@ namespace Kore.Web.Http.OData
 
             try
             {
-                Repository.Update(entity);
+                Service.Update(entity);
                 //db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException x)
@@ -159,20 +168,20 @@ namespace Kore.Web.Http.OData
                 return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
             }
 
-            TEntity entity = Repository.Find(key);
+            TEntity entity = Service.FindOne(key);
             if (entity == null)
             {
                 return NotFound();
             }
 
-            Repository.Delete(entity);
+            Service.Delete(entity);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         protected virtual bool EntityExists(TKey key)
         {
-            return Repository.Find(key) != null;
+            return Service.FindOne(key) != null;
         }
 
         protected abstract TKey GetId(TEntity entity);

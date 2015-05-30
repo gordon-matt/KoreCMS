@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Kore.Infrastructure;
 using Kore.Localization;
+using Kore.Plugins.Maintenance.Watchdog.Services;
 using Kore.Web.Configuration;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
@@ -27,6 +28,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Infrastructure
             builder.RegisterType<WatchdogSettings>().As<ISettings>().SingleInstance();
             builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();
             builder.RegisterType<WatchdogPermissions>().As<IPermissionProvider>().SingleInstance();
+            builder.RegisterType<WatchdogInstanceService>().As<IWatchdogInstanceService>().InstancePerDependency();
         }
 
         public int Order

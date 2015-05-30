@@ -13,13 +13,13 @@ using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Localization;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
+using Kore.Web.ContentManagement.Areas.Admin.Messaging;
+using Kore.Web.ContentManagement.Areas.Admin.Messaging.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Newsletters;
 using Kore.Web.ContentManagement.Areas.Admin.Newsletters.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.Pages;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.ContentManagement.FileSystems.Media;
-using Kore.Web.ContentManagement.Messaging;
-using Kore.Web.ContentManagement.Messaging.Services;
 using Kore.Web.Indexing.Services;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
@@ -48,6 +48,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.RegisterType<MessageService>().As<IMessageService>().InstancePerDependency();
             builder.RegisterType<MessageService>().As<IQueuedMessageProvider>().InstancePerDependency();
             builder.RegisterType<MessageTemplateService>().As<IMessageTemplateService>().InstancePerDependency();
+            builder.RegisterType<QueuedEmailService>().As<IQueuedEmailService>().InstancePerDependency();
 
             // Pages
             builder.RegisterType<PageService>().As<IPageService>().InstancePerDependency();

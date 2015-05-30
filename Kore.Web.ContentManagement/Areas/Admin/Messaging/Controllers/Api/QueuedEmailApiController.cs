@@ -1,6 +1,6 @@
 ﻿using System;
-using Kore.Data;
-using Kore.Web.ContentManagement.Messaging.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Messaging.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Messaging.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -9,8 +9,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers.Api
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class QueuedEmailApiController : GenericODataController<QueuedEmail, Guid>
     {
-        public QueuedEmailApiController(IRepository<QueuedEmail> repository)
-            : base(repository)
+        public QueuedEmailApiController(IQueuedEmailService service)
+            : base(service)
         {
         }
 

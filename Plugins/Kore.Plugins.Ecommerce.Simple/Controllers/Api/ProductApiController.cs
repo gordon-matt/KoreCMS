@@ -1,5 +1,6 @@
 ﻿using Kore.Data;
 using Kore.Plugins.Ecommerce.Simple.Data.Domain;
+using Kore.Plugins.Ecommerce.Simple.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -8,8 +9,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers.Api
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class ProductApiController : GenericODataController<Product, int>
     {
-        public ProductApiController(IRepository<Product> repository)
-            : base(repository)
+        public ProductApiController(IProductService service)
+            : base(service)
         {
         }
 

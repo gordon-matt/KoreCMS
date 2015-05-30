@@ -4,8 +4,10 @@ using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using Kore.Data;
+using Kore.Data.Services;
 using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Blog.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -17,9 +19,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
         private readonly Lazy<IMembershipService> membershipService;
 
         public BlogApiController(
-            IRepository<BlogEntry> repository,
+            IBlogService service,
             Lazy<IMembershipService> membershipService)
-            : base(repository)
+            : base(service)
         {
             this.membershipService = membershipService;
         }
@@ -47,7 +49,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 
         public override IHttpActionResult Put([FromODataUri] Guid key, BlogEntry entity)
         {
-            var currentEntry = Repository.Find(entity.Id);
+            var currentEntry = Service.FindOne(entity.Id);
             entity.UserId = currentEntry.UserId;
             entity.DateCreatedUtc = currentEntry.DateCreatedUtc;
             return base.Put(key, entity);

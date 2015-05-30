@@ -13,12 +13,10 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers.Api
     public class PluginApiController : ODataController
     {
         private readonly IPluginFinder pluginFinder;
-        private readonly Lazy<IWebHelper> webHelper;
 
-        public PluginApiController(IPluginFinder pluginFinder, Lazy<IWebHelper> webHelper)
+        public PluginApiController(IPluginFinder pluginFinder)
         {
             this.pluginFinder = pluginFinder;
-            this.webHelper = webHelper;
         }
 
         // GET: odata/kore/cms/Plugins

@@ -4,7 +4,9 @@ using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.Results;
 using Kore.Data;
+using Kore.Data.Services;
 using Kore.Logging.Domain;
+using Kore.Web.Areas.Admin.Log.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -12,8 +14,8 @@ namespace Kore.Web.Areas.Admin.Log.Controllers.Api
 {
     public class LogApiController : GenericODataController<LogEntry, Guid>
     {
-        public LogApiController(IRepository<LogEntry> repository)
-            : base(repository)
+        public LogApiController(ILogService service)
+            : base(service)
         {
         }
 
@@ -45,7 +47,7 @@ namespace Kore.Web.Areas.Admin.Log.Controllers.Api
                 return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
             }
 
-            Repository.DeleteAll();
+            Service.DeleteAll();
 
             return Ok();
         }

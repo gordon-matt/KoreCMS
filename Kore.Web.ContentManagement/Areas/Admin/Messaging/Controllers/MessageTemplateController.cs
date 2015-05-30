@@ -2,7 +2,7 @@
 using Kore.Web.Mvc;
 using Kore.Web.Security.Membership.Permissions;
 
-namespace Kore.Web.ContentManagement.Messaging.Controllers
+namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers
 {
     [Authorize]
     [RouteArea(CmsConstants.Areas.Messaging)]

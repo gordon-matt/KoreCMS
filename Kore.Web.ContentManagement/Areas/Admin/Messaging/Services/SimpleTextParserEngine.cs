@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging.Models;
 
-namespace Kore.Web.ContentManagement.Messaging.Services
+namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Services
 {
     public class SimpleTextParserEngine : IParserEngine
     {

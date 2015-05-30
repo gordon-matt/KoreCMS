@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http.OData;
 using Kore.Collections;
-using Kore.Data;
 using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
@@ -13,11 +13,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class PageTreeApiController : ODataController
     {
-        private readonly IRepository<Page> pageRepository;
+        private readonly IPageService service;
 
-        public PageTreeApiController(IRepository<Page> pageRepository)
+        public PageTreeApiController(IPageService service)
         {
-            this.pageRepository = pageRepository;
+            this.service = service;
         }
 
         [EnableQuery]
@@ -28,7 +28,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 return Enumerable.Empty<PageTreeItem>();
             }
 
-            var pages = pageRepository.Table.ToHashSet();
+            var pages = service.Find();
 
             var hierarchy = pages
                 .Where(x => x.ParentId == null && x.RefId == null)

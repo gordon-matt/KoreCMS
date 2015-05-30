@@ -36,9 +36,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
             builder.RegisterType<CartLinkBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<CheckoutLinkBlock>().As<IContentBlock>().InstancePerDependency();
 
-            builder.RegisterType<CartService>().As<ICartService>().SingleInstance();
             builder.RegisterType<AddressService>().As<IAddressService>().InstancePerDependency();
+            builder.RegisterType<CartService>().As<ICartService>().InstancePerDependency();
             builder.RegisterType<CategoryService>().As<ICategoryService>().InstancePerDependency();
+            builder.RegisterType<OrderLineService>().As<IOrderLineService>().InstancePerDependency();
+            builder.RegisterType<OrderNoteService>().As<IOrderNoteService>().InstancePerDependency();
             builder.RegisterType<OrderService>().As<IOrderService>().InstancePerDependency();
             builder.RegisterType<ProductImageService>().As<IProductImageService>().InstancePerDependency();
             builder.RegisterType<ProductService>().As<IProductService>().InstancePerDependency();

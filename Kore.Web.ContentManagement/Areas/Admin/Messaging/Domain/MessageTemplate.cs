@@ -3,7 +3,7 @@ using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
 
-namespace Kore.Web.ContentManagement.Messaging.Domain
+namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Domain
 {
     public class MessageTemplate : IEntity
     {

@@ -3,7 +3,6 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.Results;
-using Castle.Core.Logging;
 using Kore.Data;
 using Kore.Tasks;
 using Kore.Tasks.Domain;
@@ -40,7 +39,7 @@ namespace Kore.Web.Areas.Admin.ScheduledTasks.Controllers.Api
 
             int taskId = (int)parameters["taskId"];
 
-            var scheduleTask = Repository.Find(taskId);
+            var scheduleTask = Service.FindOne(taskId);
             if (scheduleTask == null)
                 return NotFound();
 

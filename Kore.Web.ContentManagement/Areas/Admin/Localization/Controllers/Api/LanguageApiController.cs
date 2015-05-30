@@ -6,9 +6,11 @@ using System.Web.Http.OData;
 using System.Web.Http.Results;
 using Kore.Caching;
 using Kore.Data;
+using Kore.Data.Services;
 using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Localization.Domain;
+using Kore.Localization.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 using LanguageEntity = Kore.Localization.Domain.Language;
@@ -19,15 +21,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
     public class LanguageApiController : GenericODataController<LanguageEntity, Guid>
     {
         private readonly Lazy<ICacheManager> cacheManager;
-        private readonly Lazy<IRepository<LocalizableString>> localizableStringRepository;
+        private readonly Lazy<ILocalizableStringService> localizableStringService;
 
         public LanguageApiController(
-            IRepository<LanguageEntity> repository,
-            Lazy<IRepository<LocalizableString>> localizableStringRepository,
+            ILanguageService service,
+            Lazy<ILocalizableStringService> localizableStringService,
             Lazy<ICacheManager> cacheManager)
-            : base(repository)
+            : base(service)
         {
-            this.localizableStringRepository = localizableStringRepository;
+            this.localizableStringService = localizableStringService;
             this.cacheManager = cacheManager;
         }
 
@@ -49,7 +51,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
                 return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
             }
 
-            localizableStringRepository.Value.DeleteAll();
+            localizableStringService.Value.DeleteAll();
 
             var languagePacks = EngineContext.Current.ResolveAll<ILanguagePack>();
 
@@ -67,7 +69,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
                     });
                 }
             }
-            localizableStringRepository.Value.Insert(toInsert);
+            localizableStringService.Value.Insert(toInsert);
 
             cacheManager.Value.RemoveByPattern("Kore_LocalizableStrings_.*");
 

@@ -4,7 +4,7 @@ using System.Net.Mail;
 using System.Text;
 using Kore.Serialization;
 
-namespace Kore.Web.ContentManagement.Messaging
+namespace Kore.Web.ContentManagement.Areas.Admin.Messaging
 {
     public class MailMessageWrapper
     {

@@ -6,12 +6,11 @@ using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.Results;
-using Castle.Core.Logging;
 using Kore.Collections;
 using Kore.Data;
 using Kore.Plugins.Widgets.Google.Data.Domain;
 using Kore.Plugins.Widgets.Google.Models;
-using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -19,14 +18,14 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
 {
     public class GoogleXmlSitemapApiController : GenericODataController<GoogleSitemapPageConfig, int>
     {
-        private IRepository<Page> pageRepository;
+        private IPageService pageService;
 
         public GoogleXmlSitemapApiController(
             IRepository<GoogleSitemapPageConfig> repository,
-            IRepository<Page> pageRepository)
+            IPageService pageService)
             : base(repository)
         {
-            this.pageRepository = pageRepository;
+            this.pageService = pageService;
         }
 
         #region GenericODataController<GoogleSitemapPageConfig, int> Members
@@ -63,9 +62,9 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
             }
 
             // First ensure that current pages are in the config
-            var config = Repository.Table.ToHashSet();
+            var config = Service.Find();
             var configPageIds = config.Select(x => x.PageId).ToHashSet();
-            var pages = pageRepository.Table.ToHashSet();
+            var pages = pageService.Find();
             var pageIds = pages.Select(x => x.Id).ToHashSet();
 
             var newPageIds = pageIds.Except(configPageIds);
@@ -73,7 +72,7 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
 
             if (pageIdsToDelete.Any())
             {
-                Repository.Delete(x => pageIdsToDelete.Contains(x.PageId));
+                Service.Delete(x => pageIdsToDelete.Contains(x.PageId));
             }
 
             if (newPageIds.Any())
@@ -87,9 +86,9 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
                         Priority = .5f
                     });
 
-                Repository.Insert(toInsert);
+                Service.Insert(toInsert);
             }
-            config = Repository.Table.ToHashSet();
+            config = Service.Find();
 
             var collection = new HashSet<GoogleSitemapPageConfigModel>();
             foreach (var item in config)
@@ -123,7 +122,7 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            var entity = Repository.Find(id);
+            var entity = Service.FindOne(id);
 
             if (entity == null)
             {
@@ -133,7 +132,7 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
             {
                 entity.ChangeFrequency = (ChangeFrequency)changeFrequency;
                 entity.Priority = priority;
-                Repository.Update(entity);
+                Service.Update(entity);
 
                 return Updated(entity);
                 //return Updated(new GoogleSitemapPageConfigModel
@@ -154,10 +153,10 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
                 return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
             }
 
-            var config = Repository.Table.ToHashSet();
+            var config = Service.Find();
             var file = new GoogleSitemapXmlFile();
 
-            var pages = pageRepository.Table.ToHashSet();
+            var pages = pageService.Find();
             foreach (var item in config)
             {
                 var page = pages.First(x => x.Id == item.PageId);

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Kore.Infrastructure;
-using Kore.Web.ContentManagement.Messaging.Services;
+using Kore.Web.ContentManagement.Areas.Admin.Messaging.Services;
 
-namespace Kore.Web.ContentManagement.Messaging
+namespace Kore.Web.ContentManagement.Areas.Admin.Messaging
 {
     public class MessageTemplatesUpdater : IStartupTask
     {

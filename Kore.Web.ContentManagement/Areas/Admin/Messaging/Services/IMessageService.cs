@@ -6,9 +6,9 @@ using System.Text;
 using Kore.Caching;
 using Kore.Data;
 using Kore.Data.Services;
-using Kore.Web.ContentManagement.Messaging.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Messaging.Domain;
 
-namespace Kore.Web.ContentManagement.Messaging.Services
+namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Services
 {
     public interface IMessageService : IGenericDataService<QueuedEmail>
     {

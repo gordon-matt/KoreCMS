@@ -1,6 +1,6 @@
 ﻿using System;
-using Kore.Data;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -9,8 +9,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class PageTypeApiController : GenericODataController<PageType, Guid>
     {
-        public PageTypeApiController(IRepository<PageType> repository)
-            : base(repository)
+        public PageTypeApiController(IPageTypeService service)
+            : base(service)
         {
         }
 

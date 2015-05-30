@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging.Models;
 
-namespace Kore.Web.ContentManagement.Messaging.Services
+namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Services
 {
     public class UrlContentParserEngine : IParserEngine
     {

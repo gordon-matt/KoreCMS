@@ -8,10 +8,10 @@ using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using System.Web.Http.Results;
 using Kore.Collections;
-using Kore.Data;
 using Kore.Localization;
 using Kore.Plugins.Maintenance.Watchdog.Data.Domain;
 using Kore.Plugins.Maintenance.Watchdog.Models;
+using Kore.Plugins.Maintenance.Watchdog.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 using Newtonsoft.Json;
@@ -27,9 +27,9 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
         public Localizer T { get; set; }
 
         public WatchdogInstanceApiController(
-            IRepository<WatchdogInstance> repository,
+            IWatchdogInstanceService service,
             Lazy<WatchdogSettings> settings)
-            : base(repository)
+            : base(service)
         {
             this.settings = settings;
             T = LocalizationUtilities.Resolve();
@@ -70,7 +70,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
 
             int watchdogInstanceId = (int)parameters["watchdogInstanceId"];
 
-            var instance = Repository.Find(watchdogInstanceId);
+            var instance = Service.FindOne(watchdogInstanceId);
 
             using (var client = new HttpClient())
             {
@@ -126,7 +126,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
 
             using (var client = new HttpClient())
             {
-                var watchdogInstance = Repository.Find(watchdogInstanceId);
+                var watchdogInstance = Service.FindOne(watchdogInstanceId);
 
                 var response = client.GetAsync(string.Format(
                     urlFormat,
@@ -154,7 +154,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
 
             using (var client = new HttpClient())
             {
-                var watchdogInstance = Repository.Find(watchdogInstanceId);
+                var watchdogInstance = Service.FindOne(watchdogInstanceId);
 
                 var response = client.GetAsync(string.Format(
                     urlFormat,
@@ -181,7 +181,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
 
             using (var client = new HttpClient())
             {
-                var watchdogInstance = Repository.Find(watchdogInstanceId);
+                var watchdogInstance = Service.FindOne(watchdogInstanceId);
 
                 var response = client.GetAsync(string.Format(
                     urlFormat,
@@ -208,7 +208,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
 
             using (var client = new HttpClient())
             {
-                var watchdogInstance = Repository.Find(watchdogInstanceId);
+                var watchdogInstance = Service.FindOne(watchdogInstanceId);
 
                 var response = client.GetAsync(string.Format(
                     urlFormat,
@@ -234,7 +234,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
 
             using (var client = new HttpClient())
             {
-                var watchdogInstance = Repository.Find(watchdogInstanceId);
+                var watchdogInstance = Service.FindOne(watchdogInstanceId);
 
                 var response = client.GetAsync(string.Format(
                     urlFormat,

@@ -6,8 +6,6 @@ using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using System.Web.Http.Results;
-using Castle.Core.Logging;
-using Kore.Data;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Http.OData;
@@ -21,9 +19,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         private readonly IHistoricPageService historicPageService;
 
         public PageApiController(
-            IRepository<Page> repository,
+            IPageService service,
             IHistoricPageService historicPageService)
-            : base(repository)
+            : base(service)
         {
             this.historicPageService = historicPageService;
         }
@@ -35,7 +33,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             {
                 return Enumerable.Empty<Page>().AsQueryable();
             }
-            return Repository.Table.Where(x => x.RefId == null);
+            return Service.Repository.Table.Where(x => x.RefId == null);
         }
 
         public override IHttpActionResult Patch([FromODataUri] Guid key, Delta<Page> patch)
@@ -50,7 +48,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            var entity = Repository.Find(key);
+            var entity = Service.FindOne(key);
             if (entity == null)
             {
                 return NotFound();
@@ -60,7 +58,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
             try
             {
-                var currentPage = Repository.Find(entity.Id);
+                var currentPage = Service.FindOne(entity.Id);
 
                 // archive current version before updating
                 var historicPage = new HistoricPage
@@ -84,7 +82,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 };
                 historicPageService.Insert(historicPage);
 
-                Repository.Update(entity);
+                Service.Update(entity);
             }
             catch (DbUpdateConcurrencyException x)
             {
@@ -126,7 +124,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
             try
             {
-                var currentPage = Repository.Find(entity.Id);
+                var currentPage = Service.FindOne(entity.Id);
 
                 // archive current version before updating
                 var historicPage = new HistoricPage
@@ -152,7 +150,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
                 entity.DateCreatedUtc = currentPage.DateCreatedUtc;
                 entity.DateModifiedUtc = DateTime.UtcNow;
-                Repository.Update(entity);
+                Service.Update(entity);
             }
             catch (DbUpdateConcurrencyException x)
             {
@@ -189,10 +187,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             Guid pageId = (Guid)parameters["pageId"];
             string cultureCode = (string)parameters["cultureCode"];
 
-            var record = Repository.Table.FirstOrDefault(x => x.RefId == pageId && x.CultureCode == cultureCode);
+            var record = Service.FindOne(x => x.RefId == pageId && x.CultureCode == cultureCode);
             if (record == null)
             {
-                record = Repository.Find(pageId);
+                record = Service.FindOne(pageId);
 
                 var translation = new Page
                 {
@@ -211,7 +209,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     RefId = pageId
                 };
 
-                Repository.Insert(translation);
+                Service.Insert(translation);
 
                 return new EdmPage
                 {

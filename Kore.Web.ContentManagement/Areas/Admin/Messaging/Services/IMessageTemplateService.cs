@@ -3,7 +3,7 @@ using Kore.Caching;
 using Kore.Data;
 using Kore.Data.Services;
 
-namespace Kore.Web.ContentManagement.Messaging.Services
+namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Services
 {
     public interface IMessageTemplateService : IGenericDataService<Domain.MessageTemplate>
     {

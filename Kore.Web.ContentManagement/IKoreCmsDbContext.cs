@@ -4,8 +4,8 @@ using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Messaging.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
-using Kore.Web.ContentManagement.Messaging.Domain;
 
 namespace Kore.Web.ContentManagement
 {

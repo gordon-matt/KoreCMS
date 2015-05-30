@@ -145,6 +145,7 @@
     <Compile Include="Areas\Admin\Blog\Services\IBlogService.cs" />
     <Compile Include="Areas\Admin\Localization\Models\LanguagePackFile.cs" />
     <Compile Include="Areas\Admin\Media\Services\IMediaService.cs" />
+    <Compile Include="Areas\Admin\Messaging\Services\IQueuedEmailService.cs" />
     <Compile Include="CmsPermissions.cs" />
     <Compile Include="Infrastructure\IAutoMenuProvider.cs" />
     <Compile Include="Areas\Admin\Newsletters\ContentBlocks\NewsletterSubscriptionBlock.cs" />

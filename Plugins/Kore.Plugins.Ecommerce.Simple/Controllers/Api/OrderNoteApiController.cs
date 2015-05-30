@@ -1,5 +1,5 @@
-﻿using Kore.Data;
-using Kore.Plugins.Ecommerce.Simple.Data.Domain;
+﻿using Kore.Plugins.Ecommerce.Simple.Data.Domain;
+using Kore.Plugins.Ecommerce.Simple.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -7,8 +7,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers.Api
 {
     public class OrderNoteApiController : GenericODataController<OrderNote, int>
     {
-        public OrderNoteApiController(IRepository<OrderNote> repository)
-            : base(repository)
+        public OrderNoteApiController(IOrderNoteService service)
+            : base(service)
         {
         }
 

@@ -6,8 +6,8 @@ using System.Web.Mvc;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web;
-using Kore.Web.ContentManagement.Messaging;
-using Kore.Web.ContentManagement.Messaging.Services;
+using Kore.Web.ContentManagement.Areas.Admin.Messaging;
+using Kore.Web.ContentManagement.Areas.Admin.Messaging.Services;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Routing;
 using Kore.Web.Security.Membership;
@@ -226,7 +226,7 @@ namespace Kore.Controllers
 
                 // TODO: Make this a message template
                 await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                
+
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -499,7 +499,7 @@ namespace Kore.Controllers
                         // Send an email with this link
                         string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                        
+
                         // TODO: Make this a message template
                         SendEmail(user.Email, callbackUrl, "Confirm your account", "Please confirm your account by clicking this link");
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Web;
 
-namespace Kore.Web.ContentManagement.Messaging.Services
+namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Services
 {
     public interface ITokenizer
     {

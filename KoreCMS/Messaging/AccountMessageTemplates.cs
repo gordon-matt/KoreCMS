@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Kore.Web.ContentManagement.Messaging;
+using Kore.Web.ContentManagement.Areas.Admin.Messaging;
 
 namespace KoreCMS.Messaging
 {

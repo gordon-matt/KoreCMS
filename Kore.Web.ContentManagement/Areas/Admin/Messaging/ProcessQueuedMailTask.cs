@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Linq;
-using Autofac;
-using Castle.Core.Logging;
 using Kore.Infrastructure;
 using Kore.Logging;
 using Kore.Net.Mail;
 using Kore.Tasks;
 
-namespace Kore.Web.ContentManagement.Messaging
+namespace Kore.Web.ContentManagement.Areas.Admin.Messaging
 {
     public class ProcessQueuedMailTask : ITask
     {

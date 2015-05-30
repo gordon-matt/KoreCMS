@@ -6,10 +6,10 @@ using Kore.Localization.Models;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Messaging.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
-using Kore.Web.ContentManagement.Messaging.Domain;
 using Kore.Web.Infrastructure;
 
 namespace Kore.Web.ContentManagement.Infrastructure

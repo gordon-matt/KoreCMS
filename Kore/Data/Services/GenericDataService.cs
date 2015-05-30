@@ -63,7 +63,7 @@ namespace Kore.Data.Services
 
         #region Constructor
 
-        protected GenericDataService(ICacheManager cacheManager, IRepository<TEntity> repository)
+        public GenericDataService(ICacheManager cacheManager, IRepository<TEntity> repository)
         {
             this.cacheManager = cacheManager;
             this.repository = repository;

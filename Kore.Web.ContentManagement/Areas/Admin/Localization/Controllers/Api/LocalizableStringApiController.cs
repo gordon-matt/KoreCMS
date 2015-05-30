@@ -11,6 +11,7 @@ using Kore.Collections;
 using Kore.Data;
 using Kore.Localization.Domain;
 using Kore.Localization.Models;
+using Kore.Localization.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -22,9 +23,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
         private readonly ICacheManager cacheManager;
 
         public LocalizableStringApiController(
-            IRepository<LocalizableString> repository,
+            ILocalizableStringService service,
             ICacheManager cacheManager)
-            : base(repository)
+            : base(service)
         {
             this.cacheManager = cacheManager;
         }
@@ -50,7 +51,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
 
             string cultureCode = (string)parameters["cultureCode"];
 
-            var query = Repository.Table
+            var query = Service.Repository.Table
                     .Where(x => x.CultureCode == null || x.CultureCode == cultureCode)
                     .GroupBy(x => x.TextKey)
                     .Select(grp => new ComparitiveLocalizableString
@@ -87,7 +88,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
                 return BadRequest();
             }
 
-            var localizedString = Repository.Table.FirstOrDefault(x => x.CultureCode == cultureCode && x.TextKey == key);
+            var localizedString = Service.Repository.Table.FirstOrDefault(x => x.CultureCode == cultureCode && x.TextKey == key);
 
             if (localizedString == null)
             {
@@ -98,12 +99,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
                     TextKey = key,
                     TextValue = entity.LocalizedValue
                 };
-                Repository.Insert(localizedString);
+                Service.Insert(localizedString);
             }
             else
             {
                 localizedString.TextValue = entity.LocalizedValue;
-                Repository.Update(localizedString);
+                Service.Update(localizedString);
             }
 
             cacheManager.Remove(string.Concat("Kore_LocalizableStrings_", cultureCode));
@@ -122,14 +123,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
             string cultureCode = (string)parameters["cultureCode"];
             string key = (string)parameters["key"];
 
-            var entity = Repository.Table.FirstOrDefault(x => x.CultureCode == cultureCode && x.TextKey == key);
+            var entity = Service.FindOne(x => x.CultureCode == cultureCode && x.TextKey == key);
             if (entity == null)
             {
                 return NotFound();
             }
 
             entity.TextValue = null;
-            Repository.Update(entity);
+            Service.Update(entity);
             //Repository.Delete(entity);
 
             cacheManager.Remove(string.Concat("Kore_LocalizableStrings_", cultureCode));

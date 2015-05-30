@@ -3,8 +3,8 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.Results;
-using Kore.Data;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -13,14 +13,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class HistoricPageApiController : GenericODataController<HistoricPage, Guid>
     {
-        private readonly IRepository<Page> pageRepository;
+        private readonly IPageService pageService;
 
         public HistoricPageApiController(
-            IRepository<HistoricPage> repository,
-            IRepository<Page> pageRepository)
-            : base(repository)
+            IHistoricPageService service,
+            IPageService pageService)
+            : base(service)
         {
-            this.pageRepository = pageRepository;
+            this.pageService = pageService;
         }
 
         protected override Guid GetId(HistoricPage entity)
@@ -41,14 +41,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
             }
 
-            var pageToRestore = Repository.Find(key);
+            var pageToRestore = Service.FindOne(key);
 
             if (pageToRestore == null)
             {
                 return NotFound();
             }
 
-            var page = pageRepository.Find(pageToRestore.PageId);
+            var page = pageService.FindOne(pageToRestore.PageId);
 
             // first we save current as a NEW historical page
             var backupPage = new HistoricPage
@@ -69,7 +69,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 RefId = page.RefId,
                 ArchivedDate = DateTime.UtcNow
             };
-            Repository.Insert(backupPage);
+            Service.Insert(backupPage);
 
             // then restore the historical page, as requested
             page.ParentId = pageToRestore.ParentId;
@@ -85,7 +85,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             page.CultureCode = pageToRestore.CultureCode;
             page.RefId = pageToRestore.RefId;
 
-            pageRepository.Update(page);
+            pageService.Update(page);
 
             return Ok();
         }

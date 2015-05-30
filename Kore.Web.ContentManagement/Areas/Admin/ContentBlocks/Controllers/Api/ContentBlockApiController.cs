@@ -7,11 +7,10 @@ using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using System.Web.Http.Results;
-using Castle.Core.Logging;
-using Kore.Data;
 using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -20,8 +19,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class ContentBlockApiController : GenericODataController<ContentBlock, Guid>
     {
-        public ContentBlockApiController(IRepository<ContentBlock> repository)
-            : base(repository)
+        public ContentBlockApiController(IContentBlockService service)
+            : base(service)
         {
         }
 
@@ -43,7 +42,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
                 return Enumerable.Empty<ContentBlock>().AsQueryable();
             }
 
-            return Repository.Table.Where(x => x.PageId == null);
+            return Service.Repository.Table.Where(x => x.PageId == null);
         }
 
         [EnableQuery]
@@ -57,7 +56,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
 
             var pageId = (Guid)parameters["pageId"];
 
-            return Repository.Table
+            return Service.Repository.Table
                 .Where(x => x.PageId == pageId && x.RefId == null)
                 .OrderBy(x => x.ZoneId)
                 .ThenBy(x => x.Order);
@@ -125,7 +124,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
 
             var records = entity.Id == Guid.Empty
                 ? new List<ContentBlock> { new ContentBlock() }
-                : Repository.Table.Where(x => x.Id == entity.Id || x.RefId == entity.Id).ToList();
+                : Service.Repository.Table.Where(x => x.Id == entity.Id || x.RefId == entity.Id).ToList();
 
             // TODO: this shouldn't be from contentBlock values, but from the localized properties on the page
             //var values = JsonConvert.DeserializeObject<ExpandoObject>(entity.BlockValues) as IDictionary<string, object>;
@@ -166,7 +165,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
                             if (translatedRecord != null)
                             {
                                 records.Remove(translatedRecord);
-                                Repository.Delete(translatedRecord);
+                                Service.Delete(translatedRecord);
                             }
                         }
                     }
@@ -253,8 +252,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
                 record.DisplayCondition = contentBlock.DisplayCondition;
             }
 
-            Repository.Insert(toInsert);
-            Repository.Update(toUpdate);
+            Service.Insert(toInsert);
+            Service.Update(toUpdate);
         }
 
         protected override Permission ReadPermission

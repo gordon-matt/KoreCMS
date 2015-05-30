@@ -55,10 +55,7 @@ CACHE
 	- Trigger clearing of cache results when appropriate
 	- Allow for Redis or other provider via interface
 - Store Cache Keys as contants
-- make api controllers use services insstead of repositories to get caching
-
-MEMBERSHIP:
-- Move membership controllers from CMS to Kore.Web?
+- make api controllers use services instead of repositories (to take advantage of caching)
 
 OTHER
 - why are tasks not showing anymore?

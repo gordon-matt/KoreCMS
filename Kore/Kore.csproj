@@ -129,7 +129,6 @@
     <Compile Include="Collections\Generic\TupleHashSet.cs" />
     <Compile Include="Collections\Generic\TupleList.cs" />
     <Compile Include="ComponentModel\IModelAttribute.cs" />
-    <Compile Include="Configuration\DataConfigurationElement.cs" />
     <Compile Include="Configuration\Domain\Setting.cs" />
     <Compile Include="Configuration\EngineConfigurationElement.cs" />
     <Compile Include="Configuration\KoreConfigurationSection.cs" />

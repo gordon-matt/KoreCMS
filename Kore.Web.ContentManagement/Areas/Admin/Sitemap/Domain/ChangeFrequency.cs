@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace Kore.Plugins.Widgets.Google.Data.Domain
+namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Domain
 {
     public enum ChangeFrequency : byte
     {

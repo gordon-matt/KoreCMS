@@ -65,6 +65,13 @@ namespace Kore.Web.ContentManagement
 
         #endregion Pages
 
+        #region Sitemap
+
+        public static readonly Permission SitemapRead = new Permission { Name = "Sitemap_Read", Category = "Content Management", Description = "Sitemap - Read" };
+        public static readonly Permission SitemapWrite = new Permission { Name = "Sitemap_Write", Category = "Content Management", Description = "Sitemap - Write" };
+
+        #endregion Sitemap
+
         public IEnumerable<Permission> GetPermissions()
         {
             yield return BlogRead;
@@ -98,6 +105,9 @@ namespace Kore.Web.ContentManagement
             yield return PagesWrite;
             yield return PageTypesRead;
             yield return PageTypesWrite;
+
+            yield return SitemapRead;
+            yield return SitemapWrite;
         }
     }
 }

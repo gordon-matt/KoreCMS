@@ -29,23 +29,7 @@ namespace Kore.Plugins.Widgets.Google.Infrastructure
                     { LocalizableStrings.ContentBlocks.MapBlock.Latitude, "Latitude" },
                     { LocalizableStrings.ContentBlocks.MapBlock.Longitude, "Longitude" },
                     { LocalizableStrings.ContentBlocks.MapBlock.Zoom, "Zoom" },
-                    { LocalizableStrings.SitemapModel.ChangeFrequency, "Change Frequency" },
-                    { LocalizableStrings.SitemapModel.Id, "ID" },
-                    { LocalizableStrings.SitemapModel.Location, "Location" },
-                    { LocalizableStrings.SitemapModel.Priority, "Priority" },
-                    { LocalizableStrings.SitemapModel.ChangeFrequencies.Always, "Always" },
-                    { LocalizableStrings.SitemapModel.ChangeFrequencies.Daily, "Daily" },
-                    { LocalizableStrings.SitemapModel.ChangeFrequencies.Hourly, "Hourly" },
-                    { LocalizableStrings.SitemapModel.ChangeFrequencies.Monthly, "Monthly" },
-                    { LocalizableStrings.SitemapModel.ChangeFrequencies.Never, "Never" },
-                    { LocalizableStrings.SitemapModel.ChangeFrequencies.Weekly, "Weekly" },
-                    { LocalizableStrings.SitemapModel.ChangeFrequencies.Yearly, "Yearly" },
-                    { LocalizableStrings.ConfirmGenerateFile, "Are you sure you want to generate a new XML sitemap file? Warning: This will replace the existing one." },
-                    { LocalizableStrings.GenerateFile, "Generate File" },
-                    { LocalizableStrings.GenerateFileError, "Error when generating XML sitemap file." },
-                    { LocalizableStrings.GenerateFileSuccess, "Successfully generated XML sitemap file." },
                     { LocalizableStrings.Google, "Google" },
-                    { LocalizableStrings.XMLSitemap, "XML Sitemap" }
                 };
             }
         }

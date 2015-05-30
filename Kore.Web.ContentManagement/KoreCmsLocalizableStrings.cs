@@ -269,6 +269,35 @@
             }
         }
 
+        public static class Sitemap
+        {
+            public static class Model
+            {
+                public static class ChangeFrequencies
+                {
+                    public const string Always = "Kore.Web.ContentManagement/Sitemap.Model.ChangeFrequencies.Always";
+                    public const string Hourly = "Kore.Web.ContentManagement/Sitemap.Model.ChangeFrequencies.Hourly";
+                    public const string Daily = "Kore.Web.ContentManagement/Sitemap.Model.ChangeFrequencies.Daily";
+                    public const string Weekly = "Kore.Web.ContentManagement/Sitemap.Model.ChangeFrequencies.Weekly";
+                    public const string Monthly = "Kore.Web.ContentManagement/Sitemap.Model.ChangeFrequencies.Monthly";
+                    public const string Yearly = "Kore.Web.ContentManagement/Sitemap.Model.ChangeFrequencies.Yearly";
+                    public const string Never = "Kore.Web.ContentManagement/Sitemap.Model.ChangeFrequencies.Never";
+                }
+
+                public const string ChangeFrequency = "Kore.Web.ContentManagement/SitemapModel.ChangeFrequency";
+                public const string Id = "Kore.Web.ContentManagement/SitemapModel.Id";
+                public const string Location = "Kore.Web.ContentManagement/SitemapModel.Location";
+                public const string Priority = "Kore.Web.ContentManagement/SitemapModel.Priority";
+            }
+
+            public const string ConfirmGenerateFile = "Kore.Web.ContentManagement/Sitemap.ConfirmGenerateFile";
+            public const string GenerateFile = "Kore.Web.ContentManagement/Sitemap.GenerateFile";
+            public const string GenerateFileError = "Kore.Web.ContentManagement/Sitemap.GenerateFileError";
+            public const string GenerateFileSuccess = "Kore.Web.ContentManagement/Sitemap.GenerateFileSuccess";
+            public const string Title = "Kore.Web.ContentManagement/Sitemap.Title";
+            public const string XMLSitemap = "Kore.Web.ContentManagement/Sitemap.XMLSitemap";
+        }
+
         public static class UserProfile
         {
             public static class Newsletter

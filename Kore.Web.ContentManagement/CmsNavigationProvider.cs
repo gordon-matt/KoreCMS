@@ -71,6 +71,12 @@ namespace Kore.Web.ContentManagement
                 .IconCssClass("kore-icon kore-icon-message-queue")
                 .Permission(CmsPermissions.QueuedEmailsRead));
 
+            // XML Sitemap
+            builder.Add(T(KoreCmsLocalizableStrings.Sitemap.XMLSitemap), "5", item => item
+                .Action("Index", "XmlSitemap", new { area = CmsConstants.Areas.Sitemap })
+                .IconCssClass("kore-icon kore-icon-sitemap")
+                .Permission(CmsPermissions.SitemapRead));
+
             // Subscribers
             builder.Add(T(KoreCmsLocalizableStrings.Newsletters.Subscribers), "5", item => item
                 .Action("Index", "Subscriber", new { area = CmsConstants.Areas.Newsletters })

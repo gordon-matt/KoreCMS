@@ -16,7 +16,6 @@ namespace Kore.Web.ContentManagement
 
         public void GetNavigation(NavigationBuilder builder)
         {
-            builder.Add(T(KoreCmsLocalizableStrings.Membership.Title), "1", BuildMembershipMenu);
             builder.Add(T(KoreCmsLocalizableStrings.Navigation.CMS), "2", BuildCmsMenu);
         }
 
@@ -76,20 +75,6 @@ namespace Kore.Web.ContentManagement
             builder.Add(T(KoreCmsLocalizableStrings.Newsletters.Subscribers), "5", item => item
                 .Action("Index", "Subscriber", new { area = CmsConstants.Areas.Newsletters })
                 .IconCssClass("kore-icon kore-icon-subscribers")
-                .Permission(StandardPermissions.FullAccess));
-        }
-
-        private void BuildMembershipMenu(NavigationItemBuilder builder)
-        {
-            builder.IconCssClass("kore-icon kore-icon-membership");
-            builder.Permission(StandardPermissions.FullAccess);
-
-            builder.Add(T(KoreCmsLocalizableStrings.Membership.Users), "1", item => item.Action("Users", "Membership", new { area = CmsConstants.Areas.Membership })
-                .IconCssClass("kore-icon kore-icon-users")
-                .Permission(StandardPermissions.FullAccess));
-
-            builder.Add(T(KoreCmsLocalizableStrings.Membership.Roles), "2", item => item.Action("Roles", "Membership", new { area = CmsConstants.Areas.Membership })
-                .IconCssClass("kore-icon kore-icon-roles")
                 .Permission(StandardPermissions.FullAccess));
         }
     }

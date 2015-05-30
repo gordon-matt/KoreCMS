@@ -3,7 +3,7 @@ using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
 using Kore.Security.Membership;
 
-namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
+namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
 {
     public class PublicUserApiController : ODataController
     {

@@ -5,10 +5,10 @@ using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
 using Kore.Web.Security.Membership.Permissions;
 
-namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers
+namespace Kore.Web.Areas.Admin.Membership.Controllers
 {
     [Authorize]
-    [RouteArea(CmsConstants.Areas.Membership)]
+    [RouteArea(KoreWebConstants.Areas.Membership)]
     public class MembershipController : KoreController
     {
         private readonly IMembershipService membershipService;
@@ -36,16 +36,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Membership.Title));
-            WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Membership.Users));
+            WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.Membership.Title));
+            WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.Membership.Users));
 
-            ViewBag.Title = T(KoreCmsLocalizableStrings.Membership.Title);
-            ViewBag.SubTitle = T(KoreCmsLocalizableStrings.Membership.Users);
+            ViewBag.Title = T(KoreWebLocalizableStrings.Membership.Title);
+            ViewBag.SubTitle = T(KoreWebLocalizableStrings.Membership.Users);
 
-            ViewBag.SelectList = membershipService.GetAllRoles().ToSelectList(v => v.Id.ToString(), t => t.Name, T(KoreCmsLocalizableStrings.Membership.AllRolesSelectListOption));
+            ViewBag.SelectList = membershipService.GetAllRoles().ToSelectList(v => v.Id.ToString(), t => t.Name, T(KoreWebLocalizableStrings.Membership.AllRolesSelectListOption));
 
             ViewBag.InitialView = "User";
-            return View("Kore.Web.ContentManagement.Areas.Admin.Membership.Views.Membership.Index");
+            return View("Kore.Web.Areas.Admin.Membership.Views.Membership.Index");
         }
 
         [CompressFilter]
@@ -57,14 +57,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Membership.Title));
-            WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Membership.Roles));
+            WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.Membership.Title));
+            WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.Membership.Roles));
 
-            ViewBag.Title = T(KoreCmsLocalizableStrings.Membership.Title);
-            ViewBag.SubTitle = T(KoreCmsLocalizableStrings.Membership.Roles);
+            ViewBag.Title = T(KoreWebLocalizableStrings.Membership.Title);
+            ViewBag.SubTitle = T(KoreWebLocalizableStrings.Membership.Roles);
 
             ViewBag.InitialView = "Role";
-            return View("Kore.Web.ContentManagement.Areas.Admin.Membership.Views.Membership.Index");
+            return View("Kore.Web.Areas.Admin.Membership.Views.Membership.Index");
         }
     }
 }

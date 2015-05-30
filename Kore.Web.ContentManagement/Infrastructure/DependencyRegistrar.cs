@@ -102,11 +102,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.RegisterType<LanguageSwitchBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<NewsletterSubscriptionBlock>().As<IContentBlock>().InstancePerDependency();
 
-            // TODO: These should probably be moved to another assembly (add-ons)
-            //builder.RegisterType<NivoSliderBlock>().As<IContentBlock>().InstancePerDependency();
-            //builder.RegisterType<PhotoGalleryBlock>().As<IContentBlock>().InstancePerDependency();
-            //builder.RegisterType<SupersizedBlock>().As<IContentBlock>().InstancePerDependency();
-
             #endregion Content Blocks
 
             #region Other: Content Blocks

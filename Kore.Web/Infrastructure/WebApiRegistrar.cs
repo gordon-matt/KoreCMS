@@ -2,8 +2,10 @@
 using System.Web.Http.OData.Builder;
 using Kore.Configuration.Domain;
 using Kore.Logging.Domain;
+using Kore.Security.Membership;
 using Kore.Tasks.Domain;
 using Kore.Web.Areas.Admin.Configuration.Models;
+using Kore.Web.Areas.Admin.Membership.Controllers.Api;
 using Kore.Web.Areas.Admin.Plugins.Models;
 
 namespace Kore.Web.Infrastructure
@@ -17,11 +19,16 @@ namespace Kore.Web.Infrastructure
             ODataModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<LogEntry>("LogApi");
             builder.EntitySet<EdmPluginDescriptor>("PluginApi");
+            builder.EntitySet<KorePermission>("PermissionApi");
+            builder.EntitySet<KoreRole>("RoleApi");
+            builder.EntitySet<KoreUser>("UserApi");
+            builder.EntitySet<PublicUserInfo>("PublicUserApi");
             builder.EntitySet<ScheduledTask>("ScheduledTaskApi");
             builder.EntitySet<Setting>("SettingsApi");
             builder.EntitySet<EdmThemeConfiguration>("ThemeApi");
 
             RegisterLogODataActions(builder);
+            RegisterMembershipODataActions(builder);
             RegisterPluginODataActions(builder);
             RegisterScheduledTaskODataActions(builder);
             RegisterThemeODataActions(builder);
@@ -35,6 +42,36 @@ namespace Kore.Web.Infrastructure
         {
             var clearAction = builder.Entity<LogEntry>().Collection.Action("Clear");
             clearAction.Returns<IHttpActionResult>();
+        }
+
+        private static void RegisterMembershipODataActions(ODataModelBuilder builder)
+        {
+            var getUsersInRoleAction = builder.Entity<KoreUser>().Collection.Action("GetUsersInRole");
+            getUsersInRoleAction.Parameter<string>("roleId");
+            getUsersInRoleAction.ReturnsCollectionFromEntitySet<KoreUser>("Users");
+
+            var assignUserToRolesAction = builder.Entity<KoreUser>().Collection.Action("AssignUserToRoles");
+            assignUserToRolesAction.Parameter<string>("userId");
+            assignUserToRolesAction.CollectionParameter<string>("roles");
+            assignUserToRolesAction.Returns<IHttpActionResult>();
+
+            var changePasswordAction = builder.Entity<KoreUser>().Collection.Action("ChangePassword");
+            changePasswordAction.Parameter<string>("userId");
+            changePasswordAction.Parameter<string>("password");
+            changePasswordAction.Returns<IHttpActionResult>();
+
+            var getRolesForUserAction = builder.Entity<KoreRole>().Collection.Action("GetRolesForUser");
+            getRolesForUserAction.Parameter<string>("userId");
+            getRolesForUserAction.ReturnsCollection<EdmKoreRole>();
+
+            var assignPermissionsToRoleAction = builder.Entity<KoreRole>().Collection.Action("AssignPermissionsToRole");
+            assignPermissionsToRoleAction.Parameter<string>("roleId");
+            assignPermissionsToRoleAction.CollectionParameter<string>("permissions");
+            assignPermissionsToRoleAction.Returns<IHttpActionResult>();
+
+            var getPermissionsForRoleAction = builder.Entity<KorePermission>().Collection.Action("GetPermissionsForRole");
+            getPermissionsForRoleAction.Parameter<string>("roleId");
+            getPermissionsForRoleAction.ReturnsCollection<EdmKorePermission>();
         }
 
         private static void RegisterPluginODataActions(ODataModelBuilder builder)

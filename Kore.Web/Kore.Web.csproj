@@ -162,6 +162,12 @@
     <Compile Include="Areas\Admin\Log\Controllers\LogController.cs" />
     <Compile Include="Areas\Admin\Log\LogAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Log\Services\ILogService.cs" />
+    <Compile Include="Areas\Admin\Membership\Controllers\Api\PermissionApiController.cs" />
+    <Compile Include="Areas\Admin\Membership\Controllers\Api\PublicUserApiController.cs" />
+    <Compile Include="Areas\Admin\Membership\Controllers\Api\RoleApiController.cs" />
+    <Compile Include="Areas\Admin\Membership\Controllers\Api\UserApiController.cs" />
+    <Compile Include="Areas\Admin\Membership\Controllers\MembershipController.cs" />
+    <Compile Include="Areas\Admin\Membership\MembershipAreaRegistration.cs" />
     <Compile Include="Areas\Admin\NavigationProvider.cs" />
     <Compile Include="Areas\Admin\ScheduledTasks\Controllers\Api\ScheduledTaskApiController.cs" />
     <Compile Include="Areas\Admin\ScheduledTasks\Controllers\ScheduledTaskController.cs" />
@@ -474,6 +480,14 @@
     <EmbeddedResource Include="Areas\Admin\Indexing\Views\Search\Results.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Configuration\Views\Theme\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Log\Views\Log\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\ChangePassword.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\EditRole.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\EditRolePermissions.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\EditUser.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\EditUserRoles.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\Roles.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\Users.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\SmtpSettings.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Plugins\Views\Plugin\Index.cshtml" />
@@ -499,6 +513,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\ScheduledTasks\Scripts\index.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\Admin\Membership\Scripts\membership.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\Admin\Membership\Scripts\permissions.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\Admin\Membership\Scripts\roles.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\Admin\Membership\Scripts\users.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

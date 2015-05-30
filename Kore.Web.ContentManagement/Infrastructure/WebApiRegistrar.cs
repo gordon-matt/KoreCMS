@@ -3,10 +3,8 @@ using System.Web.Http;
 using System.Web.Http.OData.Builder;
 using Kore.Localization.Domain;
 using Kore.Localization.Models;
-using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
-using Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api;
@@ -33,10 +31,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.EntitySet<HistoricPage>("HistoricPageApi");
             builder.EntitySet<Page>("PageApi");
             builder.EntitySet<PageType>("PageTypeApi");
-            builder.EntitySet<KorePermission>("PermissionApi");
-            builder.EntitySet<PublicUserInfo>("PublicUserApi");
-            builder.EntitySet<KoreRole>("RoleApi");
-            builder.EntitySet<KoreUser>("UserApi");
             builder.EntitySet<QueuedEmail>("QueuedEmailApi");
             builder.EntitySet<Subscriber>("SubscriberApi");
             builder.EntitySet<Zone>("ZoneApi");
@@ -49,7 +43,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
             RegisterHistoricPageODataActions(builder);
             RegisterLanguageODataActions(builder);
             RegisterLocalizableStringODataActions(builder);
-            RegisterMembershipODataActions(builder);
             RegisterMessageTemplateODataActions(builder);
             RegisterPageODataActions(builder);
 
@@ -86,36 +79,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
             deleteComparitiveAction.Parameter<string>("cultureCode");
             deleteComparitiveAction.Parameter<string>("key");
             deleteComparitiveAction.Returns<IHttpActionResult>();
-        }
-
-        private static void RegisterMembershipODataActions(ODataModelBuilder builder)
-        {
-            var getUsersInRoleAction = builder.Entity<KoreUser>().Collection.Action("GetUsersInRole");
-            getUsersInRoleAction.Parameter<string>("roleId");
-            getUsersInRoleAction.ReturnsCollectionFromEntitySet<KoreUser>("Users");
-
-            var assignUserToRolesAction = builder.Entity<KoreUser>().Collection.Action("AssignUserToRoles");
-            assignUserToRolesAction.Parameter<string>("userId");
-            assignUserToRolesAction.CollectionParameter<string>("roles");
-            assignUserToRolesAction.Returns<IHttpActionResult>();
-
-            var changePasswordAction = builder.Entity<KoreUser>().Collection.Action("ChangePassword");
-            changePasswordAction.Parameter<string>("userId");
-            changePasswordAction.Parameter<string>("password");
-            changePasswordAction.Returns<IHttpActionResult>();
-
-            var getRolesForUserAction = builder.Entity<KoreRole>().Collection.Action("GetRolesForUser");
-            getRolesForUserAction.Parameter<string>("userId");
-            getRolesForUserAction.ReturnsCollection<EdmKoreRole>();
-
-            var assignPermissionsToRoleAction = builder.Entity<KoreRole>().Collection.Action("AssignPermissionsToRole");
-            assignPermissionsToRoleAction.Parameter<string>("roleId");
-            assignPermissionsToRoleAction.CollectionParameter<string>("permissions");
-            assignPermissionsToRoleAction.Returns<IHttpActionResult>();
-
-            var getPermissionsForRoleAction = builder.Entity<KorePermission>().Collection.Action("GetPermissionsForRole");
-            getPermissionsForRoleAction.Parameter<string>("roleId");
-            getPermissionsForRoleAction.ReturnsCollection<EdmKorePermission>();
         }
 
         private static void RegisterMessageTemplateODataActions(ODataModelBuilder builder)

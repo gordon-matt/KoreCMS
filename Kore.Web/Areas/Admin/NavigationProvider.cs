@@ -17,9 +17,23 @@ namespace Kore.Web.Areas.Admin
 
         public void GetNavigation(NavigationBuilder builder)
         {
-            // Configuration
+            builder.Add(T(KoreWebLocalizableStrings.Membership.Title), "1", BuildMembershipMenu);
             builder.Add(T(KoreWebLocalizableStrings.General.Configuration), "3", BuildConfigurationMenu);
             builder.Add(T(KoreWebLocalizableStrings.Maintenance.Title), "4", BuildMaintenanceMenu);
+        }
+
+        private void BuildMembershipMenu(NavigationItemBuilder builder)
+        {
+            builder.IconCssClass("kore-icon kore-icon-membership");
+            builder.Permission(StandardPermissions.FullAccess);
+
+            builder.Add(T(KoreWebLocalizableStrings.Membership.Users), "1", item => item.Action("Users", "Membership", new { area = KoreWebConstants.Areas.Membership })
+                .IconCssClass("kore-icon kore-icon-users")
+                .Permission(StandardPermissions.FullAccess));
+
+            builder.Add(T(KoreWebLocalizableStrings.Membership.Roles), "2", item => item.Action("Roles", "Membership", new { area = KoreWebConstants.Areas.Membership })
+                .IconCssClass("kore-icon kore-icon-roles")
+                .Permission(StandardPermissions.FullAccess));
         }
 
         private void BuildConfigurationMenu(NavigationItemBuilder builder)

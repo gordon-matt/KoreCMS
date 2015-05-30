@@ -2,10 +2,10 @@
     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <form id="user-roles-form-section-form" role="form">
             <fieldset>
-                <legend>@T(KoreCmsLocalizableStrings.Membership.UpdateUserRoles)</legend>
+                <legend>@T(KoreWebLocalizableStrings.Membership.UpdateUserRoles)</legend>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
-                        @Html.Label("UserRoles", T(KoreCmsLocalizableStrings.Membership.UserModel.Roles), new { @class = "control-label" })
+                        @Html.Label("UserRoles", T(KoreWebLocalizableStrings.Membership.UserModel.Roles), new { @class = "control-label" })
                         @Html.Kore().RolesCheckBoxList("UserRoles", null, new { @class = "checkbox" }, new { data_bind = "checked: userModel.roles" })
                     </div>
                 </div>

@@ -57,7 +57,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
                 return Json(new
                 {
                     Successful = false,
-                    Message = T(KoreCmsLocalizableStrings.Membership.InvalidEmailAddress).Text
+                    Message = T(KoreWebLocalizableStrings.Membership.InvalidEmailAddress).Text
                 });
             }
 
@@ -88,7 +88,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
                 return Json(new
                 {
                     Successful = false,
-                    Message = T(KoreCmsLocalizableStrings.Membership.UserEmailAlreadyExists).Text
+                    Message = T(KoreWebLocalizableStrings.Membership.UserEmailAlreadyExists).Text
                 });
             }
 

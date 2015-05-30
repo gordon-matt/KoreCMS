@@ -21,7 +21,7 @@
 
 //    self.edit = function (id) {
 //        $.ajax({
-//            url: "/odata/kore/cms/PermissionApi('" + id + "')",
+//            url: "/odata/kore/web/PermissionApi('" + id + "')",
 //            type: "GET",
 //            dataType: "json",
 //            async: false
@@ -45,7 +45,7 @@
 //    self.delete = function (id) {
 //        if (confirm(translations.DeleteRecordConfirm)) {
 //            $.ajax({
-//                url: "/odata/kore/cms/PermissionApi('" + id + "')",
+//                url: "/odata/kore/web/PermissionApi('" + id + "')",
 //                type: "DELETE",
 //                async: false
 //            })
@@ -78,7 +78,7 @@
 //        if (self.id() == emptyGuid) {
 //            // INSERT
 //            $.ajax({
-//                url: "/odata/kore/cms/PermissionApi",
+//                url: "/odata/kore/web/PermissionApi",
 //                type: "POST",
 //                contentType: "application/json; charset=utf-8",
 //                data: JSON.stringify(record),
@@ -101,7 +101,7 @@
 //        else {
 //            // UPDATE
 //            $.ajax({
-//                url: "/odata/kore/cms/PermissionApi('" + self.id() + "')",
+//                url: "/odata/kore/web/PermissionApi('" + self.id() + "')",
 //                type: "PUT",
 //                contentType: "application/json; charset=utf-8",
 //                data: JSON.stringify(record),
@@ -140,7 +140,7 @@
 //            type: "odata",
 //            transport: {
 //                read: {
-//                    url: "/odata/kore/cms/PermissionApi",
+//                    url: "/odata/kore/web/PermissionApi",
 //                    dataType: "json"
 //                }
 //            },

@@ -109,6 +109,55 @@
             public const string Title = "Kore.Web/Maintenance.Title";
         }
 
+        public static class Membership
+        {
+            public const string AllRolesSelectListOption = "Kore.Web/Membership.AllRolesSelectListOption";
+            public const string ChangePassword = "Kore.Web/Membership.ChangePassword";
+            public const string ChangePasswordError = "Kore.Web/Membership.ChangePasswordError";
+            public const string ChangePasswordSuccess = "Kore.Web/Membership.ChangePasswordSuccess";
+            public const string EditRolePermissions = "Kore.Web/Membership.EditRolePermissions";
+            public const string InvalidEmailAddress = "Kore.Web/Membership.InvalidEmailAddress";
+            public const string IsLockedOut = "Kore.Web/Membership.IsLockedOut";
+            public const string Password = "Kore.Web/Membership.Password";
+            public const string Permissions = "Kore.Web/Membership.Permissions";
+            public const string Roles = "Kore.Web/Membership.Roles";
+            public const string SavePermissionsError = "Kore.Web/Membership.SavePermissionsError";
+            public const string SavePermissionsSuccess = "Kore.Web/Membership.SavePermissionsSuccess";
+            public const string SaveRolesError = "Kore.Web/Membership.SaveRolesError";
+            public const string SaveRolesSuccess = "Kore.Web/Membership.SaveRolesSuccess";
+            public const string Title = "Kore.Web/Membership.Title";
+            public const string UpdateUserRoles = "Kore.Web/Membership.UpdateUserRoles";
+            public const string UserEmailAlreadyExists = "Kore.Web/Membership.UserEmailAlreadyExists";
+            public const string Users = "Kore.Web/Membership.Users";
+
+            public static class ChangePasswordModel
+            {
+                public const string ConfirmPassword = "Kore.Web/Membership.ChangePasswordModel.ConfirmPassword";
+                public const string Password = "Kore.Web/Membership.ChangePasswordModel.Password";
+                public const string UserName = "Kore.Web/Membership.ChangePasswordModel.UserName";
+            }
+
+            public static class PermissionModel
+            {
+                public const string Category = "Kore.Web/Membership.PermissionModel.Category";
+                public const string Name = "Kore.Web/Membership.PermissionModel.Name";
+            }
+
+            public static class RoleModel
+            {
+                public const string Name = "Kore.Web/Membership.RoleModel.Name";
+            }
+
+            public static class UserModel
+            {
+                public const string Email = "Kore.Web/Membership.UserModel.Email";
+                public const string IsActive = "Kore.Web/Membership.UserModel.IsActive";
+                public const string IsLockedOut = "Kore.Web/Membership.UserModel.IsLockedOut";
+                public const string Roles = "Kore.Web/Membership.UserModel.Roles";
+                public const string UserName = "Kore.Web/Membership.UserModel.UserName";
+            }
+        }
+
         public static class Plugins
         {
             public static class Model

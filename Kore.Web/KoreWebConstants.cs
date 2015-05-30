@@ -46,6 +46,7 @@ namespace Kore.Web
             public const string Configuration = "Admin/Configuration";
             public const string Indexing = "Admin/Indexing";
             public const string Log = "Admin/Log";
+            public const string Membership = "Admin/Membership";
             public const string Plugins = "Admin/Plugins";
             public const string ScheduledTasks = "Admin/ScheduledTasks";
         }

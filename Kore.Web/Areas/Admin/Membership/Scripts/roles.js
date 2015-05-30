@@ -21,7 +21,7 @@ var RoleVM = function () {
 
     self.edit = function (id) {
         $.ajax({
-            url: "/odata/kore/cms/RoleApi('" + id + "')",
+            url: "/odata/kore/web/RoleApi('" + id + "')",
             type: "GET",
             dataType: "json",
             async: false
@@ -45,7 +45,7 @@ var RoleVM = function () {
     self.delete = function (id) {
         if (confirm(translations.DeleteRecordConfirm)) {
             $.ajax({
-                url: "/odata/kore/cms/RoleApi('" + id + "')",
+                url: "/odata/kore/web/RoleApi('" + id + "')",
                 type: "DELETE",
                 async: false
             })
@@ -76,7 +76,7 @@ var RoleVM = function () {
         if (self.id() == emptyGuid) {
             // INSERT
             $.ajax({
-                url: "/odata/kore/cms/RoleApi",
+                url: "/odata/kore/web/RoleApi",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -99,7 +99,7 @@ var RoleVM = function () {
         else {
             // UPDATE
             $.ajax({
-                url: "/odata/kore/cms/RoleApi('" + self.id() + "')",
+                url: "/odata/kore/web/RoleApi('" + self.id() + "')",
                 type: "PUT",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -130,7 +130,7 @@ var RoleVM = function () {
         self.permissions([]);
 
         $.ajax({
-            url: "/odata/kore/cms/PermissionApi/GetPermissionsForRole",
+            url: "/odata/kore/web/PermissionApi/GetPermissionsForRole",
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ roleId: id }),
@@ -163,7 +163,7 @@ var RoleVM = function () {
         };
 
         $.ajax({
-            url: "/odata/kore/cms/RoleApi/AssignPermissionsToRole",
+            url: "/odata/kore/web/RoleApi/AssignPermissionsToRole",
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
@@ -191,7 +191,7 @@ var RoleVM = function () {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/cms/RoleApi",
+                    url: "/odata/kore/web/RoleApi",
                     dataType: "json"
                 }
             },

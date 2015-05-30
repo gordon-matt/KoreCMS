@@ -5,7 +5,7 @@
                 <legend>Edit</legend>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
-                        @Html.Label("UserName", T(KoreCmsLocalizableStrings.Membership.UserModel.UserName), new { @class = "control-label" })
+                        @Html.Label("UserName", T(KoreWebLocalizableStrings.Membership.UserModel.UserName), new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="kore-icon kore-icon-user"></i>
@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
-                        @Html.Label("Email", T(KoreCmsLocalizableStrings.Membership.UserModel.Email), new { @class = "control-label" })
+                        @Html.Label("Email", T(KoreWebLocalizableStrings.Membership.UserModel.Email), new { @class = "control-label" })
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="kore-icon kore-icon-mail"></i>
@@ -28,7 +28,7 @@
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <div class="checkbox">
                         <label>
-                            @Html.CheckBox("IsLockedOut", new { data_bind = "checked: userModel.isLockedOut" }) @T(KoreCmsLocalizableStrings.Membership.UserModel.IsLockedOut)
+                            @Html.CheckBox("IsLockedOut", new { data_bind = "checked: userModel.isLockedOut" }) @T(KoreWebLocalizableStrings.Membership.UserModel.IsLockedOut)
                         </label>
                     </div>
                 </div>

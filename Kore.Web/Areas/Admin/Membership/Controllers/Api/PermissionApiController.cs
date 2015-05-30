@@ -13,7 +13,7 @@ using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web.Security.Membership.Permissions;
 
-namespace Kore.Web.ContentManagement.Areas.Admin.Membership.Controllers.Api
+namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
 {
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class PermissionApiController : ODataController

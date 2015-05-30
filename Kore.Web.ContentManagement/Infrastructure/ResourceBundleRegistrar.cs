@@ -32,11 +32,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/localizable-strings")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Localization.Scripts.localizableStrings.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/membership")
-                .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Membership.Scripts.membership.js")
-                .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Membership.Scripts.roles.js")
-                .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Membership.Scripts.users.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/menus")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Menus.Scripts.menus.js"));
 

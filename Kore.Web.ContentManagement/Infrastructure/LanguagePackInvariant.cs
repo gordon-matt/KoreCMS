@@ -23,6 +23,8 @@ namespace Kore.Web.ContentManagement.Infrastructure
                     { KoreCmsLocalizableStrings.Blog.Model.ExternalLink, "External Link" },
                     { KoreCmsLocalizableStrings.Blog.Model.FullDescription, "Full Description" },
                     { KoreCmsLocalizableStrings.Blog.Model.Headline, "Headline" },
+                    { KoreCmsLocalizableStrings.Blog.Model.MetaDescription, "Meta Description" },
+                    { KoreCmsLocalizableStrings.Blog.Model.MetaKeywords, "Meta Keywords" },
                     { KoreCmsLocalizableStrings.Blog.Model.ShortDescription, "Short Description" },
                     { KoreCmsLocalizableStrings.Blog.Model.Slug, "Slug" },
                     { KoreCmsLocalizableStrings.Blog.Model.TeaserImageUrl, "Teaser Image URL" },

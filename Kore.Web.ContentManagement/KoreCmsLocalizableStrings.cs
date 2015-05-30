@@ -14,6 +14,8 @@
                 public const string ExternalLink = "Kore.Web.ContentManagement/Blog.Model.ExternalLink";
                 public const string FullDescription = "Kore.Web.ContentManagement/Blog.Model.FullDescription";
                 public const string Headline = "Kore.Web.ContentManagement/Blog.Model.Headline";
+                public const string MetaDescription = "Kore.Web.ContentManagement/Blog.Model.MetaDescription";
+                public const string MetaKeywords = "Kore.Web.ContentManagement/Blog.Model.MetaKeywords";
                 public const string ShortDescription = "Kore.Web.ContentManagement/Blog.Model.ShortDescription";
                 public const string Slug = "Kore.Web.ContentManagement/Blog.Model.Slug";
                 public const string TeaserImageUrl = "Kore.Web.ContentManagement/Blog.Model.TeaserImageUrl";

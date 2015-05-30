@@ -15,18 +15,22 @@ var ViewModel = function () {
     self.fullDescription = ko.observable(null);
     self.useExternalLink = ko.observable(false);
     self.externalLink = ko.observable(null);
+    self.metaKeywords = ko.observable(null);
+    self.metaDescription = ko.observable(null);
 
     self.tinyMCE_fullDescription = koreDefaultTinyMCEConfig;
 
     self.create = function () {
         self.id(emptyGuid);
-        self.headline('');
-        self.slug('');
+        self.headline(null);
+        self.slug(null);
         self.teaserImageUrl(null);
-        self.shortDescription('');
-        self.fullDescription('');
+        self.shortDescription(null);
+        self.fullDescription(null);
         self.useExternalLink(false);
-        self.externalLink('');
+        self.externalLink(null);
+        self.metaKeywords(null);
+        self.metaDescription(null);
 
         self.validator.resetForm();
         switchSection($("#form-section"));
@@ -49,6 +53,8 @@ var ViewModel = function () {
             self.fullDescription(json.FullDescription);
             self.useExternalLink(json.UseExternalLink);
             self.externalLink(json.ExternalLink);
+            self.metaKeywords(json.MetaKeywords);
+            self.metaDescription(json.MetaDescription);
 
             self.validator.resetForm();
             switchSection($("#form-section"));
@@ -95,7 +101,9 @@ var ViewModel = function () {
             ShortDescription: self.shortDescription(),
             FullDescription: self.fullDescription(),
             UseExternalLink: self.useExternalLink(),
-            ExternalLink: self.externalLink()
+            ExternalLink: self.externalLink(),
+            MetaKeywords: self.metaKeywords(),
+            MetaDescription: self.metaDescription()
         };
 
         if (isNew) {
@@ -153,7 +161,9 @@ var ViewModel = function () {
             Headline: { required: true, maxlength: 255 },
             Slug: { required: true, maxlength: 255 },
             TeaserImageUrl: { maxlength: 255 },
-            ExternalLink: { maxlength: 255 }
+            ExternalLink: { maxlength: 255 },
+            MetaKeywords: { maxlength: 255 },
+            MetaDescription: { maxlength: 255 }
         }
     });
 };

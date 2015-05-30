@@ -10,7 +10,7 @@ var RoleVM = function () {
 
     self.create = function () {
         self.id(emptyGuid);
-        self.name('');
+        self.name(null);
 
         self.permissions([]);
 

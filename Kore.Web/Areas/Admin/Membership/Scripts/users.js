@@ -60,8 +60,8 @@ var UserVM = function () {
 
     self.create = function () {
         self.id(emptyGuid);
-        self.userName('');
-        self.email('');
+        self.userName(null);
+        self.email(null);
         self.isLockedOut(false);
 
         self.roles([]);

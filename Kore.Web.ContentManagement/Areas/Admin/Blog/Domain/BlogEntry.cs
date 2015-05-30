@@ -27,6 +27,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 
         public string ExternalLink { get; set; }
 
+        public string MetaKeywords { get; set; }
+
+        public string MetaDescription { get; set; }
+
         #region IEntity Members
 
         public object[] KeyValues
@@ -52,6 +56,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
             Property(x => x.FullDescription).IsMaxLength().IsRequired();
             Property(x => x.UseExternalLink).IsRequired();
             Property(x => x.ExternalLink).HasMaxLength(255).IsRequired();
+            Property(x => x.MetaKeywords).HasMaxLength(255);
+            Property(x => x.MetaDescription).HasMaxLength(255);
         }
     }
 }

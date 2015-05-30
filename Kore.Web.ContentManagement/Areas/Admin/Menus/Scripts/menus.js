@@ -18,10 +18,10 @@ var MenuItemVM = function () {
     self.create = function (menuId, parentId) {
         self.id(emptyGuid);
         self.menuId(menuId);
-        self.text('');
-        self.description('');
-        self.url('');
-        self.cssClass('');
+        self.text(null);
+        self.description(null);
+        self.url(null);
+        self.cssClass(null);
         self.position(0);
         self.parentId(parentId);
         self.enabled(false);
@@ -212,8 +212,8 @@ var ViewModel = function () {
 
     self.create = function () {
         self.id(emptyGuid);
-        self.name('');
-        self.urlFilter('');
+        self.name(null);
+        self.urlFilter(null);
 
         self.validator.resetForm();
         switchSection($("#form-section"));

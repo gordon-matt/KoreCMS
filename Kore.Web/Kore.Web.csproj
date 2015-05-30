@@ -518,9 +518,6 @@
     <EmbeddedResource Include="Areas\Admin\Membership\Scripts\membership.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Admin\Membership\Scripts\permissions.js" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Membership\Scripts\roles.js" />
   </ItemGroup>
   <ItemGroup>

@@ -61,13 +61,14 @@ OTHER
 - admin theme settings (left or top menu, which SmartAdmin colors etc)
 - need some way to provide descriptions/tooltips using an [Attribute] of some kind for widget properties (and page type properties too)..
 - LOG FILE SETTINGS?
-- move sitemap to Kore.Web!!!
 - new sitemap html page (see nop for example)
 - Video Content Block
 - Make moment.js part of Kore? Can have ISettings for it.. etc. Same for TinyMCE and more.
 - allowing email as username is a problem in cases like Blog!
 - slugify automaticlly
 - reusable image picker (Html Helper?)
+
+- minify HTML
 
 - use smartadmin jarvis widget for forms?
 - scheduled task to auto shrink log file?

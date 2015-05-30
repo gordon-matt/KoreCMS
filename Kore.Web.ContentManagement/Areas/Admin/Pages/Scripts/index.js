@@ -155,9 +155,9 @@ var ViewModel = function () {
         self.id(emptyGuid);
         self.parentId(null);
         self.pageTypeId(emptyGuid);
-        self.name('');
-        self.slug('');
-        self.fields('');
+        self.name(null);
+        self.slug(null);
+        self.fields(null);
         self.isEnabled(false);
         self.order(0);
         self.showOnMenus(true);

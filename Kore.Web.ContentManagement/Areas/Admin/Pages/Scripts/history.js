@@ -44,7 +44,7 @@ var ViewModel = function () {
             self.refId(json.RefId);
 
             $.get("/admin/pages/preview/" + id + '/true', function (data) {
-                $("#page-preview").html(data);
+                $("#page-preview").contents().find('html').html(data);
             });
 
             switchSection($("#details-section"));
@@ -75,7 +75,7 @@ var ViewModel = function () {
     };
 
     self.cancel = function () {
-        $('#page-preview').html('');
+        $('#page-preview').contents().find('html').html('');
         switchSection($("#grid-section"));
     };;
 };

@@ -8,20 +8,20 @@ using System.Web.Http.OData;
 using System.Web.Http.Results;
 using Kore.Collections;
 using Kore.Data;
-using Kore.Plugins.Widgets.Google.Data.Domain;
-using Kore.Plugins.Widgets.Google.Models;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
+using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Models;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 
-namespace Kore.Plugins.Widgets.Google.Controllers.Api
+namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
 {
-    public class GoogleXmlSitemapApiController : GenericODataController<GoogleSitemapPageConfig, int>
+    public class XmlSitemapApiController : GenericODataController<SitemapConfig, int>
     {
         private IPageService pageService;
 
-        public GoogleXmlSitemapApiController(
-            IRepository<GoogleSitemapPageConfig> repository,
+        public XmlSitemapApiController(
+            IRepository<SitemapConfig> repository,
             IPageService pageService)
             : base(repository)
         {
@@ -30,35 +30,35 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
 
         #region GenericODataController<GoogleSitemapPageConfig, int> Members
 
-        protected override int GetId(GoogleSitemapPageConfig entity)
+        protected override int GetId(SitemapConfig entity)
         {
             return entity.Id;
         }
 
-        protected override void SetNewId(GoogleSitemapPageConfig entity)
+        protected override void SetNewId(SitemapConfig entity)
         {
             // Do nothing
         }
 
         protected override Permission ReadPermission
         {
-            get { return GooglePermissions.SitemapRead; }
+            get { return CmsPermissions.SitemapRead; }
         }
 
         protected override Permission WritePermission
         {
-            get { return GooglePermissions.SitemapWrite; }
+            get { return CmsPermissions.SitemapWrite; }
         }
 
         #endregion GenericODataController<GoogleSitemapPageConfig, int> Members
 
         [EnableQuery]
         [HttpPost]
-        public virtual IEnumerable<GoogleSitemapPageConfigModel> GetConfig(ODataActionParameters parameters)
+        public virtual IEnumerable<SitemapConfigModel> GetConfig(ODataActionParameters parameters)
         {
             if (!CheckPermission(ReadPermission))
             {
-                return Enumerable.Empty<GoogleSitemapPageConfigModel>();
+                return Enumerable.Empty<SitemapConfigModel>();
             }
 
             // First ensure that current pages are in the config
@@ -79,7 +79,7 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
             {
                 var toInsert = pages
                     .Where(x => newPageIds.Contains(x.Id))
-                    .Select(x => new GoogleSitemapPageConfig
+                    .Select(x => new SitemapConfig
                     {
                         PageId = x.Id,
                         ChangeFrequency = ChangeFrequency.Weekly,
@@ -90,11 +90,11 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
             }
             config = Service.Find();
 
-            var collection = new HashSet<GoogleSitemapPageConfigModel>();
+            var collection = new HashSet<SitemapConfigModel>();
             foreach (var item in config)
             {
                 var page = pages.First(x => x.Id == item.PageId);
-                collection.Add(new GoogleSitemapPageConfigModel
+                collection.Add(new SitemapConfigModel
                 {
                     Id = item.Id,
                     Location = page.Slug,
@@ -135,7 +135,7 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
                 Service.Update(entity);
 
                 return Updated(entity);
-                //return Updated(new GoogleSitemapPageConfigModel
+                //return Updated(new SitemapConfigModel
                 //{
                 //    Id = entity.Id,
                 //    Location = pageRepository.Table.First(x => x.Id == entity.PageId).Slug,
@@ -154,7 +154,7 @@ namespace Kore.Plugins.Widgets.Google.Controllers.Api
             }
 
             var config = Service.Find();
-            var file = new GoogleSitemapXmlFile();
+            var file = new SitemapXmlFile();
 
             var pages = pageService.Find();
             foreach (var item in config)

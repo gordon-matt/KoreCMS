@@ -10,6 +10,8 @@ using Kore.Web.ContentManagement.Areas.Admin.Messaging.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Models;
 using Kore.Web.Infrastructure;
 
 namespace Kore.Web.ContentManagement.Infrastructure
@@ -32,6 +34,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.EntitySet<Page>("PageApi");
             builder.EntitySet<PageType>("PageTypeApi");
             builder.EntitySet<QueuedEmail>("QueuedEmailApi");
+            builder.EntitySet<SitemapConfig>("XmlSitemapApi");
             builder.EntitySet<Subscriber>("SubscriberApi");
             builder.EntitySet<Zone>("ZoneApi");
 
@@ -45,11 +48,19 @@ namespace Kore.Web.ContentManagement.Infrastructure
             RegisterLocalizableStringODataActions(builder);
             RegisterMessageTemplateODataActions(builder);
             RegisterPageODataActions(builder);
+            RegisterXmlSitemapODataActions(builder);
 
             config.Routes.MapODataRoute("OData_Kore_CMS", "odata/kore/cms", builder.GetEdmModel());
         }
 
         #endregion IWebApiRegistrar Members
+
+        private static void RegisterContentBlockODataActions(ODataModelBuilder builder)
+        {
+            var getByPageIdAction = builder.Entity<ContentBlock>().Collection.Action("GetByPageId");
+            getByPageIdAction.Parameter<Guid>("pageId");
+            getByPageIdAction.ReturnsCollectionFromEntitySet<ContentBlock>("ContentBlocks");
+        }
 
         private static void RegisterHistoricPageODataActions(ODataModelBuilder builder)
         {
@@ -96,11 +107,19 @@ namespace Kore.Web.ContentManagement.Infrastructure
             translateAction.Returns<EdmPage>();
         }
 
-        private static void RegisterContentBlockODataActions(ODataModelBuilder builder)
+        private static void RegisterXmlSitemapODataActions(ODataModelBuilder builder)
         {
-            var getByPageIdAction = builder.Entity<ContentBlock>().Collection.Action("GetByPageId");
-            getByPageIdAction.Parameter<Guid>("pageId");
-            getByPageIdAction.ReturnsCollectionFromEntitySet<ContentBlock>("ContentBlocks");
+            var getConfigAction = builder.Entity<SitemapConfig>().Collection.Action("GetConfig");
+            getConfigAction.ReturnsCollection<SitemapConfigModel>();
+
+            var setConfigAction = builder.Entity<SitemapConfig>().Collection.Action("SetConfig");
+            setConfigAction.Parameter<int>("id");
+            setConfigAction.Parameter<byte>("changeFrequency");
+            setConfigAction.Parameter<float>("priority");
+            setConfigAction.Returns<IHttpActionResult>();
+
+            var generateAction = builder.Entity<SitemapConfig>().Collection.Action("Generate");
+            generateAction.Returns<IHttpActionResult>();
         }
     }
 }

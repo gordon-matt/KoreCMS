@@ -1,0 +1,72 @@
+﻿@using Kore.Web.ContentManagement.Areas.Admin.Sitemap
+@using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Domain
+@model IEnumerable<SitemapConfig>
+
+@{
+    Layout = KoreWebConstants.DefaultAdminLayoutPath;
+
+    Style.IncludeBundle("kendo-ui");
+
+    Script.IncludeBundle("kendo-ui");
+    Script.IncludeBundle("knockout");
+    Script.IncludeBundle("knockout-mapping");
+    Script.IncludeBundle("notify");
+
+    Script.IncludeBundle("kore-cms/xml-sitemap");
+
+    string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
+}
+
+<div id="grid-section" class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <a onclick="generateFile()" href="javascript:void(0)" class="btn btn-success">
+            <i class="kore-icon kore-icon-save"></i>
+            @T(KoreCmsLocalizableStrings.Sitemap.GenerateFile)
+        </a>
+    </div>
+
+    <div class="clearfix"></div>
+    <br />
+
+    <div class="col-md-12 @rtlClass">
+        <div id="Grid"></div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        var gridPageSize = @SiteSettings.DefaultGridPageSize;
+        var translations = {
+            ConfirmGenerateFile: '@T(KoreCmsLocalizableStrings.Sitemap.ConfirmGenerateFile).Text',
+            GenerateFileSuccess: '@T(KoreCmsLocalizableStrings.Sitemap.GenerateFileSuccess).Text',
+            GenerateFileError: '@T(KoreCmsLocalizableStrings.Sitemap.GenerateFileError).Text',
+
+            ChangeFrequencies: {
+                Always: '@T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Always).Text',
+                Hourly: '@T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Hourly).Text',
+                Daily: '@T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Daily).Text',
+                Weekly: '@T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Weekly).Text',
+                Monthly: '@T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Monthly).Text',
+                Yearly: '@T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Yearly).Text',
+                Never: '@T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Never).Text',
+            },
+
+            Columns: {
+                ChangeFrequency: '@T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequency).Text',
+                Id: '@T(KoreCmsLocalizableStrings.Sitemap.Model.Id).Text',
+                Location: '@T(KoreCmsLocalizableStrings.Sitemap.Model.Location).Text',
+                Priority: '@T(KoreCmsLocalizableStrings.Sitemap.Model.Priority).Text',
+            }
+        };
+
+        var changeFrequencies = [
+            { "Id": 0, "Name": translations.ChangeFrequencies.Always },
+            { "Id": 1, "Name": translations.ChangeFrequencies.Hourly },
+            { "Id": 2, "Name": translations.ChangeFrequencies.Daily },
+            { "Id": 3, "Name": translations.ChangeFrequencies.Weekly },
+            { "Id": 4, "Name": translations.ChangeFrequencies.Monthly },
+            { "Id": 5, "Name": translations.ChangeFrequencies.Yearly },
+            { "Id": 6, "Name": translations.ChangeFrequencies.Never }
+        ];
+    </script>
+}

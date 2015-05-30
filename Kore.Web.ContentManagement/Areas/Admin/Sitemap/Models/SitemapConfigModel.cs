@@ -1,8 +1,8 @@
-﻿using Kore.Plugins.Widgets.Google.Data.Domain;
+﻿using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Domain;
 
-namespace Kore.Plugins.Widgets.Google.Models
+namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Models
 {
-    public class GoogleSitemapPageConfigModel
+    public class SitemapConfigModel
     {
         public int Id { get; set; }
 

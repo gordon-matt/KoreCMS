@@ -57,11 +57,11 @@ CACHE
 - Store Cache Keys as contants
 
 OTHER
-- why are tasks not showing anymore?
 - Provide overloads for AutoMenu(), AutoSubmenu() and AutoBreadcrumbs() that don't require any template (just generate it for Bootstrap by default)
 - admin theme settings (left or top menu, which SmartAdmin colors etc)
 - need some way to provide descriptions/tooltips using an [Attribute] of some kind for widget properties (and page type properties too)..
-- LOG FILE SETTINGS
+- LOG FILE SETTINGS?
+- move sitemap to Kore.Web!!!
 - new sitemap html page (see nop for example)
 - Video Content Block
 - Make moment.js part of Kore? Can have ISettings for it.. etc. Same for TinyMCE and more.
@@ -79,7 +79,6 @@ OTHER
 - Content Blocks: Localization
 - Content Blocks: override template path (for display only)
 - dashboard widgets
-- move sitemap to Kore.Web!!!
 - blog, store, etc for google sitemap (some kind of IPageProvider that can be used commongly for sitemap and also auto menus?)
 - add meta keywords and desc for blog entries and products, categories, etc..
 - uninstall plugin should remove permissions

@@ -4,12 +4,12 @@ using System.Runtime.Serialization;
 using Kore.Data;
 using Kore.Data.EntityFramework;
 
-namespace Kore.Plugins.Widgets.Google.Data.Domain
+namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Domain
 {
     [DataContract]
-    public class GoogleSitemapPageConfig : IEntity
+    public class SitemapConfig : IEntity
     {
-        public GoogleSitemapPageConfig()
+        public SitemapConfig()
         {
             Priority = .5f;
         }
@@ -36,11 +36,11 @@ namespace Kore.Plugins.Widgets.Google.Data.Domain
         #endregion IEntity Members
     }
 
-    public class GoogleSitemapPageConfigMap : EntityTypeConfiguration<GoogleSitemapPageConfig>, IEntityTypeConfiguration
+    public class SitemapConfigMap : EntityTypeConfiguration<SitemapConfig>, IEntityTypeConfiguration
     {
-        public GoogleSitemapPageConfigMap()
+        public SitemapConfigMap()
         {
-            ToTable(Constants.Tables.SitemapConfig);
+            ToTable(CmsConstants.Tables.SitemapConfig);
             HasKey(x => x.Id);
             Property(x => x.ChangeFrequency).IsRequired();
             Property(x => x.Priority).IsRequired();

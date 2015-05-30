@@ -19,6 +19,7 @@ namespace Kore.Web.ContentManagement
             public const string Menus = "Admin/Menus";
             public const string Newsletters = "Admin/Newsletters";
             public const string Pages = "Admin/Pages";
+            public const string Sitemap = "Admin/Sitemap";
         }
 
         public static class CacheKeys
@@ -40,6 +41,7 @@ namespace Kore.Web.ContentManagement
             internal const string MessageTemplates = "Kore_MessageTemplates";
             internal const string Pages = "Kore_Pages";
             internal const string PageTypes = "Kore_PageTypes";
+            internal const string SitemapConfig = "Kore_SitemapConfig";
             internal const string QueuedEmails = "Kore_QueuedEmails";
             internal const string QueuedSMS = "Kore_QueuedSMS";
             internal const string Zones = "Kore_Zones";

@@ -28,30 +28,6 @@
             }
         }
 
-        public static class SitemapModel
-        {
-            public static class ChangeFrequencies
-            {
-                public const string Always = "Plugins.Widgets.Google/SitemapModel.ChangeFrequencies.Always";
-                public const string Hourly = "Plugins.Widgets.Google/SitemapModel.ChangeFrequencies.Hourly";
-                public const string Daily = "Plugins.Widgets.Google/SitemapModel.ChangeFrequencies.Daily";
-                public const string Weekly = "Plugins.Widgets.Google/SitemapModel.ChangeFrequencies.Weekly";
-                public const string Monthly = "Plugins.Widgets.Google/SitemapModel.ChangeFrequencies.Monthly";
-                public const string Yearly = "Plugins.Widgets.Google/SitemapModel.ChangeFrequencies.Yearly";
-                public const string Never = "Plugins.Widgets.Google/SitemapModel.ChangeFrequencies.Never";
-            }
-
-            public const string ChangeFrequency = "Plugins.Widgets.Google/SitemapModel.ChangeFrequency";
-            public const string Id = "Plugins.Widgets.Google/SitemapModel.Id";
-            public const string Location = "Plugins.Widgets.Google/SitemapModel.Location";
-            public const string Priority = "Plugins.Widgets.Google/SitemapModel.Priority";
-        }
-
-        public const string ConfirmGenerateFile = "Plugins.Widgets.Google/ConfirmGenerateFile";
-        public const string GenerateFile = "Plugins.Widgets.Google/GenerateFile";
-        public const string GenerateFileError = "Plugins.Widgets.Google/GenerateFileError";
-        public const string GenerateFileSuccess = "Plugins.Widgets.Google/GenerateFileSuccess";
         public const string Google = "Plugins.Widgets.Google/Google";
-        public const string XMLSitemap = "Plugins.Widgets.Google/XMLSitemap";
     }
 }

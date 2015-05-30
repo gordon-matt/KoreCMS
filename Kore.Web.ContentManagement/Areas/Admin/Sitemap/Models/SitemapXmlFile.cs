@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
-using Kore.Plugins.Widgets.Google.Data.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Domain;
 
-namespace Kore.Plugins.Widgets.Google.Models
+namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Models
 {
     [XmlRoot("urlset", Namespace = "http://www.sitemaps.org/schemas/sitemap/0.9")]
-    public class GoogleSitemapXmlFile
+    public class SitemapXmlFile
     {
-        public GoogleSitemapXmlFile()
+        public SitemapXmlFile()
         {
             Urls = new List<UrlElement>();
         }

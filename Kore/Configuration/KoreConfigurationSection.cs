@@ -29,12 +29,6 @@ namespace Kore.Configuration
             set { base["ignoreStartupTasks"] = value; }
         }
 
-        [ConfigurationProperty("data", IsRequired = false)]
-        public DataConfigurationElement Data
-        {
-            get { return (DataConfigurationElement)base["data"]; }
-        }
-
         [ConfigurationProperty("engine", IsRequired = false)]
         public EngineConfigurationElement Engine
         {

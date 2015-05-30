@@ -96,6 +96,20 @@ namespace Kore.Web.Mvc.KoreUI
 
         #endregion TextBoxWithAddOns
 
+        #region Panel
+
+        public PanelBuilder<TModel> Begin(Panel panel)
+        {
+            if (panel == null)
+            {
+                throw new ArgumentNullException("panel");
+            }
+
+            return new PanelBuilder<TModel>(this.html, panel);
+        }
+
+        #endregion Panel
+
         #region Quotes
 
         public MvcHtmlString Quote(string text, string author, string titleOfWork, object htmlAttributes = null)

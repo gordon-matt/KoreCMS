@@ -44,6 +44,8 @@ namespace Kore.Web.Mvc.KoreUI.Providers
 
         public abstract IModalProvider ModalProvider { get; }
 
+        public abstract IPanelProvider PanelProvider { get; }
+
         public abstract ITabsProvider TabsProvider { get; }
 
         public abstract IThumbnailProvider ThumbnailProvider { get; }

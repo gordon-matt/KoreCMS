@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 
 namespace Kore.Web.Mvc.KoreUI
 {
@@ -28,7 +29,7 @@ namespace Kore.Web.Mvc.KoreUI
         {
             if (string.IsNullOrEmpty(id))
             {
-                id = "tabs";
+                id = "tabs-" + Guid.NewGuid();
             }
 
             this.Position = position;

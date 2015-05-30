@@ -81,7 +81,6 @@ OTHER
 - Content Blocks: override template path (for display only)
 - dashboard widgets
 - blog, store, etc for google sitemap (some kind of IPageProvider that can be used commongly for sitemap and also auto menus?)
-- add meta keywords and desc for blog entries and products, categories, etc..
 - uninstall plugin should remove permissions
 
 - implement this: http://plugins.krajee.com/file-input/demo#advanced-usage

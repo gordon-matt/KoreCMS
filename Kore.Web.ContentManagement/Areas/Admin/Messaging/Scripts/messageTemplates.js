@@ -12,10 +12,10 @@ var ViewModel = function () {
 
     self.create = function () {
         self.id(emptyGuid);
-        self.name('');
+        self.name(null);
         self.ownerId(null);
-        self.subject('');
-        self.body('');
+        self.subject(null);
+        self.body(null);
         self.enabled(false);
 
         $("#tokens-list").html("");

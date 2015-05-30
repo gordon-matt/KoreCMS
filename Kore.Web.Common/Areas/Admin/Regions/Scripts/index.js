@@ -11,8 +11,8 @@ var CountryModel = function () {
 
     self.create = function () {
         self.id(0);
-        self.name('');
-        self.countryCode('');
+        self.name(null);
+        self.countryCode(null);
         self.hasStates(false);
         self.parentId(viewModel.selectedContinentId());
 
@@ -182,8 +182,8 @@ var StateModel = function () {
 
     self.create = function () {
         self.id(0);
-        self.name('');
-        self.stateCode('');
+        self.name(null);
+        self.stateCode(null);
         self.parentId(viewModel.selectedCountryId());
 
         self.validator.resetForm();
@@ -334,7 +334,7 @@ var CityModel = function () {
 
     self.create = function () {
         self.id(0);
-        self.name('');
+        self.name(null);
 
         if (viewModel.selectedStateId()) {
             self.parentId(viewModel.selectedStateId());

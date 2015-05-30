@@ -46,17 +46,17 @@ var ProductModel = function () {
 
     self.create = function () {
         self.id(0);
-        self.name('');
-        self.slug('');
+        self.name(null);
+        self.slug(null);
         //self.categoryId(0);
         self.price(0);
         self.tax(0);
         self.shippingCost(0);
-        self.mainImageUrl('');
-        self.shortDescription('');
-        self.fullDescription('');
-        self.metaKeywords('');
-        self.metaDescription('');
+        self.mainImageUrl(null);
+        self.shortDescription(null);
+        self.fullDescription(null);
+        self.metaKeywords(null);
+        self.metaDescription(null);
 
         imagePickerField = 'product';
 
@@ -227,13 +227,13 @@ var ViewModel = function () {
     self.create = function () {
         self.id(0);
         self.parentId(null);
-        self.name('');
-        self.slug('');
+        self.name(null);
+        self.slug(null);
         self.order(0);
-        self.imageUrl('');
-        self.description('');
-        self.metaKeywords('');
-        self.metaDescription('');
+        self.imageUrl(null);
+        self.description(null);
+        self.metaKeywords(null);
+        self.metaDescription(null);
 
         self.showToolbar(false);
         imagePickerField = 'category';

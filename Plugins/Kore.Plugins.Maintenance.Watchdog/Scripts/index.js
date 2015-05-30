@@ -8,8 +8,8 @@ var ViewModel = function () {
     self.password = ko.observable(null);
 
     self.create = function () {
-        self.url('');
-        self.password('');
+        self.url(null);
+        self.password(null);
 
         self.validator.resetForm();
         switchSection($("#form-section"));
@@ -131,6 +131,7 @@ var ViewModel = function () {
         }
     });
 };
+
 var viewModel;
 $(document).ready(function () {
     viewModel = new ViewModel();

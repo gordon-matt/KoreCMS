@@ -12,8 +12,8 @@ var ViewModel = function () {
 
     self.create = function () {
         self.id(emptyGuid);
-        self.name('');
-        self.cultureCode('');
+        self.name(null);
+        self.cultureCode(null);
         self.isRTL(false);
         self.isEnabled(false);
         self.sortOrder(0);

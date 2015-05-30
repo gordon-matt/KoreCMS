@@ -161,16 +161,16 @@ var ViewModel = function () {
 
     self.create = function () {
         self.id(emptyGuid);
-        self.title('');
+        self.title(null);
         self.order(0);
         self.isEnabled(false);
-        self.blockName('');
-        self.blockType('');
+        self.blockName(null);
+        self.blockType(null);
         self.zoneId(emptyGuid);
-        self.displayCondition('');
-        self.blockValues('');
+        self.displayCondition(null);
+        self.blockValues(null);
         self.pageId(pageId);
-        self.cultureCode('');
+        self.cultureCode(null);
         self.refId(null);
 
         // Clean up from previously injected html/scripts

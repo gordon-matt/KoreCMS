@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Castle.Core.Logging;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 using Kore.Web.Plugins;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -21,6 +22,7 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
             this.webHelper = webHelper;
         }
 
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {
@@ -37,6 +39,7 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
             return View("Kore.Web.Areas.Admin.Plugins.Views.Plugin.Index");
         }
 
+        [Compress]
         [Route("install/{systemName}")]
         public ActionResult Install(string systemName)
         {
@@ -81,6 +84,7 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
             return RedirectToAction("Index");
         }
 
+        [Compress]
         [Route("uninstall/{systemName}")]
         public ActionResult Uninstall(string systemName)
         {

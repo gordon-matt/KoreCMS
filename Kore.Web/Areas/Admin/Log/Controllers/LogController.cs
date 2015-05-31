@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.Areas.Admin.Log.Controllers
@@ -8,6 +9,7 @@ namespace Kore.Web.Areas.Admin.Log.Controllers
     [RouteArea(KoreWebConstants.Areas.Log)]
     public class LogController : KoreController
     {
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {

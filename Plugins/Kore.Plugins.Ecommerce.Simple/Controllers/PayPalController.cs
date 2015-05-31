@@ -15,6 +15,7 @@ using Kore.Plugins.Ecommerce.Simple.Models;
 using Kore.Plugins.Ecommerce.Simple.Services;
 using Kore.Web.Mvc;
 using System.Data.Entity;
+using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Plugins.Ecommerce.Simple.Controllers
 {
@@ -39,6 +40,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             this.settings = settings;
         }
 
+        [Compress]
         [Route("buy-now")]
         public ActionResult BuyNow()
         {
@@ -75,6 +77,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return View(model);
         }
 
+        [Compress]
         [Route("return/{orderId}")]
         public ActionResult Return(int orderId)
         {
@@ -202,6 +205,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return RedirectToAction("Index", "Store", new { area = string.Empty });
         }
 
+        [Compress]
         [Route("cancel-return/{orderId}")]
         public ActionResult CancelReturn(int orderId)
         {
@@ -218,6 +222,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return RedirectToAction("Index", "Store", new { area = string.Empty });
         }
 
+        [Compress]
         [Route("notification/{orderId}")]
         public ActionResult Notification(int orderId)
         {

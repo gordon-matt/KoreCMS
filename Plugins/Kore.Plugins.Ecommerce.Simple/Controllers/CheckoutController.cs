@@ -5,6 +5,7 @@ using Kore.Plugins.Ecommerce.Simple.Data.Domain;
 using Kore.Plugins.Ecommerce.Simple.Models;
 using Kore.Plugins.Ecommerce.Simple.Services;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Plugins.Ecommerce.Simple.Controllers
 {
@@ -29,6 +30,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             this.settings = settings;
         }
 
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {

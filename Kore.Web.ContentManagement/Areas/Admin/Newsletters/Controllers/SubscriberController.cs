@@ -6,6 +6,7 @@ using Kore.Collections;
 using Kore.Security.Membership;
 using Kore.Web.Events;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 using Kore.Web.Security.Membership;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -30,6 +31,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
             this.eventBus = eventBus;
         }
 
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {
@@ -48,6 +50,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
         }
 
         [AllowAnonymous]
+        [Compress]
         [Route("subscribe")]
         public JsonResult Subscribe(string email, string name)
         {
@@ -126,6 +129,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
             });
         }
 
+        [Compress]
         [Route("download-csv")]
         public FileContentResult DownloadCsv()
         {

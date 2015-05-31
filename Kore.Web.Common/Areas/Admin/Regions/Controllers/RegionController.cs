@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Kore.Web.Common.Areas.Admin.Regions.Models;
 using Kore.Web.Common.Areas.Admin.Regions.Services;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Web.Common.Areas.Admin.Regions.Controllers
 {
@@ -18,6 +19,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers
             this.regionService = regionService;
         }
 
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {

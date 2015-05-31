@@ -5,6 +5,7 @@ using System.Web.Routing;
 using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 {
@@ -19,6 +20,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
             this.contentBlockService = contentBlockService;
         }
 
+        [Compress]
         [Route("{pageId?}")]
         public ActionResult Index(Guid? pageId)
         {
@@ -42,6 +44,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
             return View("Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.ContentBlock.Index");
         }
 
+        [Compress]
         [Route("get-editor-ui/{contentBlockId}")]
         public ActionResult GetEditorUI(Guid contentBlockId)
         {

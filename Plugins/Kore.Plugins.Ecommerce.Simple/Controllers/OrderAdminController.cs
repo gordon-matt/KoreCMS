@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Plugins.Ecommerce.Simple.Controllers
 {
@@ -8,6 +9,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
     [RoutePrefix("orders")]
     public class OrderAdminController : KoreController
     {
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {

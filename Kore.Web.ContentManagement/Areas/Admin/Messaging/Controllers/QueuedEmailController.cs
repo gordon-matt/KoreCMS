@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers
@@ -9,6 +10,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers
     [RoutePrefix("queued-email")]
     public class QueuedEmailController : KoreController
     {
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {

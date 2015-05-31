@@ -6,6 +6,7 @@ using Kore.Localization.Services;
 using Kore.Web.Configuration;
 using Kore.Web.ContentManagement.Areas.Admin.Localization.Models;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
@@ -29,6 +30,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
             this.siteSettings = siteSettings;
         }
 
+        [Compress]
         [Route("{languageId}")]
         public ActionResult Index(Guid languageId)
         {
@@ -51,6 +53,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
             return View("Kore.Web.ContentManagement.Areas.Admin.Localization.Views.LocalizableString.Index");
         }
 
+        [Compress]
         [Route("export/{cultureCode}")]
         public ActionResult ExportLanguagePack(string cultureCode)
         {
@@ -70,6 +73,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
         }
 
         //TODO: Test
+        [Compress]
         [Route("translate/{key}")]
         public JsonResult Translate(string key)
         {

@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Plugins.Maintenance.Watchdog.Controllers
 {
@@ -15,6 +16,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers
             this.settings = settings;
         }
 
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {

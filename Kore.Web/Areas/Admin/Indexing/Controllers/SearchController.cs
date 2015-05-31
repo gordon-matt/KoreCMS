@@ -5,6 +5,7 @@ using Kore.Web.Indexing;
 using Kore.Web.Indexing.Services;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Notify;
+using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Web.Areas.Admin.Indexing.Controllers
 {
@@ -21,6 +22,7 @@ namespace Kore.Web.Areas.Admin.Indexing.Controllers
             this.searchService = searchService;
         }
 
+        [Compress]
         [Route("")]
         public ActionResult Search(string q = "")
         {

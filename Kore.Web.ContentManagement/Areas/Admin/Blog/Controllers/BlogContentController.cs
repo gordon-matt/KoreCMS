@@ -6,6 +6,7 @@ using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
 {
@@ -27,6 +28,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
             this.membershipService = membershipService;
         }
 
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {
@@ -89,6 +91,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
             }
         }
 
+        [Compress]
         [Route("{slug}")]
         public ActionResult Details(string slug)
         {

@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Controllers
 {
@@ -7,6 +8,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Controllers
     [RouteArea(CmsConstants.Areas.Menus)]
     public class MenuController : KoreController
     {
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {

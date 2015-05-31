@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
 {
@@ -7,6 +8,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
     [RouteArea(CmsConstants.Areas.Blog)]
     public class BlogController : KoreController
     {
+        [Compress]
         [Route("")]
         public ActionResult Index(string slug)
         {

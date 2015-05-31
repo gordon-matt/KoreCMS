@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
@@ -9,6 +10,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
     [RoutePrefix("languages")]
     public class LanguageController : KoreController
     {
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {

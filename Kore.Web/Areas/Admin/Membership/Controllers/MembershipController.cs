@@ -27,7 +27,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers
             return true;
         }
 
-        [CompressFilter]
+        [Compress]
         [Route("users")]
         public virtual ActionResult Users()
         {
@@ -48,7 +48,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers
             return View("Kore.Web.Areas.Admin.Membership.Views.Membership.Index");
         }
 
-        [CompressFilter]
+        [Compress]
         [Route("roles")]
         public virtual ActionResult Roles()
         {

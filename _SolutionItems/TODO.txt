@@ -14,6 +14,12 @@ TODO: change from page history to page versioning instead (keep all pages in pag
 -    then: we can make page preview work with unsaved versions of pages
 
 
+- remove zone from block dropdown after delete
+- context menu for media is far down below
+- problem with sub pages in xml sitemap (duplicates)
+
+
+
 - page preview in history still has some issues (not showing correct css in soem cases, like missing breadcrumbs or hidden text under navbar)
 	- AND worse: it seems to mess with the admin navbar - better to show preview in modal or OTHER tab (have a button)
 

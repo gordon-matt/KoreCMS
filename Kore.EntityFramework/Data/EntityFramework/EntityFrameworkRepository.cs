@@ -66,7 +66,7 @@ namespace Kore.Data.EntityFramework
         public int DeleteAll()
         {
             int rowsAffected = Table.Delete();
-            RefreshMany(Table.ToHashSet());
+            RefreshAll();
             return rowsAffected;
         }
 
@@ -80,14 +80,30 @@ namespace Kore.Data.EntityFramework
         public int Delete(IQueryable<TEntity> query)
         {
             int rowsAffected = Table.Delete(query);
-            RefreshMany(Table.ToHashSet());
+            RefreshAll();
             return rowsAffected;
         }
 
         public int Delete(TEntity entity)
         {
-            Entities.Attach(entity);
-            Entities.Remove(entity);
+            if (Context.Entry(entity).State == EntityState.Detached)
+            {
+                var localEntity = Entities.Local.FirstOrDefault(x => x.KeyValues.ArrayEquals(entity.KeyValues));
+
+                if (localEntity != null)
+                {
+                    Context.Entry(localEntity).State = EntityState.Deleted;
+                }
+                else
+                {
+                    Entities.Attach(entity);
+                    Context.Entry(entity).State = EntityState.Deleted;
+                }
+            }
+            else
+            {
+                Entities.Remove(entity);
+            }
             return Context.SaveChanges();
         }
 
@@ -95,8 +111,24 @@ namespace Kore.Data.EntityFramework
         {
             foreach (var entity in entities)
             {
-                Entities.Attach(entity);
-                Entities.Remove(entity);
+                if (Context.Entry(entity).State == EntityState.Detached)
+                {
+                    var localEntity = Entities.Local.FirstOrDefault(x => x.KeyValues.ArrayEquals(entity.KeyValues));
+
+                    if (localEntity != null)
+                    {
+                        Context.Entry(localEntity).State = EntityState.Deleted;
+                    }
+                    else
+                    {
+                        Entities.Attach(entity);
+                        Context.Entry(entity).State = EntityState.Deleted;
+                    }
+                }
+                else
+                {
+                    Entities.Remove(entity);
+                }
             }
             return Context.SaveChanges();
         }
@@ -165,26 +197,26 @@ namespace Kore.Data.EntityFramework
                     throw new ArgumentNullException("entity");
                 }
 
-                if (context.Entry(entity).State == EntityState.Detached)
+                if (Context.Entry(entity).State == EntityState.Detached)
                 {
                     var localEntity = Entities.Local.FirstOrDefault(x => x.KeyValues.ArrayEquals(entity.KeyValues));
 
                     if (localEntity != null)
                     {
-                        context.Entry(localEntity).CurrentValues.SetValues(entity);
+                        Context.Entry(localEntity).CurrentValues.SetValues(entity);
                     }
                     else
                     {
                         entity = Entities.Attach(entity);
-                        context.Entry(entity).State = EntityState.Modified;
+                        Context.Entry(entity).State = EntityState.Modified;
                     }
                 }
                 else
                 {
-                    context.Entry(entity).State = EntityState.Modified;
+                    Context.Entry(entity).State = EntityState.Modified;
                 }
 
-                return context.SaveChanges();
+                return Context.SaveChanges();
             }
             catch (DbEntityValidationException x)
             {
@@ -209,26 +241,26 @@ namespace Kore.Data.EntityFramework
 
                 foreach (var entity in entities)
                 {
-                    if (context.Entry(entity).State == EntityState.Detached)
+                    if (Context.Entry(entity).State == EntityState.Detached)
                     {
                         var localEntity = Entities.Local.FirstOrDefault(x => x.KeyValues.ArrayEquals(entity.KeyValues));
 
                         if (localEntity != null)
                         {
-                            context.Entry(localEntity).CurrentValues.SetValues(entity);
+                            Context.Entry(localEntity).CurrentValues.SetValues(entity);
                         }
                         else
                         {
                             Entities.Attach(entity);
-                            context.Entry(entity).State = EntityState.Modified;
+                            Context.Entry(entity).State = EntityState.Modified;
                         }
                     }
                     else
                     {
-                        context.Entry(entity).State = EntityState.Modified;
+                        Context.Entry(entity).State = EntityState.Modified;
                     }
                 }
-                return context.SaveChanges();
+                return Context.SaveChanges();
             }
             catch (DbEntityValidationException x)
             {
@@ -245,7 +277,7 @@ namespace Kore.Data.EntityFramework
         public int Update(Expression<Func<TEntity, TEntity>> updateExpression)
         {
             int rowsAffected = Table.Update(updateExpression);
-            RefreshMany(Table.ToHashSet());
+            RefreshAll();
             return rowsAffected;
         }
 
@@ -259,7 +291,7 @@ namespace Kore.Data.EntityFramework
         public int Update(IQueryable<TEntity> query, Expression<Func<TEntity, TEntity>> updateExpression)
         {
             int rowsAffected = Table.Update(query, updateExpression);
-            RefreshMany(Table.ToHashSet());
+            RefreshAll();
             return rowsAffected;
         }
 
@@ -277,7 +309,7 @@ namespace Kore.Data.EntityFramework
 
         public ObjectContext ObjectContext
         {
-            get { return ((IObjectContextAdapter)context).ObjectContext; }
+            get { return ((IObjectContextAdapter)Context).ObjectContext; }
         }
 
         public virtual void RefreshAll()

@@ -33,8 +33,7 @@ namespace Kore.Web.Mvc.KoreUI
                     {
                         writer.Write(string.Format(
 @"<div class=""panel-heading"">
-    <h3 class=""panel-title"">{0}</h3>
-</div>", title));
+    <h3 class=""panel-title"">{0}</h3>", title));
                     }
                     break;
 
@@ -48,14 +47,7 @@ namespace Kore.Web.Mvc.KoreUI
 
         public void EndPanelSection(PanelSectionType sectionType, TextWriter writer)
         {
-            if (sectionType == PanelSectionType.Body)
-            {
-                writer.Write("</div>");
-            }
-            else
-            {
-                // Do nothing
-            }
+            writer.Write("</div>");
         }
 
         #endregion IPanelProvider Members

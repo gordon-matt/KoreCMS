@@ -1,4 +1,5 @@
 ﻿@using Kore.Plugins.Maintenance.Watchdog.Extensions
+@using Kore.Web.Mvc.KoreUI
 @using LocalizableStrings = Kore.Plugins.Maintenance.Watchdog.LocalizableStrings
 
 @{
@@ -34,39 +35,48 @@
 </div>
 
 <div id="form-section" class="row" style="display:none">
-    <form id="form-section-form" role="form">
-        <fieldset>
-            <legend>@T(KoreWebLocalizableStrings.General.Create)</legend>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.Label("Url", T(LocalizableStrings.Model.Url), new { @class = "control-label" })
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="kore-icon kore-icon-globe"></i>
-                        </span>
-                        @Html.TextBox("Url", null, new { @class = "form-control", data_bind = "value: url" })
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.Label("Password", T(LocalizableStrings.Model.Password), new { @class = "control-label" })
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="kore-icon kore-icon-password"></i>
-                        </span>
-                        @Html.Password("Password", null, new { @class = "form-control", data_bind = "value: password" })
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="form-group pull-right">
-                    <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                    <button type="button" class="btn btn-primary" data-bind="click: save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
-                </div>
-            </div>
-        </fieldset>
-    </form>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+            using (var body = panel.BeginBody())
+            {
+                <form id="form-section-form" role="form">
+                    <fieldset>
+                        <legend>@T(KoreWebLocalizableStrings.General.Create)</legend>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Url", T(LocalizableStrings.Model.Url), new { @class = "control-label" })
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="kore-icon kore-icon-globe"></i>
+                                    </span>
+                                    @Html.TextBox("Url", null, new { @class = "form-control", data_bind = "value: url" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Password", T(LocalizableStrings.Model.Password), new { @class = "control-label" })
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="kore-icon kore-icon-password"></i>
+                                    </span>
+                                    @Html.Password("Password", null, new { @class = "form-control", data_bind = "value: password" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group pull-right">
+                                <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            }
+        }
+    </div>
 </div>
 
 <script type="text/x-kendo-template" id="services-template">

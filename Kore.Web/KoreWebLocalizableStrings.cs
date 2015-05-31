@@ -14,6 +14,7 @@
             public const string Create = "Kore.Web/General.Create";
             public const string CreateFormat = "Kore.Web/General.CreateFormat";
             public const string Delete = "Kore.Web/General.Delete";
+            public const string Details = "Kore.Web/General.Details";
             public const string Edit = "Kore.Web/General.Edit";
             public const string EditFormat = "Kore.Web/General.EditFormat";
             public const string Enabled = "Kore.Web/General.Enabled";

@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using Kore.Web.Indexing.Services;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.Areas.Admin.Indexing.Controllers
@@ -17,6 +18,7 @@ namespace Kore.Web.Areas.Admin.Indexing.Controllers
             this.indexingService = indexingService;
         }
 
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {

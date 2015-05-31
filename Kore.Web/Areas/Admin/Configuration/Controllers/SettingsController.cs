@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Kore.Web.Configuration;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Web.Areas.Admin.Configuration.Controllers
 {
@@ -20,6 +21,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers
             this.settings = settings;
         }
 
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {
@@ -37,6 +39,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers
             return View("Kore.Web.Areas.Admin.Configuration.Views.Settings.Index");
         }
 
+        [Compress]
         [Route("get-editor-ui/{type}")]
         public ActionResult GetEditorUI(string type)
         {

@@ -355,9 +355,8 @@
     <Compile Include="Mvc\Notify\NotifyEntry.cs" />
     <Compile Include="Mvc\Notify\NotifyFilter.cs" />
     <Compile Include="Mvc\Optimization\BundleCollection.cs" />
-    <Compile Include="Mvc\Optimization\CompressFilterAttribute.cs" />
-    <Compile Include="Mvc\Optimization\HtmlMinifierAttribute.cs" />
-    <Compile Include="Mvc\Optimization\HtmlMinifierFilter.cs" />
+    <Compile Include="Mvc\Optimization\CompressAttribute.cs" />
+    <Compile Include="Mvc\Optimization\HtmlMinifyAttribute.cs" />
     <Compile Include="Mvc\Resources\BundleRegistrationException.cs" />
     <Compile Include="Mvc\Resources\IResourcesManager.cs" />
     <Compile Include="Mvc\Resources\MetaEntry.cs" />

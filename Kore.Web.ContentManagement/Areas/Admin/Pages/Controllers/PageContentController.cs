@@ -10,6 +10,7 @@ using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 {
@@ -39,6 +40,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         }
 
         //[OutputCache(Duration = 600, VaryByParam = "slug")] //TODO: Uncomment this when ready
+        [Compress]
         public ActionResult Index(string slug)
         {
             // Hack to make it search the correct path for the view

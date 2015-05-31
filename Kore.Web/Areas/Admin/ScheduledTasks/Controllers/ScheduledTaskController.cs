@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Web.Areas.Admin.ScheduledTasks.Controllers
 {
@@ -7,6 +8,7 @@ namespace Kore.Web.Areas.Admin.ScheduledTasks.Controllers
     [RouteArea(KoreWebConstants.Areas.ScheduledTasks)]
     public class ScheduledTaskController : KoreController
     {
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {

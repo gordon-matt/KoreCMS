@@ -53,9 +53,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
             Property(x => x.Slug).HasMaxLength(128).IsRequired();
             Property(x => x.TeaserImageUrl).HasMaxLength(255);
             Property(x => x.ShortDescription).IsMaxLength().IsRequired();
-            Property(x => x.FullDescription).IsMaxLength().IsRequired();
+            Property(x => x.FullDescription).IsMaxLength();
             Property(x => x.UseExternalLink).IsRequired();
-            Property(x => x.ExternalLink).HasMaxLength(255).IsRequired();
+            Property(x => x.ExternalLink).HasMaxLength(255);
             Property(x => x.MetaKeywords).HasMaxLength(255);
             Property(x => x.MetaDescription).HasMaxLength(255);
         }

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
-using System.Linq;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Mvc;
-using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 {
@@ -38,6 +39,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             this.zoneService = zoneService;
         }
 
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {
@@ -54,6 +56,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             return View("Kore.Web.ContentManagement.Areas.Admin.Pages.Views.Page.Index");
         }
 
+        [Compress]
         [Route("get-editor-ui/{pageId}")]
         public ActionResult GetEditorUI(Guid pageId)
         {
@@ -68,6 +71,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             return Json(new { Content = content }, JsonRequestBehavior.AllowGet);
         }
 
+        [Compress]
         [Route("{pageId}/history")]
         public ActionResult History(Guid pageId)
         {
@@ -90,7 +94,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             return View("Kore.Web.ContentManagement.Areas.Admin.Pages.Views.Page.History");
         }
 
-
+        [Compress]
         [Route("preview/{pageId}/{isHistoricPage}")]
         public ActionResult Preview(Guid pageId, bool isHistoricPage)
         {
@@ -103,7 +107,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                 var historicPage = historicPageService.Value.FindOne(pageId);
                 page = new Page
                 {
-                    AccessRestrictions= historicPage.AccessRestrictions,
+                    AccessRestrictions = historicPage.AccessRestrictions,
                     CultureCode = historicPage.CultureCode,
                     DateCreatedUtc = historicPage.DateCreatedUtc,
                     DateModifiedUtc = historicPage.DateModifiedUtc,

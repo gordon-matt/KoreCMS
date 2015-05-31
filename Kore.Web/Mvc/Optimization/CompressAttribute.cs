@@ -4,21 +4,27 @@ using System.Web.Mvc;
 
 namespace Kore.Web.Mvc.Optimization
 {
-    public class CompressFilterAttribute : ActionFilterAttribute
+    public class CompressAttribute : ActionFilterAttribute
     {
         public override void OnResultExecuting(ResultExecutingContext filterContext)
         {
-            string str = filterContext.HttpContext.Request.Headers["Accept-Encoding"];
-            if (!string.IsNullOrEmpty(str))
+            string acceptEncoding = filterContext.HttpContext.Request.Headers["Accept-Encoding"];
+            if (!string.IsNullOrEmpty(acceptEncoding))
             {
-                str = str.ToUpperInvariant();
+                acceptEncoding = acceptEncoding.ToUpperInvariant();
                 HttpResponseBase response = filterContext.HttpContext.Response;
-                if (str.Contains("GZIP"))
+
+                if (response.Filter == null)
+                {
+                    return;
+                }
+
+                if (acceptEncoding.Contains("GZIP"))
                 {
                     response.AppendHeader("Content-encoding", "gzip");
                     response.Filter = new GZipStream(response.Filter, CompressionMode.Compress);
                 }
-                else if (str.Contains("DEFLATE"))
+                else if (acceptEncoding.Contains("DEFLATE"))
                 {
                     response.AppendHeader("Content-encoding", "deflate");
                     response.Filter = new DeflateStream(response.Filter, CompressionMode.Compress);

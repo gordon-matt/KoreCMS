@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Kore.Collections;
 using Kore.Plugins.Ecommerce.Simple.Services;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 using Kore.Web.Navigation;
 
 namespace Kore.Plugins.Ecommerce.Simple.Controllers
@@ -29,6 +30,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         }
 
         //[OutputCache(Duration = 600, VaryByParam = "categoryId")]
+        [Compress]
         [Route("categories")]
         public ActionResult Categories(int? categoryId = null)
         {
@@ -70,6 +72,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         }
 
         //[OutputCache(Duration = 600, VaryByParam = "none")] //TODO: Uncomment when ready
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {
@@ -85,6 +88,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         }
 
         //[OutputCache(Duration = 600, VaryByParam = "categorySlug;productSlug")]
+        [Compress]
         [Route("categories/{categorySlug}/{productSlug}")]
         public ActionResult Product(string categorySlug, string productSlug)
         {
@@ -144,6 +148,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         }
 
         //[OutputCache(Duration = 600, VaryByParam = "categorySlug")]
+        [Compress]
         [Route("categories/{categorySlug}")]
         public ActionResult Products(string categorySlug)
         {

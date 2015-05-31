@@ -73,7 +73,6 @@ OTHER
 
 - minify HTML
 
-- use smartadmin jarvis widget for forms?
 - scheduled task to auto shrink log file?
 
 - review all TODO notes

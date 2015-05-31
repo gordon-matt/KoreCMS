@@ -195,6 +195,7 @@
     <Compile Include="IO\CustomEncodingStringWriter.cs" />
     <Compile Include="IO\FileInfoExtensions.cs" />
     <Compile Include="IO\StreamExtensions.cs" />
+    <Compile Include="IO\FilteredStream.cs" />
     <Compile Include="IWorkContext.cs" />
     <Compile Include="KoreVersion.cs" />
     <Compile Include="KoreConstants.cs" />

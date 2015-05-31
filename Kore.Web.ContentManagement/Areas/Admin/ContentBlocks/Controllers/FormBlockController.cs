@@ -8,6 +8,7 @@ using Castle.Core.Logging;
 using Kore.Net.Mail;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Models;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 {
@@ -22,6 +23,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
             this.emailSender = emailSender;
         }
 
+        [Compress]
         [HttpPost]
         [Route("form-content-block/save")]
         [ValidateInput(false)]

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 
 namespace KoreCMS.Controllers
 {
     public class HomeController : BaseController
     {
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {

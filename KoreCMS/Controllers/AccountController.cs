@@ -9,6 +9,7 @@ using Kore.Web;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging.Services;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 using Kore.Web.Mvc.Routing;
 using Kore.Web.Security.Membership;
 using Kore.Web.Security.Membership.Permissions;
@@ -65,6 +66,7 @@ namespace Kore.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
+        [Compress]
         [Route("login")]
         public virtual ActionResult Login(string returnUrl)
         {
@@ -76,6 +78,7 @@ namespace Kore.Controllers
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
+        [Compress]
         [ValidateAntiForgeryToken]
         [Route("login")]
         public virtual async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
@@ -111,6 +114,7 @@ namespace Kore.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
+        [Compress]
         [Route("register")]
         public virtual ActionResult Register()
         {
@@ -121,6 +125,7 @@ namespace Kore.Controllers
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
+        [Compress]
         [Route("register")]
         [ValidateAntiForgeryToken]
         public virtual async Task<ActionResult> Register(RegisterViewModel model)
@@ -165,6 +170,7 @@ namespace Kore.Controllers
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
+        [Compress]
         [Route("confirm-email")]
         public virtual async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
@@ -196,6 +202,7 @@ namespace Kore.Controllers
         //
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
+        [Compress]
         [Route("forgot-password")]
         public virtual ActionResult ForgotPassword()
         {
@@ -206,6 +213,7 @@ namespace Kore.Controllers
         // POST: /Account/ForgotPassword
         [HttpPost]
         [AllowAnonymous]
+        [Compress]
         [Route("forgot-password")]
         [ValidateAntiForgeryToken]
         public virtual async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
@@ -237,6 +245,7 @@ namespace Kore.Controllers
         //
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
+        [Compress]
         [Route("forgot-password-confirmation")]
         public virtual ActionResult ForgotPasswordConfirmation()
         {
@@ -246,6 +255,7 @@ namespace Kore.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
+        [Compress]
         [Route("reset-password")]
         public virtual ActionResult ResetPassword(string code)
         {
@@ -260,6 +270,7 @@ namespace Kore.Controllers
         // POST: /Account/ResetPassword
         [HttpPost]
         [AllowAnonymous]
+        [Compress]
         [ValidateAntiForgeryToken]
         [Route("reset-password")]
         public virtual async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
@@ -298,6 +309,7 @@ namespace Kore.Controllers
         //
         // GET: /Account/ResetPasswordConfirmation
         [AllowAnonymous]
+        [Compress]
         [Route("reset-password-confirmation")]
         public virtual ActionResult ResetPasswordConfirmation()
         {
@@ -328,6 +340,7 @@ namespace Kore.Controllers
 
         //
         // GET: /Account/Manage
+        [Compress]
         [Route("manage")]
         public virtual ActionResult Manage(ManageMessageId? message)
         {
@@ -345,6 +358,7 @@ namespace Kore.Controllers
         //
         // POST: /Account/Manage
         [HttpPost]
+        [Compress]
         [Route("manage")]
         [ValidateAntiForgeryToken]
         public virtual async Task<ActionResult> Manage(ManageUserViewModel model)
@@ -400,6 +414,7 @@ namespace Kore.Controllers
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
+        [Compress]
         [Route("external-login")]
         [ValidateAntiForgeryToken]
         public virtual ActionResult ExternalLogin(string provider, string returnUrl)
@@ -411,6 +426,7 @@ namespace Kore.Controllers
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
+        [Compress]
         [Route("external-login-callback")]
         public virtual async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
@@ -438,6 +454,7 @@ namespace Kore.Controllers
 
         //
         // POST: /Account/LinkLogin
+        [Compress]
         [HttpPost]
         [Route("link-login")]
         [ValidateAntiForgeryToken]
@@ -449,6 +466,7 @@ namespace Kore.Controllers
 
         //
         // GET: /Account/LinkLoginCallback
+        [Compress]
         [Route("link-login-callback")]
         public virtual async Task<ActionResult> LinkLoginCallback()
         {
@@ -469,6 +487,7 @@ namespace Kore.Controllers
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
         [AllowAnonymous]
+        [Compress]
         [Route("external-login-confirmation")]
         [ValidateAntiForgeryToken]
         public virtual async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
@@ -516,6 +535,7 @@ namespace Kore.Controllers
         //
         // POST: /Account/LogOff
         [HttpPost]
+        [Compress]
         [Route("log-off")]
         [ValidateAntiForgeryToken]
         public virtual ActionResult LogOff()
@@ -527,6 +547,7 @@ namespace Kore.Controllers
         //
         // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]
+        [Compress]
         [Route("external-login-failure")]
         public virtual ActionResult ExternalLoginFailure()
         {
@@ -554,6 +575,7 @@ namespace Kore.Controllers
 
         #region User Profile
 
+        [Compress]
         [Route("profile/{userId}")]
         public virtual ActionResult ViewProfile(string userId)
         {
@@ -583,12 +605,14 @@ namespace Kore.Controllers
             return View("Profile", model: userId);
         }
 
+        [Compress]
         [Route("my-profile")]
         public virtual ActionResult ViewMyProfile()
         {
             return ViewProfile(WorkContext.CurrentUser.Id);
         }
 
+        [Compress]
         [Route("profile/edit/{userId}/")]
         public virtual ActionResult EditProfile(string userId)
         {
@@ -615,6 +639,7 @@ namespace Kore.Controllers
             return View("ProfileEdit", model: userId);
         }
 
+        [Compress]
         [Route("my-profile/edit")]
         public virtual ActionResult EditMyProfile()
         {
@@ -622,6 +647,7 @@ namespace Kore.Controllers
         }
 
         [HttpPost]
+        [Compress]
         [Route("update-profile")]
         [ValidateInput(false)]
         public virtual ActionResult UpdateProfile()

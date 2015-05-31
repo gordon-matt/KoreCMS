@@ -5,6 +5,7 @@ using Kore.Collections;
 using Kore.Plugins.Ecommerce.Simple.Models;
 using Kore.Plugins.Ecommerce.Simple.Services;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Plugins.Ecommerce.Simple.Controllers
 {
@@ -26,6 +27,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             this.settings = settings;
         }
 
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {
@@ -36,6 +38,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return View();
         }
 
+        [Compress]
         [Route("get-cart")]
         public JsonResult Get()
         {
@@ -43,6 +46,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return Json(new { Items = cart.Items }, JsonRequestBehavior.AllowGet);
         }
 
+        [Compress]
         [Route("add-item-to-cart")]
         public JsonResult Post(int productId)
         {
@@ -82,6 +86,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return Json(new { Success = true, Message = T(LocalizableStrings.AddToCartSuccess).Text });
         }
 
+        [Compress]
         [Route("update-cart-item/{productId}")]
         public JsonResult Put(int productId, short quantity)
         {
@@ -120,6 +125,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return Json(new { Success = true, Message = T(LocalizableStrings.CartUpdated).Text });
         }
 
+        [Compress]
         [Route("delete-cart-item/{productId}")]
         public JsonResult Delete(int productId)
         {
@@ -137,6 +143,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return Json(new { Success = true, Message = T(LocalizableStrings.ItemRemovedFromCart).Text });
         }
 
+        [Compress]
         [Route("update-cart")]
         public JsonResult UpdateCart(CartModel cart)
         {

@@ -4,6 +4,7 @@ using ElFinder;
 using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
 using Kore.Web.Mvc;
+using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
 {
@@ -12,6 +13,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
     [RoutePrefix("media-library")]
     public class MediaController : KoreController
     {
+        [Compress]
         [Route("")]
         public ActionResult Index()
         {
@@ -29,12 +31,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
             return View("Kore.Web.ContentManagement.Areas.Admin.Media.Views.Media.Index");
         }
 
+        [Compress]
         [Route("browse")]
         public ActionResult Browse()
         {
             return View("Kore.Web.ContentManagement.Areas.Admin.Media.Views.Media.Browse");
         }
 
+        [Compress]
         [Route("browse-partial")]
         public ActionResult BrowsePartial()
         {
@@ -42,6 +46,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
         }
 
         //[HttpPost]
+        [Compress]
         [Route("connector")]
         public ActionResult Connector()
         {
@@ -85,12 +90,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Controllers
             }
         }
 
+        [Compress]
         [Route("SelectFile/{target}")]
         public ActionResult SelectFile(string target)
         {
             return Json(ConnectorInstance.GetFileByHash(target).FullName);
         }
 
+        [Compress]
         [Route("thumbnails/{thumbHash}")]
         public ActionResult Thumbs(string thumbHash)
         {

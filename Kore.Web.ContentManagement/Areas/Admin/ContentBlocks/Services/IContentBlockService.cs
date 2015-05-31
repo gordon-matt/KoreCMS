@@ -38,7 +38,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
         //TODO: Override other Delete() methods with similar logic to this one
         public override int Delete(ContentBlock entity)
         {
-            var entities = Repository.Table.Where(x => x.Id == entity.Id || x.RefId == entity.Id);
+            var entities = Find(x => x.Id == entity.Id || x.RefId == entity.Id);
             return Delete(entities);
         }
 

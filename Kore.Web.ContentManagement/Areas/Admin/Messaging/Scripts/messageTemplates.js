@@ -15,7 +15,7 @@ var ViewModel = function () {
         self.name(null);
         self.ownerId(null);
         self.subject(null);
-        self.body(null);
+        self.body('');
         self.enabled(false);
 
         $("#tokens-list").html("");

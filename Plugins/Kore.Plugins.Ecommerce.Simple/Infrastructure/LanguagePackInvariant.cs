@@ -76,6 +76,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                     { LocalizableStrings.ProductModel.ShortDescription, "Short Description" },
                     { LocalizableStrings.ProductModel.Slug, "Slug" },
                     { LocalizableStrings.ProductModel.Tax, "Tax" },
+                    { LocalizableStrings.Product, "Product" },
                     { LocalizableStrings.Products, "Products" },
                     { LocalizableStrings.QuantityUpdated, "Quantity Updated" },
                     { LocalizableStrings.SelectCategoryToBeginEdit, "Select a category to begin editing." },

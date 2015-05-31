@@ -1,5 +1,6 @@
 ﻿@using Kore.Localization.Domain
 @using Kore.Web.ContentManagement
+@using Kore.Web.Mvc.KoreUI
 
 @{
     Layout = KoreWebConstants.DefaultAdminLayoutPath;
@@ -34,64 +35,73 @@
     <div class="clearfix"></div>
     <br />
 
-    <div class="col-md-12 @rtlClass">
-        <div id="Grid"></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="@rtlClass">
+            <div id="Grid"></div>
+        </div>
     </div>
 </div>
 
 <div id="form-section" class="row" style="display:none">
     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <form id="form-section-form" role="form">
-            <fieldset>
-                <legend id="form-section-legend"></legend>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                    <div class="form-group">
-                        @Html.Label("CultureCode", T(KoreCmsLocalizableStrings.Localization.LanguageModel.CultureCode), new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="kore-icon kore-icon-globe"></i>
-                            </span>
-                            @Html.CulturesDropDownList("CultureCode", null, new { @class = "form-control", data_bind = "value: cultureCode, event: { change: onCultureCodeChanged }" }, string.Empty)
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+            using (var body = panel.BeginBody())
+            {
+                <form id="form-section-form" role="form">
+                    <fieldset>
+                        <legend id="form-section-legend"></legend>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("CultureCode", T(KoreCmsLocalizableStrings.Localization.LanguageModel.CultureCode), new { @class = "control-label" })
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="kore-icon kore-icon-globe"></i>
+                                    </span>
+                                    @Html.CulturesDropDownList("CultureCode", null, new { @class = "form-control", data_bind = "value: cultureCode, event: { change: onCultureCodeChanged }" }, string.Empty)
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                    <div class="form-group">
-                        @Html.Label("Name", T(KoreCmsLocalizableStrings.Localization.LanguageModel.Name), new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="kore-icon kore-icon-file"></i>
-                            </span>
-                            @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Name", T(KoreCmsLocalizableStrings.Localization.LanguageModel.Name), new { @class = "control-label" })
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="kore-icon kore-icon-file"></i>
+                                    </span>
+                                    @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                    <div class="form-group">
-                        @Html.Label("SortOrder", T(KoreCmsLocalizableStrings.Localization.LanguageModel.SortOrder), new { @class = "control-label" })
-                        @Html.TextBox("SortOrder", null, new { @class = "form-control", data_bind = "value: sortOrder" })
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                    <div class="checkbox">
-                        <label>
-                            @Html.CheckBox("IsRTL", new { data_bind = "checked: isRTL" }) @T(KoreCmsLocalizableStrings.Localization.LanguageModel.IsRTL)
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            @Html.CheckBox("IsEnabled", new { data_bind = "checked: isEnabled" }) @T(KoreCmsLocalizableStrings.Localization.LanguageModel.IsEnabled)
-                        </label>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group pull-right">
-                        <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                        <button type="button" class="btn btn-primary" data-bind="click: save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
-                    </div>
-                </div>
-            </fieldset>
-        </form>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("SortOrder", T(KoreCmsLocalizableStrings.Localization.LanguageModel.SortOrder), new { @class = "control-label" })
+                                @Html.TextBox("SortOrder", null, new { @class = "form-control", data_bind = "value: sortOrder" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="checkbox">
+                                <label>
+                                    @Html.CheckBox("IsRTL", new { data_bind = "checked: isRTL" }) @T(KoreCmsLocalizableStrings.Localization.LanguageModel.IsRTL)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    @Html.CheckBox("IsEnabled", new { data_bind = "checked: isEnabled" }) @T(KoreCmsLocalizableStrings.Localization.LanguageModel.IsEnabled)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group pull-right">
+                                <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            }
+        }
     </article>
 </div>
 

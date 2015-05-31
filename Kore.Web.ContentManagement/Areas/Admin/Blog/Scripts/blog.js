@@ -26,7 +26,7 @@ var ViewModel = function () {
         self.slug(null);
         self.teaserImageUrl(null);
         self.shortDescription(null);
-        self.fullDescription(null);
+        self.fullDescription('');
         self.useExternalLink(false);
         self.externalLink(null);
         self.metaKeywords(null);

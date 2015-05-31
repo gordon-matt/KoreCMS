@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Kore.Web
+
+@{
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
 
@@ -14,7 +16,6 @@
                 @T(KoreWebLocalizableStrings.Membership.Roles)
             </a>
         </div>
-
         <div class="pull-right">
             @Html.Kore().RolesDropDownList("RoleFilter", null, new { @class = "form-control", data_bind = "value: userModel.filterRoleId, event: { change: userModel.filterRole }" }, string.Empty)
         </div>

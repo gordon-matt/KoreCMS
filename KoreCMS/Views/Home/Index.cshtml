@@ -32,13 +32,3 @@
 
 @Html.ContentZone("Zone1")
 
-@using (var panel = Html.KoreUI().Begin(new Kore.Web.Mvc.KoreUI.Panel(state: Kore.Web.Mvc.KoreUI.State.Primary)))
-{
-    using (var header = panel.BeginHeader("My Panel"))
-    {
-    }
-    using (var body = panel.BeginBody())
-    {
-        <p>Cool</p>
-    }
-}

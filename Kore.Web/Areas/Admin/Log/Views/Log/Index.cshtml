@@ -1,4 +1,6 @@
 ﻿@using Kore.Web
+@using Kore.Web.Mvc.KoreUI
+
 @{
     Layout = KoreWebConstants.DefaultAdminLayoutPath;
 
@@ -26,55 +28,67 @@
     <div class="clearfix"></div>
     <br />
 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
-        <div id="Grid"></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="@rtlClass">
+            <div id="Grid"></div>
+        </div>
     </div>
 </div>
+
 <div id="details-section" class="row" style="display:none">
-    <table class="table table-striped">
-        <tbody>
-            <tr>
-                <th>@T(KoreWebLocalizableStrings.Log.Model.EventDateTime)</th>
-                <td data-bind="text: eventDateTime"></td>
-            </tr>
-            <tr>
-                <th>@T(KoreWebLocalizableStrings.Log.Model.EventLevel)</th>
-                <td data-bind="text: eventLevel"></td>
-            </tr>
-            <tr>
-                <th>@T(KoreWebLocalizableStrings.Log.Model.UserName)</th>
-                <td data-bind="text: userName"></td>
-            </tr>
-            <tr>
-                <th>@T(KoreWebLocalizableStrings.Log.Model.MachineName)</th>
-                <td data-bind="text: machineName"></td>
-            </tr>
-            <tr>
-                <th>@T(KoreWebLocalizableStrings.Log.Model.EventMessage)</th>
-                <td data-bind="text: eventMessage"></td>
-            </tr>
-            <tr>
-                <th>@T(KoreWebLocalizableStrings.Log.Model.ErrorSource)</th>
-                <td data-bind="text: errorSource"></td>
-            </tr>
-            <tr>
-                <th>@T(KoreWebLocalizableStrings.Log.Model.ErrorClass)</th>
-                <td data-bind="text: errorClass"></td>
-            </tr>
-            <tr>
-                <th>@T(KoreWebLocalizableStrings.Log.Model.ErrorMethod)</th>
-                <td data-bind="text: errorMethod"></td>
-            </tr>
-            <tr>
-                <th>@T(KoreWebLocalizableStrings.Log.Model.ErrorMessage)</th>
-                <td data-bind="text: errorMessage"></td>
-            </tr>
-            <tr>
-                <th>@T(KoreWebLocalizableStrings.Log.Model.InnerErrorMessage)</th>
-                <td data-bind="text: innerErrorMessage"></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+            using (var body = panel.BeginBody())
+            {
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th>@T(KoreWebLocalizableStrings.Log.Model.EventDateTime)</th>
+                            <td data-bind="text: eventDateTime"></td>
+                        </tr>
+                        <tr>
+                            <th>@T(KoreWebLocalizableStrings.Log.Model.EventLevel)</th>
+                            <td data-bind="text: eventLevel"></td>
+                        </tr>
+                        <tr>
+                            <th>@T(KoreWebLocalizableStrings.Log.Model.UserName)</th>
+                            <td data-bind="text: userName"></td>
+                        </tr>
+                        <tr>
+                            <th>@T(KoreWebLocalizableStrings.Log.Model.MachineName)</th>
+                            <td data-bind="text: machineName"></td>
+                        </tr>
+                        <tr>
+                            <th>@T(KoreWebLocalizableStrings.Log.Model.EventMessage)</th>
+                            <td data-bind="text: eventMessage"></td>
+                        </tr>
+                        <tr>
+                            <th>@T(KoreWebLocalizableStrings.Log.Model.ErrorSource)</th>
+                            <td data-bind="text: errorSource"></td>
+                        </tr>
+                        <tr>
+                            <th>@T(KoreWebLocalizableStrings.Log.Model.ErrorClass)</th>
+                            <td data-bind="text: errorClass"></td>
+                        </tr>
+                        <tr>
+                            <th>@T(KoreWebLocalizableStrings.Log.Model.ErrorMethod)</th>
+                            <td data-bind="text: errorMethod"></td>
+                        </tr>
+                        <tr>
+                            <th>@T(KoreWebLocalizableStrings.Log.Model.ErrorMessage)</th>
+                            <td data-bind="text: errorMessage"></td>
+                        </tr>
+                        <tr>
+                            <th>@T(KoreWebLocalizableStrings.Log.Model.InnerErrorMessage)</th>
+                            <td data-bind="text: innerErrorMessage"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+        }
+    </div>
     <div class="clearfix"></div>
     <br />
     <div class="pull-right">

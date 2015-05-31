@@ -54,7 +54,7 @@ var ProductModel = function () {
         self.shippingCost(0);
         self.mainImageUrl(null);
         self.shortDescription(null);
-        self.fullDescription(null);
+        self.fullDescription('');
         self.metaKeywords(null);
         self.metaDescription(null);
 

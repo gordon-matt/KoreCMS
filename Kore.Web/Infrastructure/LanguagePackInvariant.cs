@@ -32,6 +32,7 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.General.DeleteRecordError, "There was an error when deleting the record." },
                     { KoreWebLocalizableStrings.General.DeleteRecordErrorFormat, "There was an error when deleting the record. Additional information as follows: {0}" },
                     { KoreWebLocalizableStrings.General.DeleteRecordSuccess, "Successfully deleted record." },
+                    { KoreWebLocalizableStrings.General.Details, "Details" },
                     { KoreWebLocalizableStrings.General.Edit, "Edit" },
                     { KoreWebLocalizableStrings.General.EditFormat, "Edit {0}" },
                     { KoreWebLocalizableStrings.General.Enabled, "Enabled" },

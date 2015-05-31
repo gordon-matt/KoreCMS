@@ -1,6 +1,7 @@
 ﻿@using Kore.Web.Common
 @using Kore.Web.Common.Areas.Admin.Regions.Models
 @using Kore.Web.Mvc
+@using Kore.Web.Mvc.KoreUI
 @using LocalizableStrings = Kore.Web.Common.LocalizableStrings;
 
 @{
@@ -63,38 +64,45 @@
 
 <div id="country-form-section" class="row" style="display:none">
     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <form id="country-form-section-form" role="form">
-            <fieldset>
-                <legend id="country-form-section-legend"></legend>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                        @Html.Label("Name", T(LocalizableStrings.Regions.Model.Name), new { @class = "control-label" })
-                        @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: country.name" })
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                        @Html.Label("CountryCode", T(LocalizableStrings.Regions.Model.CountryCode), new { @class = "control-label" })
-                        @Html.TextBox("CountryCode", null, new { @class = "form-control", data_bind = "value: country.countryCode" })
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBox("HasStates", new { data_bind = "checked: country.hasStates" }) @T(LocalizableStrings.Regions.Model.HasStates)
-                            </label>
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+            using (var body = panel.BeginBody())
+            {
+                <form id="country-form-section-form" role="form">
+                    <fieldset>
+                        <legend id="country-form-section-legend"></legend>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("Name", T(LocalizableStrings.Regions.Model.Name), new { @class = "control-label" })
+                                @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: country.name" })
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group pull-right">
-                        <button type="button" class="btn btn-default" data-bind="click: country.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                        <button type="button" class="btn btn-primary" data-bind="click: country.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
-                    </div>
-                </div>
-            </fieldset>
-        </form>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("CountryCode", T(LocalizableStrings.Regions.Model.CountryCode), new { @class = "control-label" })
+                                @Html.TextBox("CountryCode", null, new { @class = "form-control", data_bind = "value: country.countryCode" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBox("HasStates", new { data_bind = "checked: country.hasStates" }) @T(LocalizableStrings.Regions.Model.HasStates)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group pull-right">
+                                <button type="button" class="btn btn-default" data-bind="click: country.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: country.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            }
+        }
     </article>
 </div>
 
@@ -120,29 +128,36 @@
 
 <div id="state-form-section" class="row" style="display:none">
     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <form id="state-form-section-form" role="form">
-            <fieldset>
-                <legend id="state-form-section-legend"></legend>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                        @Html.Label("Name", T(LocalizableStrings.Regions.Model.Name), new { @class = "control-label" })
-                        @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: state.name" })
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                        @Html.Label("StateCode", T(LocalizableStrings.Regions.Model.StateCode), new { @class = "control-label" })
-                        @Html.TextBox("StateCode", null, new { @class = "form-control", data_bind = "value: state.stateCode" })
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group pull-right">
-                        <button type="button" class="btn btn-default" data-bind="click: state.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                        <button type="button" class="btn btn-primary" data-bind="click: state.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
-                    </div>
-                </div>
-            </fieldset>
-        </form>
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+            using (var body = panel.BeginBody())
+            {
+                <form id="state-form-section-form" role="form">
+                    <fieldset>
+                        <legend id="state-form-section-legend"></legend>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("Name", T(LocalizableStrings.Regions.Model.Name), new { @class = "control-label" })
+                                @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: state.name" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("StateCode", T(LocalizableStrings.Regions.Model.StateCode), new { @class = "control-label" })
+                                @Html.TextBox("StateCode", null, new { @class = "form-control", data_bind = "value: state.stateCode" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group pull-right">
+                                <button type="button" class="btn btn-default" data-bind="click: state.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: state.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            }
+        }
     </article>
 </div>
 
@@ -168,23 +183,30 @@
 
 <div id="city-form-section" class="row" style="display:none">
     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <form id="city-form-section-form" role="form">
-            <fieldset>
-                <legend id="city-form-section-legend"></legend>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                        @Html.Label("Name", T(LocalizableStrings.Regions.Model.Name), new { @class = "control-label" })
-                        @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: city.name" })
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group pull-right">
-                        <button type="button" class="btn btn-default" data-bind="click: city.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                        <button type="button" class="btn btn-primary" data-bind="click: city.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
-                    </div>
-                </div>
-            </fieldset>
-        </form>
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+            using (var body = panel.BeginBody())
+            {
+                <form id="city-form-section-form" role="form">
+                    <fieldset>
+                        <legend id="city-form-section-legend"></legend>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("Name", T(LocalizableStrings.Regions.Model.Name), new { @class = "control-label" })
+                                @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: city.name" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group pull-right">
+                                <button type="button" class="btn btn-default" data-bind="click: city.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: city.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            }
+        }
     </article>
 </div>
 

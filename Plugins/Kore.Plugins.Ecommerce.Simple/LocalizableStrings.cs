@@ -119,6 +119,7 @@
         public const string MadeChanges = "Plugins.Ecommerce.Simple/MadeChanges";
         public const string Orders = "Plugins.Ecommerce.Simple/Orders";
         public const string Price = "Plugins.Ecommerce.Simple/Price";
+        public const string Product = "Plugins.Ecommerce.Simple/Product";
         public const string Products = "Plugins.Ecommerce.Simple/Products";
         public const string SelectCategoryToBeginEdit = "Plugins.Ecommerce.Simple/SelectCategoryToBeginEdit";
         public const string Shipping = "Plugins.Ecommerce.Simple/Shipping";

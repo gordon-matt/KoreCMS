@@ -1,5 +1,6 @@
 ﻿@using Kore.Web.ContentManagement
 @using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain
+@using Kore.Web.Mvc.KoreUI
 
 @{
     Layout = KoreWebConstants.DefaultAdminLayoutPath;
@@ -37,39 +38,46 @@
 
 <div id="form-section" class="row" style="display:none">
     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <form id="form-section-form" role="form">
-            <fieldset>
-                <legend id="form-section-legend"></legend>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                        @Html.Label("Name", T(KoreCmsLocalizableStrings.Menus.MenuModel.Name), new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="kore-icon kore-icon-file"></i>
-                            </span>
-                            @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+            using (var body = panel.BeginBody())
+            {
+                <form id="form-section-form" role="form">
+                    <fieldset>
+                        <legend id="form-section-legend"></legend>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("Name", T(KoreCmsLocalizableStrings.Menus.MenuModel.Name), new { @class = "control-label" })
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="kore-icon kore-icon-file"></i>
+                                    </span>
+                                    @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                        @Html.Label("UrlFilter", T(KoreCmsLocalizableStrings.Menus.MenuModel.UrlFilter), new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="kore-icon kore-icon-filter"></i>
-                            </span>
-                            @Html.TextBox("UrlFilter", null, new { @class = "form-control", data_bind = "value: urlFilter" })
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("UrlFilter", T(KoreCmsLocalizableStrings.Menus.MenuModel.UrlFilter), new { @class = "control-label" })
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="kore-icon kore-icon-filter"></i>
+                                    </span>
+                                    @Html.TextBox("UrlFilter", null, new { @class = "form-control", data_bind = "value: urlFilter" })
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group pull-right">
-                        <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                        <button type="button" class="btn btn-primary" data-bind="click: save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
-                    </div>
-                </div>
-            </fieldset>
-        </form>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group pull-right">
+                                <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            }
+        }
     </article>
 </div>
 
@@ -95,79 +103,86 @@
 
 <div id="items-edit-section" class="row" style="display:none">
     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <form id="item-edit-section-form" role="form">
-            <fieldset>
-                <legend id="item-edit-section-legend"></legend>
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <div class="form-group">
-                        @Html.Label("Item_Text", T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Text), new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="kore-icon kore-icon-file"></i>
-                            </span>
-                            @Html.TextBox("Item_Text", null, new { @class = "form-control", data_bind = "value: menuItem.text" })
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+            using (var body = panel.BeginBody())
+            {
+                <form id="item-edit-section-form" role="form">
+                    <fieldset>
+                        <legend id="item-edit-section-legend"></legend>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Item_Text", T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Text), new { @class = "control-label" })
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="kore-icon kore-icon-file"></i>
+                                    </span>
+                                    @Html.TextBox("Item_Text", null, new { @class = "form-control", data_bind = "value: menuItem.text" })
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <div class="form-group">
-                        @Html.Label("Item_Url", T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Url), new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="kore-icon kore-icon-globe"></i>
-                            </span>
-                            @Html.TextBox("Item_Url", null, new { @class = "form-control", data_bind = "value: menuItem.url" })
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Item_Url", T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Url), new { @class = "control-label" })
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="kore-icon kore-icon-globe"></i>
+                                    </span>
+                                    @Html.TextBox("Item_Url", null, new { @class = "form-control", data_bind = "value: menuItem.url" })
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                        @Html.Label("Item_Description", T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Description), new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="kore-icon kore-icon-file"></i>
-                            </span>
-                            @Html.TextBox("Item_Description", null, new { @class = "form-control", data_bind = "value: menuItem.description" })
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("Item_Description", T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Description), new { @class = "control-label" })
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="kore-icon kore-icon-file"></i>
+                                    </span>
+                                    @Html.TextBox("Item_Description", null, new { @class = "form-control", data_bind = "value: menuItem.description" })
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <div class="form-group">
-                        @Html.Label("Item_CssClass", T(KoreCmsLocalizableStrings.Menus.MenuItemModel.CssClass), new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="kore-icon kore-icon-font"></i>
-                            </span>
-                            @Html.TextBox("Item_CssClass", null, new { @class = "form-control", data_bind = "value: menuItem.cssClass" })
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Item_CssClass", T(KoreCmsLocalizableStrings.Menus.MenuItemModel.CssClass), new { @class = "control-label" })
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="kore-icon kore-icon-font"></i>
+                                    </span>
+                                    @Html.TextBox("Item_CssClass", null, new { @class = "form-control", data_bind = "value: menuItem.cssClass" })
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <div class="form-group">
-                        @Html.Label("Item_Position", T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Position), new { @class = "control-label" })
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="kore-icon kore-icon-sort-numeric-asc"></i>
-                            </span>
-                            @Html.TextBox("Item_Position", null, new { @class = "form-control", data_bind = "value: menuItem.position" })
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Item_Position", T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Position), new { @class = "control-label" })
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="kore-icon kore-icon-sort-numeric-asc"></i>
+                                    </span>
+                                    @Html.TextBox("Item_Position", null, new { @class = "form-control", data_bind = "value: menuItem.position" })
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <div class="checkbox">
-                        <label>
-                            @Html.CheckBox("Item_Enabled", new { data_bind = "checked: menuItem.enabled" }) @T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Enabled)
-                        </label>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group pull-right">
-                        <button type="button" class="btn btn-default" data-bind="click: menuItem.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                        <button type="button" class="btn btn-primary" data-bind="click: menuItem.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
-                    </div>
-                </div>
-            </fieldset>
-        </form>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    @Html.CheckBox("Item_Enabled", new { data_bind = "checked: menuItem.enabled" }) @T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Enabled)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group pull-right">
+                                <button type="button" class="btn btn-default" data-bind="click: menuItem.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: menuItem.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            }
+        }
     </article>
 </div>
 

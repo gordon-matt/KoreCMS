@@ -1,5 +1,6 @@
 ﻿@using Kore.Web.ContentManagement
 @using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
+@using Kore.Web.Mvc.KoreUI
 
 @{
     Layout = KoreWebConstants.DefaultAdminLayoutPath;
@@ -34,52 +35,64 @@
         </div>
         <div class="clearfix"></div>
         <br />
-        <table class="table table-bordered table-striped table-condensed">
-            <tbody>
-                @*<tr>
-                    <th>Page Type</th>
-                    <td><span data-bind="html: pageTypeId"></span></td>
-                </tr>*@
-                <tr>
-                    <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.Name)</th>
-                    <td><span data-bind="html: name"></span></td>
-                </tr>
-                <tr>
-                    <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.Slug)</th>
-                    <td><span data-bind="html: slug"></span></td>
-                </tr>
-                <tr>
-                    <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.IsEnabled)</th>
-                    <td><span data-bind="html: isEnabled"></span></td>
-                </tr>
-                <tr>
-                    <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.Order)</th>
-                    <td><span data-bind="html: order"></span></td>
-                </tr>
-                <tr>
-                    <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.ShowOnMenus)</th>
-                    <td><span data-bind="html: showOnMenus"></span></td>
-                </tr>
-                <tr>
-                    <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.DateCreated)</th>
-                    <td><span data-bind="html: dateCreatedUtc"></span></td>
-                </tr>
-                <tr>
-                    <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.DateModified)</th>
-                    <td><span data-bind="html: dateModifiedUtc"></span></td>
-                </tr>
-                <tr>
-                    <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.CultureCode)</th>
-                    <td><span data-bind="html: cultureCode"></span></td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>@T(KoreWebLocalizableStrings.General.Preview)</h2>
-        <hr />
-        <div class="embed-responsive embed-responsive-16by9">
-            <iframe id="page-preview" class="embed-responsive-item"></iframe>
-        </div>
-</article>
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+            using (var body = panel.BeginBody())
+            {
+                <table class="table table-bordered table-striped table-condensed">
+                    <tbody>
+                        @*<tr>
+                            <th>Page Type</th>
+                            <td><span data-bind="html: pageTypeId"></span></td>
+                        </tr>*@
+                        <tr>
+                            <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.Name)</th>
+                            <td><span data-bind="html: name"></span></td>
+                        </tr>
+                        <tr>
+                            <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.Slug)</th>
+                            <td><span data-bind="html: slug"></span></td>
+                        </tr>
+                        <tr>
+                            <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.IsEnabled)</th>
+                            <td><span data-bind="html: isEnabled"></span></td>
+                        </tr>
+                        <tr>
+                            <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.Order)</th>
+                            <td><span data-bind="html: order"></span></td>
+                        </tr>
+                        <tr>
+                            <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.ShowOnMenus)</th>
+                            <td><span data-bind="html: showOnMenus"></span></td>
+                        </tr>
+                        <tr>
+                            <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.DateCreated)</th>
+                            <td><span data-bind="html: dateCreatedUtc"></span></td>
+                        </tr>
+                        <tr>
+                            <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.DateModified)</th>
+                            <td><span data-bind="html: dateModifiedUtc"></span></td>
+                        </tr>
+                        <tr>
+                            <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.CultureCode)</th>
+                            <td><span data-bind="html: cultureCode"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+        }
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Preview))) { }
+            using (var body = panel.BeginBody())
+            {
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe id="page-preview" class="embed-responsive-item"></iframe>
+                </div>
+            }
+        }
+    </article>
 </div>
 
 @section scripts {

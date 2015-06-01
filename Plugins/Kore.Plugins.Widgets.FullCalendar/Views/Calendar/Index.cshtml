@@ -1,0 +1,19 @@
+﻿@using Kore.Plugins.Widgets.FullCalendar
+@using Kore.Plugins.Widgets.FullCalendar.Extensions
+@using Kore.Web.Mvc.KoreUI
+
+@{
+    Layout = KoreWebConstants.DefaultAdminLayoutPath;
+
+    Style.IncludeBundle("kendo-ui");
+
+    Script.IncludeBundle("kendo-ui");
+    Script.IncludeBundle("knockout");
+    Script.IncludeBundle("notify");
+
+    Script.IncludeBundle("kore/section-switching");
+    Script.IncludeBundle("kore/jqueryval");
+    Script.IncludePluginScript("index.js");
+
+    string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
+}

@@ -1,0 +1,15 @@
+﻿@using Kore.Infrastructure
+@using Kore.Plugins.Widgets.FullCalendar
+
+@{
+    var settings = EngineContext.Current.Resolve<StoreSettings>();
+    
+    if (!string.IsNullOrEmpty(settings.LayoutPathOverride))
+    {
+        Layout = settings.LayoutPathOverride;
+    }
+    else
+    {
+        Layout = KoreWebConstants.DefaultFrontendLayoutPath;
+    }
+}

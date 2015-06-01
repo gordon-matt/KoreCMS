@@ -1,0 +1,7 @@
+﻿@using Kore.Plugins.Widgets.FullCalendar
+@model Kore.Plugins.Widgets.FullCalendar.ContentBlocks.CartLinkBlock
+
+<a href="@Url.Action("Index", "Cart", new { area = string.Empty })" class="@Model.CssClass">
+    <i class="@Model.IconCssClass"></i>
+    @T(LocalizableStrings.ShoppingCart)
+</a>

@@ -1,16 +1,12 @@
-﻿@model Kore.Plugins.Widgets.FullCalendar.ContentBlocks.CartLinkBlock
+﻿@using Kore.Plugins.Widgets.FullCalendar
+@using Kore.Plugins.Widgets.FullCalendar.ContentBlocks
+@model FullCalendarBlock
 
 <div id="block-content" class="row">
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
-            @Html.LabelFor(m => m.CssClass, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.CssClass, new { @class = "form-control", data_bind = "value: cssClass" })
-        </div>
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-        <div class="form-group">
-            @Html.LabelFor(m => m.IconCssClass, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.IconCssClass, new { @class = "form-control", data_bind = "value: iconCssClass" })
+            @Html.LabelFor(m => m.CalendarId, new { @class = "control-label" })
+            @Html.FullCalendar().CalendarDropDownListFor(m => m.CalendarId, new { @class = "form-control", data_bind = "value: calendarId" })
         </div>
     </div>
 </div>
@@ -19,28 +15,22 @@
     var contentBlockModel = (function () {
         var f = {};
         f.updateModel = function () {
-            viewModel.cssClass = ko.observable("btn btn-success");
-            viewModel.iconCssClass = ko.observable("");
+            viewModel.calendarId = ko.observable("btn btn-success");
 
             var data = ko.mapping.fromJSON(viewModel.blockValues());
 
             if (data) {
-                if (data.CssClass) {
-                    viewModel.cssClass(data.CssClass());
-                }
-                if (data.IconCssClass) {
-                    viewModel.iconCssClass(data.IconCssClass());
+                if (data.CalendarId) {
+                    viewModel.calendarId(data.CalendarId());
                 }
             }
         };
         f.cleanUp = function () {
-            delete viewModel.cssClass;
-            delete viewModel.iconCssClass;
+            delete viewModel.calendarId;
         };
         f.onBeforeSave = function () {
             var data = {
-                CssClass: viewModel.cssClass(),
-                IconCssClass: viewModel.iconCssClass()
+                CalendarId: viewModel.calendarId()
             };
 
             viewModel.blockValues(ko.mapping.toJSON(data));

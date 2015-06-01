@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\KoreCMS\Plugins\Ecommerce.Simple\</OutputPath>
+    <OutputPath>..\..\KoreCMS\Plugins\Widgets.FullCalendar\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\KoreCMS\Plugins\Ecommerce.Simple\</OutputPath>
+    <OutputPath>..\..\KoreCMS\Plugins\Widgets.FullCalendar\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="Castle.Core">
       <HintPath>..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
@@ -62,6 +63,7 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -127,11 +129,13 @@
     <Compile Include="Constants.cs" />
     <Compile Include="ContentBlocks\FullCalendarBlock.cs" />
     <Compile Include="Controllers\Api\CalendarApiController.cs" />
+    <Compile Include="Controllers\Api\CalendarEventApiController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Data\Domain\Calendar.cs" />
     <Compile Include="Data\Domain\CalendarEvent.cs" />
     <Compile Include="Extensions\ScriptRegisterExtensions.cs" />
     <Compile Include="Extensions\StyleRegisterExtensions.cs" />
+    <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="Infrastructure\LanguagePackInvariant.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="Infrastructure\LocationFormatProvider.cs" />

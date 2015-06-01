@@ -17,3 +17,140 @@
 
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
+
+<div id="grid-section" class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <a data-bind="click: create" class="btn btn-primary">
+            <i class="kore-icon kore-icon-add"></i>
+            @T(KoreWebLocalizableStrings.General.Create)
+        </a>
+    </div>
+
+    <div class="clearfix"></div>
+    <br />
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
+        <div id="Grid"></div>
+    </div>
+</div>
+
+<div id="form-section" class="row" style="display:none">
+    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+            using (var body = panel.BeginBody())
+            {
+                <form id="form-section-form" role="form">
+                    <fieldset>
+                        <legend id="form-section-legend"></legend>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("Name", T(LocalizableStrings.CalendarModel.Name), new { @class = "control-label" })
+                                @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group pull-right">
+                                <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            }
+        }
+    </article>
+</div>
+
+<div id="events-grid-section" class="row" style="display:none">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <a data-bind="click: eventModel.create" class="btn btn-primary">
+            <i class="kore-icon kore-icon-add"></i>
+            @T(KoreWebLocalizableStrings.General.Create)
+        </a>
+        <a data-bind="click: eventModel.goBack" class="btn btn-default">
+            <i class="kore-icon kore-icon-arrow-left"></i>
+            @T(KoreWebLocalizableStrings.General.Back)
+        </a>
+    </div>
+
+    <div class="clearfix"></div>
+    <br />
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
+        <div id="EventGrid"></div>
+    </div>
+</div>
+
+<div id="events-form-section" class="row" style="display:none">
+    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+            using (var body = panel.BeginBody())
+            {
+                <form id="events-form-section-form" role="form">
+                    <fieldset>
+                        <legend id="events-form-section-legend"></legend>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("Event_Name", T(LocalizableStrings.CalendarEventModel.Name), new { @class = "control-label" })
+                                @Html.TextBox("Event_Name", null, new { @class = "form-control", data_bind = "value: eventModel.name" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("Event_StartDateTime", T(LocalizableStrings.CalendarEventModel.StartDateTime), new { @class = "control-label" })
+                                @Html.TextBox("Event_StartDateTime", null, new { data_bind = "value: eventModel.startDateTime" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("Event_EndDateTime", T(LocalizableStrings.CalendarEventModel.EndDateTime), new { @class = "control-label" })
+                                @Html.TextBox("Event_EndDateTime", null, new { data_bind = "value: eventModel.endDateTime" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group pull-right">
+                                <button type="button" class="btn btn-default" data-bind="click: eventModel.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: eventModel.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            }
+        }
+    </article>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        var gridPageSize = @SiteSettings.DefaultGridPageSize;
+        var translations = {
+            Create: '@T(KoreWebLocalizableStrings.General.Create).Text',
+            Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
+            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
+            DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',
+            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text',
+            Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
+            Events: '@T(LocalizableStrings.Events).Text',
+            GetRecordError: '@T(KoreWebLocalizableStrings.General.GetRecordError).Text',
+            InsertRecordError: '@T(KoreWebLocalizableStrings.General.InsertRecordError).Text',
+            InsertRecordSuccess: '@T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text',
+            UpdateRecordError: '@T(KoreWebLocalizableStrings.General.UpdateRecordError).Text',
+            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text',
+
+            Columns:{
+                Calendar: {
+                    Name: '@T(LocalizableStrings.CalendarModel.Name).Text'
+                },
+                Event: {
+                    Name: '@T(LocalizableStrings.CalendarEventModel.Name).Text',
+                    StartDateTime: '@T(LocalizableStrings.CalendarEventModel.StartDateTime).Text',
+                    EndDateTime: '@T(LocalizableStrings.CalendarEventModel.EndDateTime).Text'
+                }
+            }
+        }
+    </script>
+}

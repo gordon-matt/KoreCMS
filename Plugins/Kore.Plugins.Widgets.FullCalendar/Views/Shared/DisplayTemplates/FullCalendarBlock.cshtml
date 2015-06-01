@@ -1,7 +1,30 @@
-﻿@using Kore.Plugins.Widgets.FullCalendar
-@model Kore.Plugins.Widgets.FullCalendar.ContentBlocks.CartLinkBlock
+﻿@using Kore.Infrastructure
+@using Kore.Plugins.Widgets.FullCalendar
+@using Kore.Plugins.Widgets.FullCalendar.Services
+@model Kore.Plugins.Widgets.FullCalendar.ContentBlocks.FullCalendarBlock
 
-<a href="@Url.Action("Index", "Cart", new { area = string.Empty })" class="@Model.CssClass">
-    <i class="@Model.IconCssClass"></i>
-    @T(LocalizableStrings.ShoppingCart)
-</a>
+@{
+    Style.IncludeExternal("//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.css");
+    Style.IncludeExternal("//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.print.css");
+    Script.IncludeExternal("//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js");
+    Script.IncludeExternal("//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.js");
+    
+    var eventService = EngineContext.Current.Resolve<ICalendarEventService>();
+    var events = eventService.Find(x => x.CalendarId = Model.CalendarId);
+    string json = events.Select(x => new
+    {
+        title = x.Name,
+        start = x.StartDateTime,
+        end = x.EndDateTime
+    }).ToJson();
+    string blockId = "calendar-" + Guid.NewGuid();
+}
+
+<div id="@blockId"></div>
+
+@using (Script.AtFoot())
+{
+    <script type="text/javascript">
+        $('#@blockId').fullCalendar({ events: '@json' });
+    </script>
+}

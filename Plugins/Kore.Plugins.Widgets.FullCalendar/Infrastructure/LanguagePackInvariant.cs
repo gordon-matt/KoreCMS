@@ -18,7 +18,13 @@ namespace Kore.Plugins.Widgets.FullCalendar.Infrastructure
             {
                 return new Dictionary<string, string>
                 {
+                    { LocalizableStrings.CalendarEventModel.CalendarId, "Calendar" },
+                    { LocalizableStrings.CalendarEventModel.EndDateTime, "End" },
+                    { LocalizableStrings.CalendarEventModel.Name, "Name" },
+                    { LocalizableStrings.CalendarEventModel.StartDateTime, "Start" },
+                    { LocalizableStrings.CalendarModel.Name, "Name" },
                     { LocalizableStrings.ContentBlocks.FullCalendarBlock.CalendarId, "Calendar" },
+                    { LocalizableStrings.Events, "Events" },
                     { LocalizableStrings.FullCalendar, "Full Calendar" },
                 };
             }

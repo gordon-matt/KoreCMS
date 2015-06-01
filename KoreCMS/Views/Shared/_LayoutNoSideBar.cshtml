@@ -26,8 +26,29 @@
     @RenderMetas()
     <title>@ViewBag.Title - @siteName</title>
     @Html.Partial("Head")
-    @RenderStyles()
     @RenderSection("styles", required: false)
+    @RenderStyles()
+
+    @if (IsRightToLeft)
+    {
+        <style type="text/css">
+            .radio input[type="radio"],
+            .radio-inline input[type="radio"],
+            .checkbox input[type="checkbox"],
+            .checkbox-inline input[type="checkbox"] {
+              margin-right: -20px;
+            }
+            .pull-right {
+                float: left !important;
+            }
+            .pull-left {
+                float: right !important;
+            }
+            .navbar-right {
+                float: left !important;
+            }
+        </style>
+    }
 </head>
 <body dir="@dir">
     <div class="navbar navbar-default navbar-fixed-top">

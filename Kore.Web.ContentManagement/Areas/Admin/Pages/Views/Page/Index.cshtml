@@ -106,7 +106,12 @@
                                         <div id="form-section-pageTypeId" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <div class="form-group">
                                                 @Html.Label("PageTypeId", T(KoreCmsLocalizableStrings.Pages.PageModel.PageTypeId), new { @class = "control-label" })
-                                                @Html.KoreCMS().PageTypesDropDownList("PageTypeId", null, null, new { @class = "form-control", data_bind = "value: pageTypeId" })
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="kore-icon kore-icon-crop"></i>
+                                                    </span>
+                                                    @Html.KoreCMS().PageTypesDropDownList("PageTypeId", null, null, new { @class = "form-control", data_bind = "value: pageTypeId" })
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -131,7 +136,7 @@
                                                 @Html.Label("Order", T(KoreCmsLocalizableStrings.Pages.PageModel.Order), new { @class = "control-label" })
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
-                                                        <i class="kore-icon kore-icon-sort-amount-asc"></i>
+                                                        <i class="kore-icon kore-icon-sort-numeric-asc"></i>
                                                     </span>
                                                     @Html.TextBox("Order", null, new { @class = "form-control", data_bind = "value: order" })
                                                 </div>
@@ -232,12 +237,7 @@
                                         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                             <div class="form-group">
                                                 @Html.Label("PageType_Name", T(KoreCmsLocalizableStrings.Pages.PageTypeModel.Name), new { @class = "control-label" })
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="kore-icon kore-icon-file"></i>
-                                                    </span>
-                                                    @Html.TextBox("PageType_Name", null, new { @class = "form-control", disabled = "disabled", data_bind = "value: pageType.name" })
-                                                </div>
+                                                <p class="form-control-static" data-bind="text: pageType.name"></p>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

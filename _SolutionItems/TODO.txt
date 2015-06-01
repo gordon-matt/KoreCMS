@@ -12,7 +12,7 @@ PAGES:
 - Page Types: should editortemplatepath be overridable? maybe only display template?
 TODO: change from page history to page versioning instead (keep all pages in page version table - including current..)
 -    then: we can make page preview work with unsaved versions of pages
-
+- allow deleting of translated pages (the prob we should also see history for it, etc..)
 
 - context menu for media is far down below
 

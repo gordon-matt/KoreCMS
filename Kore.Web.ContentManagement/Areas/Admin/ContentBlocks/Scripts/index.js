@@ -43,6 +43,9 @@ var ZoneModel = function () {
                 $('#ZoneGrid').data('kendoGrid').dataSource.read();
                 $('#ZoneGrid').data('kendoGrid').refresh();
 
+                $('#ZoneId option[value="' + id + '"]').remove();
+                $('#Create_ZoneId option[value="' + id + '"]').remove();
+
                 $.notify(translations.DeleteRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {

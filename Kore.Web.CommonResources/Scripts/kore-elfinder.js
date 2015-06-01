@@ -12,7 +12,7 @@
     $(".elfinder-button-icon.elfinder-button-icon-quicklook").removeClass().addClass("kore-icon kore-icon-search");
     $(".elfinder-button-icon.elfinder-button-icon-copy").removeClass().addClass("kore-icon kore-icon-copy");
     $(".elfinder-button-icon.elfinder-button-icon-cut").removeClass().addClass("kore-icon kore-icon-cut");
-    $(".elfinder-button-icon.elfinder-button-icon-paste").removeClass().addClass("kore-icon kore-icon-cut");
+    $(".elfinder-button-icon.elfinder-button-icon-paste").removeClass().addClass("kore-icon kore-icon-paste");
     $(".elfinder-button-icon.elfinder-button-icon-rm").removeClass().addClass("kore-icon kore-icon-trash");
     $(".elfinder-button-icon.elfinder-button-icon-duplicate").removeClass().addClass("kore-icon kore-icon-duplicate");
     $(".elfinder-button-icon.elfinder-button-icon-edit").removeClass().addClass("kore-icon kore-icon-edit");
@@ -42,7 +42,7 @@ function elFinderReplaceIconsLarge() {
     $(".elfinder-button-icon.elfinder-button-icon-quicklook").removeClass().addClass("kore-icon kore-icon-search kore-icon-2x");
     $(".elfinder-button-icon.elfinder-button-icon-copy").removeClass().addClass("kore-icon kore-icon-copy kore-icon-2x");
     $(".elfinder-button-icon.elfinder-button-icon-cut").removeClass().addClass("kore-icon kore-icon-cut kore-icon-2x");
-    $(".elfinder-button-icon.elfinder-button-icon-paste").removeClass().addClass("kore-icon kore-icon-cut kore-icon-2x");
+    $(".elfinder-button-icon.elfinder-button-icon-paste").removeClass().addClass("kore-icon kore-icon-paste kore-icon-2x");
     $(".elfinder-button-icon.elfinder-button-icon-rm").removeClass().addClass("kore-icon kore-icon-trash kore-icon-2x");
     $(".elfinder-button-icon.elfinder-button-icon-duplicate").removeClass().addClass("kore-icon kore-icon-duplicate kore-icon-2x");
     $(".elfinder-button-icon.elfinder-button-icon-edit").removeClass().addClass("kore-icon kore-icon-edit kore-icon-2x");

@@ -51,6 +51,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 
             var currentCulture = WorkContext.CurrentCultureCode;
 
+            //TODO: To support localized routes, we should probably first try get a single record by slug,
+            //  then if there's only 1, fine.. return it.. if more than one.. then add cultureCode as
+            //  we currently do...
+
             var page = pageService.GetPageBySlug(slug, currentCulture);
 
             if (page == null)

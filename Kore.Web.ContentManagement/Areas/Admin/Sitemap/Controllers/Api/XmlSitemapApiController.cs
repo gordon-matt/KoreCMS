@@ -64,7 +64,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
             // First ensure that current pages are in the config
             var config = Service.Find();
             var configPageIds = config.Select(x => x.PageId).ToHashSet();
-            var pages = pageService.Find();
+            var pages = pageService.Find(x => x.RefId == null); // temp fix: since we don't support localized routes yet
             var pageIds = pages.Select(x => x.Id).ToHashSet();
 
             var newPageIds = pageIds.Except(configPageIds);

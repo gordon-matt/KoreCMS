@@ -16,6 +16,9 @@ TODO: change from page history to page versioning instead (keep all pages in pag
 
 - context menu for media is far down below
 
+- We need 360 in store.. and possible other things too.. how about an IStorePlugin interface?
+	- Need to think about this and how to make blocks more reuseable...
+
 - cleanup View360 editor template (use tabs or accordion)
 
 - page preview in history still has some issues (not showing correct css in soem cases, like missing breadcrumbs or hidden text under navbar)

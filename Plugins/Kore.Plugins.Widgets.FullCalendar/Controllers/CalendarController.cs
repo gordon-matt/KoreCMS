@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Kore.Web;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
 
@@ -17,6 +18,7 @@ namespace Kore.Plugins.Widgets.FullCalendar.Controllers
                 return new HttpUnauthorizedResult();
             }
 
+            WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.Plugins.Title));
             WorkContext.Breadcrumbs.Add(T(LocalizableStrings.FullCalendar));
 
             ViewBag.Title = T(LocalizableStrings.FullCalendar);

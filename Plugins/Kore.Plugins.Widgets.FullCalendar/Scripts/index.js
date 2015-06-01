@@ -1,7 +1,7 @@
 ﻿'use strict'
 
-var calendarApiUrl = "/odata/kore/plugins/FullCalendar/CalendarApi";
-var eventApiUrl = "/odata/kore/plugins/FullCalendar/CalendarEventApi";
+var calendarApiUrl = "/odata/kore/plugins/full-calendar/CalendarApi";
+var eventApiUrl = "/odata/kore/plugins/full-calendar/CalendarEventApi";
 
 var EventModel = function () {
     var self = this;
@@ -20,8 +20,8 @@ var EventModel = function () {
         self.endDateTime('');
 
         self.validator.resetForm();
-        switchSection($("#events-edit-section"));
-        $("#events-edit-section-legend").html(translations.Create);
+        switchSection($("#events-form-section"));
+        $("#events-form-section-legend").html(translations.Create);
     };
 
     self.edit = function (id) {
@@ -39,8 +39,8 @@ var EventModel = function () {
             self.endDateTime(json.EndDateTime);
 
             self.validator.resetForm();
-            switchSection($("#events-edit-section"));
-            $("#events-edit-section-legend").html(translations.Edit);
+            switchSection($("#events-form-section"));
+            $("#events-form-section-legend").html(translations.Edit);
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify(translations.GetRecordError, "error");
@@ -71,7 +71,7 @@ var EventModel = function () {
     self.save = function () {
         var isNew = (self.id() == 0);
 
-        if (!$("#events-edit-section-form").valid()) {
+        if (!$("#events-form-section-form").valid()) {
             return false;
         }
 
@@ -137,7 +137,7 @@ var EventModel = function () {
         switchSection($("#events-grid-section"));
     };
 
-    self.validator = $("#events-edit-section-form").validate({
+    self.validator = $("#events-form-section-form").validate({
         rules: {
             Event_Name: { required: true, maxlength: 255 },
             Event_StartDateTime: { required: true, date: true },
@@ -217,7 +217,7 @@ var ViewModel = function () {
             Name: self.name()
         };
 
-        if (self.id() == emptyGuid) {
+        if (self.id() == 0) {
             // INSERT
             $.ajax({
                 url: calendarApiUrl,
@@ -273,7 +273,7 @@ var ViewModel = function () {
         self.selectedCalendarId(calendarId);
 
         var grid = $('#EventGrid').data('kendoGrid');
-        grid.dataSource.transport.options.read.url = eventApiUrl + "?$filter=CalendarId eq " + continentId;
+        grid.dataSource.transport.options.read.url = eventApiUrl + "?$filter=CalendarId eq " + calendarId;
         grid.dataSource.page(1);
 
         switchSection($("#events-grid-section"));
@@ -290,6 +290,9 @@ var viewModel;
 $(document).ready(function () {
     viewModel = new ViewModel();
     ko.applyBindings(viewModel);
+
+    $("#Event_StartDateTime").kendoDateTimePicker();
+    $("#Event_EndDateTime").kendoDateTimePicker();
 
     $("#Grid").kendoGrid({
         data: null,
@@ -330,7 +333,7 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Name",
-            title: translations.Columns.Name,
+            title: translations.Columns.Calendar.Name,
             filterable: true
         }, {
             field: "Id",
@@ -388,15 +391,15 @@ $(document).ready(function () {
         scrollable: false,
         columns: [{
             field: "Name",
-            title: translations.Columns.Name,
+            title: translations.Columns.Event.Name,
             filterable: true
         }, {
             field: "StartDateTime",
-            title: translations.Columns.StartDateTime,
+            title: translations.Columns.Event.StartDateTime,
             filterable: true
         }, {
             field: "EndDateTime",
-            title: translations.Columns.EndDateTime,
+            title: translations.Columns.Event.EndDateTime,
             filterable: true
         }, {
             field: "Id",

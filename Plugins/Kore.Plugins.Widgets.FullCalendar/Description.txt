@@ -1,7 +1,7 @@
-﻿Group: Ecommerce
-FriendlyName: Simple Commerce
+﻿Group: Widgets
+FriendlyName: Full Calendar
 SystemName: Kore.Plugins.Widgets.FullCalendar
-Version: 1.00
+Version: 2.3.1
 SupportedVersions: 1.00
 Author: Widecommerce
 DisplayOrder: 1

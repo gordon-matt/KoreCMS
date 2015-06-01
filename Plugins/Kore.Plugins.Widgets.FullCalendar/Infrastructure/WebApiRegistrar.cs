@@ -12,7 +12,8 @@ namespace Kore.Plugins.Widgets.FullCalendar.Infrastructure
         public void Register(HttpConfiguration config)
         {
             ODataModelBuilder builder = new ODataConventionModelBuilder();
-            builder.EntitySet<CalendarEvent>("CalendarEntryApi");
+            builder.EntitySet<Calendar>("CalendarApi");
+            builder.EntitySet<CalendarEvent>("CalendarEventApi");
 
             config.Routes.MapODataRoute("OData_Kore_Plugin_FullCalendar", "odata/kore/plugins/full-calendar", builder.GetEdmModel());
         }

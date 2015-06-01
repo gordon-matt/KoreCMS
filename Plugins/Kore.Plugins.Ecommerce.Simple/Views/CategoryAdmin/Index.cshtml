@@ -111,7 +111,12 @@
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <div class="form-group">
                                                 @Html.Label("Order", T(LocalizableStrings.CategoryModel.Order), new { @class = "control-label" })
-                                                @Html.TextBox("Order", null, new { @class = "form-control", data_bind = "value: order" })
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="kore-icon kore-icon-sort-numeric-asc"></i>
+                                                    </span>
+                                                    @Html.TextBox("Order", null, new { @class = "form-control", data_bind = "value: order" })
+                                                </div>
                                             </div>
                                         </div>
 

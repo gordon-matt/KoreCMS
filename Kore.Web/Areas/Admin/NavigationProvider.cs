@@ -20,6 +20,7 @@ namespace Kore.Web.Areas.Admin
             builder.Add(T(KoreWebLocalizableStrings.Membership.Title), "1", BuildMembershipMenu);
             builder.Add(T(KoreWebLocalizableStrings.General.Configuration), "3", BuildConfigurationMenu);
             builder.Add(T(KoreWebLocalizableStrings.Maintenance.Title), "4", BuildMaintenanceMenu);
+            builder.Add(T(KoreWebLocalizableStrings.Plugins.Title), "99999", BuildPluginsMenu);
         }
 
         private void BuildMembershipMenu(NavigationItemBuilder builder)
@@ -79,6 +80,11 @@ namespace Kore.Web.Areas.Admin
                 .Action("Index", "ScheduledTask", new { area = KoreWebConstants.Areas.ScheduledTasks })
                 .IconCssClass("kore-icon kore-icon-schedule-tasks")
                 .Permission(ScheduledTasksPermissions.ReadScheduledTasks));
+        }
+
+        private void BuildPluginsMenu(NavigationItemBuilder builder)
+        {
+            builder.IconCssClass("kore-icon kore-icon-plugins");
         }
     }
 }

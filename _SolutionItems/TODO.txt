@@ -103,6 +103,9 @@ OTHER
   - product attributes (filter widget based on this + generic fields like price, etc)
  - make it more secure (PayPal) by removing BuyNow.cshtml and replacing it with c# code only (use HttpClient)
 
+ - Move navigation under PLUGINS and make a "home page" for store.. from that page have icons (maybe metro tiles) for
+		Store management, orders, etc.. and maybe can have widgets to show sales charts or whatever..
+
   - regions: add some button for importing common public data files (liek MaxMind)
   
    - admin page for blocking some IPs (inc. import IP block list files)

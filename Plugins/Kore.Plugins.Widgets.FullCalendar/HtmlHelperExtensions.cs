@@ -14,13 +14,13 @@ namespace Kore.Plugins.Widgets.FullCalendar
 {
     public static class HtmlHelperExtensions
     {
-        internal static FullCalendar<TModel> FullCalendar<TModel>(this HtmlHelper<TModel> html) where TModel : class
+        public static FullCalendar<TModel> FullCalendar<TModel>(this HtmlHelper<TModel> html) where TModel : class
         {
             return new FullCalendar<TModel>(html);
         }
     }
 
-    internal class FullCalendar<TModel>
+    public class FullCalendar<TModel>
         where TModel : class
     {
         private readonly HtmlHelper<TModel> html;
@@ -30,13 +30,13 @@ namespace Kore.Plugins.Widgets.FullCalendar
             this.html = html;
         }
 
-        public MvcHtmlString CalendarDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
+        public MvcHtmlString CalendarDropDownList(string name, int? selectedValue = null, string emptyText = null, object htmlAttributes = null)
         {
             var selectList = GetCalendarSelectList(selectedValue, emptyText);
             return html.DropDownList(name, selectList, htmlAttributes);
         }
 
-        public MvcHtmlString CalendarDropDownListFor(Expression<Func<TModel, string>> expression, object htmlAttributes = null, string emptyText = null)
+        public MvcHtmlString CalendarDropDownListFor(Expression<Func<TModel, int>> expression, object htmlAttributes = null, string emptyText = null)
         {
             var func = expression.Compile();
             var selectedValue = func(html.ViewData.Model);
@@ -45,7 +45,7 @@ namespace Kore.Plugins.Widgets.FullCalendar
             return html.DropDownListFor(expression, selectList, htmlAttributes);
         }
 
-        private static IEnumerable<SelectListItem> GetCalendarSelectList(string selectedValue = null, string emptyText = null)
+        private static IEnumerable<SelectListItem> GetCalendarSelectList(int? selectedValue = null, string emptyText = null)
         {
             var repository = EngineContext.Current.Resolve<IRepository<Calendar>>();
 

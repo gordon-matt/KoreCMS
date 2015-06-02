@@ -10,7 +10,7 @@ namespace Kore.Plugins.Widgets.FullCalendar.ContentBlocks
         }
 
         [LocalizedDisplayName(LocalizableStrings.ContentBlocks.FullCalendarBlock.CalendarId)]
-        public string CalendarId { get; set; }
+        public int CalendarId { get; set; }
 
         #region ContentBlockBase Overrides
 

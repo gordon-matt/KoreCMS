@@ -75,12 +75,15 @@ var EventModel = function () {
             return false;
         }
 
+        var startDateTime = moment(self.startDateTime());
+        var endDateTime = moment(self.endDateTime());
+
         var record = {
             Id: self.id(),
             CalendarId: self.calendarId(),
             Name: self.name(),
-            StartDateTime: self.startDateTime(),
-            EndDateTime: self.endDateTime()
+            StartDateTime: startDateTime.format('YYYY-MM-DDTHH:mm'),
+            EndDateTime: endDateTime.format('YYYY-MM-DDTHH:mm')
         };
 
         if (isNew) {

@@ -1,16 +1,24 @@
 ﻿@using Kore.Infrastructure
 @using Kore.Plugins.Widgets.FullCalendar
+@using Kore.Plugins.Widgets.FullCalendar.Extensions
 @using Kore.Plugins.Widgets.FullCalendar.Services
 @model Kore.Plugins.Widgets.FullCalendar.ContentBlocks.FullCalendarBlock
 
 @{
-    Style.IncludeExternal("//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.css");
-    Style.IncludeExternal("//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.print.css");
+    Style.IncludePluginStyle("fullcalendar.min.css");
+    Style.IncludePluginStyle("fullcalendar.print.css");
     Script.IncludeExternal("//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js");
-    Script.IncludeExternal("//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.js");
+    Script.IncludePluginScript("fullcalendar-2.3.1/fullcalendar.min.js");
+
+    string lang = WorkContext.CurrentCultureCode.LeftOf('-');
+    
+    if (lang != "en")
+    {
+        Script.IncludePluginScript("fullcalendar-2.3.1/lang/" + lang + ".js");
+    }
     
     var eventService = EngineContext.Current.Resolve<ICalendarEventService>();
-    var events = eventService.Find(x => x.CalendarId = Model.CalendarId);
+    var events = eventService.Find(x => x.CalendarId == Model.CalendarId);
     string json = events.Select(x => new
     {
         title = x.Name,
@@ -25,6 +33,9 @@
 @using (Script.AtFoot())
 {
     <script type="text/javascript">
-        $('#@blockId').fullCalendar({ events: '@json' });
+        $('#@blockId').fullCalendar({
+            isRTL: @IsRightToLeft.ToString().ToLowerInvariant(),
+            events: @Html.Raw(json)
+        });
     </script>
 }

@@ -15,7 +15,7 @@
     var contentBlockModel = (function () {
         var f = {};
         f.updateModel = function () {
-            viewModel.calendarId = ko.observable("btn btn-success");
+            viewModel.calendarId = ko.observable(0);
 
             var data = ko.mapping.fromJSON(viewModel.blockValues());
 

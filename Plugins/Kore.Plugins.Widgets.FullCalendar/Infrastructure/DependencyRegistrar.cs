@@ -1,8 +1,9 @@
 ﻿using Autofac;
 using Kore.Infrastructure;
 using Kore.Localization;
+using Kore.Plugins.Widgets.FullCalendar.ContentBlocks;
 using Kore.Plugins.Widgets.FullCalendar.Services;
-using Kore.Web.Configuration;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Navigation;
@@ -29,7 +30,7 @@ namespace Kore.Plugins.Widgets.FullCalendar.Infrastructure
             builder.RegisterType<NavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();
 
-            //builder.RegisterType<FullCalendarBlock>().As<IContentBlock>().InstancePerDependency();
+            builder.RegisterType<FullCalendarBlock>().As<IContentBlock>().InstancePerDependency();
 
             builder.RegisterType<CalendarService>().As<ICalendarService>().InstancePerDependency();
             builder.RegisterType<CalendarEventService>().As<ICalendarEventService>().InstancePerDependency();

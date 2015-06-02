@@ -51,9 +51,14 @@ namespace Kore.Web.Mvc.Resources
             return string.Format("{0}{1}{0}", System.Environment.NewLine, string.Join(System.Environment.NewLine, resources));
         }
 
-        protected override string BuildResource(string url)
+        protected override string BuildResource(ResourceEntry resource)
         {
-            return string.Format("<script type=\"text/javascript\" src=\"{0}\"></script>", urlHelper.Content(url));
+            var builder = new FluentTagBuilder("script")
+                .MergeAttribute("type", "text/javascript")
+                .MergeAttribute("src", urlHelper.Content(resource.Path))
+                .MergeAttributes(resource.HtmlAttributes);
+
+            return builder.ToString();
         }
 
         private class CaptureScope : IDisposable

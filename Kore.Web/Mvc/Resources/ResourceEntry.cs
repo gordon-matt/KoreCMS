@@ -15,10 +15,6 @@
 
         public int Order { get; set; }
 
-        public ResourceEntry HasOrder(int order)
-        {
-            Order = order;
-            return this;
-        }
+        public object HtmlAttributes { get; set; }
     }
 }

@@ -71,9 +71,15 @@ namespace Kore.Web.Mvc.Resources
             return string.Format("<style type=\"text/css\">{0}</style>", string.Join(System.Environment.NewLine, resources));
         }
 
-        protected override string BuildResource(string url)
+        protected override string BuildResource(ResourceEntry resource)
         {
-            return string.Format("<link type=\"text/css\" rel=\"stylesheet\" href=\"{0}\" />", urlHelper.Content(url));
+            var builder = new FluentTagBuilder("link", TagRenderMode.SelfClosing)
+                .MergeAttribute("type", "text/css")
+                .MergeAttribute("rel", "stylesheet")
+                .MergeAttribute("href", urlHelper.Content(resource.Path))
+                .MergeAttributes(resource.HtmlAttributes);
+
+            return builder.ToString();
         }
     }
 }

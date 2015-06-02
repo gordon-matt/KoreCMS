@@ -14,10 +14,8 @@ TODO: change from page history to page versioning instead (keep all pages in pag
 -    then: we can make page preview work with unsaved versions of pages
 - allow deleting of translated pages (the prob we should also see history for it, etc..)
 
-- context menu for media is far down below
 
-- We need 360 in store.. and possible other things too.. how about an IStorePlugin interface?
-	- Need to think about this and how to make blocks more reuseable...
+- context menu for media is far down below
 
 - cleanup View360 editor template (use tabs or accordion)
 
@@ -95,6 +93,9 @@ OTHER
 - implement this: http://plugins.krajee.com/file-input/demo#advanced-usage
 	- for product images, import lang pack, etc..
   
+- upgrade to OData v4?
+
+
 - SIMPLE ECOMMERCE
   - comments/reviews
   - star ratings?

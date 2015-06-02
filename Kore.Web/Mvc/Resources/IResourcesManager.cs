@@ -8,7 +8,7 @@ namespace Kore.Web.Mvc.Resources
 
         void RegisterInlineResource(string type, string code, bool ignoreExists = false);
 
-        IEnumerable<string> GetResources(string type);
+        IEnumerable<ResourceEntry> GetResources(string type);
 
         IEnumerable<string> GetInlineResources(string type);
 

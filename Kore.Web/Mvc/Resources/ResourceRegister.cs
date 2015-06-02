@@ -24,7 +24,7 @@ namespace Kore.Web.Mvc.Resources
 
         protected abstract string VirtualBasePath { get; }
 
-        public virtual ResourceEntry Include(string path, bool isThemePath = false, int? order = null)
+        public virtual ResourceEntry Include(string path, bool isThemePath = false, int? order = null, object htmlAttributes = null)
         {
             ResourceEntry resourceEntry;
             if (isThemePath)
@@ -43,6 +43,8 @@ namespace Kore.Web.Mvc.Resources
                 resourceEntry.Order = order.Value;
             }
 
+            resourceEntry.HtmlAttributes = htmlAttributes;
+
             return resourceEntry;
         }
 
@@ -52,7 +54,7 @@ namespace Kore.Web.Mvc.Resources
             return BundleTable.Bundles.ResolveBundleUrl(bundleUrl);
         }
 
-        public virtual ResourceEntry IncludeBundle(string bundleName, int? order = null)
+        public virtual ResourceEntry IncludeBundle(string bundleName, int? order = null, object htmlAttributes = null)
         {
             string bundleUrl = string.Concat(BundleBasePath, bundleName);
 
@@ -67,21 +69,30 @@ namespace Kore.Web.Mvc.Resources
                     resourceEntry.Order = order.Value;
                 }
 
+                resourceEntry.HtmlAttributes = htmlAttributes;
+
                 return resourceEntry;
             }
 
             throw new UnregisteredBundleException(bundleUrl);
         }
 
-        public void IncludeExternal(string path, int? order = null)
+        public void IncludeExternal(string path, int? order = null, object htmlAttributes = null)
         {
             if (order.HasValue)
             {
-                resourcesManager.RegisterResource(new ResourceEntry(ResourceType, path).HasOrder(order.Value));
+                resourcesManager.RegisterResource(new ResourceEntry(ResourceType, path)
+                {
+                    Order = order.Value,
+                    HtmlAttributes = htmlAttributes
+                });
             }
             else
             {
-                resourcesManager.RegisterResource(new ResourceEntry(ResourceType, path));
+                resourcesManager.RegisterResource(new ResourceEntry(ResourceType, path)
+                {
+                    HtmlAttributes = htmlAttributes
+                });
             }
         }
 
@@ -123,7 +134,7 @@ namespace Kore.Web.Mvc.Resources
             var url = BundleTable.Bundles.ResolveBundleUrl(bundleUrl);
             if (!string.IsNullOrEmpty(url))
             {
-                return new MvcHtmlString(BuildResource(url));
+                return new MvcHtmlString(BuildResource(new ResourceEntry(ResourceType, url)));
             }
 
             throw new UnregisteredBundleException(bundleUrl);
@@ -139,6 +150,6 @@ namespace Kore.Web.Mvc.Resources
 
         protected abstract string BuildInlineResources(IEnumerable<string> resources);
 
-        protected abstract string BuildResource(string url);
+        protected abstract string BuildResource(ResourceEntry resource);
     }
 }

@@ -5,296 +5,294 @@
 @model FlexSliderBlock
 
 <div id="block-content">
-    <div id="settings-content">
-        <div role="tabpanel">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#General" aria-controls="General" role="tab" data-toggle="tab">@T(LocalizableStrings.FlexSliderBlock.EditorTabs.General)</a>
-                </li>
-                <li role="presentation">
-                    <a href="#Animation" aria-controls="Animation" role="tab" data-toggle="tab">@T(LocalizableStrings.FlexSliderBlock.EditorTabs.Animation)</a>
-                </li>
-                <li role="presentation">
-                    <a href="#Navigation" aria-controls="Navigation" role="tab" data-toggle="tab">@T(LocalizableStrings.FlexSliderBlock.EditorTabs.Navigation)</a>
-                </li>
-                <li role="presentation">
-                    <a href="#Events" aria-controls="Events" role="tab" data-toggle="tab">@T(LocalizableStrings.FlexSliderBlock.EditorTabs.Events)</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="General">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.MediaFolder, new { @class = "control-label" })
-                            @Html.KoreCMS().MediaFoldersDropDownListFor(m => m.MediaFolder, new { @class = "form-control", data_bind = "value: mediaFolder" })
-                        </div>
+    <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#General" aria-controls="General" role="tab" data-toggle="tab">@T(LocalizableStrings.FlexSliderBlock.EditorTabs.General)</a>
+            </li>
+            <li role="presentation">
+                <a href="#Animation" aria-controls="Animation" role="tab" data-toggle="tab">@T(LocalizableStrings.FlexSliderBlock.EditorTabs.Animation)</a>
+            </li>
+            <li role="presentation">
+                <a href="#Navigation" aria-controls="Navigation" role="tab" data-toggle="tab">@T(LocalizableStrings.FlexSliderBlock.EditorTabs.Navigation)</a>
+            </li>
+            <li role="presentation">
+                <a href="#Events" aria-controls="Events" role="tab" data-toggle="tab">@T(LocalizableStrings.FlexSliderBlock.EditorTabs.Events)</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="General">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.MediaFolder, new { @class = "control-label" })
+                        @Html.KoreCMS().MediaFoldersDropDownListFor(m => m.MediaFolder, new { @class = "form-control", data_bind = "value: mediaFolder" })
                     </div>
-                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.ControlId, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.ControlId, new { @class = "form-control", data_bind = "value: controlId" })
-                        </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ControlId, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.ControlId, new { @class = "form-control", data_bind = "value: controlId" })
                     </div>
-                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Namespace, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.Namespace, new { @class = "form-control", data_bind = "value: namespace" })
-                        </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Namespace, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Namespace, new { @class = "form-control", data_bind = "value: namespace" })
                     </div>
-                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Selector, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.Selector, new { @class = "form-control", data_bind = "value: selector" })
-                        </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Selector, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Selector, new { @class = "form-control", data_bind = "value: selector" })
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBox("Randomize", new { data_bind = "checked: randomize" }) @T(LocalizableStrings.FlexSliderBlock.Randomize)
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBox("PauseOnAction", new { data_bind = "checked: pauseOnAction" }) @T(LocalizableStrings.FlexSliderBlock.PauseOnAction)
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBox("PauseOnHover", new { data_bind = "checked: pauseOnHover" }) @T(LocalizableStrings.FlexSliderBlock.PauseOnHover)
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBox("Touch", new { data_bind = "checked: touch" }) @T(LocalizableStrings.FlexSliderBlock.Touch)
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBox("Video", new { data_bind = "checked: video" }) @T(LocalizableStrings.FlexSliderBlock.Video)
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBox("Slideshow", new { data_bind = "checked: slideshow" }) @T(LocalizableStrings.FlexSliderBlock.Slideshow)
+                        </label>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.SlideshowSpeed, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.SlideshowSpeed, new { @class = "form-control", data_bind = "value: slideshowSpeed" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.StartAt, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.StartAt, new { @class = "form-control", data_bind = "value: startAt" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.InitDelay, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.InitDelay, new { @class = "form-control", data_bind = "value: initDelay" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Sync, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Sync, new { @class = "form-control", data_bind = "value: sync" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.AsNavFor, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.AsNavFor, new { @class = "form-control", data_bind = "value: asNavFor" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ItemWidth, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.ItemWidth, new { @class = "form-control", data_bind = "value: itemWidth" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ItemMargin, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.ItemMargin, new { @class = "form-control", data_bind = "value: itemMargin" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.MinItems, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.MinItems, new { @class = "form-control", data_bind = "value: minItems" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.MaxItems, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.MaxItems, new { @class = "form-control", data_bind = "value: maxItems" })
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="Animation">
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Animation, new { @class = "control-label" })
+                        @Html.EnumDropDownListFor(m => m.Animation, new { @class = "form-control", data_bind = "value: animation" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Easing, new { @class = "control-label" })
+                        @Html.EnumDropDownListFor(m => m.Easing, new { @class = "form-control", data_bind = "value: easing" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.AnimationSpeed, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.AnimationSpeed, new { @class = "form-control", data_bind = "value: animationSpeed" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Move, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Move, new { @class = "form-control", data_bind = "value: move" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Direction, new { @class = "control-label" })
+                        @Html.EnumDropDownListFor(m => m.Direction, new { @class = "form-control", data_bind = "value: direction" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBox("Reverse", new { data_bind = "checked: reverse" }) @T(LocalizableStrings.FlexSliderBlock.Reverse)
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBox("AnimationLoop", new { data_bind = "checked: animationLoop" }) @T(LocalizableStrings.FlexSliderBlock.AnimationLoop)
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBox("SmoothHeight", new { data_bind = "checked: smoothHeight" }) @T(LocalizableStrings.FlexSliderBlock.SmoothHeight)
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBox("UseCSS", new { data_bind = "checked: useCSS" }) @T(LocalizableStrings.FlexSliderBlock.UseCSS)
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="Navigation">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ControlNav, new { @class = "control-label" })
+                        @Html.EnumDropDownListFor(m => m.ControlNav, new { @class = "form-control", data_bind = "value: controlNav" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="well">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("Randomize", new { data_bind = "checked: randomize" }) @T(LocalizableStrings.FlexSliderBlock.Randomize)
+                                @Html.CheckBox("DirectionNav", new { data_bind = "checked: directionNav" }) @T(LocalizableStrings.FlexSliderBlock.DirectionNav)
                             </label>
                         </div>
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBox("PauseOnAction", new { data_bind = "checked: pauseOnAction" }) @T(LocalizableStrings.FlexSliderBlock.PauseOnAction)
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBox("PauseOnHover", new { data_bind = "checked: pauseOnHover" }) @T(LocalizableStrings.FlexSliderBlock.PauseOnHover)
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBox("Touch", new { data_bind = "checked: touch" }) @T(LocalizableStrings.FlexSliderBlock.Touch)
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBox("Video", new { data_bind = "checked: video" }) @T(LocalizableStrings.FlexSliderBlock.Video)
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBox("Slideshow", new { data_bind = "checked: slideshow" }) @T(LocalizableStrings.FlexSliderBlock.Slideshow)
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.SlideshowSpeed, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.SlideshowSpeed, new { @class = "form-control", data_bind = "value: slideshowSpeed" })
+                            @Html.LabelFor(m => m.PrevText, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.PrevText, new { @class = "form-control", data_bind = "value: prevText" })
                         </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.StartAt, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.StartAt, new { @class = "form-control", data_bind = "value: startAt" })
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.InitDelay, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.InitDelay, new { @class = "form-control", data_bind = "value: initDelay" })
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Sync, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.Sync, new { @class = "form-control", data_bind = "value: sync" })
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.AsNavFor, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.AsNavFor, new { @class = "form-control", data_bind = "value: asNavFor" })
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.ItemWidth, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.ItemWidth, new { @class = "form-control", data_bind = "value: itemWidth" })
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.ItemMargin, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.ItemMargin, new { @class = "form-control", data_bind = "value: itemMargin" })
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.MinItems, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.MinItems, new { @class = "form-control", data_bind = "value: minItems" })
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.MaxItems, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.MaxItems, new { @class = "form-control", data_bind = "value: maxItems" })
+                            @Html.LabelFor(m => m.NextText, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.NextText, new { @class = "form-control", data_bind = "value: nextText" })
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="Animation">
-                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Animation, new { @class = "control-label" })
-                            @Html.EnumDropDownListFor(m => m.Animation, new { @class = "form-control", data_bind = "value: animation" })
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Easing, new { @class = "control-label" })
-                            @Html.EnumDropDownListFor(m => m.Easing, new { @class = "form-control", data_bind = "value: easing" })
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.AnimationSpeed, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.AnimationSpeed, new { @class = "form-control", data_bind = "value: animationSpeed" })
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Move, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.Move, new { @class = "form-control", data_bind = "value: move" })
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Direction, new { @class = "control-label" })
-                            @Html.EnumDropDownListFor(m => m.Direction, new { @class = "form-control", data_bind = "value: direction" })
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="well">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("Reverse", new { data_bind = "checked: reverse" }) @T(LocalizableStrings.FlexSliderBlock.Reverse)
+                                @Html.CheckBox("PausePlay", new { data_bind = "checked: pausePlay" }) @T(LocalizableStrings.FlexSliderBlock.PausePlay)
                             </label>
                         </div>
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBox("AnimationLoop", new { data_bind = "checked: animationLoop" }) @T(LocalizableStrings.FlexSliderBlock.AnimationLoop)
-                            </label>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PauseText, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.PauseText, new { @class = "form-control", data_bind = "value: pauseText" })
                         </div>
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBox("SmoothHeight", new { data_bind = "checked: smoothHeight" }) @T(LocalizableStrings.FlexSliderBlock.SmoothHeight)
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBox("UseCSS", new { data_bind = "checked: useCSS" }) @T(LocalizableStrings.FlexSliderBlock.UseCSS)
-                            </label>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PlayText, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.PlayText, new { @class = "form-control", data_bind = "value: playText" })
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="Navigation">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.ControlNav, new { @class = "control-label" })
-                            @Html.EnumDropDownListFor(m => m.ControlNav, new { @class = "form-control", data_bind = "value: controlNav" })
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                        <div class="well">
-                            <div class="checkbox">
-                                <label>
-                                    @Html.CheckBox("DirectionNav", new { data_bind = "checked: directionNav" }) @T(LocalizableStrings.FlexSliderBlock.DirectionNav)
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.PrevText, new { @class = "control-label" })
-                                @Html.TextBoxFor(m => m.PrevText, new { @class = "form-control", data_bind = "value: prevText" })
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.NextText, new { @class = "control-label" })
-                                @Html.TextBoxFor(m => m.NextText, new { @class = "form-control", data_bind = "value: nextText" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                        <div class="well">
-                            <div class="checkbox">
-                                <label>
-                                    @Html.CheckBox("PausePlay", new { data_bind = "checked: pausePlay" }) @T(LocalizableStrings.FlexSliderBlock.PausePlay)
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.PauseText, new { @class = "control-label" })
-                                @Html.TextBoxFor(m => m.PauseText, new { @class = "form-control", data_bind = "value: pauseText" })
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.PlayText, new { @class = "control-label" })
-                                @Html.TextBoxFor(m => m.PlayText, new { @class = "form-control", data_bind = "value: playText" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.ControlsContainer, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.ControlsContainer, new { @class = "form-control", data_bind = "value: controlsContainer" })
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.ManualControls, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.ManualControls, new { @class = "form-control", data_bind = "value: manualControls" })
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBox("Keyboard", new { data_bind = "checked: keyboard" }) @T(LocalizableStrings.FlexSliderBlock.Keyboard)
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBox("MultipleKeyboard", new { data_bind = "checked: multipleKeyboard" }) @T(LocalizableStrings.FlexSliderBlock.MultipleKeyboard)
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBox("Mousewheel", new { data_bind = "checked: mousewheel" }) @T(LocalizableStrings.FlexSliderBlock.Mousewheel)
-                            </label>
-                        </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ControlsContainer, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.ControlsContainer, new { @class = "form-control", data_bind = "value: controlsContainer" })
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="Events">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.OnStart, new { @class = "control-label" })
-                            @Html.TextAreaFor(m => m.OnStart, new { @class = "form-control", data_bind = "value: onStart" })
-                        </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ManualControls, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.ManualControls, new { @class = "form-control", data_bind = "value: manualControls" })
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.OnEnd, new { @class = "control-label" })
-                            @Html.TextAreaFor(m => m.OnEnd, new { @class = "form-control", data_bind = "value: onEnd" })
-                        </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBox("Keyboard", new { data_bind = "checked: keyboard" }) @T(LocalizableStrings.FlexSliderBlock.Keyboard)
+                        </label>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.OnBefore, new { @class = "control-label" })
-                            @Html.TextAreaFor(m => m.OnBefore, new { @class = "form-control", data_bind = "value: onBefore" })
-                        </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBox("MultipleKeyboard", new { data_bind = "checked: multipleKeyboard" }) @T(LocalizableStrings.FlexSliderBlock.MultipleKeyboard)
+                        </label>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.OnAfter, new { @class = "control-label" })
-                            @Html.TextAreaFor(m => m.OnAfter, new { @class = "form-control", data_bind = "value: onAfter" })
-                        </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBox("Mousewheel", new { data_bind = "checked: mousewheel" }) @T(LocalizableStrings.FlexSliderBlock.Mousewheel)
+                        </label>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.OnAdded, new { @class = "control-label" })
-                            @Html.TextAreaFor(m => m.OnAdded, new { @class = "form-control", data_bind = "value: onAdded" })
-                        </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="Events">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.OnStart, new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.OnStart, new { @class = "form-control", data_bind = "value: onStart" })
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.OnRemoved, new { @class = "control-label" })
-                            @Html.TextAreaFor(m => m.OnRemoved, new { @class = "form-control", data_bind = "value: onRemoved" })
-                        </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.OnEnd, new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.OnEnd, new { @class = "form-control", data_bind = "value: onEnd" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.OnBefore, new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.OnBefore, new { @class = "form-control", data_bind = "value: onBefore" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.OnAfter, new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.OnAfter, new { @class = "form-control", data_bind = "value: onAfter" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.OnAdded, new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.OnAdded, new { @class = "form-control", data_bind = "value: onAdded" })
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.OnRemoved, new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.OnRemoved, new { @class = "form-control", data_bind = "value: onRemoved" })
                     </div>
                 </div>
             </div>

@@ -38,19 +38,19 @@ namespace Kore.Web.Mvc.Resources
             }
         }
 
-        public IEnumerable<string> GetResources(string type)
+        public IEnumerable<ResourceEntry> GetResources(string type)
         {
             return resources
                 .Where(x => x.Value.Type == type)
                 .OrderBy(x => x.Value.Order)
-                .Select(x => x.Key).ToList();
+                .Select(x => x.Value);
         }
 
         public IEnumerable<string> GetInlineResources(string type)
         {
             return inlineResources
                 .Where(x => x.Value == type)
-                .Select(x => x.Key).ToList();
+                .Select(x => x.Key);
         }
 
         public void SetMeta(MetaEntry meta)

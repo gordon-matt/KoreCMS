@@ -6,7 +6,7 @@
 
 @{
     Style.IncludePluginStyle("fullcalendar.min.css");
-    Style.IncludePluginStyle("fullcalendar.print.css");
+    Style.IncludePluginStyle("fullcalendar.print.css", htmlAttributes: new { media = "print" });
     Script.IncludeExternal("//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js");
     Script.IncludePluginScript("fullcalendar-2.3.1/fullcalendar.min.js");
 
@@ -34,6 +34,11 @@
 {
     <script type="text/javascript">
         $('#@blockId').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
             isRTL: @IsRightToLeft.ToString().ToLowerInvariant(),
             events: @Html.Raw(json)
         });

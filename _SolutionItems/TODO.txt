@@ -48,6 +48,10 @@ LOCALIZATION:
 - import/export language packs (from localized strings table)
 - use {0:G} date format in all kendo grids?
 
+FULL CALENDAR:
+- Support Google Calendar
+- Support loading events via AJAX
+
 FORM BUILDER:
 - At least use markitup or something instead of wysiwyg.
 	- Helpful links:
@@ -71,6 +75,10 @@ OTHER
 - LOG FILE SETTINGS?
 - new sitemap html page (see nop for example)
 - Video Content Block
+	Good options for players: 
+		1. http://www.webdesign-flash.ro/p/rvp/index.html#/?playlistId=0&videoId=0
+		2. http://codecanyon.cosmo-coder.com/vimuse/regular.html
+
 - Make moment.js part of Kore? Can have ISettings for it.. etc. Same for TinyMCE and more.
 - allowing email as username is a problem in cases like Blog!
 - slugify automaticlly

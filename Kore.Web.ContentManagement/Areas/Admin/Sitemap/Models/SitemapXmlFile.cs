@@ -9,11 +9,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Models
     {
         public SitemapXmlFile()
         {
-            Urls = new List<UrlElement>();
+            Urls = new HashSet<UrlElement>();
         }
 
         [XmlElement("url")]
-        public List<UrlElement> Urls { get; set; }
+        public HashSet<UrlElement> Urls { get; set; }
     }
 
     public class UrlElement

@@ -67,7 +67,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
             // First ensure that current pages are in the config
             var config = Service.Find();
             var configPageIds = config.Select(x => x.PageId).ToHashSet();
-            var pageVersions = pageVersionService.Find(x => x.CultureCode == null); // temp fix: since we don't support localized routes yet
+            var pageVersions = pageVersionService.GetCurrentVersions(); // temp fix: since we don't support localized routes yet
             var pageVersionIds = pageVersions.Select(x => x.Id).ToHashSet();
 
             var newPageVersionIds = pageVersionIds.Except(configPageIds);
@@ -160,10 +160,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
             var file = new SitemapXmlFile();
 
             var pageVersions = pageVersionService.Find();
+            var urls = new HashSet<UrlElement>();
+
             foreach (var item in config)
             {
                 var page = pageVersions.First(x => x.Id == item.PageId);
-                file.Urls.Add(new UrlElement
+                urls.Add(new UrlElement
                 {
                     Location = string.Concat(Request.RequestUri.GetLeftPart(UriPartial.Authority), "/", page.Slug),
                     LastModified = page.DateModifiedUtc.ToString("yyyy-MM-dd"),
@@ -171,6 +173,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
                     Priority = item.Priority
                 });
             }
+            file.Urls = urls.OrderBy(x => x.Location).ToHashSet();
 
             try
             {

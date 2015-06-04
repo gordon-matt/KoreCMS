@@ -213,25 +213,25 @@
 
             public const string CannotDeleteOnlyVersion = "Kore.Web.ContentManagement/Pages.CannotDeleteOnlyVersion";
 
-            public static class HistoricPageModel
-            {
-                public const string ArchivedDate = "Kore.Web.ContentManagement/Pages.HistoricPageModel.ArchivedDate";
-            }
-
             public static class PageModel
             {
-                public const string CultureCode = "Kore.Web.ContentManagement/Pages.PageModel.CultureCode";
-                public const string DateCreated = "Kore.Web.ContentManagement/Pages.PageModel.DateCreated";
-                public const string DateModified = "Kore.Web.ContentManagement/Pages.PageModel.DateModified";
-                public const string IsDraft = "Kore.Web.ContentManagement/Pages.PageModel.IsDraft";
                 public const string IsEnabled = "Kore.Web.ContentManagement/Pages.PageModel.IsEnabled";
+                public const string Name = "Kore.Web.ContentManagement/Pages.PageModel.Name";
                 public const string Order = "Kore.Web.ContentManagement/Pages.PageModel.Order";
                 public const string PageTypeId = "Kore.Web.ContentManagement/Pages.PageModel.PageTypeId";
                 public const string Roles = "Kore.Web.ContentManagement/Pages.PageModel.Roles";
                 public const string ShowOnMenus = "Kore.Web.ContentManagement/Pages.PageModel.ShowOnMenus";
-                public const string Slug = "Kore.Web.ContentManagement/Pages.PageModel.Slug";
-                public const string Status = "Kore.Web.ContentManagement/Pages.PageModel.Status";
-                public const string Title = "Kore.Web.ContentManagement/Pages.PageModel.Title";
+            }
+
+            public static class PageVersionModel
+            {
+                public const string CultureCode = "Kore.Web.ContentManagement/Pages.PageVersionModel.CultureCode";
+                public const string DateCreated = "Kore.Web.ContentManagement/Pages.PageVersionModel.DateCreated";
+                public const string DateModified = "Kore.Web.ContentManagement/Pages.PageVersionModel.DateModified";
+                public const string IsDraft = "Kore.Web.ContentManagement/Pages.PageVersionModel.IsDraft";
+                public const string Slug = "Kore.Web.ContentManagement/Pages.PageVersionModel.Slug";
+                public const string Status = "Kore.Web.ContentManagement/Pages.PageVersionModel.Status";
+                public const string Title = "Kore.Web.ContentManagement/Pages.PageVersionModel.Title";
             }
 
             public static class PageTypeModel
@@ -252,11 +252,6 @@
                     public const string MetaDescription = "Kore.Web.ContentManagement/Pages.PageTypes.StandardPage.MetaDescription";
                     public const string MetaKeywords = "Kore.Web.ContentManagement/Pages.PageTypes.StandardPage.MetaKeywords";
                 }
-            }
-
-            public static class TranslatePageModel
-            {
-                public const string Culture = "Kore.Web.ContentManagement/Pages.TranslatePageModel.Culture";
             }
         }
 

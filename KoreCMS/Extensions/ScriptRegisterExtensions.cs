@@ -39,10 +39,10 @@ namespace KoreCMS.Extensions
 
         public static void IncludeJQuery(this ScriptRegister register)
         {
-            register.IncludeBundle("jquery", order: DefaultOrder);
-            register.IncludeBundle("jquery-migrate", order: DefaultOrder);
-            //register.Include("jquery-2.1.1.min.js", order: DefaultOrder);
-            //register.Include("jquery-migrate-1.2.1.min.js", order: DefaultOrder);
+            //register.IncludeBundle("jquery", order: DefaultOrder);
+            //register.IncludeBundle("jquery-migrate", order: DefaultOrder);
+            register.Include("jquery-2.1.1.min.js", order: DefaultOrder);
+            register.Include("jquery-migrate-1.2.1.min.js", order: DefaultOrder);
         }
 
         public static void IncludeJQueryUI(this ScriptRegister register)

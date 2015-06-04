@@ -16,7 +16,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
 
         public Guid PageTypeId { get; set; }
 
-        public string Title { get; set; }
+        public string Name { get; set; }
 
         public bool IsEnabled { get; set; }
 
@@ -49,7 +49,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
             ToTable(CmsConstants.Tables.Pages);
             HasKey(x => x.Id);
             Property(x => x.PageTypeId).IsRequired();
-            Property(x => x.Title).IsRequired().HasMaxLength(255);
+            Property(x => x.Name).IsRequired().HasMaxLength(255);
             Property(x => x.IsEnabled).IsRequired();
             Property(x => x.Order).IsRequired();
             Property(x => x.ShowOnMenus).IsRequired();

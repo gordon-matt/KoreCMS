@@ -34,8 +34,8 @@ namespace KoreCMS.Data
 
         static ApplicationDbContext()
         {
-            Database.SetInitializer<ApplicationDbContext>(new CreateDatabaseIfNotExists<ApplicationDbContext>());
-            //Database.SetInitializer<ApplicationDbContext>(null);
+            //Database.SetInitializer<ApplicationDbContext>(new CreateDatabaseIfNotExists<ApplicationDbContext>());
+            Database.SetInitializer<ApplicationDbContext>(null);
         }
 
         public ApplicationDbContext()

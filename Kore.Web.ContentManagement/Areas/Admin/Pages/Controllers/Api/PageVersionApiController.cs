@@ -73,20 +73,23 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             {
                 var currentVersion = Service.FindOne(entity.Id);
 
-                // archive current version before updating
-                var backup = new PageVersion
+                if (currentVersion.Status == VersionStatus.Published)
                 {
-                    Id = Guid.NewGuid(),
-                    PageId = currentVersion.PageId,
-                    CultureCode = currentVersion.CultureCode,
-                    DateCreatedUtc = currentVersion.DateCreatedUtc,
-                    DateModifiedUtc = currentVersion.DateModifiedUtc,
-                    Status = VersionStatus.Archived,
-                    Title = currentVersion.Title,
-                    Slug = currentVersion.Slug,
-                    Fields = currentVersion.Fields,
-                };
-                Service.Insert(backup);
+                    // archive current version before updating
+                    var backup = new PageVersion
+                    {
+                        Id = Guid.NewGuid(),
+                        PageId = currentVersion.PageId,
+                        CultureCode = currentVersion.CultureCode,
+                        DateCreatedUtc = currentVersion.DateCreatedUtc,
+                        DateModifiedUtc = currentVersion.DateModifiedUtc,
+                        Status = VersionStatus.Archived,
+                        Title = currentVersion.Title,
+                        Slug = currentVersion.Slug,
+                        Fields = currentVersion.Fields,
+                    };
+                    Service.Insert(backup);
+                }
 
                 entity.DateModifiedUtc = DateTime.UtcNow;
                 Service.Update(entity);
@@ -133,20 +136,23 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             {
                 var currentVersion = Service.FindOne(entity.Id);
 
-                // archive current version before updating
-                var backup = new PageVersion
+                if (currentVersion.Status == VersionStatus.Published)
                 {
-                    Id = Guid.NewGuid(),
-                    PageId = currentVersion.PageId,
-                    CultureCode = currentVersion.CultureCode,
-                    DateCreatedUtc = currentVersion.DateCreatedUtc,
-                    DateModifiedUtc = currentVersion.DateModifiedUtc,
-                    Status = VersionStatus.Archived,
-                    Title = currentVersion.Title,
-                    Slug = currentVersion.Slug,
-                    Fields = currentVersion.Fields,
-                };
-                Service.Insert(backup);
+                    // archive current version before updating
+                    var backup = new PageVersion
+                    {
+                        Id = Guid.NewGuid(),
+                        PageId = currentVersion.PageId,
+                        CultureCode = currentVersion.CultureCode,
+                        DateCreatedUtc = currentVersion.DateCreatedUtc,
+                        DateModifiedUtc = currentVersion.DateModifiedUtc,
+                        Status = VersionStatus.Archived,
+                        Title = currentVersion.Title,
+                        Slug = currentVersion.Slug,
+                        Fields = currentVersion.Fields,
+                    };
+                    Service.Insert(backup);
+                }
 
                 entity.DateCreatedUtc = currentVersion.DateCreatedUtc;
                 entity.DateModifiedUtc = DateTime.UtcNow;
@@ -191,10 +197,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 return NotFound();
             }
 
-            var current = Service.Repository.Table
-                .FirstOrDefault(x =>
-                    x.PageId == versionToRestore.PageId &&
-                    x.Status == VersionStatus.Published);
+            var current = ((IPageVersionService)Service).GetCurrentVersion(
+                versionToRestore.PageId,
+                versionToRestore.CultureCode,
+                enabledOnly: false,
+                shownOnMenusOnly: false);
 
             if (current == null)
             {

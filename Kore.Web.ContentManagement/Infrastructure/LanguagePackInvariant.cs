@@ -151,6 +151,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
                     { KoreCmsLocalizableStrings.Pages.PageTypes.StandardPage.MetaDescription, "Meta Description" },
                     { KoreCmsLocalizableStrings.Pages.PageTypes.StandardPage.MetaKeywords, "Meta Keywords" },
                     { KoreCmsLocalizableStrings.Pages.PageTypes.Title, "Page Types" },
+                    { KoreCmsLocalizableStrings.Pages.Restore, "Restore" },
                     { KoreCmsLocalizableStrings.Pages.RestoreVersion, "Restore Version" },
                     { KoreCmsLocalizableStrings.Pages.SelectPageToBeginEdit, "Select a page to begin editing." },
                     { KoreCmsLocalizableStrings.Pages.Tags, "Tags" },

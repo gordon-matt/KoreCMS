@@ -347,7 +347,6 @@
     <EmbeddedResource Include="Areas\Admin\Localization\Views\Language\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Localization\Views\LocalizableString\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Menus\Views\Menu\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Admin\Pages\Views\Page\History.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Page\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\ContentBlock\Index.cshtml" />
     <None Include="app.config">
@@ -414,7 +413,6 @@
     <EmbeddedResource Include="Areas\Admin\Blog\Scripts\blogContent.js" />
     <Content Include="Areas\Admin\Media\Services\mimeTypes.txt" />
     <EmbeddedResource Include="Areas\Admin\Menus\Scripts\menus.js" />
-    <EmbeddedResource Include="Areas\Admin\Pages\Scripts\history.js" />
     <EmbeddedResource Include="Areas\Admin\Pages\Scripts\index.js" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Scripts\index.js" />
     <EmbeddedResource Include="Scripts\jquery.dom.form_params.min.js" />

@@ -264,6 +264,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 Id = currentVersion.Id,
                 PageId = currentVersion.PageId,
                 CultureCode = currentVersion.CultureCode,
+                Status = currentVersion.Status,
                 Title = currentVersion.Title,
                 Slug = currentVersion.Slug,
                 Fields = currentVersion.Fields
@@ -288,6 +289,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         public Guid PageId { get; set; }
 
         public string CultureCode { get; set; }
+
+        public VersionStatus Status { get; set; }
 
         public string Title { get; set; }
 

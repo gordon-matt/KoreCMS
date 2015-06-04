@@ -129,7 +129,7 @@ namespace Kore.Web.ContentManagement.Controllers
             var items = authorizedPages
                 .Select(x => new MenuItem
             {
-                Id = x.Id,
+                Id = x.Page.Id,
                 Text = x.Title,
                 Url = "/" + x.Slug,
                 Enabled = true,
@@ -230,16 +230,18 @@ namespace Kore.Web.ContentManagement.Controllers
             }
             else
             {
-                var currentPage = pageVersionService.Repository.Table.FirstOrDefault(y => y.Slug == currentUrlSlug);
+                // We don't care about culture here because the only thing we're interested in getting is
+                //  the Page ID, which will of course be the same for all versions of a page.
+                var anyVersion = pageVersionService.Repository.Table.FirstOrDefault(y => y.Slug == currentUrlSlug);
 
                 // If the current page is a CMS page
-                if (currentPage != null)
+                if (anyVersion != null)
                 {
                     pageVersions = pageVersionService.GetCurrentVersions(
                         WorkContext.CurrentCultureCode,
                         enabledOnly: true,
                         shownOnMenusOnly: true,
-                        parentId: currentPage.Id);
+                        parentId: anyVersion.Page.Id);
                 }
                 else
                 {
@@ -254,7 +256,7 @@ namespace Kore.Web.ContentManagement.Controllers
                 var items = authorizedPages
                     .Select(x => new MenuItem
                     {
-                        Id = x.Id,
+                        Id = x.Page.Id,
                         Text = x.Title,
                         Url = "/" + x.Slug,
                         Enabled = true,

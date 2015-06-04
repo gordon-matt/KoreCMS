@@ -22,6 +22,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization
         [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.LanguageSwitchBlock.CustomTemplatePath)]
         public string CustomTemplatePath { get; set; }
 
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.LanguageSwitchBlock.IncludeInvariant)]
+        public bool IncludeInvariant { get; set; }
+
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.LanguageSwitchBlock.InvariantText)]
+        public string InvariantText { get; set; }
+
         #region ContentBlockBase Overrides
 
         public override string Name

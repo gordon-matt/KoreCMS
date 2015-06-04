@@ -22,14 +22,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
             get { return "Kore.Web.ContentManagement.Areas.Admin.Pages.Views.Shared.EditorTemplates.StandardPage"; }
         }
 
-        public override void InitializeInstance(Page page)
+        public override void InitializeInstance(PageVersion pageVersion)
         {
-            if (string.IsNullOrEmpty(page.Fields))
+            if (pageVersion == null || string.IsNullOrEmpty(pageVersion.Fields))
             {
                 return;
             }
 
-            dynamic fields = JObject.Parse(page.Fields);
+            dynamic fields = JObject.Parse(pageVersion.Fields);
             MetaKeywords = fields.MetaKeywords;
             MetaDescription = fields.MetaDescription;
             BodyContent = fields.BodyContent;

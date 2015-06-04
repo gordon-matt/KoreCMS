@@ -21,6 +21,17 @@
                 @Html.CheckBoxFor(m => m.UseUrlPrefix, new { data_bind = "checked: useUrlPrefix" }) @T(KoreCmsLocalizableStrings.ContentBlocks.LanguageSwitchBlock.UseUrlPrefix)
             </label>
         </div>
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.IncludeInvariant, new { data_bind = "checked: includeInvariant" }) @T(KoreCmsLocalizableStrings.ContentBlocks.LanguageSwitchBlock.IncludeInvariant)
+            </label>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.InvariantText, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.InvariantText, new { @class = "form-control", data_bind = "value: invariantText" })
+        </div>
     </div>
 </div>
 
@@ -31,6 +42,8 @@
             viewModel.style = ko.observable("");
             viewModel.customTemplatePath = ko.observable("");
             viewModel.useUrlPrefix = ko.observable(false);
+            viewModel.includeInvariant = ko.observable(false);
+            viewModel.invariantText = ko.observable("[ Invariant ]");
 
             var data = ko.mapping.fromJSON(viewModel.blockValues());
 
@@ -44,18 +57,28 @@
                 if (data.UseUrlPrefix) {
                     viewModel.useUrlPrefix(data.UseUrlPrefix());
                 }
+                if (data.IncludeInvariant) {
+                    viewModel.includeInvariant(data.IncludeInvariant());
+                }
+                if (data.InvariantText) {
+                    viewModel.invariantText(data.InvariantText());
+                }
             }
         };
         f.cleanUp = function () {
             delete viewModel.style;
             delete viewModel.customTemplatePath;
             delete viewModel.useUrlPrefix;
+            delete viewModel.includeInvariant;
+            delete viewModel.invariantText;
         };
         f.onBeforeSave = function () {
             var data = {
                 Style: viewModel.style(),
                 CustomTemplatePath: viewModel.customTemplatePath(),
-                UseUrlPrefix: viewModel.useUrlPrefix()
+                UseUrlPrefix: viewModel.useUrlPrefix(),
+                IncludeInvariant: viewModel.includeInvariant(),
+                InvariantText: viewModel.invariantText()
             };
 
             viewModel.blockValues(ko.mapping.toJSON(data));

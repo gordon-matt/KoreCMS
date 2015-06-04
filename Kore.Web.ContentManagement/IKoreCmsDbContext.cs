@@ -15,8 +15,6 @@ namespace Kore.Web.ContentManagement
 
         DbSet<ContentBlock> ContentBlocks { get; set; }
 
-        DbSet<HistoricPage> HistoricPages { get; set; }
-
         DbSet<LogEntry> Log { get; set; }
 
         DbSet<Image> Images { get; set; }
@@ -30,6 +28,8 @@ namespace Kore.Web.ContentManagement
         DbSet<MessageTemplate> MessageTemplates { get; set; }
 
         DbSet<Page> Pages { get; set; }
+
+        DbSet<PageVersion> PageVersions { get; set; }
 
         DbSet<QueuedEmail> QueuedEmails { get; set; }
 

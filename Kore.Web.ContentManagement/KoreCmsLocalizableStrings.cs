@@ -51,6 +51,8 @@
             public static class LanguageSwitchBlock
             {
                 public const string CustomTemplatePath = "Kore.Web.ContentManagement/ContentBlocks.LanguageSwitchBlock.CustomTemplatePath";
+                public const string IncludeInvariant = "Kore.Web.ContentManagement/ContentBlocks.LanguageSwitchBlock.IncludeInvariant";
+                public const string InvariantText = "Kore.Web.ContentManagement/ContentBlocks.LanguageSwitchBlock.InvariantText";
                 public const string Style = "Kore.Web.ContentManagement/ContentBlocks.LanguageSwitchBlock.Style";
                 public const string UseUrlPrefix = "Kore.Web.ContentManagement/ContentBlocks.LanguageSwitchBlock.UseUrlPrefix";
             }
@@ -197,6 +199,7 @@
             public const string ConfirmRestoreVersion = "Kore.Web.ContentManagement/Pages.ConfirmRestoreVersion";
             public const string History = "Kore.Web.ContentManagement/Pages.History";
             public const string ManagePages = "Kore.Web.ContentManagement/Pages.ManagePages";
+            public const string Page = "Kore.Web.ContentManagement/Pages.Page";
             public const string PageHistory = "Kore.Web.ContentManagement/Pages.PageHistory";
             public const string PageHistoryRestoreConfirm = "Kore.Web.ContentManagement/Pages.PageHistoryRestoreConfirm";
             public const string PageHistoryRestoreError = "Kore.Web.ContentManagement/Pages.PageHistoryRestoreError";
@@ -206,6 +209,9 @@
             public const string Tags = "Kore.Web.ContentManagement/Pages.Tags";
             public const string Title = "Kore.Web.ContentManagement/Pages.Title";
             public const string Translations = "Kore.Web.ContentManagement/Pages.Translations";
+            public const string Versions = "Kore.Web.ContentManagement/Pages.Versions";
+
+            public const string CannotDeleteOnlyVersion = "Kore.Web.ContentManagement/Pages.CannotDeleteOnlyVersion";
 
             public static class HistoricPageModel
             {
@@ -217,13 +223,15 @@
                 public const string CultureCode = "Kore.Web.ContentManagement/Pages.PageModel.CultureCode";
                 public const string DateCreated = "Kore.Web.ContentManagement/Pages.PageModel.DateCreated";
                 public const string DateModified = "Kore.Web.ContentManagement/Pages.PageModel.DateModified";
+                public const string IsDraft = "Kore.Web.ContentManagement/Pages.PageModel.IsDraft";
                 public const string IsEnabled = "Kore.Web.ContentManagement/Pages.PageModel.IsEnabled";
-                public const string Name = "Kore.Web.ContentManagement/Pages.PageModel.Name";
                 public const string Order = "Kore.Web.ContentManagement/Pages.PageModel.Order";
                 public const string PageTypeId = "Kore.Web.ContentManagement/Pages.PageModel.PageTypeId";
                 public const string Roles = "Kore.Web.ContentManagement/Pages.PageModel.Roles";
                 public const string ShowOnMenus = "Kore.Web.ContentManagement/Pages.PageModel.ShowOnMenus";
                 public const string Slug = "Kore.Web.ContentManagement/Pages.PageModel.Slug";
+                public const string Status = "Kore.Web.ContentManagement/Pages.PageModel.Status";
+                public const string Title = "Kore.Web.ContentManagement/Pages.PageModel.Title";
             }
 
             public static class PageTypeModel

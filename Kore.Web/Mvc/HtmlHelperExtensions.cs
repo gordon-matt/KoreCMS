@@ -616,17 +616,9 @@ namespace Kore.Web.Mvc
             this.html = html;
         }
 
-        public MvcHtmlString LanguagesDropDownList(string name, string selectedValue = null, object htmlAttributes = null, string emptyText = null)
+        public MvcHtmlString LanguagesDropDownList(string name, string selectedValue = null, object htmlAttributes = null, string emptyText = null, bool includeInvariant = false, string invariantText = null)
         {
-            var languageManager = EngineContext.Current.Resolve<ILanguageManager>();
-
-            var selectList = languageManager.GetActiveLanguages()
-                .ToSelectList(
-                    value => value.CultureCode,
-                    text => text.Name,
-                    selectedValue,
-                    emptyText);
-
+            var selectList = GetLanguages(selectedValue, emptyText);
             return html.DropDownList(name, selectList, htmlAttributes);
         }
 
@@ -636,19 +628,12 @@ namespace Kore.Web.Mvc
         /// <param name="expression"> An expression that identifies the property to use. This property should contain a culture code value</param>
         /// <param name="htmlAttributes">An object that contains the HTML attributes to set for the element.</param>
         /// <returns></returns>
-        public MvcHtmlString LanguagesDropDownListFor(Expression<Func<TModel, string>> expression, object htmlAttributes = null, string emptyText = null)
+        public MvcHtmlString LanguagesDropDownListFor(Expression<Func<TModel, string>> expression, object htmlAttributes = null, string emptyText = null, bool includeInvariant = false, string invariantText = null)
         {
-            var languageManager = EngineContext.Current.Resolve<ILanguageManager>();
             var func = expression.Compile();
             var selectedValue = func(html.ViewData.Model);
 
-            var selectList = languageManager.GetActiveLanguages()
-                .ToSelectList(
-                    value => value.CultureCode,
-                    text => text.Name,
-                    selectedValue,
-                    emptyText);
-
+            var selectList = GetLanguages(selectedValue, emptyText);
             return html.DropDownListFor(expression, selectList, htmlAttributes);
         }
 
@@ -771,6 +756,31 @@ namespace Kore.Web.Mvc
                     emptyText);
 
             return html.DropDownListFor(expression, selectList, htmlAttributes);
+        }
+
+        private static IEnumerable<SelectListItem> GetLanguages(string selectedValue = null, string emptyText = null, bool includeInvariant = false, string invariantText = null)
+        {
+            var languageManager = EngineContext.Current.Resolve<ILanguageManager>();
+            var languages = languageManager.GetActiveLanguages().ToList();
+
+            if (includeInvariant)
+            {
+                if (string.IsNullOrEmpty(invariantText))
+                {
+                    languages.Insert(0, new Language { CultureCode = null, Name = "[ Invariant ]" });
+                }
+                else
+                {
+                    languages.Insert(0, new Language { CultureCode = null, Name = invariantText });
+                }
+            }
+
+            return languages
+                .ToSelectList(
+                    value => value.CultureCode,
+                    text => text.Name,
+                    selectedValue,
+                    emptyText);
         }
 
         private class PermissionComparer : IComparer<string>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Data.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -13,6 +14,7 @@ using Kore.Web.ContentManagement.Infrastructure;
 using Kore.Web.Mvc;
 using Kore.Web.Navigation;
 using MenuItem = Kore.Web.ContentManagement.Areas.Admin.Menus.Domain.MenuItem;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 
 namespace Kore.Web.ContentManagement.Controllers
 {
@@ -45,13 +47,17 @@ namespace Kore.Web.ContentManagement.Controllers
             }
 
             var pageService = EngineContext.Current.Resolve<IPageService>();
+            var pageVersionService = EngineContext.Current.Resolve<IPageVersionService>();
 
-            var currentPage = pageService.Repository.Table.FirstOrDefault(y => y.Slug == currentUrlSlug);
-            var allPages = pageService.Repository.Table.Where(x => x.IsEnabled && x.RefId == null).ToHashSet();
+            var currentPageVersion = pageVersionService.Repository.Table
+                .Include(x => x.Page)
+                .FirstOrDefault(y => y.Slug == currentUrlSlug);
 
-            if (currentPage != null)
+            var allPages = pageService.Find(x => x.IsEnabled);
+
+            if (currentPageVersion != null)
             {
-                var parentId = currentPage.ParentId;
+                var parentId = currentPageVersion.Page.ParentId;
                 while (parentId != null)
                 {
                     var parentPage = allPages.FirstOrDefault(y => y.Id == parentId);
@@ -63,10 +69,11 @@ namespace Kore.Web.ContentManagement.Controllers
 
                     if (PageSecurityHelper.CheckUserHasAccessToPage(parentPage, User))
                     {
+                        var currentVersion = pageVersionService.GetCurrentVersion(parentPage.Id, WorkContext.CurrentCultureCode);
                         breadcrumbs.Add(new Breadcrumb
                         {
-                            Text = parentPage.Name,
-                            Url = parentPage.IsEnabled ? "/" + parentPage.Slug : null
+                            Text = currentVersion.Title,
+                            Url = parentPage.IsEnabled ? "/" + currentVersion.Slug : null
                         });
                     }
 
@@ -77,7 +84,7 @@ namespace Kore.Web.ContentManagement.Controllers
 
                 breadcrumbs.Add(new Breadcrumb
                 {
-                    Text = currentPage.Name
+                    Text = currentPageVersion.Title
                 });
             }
             else
@@ -94,6 +101,8 @@ namespace Kore.Web.ContentManagement.Controllers
         public ActionResult AutoMenu(string templateViewName, bool includeHomePageLink = true)
         {
             var pageService = EngineContext.Current.Resolve<IPageService>();
+            var pageVersionService = EngineContext.Current.Resolve<IPageVersionService>();
+
             var menuItems = new List<MenuItem>();
             var menuId = Guid.NewGuid();
 
@@ -110,25 +119,22 @@ namespace Kore.Web.ContentManagement.Controllers
                 });
             }
 
-            var pages = pageService.Repository.Table
-                .Where(x =>
-                    x.IsEnabled &&
-                    x.RefId == null)
-                .ToHashSet();
+            var pageVersions = pageVersionService.GetCurrentVersions(
+                WorkContext.CurrentCultureCode,
+                enabledOnly: true,
+                shownOnMenusOnly: true);
 
-            var authorizedPages = pages.Where(x =>
-                x.ShowOnMenus &&
-                PageSecurityHelper.CheckUserHasAccessToPage(x, User));
+            var authorizedPages = pageVersions.Where(x => PageSecurityHelper.CheckUserHasAccessToPage(x.Page, User));
 
             var items = authorizedPages
                 .Select(x => new MenuItem
             {
                 Id = x.Id,
-                Text = x.Name,
+                Text = x.Title,
                 Url = "/" + x.Slug,
                 Enabled = true,
-                ParentId = x.ParentId,
-                Position = x.Order
+                ParentId = x.Page.ParentId,
+                Position = x.Page.Order
             });
 
             menuItems.AddRange(items);
@@ -202,24 +208,38 @@ namespace Kore.Web.ContentManagement.Controllers
                 }
             }
 
-            var pageService = EngineContext.Current.Resolve<IPageService>();
-            var query = pageService.Repository.Table.Where(x => x.IsEnabled && x.RefId == null);
+            var pageVersionService = EngineContext.Current.Resolve<IPageVersionService>();
+
+            var pageVersions = Enumerable.Empty<PageVersion>();
+
+            //var pageVersions = pageVersionService.GetCurrentVersions(
+            //    WorkContext.CurrentCultureCode,
+            //    enabledOnly: true,
+            //    shownOnMenusOnly: true);
 
             bool hasCmsPages = true;
 
             // If on home page
             if (string.IsNullOrEmpty(currentUrlSlug))
             {
-                query = query.Where(x => x.ParentId == null);
+                pageVersions = pageVersionService.GetCurrentVersions(
+                    WorkContext.CurrentCultureCode,
+                    enabledOnly: true,
+                    shownOnMenusOnly: true,
+                    topLevelOnly: true);
             }
             else
             {
-                var currentPage = pageService.Repository.Table.FirstOrDefault(y => y.Slug == currentUrlSlug);
+                var currentPage = pageVersionService.Repository.Table.FirstOrDefault(y => y.Slug == currentUrlSlug);
 
                 // If the current page is a CMS page
                 if (currentPage != null)
                 {
-                    query = query.Where(x => x.ParentId == currentPage.Id);
+                    pageVersions = pageVersionService.GetCurrentVersions(
+                        WorkContext.CurrentCultureCode,
+                        enabledOnly: true,
+                        shownOnMenusOnly: true,
+                        parentId: currentPage.Id);
                 }
                 else
                 {
@@ -229,19 +249,17 @@ namespace Kore.Web.ContentManagement.Controllers
 
             if (hasCmsPages)
             {
-                var pages = query.ToHashSet();
-
-                var authorizedPages = pages.Where(x => x.ShowOnMenus && PageSecurityHelper.CheckUserHasAccessToPage(x, User));
+                var authorizedPages = pageVersions.Where(x => PageSecurityHelper.CheckUserHasAccessToPage(x.Page, User));
 
                 var items = authorizedPages
                     .Select(x => new MenuItem
                     {
                         Id = x.Id,
-                        Text = x.Name,
+                        Text = x.Title,
                         Url = "/" + x.Slug,
                         Enabled = true,
-                        ParentId = x.ParentId,
-                        Position = x.Order
+                        ParentId = x.Page.ParentId,
+                        Position = x.Page.Order
                     });
 
                 menuItems.AddRange(items);
@@ -262,10 +280,10 @@ namespace Kore.Web.ContentManagement.Controllers
         {
             string currentUrlSlug = filterByUrl ? Request.Url.LocalPath.TrimStart('/') : null;
 
-            var pageService = EngineContext.Current.Resolve<IPageService>();
+            var pageVersionService = EngineContext.Current.Resolve<IPageVersionService>();
 
             // Check if it's a CMS page or not.
-            if (currentUrlSlug != null && pageService.GetPageBySlug(currentUrlSlug) == null)
+            if (currentUrlSlug != null && pageVersionService.Find(x => x.Slug == currentUrlSlug) == null)
             {
                 // It's not a CMS page, so don't try to filter by slug...
                 // Set slug to null, to query for a menu without any URL filter

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Data.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -19,23 +20,23 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         protected static Regex ContentZonePattern = new Regex(@"\[\[ContentZone:(?<Zone>.*)\]\]", RegexOptions.Compiled);
 
         private readonly Lazy<IContentBlockService> contentBlockService;
-        private readonly Lazy<IHistoricPageService> historicPageService;
         private readonly Lazy<IPageService> pageService;
         private readonly Lazy<IPageTypeService> pageTypeService;
+        private readonly Lazy<IPageVersionService> pageVersionService;
         private readonly Lazy<IZoneService> zoneService;
 
         public PageController(
             Lazy<IContentBlockService> contentBlockService,
-            Lazy<IHistoricPageService> historicPageService,
             Lazy<IPageService> pageService,
             Lazy<IPageTypeService> pageTypeService,
+            Lazy<IPageVersionService> pageVersionService,
             Lazy<IZoneService> zoneService)
             : base()
         {
             this.contentBlockService = contentBlockService;
-            this.historicPageService = historicPageService;
             this.pageService = pageService;
             this.pageTypeService = pageTypeService;
+            this.pageVersionService = pageVersionService;
             this.zoneService = zoneService;
         }
 
@@ -57,100 +58,56 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         }
 
         [Compress]
-        [Route("get-editor-ui/{pageId}")]
-        public ActionResult GetEditorUI(Guid pageId)
+        [Route("get-editor-ui/{pageVersionId}")]
+        public ActionResult GetEditorUI(Guid pageVersionId)
         {
-            var page = pageService.Value.FindOne(pageId);
-            var pageType = pageTypeService.Value.FindOne(page.PageTypeId);
+            var pageVersion = pageVersionService.Value.Repository.Table
+                .Include(x => x.Page)
+                .FirstOrDefault(x => x.Id == pageVersionId);
+
+            var pageType = pageTypeService.Value.FindOne(pageVersion.Page.PageTypeId);
             var korePageTypes = pageTypeService.Value.GetKorePageTypes();
 
             var korePageType = pageTypeService.Value.GetKorePageType(pageType.Name);
-            korePageType.InitializeInstance(page);
+            korePageType.InitializeInstance(pageVersion);
 
             string content = RenderRazorPartialViewToString(korePageType.EditorTemplatePath, korePageType);
             return Json(new { Content = content }, JsonRequestBehavior.AllowGet);
         }
 
         [Compress]
-        [Route("{pageId}/history")]
-        public ActionResult History(Guid pageId)
-        {
-            if (!CheckPermission(CmsPermissions.PageHistoryRead))
-            {
-                return new HttpUnauthorizedResult();
-            }
-
-            var page = pageService.Value.FindOne(pageId);
-
-            WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Pages.Title), Url.Action("Index"));
-            WorkContext.Breadcrumbs.Add(page.Name);
-            WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Pages.History));
-
-            ViewBag.PageId = pageId;
-
-            ViewBag.Title = T(KoreCmsLocalizableStrings.Pages.Title);
-            ViewBag.SubTitle = T(KoreCmsLocalizableStrings.Pages.PageHistory);
-
-            return View("Kore.Web.ContentManagement.Areas.Admin.Pages.Views.Page.History");
-        }
-
-        [Compress]
-        [Route("preview/{pageId}/{isHistoricPage}")]
-        public ActionResult Preview(Guid pageId, bool isHistoricPage)
+        [Route("preview/{pageId}")]
+        public ActionResult Preview(Guid pageVersionId)
         {
             var currentCulture = WorkContext.CurrentCultureCode;
 
-            Page page = null;
+            var pageVersion = pageVersionService.Value.Repository.Table
+                .Include(x => x.Page)
+                .FirstOrDefault(x => x.Id == pageVersionId);
 
-            if (isHistoricPage)
-            {
-                var historicPage = historicPageService.Value.FindOne(pageId);
-                page = new Page
-                {
-                    AccessRestrictions = historicPage.AccessRestrictions,
-                    CultureCode = historicPage.CultureCode,
-                    DateCreatedUtc = historicPage.DateCreatedUtc,
-                    DateModifiedUtc = historicPage.DateModifiedUtc,
-                    Fields = historicPage.Fields,
-                    Id = historicPage.PageId,
-                    IsEnabled = historicPage.IsEnabled,
-                    Name = historicPage.Name,
-                    Order = historicPage.Order,
-                    PageTypeId = historicPage.PageTypeId,
-                    ParentId = historicPage.ParentId,
-                    RefId = historicPage.RefId,
-                    ShowOnMenus = historicPage.ShowOnMenus,
-                    Slug = historicPage.Slug
-                };
-            }
-            else
-            {
-                page = pageService.Value.FindOne(pageId);
-            }
-
-            page.IsEnabled = true; // Override here to make sure it passes the check here: PageSecurityHelper.CheckUserHasAccessToPage
+            pageVersion.Page.IsEnabled = true; // Override here to make sure it passes the check here: PageSecurityHelper.CheckUserHasAccessToPage
 
             //if (page != null && page.IsEnabled)
-            if (page != null)
+            if (pageVersion != null)
             {
                 // If there are access restrictions
-                if (!PageSecurityHelper.CheckUserHasAccessToPage(page, User))
+                if (!PageSecurityHelper.CheckUserHasAccessToPage(pageVersion.Page, User))
                 {
                     return new HttpUnauthorizedResult();
                 }
 
                 // Else no restrictions (available for anyone to view)
-                WorkContext.SetState("CurrentPageId", page.Id);
-                WorkContext.Breadcrumbs.Add(page.Name);
+                WorkContext.SetState("CurrentPageId", pageVersion.Id);
+                WorkContext.Breadcrumbs.Add(pageVersion.Title);
 
-                var pageType = pageTypeService.Value.FindOne(page.PageTypeId);
+                var pageType = pageTypeService.Value.FindOne(pageVersion.Page.PageTypeId);
                 var korePageType = pageTypeService.Value.GetKorePageType(pageType.Name);
-                korePageType.InstanceName = page.Name;
-                korePageType.InstanceParentId = page.ParentId;
+                korePageType.InstanceName = pageVersion.Title;
+                korePageType.InstanceParentId = pageVersion.Page.ParentId;
                 korePageType.LayoutPath = pageType.LayoutPath;
-                korePageType.InitializeInstance(page);
+                korePageType.InitializeInstance(pageVersion);
 
-                var contentBlocks = contentBlockService.Value.GetContentBlocks(page.Id);
+                var contentBlocks = contentBlockService.Value.GetContentBlocks(pageVersion.Id);
                 korePageType.ReplaceContentTokens(x => InsertContentBlocks(x, contentBlocks));
 
                 return View(pageType.DisplayTemplatePath, korePageType);

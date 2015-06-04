@@ -10,7 +10,6 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 {
-    //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class PageTreeApiController : ODataController
     {
         private readonly IPageService service;
@@ -31,13 +30,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             var pages = service.Find();
 
             var hierarchy = pages
-                .Where(x => x.ParentId == null && x.RefId == null)
+                .Where(x => x.ParentId == null)
                 .OrderBy(x => x.Order)
-                .ThenBy(x => x.Name)
+                .ThenBy(x => x.Title)
                 .Select(x => new PageTreeItem
                 {
                     Id = x.Id,
-                    Name = x.Name,
+                    Title = x.Title,
                     IsEnabled = x.IsEnabled,
                     SubPages = GetSubPages(pages, x.Id).ToList()
                 });
@@ -48,13 +47,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         private static IEnumerable<PageTreeItem> GetSubPages(IEnumerable<Page> pages, Guid parentId)
         {
             return pages
-                .Where(x => x.ParentId == parentId && x.RefId == null)
+                .Where(x => x.ParentId == parentId)
                 .OrderBy(x => x.Order)
-                .ThenBy(x => x.Name)
+                .ThenBy(x => x.Title)
                 .Select(x => new PageTreeItem
                 {
                     Id = x.Id,
-                    Name = x.Name,
+                    Title = x.Title,
                     IsEnabled = x.IsEnabled,
                     SubPages = GetSubPages(pages, x.Id).ToList()
                 });
@@ -77,7 +76,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public string Title { get; set; }
 
         public bool IsEnabled { get; set; }
 

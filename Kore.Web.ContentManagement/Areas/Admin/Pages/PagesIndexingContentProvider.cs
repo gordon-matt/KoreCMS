@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Globalization;
 using System.Web.Mvc;
 using Kore.Collections;
@@ -13,23 +14,29 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
     public class PagesIndexingContentProvider : IIndexingContentProvider
     {
         private readonly IPageService pageService;
+        private readonly IPageVersionService pageVersionService;
         private readonly IPageTypeService pageTypeService;
         private readonly UrlHelper urlHelper;
         private readonly static char[] trimCharacters = { ' ', '\r', '\n', '\t' };
 
         public PagesIndexingContentProvider(
             IPageService pageService,
+            IPageVersionService pageVersionService,
             IPageTypeService pageTypeService,
             UrlHelper urlHelper)
         {
             this.pageService = pageService;
+            this.pageVersionService = pageVersionService;
             this.pageTypeService = pageTypeService;
             this.urlHelper = urlHelper;
         }
 
         public IEnumerable<IDocumentIndex> GetDocuments(Func<string, IDocumentIndex> factory)
         {
-            var pages = pageService.Repository.Table.ToHashSet();
+            var pageVersions = pageVersionService.Repository.Table
+                .Include(x => x.Page)
+                .ToHashSet();
+
             CultureInfo defaultCultureInfo = null;
             var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
             if (!string.IsNullOrEmpty(workContext.CurrentCultureCode))
@@ -44,21 +51,21 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
                 }
             }
 
-            foreach (var page in pages)
+            foreach (var pageVersion in pageVersions)
             {
-                var document = factory(page.Id.ToString());
+                var document = factory(pageVersion.Id.ToString());
 
-                var pageType = pageTypeService.FindOne(page.PageTypeId);
+                var pageType = pageTypeService.FindOne(pageVersion.Page.PageTypeId);
                 var korePageType = pageTypeService.GetKorePageType(pageType.Name);
-                korePageType.InstanceName = page.Name;
+                korePageType.InstanceName = pageVersion.Title;
                 korePageType.LayoutPath = pageType.LayoutPath;
-                korePageType.InitializeInstance(page);
+                korePageType.InitializeInstance(pageVersion);
 
                 string description;
                 korePageType.PopulateDocumentIndex(document, out description);
 
                 //document.Add("url", urlHelper.Action("Index", "PageContent", new { area = Constants.Areas.Pages, slug = page.Slug })).Store();
-                document.Add("url", "/" + page.Slug).Store();
+                document.Add("url", "/" + pageVersion.Slug).Store();
 
                 description = CreatePageDescription(description);
                 if (!string.IsNullOrEmpty(description))
@@ -66,9 +73,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
                     document.Add("description", description.Left(256)).Analyze().Store();
                 }
 
-                if (!string.IsNullOrEmpty(page.CultureCode))
+                if (!string.IsNullOrEmpty(pageVersion.CultureCode))
                 {
-                    var cultureInfo = new CultureInfo(page.CultureCode);
+                    var cultureInfo = new CultureInfo(pageVersion.CultureCode);
                     document.Add("culture", cultureInfo.LCID).Store();
                 }
                 else

@@ -30,9 +30,9 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.EntitySet<Menu>("MenuApi");
             builder.EntitySet<MenuItem>("MenuItemApi");
             builder.EntitySet<MessageTemplate>("MessageTemplateApi");
-            builder.EntitySet<HistoricPage>("HistoricPageApi");
             builder.EntitySet<Page>("PageApi");
             builder.EntitySet<PageType>("PageTypeApi");
+            builder.EntitySet<PageVersion>("PageVersionApi");
             builder.EntitySet<QueuedEmail>("QueuedEmailApi");
             builder.EntitySet<SitemapConfig>("XmlSitemapApi");
             builder.EntitySet<Subscriber>("SubscriberApi");
@@ -43,11 +43,10 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             // Action Configurations
             RegisterContentBlockODataActions(builder);
-            RegisterHistoricPageODataActions(builder);
             RegisterLanguageODataActions(builder);
             RegisterLocalizableStringODataActions(builder);
             RegisterMessageTemplateODataActions(builder);
-            RegisterPageODataActions(builder);
+            RegisterPageVersionODataActions(builder);
             RegisterXmlSitemapODataActions(builder);
 
             config.Routes.MapODataRoute("OData_Kore_CMS", "odata/kore/cms", builder.GetEdmModel());
@@ -60,12 +59,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
             var getByPageIdAction = builder.Entity<ContentBlock>().Collection.Action("GetByPageId");
             getByPageIdAction.Parameter<Guid>("pageId");
             getByPageIdAction.ReturnsCollectionFromEntitySet<ContentBlock>("ContentBlocks");
-        }
-
-        private static void RegisterHistoricPageODataActions(ODataModelBuilder builder)
-        {
-            var restoreVersionAction = builder.Entity<HistoricPage>().Action("RestoreVersion");
-            restoreVersionAction.Returns<IHttpActionResult>();
         }
 
         private static void RegisterLanguageODataActions(ODataModelBuilder builder)
@@ -99,12 +92,15 @@ namespace Kore.Web.ContentManagement.Infrastructure
             getTokensAction.ReturnsCollection<string>();
         }
 
-        private static void RegisterPageODataActions(ODataModelBuilder builder)
+        private static void RegisterPageVersionODataActions(ODataModelBuilder builder)
         {
-            var translateAction = builder.Entity<Page>().Collection.Action("Translate");
+            var restoreVersionAction = builder.Entity<PageVersion>().Action("RestoreVersion");
+            restoreVersionAction.Returns<IHttpActionResult>();
+
+            var translateAction = builder.Entity<PageVersion>().Collection.Action("GetCurrentVersion");
             translateAction.Parameter<Guid>("pageId");
             translateAction.Parameter<string>("cultureCode");
-            translateAction.Returns<EdmPage>();
+            translateAction.Returns<EdmPageVersion>();
         }
 
         private static void RegisterXmlSitemapODataActions(ODataModelBuilder builder)

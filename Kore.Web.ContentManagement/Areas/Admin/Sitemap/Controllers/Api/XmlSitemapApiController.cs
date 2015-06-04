@@ -18,14 +18,17 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
 {
     public class XmlSitemapApiController : GenericODataController<SitemapConfig, int>
     {
-        private IPageService pageService;
+        private readonly IPageService pageService;
+        private readonly IPageVersionService pageVersionService;
 
         public XmlSitemapApiController(
             IRepository<SitemapConfig> repository,
-            IPageService pageService)
+            IPageService pageService,
+            IPageVersionService pageVersionService)
             : base(repository)
         {
             this.pageService = pageService;
+            this.pageVersionService = pageVersionService;
         }
 
         #region GenericODataController<GoogleSitemapPageConfig, int> Members
@@ -64,21 +67,21 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
             // First ensure that current pages are in the config
             var config = Service.Find();
             var configPageIds = config.Select(x => x.PageId).ToHashSet();
-            var pages = pageService.Find(x => x.RefId == null); // temp fix: since we don't support localized routes yet
-            var pageIds = pages.Select(x => x.Id).ToHashSet();
+            var pageVersions = pageVersionService.Find(x => x.CultureCode == null); // temp fix: since we don't support localized routes yet
+            var pageVersionIds = pageVersions.Select(x => x.Id).ToHashSet();
 
-            var newPageIds = pageIds.Except(configPageIds);
-            var pageIdsToDelete = configPageIds.Except(pageIds);
+            var newPageVersionIds = pageVersionIds.Except(configPageIds);
+            var pageVersionIdsToDelete = configPageIds.Except(pageVersionIds);
 
-            if (pageIdsToDelete.Any())
+            if (pageVersionIdsToDelete.Any())
             {
-                Service.Delete(x => pageIdsToDelete.Contains(x.PageId));
+                Service.Delete(x => pageVersionIdsToDelete.Contains(x.PageId));
             }
 
-            if (newPageIds.Any())
+            if (newPageVersionIds.Any())
             {
-                var toInsert = pages
-                    .Where(x => newPageIds.Contains(x.Id))
+                var toInsert = pageVersions
+                    .Where(x => newPageVersionIds.Contains(x.Id))
                     .Select(x => new SitemapConfig
                     {
                         PageId = x.Id,
@@ -93,7 +96,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
             var collection = new HashSet<SitemapConfigModel>();
             foreach (var item in config)
             {
-                var page = pages.First(x => x.Id == item.PageId);
+                var page = pageVersions.First(x => x.Id == item.PageId);
                 collection.Add(new SitemapConfigModel
                 {
                     Id = item.Id,
@@ -156,10 +159,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
             var config = Service.Find();
             var file = new SitemapXmlFile();
 
-            var pages = pageService.Find();
+            var pageVersions = pageVersionService.Find();
             foreach (var item in config)
             {
-                var page = pages.First(x => x.Id == item.PageId);
+                var page = pageVersions.First(x => x.Id == item.PageId);
                 file.Urls.Add(new UrlElement
                 {
                     Location = string.Concat(Request.RequestUri.GetLeftPart(UriPartial.Authority), "/", page.Slug),

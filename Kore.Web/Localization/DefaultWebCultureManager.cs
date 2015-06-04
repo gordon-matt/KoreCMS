@@ -21,7 +21,7 @@ namespace Kore.Web.Localization
         {
             if (requestContext.Items.Contains("CachedCurrentCulture"))
             {
-                return requestContext.Items["CachedCurrentCulture"].ToString();
+                return (string)requestContext.Items["CachedCurrentCulture"];
             }
 
             var requestedCultures = cultureSelectors
@@ -30,11 +30,16 @@ namespace Kore.Web.Localization
                 .Where(x => x != null)
                 .OrderByDescending(x => x.Priority);
 
-            var cultureCode = "en-US";
+            string cultureCode = null;
 
             if (requestedCultures.Any())
             {
                 cultureCode = requestedCultures.First().CultureCode;
+            }
+
+            if (cultureCode == string.Empty)
+            {
+                cultureCode = null;
             }
 
             requestContext.Items["CachedCurrentCulture"] = cultureCode;

@@ -6,7 +6,6 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 {
-    //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class PageTypeApiController : GenericODataController<PageType, Guid>
     {
         public PageTypeApiController(IPageTypeService service)

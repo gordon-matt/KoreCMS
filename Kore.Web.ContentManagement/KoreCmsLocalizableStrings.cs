@@ -204,6 +204,7 @@
             public const string PageHistoryRestoreConfirm = "Kore.Web.ContentManagement/Pages.PageHistoryRestoreConfirm";
             public const string PageHistoryRestoreError = "Kore.Web.ContentManagement/Pages.PageHistoryRestoreError";
             public const string PageHistoryRestoreSuccess = "Kore.Web.ContentManagement/Pages.PageHistoryRestoreSuccess";
+            public const string Restore = "Kore.Web.ContentManagement/Pages.Restore";
             public const string RestoreVersion = "Kore.Web.ContentManagement/Pages.RestoreVersion";
             public const string SelectPageToBeginEdit = "Kore.Web.ContentManagement/Pages.SelectPageToBeginEdit";
             public const string Tags = "Kore.Web.ContentManagement/Pages.Tags";

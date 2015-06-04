@@ -26,7 +26,7 @@
 }
 
 <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
         <div class="pull-left">
             <a data-bind="click: create" class="btn btn-primary">
                 <i class="kore-icon kore-icon-add"></i>
@@ -37,7 +37,9 @@
                 @T(KoreCmsLocalizableStrings.Pages.PageTypes.Title)
             </a>
         </div>
-        <div data-bind="visible: showToolbar" style="display:none">
+    </div>
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">
+        <div data-bind="visible: displayMode() == 'EditPage'" style="display:none">
             <div class="btn-group pull-right">
                 <a onclick="viewModel.delete()" class="btn btn-danger btn-lg" title="@T(KoreWebLocalizableStrings.General.Delete).Text">
                     <i class="kore-icon kore-icon-trash"></i>
@@ -56,9 +58,12 @@
                 </a>
             </div>
         </div>
-        <div data-bind="visible: pageVersion.showToolbar" style="display:none">
-            <div class="btn-group pull-right">
-                
+        <div data-bind="visible: displayMode() == 'PageHistoryGrid'" style="display:none">
+            <div class="pull-left">
+                <a data-bind="click: pageVersion.goBack" class="btn btn-default">
+                    <i class="kore-icon kore-icon-arrow-left"></i>
+                    @T(KoreWebLocalizableStrings.General.Back)
+                </a>
             </div>
         </div>
     </div>
@@ -154,10 +159,15 @@
                                         </div>
                                     </fieldset>
                                 </form>
-                                <form id="form-section-version-form" data-bind="visible: isEditMode">
+                            }
+                        }
+                        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary, htmlAttributes: new { data_bind = "visible: displayMode() == 'EditPage'" })))
+                        {
+                            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+                            using (var body = panel.BeginBody())
+                            {
+                                <form id="form-section-version-form" data-bind="visible: displayMode() == 'EditPage'">
                                     <fieldset>
-                                        <legend>@T(KoreWebLocalizableStrings.General.Details)</legend>
-
                                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                             <div class="form-group">
                                                 @Html.Label("Version_Title", T(KoreCmsLocalizableStrings.Pages.PageVersionModel.Title), new { @class = "control-label" })
@@ -189,30 +199,19 @@
 
                                     <fieldset id="fields-definition"></fieldset>
                                 </form>
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="form-group pull-right">
-                                        <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                                        <button type="button" class="btn btn-primary" data-bind="click: save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
-                                    </div>
-                                </div>
                             }
                         }
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group pull-right">
+                                <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                            </div>
+                        </div>
                     </article>
-
                 </div>
 
 
                 <div id="version-grid-section" class="row" style="display:none">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <a data-bind="click: pageVersion.goBack" class="btn btn-default">
-                            <i class="kore-icon kore-icon-arrow-left"></i>
-                            @T(KoreWebLocalizableStrings.General.Back)
-                        </a>
-                    </div>
-
-                    <div class="clearfix"></div>
-                    <br />
-
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
                         @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
                         {
@@ -227,12 +226,6 @@
 
                 <div id="version-details-section" class="row" style="display:none">
                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="pull-right">
-                            <button type="button" class="btn btn-default" data-bind="click: pageVersion.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                            <button type="button" class="btn btn-warning" data-bind="click: pageVersion.restore">@T(KoreCmsLocalizableStrings.Pages.RestoreVersion)</button>
-                        </div>
-                        <div class="clearfix"></div>
-                        <br />
                         @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
                         {
                             using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
@@ -355,6 +348,7 @@
             InsertRecordError: '@T(KoreWebLocalizableStrings.General.InsertRecordError).Text',
             InsertRecordSuccess: '@T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text',
             Preview: '@T(KoreWebLocalizableStrings.General.Preview).Text',
+            Restore: '@T(KoreCmsLocalizableStrings.Pages.Restore).Text',
             Toggle: '@T(KoreWebLocalizableStrings.General.Toggle).Text',
             Translations: '@T(KoreCmsLocalizableStrings.Pages.Translations).Text',
             UpdateRecordError: '@T(KoreWebLocalizableStrings.General.UpdateRecordError).Text',

@@ -32,11 +32,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             var hierarchy = pages
                 .Where(x => x.ParentId == null)
                 .OrderBy(x => x.Order)
-                .ThenBy(x => x.Title)
+                .ThenBy(x => x.Name)
                 .Select(x => new PageTreeItem
                 {
                     Id = x.Id,
-                    Title = x.Title,
+                    Title = x.Name,
                     IsEnabled = x.IsEnabled,
                     SubPages = GetSubPages(pages, x.Id).ToList()
                 });
@@ -49,11 +49,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             return pages
                 .Where(x => x.ParentId == parentId)
                 .OrderBy(x => x.Order)
-                .ThenBy(x => x.Title)
+                .ThenBy(x => x.Name)
                 .Select(x => new PageTreeItem
                 {
                     Id = x.Id,
-                    Title = x.Title,
+                    Title = x.Name,
                     IsEnabled = x.IsEnabled,
                     SubPages = GetSubPages(pages, x.Id).ToList()
                 });

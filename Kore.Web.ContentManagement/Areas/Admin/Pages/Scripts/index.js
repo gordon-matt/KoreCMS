@@ -25,6 +25,7 @@ var PageTypeVM = function () {
 
             self.validator.resetForm();
             switchSection($("#page-type-form-section"));
+            viewModel.displayMode('PageTypeEdit');
             $("#page-type-form-section-legend").html(translations.Edit);
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
@@ -82,6 +83,7 @@ var PageTypeVM = function () {
                 $('#PageTypesGrid').data('kendoGrid').refresh();
 
                 switchSection($("#page-type-grid-section"));
+                viewModel.displayMode('PageTypeGrid');
 
                 $.notify(translations.InsertRecordSuccess, "success");
             })
@@ -104,6 +106,7 @@ var PageTypeVM = function () {
                 $('#PageTypesGrid').data('kendoGrid').refresh();
 
                 switchSection($("#page-type-grid-section"));
+                viewModel.displayMode('PageTypeGrid');
 
                 $.notify(translations.UpdateRecordSuccess, "success");
             })
@@ -116,6 +119,7 @@ var PageTypeVM = function () {
 
     self.cancel = function () {
         switchSection($("#page-type-grid-section"));
+        viewModel.displayMode('PageTypeGrid');
     };
 
     self.validator = $("#page-type-form-section-form").validate({
@@ -143,40 +147,17 @@ var PageVersionVM = function () {
 
     self.pageModelStub = null;
 
-    self.view = function (id) {
-        $.ajax({
-            url: "/odata/kore/cms/PageVersionApi(guid'" + id + "')",
-            type: "GET",
-            dataType: "json",
-            async: false
-        })
-        .done(function (json) {
-            self.id(json.Id);
-            self.pageId(json.PageId);
-            self.cultureCode(json.CultureCode);
-            self.status(json.Status);
-            self.title(json.Title);
-            self.slug(json.Slug);
-            self.fields(json.Fields);
-
-            switchSection($("#version-details-section"));
-        })
-        .fail(function (jqXHR, textStatus, errorThrown) {
-            $.notify(translations.GetRecordError, "error");
-            console.log(textStatus + ': ' + errorThrown);
-        });
-    };
-
-    self.restore = function () {
+    self.restore = function (id) {
         if (confirm(translations.PageHistoryRestoreConfirm)) {
             $.ajax({
-                url: "/odata/kore/cms/PageVersionApi(guid'" + self.id() + "')/RestoreVersion",
+                url: "/odata/kore/cms/PageVersionApi(guid'" + id + "')/RestoreVersion",
                 type: "POST"
             })
             .done(function (json) {
                 $('#PageVersionGrid').data('kendoGrid').dataSource.read();
                 $('#PageVersionGrid').data('kendoGrid').refresh();
-                switchSection($("#version-grid-section"));
+                switchSection($("#blank-section"));
+                viewModel.displayMode('Blank');
                 $.notify(translations.PageHistoryRestoreSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -186,20 +167,9 @@ var PageVersionVM = function () {
         };
     };
 
-    self.cancel = function () {
-        switchSection($("#version-grid-section"));
-    };
-
     self.goBack = function () {
         switchSection($("#form-section"));
-        viewModel.showToolbar(true);
-        viewModel.isEditMode(true);
-    };
-
-    self.refresh = function () {
-        $('#PageVersionGrid').data('kendoGrid').dataSource.read();
-        $('#PageVersionGrid').data('kendoGrid').refresh();
-        switchSection($("#version-grid-section"));
+        viewModel.displayMode('EditPage');
     };
 };
 
@@ -216,8 +186,7 @@ var ViewModel = function () {
 
     self.accessRestrictions = null;
     self.roles = ko.observableArray([]);
-    self.showToolbar = ko.observable(false);
-    self.isEditMode = ko.observable(false);
+    self.displayMode = ko.observable('Blank');
 
     self.pageType = new PageTypeVM();
     self.pageVersion = new PageVersionVM();
@@ -238,8 +207,7 @@ var ViewModel = function () {
 
         self.setupVersionCreateSection();
 
-        self.showToolbar(false);
-        self.isEditMode(false);
+        self.displayMode('CreatePage');
 
         self.validator.resetForm();
         switchSection($("#form-section"));
@@ -321,8 +289,7 @@ var ViewModel = function () {
                 console.log(textStatus + ': ' + errorThrown);
             });
 
-            self.showToolbar(true);
-            self.isEditMode(true);
+            self.displayMode('EditPage');
 
             self.validator.resetForm();
             switchSection($("#form-section"));
@@ -485,8 +452,9 @@ var ViewModel = function () {
             });
 
             self.saveVersion();
-            self.refresh();
         }
+
+        self.refresh();
     };
 
     self.saveVersion = function () {
@@ -565,10 +533,7 @@ var ViewModel = function () {
         ko.cleanNode(elementToBind);
         $("#fields-definition").html("");
 
-        switchSection($("#version-grid-section"));
-
-        self.showToolbar(false);
-        self.isEditMode(false);
+        self.displayMode('Blank');
 
         switchSection($("#blank-section"));
     };
@@ -597,8 +562,7 @@ var ViewModel = function () {
     };
 
     self.showPageHistory = function () {
-        self.showToolbar(false);
-        self.isEditMode(false);
+        self.displayMode('PageHistoryGrid');
 
         if (currentCulture == null || currentCulture == "") {
             self.pageVersionGrid.dataSource.transport.options.read.url = "/odata/kore/cms/PageVersionApi?$filter=CultureCode eq null and PageId eq guid'" + self.id() + "'";
@@ -612,15 +576,13 @@ var ViewModel = function () {
     };
 
     self.showPageTypes = function () {
-        self.showToolbar(false);
-        self.isEditMode(false);
+        self.displayMode('PageTypeGrid');
         switchSection($("#page-type-grid-section"));
     };
 
     self.refresh = function () {
         switchSection($("#blank-section"));
-        self.showToolbar(false);
-        self.isEditMode(false);
+        self.displayMode('Blank');
         $("#treeview").data("kendoTreeView").dataSource.read();
     };
 
@@ -771,7 +733,7 @@ $(document).ready(function () {
             title: " ",
             template:
                 '<div class="btn-group">' +
-                '<a onclick="viewModel.pageVersion.view(\'#=Id#\')" class="btn btn-info btn-xs">' + translations.Details + '</a>' +
+                '<a onclick="viewModel.pageVersion.restore(\'#=Id#\')" class="btn btn-warning btn-xs">' + translations.Restore + '</a>' +
                 '<a onclick="viewModel.preview(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Preview + '</a>' +
                 '</div>',
             attributes: { "class": "text-center" },

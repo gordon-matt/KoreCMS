@@ -37,8 +37,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                 DateCreatedUtc = DateTime.UtcNow,
                 DateModifiedUtc = DateTime.UtcNow,
                 Status = VersionStatus.Draft,
-                Title = entity.Title,
-                Slug = entity.Title.ToSlugUrl()
+                Title = entity.Name,
+                Slug = entity.Name.ToSlugUrl()
             });
 
             return rowsAffected;
@@ -56,8 +56,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                 DateCreatedUtc = DateTime.UtcNow,
                 DateModifiedUtc = DateTime.UtcNow,
                 Status = VersionStatus.Draft,
-                Title = x.Title,
-                Slug = x.Title.ToSlugUrl()
+                Title = x.Name,
+                Slug = x.Name.ToSlugUrl()
             });
             rowsAffected += pageVersionRepository.Insert(pageVersions);
 

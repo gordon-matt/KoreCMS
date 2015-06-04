@@ -2,17 +2,18 @@
 CURRENT NOTES
 ============================================================================================
 PAGES:
-- put history on same page
 - make blank section look nicer
 - show icons on tree (inc. for enabled/disabled)
 - remove "Create Sub Page" button after 3 levels
 - move Page Types to separate page? Alternatively, make it more intuitive..
 - make custom tinymce config (cant have widget zones in other editors- its for pages only)
-- Delete sub pages when delete page (or move those subpages up 1 level)?
+- Delete sub pages when delete page (or move those subpages up 1 level)? Else they become orphans
 - Page Types: should editortemplatepath be overridable? maybe only display template?
-TODO: change from page history to page versioning instead (keep all pages in page version table - including current..)
--    then: we can make page preview work with unsaved versions of pages
+
 - allow deleting of translated pages (the prob we should also see history for it, etc..)
+	- maybe this should happen when deleting the language? All pages, blocks, etc.. for that language get deleted
+
+- page history must not show published version
 
 
 - context menu for media is far down below

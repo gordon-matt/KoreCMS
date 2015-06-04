@@ -42,7 +42,7 @@
                 <a onclick="viewModel.delete()" class="btn btn-danger btn-lg" title="@T(KoreWebLocalizableStrings.General.Delete).Text">
                     <i class="kore-icon kore-icon-trash"></i>
                 </a>
-                <a data-bind="click: showPageVersions" class="btn btn-warning btn-lg" title="@T(KoreCmsLocalizableStrings.Pages.Versions).Text">
+                <a data-bind="click: showPageHistory" class="btn btn-warning btn-lg" title="@T(KoreCmsLocalizableStrings.Pages.PageHistory).Text">
                     <i class="kore-icon kore-icon-history"></i>
                 </a>
                 <a data-bind="attr: { href: '/admin/contentBlocks/' + id() }" class="btn btn-info btn-lg" title="@T(KoreCmsLocalizableStrings.ContentBlocks.Title).Text">
@@ -51,7 +51,7 @@
                 <a data-bind="click: toggleEnabled" class="btn btn-default btn-lg" title="@T(KoreWebLocalizableStrings.General.Toggle).Text">
                     <i class="kore-icon kore-icon-toggle-on"></i>
                 </a>
-                <a data-bind="click: preview" class="btn btn-success btn-lg" title="@T(KoreWebLocalizableStrings.General.Preview).Text">
+                <a data-bind="click: previewCurrent" class="btn btn-success btn-lg" title="@T(KoreWebLocalizableStrings.General.Preview).Text">
                     <i class="kore-icon kore-icon-preview"></i>
                 </a>
             </div>
@@ -112,12 +112,12 @@
                                         </div>
                                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                             <div class="form-group">
-                                                @Html.Label("Title", T(KoreCmsLocalizableStrings.Pages.PageModel.Title), new { @class = "control-label" })
+                                                @Html.Label("Name", T(KoreCmsLocalizableStrings.Pages.PageModel.Name), new { @class = "control-label" })
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
                                                         <i class="kore-icon kore-icon-file"></i>
                                                     </span>
-                                                    @Html.TextBox("Title", null, new { @class = "form-control", data_bind = "value: title" })
+                                                    @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
                                                 </div>
                                             </div>
                                         </div>
@@ -160,7 +160,7 @@
 
                                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                             <div class="form-group">
-                                                @Html.Label("Version_Title", T(KoreCmsLocalizableStrings.Pages.PageModel.Title), new { @class = "control-label" })
+                                                @Html.Label("Version_Title", T(KoreCmsLocalizableStrings.Pages.PageVersionModel.Title), new { @class = "control-label" })
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
                                                         <i class="kore-icon kore-icon-file"></i>
@@ -171,7 +171,7 @@
                                         </div>
                                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                             <div class="form-group">
-                                                @Html.Label("Version_Slug", T(KoreCmsLocalizableStrings.Pages.PageModel.Slug), new { @class = "control-label" })
+                                                @Html.Label("Version_Slug", T(KoreCmsLocalizableStrings.Pages.PageVersionModel.Slug), new { @class = "control-label" })
                                                 @Html.TextBox("Version_Slug", null, new { @class = "form-control", data_bind = "value: pageVersion.slug" })
                                             </div>
                                         </div>
@@ -180,7 +180,7 @@
                                             <div class="form-group">
                                                 <div class="checkbox">
                                                     <label>
-                                                        @Html.CheckBox("Version_IsDraft", new { data_bind = "checked: pageVersion.isDraft" }) @T(KoreCmsLocalizableStrings.Pages.PageModel.IsDraft)
+                                                        @Html.CheckBox("Version_IsDraft", new { data_bind = "checked: pageVersion.isDraft" }) @T(KoreCmsLocalizableStrings.Pages.PageVersionModel.IsDraft)
                                                     </label>
                                                 </div>
                                             </div>
@@ -245,11 +245,11 @@
                                             <td><span data-bind="html: pageTypeId"></span></td>
                                         </tr>*@
                                         <tr>
-                                            <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.Title)</th>
+                                            <th>@T(KoreCmsLocalizableStrings.Pages.PageVersionModel.Title)</th>
                                             <td><span data-bind="html: pageVersion.title"></span></td>
                                         </tr>
                                         <tr>
-                                            <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.Slug)</th>
+                                            <th>@T(KoreCmsLocalizableStrings.Pages.PageVersionModel.Slug)</th>
                                             <td><span data-bind="html: pageVersion.slug"></span></td>
                                         </tr>
                                         @*<tr>
@@ -261,21 +261,11 @@
                                             <td><span data-bind="html: dateModifiedUtc"></span></td>
                                         </tr>*@
                                         <tr>
-                                            <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.CultureCode)</th>
+                                            <th>@T(KoreCmsLocalizableStrings.Pages.PageVersionModel.CultureCode)</th>
                                             <td><span data-bind="html: pageVersion.cultureCode"></span></td>
                                         </tr>
                                     </tbody>
                                 </table>
-                            }
-                        }
-                        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
-                        {
-                            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Preview))) { }
-                            using (var body = panel.BeginBody())
-                            {
-                                <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe id="page-preview" class="embed-responsive-item"></iframe>
-                                </div>
                             }
                         }
                     </article>
@@ -357,26 +347,34 @@
             DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
             DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',
             DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text',
+            Details: '@T(KoreWebLocalizableStrings.General.Details).Text',
             Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
             GetRecordError: '@T(KoreWebLocalizableStrings.General.GetRecordError).Text',
             GetTranslationError: '@T(KoreCmsLocalizableStrings.Messages.GetTranslationError).Text',
             History: '@T(KoreCmsLocalizableStrings.Pages.History).Text',
             InsertRecordError: '@T(KoreWebLocalizableStrings.General.InsertRecordError).Text',
             InsertRecordSuccess: '@T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text',
+            Preview: '@T(KoreWebLocalizableStrings.General.Preview).Text',
             Toggle: '@T(KoreWebLocalizableStrings.General.Toggle).Text',
             Translations: '@T(KoreCmsLocalizableStrings.Pages.Translations).Text',
             UpdateRecordError: '@T(KoreWebLocalizableStrings.General.UpdateRecordError).Text',
             UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text',
             UpdateTranslationError: '@T(KoreCmsLocalizableStrings.Messages.UpdateTranslationError).Text',
             UpdateTranslationSuccess: '@T(KoreCmsLocalizableStrings.Messages.UpdateTranslationSuccess).Text',
+            View: '@T(KoreWebLocalizableStrings.General.View).Text',
+        
+            PageHistoryRestoreConfirm: '@T(KoreCmsLocalizableStrings.Pages.PageHistoryRestoreConfirm).Text',
+            PageHistoryRestoreError: '@T(KoreCmsLocalizableStrings.Pages.PageHistoryRestoreError).Text',
+            PageHistoryRestoreSuccess: '@T(KoreCmsLocalizableStrings.Pages.PageHistoryRestoreSuccess).Text',
 
             Columns: {
                 PageType: {
                     Name: '@T(KoreCmsLocalizableStrings.Pages.PageTypeModel.Name).Text',
                 },
                 PageVersion: {
-                    Title: '@T(KoreCmsLocalizableStrings.Pages.PageModel.Title).Text',
-                    DateModifiedUtc: '@T(KoreCmsLocalizableStrings.Pages.PageModel.DateModified).Text',
+                    Title: '@T(KoreCmsLocalizableStrings.Pages.PageVersionModel.Title).Text',
+                    Slug: '@T(KoreCmsLocalizableStrings.Pages.PageVersionModel.Slug).Text',
+                    DateModifiedUtc: '@T(KoreCmsLocalizableStrings.Pages.PageVersionModel.DateModified).Text',
                 }
             }
         }

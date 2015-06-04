@@ -159,10 +159,6 @@ var PageVersionVM = function () {
             self.slug(json.Slug);
             self.fields(json.Fields);
 
-            $.get("/admin/pages/preview/" + id, function (data) {
-                $("#page-preview").contents().find('html').html(data);
-            });
-
             switchSection($("#version-details-section"));
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
@@ -191,13 +187,13 @@ var PageVersionVM = function () {
     };
 
     self.cancel = function () {
-        $('#page-preview').contents().find('html').html('');
         switchSection($("#version-grid-section"));
     };
 
     self.goBack = function () {
         switchSection($("#form-section"));
         viewModel.showToolbar(true);
+        viewModel.isEditMode(true);
     };
 
     self.refresh = function () {
@@ -213,7 +209,7 @@ var ViewModel = function () {
     self.id = ko.observable(emptyGuid);
     self.parentId = ko.observable(null);
     self.pageTypeId = ko.observable(emptyGuid);
-    self.title = ko.observable(null);
+    self.name = ko.observable(null);
     self.isEnabled = ko.observable(false);
     self.order = ko.observable(0);
     self.showOnMenus = ko.observable(true);
@@ -226,11 +222,13 @@ var ViewModel = function () {
     self.pageType = new PageTypeVM();
     self.pageVersion = new PageVersionVM();
 
+    self.pageVersionGrid = null;
+
     self.create = function () {
         self.id(emptyGuid);
         self.parentId(null);
         self.pageTypeId(emptyGuid);
-        self.title(null);
+        self.name(null);
         self.isEnabled(false);
         self.order(0);
         self.showOnMenus(true);
@@ -290,7 +288,7 @@ var ViewModel = function () {
             self.id(json.Id);
             self.parentId(json.ParentId);
             self.pageTypeId(json.PageTypeId);
-            self.title(json.Title);
+            self.name(json.Name);
             self.isEnabled(json.IsEnabled);
             self.order(json.Order);
             self.showOnMenus(json.ShowOnMenus);
@@ -446,7 +444,7 @@ var ViewModel = function () {
             Id: self.id(),
             ParentId: self.parentId(),
             PageTypeId: self.pageTypeId(),
-            Title: self.title(),
+            Name: self.name(),
             IsEnabled: self.isEnabled(),
             Order: self.order(),
             ShowOnMenus: self.showOnMenus()
@@ -598,18 +596,17 @@ var ViewModel = function () {
         });
     };
 
-    self.showPageVersions = function () {
+    self.showPageHistory = function () {
         self.showToolbar(false);
         self.isEditMode(false);
 
-        var grid = $('#PageVersionGrid').data('kendoGrid');
         if (currentCulture == null || currentCulture == "") {
-            grid.dataSource.transport.options.read.url = "/odata/kore/cms/PageVersionApi?$filter=CultureCode eq null and PageId eq guid'" + self.id() + "'";
+            self.pageVersionGrid.dataSource.transport.options.read.url = "/odata/kore/cms/PageVersionApi?$filter=CultureCode eq null and PageId eq guid'" + self.id() + "'";
         }
         else {
-            grid.dataSource.transport.options.read.url = "/odata/kore/cms/PageVersionApi?$filter=CultureCode eq '" + currentCulture + "' and PageId eq guid'" + self.id() + "'";
+            self.pageVersionGrid.dataSource.transport.options.read.url = "/odata/kore/cms/PageVersionApi?$filter=CultureCode eq '" + currentCulture + "' and PageId eq guid'" + self.id() + "'";
         }
-        grid.dataSource.page(1);
+        self.pageVersionGrid.dataSource.page(1);
 
         switchSection($("#version-grid-section"));
     };
@@ -627,8 +624,12 @@ var ViewModel = function () {
         $("#treeview").data("kendoTreeView").dataSource.read();
     };
 
-    self.preview = function () {
-        var win = window.open('/admin/pages/preview/' + self.pageVersion.id(), '_blank');
+    self.previewCurrent = function () {
+        self.preview(self.pageVersion.id());
+    };
+
+    self.preview = function (id) {
+        var win = window.open('/admin/pages/preview/' + id, '_blank');
         if (win) {
             win.focus();
         } else {
@@ -755,17 +756,24 @@ $(document).ready(function () {
             title: translations.Columns.PageVersion.Title,
             filterable: true
         }, {
+            field: "Slug",
+            title: translations.Columns.PageVersion.Slug,
+            filterable: true
+        }, {
             field: "DateModifiedUtc",
             title: translations.Columns.PageVersion.DateModifiedUtc,
             filterable: true,
-            width: 200,
+            width: 180,
             type: "date",
             format: "{0:G}"
         }, {
             field: "Id",
             title: " ",
             template:
-                '<a onclick="viewModel.pageVersion.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>',
+                '<div class="btn-group">' +
+                '<a onclick="viewModel.pageVersion.view(\'#=Id#\')" class="btn btn-info btn-xs">' + translations.Details + '</a>' +
+                '<a onclick="viewModel.preview(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Preview + '</a>' +
+                '</div>',
             attributes: { "class": "text-center" },
             filterable: false,
             width: 130
@@ -882,4 +890,6 @@ $(document).ready(function () {
             });
         }
     });
+
+    viewModel.pageVersionGrid = $('#PageVersionGrid').data('kendoGrid');
 });

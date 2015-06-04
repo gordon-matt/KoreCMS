@@ -76,7 +76,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         }
 
         [Compress]
-        [Route("preview/{pageId}")]
+        [Route("preview/{pageVersionId}")]
         public ActionResult Preview(Guid pageVersionId)
         {
             var currentCulture = WorkContext.CurrentCultureCode;

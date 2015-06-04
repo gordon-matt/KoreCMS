@@ -25,12 +25,6 @@
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
 
-@*<style type="text/css">
-    .k-treeview span.k-state-selected a {
-        color: #FFF;
-    }
-</style>*@
-
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="pull-left">
@@ -43,19 +37,13 @@
                 @T(KoreCmsLocalizableStrings.Pages.PageTypes.Title)
             </a>
         </div>
-        <div id="toolbar" data-bind="visible: showToolbar">
+        <div data-bind="visible: showToolbar" style="display:none">
             <div class="btn-group pull-right">
                 <a onclick="viewModel.delete()" class="btn btn-danger btn-lg" title="@T(KoreWebLocalizableStrings.General.Delete).Text">
                     <i class="kore-icon kore-icon-trash"></i>
                 </a>
-                <a data-bind="attr: { href: '/admin/pages/' + id() + '/history' }" class="btn btn-warning btn-lg" title="@T(KoreCmsLocalizableStrings.Pages.History).Text">
+                <a data-bind="click: showPageVersions" class="btn btn-warning btn-lg" title="@T(KoreCmsLocalizableStrings.Pages.Versions).Text">
                     <i class="kore-icon kore-icon-history"></i>
-                </a>
-                <a data-bind="click: translate" class="btn btn-primary btn-lg" title="@T(KoreCmsLocalizableStrings.Pages.Translations).Text">
-                    <i class="kore-icon kore-icon-globe"></i>
-                </a>
-                <a data-bind="click: preview" class="btn btn-success btn-lg" title="@T(KoreWebLocalizableStrings.General.Preview).Text">
-                    <i class="kore-icon kore-icon-preview"></i>
                 </a>
                 <a data-bind="attr: { href: '/admin/contentBlocks/' + id() }" class="btn btn-info btn-lg" title="@T(KoreCmsLocalizableStrings.ContentBlocks.Title).Text">
                     <i class="kore-icon kore-icon-content-blocks"></i>
@@ -63,6 +51,14 @@
                 <a data-bind="click: toggleEnabled" class="btn btn-default btn-lg" title="@T(KoreWebLocalizableStrings.General.Toggle).Text">
                     <i class="kore-icon kore-icon-toggle-on"></i>
                 </a>
+                <a data-bind="click: preview" class="btn btn-success btn-lg" title="@T(KoreWebLocalizableStrings.General.Preview).Text">
+                    <i class="kore-icon kore-icon-preview"></i>
+                </a>
+            </div>
+        </div>
+        <div data-bind="visible: pageVersion.showToolbar" style="display:none">
+            <div class="btn-group pull-right">
+                
             </div>
         </div>
     </div>
@@ -97,7 +93,7 @@
                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
                         {
-                            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+                            using (var header = panel.BeginHeader(T(KoreCmsLocalizableStrings.Pages.Page))) { }
                             using (var body = panel.BeginBody())
                             {
                                 <form id="form-section-form" role="form">
@@ -116,19 +112,13 @@
                                         </div>
                                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                             <div class="form-group">
-                                                @Html.Label("Name", T(KoreCmsLocalizableStrings.Pages.PageModel.Name), new { @class = "control-label" })
+                                                @Html.Label("Title", T(KoreCmsLocalizableStrings.Pages.PageModel.Title), new { @class = "control-label" })
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
                                                         <i class="kore-icon kore-icon-file"></i>
                                                     </span>
-                                                    @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
+                                                    @Html.TextBox("Title", null, new { @class = "form-control", data_bind = "value: title" })
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                            <div class="form-group">
-                                                @Html.Label("Slug", T(KoreCmsLocalizableStrings.Pages.PageModel.Slug), new { @class = "control-label" })
-                                                @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: slug" })
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -163,49 +153,129 @@
                                             </div>
                                         </div>
                                     </fieldset>
+                                </form>
+                                <form id="form-section-version-form" data-bind="visible: isEditMode">
+                                    <fieldset>
+                                        <legend>@T(KoreWebLocalizableStrings.General.Details)</legend>
+
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="form-group">
+                                                @Html.Label("Version_Title", T(KoreCmsLocalizableStrings.Pages.PageModel.Title), new { @class = "control-label" })
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="kore-icon kore-icon-file"></i>
+                                                    </span>
+                                                    @Html.TextBox("Version_Title", null, new { @class = "form-control", data_bind = "value: pageVersion.title" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="form-group">
+                                                @Html.Label("Version_Slug", T(KoreCmsLocalizableStrings.Pages.PageModel.Slug), new { @class = "control-label" })
+                                                @Html.TextBox("Version_Slug", null, new { @class = "form-control", data_bind = "value: pageVersion.slug" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        @Html.CheckBox("Version_IsDraft", new { data_bind = "checked: pageVersion.isDraft" }) @T(KoreCmsLocalizableStrings.Pages.PageModel.IsDraft)
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
 
                                     <fieldset id="fields-definition"></fieldset>
-
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <div class="form-group pull-right">
-                                            <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                                            <button type="button" class="btn btn-primary" data-bind="click: save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
-                                        </div>
-                                    </div>
                                 </form>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group pull-right">
+                                        <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                        <button type="button" class="btn btn-primary" data-bind="click: save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                                    </div>
+                                </div>
                             }
                         }
                     </article>
+
                 </div>
 
-                <div id="culture-selector-section" class="row" style="display:none">
-                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <div id="version-grid-section" class="row" style="display:none">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <a data-bind="click: pageVersion.goBack" class="btn btn-default">
+                            <i class="kore-icon kore-icon-arrow-left"></i>
+                            @T(KoreWebLocalizableStrings.General.Back)
+                        </a>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <br />
+
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
                         @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
                         {
-                            using (var header = panel.BeginHeader(T(KoreCmsLocalizableStrings.Localization.Translate))) { }
+                            using (var header = panel.BeginHeader(T(KoreCmsLocalizableStrings.Pages.PageHistory))) { }
                             using (var body = panel.BeginBody())
                             {
-                                <form id="culture-selector-form" role="form">
-                                    @Html.Hidden("CultureSelector_PageId")
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <div class="form-group">
-                                            @Html.Label("CultureSelector_CultureCode", T(KoreCmsLocalizableStrings.Pages.TranslatePageModel.Culture), new { @class = "control-label" })
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="kore-icon kore-icon-globe"></i>
-                                                </span>
-                                                @Html.Kore().LanguagesDropDownList("CultureSelector_CultureCode", null, new { @class = "form-control" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <div class="form-group pull-right">
-                                            <button type="button" class="btn btn-default" data-bind="click: cultureSelector_onCancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                                            <button type="button" class="btn btn-primary" data-bind="click: cultureSelector_onSelected">@T(KoreWebLocalizableStrings.General.OK)</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                <div id="PageVersionGrid"></div>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div id="version-details-section" class="row" style="display:none">
+                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-default" data-bind="click: pageVersion.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                            <button type="button" class="btn btn-warning" data-bind="click: pageVersion.restore">@T(KoreCmsLocalizableStrings.Pages.RestoreVersion)</button>
+                        </div>
+                        <div class="clearfix"></div>
+                        <br />
+                        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+                        {
+                            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+                            using (var body = panel.BeginBody())
+                            {
+                                <table class="table table-bordered table-striped table-condensed">
+                                    <tbody>
+                                        @*<tr>
+                                            <th>Page Type</th>
+                                            <td><span data-bind="html: pageTypeId"></span></td>
+                                        </tr>*@
+                                        <tr>
+                                            <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.Title)</th>
+                                            <td><span data-bind="html: pageVersion.title"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.Slug)</th>
+                                            <td><span data-bind="html: pageVersion.slug"></span></td>
+                                        </tr>
+                                        @*<tr>
+                                            <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.DateCreated)</th>
+                                            <td><span data-bind="html: dateCreatedUtc"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.DateModified)</th>
+                                            <td><span data-bind="html: dateModifiedUtc"></span></td>
+                                        </tr>*@
+                                        <tr>
+                                            <th>@T(KoreCmsLocalizableStrings.Pages.PageModel.CultureCode)</th>
+                                            <td><span data-bind="html: pageVersion.cultureCode"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            }
+                        }
+                        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+                        {
+                            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Preview))) { }
+                            using (var body = panel.BeginBody())
+                            {
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe id="page-preview" class="embed-responsive-item"></iframe>
+                                </div>
                             }
                         }
                     </article>
@@ -277,6 +347,7 @@
 
 @section scripts {
     <script type="text/javascript">
+        var currentCulture = '@WorkContext.CurrentCultureCode';
         var gridPageSize = @SiteSettings.DefaultGridPageSize;
         var translations = {
             CircularRelationshipError: '@T(KoreCmsLocalizableStrings.Messages.CircularRelationshipError).Text',
@@ -302,11 +373,15 @@
             Columns: {
                 PageType: {
                     Name: '@T(KoreCmsLocalizableStrings.Pages.PageTypeModel.Name).Text',
+                },
+                PageVersion: {
+                    Title: '@T(KoreCmsLocalizableStrings.Pages.PageModel.Title).Text',
+                    DateModifiedUtc: '@T(KoreCmsLocalizableStrings.Pages.PageModel.DateModified).Text',
                 }
             }
         }
     </script>
     <script id="treeview-template" type="text/kendo-ui-template">
-        <a href="javascript:void(0)" onclick="viewModel.edit('#=item.Id#')">#= item.Name #</a>
+        <a href="javascript:void(0)" onclick="viewModel.edit('#=item.Id#')">#= item.Title #</a>
     </script>
 }

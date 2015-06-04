@@ -10,12 +10,15 @@ namespace Kore.Web.ContentManagement.Routing
     {
         public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
         {
-            var pageService = EngineContext.Current.Resolve<IPageService>();
+            var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
+            var pageVersionService = EngineContext.Current.Resolve<IPageVersionService>();
 
             if (values[parameterName] != null)
             {
                 var permalink = values[parameterName].ToString();
-                return pageService.Repository.Table.Any(x => x.Slug == permalink);
+
+                return pageVersionService.Repository.Table.Any(x => x.Slug == permalink);
+                //return pageService.Repository.Table.Any(x => x.Slug == permalink);
             }
             return false;
         }

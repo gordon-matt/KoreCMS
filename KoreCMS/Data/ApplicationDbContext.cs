@@ -34,8 +34,8 @@ namespace KoreCMS.Data
 
         static ApplicationDbContext()
         {
-            //Database.SetInitializer<ApplicationDbContext>(new CreateDatabaseIfNotExists<ApplicationDbContext>());
-            Database.SetInitializer<ApplicationDbContext>(null);
+            Database.SetInitializer<ApplicationDbContext>(new CreateDatabaseIfNotExists<ApplicationDbContext>());
+            //Database.SetInitializer<ApplicationDbContext>(null);
         }
 
         public ApplicationDbContext()
@@ -63,8 +63,6 @@ namespace KoreCMS.Data
 
         public DbSet<ContentBlock> ContentBlocks { get; set; }
 
-        public DbSet<HistoricPage> HistoricPages { get; set; }
-
         public DbSet<LogEntry> Log { get; set; }
 
         public DbSet<Image> Images { get; set; }
@@ -78,6 +76,8 @@ namespace KoreCMS.Data
         public DbSet<MessageTemplate> MessageTemplates { get; set; }
 
         public DbSet<Page> Pages { get; set; }
+
+        public DbSet<PageVersion> PageVersions { get; set; }
 
         public DbSet<QueuedEmail> QueuedEmails { get; set; }
 

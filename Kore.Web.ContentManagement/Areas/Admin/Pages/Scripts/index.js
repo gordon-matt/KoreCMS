@@ -128,52 +128,140 @@ var PageTypeVM = function () {
     });
 };
 
+var PageVersionVM = function () {
+    var self = this;
+
+    self.id = ko.observable(emptyGuid);
+    self.pageId = ko.observable(emptyGuid);
+    self.cultureCode = ko.observable(currentCulture);
+    self.status = ko.observable(0);
+    self.title = ko.observable(null);
+    self.slug = ko.observable(null);
+    self.fields = ko.observable(null);
+
+    self.isDraft = ko.observable(true);
+
+    self.pageModelStub = null;
+
+    self.view = function (id) {
+        $.ajax({
+            url: "/odata/kore/cms/PageVersionApi(guid'" + id + "')",
+            type: "GET",
+            dataType: "json",
+            async: false
+        })
+        .done(function (json) {
+            self.id(json.Id);
+            self.pageId(json.PageId);
+            self.cultureCode(json.CultureCode);
+            self.status(json.Status);
+            self.title(json.Title);
+            self.slug(json.Slug);
+            self.fields(json.Fields);
+
+            $.get("/admin/pages/preview/" + id, function (data) {
+                $("#page-preview").contents().find('html').html(data);
+            });
+
+            switchSection($("#version-details-section"));
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            $.notify(translations.GetRecordError, "error");
+            console.log(textStatus + ': ' + errorThrown);
+        });
+    };
+
+    self.restore = function () {
+        if (confirm(translations.PageHistoryRestoreConfirm)) {
+            $.ajax({
+                url: "/odata/kore/cms/PageVersionApi(guid'" + self.id() + "')/RestoreVersion",
+                type: "POST"
+            })
+            .done(function (json) {
+                $('#PageVersionGrid').data('kendoGrid').dataSource.read();
+                $('#PageVersionGrid').data('kendoGrid').refresh();
+                switchSection($("#version-grid-section"));
+                $.notify(translations.PageHistoryRestoreSuccess, "success");
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(translations.PageHistoryRestoreError, "error");
+                console.log(textStatus + ': ' + errorThrown);
+            });
+        };
+    };
+
+    self.cancel = function () {
+        $('#page-preview').contents().find('html').html('');
+        switchSection($("#version-grid-section"));
+    };
+
+    self.goBack = function () {
+        switchSection($("#form-section"));
+        viewModel.showToolbar(true);
+    };
+
+    self.refresh = function () {
+        $('#PageVersionGrid').data('kendoGrid').dataSource.read();
+        $('#PageVersionGrid').data('kendoGrid').refresh();
+        switchSection($("#version-grid-section"));
+    };
+};
+
 var ViewModel = function () {
     var self = this;
-    
+
     self.id = ko.observable(emptyGuid);
     self.parentId = ko.observable(null);
     self.pageTypeId = ko.observable(emptyGuid);
-    self.name = ko.observable(null);
-    self.slug = ko.observable(null);
-    self.fields = ko.observable(null);
+    self.title = ko.observable(null);
     self.isEnabled = ko.observable(false);
     self.order = ko.observable(0);
     self.showOnMenus = ko.observable(true);
-    self.cultureCode = ko.observable(null);
-    self.refId = ko.observable(null);
-    self.showToolbar = ko.observable(false);
-    self.accessRestrictions = null;
 
+    self.accessRestrictions = null;
     self.roles = ko.observableArray([]);
+    self.showToolbar = ko.observable(false);
+    self.isEditMode = ko.observable(false);
 
     self.pageType = new PageTypeVM();
-
-    self.pageModelStub = null;
+    self.pageVersion = new PageVersionVM();
 
     self.create = function () {
         self.id(emptyGuid);
         self.parentId(null);
         self.pageTypeId(emptyGuid);
-        self.name(null);
-        self.slug(null);
-        self.fields(null);
+        self.title(null);
         self.isEnabled(false);
         self.order(0);
         self.showOnMenus(true);
         self.accessRestrictions = null;
-        self.cultureCode('');
-        self.refId(null);
 
         self.roles([]);
 
+        self.setupVersionCreateSection();
+
         self.showToolbar(false);
+        self.isEditMode(false);
+
+        self.validator.resetForm();
+        switchSection($("#form-section"));
+        $("#form-section-legend").html(translations.Create);
+    };
+
+    self.setupVersionCreateSection = function () {
+        self.pageVersion.id(emptyGuid);
+        self.pageVersion.pageId(emptyGuid);
+        self.pageVersion.cultureCode(currentCulture);
+        self.pageVersion.status(0);
+        self.pageVersion.title(null);
+        self.pageVersion.slug(null);
+        self.pageVersion.fields(null);
 
         // Clean up from previously injected html/scripts
-        if (self.pageModelStub != null && typeof self.pageModelStub.cleanUp === 'function') {
-            self.pageModelStub.cleanUp();
+        if (self.pageVersion.pageModelStub != null && typeof self.pageVersion.pageModelStub.cleanUp === 'function') {
+            self.pageVersion.pageModelStub.cleanUp();
         }
-        self.pageModelStub = null;
+        self.pageVersion.pageModelStub = null;
 
         // Remove Old Scripts
         var oldScripts = $('script[data-fields-script="true"]');
@@ -188,9 +276,7 @@ var ViewModel = function () {
         ko.cleanNode(elementToBind);
         $("#fields-definition").html("");
 
-        self.validator.resetForm();
-        switchSection($("#form-section"));
-        $("#form-section-legend").html(translations.Create);
+        self.versionValidator.resetForm();
     };
 
     self.edit = function (id) {
@@ -204,15 +290,11 @@ var ViewModel = function () {
             self.id(json.Id);
             self.parentId(json.ParentId);
             self.pageTypeId(json.PageTypeId);
-            self.name(json.Name);
-            self.slug(json.Slug);
-            self.fields(json.Fields);
+            self.title(json.Title);
             self.isEnabled(json.IsEnabled);
             self.order(json.Order);
             self.showOnMenus(json.ShowOnMenus);
             self.accessRestrictions = ko.mapping.fromJSON(json.AccessRestrictions);
-            self.cultureCode(json.CultureCode);
-            self.refId(json.RefId);
 
             if (self.accessRestrictions.Roles != null) {
                 var split = self.accessRestrictions.Roles().split(',');
@@ -222,72 +304,111 @@ var ViewModel = function () {
                 self.roles([]);
             }
 
-            self.showToolbar(true);
-
-            self.validator.resetForm();
-            switchSection($("#form-section"));
-            $("#form-section-legend").html(translations.Edit);
-
             $.ajax({
-                url: "/admin/pages/get-editor-ui/" + self.id(),
-                type: "GET",
+                url: "/odata/kore/cms/PageVersionApi/GetCurrentVersion",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    pageId: self.id(),
+                    cultureCode: currentCulture
+                }),
                 dataType: "json",
                 async: false
             })
             .done(function (json) {
-                // Clean up from previously injected html/scripts
-                if (self.pageModelStub != null && typeof self.pageModelStub.cleanUp === 'function') {
-                    self.pageModelStub.cleanUp();
-                }
-                self.pageModelStub = null;
-
-                // Remove Old Scripts
-                var oldScripts = $('script[data-fields-script="true"]');
-
-                if (oldScripts.length > 0) {
-                    $.each(oldScripts, function () {
-                        $(this).remove();
-                    });
-                }
-
-                var elementToBind = $("#fields-definition")[0];
-                ko.cleanNode(elementToBind);
-
-                var result = $(json.Content);
-
-                // Add new HTML
-                var content = $(result.filter('#fields-content')[0]);
-                var details = $('<div>').append(content.clone()).html();
-                $("#fields-definition").html(details);
-
-                // Add new Scripts
-                var scripts = result.filter('script');
-
-                $.each(scripts, function () {
-                    var script = $(this);
-                    script.attr("data-fields-script", "true");//for some reason, .data("fields-script", "true") doesn't work here
-                    script.appendTo('body');
-                });
-
-                // Update Bindings
-                // Ensure the function exists before calling it...
-                if (typeof pageModel != null) {
-                    self.pageModelStub = pageModel;
-                    if (typeof self.pageModelStub.updateModel === 'function') {
-                        self.pageModelStub.updateModel();
-                    }
-                    ko.applyBindings(viewModel, elementToBind);
-                }
+                self.setupVersionEditSection(json);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
+
+            self.showToolbar(true);
+            self.isEditMode(true);
+
+            self.validator.resetForm();
+            switchSection($("#form-section"));
+            $("#form-section-legend").html(translations.Edit);
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
             $.notify(translations.GetRecordError, "error");
             console.log(textStatus + ': ' + errorThrown);
         });
+    };
+
+    self.setupVersionEditSection = function (json) {
+        self.pageVersion.id(json.Id);
+        self.pageVersion.pageId(json.PageId);
+        self.pageVersion.cultureCode(json.CultureCode);
+        self.pageVersion.status(json.Status);
+        self.pageVersion.title(json.Title);
+        self.pageVersion.slug(json.Slug);
+        self.pageVersion.fields(json.Fields);
+
+        if (json.Status == 'Draft') {
+            self.pageVersion.isDraft(true);
+        }
+        else {
+            self.pageVersion.isDraft(false);
+        }
+
+        $.ajax({
+            url: "/admin/pages/get-editor-ui/" + self.pageVersion.id(),
+            type: "GET",
+            dataType: "json",
+            async: false
+        })
+        .done(function (json) {
+            // Clean up from previously injected html/scripts
+            if (self.pageVersion.pageModelStub != null && typeof self.pageVersion.pageModelStub.cleanUp === 'function') {
+                self.pageVersion.pageModelStub.cleanUp();
+            }
+            self.pageVersion.pageModelStub = null;
+
+            // Remove Old Scripts
+            var oldScripts = $('script[data-fields-script="true"]');
+
+            if (oldScripts.length > 0) {
+                $.each(oldScripts, function () {
+                    $(this).remove();
+                });
+            }
+
+            var elementToBind = $("#fields-definition")[0];
+            ko.cleanNode(elementToBind);
+
+            var result = $(json.Content);
+
+            // Add new HTML
+            var content = $(result.filter('#fields-content')[0]);
+            var details = $('<div>').append(content.clone()).html();
+            $("#fields-definition").html(details);
+
+            // Add new Scripts
+            var scripts = result.filter('script');
+
+            $.each(scripts, function () {
+                var script = $(this);
+                script.attr("data-fields-script", "true");//for some reason, .data("fields-script", "true") doesn't work here
+                script.appendTo('body');
+            });
+
+            // Update Bindings
+            // Ensure the function exists before calling it...
+            if (typeof pageModel != null) {
+                self.pageVersion.pageModelStub = pageModel;
+                if (typeof self.pageVersion.pageModelStub.updateModel === 'function') {
+                    self.pageVersion.pageModelStub.updateModel();
+                }
+                ko.applyBindings(viewModel, elementToBind);
+            }
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            $.notify(translations.GetRecordError, "error");
+            console.log(textStatus + ': ' + errorThrown);
+        });
+
+        self.versionValidator.resetForm();
     };
 
     self.delete = function () {
@@ -309,40 +430,29 @@ var ViewModel = function () {
     };
 
     self.save = function () {
+        var isNew = (self.id() == emptyGuid);
 
         if (!$("#form-section-form").valid()) {
             return false;
         }
 
-        // ensure the function exists before calling it...
-        if (self.pageModelStub != null && typeof self.pageModelStub.onBeforeSave === 'function') {
-            self.pageModelStub.onBeforeSave();
-        }
-
-        var cultureCode = self.cultureCode();
-        if (cultureCode == '') {
-            cultureCode = null;
+        if (!isNew) {
+            if (!$("#form-section-version-form").valid()) {
+                return false;
+            }
         }
 
         var record = {
             Id: self.id(),
             ParentId: self.parentId(),
             PageTypeId: self.pageTypeId(),
-            Name: self.name(),
-            Slug: self.slug(),
-            Fields: self.fields(),
+            Title: self.title(),
             IsEnabled: self.isEnabled(),
             Order: self.order(),
-            ShowOnMenus: self.showOnMenus(),
-            AccessRestrictions: JSON.stringify({
-                Roles: self.roles().join()
-            }),
-            CultureCode: cultureCode,
-            RefId: self.refId()
+            ShowOnMenus: self.showOnMenus()
         };
 
-        if (self.id() == emptyGuid) {
-            // INSERT
+        if (isNew) {
             $.ajax({
                 url: "/odata/kore/cms/PageApi",
                 type: "POST",
@@ -352,7 +462,6 @@ var ViewModel = function () {
                 async: false
             })
             .done(function (json) {
-                self.refresh();
                 $.notify(translations.InsertRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -361,7 +470,6 @@ var ViewModel = function () {
             });
         }
         else {
-            // UPDATE
             $.ajax({
                 url: "/odata/kore/cms/PageApi(guid'" + self.id() + "')",
                 type: "PUT",
@@ -371,22 +479,80 @@ var ViewModel = function () {
                 async: false
             })
             .done(function (json) {
-                self.refresh();
                 $.notify(translations.UpdateRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(translations.UpdateRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
+
+            self.saveVersion();
+            self.refresh();
         }
     };
 
-    self.cancel = function () {
-        // Clean up from previously injected html/scripts
-        if (self.pageModelStub != null && typeof self.pageModelStub.cleanUp === 'function') {
-            self.pageModelStub.cleanUp();
+    self.saveVersion = function () {
+
+        // ensure the function exists before calling it...
+        if (self.pageVersion.pageModelStub != null && typeof self.pageVersion.pageModelStub.onBeforeSave === 'function') {
+            self.pageVersion.pageModelStub.onBeforeSave();
         }
-        self.pageModelStub = null;
+
+        var cultureCode = self.pageVersion.cultureCode();
+        if (cultureCode == '') {
+            cultureCode = null;
+        }
+
+        var status = 'Draft';
+
+        // if not preset to 'Archived' status...
+        if (self.pageVersion.status() != 'Archived') {
+            // and checkbox for Draft has been set,
+            if (self.pageVersion.isDraft()) {
+                // then change status to 'Draft'
+                status = 'Draft';
+            }
+            else {
+                // else change status to 'Published'
+                status = 'Published';
+            }
+        }
+
+        var record = {
+            Id: self.pageVersion.id(),
+            PageId: self.pageVersion.pageId(),
+            CultureCode: cultureCode,
+            Status: status,
+            Title: self.pageVersion.title(),
+            Slug: self.pageVersion.slug(),
+            Fields: self.pageVersion.fields(),
+        };
+
+        // UPDATE only (no option for insert here)
+        $.ajax({
+            url: "/odata/kore/cms/PageVersionApi(guid'" + self.pageVersion.id() + "')",
+            type: "PUT",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(record),
+            dataType: "json",
+            async: false
+        })
+        .done(function (json) {
+            $.notify(translations.UpdateRecordSuccess, "success");
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            $.notify(translations.UpdateRecordError, "error");
+            console.log(textStatus + ': ' + errorThrown);
+        });
+    };
+
+    self.cancel = function () {
+
+        // Clean up from previously injected html/scripts
+        if (self.pageVersion.pageModelStub != null && typeof self.pageVersion.pageModelStub.cleanUp === 'function') {
+            self.pageVersion.pageModelStub.cleanUp();
+        }
+        self.pageVersion.pageModelStub = null;
 
         // Remove Old Scripts
         var oldScripts = $('script[data-fields-script="true"]');
@@ -401,8 +567,12 @@ var ViewModel = function () {
         ko.cleanNode(elementToBind);
         $("#fields-definition").html("");
 
-        switchSection($("#blank-section"));
+        switchSection($("#version-grid-section"));
+
         self.showToolbar(false);
+        self.isEditMode(false);
+
+        switchSection($("#blank-section"));
     };
 
     self.toggleEnabled = function () {
@@ -428,157 +598,37 @@ var ViewModel = function () {
         });
     };
 
-    self.translate = function () {
-        $("#CultureSelector_PageId").val(self.id());
+    self.showPageVersions = function () {
         self.showToolbar(false);
-        switchSection($("#culture-selector-section"));
-    };
+        self.isEditMode(false);
 
-    self.cultureSelector_onCancel = function () {
-        // Clean up from previously injected html/scripts
-        if (self.pageModelStub != null && typeof self.pageModelStub.cleanUp === 'function') {
-            self.pageModelStub.cleanUp();
+        var grid = $('#PageVersionGrid').data('kendoGrid');
+        if (currentCulture == null || currentCulture == "") {
+            grid.dataSource.transport.options.read.url = "/odata/kore/cms/PageVersionApi?$filter=CultureCode eq null and PageId eq guid'" + self.id() + "'";
         }
-        self.pageModelStub = null;
-
-        // Remove Old Scripts
-        var oldScripts = $('script[data-fields-script="true"]');
-
-        if (oldScripts.length > 0) {
-            $.each(oldScripts, function () {
-                $(this).remove();
-            });
+        else {
+            grid.dataSource.transport.options.read.url = "/odata/kore/cms/PageVersionApi?$filter=CultureCode eq '" + currentCulture + "' and PageId eq guid'" + self.id() + "'";
         }
+        grid.dataSource.page(1);
 
-        var elementToBind = $("#fields-definition")[0];
-        ko.cleanNode(elementToBind);
-        $("#fields-definition").html("");
-
-        switchSection($("#blank-section"));
-        self.showToolbar(false);
-    };
-
-    self.cultureSelector_onSelected = function () {
-        var pageId = $("#CultureSelector_PageId").val();
-        var cultureName = $("#CultureSelector_CultureCode option:selected").text();
-
-        var data = {
-            pageId: pageId,
-            cultureCode: $("#CultureSelector_CultureCode").val()
-        };
-
-        $.ajax({
-            url: "/odata/kore/cms/PageApi/Translate",
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(data),
-            dataType: "json",
-            async: false
-        })
-        .done(function (json) {
-            self.id(json.Id);
-            self.parentId(json.ParentId);
-            self.pageTypeId(json.PageTypeId);
-            self.name(json.Name);
-            self.slug(json.Slug);
-            self.fields(json.Fields);
-            self.isEnabled(json.IsEnabled);
-            self.order(json.Order);
-            self.showOnMenus(json.ShowOnMenus);
-            self.accessRestrictions = ko.mapping.fromJSON(json.AccessRestrictions);
-            self.cultureCode(json.CultureCode);
-            self.refId(json.RefId);
-
-            if (self.accessRestrictions.Roles === "function") {
-                self.roles(self.accessRestrictions.Roles().split(','));
-            }
-            else {
-                self.roles([]);
-            }
-
-            self.showToolbar(false);
-            
-            self.validator.resetForm();
-            switchSection($("#form-section"));
-            $("#form-section-legend").html(translations.Edit + ': ' + cultureName);
-
-            if (self.id() != emptyGuid) {
-                $.ajax({
-                    url: "/admin/pages/get-editor-ui/" + self.id(),
-                    type: "GET",
-                    dataType: "json",
-                    async: false
-                })
-                .done(function (json) {
-                    // Clean up from previously injected html/scripts
-                    if (self.pageModelStub != null && typeof self.pageModelStub.cleanUp === 'function') {
-                        self.pageModelStub.cleanUp();
-                    }
-                    self.pageModelStub = null;
-
-                    // Remove Old Scripts
-                    var oldScripts = $('script[data-fields-script="true"]');
-
-                    if (oldScripts.length > 0) {
-                        $.each(oldScripts, function () {
-                            $(this).remove();
-                        });
-                    }
-
-                    var elementToBind = $("#fields-definition")[0];
-                    ko.cleanNode(elementToBind);
-
-                    var result = $(json.Content);
-
-                    // Add new HTML
-                    var content = $(result.filter('#fields-content')[0]);
-                    var details = $('<div>').append(content.clone()).html();
-                    $("#fields-definition").html(details);
-
-                    // Add new Scripts
-                    var scripts = result.filter('script');
-
-                    $.each(scripts, function () {
-                        var script = $(this);
-                        script.attr("data-fields-script", "true");//for some reason, .data("fields-script", "true") doesn't work here
-                        script.appendTo('body');
-                    });
-
-                    // Update Bindings
-                    // Ensure the function exists before calling it...
-                    if (typeof pageModel != null) {
-                        self.pageModelStub = pageModel;
-                        if (typeof self.pageModelStub.updateModel === 'function') {
-                            self.pageModelStub.updateModel();
-                        }
-                        ko.applyBindings(viewModel, elementToBind);
-                    }
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(translations.GetRecordError, "error");
-                    console.log(textStatus + ': ' + errorThrown);
-                });
-            }
-        })
-        .fail(function (jqXHR, textStatus, errorThrown) {
-            $.notify(translations.GetTranslationError, "error");
-            console.log(textStatus + ': ' + errorThrown);
-        });
+        switchSection($("#version-grid-section"));
     };
 
     self.showPageTypes = function () {
         self.showToolbar(false);
+        self.isEditMode(false);
         switchSection($("#page-type-grid-section"));
     };
 
     self.refresh = function () {
         switchSection($("#blank-section"));
         self.showToolbar(false);
+        self.isEditMode(false);
         $("#treeview").data("kendoTreeView").dataSource.read();
     };
 
     self.preview = function () {
-        var win = window.open('/admin/pages/preview/' + self.id() + '/false', '_blank');
+        var win = window.open('/admin/pages/preview/' + self.pageVersion.id(), '_blank');
         if (win) {
             win.focus();
         } else {
@@ -589,9 +639,15 @@ var ViewModel = function () {
 
     self.validator = $("#form-section-form").validate({
         rules: {
-            Name: { required: true, maxlength: 255 },
-            Slug: { required: true, maxlength: 255 },
+            Title: { required: true, maxlength: 255 },
             Order: { required: true, digits: true }
+        }
+    });
+
+    self.versionValidator = $("#form-section-version-form").validate({
+        rules: {
+            Version_Title: { required: true, maxlength: 255 },
+            Version_Slug: { required: true, maxlength: 255 }
         }
     });
 };
@@ -655,6 +711,67 @@ $(document).ready(function () {
         }]
     });
 
+    $("#PageVersionGrid").kendoGrid({
+        data: null,
+        dataSource: {
+            type: "odata",
+            transport: {
+                read: {
+                    url: "/odata/kore/cms/PageVersionApi?$filter=CultureCode eq null",
+                    dataType: "json"
+                }
+            },
+            schema: {
+                data: function (data) {
+                    return data.value;
+                },
+                total: function (data) {
+                    return data["odata.count"];
+                },
+                model: {
+                    fields: {
+                        Title: { type: "string" },
+                        DateModifiedUtc: { type: "date" },
+                        IsEnabled: { type: "boolean" }
+                    }
+                }
+            },
+            pageSize: gridPageSize,
+            serverPaging: true,
+            serverFiltering: true,
+            serverSorting: true,
+            sort: { field: "DateModifiedUtc", dir: "desc" }
+        },
+        filterable: true,
+        sortable: {
+            allowUnsort: false
+        },
+        pageable: {
+            refresh: true
+        },
+        scrollable: false,
+        columns: [{
+            field: "Title",
+            title: translations.Columns.PageVersion.Title,
+            filterable: true
+        }, {
+            field: "DateModifiedUtc",
+            title: translations.Columns.PageVersion.DateModifiedUtc,
+            filterable: true,
+            width: 200,
+            type: "date",
+            format: "{0:G}"
+        }, {
+            field: "Id",
+            title: " ",
+            template:
+                '<a onclick="viewModel.pageVersion.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>',
+            attributes: { "class": "text-center" },
+            filterable: false,
+            width: 130
+        }]
+    });
+
     var treeviewDS = new kendo.data.HierarchicalDataSource({
         type: "odata",
         transport: {
@@ -681,7 +798,7 @@ $(document).ready(function () {
         template: kendo.template($("#treeview-template").html()),
         dragAndDrop: true,
         dataSource: treeviewDS,
-        dataTextField: ["Name"],
+        dataTextField: ["Title"],
         loadOnDemand: false,
         dataBound: function (e) {
             setTimeout(function () {

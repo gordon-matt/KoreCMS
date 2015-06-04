@@ -1,6 +1,7 @@
 ﻿@using Kore.Infrastructure
-@using Kore.Web.ContentManagement.Areas.Admin.Localization
+@using Kore.Localization.Domain
 @using Kore.Localization.Services
+@using Kore.Web.ContentManagement.Areas.Admin.Localization
 @model LanguageSwitchBlock
 
 @if (Model.Style == LanguageSwitchBlock.LanguageSwitchStyle.Custom)
@@ -10,7 +11,19 @@
 }
 
 @{
-    var languages = EngineContext.Current.Resolve<ILanguageService>().GetActiveLanguages();
+    var languages = EngineContext.Current.Resolve<ILanguageService>().GetActiveLanguages().ToList();
+
+    if (Model.IncludeInvariant)
+    {
+        if (string.IsNullOrEmpty(Model.InvariantText))
+        {
+            languages.Insert(0, new Language { CultureCode = null, Name = "[ Invariant ]" });
+        }
+        else
+        {
+            languages.Insert(0, new Language { CultureCode = null, Name = Model.InvariantText });
+        }
+    }
 }
 
 @switch (Model.Style)
@@ -31,7 +44,7 @@
                                 <a href="/@language.CultureCode">
                                     @if (language.CultureCode == WorkContext.CurrentCultureCode)
                                     {
-                                        <span class="kore-icon kore-icon-ok"></span>
+                                        <span class="kore-icon kore-icon-fw kore-icon-ok"></span>
                                     }
                                     @language.Name
                                 </a>
@@ -46,7 +59,7 @@
                                 <a href="#" onclick="changeLanguage('@language.CultureCode');">
                                     @if (language.CultureCode == WorkContext.CurrentCultureCode)
                                     {
-                                        <span class="kore-icon kore-icon-ok"></span>
+                                        <span class="kore-icon kore-icon-fw kore-icon-ok"></span>
                                     }
                                     @language.Name
                                 </a>
@@ -91,7 +104,7 @@
                 </li>
             }
         </ul>
-        break;
+            break;
 }
 
 <script type="text/javascript">

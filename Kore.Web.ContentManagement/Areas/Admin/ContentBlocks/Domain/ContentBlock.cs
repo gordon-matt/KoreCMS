@@ -6,7 +6,7 @@ using Kore.Localization;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
 {
-    public class ContentBlock : ILocalizableEntity<Guid>, IEntity
+    public class ContentBlock : IEntity
     {
         public Guid Id { get; set; }
 

@@ -134,7 +134,7 @@ namespace Kore
 
         public static string GetDisplayName<T>(T value, out int order)
         {
-            order = -1;
+            order = 0;
             if (!(value is Enum))
             {
                 return value.ToString();

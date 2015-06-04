@@ -27,7 +27,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 
         #endregion Instance Properties
 
-        public abstract void InitializeInstance(Page page);
+        public abstract void InitializeInstance(PageVersion pageVersion);
 
         public abstract void PopulateDocumentIndex(IDocumentIndex document, out string description);
 

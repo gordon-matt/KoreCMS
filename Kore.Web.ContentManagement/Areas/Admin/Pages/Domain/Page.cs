@@ -1,24 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
-using Kore.Localization;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
 {
-    public class Page : ILocalizableEntity<Guid>, IEntity
+    public class Page : IEntity
     {
+        private ICollection<PageVersion> versions;
+
         public Guid Id { get; set; }
 
         public Guid? ParentId { get; set; }
 
         public Guid PageTypeId { get; set; }
 
-        public string Name { get; set; }
-
-        public string Slug { get; set; }
-
-        public string Fields { get; set; }
+        public string Title { get; set; }
 
         public bool IsEnabled { get; set; }
 
@@ -28,13 +26,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
 
         public string AccessRestrictions { get; set; }
 
-        public DateTime DateCreatedUtc { get; set; }
-
-        public DateTime DateModifiedUtc { get; set; }
-
-        public string CultureCode { get; set; }
-
-        public Guid? RefId { get; set; }
+        public ICollection<PageVersion> Versions
+        {
+            get { return versions ?? (versions = new HashSet<PageVersion>()); }
+            set { versions = value; }
+        }
 
         #region IEntity Members
 
@@ -53,16 +49,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
             ToTable(CmsConstants.Tables.Pages);
             HasKey(x => x.Id);
             Property(x => x.PageTypeId).IsRequired();
-            Property(x => x.Name).IsRequired().HasMaxLength(255);
-            Property(x => x.Slug).IsRequired().HasMaxLength(255);
-            Property(x => x.Fields).IsMaxLength();
+            Property(x => x.Title).IsRequired().HasMaxLength(255);
             Property(x => x.IsEnabled).IsRequired();
             Property(x => x.Order).IsRequired();
             Property(x => x.ShowOnMenus).IsRequired();
             Property(x => x.AccessRestrictions).HasColumnType("varchar").HasMaxLength(1024);
-            Property(x => x.DateCreatedUtc).IsRequired();
-            Property(x => x.DateModifiedUtc).IsRequired();
-            Property(x => x.CultureCode).HasMaxLength(10);
         }
     }
 }

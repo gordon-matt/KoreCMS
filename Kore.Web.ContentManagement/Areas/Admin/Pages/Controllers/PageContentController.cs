@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Data.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -11,6 +12,7 @@ using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 {
@@ -21,11 +23,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         private readonly IContentBlockService contentBlockService;
         private readonly Lazy<IMembershipService> membershipService;
         private readonly IPageService pageService;
+        private readonly IPageVersionService pageVersionService;
         private readonly IPageTypeService pageTypeService;
         private readonly IRepository<Zone> zoneRepository;
 
         public PageContentController(
             IPageService pageService,
+            IPageVersionService pageVersionService,
             IPageTypeService pageTypeService,
             IContentBlockService contentBlockService,
             IRepository<Zone> zoneRepository,
@@ -33,6 +37,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             : base()
         {
             this.pageService = pageService;
+            this.pageVersionService = pageVersionService;
             this.pageTypeService = pageTypeService;
             this.contentBlockService = contentBlockService;
             this.zoneRepository = zoneRepository;
@@ -55,33 +60,47 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             //  then if there's only 1, fine.. return it.. if more than one.. then add cultureCode as
             //  we currently do...
 
-            var page = pageService.GetPageBySlug(slug, currentCulture);
+            var pageVersion = pageVersionService.Repository.Table
+                .Include(x => x.Page)
+                .Where(x =>
+                    x.Status == VersionStatus.Published &&
+                    x.CultureCode == currentCulture &&
+                    x.Slug == slug)
+                .OrderByDescending(x => x.DateModifiedUtc)
+                .FirstOrDefault();
 
-            if (page == null)
+            if (pageVersion == null)
             {
-                page = pageService.GetPageBySlug(slug, null);
+                pageVersion = pageVersionService.Repository.Table
+                    .Include(x => x.Page)
+                    .Where(x =>
+                        x.Status == VersionStatus.Published &&
+                        x.CultureCode == null &&
+                        x.Slug == slug)
+                    .OrderByDescending(x => x.DateModifiedUtc)
+                    .FirstOrDefault();
             }
 
-            if (page != null && page.IsEnabled)
+            if (pageVersion != null && pageVersion.Page.IsEnabled)
             {
                 // If there are access restrictions
-                if (!PageSecurityHelper.CheckUserHasAccessToPage(page, User))
+                if (!PageSecurityHelper.CheckUserHasAccessToPage(pageVersion.Page, User))
                 {
                     return new HttpUnauthorizedResult();
                 }
 
                 // Else no restrictions (available for anyone to view)
-                WorkContext.SetState("CurrentPageId", page.Id);
-                WorkContext.Breadcrumbs.Add(page.Name);
+                WorkContext.SetState("CurrentPageId", pageVersion.PageId);
+                WorkContext.Breadcrumbs.Add(pageVersion.Title);
 
-                var pageType = pageTypeService.FindOne(page.PageTypeId);
+                var pageType = pageTypeService.FindOne(pageVersion.Page.PageTypeId);
                 var korePageType = pageTypeService.GetKorePageType(pageType.Name);
-                korePageType.InstanceName = page.Name;
-                korePageType.InstanceParentId = page.ParentId;
+                korePageType.InstanceName = pageVersion.Title;
+                korePageType.InstanceParentId = pageVersion.Page.ParentId;
                 korePageType.LayoutPath = pageType.LayoutPath;
-                korePageType.InitializeInstance(page);
+                korePageType.InitializeInstance(pageVersion);
 
-                var contentBlocks = contentBlockService.GetContentBlocks(page.Id);
+                var contentBlocks = contentBlockService.GetContentBlocks(pageVersion.PageId);
                 korePageType.ReplaceContentTokens(x => InsertContentBlocks(x, contentBlocks));
 
                 return View(pageType.DisplayTemplatePath, korePageType);

@@ -146,6 +146,8 @@
     <Compile Include="Areas\Admin\Localization\Models\LanguagePackFile.cs" />
     <Compile Include="Areas\Admin\Media\Services\IMediaService.cs" />
     <Compile Include="Areas\Admin\Messaging\Services\IQueuedEmailService.cs" />
+    <Compile Include="Areas\Admin\Pages\Controllers\Api\PageVersionApiController.cs" />
+    <Compile Include="Areas\Admin\Pages\Services\IPageVersionService.cs" />
     <Compile Include="Areas\Admin\Sitemap\Controllers\Api\XmlSitemapApiController.cs" />
     <Compile Include="Areas\Admin\Sitemap\Controllers\XmlSitemapController.cs" />
     <Compile Include="Areas\Admin\Sitemap\Domain\ChangeFrequency.cs" />
@@ -252,17 +254,14 @@
     <Compile Include="Areas\Admin\Pages\PageSecurityHelper.cs" />
     <Compile Include="Areas\Admin\Pages\PagesIndexingContentProvider.cs" />
     <Compile Include="Areas\Admin\Pages\KorePageType.cs" />
-    <Compile Include="Areas\Admin\Pages\Controllers\Api\HistoricPageApiController.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\Api\PageApiController.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\PageContentController.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\PageController.cs" />
-    <Compile Include="Areas\Admin\Pages\Domain\HistoricPage.cs" />
     <Compile Include="Areas\Admin\Pages\Domain\Page.cs" />
     <Compile Include="Areas\Admin\Pages\Domain\PageVersion.cs" />
     <Compile Include="Areas\Admin\Pages\PagesAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Pages\PageSettings.cs" />
     <Compile Include="Areas\Admin\Pages\Domain\PageType.cs" />
-    <Compile Include="Areas\Admin\Pages\Services\IHistoricPageService.cs" />
     <Compile Include="Areas\Admin\Pages\Services\IPageService.cs" />
     <Compile Include="Areas\Admin\Pages\Services\IPageTypeService.cs" />
     <Compile Include="Areas\Admin\Pages\StandardPage.cs" />
@@ -348,7 +347,6 @@
     <EmbeddedResource Include="Areas\Admin\Localization\Views\Language\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Localization\Views\LocalizableString\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Menus\Views\Menu\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Admin\Pages\Views\PageContent\PageContent.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Page\History.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Page\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\ContentBlock\Index.cshtml" />
@@ -425,7 +423,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Media\ContentBlocks\" />
-    <Folder Include="Areas\Admin\Pages\Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

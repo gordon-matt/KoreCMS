@@ -1,39 +1,64 @@
-﻿//using System;
-//using Kore.Data;
+﻿using System;
+using System.Data.Entity.ModelConfiguration;
+using Kore.Data;
+using Kore.Data.EntityFramework;
 
-//namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
-//{
-//    public class PageVersion : IEntity
-//    {
-//        public Guid Id { get; set; }
+namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
+{
+    public class PageVersion : IEntity
+    {
+        public Guid Id { get; set; }
 
-//        public Guid PageTypeId { get; set; }
+        public Guid PageId { get; set; }
 
-//        public string Data { get; set; }
+        public string CultureCode { get; set; }
 
-//        public DateTime DateCreated { get; set; }
+        public DateTime DateCreatedUtc { get; set; }
 
-//        public VersionStatus Status { get; set; }
+        public DateTime DateModifiedUtc { get; set; }
 
-//        public string CultureCode { get; set; }
+        public VersionStatus Status { get; set; }
 
-//        #region IEntity Members
+        public string Title { get; set; }
 
-//        public object[] KeyValues
-//        {
-//            get { return new object[] { Id }; }
-//        }
+        public string Slug { get; set; }
 
-//        #endregion IEntity Members
-//    }
+        public string Fields { get; set; }
 
-//    public enum VersionStatus
-//    {
-//        CheckedOut = 0,// TODO: Not used yet
-//        CheckedIn = 1,// TODO: Not used yet
-//        Published = 2,
-//        Rejected = 3,// TODO: Not used yet
-//        Replaced = 4,// TODO: Not used yet
-//        Delayed = 5 // TODO: Not used yet
-//    }
-//}
+        public virtual Page Page { get; set; }
+
+        #region IEntity Members
+
+        public object[] KeyValues
+        {
+            get { return new object[] { Id }; }
+        }
+
+        #endregion IEntity Members
+    }
+
+    public enum VersionStatus : byte
+    {
+        Draft = 0,
+        Published = 1,
+        Archived = 2
+    }
+
+    public class PageVersionMap : EntityTypeConfiguration<PageVersion>, IEntityTypeConfiguration
+    {
+        public PageVersionMap()
+        {
+            ToTable(CmsConstants.Tables.PageVersions);
+            HasKey(x => x.Id);
+            Property(x => x.PageId).IsRequired();
+            Property(x => x.CultureCode).HasMaxLength(10);
+            Property(x => x.DateCreatedUtc).IsRequired();
+            Property(x => x.DateModifiedUtc).IsRequired();
+            Property(x => x.Status).IsRequired();
+            Property(x => x.Title).IsRequired().HasMaxLength(255);
+            Property(x => x.Slug).IsRequired().HasMaxLength(255);
+            Property(x => x.Fields).IsMaxLength();
+            HasRequired(x => x.Page).WithMany(x => x.Versions).HasForeignKey(x => x.PageId);
+        }
+    }
+}

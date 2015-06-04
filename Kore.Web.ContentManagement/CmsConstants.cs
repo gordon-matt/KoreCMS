@@ -40,6 +40,7 @@ namespace Kore.Web.ContentManagement
             internal const string Menus = "Kore_Menus";
             internal const string MessageTemplates = "Kore_MessageTemplates";
             internal const string Pages = "Kore_Pages";
+            internal const string PageVersions = "Kore_PageVersions";
             internal const string PageTypes = "Kore_PageTypes";
             internal const string SitemapConfig = "Kore_SitemapConfig";
             internal const string QueuedEmails = "Kore_QueuedEmails";

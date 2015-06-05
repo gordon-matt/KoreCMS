@@ -15,6 +15,11 @@
         @Html.ValidationMessageFor(m => m.Currency)
     </div>
     <div class="form-group">
+        @Html.LabelFor(m => m.ShippingFlatRate, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.ShippingFlatRate, new { @class = "form-control", data_bind = "value: shippingFlatRate" })
+        @Html.ValidationMessageFor(m => m.ShippingFlatRate)
+    </div>
+    <div class="form-group">
         @Html.LabelFor(m => m.CategoriesPerPage, new { @class = "control-label" })
         @Html.TextBoxFor(m => m.CategoriesPerPage, new { @class = "form-control", data_bind = "value: categoriesPerPage" })
         @Html.ValidationMessageFor(m => m.CategoriesPerPage)
@@ -54,6 +59,7 @@
     function updateModel(data) {
         viewModel.pageTitle = ko.observable("Store");
         viewModel.currency = ko.observable("USD $");
+        viewModel.shippingFlatRate = ko.observable(0);
         viewModel.categoriesPerPage = ko.observable(10);
         viewModel.productsPerPage = ko.observable(25);
         viewModel.showOnMenus = ko.observable(true);
@@ -67,6 +73,9 @@
             }
             if (data.Currency) {
                 viewModel.currency(data.Currency);
+            }
+            if (data.ShippingFlatRate) {
+                viewModel.shippingFlatRate(data.ShippingFlatRate);
             }
             if (data.CategoriesPerPage) {
                 viewModel.categoriesPerPage(data.CategoriesPerPage);
@@ -92,6 +101,7 @@
     function cleanUp() {
         delete viewModel.pageTitle;
         delete viewModel.currency;
+        delete viewModel.shippingFlatRate;
         delete viewModel.categoriesPerPage;
         delete viewModel.productsPerPage;
         delete viewModel.showOnMenus;
@@ -104,6 +114,7 @@
         var data = {
             PageTitle: viewModel.pageTitle(),
             Currency: viewModel.currency(),
+            ShippingFlatRate: viewModel.shippingFlatRate(),
             CategoriesPerPage: viewModel.categoriesPerPage(),
             ProductsPerPage: viewModel.productsPerPage(),
             ShowOnMenus: viewModel.showOnMenus(),

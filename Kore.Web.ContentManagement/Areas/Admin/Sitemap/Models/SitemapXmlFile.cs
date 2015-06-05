@@ -18,6 +18,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Models
 
     public class UrlElement
     {
+        public UrlElement()
+        {
+            Links = new List<LinkElement>();
+        }
+
         [XmlElement("loc")]
         public string Location { get; set; }
 
@@ -32,5 +37,20 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Models
 
         [XmlElement("priority")]
         public float Priority { get; set; }
+
+        [XmlElement("link", Namespace = "http://www.w3.org/1999/xhtml")]
+        public List<LinkElement> Links { get; set; }
+    }
+
+    public class LinkElement
+    {
+        [XmlAttribute("rel")]
+        public string Rel { get; set; }
+
+        [XmlAttribute("hreflang")]
+        public string HrefLang { get; set; }
+
+        [XmlAttribute("href")]
+        public string Href { get; set; }
     }
 }

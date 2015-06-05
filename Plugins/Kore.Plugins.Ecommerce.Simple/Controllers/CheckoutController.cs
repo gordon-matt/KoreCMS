@@ -56,6 +56,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         {
             var cart = cartService.Value.GetCart(this.HttpContext);
 
+            if (cart.Items.Count == 0)
+            {
+                RedirectToAction("Index");
+            }
+
             Address billingAddress;
             Address shippingAddress;
 
@@ -155,6 +160,45 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             #endregion Get Shipping Address
 
+            #region Calculate Shipping Cost
+
+            float shippingTotal = 0f;
+
+            // If there's only 1 item...
+            if (cart.Items.Count == 1)
+            {
+                var item = cart.Items.First();
+
+                // If that item has a shipping cost specified...
+                if (item.ShippingCost != 0f)
+                {
+                    // ...then use it
+                    shippingTotal = (item.ShippingCost * item.Quantity);
+                }
+                else
+                {
+                    // ...else use flat rate
+                    shippingTotal = settings.ShippingFlatRate;
+                }
+            }
+            else
+            {
+                // Else there's more than 1 item in cart, so...
+                // ... first check if there are any items with no shipping cost specified..
+                if (cart.Items.Any(x => x.ShippingCost == 0f))
+                {
+                    // Yes, so we add the flat rate first...
+                    shippingTotal = settings.ShippingFlatRate;
+                }
+                // and finally we add the extra shipping rates from each product that specified one
+                shippingTotal += cart.Items.Sum(x => (x.ShippingCost * x.Quantity));
+            }
+
+            #endregion
+
+            float taxtTotal = cart.Items.Sum(x => x.Tax * x.Quantity);
+            float orderTotal = cart.Items.Sum(x => x.Price * x.Quantity) + shippingTotal + taxtTotal;
+
             var order = new Order
             {
                 UserId = WorkContext.CurrentUser == null ? null : WorkContext.CurrentUser.Id,
@@ -162,7 +206,9 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 Status = OrderStatus.Pending,
                 OrderDateUtc = DateTime.UtcNow,
                 IPAddress = ClientIPAddress,
-                OrderTotal = cart.Items.Sum(x => (x.Price + x.Tax + x.ShippingCost) * x.Quantity),
+                ShippingTotal = shippingTotal,
+                TaxTotal = taxtTotal,
+                OrderTotal = orderTotal,
                 BillingAddressId = billingAddress.Id,
                 ShippingAddressId = shippingAddress.Id
             };

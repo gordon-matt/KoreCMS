@@ -154,6 +154,7 @@
     <Compile Include="Areas\Admin\Sitemap\Domain\SitemapConfig.cs" />
     <Compile Include="Areas\Admin\Sitemap\Models\SitemapConfigModel.cs" />
     <Compile Include="Areas\Admin\Sitemap\Models\SitemapXmlFile.cs" />
+    <Compile Include="Areas\Admin\Sitemap\SitemapAreaRegistration.cs" />
     <Compile Include="CmsPermissions.cs" />
     <Compile Include="Infrastructure\IAutoMenuProvider.cs" />
     <Compile Include="Areas\Admin\Newsletters\ContentBlocks\NewsletterSubscriptionBlock.cs" />

@@ -19,6 +19,10 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 
         public int ShippingAddressId { get; set; }
 
+        public float ShippingTotal { get; set; }
+
+        public float TaxTotal { get; set; }
+
         public float OrderTotal { get; set; }
 
         public string IPAddress { get; set; }
@@ -67,6 +71,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             HasKey(x => x.Id);
             Property(x => x.BillingAddressId).IsRequired();
             Property(x => x.ShippingAddressId).IsRequired();
+            Property(x => x.ShippingTotal).IsRequired();
+            Property(x => x.TaxTotal).IsRequired();
             Property(x => x.OrderTotal).IsRequired();
             Property(x => x.OrderDateUtc).IsRequired();
             Property(x => x.Status).IsRequired();

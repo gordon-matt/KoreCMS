@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.Results;
+using System.Xml.Serialization;
 using Kore.Collections;
 using Kore.Data;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
@@ -162,25 +164,54 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
             var pageVersions = pageVersionService.Find();
             var urls = new HashSet<UrlElement>();
 
+            string siteUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
             foreach (var item in config)
             {
                 var page = pageVersions.First(x => x.Id == item.PageId);
+
+                var localizedVersions = pageVersions
+                    .Where(x =>
+                        x.PageId == page.PageId &&
+                        x.CultureCode != null);
+
+                var cultures = localizedVersions.Select(x => x.CultureCode).Distinct().ToList();
+
+                var links = new List<LinkElement>();
+                foreach (string culture in cultures)
+                {
+                    var localizedVersion = localizedVersions
+                        .OrderByDescending(x => x.DateModifiedUtc)
+                        .First();
+
+                    links.Add(new LinkElement
+                    {
+                        Rel = "alternate",
+                        HrefLang = culture.ToLowerInvariant(),
+                        Href = string.Concat(siteUrl, "/", localizedVersion.Slug)
+                    });
+                }
+
                 urls.Add(new UrlElement
                 {
-                    Location = string.Concat(Request.RequestUri.GetLeftPart(UriPartial.Authority), "/", page.Slug),
+                    Location = string.Concat(siteUrl, "/", page.Slug),
                     LastModified = page.DateModifiedUtc.ToString("yyyy-MM-dd"),
                     ChangeFrequency = item.ChangeFrequency,
-                    Priority = item.Priority
+                    Priority = item.Priority,
+                    Links = links
                 });
             }
             file.Urls = urls.OrderBy(x => x.Location).ToHashSet();
 
             try
             {
+                var xmlns = new XmlSerializerNamespaces();
+                xmlns.Add("xhtml", "http://www.w3.org/1999/xhtml");
+
                 file.XmlSerialize(
                     HostingEnvironment.MapPath("~/sitemap.xml"),
-                    removeNamespaces: false,
-                    omitXmlDeclaration: false);
+                    omitXmlDeclaration: false,
+                    xmlns: xmlns,
+                    encoding: Encoding.UTF8);
 
                 // For some reason, just returning Ok() with no parameter causes the following client-side error:
                 //  "unexpected end of data at line 1 column 1 of the JSON data"

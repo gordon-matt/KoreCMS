@@ -92,6 +92,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                     { LocalizableStrings.Settings.Store.MenuPosition, "Menu Position" },
                     { LocalizableStrings.Settings.Store.PageTitle, "Page Title" },
                     { LocalizableStrings.Settings.Store.ProductsPerPage, "Products Per Page" },
+                    { LocalizableStrings.Settings.Store.ShippingFlatRate, "Flat Rate for Shipping" },
                     { LocalizableStrings.Settings.Store.ShowOnMenus, "Show on Menus" },
                     { LocalizableStrings.Settings.Store.UseAjax, "Use Ajax" },
                     { LocalizableStrings.Shipping, "Shipping" },

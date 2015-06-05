@@ -19,6 +19,7 @@ namespace Kore.Web.Common.Infrastructure
             builder.RegisterType<NavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<LocationFormatProvider>().As<ILocationFormatProvider>().SingleInstance();
             builder.RegisterType<RegionService>().As<IRegionService>().InstancePerDependency();
+            builder.RegisterType<RegionSettingsService>().As<IRegionSettingsService>().InstancePerDependency();
             builder.RegisterType<Permissions>().As<IPermissionProvider>().SingleInstance();
             //builder.RegisterType<BlogSettings>().As<ISettings>().SingleInstance();
             builder.RegisterType<ResourceBundleRegistrar>().As<IResourceBundleRegistrar>().SingleInstance();

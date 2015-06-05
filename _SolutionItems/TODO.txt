@@ -16,6 +16,23 @@ PAGES:
 - page history must not show published version
 
 
+
+- number of pages in history not working yet
+======================================================
+- look for boolean fields in settings, pages, blocks, etc.. wherever have dynamically loaded html.. and knockout.. since a check like this:
+		if (data.IsEnabled) {
+			viewModel.settings.isEnabled(data.IsEnabled)
+		}
+		... will fail to work the way we want.. being thick, I didn't realize the obvious in these cases: data.IsEnabled is false - this is the value, not whether it's null or not!!! .. so we need to do this:
+		
+		viewModel.settings.isEnabled = ko.observable(true);
+		if (!data.IsEnabled) {
+			viewModel.settings.isEnabled(false);
+		}
+		
+		or vice versa if initializing to false. Also, in that case, we might need to first check if the type is a boolean..
+======================================================
+
 - context menu for media is far down below
 
 - cleanup View360 editor template (use tabs or accordion)
@@ -137,6 +154,10 @@ OTHER
 - plugins should be published along with site
 
 - Use HTML5 semantic tags properly everywhere
+
+
+- Create unique indexes where appropriate:
+	http://stackoverflow.com/questions/23892553/creating-unique-index-with-entity-framework-6-1-fluent-api
 
 TO TEST:
 LocationFormatProvider can probably be used to make View() work without providing embedded view name. example:

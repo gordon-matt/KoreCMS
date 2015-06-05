@@ -3,6 +3,7 @@ using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Plugins.Ecommerce.Simple.ContentBlocks;
 using Kore.Plugins.Ecommerce.Simple.Services;
+using Kore.Web.Common.Areas.Admin.Regions;
 using Kore.Web.Configuration;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.ContentManagement.Infrastructure;
@@ -47,6 +48,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
 
             builder.RegisterType<PayPalSettings>().As<ISettings>().SingleInstance();
             builder.RegisterType<StoreSettings>().As<ISettings>().SingleInstance();
+
+            builder.RegisterType<StoreRegionSettings>().As<IRegionSettings>().SingleInstance();
 
             builder.RegisterType<AutoMenuProvider>().As<IAutoMenuProvider>().SingleInstance();
             builder.RegisterType<StoreProductsIndexingContentProvider>().As<IIndexingContentProvider>().InstancePerDependency();

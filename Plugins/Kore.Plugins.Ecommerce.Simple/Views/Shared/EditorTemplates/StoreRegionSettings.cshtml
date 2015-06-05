@@ -1,0 +1,38 @@
+﻿@using Kore.Plugins.Ecommerce.Simple
+@using Kore.Web.Mvc
+
+@model StoreRegionSettings
+
+<div id="region-settings">
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.IsEnabled, new { data_bind = "checked: settings.isEnabled" }) @T(KoreWebLocalizableStrings.General.Enabled)
+            </label>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function updateModel(data) {
+        viewModel.settings.isEnabled = ko.observable(false);
+
+        if (data) {
+            if (data.IsEnabled) {
+                viewModel.settings.isEnabled(true);
+            }
+        }
+    };
+
+    function cleanUp() {
+        delete viewModel.settings.isEnabled;
+    }
+
+    function onBeforeSave() {
+        var data = {
+            IsEnabled: viewModel.settings.isEnabled()
+        };
+
+        viewModel.settings.fields(ko.mapping.toJSON(data));
+    };
+</script>

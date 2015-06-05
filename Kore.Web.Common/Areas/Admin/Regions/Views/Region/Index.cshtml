@@ -1,4 +1,5 @@
 ﻿@using Kore.Web.Common
+@using Kore.Web.Common.Areas.Admin.Regions
 @using Kore.Web.Common.Areas.Admin.Regions.Models
 @using Kore.Web.Mvc
 @using Kore.Web.Mvc.KoreUI
@@ -20,6 +21,8 @@
 
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
     var assembly = System.Reflection.Assembly.GetAssembly(typeof(Kore.Web.Common.Constants));
+    
+    var regionSettings = (IEnumerable<IRegionSettings>)ViewBag.RegionSettings;
 }
 
 <div id="main-section" class="row">
@@ -210,6 +213,77 @@
     </article>
 </div>
 
+<div id="settings-grid-section" class="row" style="display:none">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <a data-bind="click: settings.goBack" class="btn btn-default">
+            <i class="kore-icon kore-icon-arrow-left"></i>
+            @T(KoreWebLocalizableStrings.General.Back)
+        </a>
+    </div>
+
+    <div class="clearfix"></div>
+    <br />
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
+        <div id="SettingsGrid"></div>
+    </div>
+</div>
+
+<div id="settings-form-section" class="row" style="display:none">
+    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Settings))) { }
+            using (var body = panel.BeginBody())
+            {
+                <form id="settings-form-section-form" role="form">
+                    <fieldset>
+                        <legend id="settings-form-section-legend"></legend>
+                        @*HTML injected here*@
+                        <div id="settings-details"></div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group pull-right">
+                                <button type="button" class="btn btn-default" data-bind="click: settings.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: settings.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            }
+        }
+    </article>
+</div>
+
+@*<div id="settings-section" class="row" style="display:none">
+    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Settings))) { }
+            using (var body = panel.BeginBody())
+            {
+                using (var accordion = Html.KoreUI().Begin(new Kore.Web.Mvc.KoreUI.Accordion("settings-accordion")))
+                {
+                    <form role="form">
+                        @foreach (var settings in regionSettings)
+                        {
+                            using (var accordionPanel = accordion.BeginPanel(settings.Name, settings.Name.ToSlugUrl()))
+                            {
+                                @Html.Partial(settings.EditorTemplatePath, settings)
+                            }
+                        }
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group pull-right">
+                                <button type="button" class="btn btn-default" data-bind="click: settings.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: settings.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                            </div>
+                        </div>
+                    </form>
+                }
+            }
+        }
+    </article>
+</div>*@
+
 @section scripts {
     <script type="text/javascript">
         var gridPageSize = @SiteSettings.DefaultGridPageSize;
@@ -223,6 +297,7 @@
             GetRecordError: '@T(KoreWebLocalizableStrings.General.GetRecordError).Text',
             InsertRecordError: '@T(KoreWebLocalizableStrings.General.InsertRecordError).Text',
             InsertRecordSuccess: '@T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text',
+            Settings: '@T(KoreWebLocalizableStrings.General.Settings).Text',
             UpdateRecordError: '@T(KoreWebLocalizableStrings.General.UpdateRecordError).Text',
             UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text',
             Cities: '@T(LocalizableStrings.Regions.Cities).Text',

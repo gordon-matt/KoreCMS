@@ -36,6 +36,7 @@
                 public const string MenuPosition = "Plugins.Ecommerce.Simple/Settings.Store.MenuPosition";
                 public const string PageTitle = "Plugins.Ecommerce.Simple/Settings.Store.PageTitle";
                 public const string ProductsPerPage = "Plugins.Ecommerce.Simple/Settings.Store.ProductsPerPage";
+                public const string ShippingFlatRate = "Plugins.Ecommerce.Simple/Settings.Store.ShippingFlatRate";
                 public const string ShowOnMenus = "Plugins.Ecommerce.Simple/Settings.Store.ShowOnMenus";
                 public const string UseAjax = "Plugins.Ecommerce.Simple/Settings.Store.UseAjax";
             }

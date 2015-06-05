@@ -20,9 +20,6 @@ PAGES:
 
 - cleanup View360 editor template (use tabs or accordion)
 
-- page preview in history still has some issues (not showing correct css in soem cases, like missing breadcrumbs or hidden text under navbar)
-	- AND worse: it seems to mess with the admin navbar - better to show preview in modal or OTHER tab (have a button)
-
 - plugin idea: live chat
 - dont load entityType configurations if plugin not loaded..
 
@@ -43,6 +40,9 @@ LOCALIZATION:
 - localize blog entries
 - localize message templates
 - localizable routes... then can have localized sitemap (see: https://support.google.com/webmasters/answer/2620865?hl=en)
+		: Update: this is partly done now, but still has 2 issues:
+		1. need to provide the invariant one ("en" by default or what? maybe configurable)
+		2. need to duplicate the set of URLs for every language
 - localizable enums?
 - localize accoutn views
 - localize error pages (404, etc)
@@ -85,7 +85,7 @@ OTHER
 - slugify automaticlly
 - reusable image picker (Html Helper?)
 
-- minify HTML
+- minify HTML?
 
 - scheduled task to auto shrink log file?
 
@@ -115,7 +115,7 @@ OTHER
  - Move navigation under PLUGINS and make a "home page" for store.. from that page have icons (maybe metro tiles) for
 		Store management, orders, etc.. and maybe can have widgets to show sales charts or whatever..
 
-  - regions: add some button for importing common public data files (liek MaxMind)
+  - regions: add some button for importing common public data files (like MaxMind)
   
    - admin page for blocking some IPs (inc. import IP block list files)
   

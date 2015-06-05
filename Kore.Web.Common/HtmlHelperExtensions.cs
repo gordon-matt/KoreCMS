@@ -7,6 +7,7 @@ using System.Web.Mvc.Html;
 using Kore.Infrastructure;
 using Kore.Web.Collections;
 using Kore.Web.Common.Areas.Admin.Regions.Services;
+using Kore.Web.Mvc;
 
 namespace Kore.Web.Common
 {
@@ -41,6 +42,36 @@ namespace Kore.Web.Common
 
             var selectList = GetCountries(selectedValue, emptyText);
             return html.DropDownListFor(expression, selectList, htmlAttributes);
+        }
+
+        public MvcHtmlString CountryCheckBoxList(
+            string name,
+            IEnumerable<string> selectedIds,
+            object labelHtmlAttributes = null,
+            object checkboxHtmlAttributes = null)
+        {
+            var selectList = GetCountries();
+
+            return html.CheckBoxList(
+                name,
+                selectList,
+                selectedIds,
+                labelHtmlAttributes: labelHtmlAttributes,
+                checkboxHtmlAttributes: checkboxHtmlAttributes);
+        }
+
+        public MvcHtmlString CountryCheckBoxListFor(
+            Expression<Func<TModel, IEnumerable<string>>> expression,
+            object labelHtmlAttributes = null,
+            object checkboxHtmlAttributes = null)
+        {
+            var selectList = GetCountries();
+
+            return html.CheckBoxListFor(
+                expression,
+                selectList,
+                labelHtmlAttributes: labelHtmlAttributes,
+                checkboxHtmlAttributes: checkboxHtmlAttributes);
         }
 
         private static IEnumerable<SelectListItem> GetCountries(int? selectedValue = null, string emptyText = null)

@@ -21,6 +21,9 @@ namespace Kore.Plugins.Ecommerce.Simple
         [LocalizedDisplayName(LocalizableStrings.Settings.Store.Currency)]
         public string Currency { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.Store.ShippingFlatRate)]
+        public float ShippingFlatRate { get; set; }
+
         [LocalizedDisplayName(LocalizableStrings.Settings.Store.CategoriesPerPage)]
         public byte CategoriesPerPage { get; set; }
 

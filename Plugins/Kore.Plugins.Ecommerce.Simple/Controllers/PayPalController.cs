@@ -70,8 +70,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 Items = cart.Items,
                 OrderId = order.Id,
                 OrderTotal = order.OrderTotal,
-                SalesTax = cart.Items.Sum(x => x.Tax),
-                ShippingFee = cart.Items.Sum(x => x.ShippingCost),
+                SalesTax = order.TaxTotal,
+                ShippingFee = order.ShippingTotal,
                 BillingAddress = order.BillingAddress
             };
             return View(model);

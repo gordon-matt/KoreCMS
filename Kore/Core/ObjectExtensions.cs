@@ -167,41 +167,24 @@ namespace Kore
         /// <typeparam name="T">This item's type</typeparam>
         /// <param name="item">This item</param>
         /// <param name="fileName">The file to which you want to write.</param>
+        /// <param name="omitXmlDeclaration">False to keep the XML declaration. Otherwise, it will be removed.</param>
         /// <param name="removeNamespaces">
         ///     <para>Specify whether to remove xml namespaces.</para>para>
         ///     <para>If your object has any XmlInclude attributes, then set this to false</para>
         /// </param>
+        /// <param name="xmlns">If not null, "removeNamespaces" is ignored and the provided namespaces are used.</param>
+        /// <param name="encoding">Specify encoding, if required.</param>
         /// <returns>true if successful, otherwise false.</returns>
-        public static bool XmlSerialize<T>(this T item, string fileName, bool removeNamespaces = true, bool omitXmlDeclaration = true)
+        public static bool XmlSerialize<T>(
+            this T item,
+            string fileName,
+            bool omitXmlDeclaration = true,
+            bool removeNamespaces = true,
+            XmlSerializerNamespaces xmlns = null,
+            Encoding encoding = null)
         {
-            object locker = new object();
-
-            var xmlns = new XmlSerializerNamespaces();
-            xmlns.Add(string.Empty, string.Empty);
-
-            var xmlSerializer = new XmlSerializer(item.GetType());
-
-            var settings = new XmlWriterSettings
-            {
-                Indent = true,
-                OmitXmlDeclaration = omitXmlDeclaration
-            };
-
-            lock (locker)
-            {
-                using (var writer = XmlWriter.Create(fileName, settings))
-                {
-                    if (removeNamespaces)
-                    {
-                        xmlSerializer.Serialize(writer, item, xmlns);
-                    }
-                    else { xmlSerializer.Serialize(writer, item); }
-
-                    writer.Close();
-                }
-            }
-
-            return true;
+            string xml = item.XmlSerialize(omitXmlDeclaration, removeNamespaces, xmlns, encoding);
+            return xml.ToFile(fileName);
         }
 
         /// <summary>
@@ -209,18 +192,22 @@ namespace Kore
         /// </summary>
         /// <typeparam name="T">This item's type</typeparam>
         /// <param name="item">This item</param>
+        /// <param name="omitXmlDeclaration">False to keep the XML declaration. Otherwise, it will be removed.</param>
         /// <param name="removeNamespaces">
         ///     <para>Specify whether to remove xml namespaces.</para>para>
         ///     <para>If your object has any XmlInclude attributes, then set this to false</para>
         /// </param>
-        /// <param name="itemType"></param>
+        /// <param name="xmlns">If not null, "removeNamespaces" is ignored and the provided namespaces are used.</param>
+        /// <param name="encoding">Specify encoding, if required.</param>
         /// <returns>Serialized XML for specified System.Object</returns>
-        public static string XmlSerialize<T>(this T item, bool removeNamespaces = true, bool omitXmlDeclaration = true, Encoding encoding = null)
+        public static string XmlSerialize<T>(
+            this T item,
+            bool omitXmlDeclaration = true,
+            bool removeNamespaces = true,
+            XmlSerializerNamespaces xmlns = null,
+            Encoding encoding = null)
         {
             object locker = new object();
-
-            var xmlns = new XmlSerializerNamespaces();
-            xmlns.Add(string.Empty, string.Empty);
 
             var xmlSerializer = new XmlSerializer(item.GetType());
 
@@ -237,11 +224,21 @@ namespace Kore
                 {
                     using (var xmlWriter = XmlWriter.Create(stringWriter, settings))
                     {
-                        if (removeNamespaces)
+                        if (xmlns != null)
                         {
                             xmlSerializer.Serialize(xmlWriter, item, xmlns);
                         }
-                        else { xmlSerializer.Serialize(xmlWriter, item); }
+                        else
+                        {
+                            if (removeNamespaces)
+                            {
+                                xmlns = new XmlSerializerNamespaces();
+                                xmlns.Add(string.Empty, string.Empty);
+
+                                xmlSerializer.Serialize(xmlWriter, item, xmlns);
+                            }
+                            else { xmlSerializer.Serialize(xmlWriter, item); }
+                        }
 
                         return stringBuilder.ToString();
                     }

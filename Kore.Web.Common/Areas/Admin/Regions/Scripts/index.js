@@ -1,5 +1,131 @@
 ﻿'use strict'
 
+var SettingsModel = function () {
+    var self = this;
+    self.regionId = ko.observable(0);
+    self.settingsId = ko.observable('');
+    self.fields = ko.observable('');
+
+    self.edit = function (id) {
+        self.settingsId(id);
+
+        $.ajax({
+            url: "/odata/kore/common/RegionSettingsApi/GetSettings",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                settingsId: id,
+                regionId: self.regionId()
+            }),
+            dataType: "json",
+            async: false
+        })
+        .done(function (json) {
+            self.fields(json.Fields);
+
+            $.ajax({
+                url: "/admin/regions/get-editor-ui/" + id,
+                type: "GET",
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+
+                // Clean up from previously injected html/scripts
+                if (typeof cleanUp == 'function') {
+                    cleanUp();
+                }
+
+                // Remove Old Scripts
+                var oldScripts = $('script[data-settings-script="true"]');
+
+                if (oldScripts.length > 0) {
+                    $.each(oldScripts, function () {
+                        $(this).remove();
+                    });
+                }
+
+                var elementToBind = $("#settings-form-section")[0];
+                ko.cleanNode(elementToBind);
+
+                var result = $(json.Content);
+
+                // Add new HTML
+                var content = $(result.filter('#region-settings')[0]);
+                var details = $('<div>').append(content.clone()).html();
+                $("#settings-details").html(details);
+
+                // Add new Scripts
+                var scripts = result.filter('script');
+
+                $.each(scripts, function () {
+                    var script = $(this);
+                    script.attr("data-settings-script", "true");//for some reason, .data("block-script", "true") doesn't work here
+                    script.appendTo('body');
+                });
+
+                // Update Bindings
+                // Ensure the function exists before calling it...
+                if (typeof updateModel == 'function') {
+                    var data = ko.toJS(ko.mapping.fromJSON(self.fields()));
+                    updateModel(data);
+                    ko.applyBindings(viewModel, elementToBind);
+                }
+
+                //self.validator.resetForm();
+                switchSection($("#settings-form-section"));
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(translations.GetRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
+            });
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            $.notify(translations.GetRecordError, "error");
+            console.log(textStatus + ': ' + errorThrown);
+        });
+    };
+
+    self.save = function () {
+        // ensure the function exists before calling it...
+        if (typeof onBeforeSave == 'function') {
+            onBeforeSave();
+        }
+
+        var record = {
+            settingsId: self.settingsId(),
+            regionId: self.regionId(),
+            fields: self.fields()
+        };
+
+        $.ajax({
+            url: "/odata/kore/common/RegionSettingsApi/SaveSettings",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(record),
+            dataType: "json",
+            async: false,
+        })
+        .done(function (json) {
+            switchSection($("#settings-grid-section"));
+
+            $.notify(translations.UpdateRecordSuccess, "success");
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            $.notify(translations.UpdateRecordError + ": " + jqXHR.responseText || textStatus, "error");
+            console.log(textStatus + ': ' + errorThrown);
+        });
+    };
+
+    self.cancel = function () {
+        switchSection($("#settings-grid-section"));
+    };
+
+    self.goBack = function () {
+        switchSection($("#main-section"));
+    };
+};
+
 var CountryModel = function () {
     var self = this;
 
@@ -480,6 +606,7 @@ var ViewModel = function () {
     self.country = new CountryModel();
     self.state = new StateModel();
     self.city = new CityModel();
+    self.settings = new SettingsModel();
 
     self.showCountries = function (continentId) {
         self.selectedContinentId(continentId);
@@ -491,6 +618,11 @@ var ViewModel = function () {
         //grid.refresh();
 
         switchSection($("#country-grid-section"));
+    };
+
+    self.showSettings = function (regionId) {
+        self.settings.regionId(regionId);
+        switchSection($("#settings-grid-section"));
     };
 };
 
@@ -555,6 +687,7 @@ $(document).ready(function () {
                 'else {# <a onclick="viewModel.country.showCities(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Cities + '</a> #} # ' +
                 '<a onclick="viewModel.country.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
                 '<a onclick="viewModel.country.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
+                '<a onclick="viewModel.showSettings(#=Id#)" class="btn btn-info btn-xs">' + translations.Settings + '</a>' +
                 '</div>',
             attributes: { "class": "text-center" },
             filterable: false,
@@ -611,6 +744,7 @@ $(document).ready(function () {
                 '<a onclick="viewModel.state.showCities(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Cities + '</a>' +
                 '<a onclick="viewModel.state.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
                 '<a onclick="viewModel.state.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
+                '<a onclick="viewModel.showSettings(#=Id#)" class="btn btn-info btn-xs">' + translations.Settings + '</a>' +
                 '</div>',
             attributes: { "class": "text-center" },
             filterable: false,
@@ -666,10 +800,63 @@ $(document).ready(function () {
                 '<div class="btn-group">' +
                 '<a onclick="viewModel.city.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
                 '<a onclick="viewModel.city.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
+                '<a onclick="viewModel.showSettings(#=Id#)" class="btn btn-info btn-xs">' + translations.Settings + '</a>' +
                 '</div>',
             attributes: { "class": "text-center" },
             filterable: false,
             width: 180
         }]
     });
+
+    $("#SettingsGrid").kendoGrid({
+        data: null,
+        dataSource: {
+            type: "odata",
+            transport: {
+                read: {
+                    url: "/odata/kore/common/RegionSettingsApi",
+                    dataType: "json"
+                }
+            },
+            schema: {
+                data: function (data) {
+                    return data.value;
+                },
+                total: function (data) {
+                    return data["odata.count"];
+                },
+                model: {
+                    fields: {
+                        Name: { type: "string" }
+                    }
+                }
+            },
+            pageSize: gridPageSize,
+            serverPaging: true,
+            serverFiltering: true,
+            serverSorting: true,
+            sort: { field: "Name", dir: "asc" }
+        },
+        filterable: true,
+        sortable: {
+            allowUnsort: false
+        },
+        pageable: {
+            refresh: true
+        },
+        scrollable: false,
+        columns: [{
+            field: "Name",
+            title: translations.Columns.Name,
+            filterable: true
+        }, {
+            field: "Id",
+            title: " ",
+            template: '<div class="btn-group"><a onclick="viewModel.settings.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a></div>',
+            attributes: { "class": "text-center" },
+            filterable: false,
+            width: 120
+        }]
+    });
+
 });

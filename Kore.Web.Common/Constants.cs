@@ -12,6 +12,7 @@ namespace Kore.Web.Common
         public static class Tables
         {
             public const string Regions = "Kore_Common_Regions";
+            public const string RegionSettings = "Kore_Common_RegionSettings";
         }
     }
 }

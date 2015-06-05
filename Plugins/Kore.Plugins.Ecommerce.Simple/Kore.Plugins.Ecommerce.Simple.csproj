@@ -181,6 +181,7 @@
     <Compile Include="SimpleCommercePermissions.cs" />
     <Compile Include="SimpleCommercePlugin.cs" />
     <Compile Include="StoreProductsIndexingContentProvider.cs" />
+    <Compile Include="StoreRegionSettings.cs" />
     <Compile Include="StoreSettings.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +220,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Views\Shared\EditorTemplates\PayPalSettings.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Shared\EditorTemplates\StoreRegionSettings.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Views\Shared\EditorTemplates\StoreSettings.cshtml">

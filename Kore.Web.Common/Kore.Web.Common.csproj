@@ -136,12 +136,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Areas\Admin\Regions\Controllers\Api\RegionApiController.cs" />
+    <Compile Include="Areas\Admin\Regions\Controllers\Api\RegionSettingsApiController.cs" />
     <Compile Include="Areas\Admin\Regions\Controllers\RegionController.cs" />
     <Compile Include="Areas\Admin\Regions\Domain\Region.cs" />
+    <Compile Include="Areas\Admin\Regions\Domain\RegionSettings.cs" />
     <Compile Include="Areas\Admin\Regions\Domain\RegionType.cs" />
+    <Compile Include="Areas\Admin\Regions\IRegionSettings.cs" />
     <Compile Include="Areas\Admin\Regions\Models\RegionModel.cs" />
     <Compile Include="Areas\Admin\Regions\RegionsAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Regions\Services\IRegionService.cs" />
+    <Compile Include="Areas\Admin\Regions\Services\IRegionSettingsService.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="Infrastructure\ResourceBundleRegistrar.cs" />
     <Compile Include="Permissions.cs" />

@@ -5,13 +5,15 @@ namespace Kore.Plugins.Ecommerce.Simple
 {
     public class StoreRegionSettings : IRegionSettings
     {
+        internal const string SettingsName = "Simple Commerce";
+
         public bool IsEnabled { get; set; }
 
         #region IRegionData Members
 
         public string Name
         {
-            get { return "Simple Commerce"; }
+            get { return SettingsName; }
         }
 
         public string EditorTemplatePath

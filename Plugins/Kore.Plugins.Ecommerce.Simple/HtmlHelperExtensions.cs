@@ -8,7 +8,11 @@ using Kore.Collections;
 using Kore.Data;
 using Kore.Infrastructure;
 using Kore.Plugins.Ecommerce.Simple.Data.Domain;
+using Kore.Web;
 using Kore.Web.Collections;
+using Kore.Web.Common.Areas.Admin.Regions.Domain;
+using Kore.Web.Common.Areas.Admin.Regions.Services;
+using Newtonsoft.Json.Linq;
 
 namespace Kore.Plugins.Ecommerce.Simple
 {
@@ -45,6 +49,21 @@ namespace Kore.Plugins.Ecommerce.Simple
             return html.DropDownListFor(expression, selectList, htmlAttributes);
         }
 
+        public MvcHtmlString CountryDropDownList(string name, int? selectedValue = null, string emptyText = null, object htmlAttributes = null)
+        {
+            var selectList = GetCountries(selectedValue, emptyText);
+            return html.DropDownList(name, selectList, htmlAttributes);
+        }
+
+        public MvcHtmlString CountryDropDownListFor(Expression<Func<TModel, int>> expression, object htmlAttributes = null, string emptyText = null)
+        {
+            var func = expression.Compile();
+            var selectedValue = func(html.ViewData.Model);
+
+            var selectList = GetCountries(selectedValue, emptyText);
+            return html.DropDownListFor(expression, selectList, htmlAttributes);
+        }
+
         private static IEnumerable<SelectListItem> GetCategoriesSelectList(string selectedValue = null, string emptyText = null)
         {
             var repository = EngineContext.Current.Resolve<IRepository<Category>>();
@@ -57,6 +76,38 @@ namespace Kore.Plugins.Ecommerce.Simple
                     text => text.Name,
                     selectedValue,
                     emptyText);
+        }
+
+        private static IEnumerable<SelectListItem> GetCountries(int? selectedValue = null, string emptyText = null)
+        {
+            var regionService = EngineContext.Current.Resolve<IRegionService>();
+            var regionSettingsService = EngineContext.Current.Resolve<IRegionSettingsService>();
+
+            var countries = regionService.GetCountries().ToDictionary(k => k.Id, v => v);
+
+            string settingsId = StoreRegionSettings.SettingsName.ToSlugUrl();
+
+            var settings = regionSettingsService.Find(x =>
+                x.SettingsId == settingsId &&
+                countries.Keys.Contains(x.RegionId));
+
+            var records = new HashSet<Region>();
+            foreach (var setting in settings)
+            {
+                dynamic fields = JObject.Parse(setting.Fields);
+                bool isEnabled = fields.IsEnabled;
+
+                if (isEnabled)
+                {
+                    records.Add(countries[setting.RegionId]);
+                }
+            }
+
+            return records.OrderBy(x => x.Name).ToSelectList(
+                value => value.Id,
+                text => text.Name,
+                selectedValue,
+                emptyText);
         }
     }
 }

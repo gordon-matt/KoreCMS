@@ -143,9 +143,11 @@
     <Compile Include="Areas\Admin\Blog\Controllers\BlogController.cs" />
     <Compile Include="Areas\Admin\Blog\Domain\BlogEntry.cs" />
     <Compile Include="Areas\Admin\Blog\Services\IBlogService.cs" />
+    <Compile Include="Areas\Admin\ContentBlocks\IFormBlockProcessor.cs" />
     <Compile Include="Areas\Admin\Localization\Models\LanguagePackFile.cs" />
     <Compile Include="Areas\Admin\Media\Services\IMediaService.cs" />
     <Compile Include="Areas\Admin\Messaging\Services\IQueuedEmailService.cs" />
+    <Compile Include="Areas\Admin\Newsletters\Services\INewsletterService.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\Api\PageVersionApiController.cs" />
     <Compile Include="Areas\Admin\Pages\Services\IPageVersionService.cs" />
     <Compile Include="Areas\Admin\Sitemap\Controllers\Api\XmlSitemapApiController.cs" />

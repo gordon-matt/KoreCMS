@@ -15,6 +15,7 @@ PAGES:
 
 - page history must not show published version
 
+- disallow SYSTEM message templates from being deleted. Only custom templates should be allowed to be deleted.
 
 - context menu for media is far down below
 

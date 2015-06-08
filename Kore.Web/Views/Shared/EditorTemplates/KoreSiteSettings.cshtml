@@ -121,7 +121,7 @@
             if (data.DefaultMobileTheme) {
                 viewModel.defaultMobileTheme(data.DefaultMobileTheme);
             }
-            if (data.AllowUserToSelectTheme) {
+            if (data.AllowUserToSelectTheme && (typeof data.AllowUserToSelectTheme === 'boolean')) {
                 viewModel.allowUserToSelectTheme(data.AllowUserToSelectTheme);
             }
             if (data.DefaultLanguage) {

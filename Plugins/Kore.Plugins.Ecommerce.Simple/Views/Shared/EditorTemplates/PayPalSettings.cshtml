@@ -54,7 +54,7 @@
             if (data.SandboxUrl) {
                 viewModel.sandboxUrl(data.SandboxUrl);
             }
-            if (data.UseSandboxMode) {
+            if (data.UseSandboxMode && (typeof data.UseSandboxMode === 'boolean')) {
                 viewModel.useSandboxMode(data.UseSandboxMode);
             }
             if (data.Merchant) {

@@ -73,10 +73,10 @@
             if (data.Port) {
                 viewModel.port(data.Port);
             }
-            if (data.EnableSsl) {
+            if (data.EnableSsl && (typeof data.EnableSsl === 'boolean')) {
                 viewModel.enableSsl(data.EnableSsl);
             }
-            if (data.UseDefaultCredentials) {
+            if (data.UseDefaultCredentials && (typeof data.UseDefaultCredentials === 'boolean')) {
                 viewModel.useDefaultCredentials(data.UseDefaultCredentials);
             }
             if (data.Username) {

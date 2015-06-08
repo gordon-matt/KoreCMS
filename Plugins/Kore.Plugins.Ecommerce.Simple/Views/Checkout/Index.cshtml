@@ -1,7 +1,6 @@
 ﻿@using Kore.Plugins.Ecommerce.Simple
 @using Kore.Plugins.Ecommerce.Simple.Extensions
 @using Kore.Plugins.Ecommerce.Simple.Models
-@using Kore.Web.Common
 @using Kore.Web.Mvc.KoreUI
 @using LocalizableStrings = Kore.Plugins.Ecommerce.Simple.LocalizableStrings
 
@@ -112,7 +111,7 @@
                         <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="kore-icon kore-icon-globe"></i></span>
-                                @Html.KoreCommon().CountryDropDownListFor(m => m.BillingAddress.CountryId, htmlAttributes: new { @class = "form-control" })
+                                @Html.SimpleCommerce().CountryDropDownListFor(m => m.BillingAddress.CountryId, htmlAttributes: new { @class = "form-control" })
                             </div>
                             @Html.ValidationMessageFor(m => m.BillingAddress.CountryId)
                         </div>
@@ -232,7 +231,7 @@
                             <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="kore-icon kore-icon-globe"></i></span>
-                                    @Html.KoreCommon().CountryDropDownListFor(m => m.ShippingAddress.CountryId, htmlAttributes: new { @class = "form-control" })
+                                    @Html.SimpleCommerce().CountryDropDownListFor(m => m.ShippingAddress.CountryId, htmlAttributes: new { @class = "form-control" })
                                 </div>
                                 @Html.ValidationMessageFor(m => m.ShippingAddress.CountryId)
                             </div>

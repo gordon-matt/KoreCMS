@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Kore.ComponentModel;
 
 namespace KoreCMS.Models
 {

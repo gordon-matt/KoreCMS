@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -17,10 +18,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
     public class FormBlockController : KoreController
     {
         private readonly IEmailSender emailSender;
+        private readonly IEnumerable<IFormBlockProcessor> processors;
 
-        public FormBlockController(IEmailSender emailSender)
+        public FormBlockController(
+            IEmailSender emailSender,
+            IEnumerable<IFormBlockProcessor> processors)
         {
             this.emailSender = emailSender;
+            this.processors = processors;
         }
 
         [Compress]
@@ -29,6 +34,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
         [ValidateInput(false)]
         public ActionResult Save(FormCollection formCollection)
         {
+            string id = formCollection["Id"];
             bool enableCaptcha = Convert.ToBoolean(formCollection["EnableCaptcha"]);
             string thankYouMessage = formCollection["ThankYouMessage"];
             string redirectUrl = formCollection["RedirectUrl"];
@@ -54,9 +60,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
             }
 
             var values = Request.Form.AllKeys.ToDictionary(key => key, key => (object)formCollection[key]);
-            //var values = Request.Form.AllKeys.ToDictionary(key => key, key => (object)Request.Form[key]);
 
             // Remove some items
+            values.Remove("Id");
             values.Remove("EnableCaptcha");
             values.Remove("captcha_challenge");
             values.Remove("captcha_response");
@@ -71,6 +77,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
             body.Append(subject);
             body.Append("<br/>");
 
+            //TODO: Make this a message template
             body.Append("<table style=\"font-family: 'Arial' , Source Sans Pro, sans-serif; font-size: 1.2em; padding: 7px; width: 80%; border-collapse: collapse; border-spacing: 0;\">");
 
             foreach (var value in values)
@@ -96,7 +103,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
                 BodyEncoding = Encoding.UTF8,
                 IsBodyHtml = true
             };
-            mailMessage.To.Add(emailAddress);
+            //mailMessage.To.Add(emailAddress);
 
             if (Request.Files.Count > 0)
             {
@@ -112,6 +119,22 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 
             try
             {
+                Guid blockId = Guid.Parse(id);
+                foreach (var processor in processors)
+                {
+                    processor.Process(formCollection, mailMessage);
+                }
+            }
+            catch (Exception x)
+            {
+                Logger.Error("Error while trying to process form block.", x);
+            }
+
+            try
+            {
+                // Clear the Recipients list in case it's been set by an IFormBlockProcessor
+                mailMessage.To.Clear();
+                mailMessage.To.Add(emailAddress);
                 emailSender.Send(mailMessage);
 
                 var result = new SaveResultModel

@@ -17,6 +17,7 @@ using Kore.Web.ContentManagement.Areas.Admin.Messaging;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Newsletters;
 using Kore.Web.ContentManagement.Areas.Admin.Newsletters.ContentBlocks;
+using Kore.Web.ContentManagement.Areas.Admin.Newsletters.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.ContentManagement.FileSystems.Media;
@@ -58,6 +59,8 @@ namespace Kore.Web.ContentManagement.Infrastructure
             // Content Blocks
             builder.RegisterType<ContentBlockService>().As<IContentBlockService>().InstancePerDependency();
             builder.RegisterType<ZoneService>().As<IZoneService>().InstancePerDependency();
+
+            builder.RegisterType<NewsletterService>().As<INewsletterService>().InstancePerDependency();
 
             #endregion Services
 

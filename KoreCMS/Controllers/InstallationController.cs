@@ -82,6 +82,7 @@ namespace KoreCMS.Controllers
                 //  does what we need...
                 //context.Database.Create();
 
+                context.Database.Initialize(true);
                 context.Seed();
             }
 

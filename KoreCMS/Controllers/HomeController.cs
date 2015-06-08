@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Web.Mvc;
+using Kore.EntityFramework;
 using Kore.Web.Mvc.Optimization;
+using KoreCMS.Data;
 
 namespace KoreCMS.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
         [Compress]
         [Route("")]
         public ActionResult Index()
         {
+            if (!DatabaseHelper.IsDatabaseInstalled())
+            {
+                return RedirectToAction("Index", "Installation");
+            }
             return View();
         }
 

@@ -4,7 +4,7 @@ using Kore.Web.Mvc.Optimization;
 namespace KoreCMS.Controllers
 {
     [RoutePrefix("error")]
-    public class ErrorController : BaseController
+    public class ErrorController : Controller
     {
         [Compress]
         [Route("404-not-found")]

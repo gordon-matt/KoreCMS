@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Autofac;
 using Kore.Configuration;
+using Kore.EntityFramework;
 using Kore.Infrastructure.DependencyManagement;
 using Kore.Web.Infrastructure.DependencyManagement;
 
@@ -37,6 +39,11 @@ namespace Kore.Infrastructure
 
         private void RunStartupTasks()
         {
+            if (!DatabaseHelper.IsDatabaseInstalled())
+            {
+                return;
+            }
+
             var typeFinder = _containerManager.Resolve<ITypeFinder>();
             var startUpTaskTypes = typeFinder.FindClassesOfType<IStartupTask>();
             var startUpTasks = new List<IStartupTask>();

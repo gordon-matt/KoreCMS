@@ -94,16 +94,24 @@ namespace Kore.Controllers
                 //}
 
                 var user = await UserManager.FindByEmailAsync(model.Email);
-                var authorizedUser = await UserManager.FindAsync(user.UserName, model.Password);
 
-                if (authorizedUser != null)
+                if (user == null)
                 {
-                    await SignInAsync(authorizedUser, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
+                    ModelState.AddModelError(string.Empty, T(LocalizableStrings.Account.InvalidUserNameOrPassword));
                 }
                 else
                 {
-                    ModelState.AddModelError("", T(LocalizableStrings.Account.InvalidUserNameOrPassword));
+                    var authorizedUser = await UserManager.FindAsync(user.UserName, model.Password);
+
+                    if (authorizedUser != null)
+                    {
+                        await SignInAsync(authorizedUser, model.RememberMe);
+                        return RedirectToLocal(returnUrl);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, T(LocalizableStrings.Account.InvalidUserNameOrPassword));
+                    }
                 }
             }
 

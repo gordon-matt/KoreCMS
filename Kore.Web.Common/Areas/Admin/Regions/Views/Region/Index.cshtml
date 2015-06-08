@@ -238,9 +238,7 @@
             {
                 <form id="settings-form-section-form" role="form">
                     <fieldset>
-                        <legend id="settings-form-section-legend"></legend>
-                        @*HTML injected here*@
-                        <div id="settings-details"></div>
+                        <div id="settings-details">@*HTML injected here*@</div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group pull-right">
                                 <button type="button" class="btn btn-default" data-bind="click: settings.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
@@ -253,36 +251,6 @@
         }
     </article>
 </div>
-
-@*<div id="settings-section" class="row" style="display:none">
-    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
-        {
-            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Settings))) { }
-            using (var body = panel.BeginBody())
-            {
-                using (var accordion = Html.KoreUI().Begin(new Kore.Web.Mvc.KoreUI.Accordion("settings-accordion")))
-                {
-                    <form role="form">
-                        @foreach (var settings in regionSettings)
-                        {
-                            using (var accordionPanel = accordion.BeginPanel(settings.Name, settings.Name.ToSlugUrl()))
-                            {
-                                @Html.Partial(settings.EditorTemplatePath, settings)
-                            }
-                        }
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="form-group pull-right">
-                                <button type="button" class="btn btn-default" data-bind="click: settings.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                                <button type="button" class="btn btn-primary" data-bind="click: settings.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
-                            </div>
-                        </div>
-                    </form>
-                }
-            }
-        }
-    </article>
-</div>*@
 
 @section scripts {
     <script type="text/javascript">

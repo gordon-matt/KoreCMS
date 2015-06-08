@@ -691,7 +691,7 @@ $(document).ready(function () {
                 '</div>',
             attributes: { "class": "text-center" },
             filterable: false,
-            width: 180
+            width: 230
         }]
     });
 
@@ -748,7 +748,7 @@ $(document).ready(function () {
                 '</div>',
             attributes: { "class": "text-center" },
             filterable: false,
-            width: 180
+            width: 230
         }]
     });
 

@@ -83,13 +83,13 @@
             if (data.ProductsPerPage) {
                 viewModel.productsPerPage(data.ProductsPerPage);
             }
-            if (data.ShowOnMenus) {
+            if (data.ShowOnMenus && (typeof data.ShowOnMenus === 'boolean')) {
                 viewModel.showOnMenus(data.ShowOnMenus);
             }
             if (data.MenuPosition) {
                 viewModel.menuPosition(data.MenuPosition);
             }
-            if (data.UseAjax) {
+            if (data.UseAjax && (typeof data.UseAjax === 'boolean')) {
                 viewModel.useAjax(data.UseAjax);
             }
             if (data.LayoutPathOverride) {

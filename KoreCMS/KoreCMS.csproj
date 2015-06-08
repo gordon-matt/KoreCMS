@@ -237,9 +237,9 @@
     <Compile Include="Areas\Admin\NavigationProvider.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InstallationController.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
     <Compile Include="Data\ApplicationUserManager.cs" />
     <Compile Include="Data\Domain\ApplicationUser.cs" />
@@ -253,12 +253,12 @@
     </Compile>
     <Compile Include="Infrastructure\LanguagePackInvariant.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
-    <Compile Include="Initialization.cs" />
     <Compile Include="LocalizableStrings.cs" />
     <Compile Include="Messaging\AccountMessageTemplates.cs" />
     <Compile Include="Messaging\AccountMessageTemplateTokensProvider.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\InstallationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IdentityMembershipService.cs" />
     <Compile Include="Services\MembershipService.cs" />
@@ -339,6 +339,7 @@
     <Content Include="Content\fancybox\fancybox_sprite.png" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\images\KoreLogo.png" />
     <Content Include="Content\jquery.fancybox-buttons.css" />
     <Content Include="Content\jquery.fancybox-thumbs.css" />
     <Content Include="Content\jquery.fancybox.css" />
@@ -1821,6 +1822,7 @@
     <Content Include="Themes\EShopper\Views\Kore.Web.ContentManagement\BlogContent\Index.cshtml" />
     <Content Include="Themes\EShopper\Views\Kore.Web.ContentManagement\Web.config" />
     <Content Include="Themes\EShopper\Views\Kore.Web.ContentManagement\_ViewStart.cshtml" />
+    <Content Include="Views\Installation\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

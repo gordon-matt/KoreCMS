@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.WebPages;
 using Kore.Configuration;
+using Kore.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Tasks;
 using Kore.Web.Hosting;
@@ -51,10 +52,15 @@ namespace Kore.Web
             var dependencyResolver = new KoreDependencyResolver();
             DependencyResolver.SetResolver(dependencyResolver);
 
-            //remove all view engines
-            ViewEngines.Engines.Clear();
-            //except the themeable razor view engine we use
-            ViewEngines.Engines.Add(new ThemeableRazorViewEngine());
+            bool isDatabaseInstalled = DatabaseHelper.IsDatabaseInstalled();
+
+            if (isDatabaseInstalled)
+            {
+                //remove all view engines
+                ViewEngines.Engines.Clear();
+                //except the themeable razor view engine we use
+                ViewEngines.Engines.Add(new ThemeableRazorViewEngine());
+            }
 
             //register virtual path provider for embedded views
             var embeddedViewResolver = EngineContext.Current.Resolve<IEmbeddedResourceResolver>();
@@ -78,9 +84,8 @@ namespace Kore.Web
 
             FilterProviders.Providers.Add(new KoreFilterProvider());
 
-            //TODO: First check if DB installed yet
-            //TODO: currently when a task is updated, the new schedule (number of seconds) does not take effect until restart
-            if (KoreConfigurationSection.Instance.Tasks.Enabled)
+
+            if (isDatabaseInstalled && KoreConfigurationSection.Instance.Tasks.Enabled)
             {
                 TaskManager.Instance.Initialize();
                 TaskManager.Instance.Start();

@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Configuration\Domain\SettingMap.cs" />
     <Compile Include="CreateSeedDatabaseIfNotExists.cs" />
+    <Compile Include="DatabaseHelper.cs" />
     <Compile Include="Data\EntityFramework\DbContextExtensions.cs" />
     <Compile Include="Data\EntityFramework\DependencyRegistrar.cs" />
     <Compile Include="Data\EntityFramework\EntityFrameworkRepository.cs" />

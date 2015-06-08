@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using Kore.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Localization.Services;
@@ -79,6 +80,11 @@ namespace Kore.Web.Mvc
             base.InitHelpers();
 
             if (initializationCompleted)
+            {
+                return;
+            }
+
+            if (!DatabaseHelper.IsDatabaseInstalled())
             {
                 return;
             }

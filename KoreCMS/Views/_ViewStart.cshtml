@@ -2,6 +2,12 @@
 @using Kore.Web.Configuration
 
 @{
+    if (!Kore.EntityFramework.DatabaseHelper.IsDatabaseInstalled())
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        return;
+    }
+    
     var siteSettings = EngineContext.Current.Resolve<KoreSiteSettings>();
 
     if (string.IsNullOrEmpty(siteSettings.DefaultFrontendLayoutPath))

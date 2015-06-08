@@ -1,0 +1,185 @@
+﻿@using Kore.Web.Mvc.KoreUI
+
+@model InstallationModel
+
+@{
+    Layout = null;
+    ViewBag.Title = "Installation Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/bundles/content/bootstrap")
+    @Styles.Render("~/bundles/content/kore-icons")
+
+    <style type="text/css">
+        body {
+            background: url("http://www.psdgraphics.com/file/fresh-green-background.jpg") no-repeat;
+            background-size: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container body-content">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+
+                <div class="text-center">
+                    <img src="/Content/images/KoreLogo.png" alt="Kore CMS" />
+                    <h2>@ViewBag.Title</h2>
+                </div>
+
+                @using (Html.BeginForm("InstallPost", "Installation", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    
+                    using (var panel = Html.KoreUI().Begin(new Panel()))
+                    {
+                        using (var header = panel.BeginHeader("Admin Login Details"))
+                        {
+                        }
+                        using (var body = panel.BeginBody())
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.AdminEmail, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                        @Html.TextBoxFor(m => m.AdminEmail, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.AdminPassword, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                        @Html.PasswordFor(m => m.AdminPassword, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    using (var panel = Html.KoreUI().Begin(new Panel()))
+                    {
+                        using (var header = panel.BeginHeader("Database"))
+                        {
+                        }
+                        using (var body = panel.BeginBody())
+                        {
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <div class="checkbox">
+                                        @Html.CheckBoxFor(m => m.EnterConnectionString, new { onclick = "onEnterConnectionStringClick(this);" })
+                                        @Html.LabelFor(m => m.EnterConnectionString)
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="connection-string-group" class="form-group" style="display:none">
+                                @Html.LabelFor(m => m.ConnectionString, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-plug"></i></span>
+                                        @Html.TextBoxFor(m => m.ConnectionString, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="database-server-group" class="form-group">
+                                @Html.LabelFor(m => m.DatabaseServer, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-database"></i></span>
+                                        @Html.TextBoxFor(m => m.DatabaseServer, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="database-name-group" class="form-group">
+                                @Html.LabelFor(m => m.DatabaseName, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-database"></i></span>
+                                        @Html.TextBoxFor(m => m.DatabaseName, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <div class="checkbox">
+                                        @Html.CheckBoxFor(m => m.UseWindowsAuthentication, new { onclick = "onUseWindowsAuthenticationClick(this);" })
+                                        @Html.LabelFor(m => m.UseWindowsAuthentication)
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="database-username-group" class="form-group">
+                                @Html.LabelFor(m => m.DatabaseUsername, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                        @Html.TextBoxFor(m => m.DatabaseUsername, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="database-password-group" class="form-group">
+                                @Html.LabelFor(m => m.DatabasePassword, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                        @Html.TextBoxFor(m => m.DatabasePassword, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" class="btn btn-default" value="Install Now" />
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/js/jquery")
+    @Scripts.Render("~/bundles/js/jqueryval")
+    @Scripts.Render("~/bundles/js/kore/jqueryval")
+
+    <script type="text/javascript">
+        function onEnterConnectionStringClick(cb) {
+            if (cb.checked) {
+                $('#database-server-group').hide();
+                $('#database-name-group').hide();
+                $('#connection-string-group').show();
+            }
+            else {
+                $('#connection-string-group').hide();
+                $('#database-server-group').show();
+                $('#database-name-group').show();
+            }
+        }
+        function onUseWindowsAuthenticationClick(cb) {
+            if (cb.checked) {
+                $('#database-username-group').hide();
+                $('#database-password-group').hide();
+            }
+            else {
+                $('#database-username-group').show();
+                $('#database-password-group').show();
+            }
+        }
+    </script>
+</body>
+</html>

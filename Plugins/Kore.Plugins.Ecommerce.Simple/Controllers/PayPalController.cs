@@ -16,6 +16,7 @@ using Kore.Plugins.Ecommerce.Simple.Services;
 using Kore.Web.Mvc;
 using System.Data.Entity;
 using Kore.Web.Mvc.Optimization;
+using Kore.Web.Common.Areas.Admin.Regions.Services;
 
 namespace Kore.Plugins.Ecommerce.Simple.Controllers
 {
@@ -26,17 +27,20 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         private readonly Lazy<ICartService> cartService;
         private readonly Lazy<IOrderService> orderService;
         private readonly Lazy<IProductService> productService;
+        private readonly Lazy<IRegionService> regionService;
         private readonly PayPalSettings settings;
 
         public PayPalController(
             Lazy<ICartService> cartService,
             Lazy<IOrderService> orderService,
             Lazy<IProductService> productService,
+            Lazy<IRegionService> regionService,
             PayPalSettings settings)
         {
             this.cartService = cartService;
             this.orderService = orderService;
             this.productService = productService;
+            this.regionService = regionService;
             this.settings = settings;
         }
 
@@ -74,6 +78,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 ShippingFee = order.ShippingTotal,
                 BillingAddress = order.BillingAddress
             };
+
+            ViewBag.BillingCountryCode = regionService.Value.Get(order.BillingAddress.CountryId).CountryCode;
             return View(model);
         }
 

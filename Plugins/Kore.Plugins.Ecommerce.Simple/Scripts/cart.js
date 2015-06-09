@@ -32,6 +32,7 @@ var ViewModel = function () {
             var item = self.items()[i];
             total += (item.shippingCost() * item.quantity());
         }
+        total += shippingFlatRate;
         return total.toFixed(2);
     });
 
@@ -50,6 +51,7 @@ var ViewModel = function () {
             var item = self.items()[i];
             total += ((item.price() + item.tax() + item.shippingCost()) * item.quantity());
         }
+        total += shippingFlatRate;
         return total.toFixed(2);
     });
 

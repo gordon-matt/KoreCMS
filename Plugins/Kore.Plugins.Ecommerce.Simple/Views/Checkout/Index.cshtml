@@ -278,6 +278,16 @@
                                 </tr>
                             }
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="text-right" colspan="4">
+                                    <h6>@T(LocalizableStrings.SubTotal) <strong>@currencyCode @Model.SubTotal.ToString("N2")</strong></h6>
+                                    <h6>@T(LocalizableStrings.ShippingTotal) <strong>@currencyCode @Model.ShippingTotal.ToString("N2")</strong></h6>
+                                    <h6>@T(LocalizableStrings.TaxTotal) <strong>@currencyCode @Model.TaxTotal.ToString("N2")</strong></h6>
+                                    <h4>@T(LocalizableStrings.Total) <strong>@currencyCode @Model.GrandTotal.ToString("N2")</strong></h4>
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                     <div class="pull-right">
                         <button type="submit" class="btn btn-success">

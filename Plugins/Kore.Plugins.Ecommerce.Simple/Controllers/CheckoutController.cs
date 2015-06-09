@@ -42,9 +42,15 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             ViewBag.CurrencyCode = settings.Currency;
 
+            var cart = cartService.Value.GetCart(this.HttpContext);
+
             var model = new CheckoutModel
             {
-                Cart = cartService.Value.GetCart(this.HttpContext)
+                Cart = cart,
+                SubTotal = cart.Items.Sum(x => (x.Price * x.Quantity)),
+                TaxTotal = cart.Items.Sum(x => (x.Tax * x.Quantity)),
+                ShippingTotal = settings.ShippingFlatRate + (cart.Items.Sum(x => (x.ShippingCost * x.Quantity))),
+                GrandTotal = settings.ShippingFlatRate + (cart.Items.Sum(x => (x.Price + x.Tax + x.ShippingCost) * x.Quantity))
             };
 
             return View(model);
@@ -162,37 +168,39 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             #region Calculate Shipping Cost
 
-            float shippingTotal = 0f;
+            float shippingTotal = settings.ShippingFlatRate + cart.Items.Sum(x => (x.ShippingCost * x.Quantity));
 
-            // If there's only 1 item...
-            if (cart.Items.Count == 1)
-            {
-                var item = cart.Items.First();
+            //float shippingTotal = 0f;
 
-                // If that item has a shipping cost specified...
-                if (item.ShippingCost != 0f)
-                {
-                    // ...then use it
-                    shippingTotal = (item.ShippingCost * item.Quantity);
-                }
-                else
-                {
-                    // ...else use flat rate
-                    shippingTotal = settings.ShippingFlatRate;
-                }
-            }
-            else
-            {
-                // Else there's more than 1 item in cart, so...
-                // ... first check if there are any items with no shipping cost specified..
-                if (cart.Items.Any(x => x.ShippingCost == 0f))
-                {
-                    // Yes, so we add the flat rate first...
-                    shippingTotal = settings.ShippingFlatRate;
-                }
-                // and finally we add the extra shipping rates from each product that specified one
-                shippingTotal += cart.Items.Sum(x => (x.ShippingCost * x.Quantity));
-            }
+            //// If there's only 1 item...
+            //if (cart.Items.Count == 1)
+            //{
+            //    var item = cart.Items.First();
+
+            //    // If that item has a shipping cost specified...
+            //    if (item.ShippingCost != 0f)
+            //    {
+            //        // ...then use it
+            //        shippingTotal = (item.ShippingCost * item.Quantity);
+            //    }
+            //    else
+            //    {
+            //        // ...else use flat rate
+            //        shippingTotal = settings.ShippingFlatRate;
+            //    }
+            //}
+            //else
+            //{
+            //    // Else there's more than 1 item in cart, so...
+            //    // ... first check if there are any items with no shipping cost specified..
+            //    if (cart.Items.Any(x => x.ShippingCost == 0f))
+            //    {
+            //        // Yes, so we add the flat rate first...
+            //        shippingTotal = settings.ShippingFlatRate;
+            //    }
+            //    // and finally we add the extra shipping rates from each product that specified one
+            //    shippingTotal += cart.Items.Sum(x => (x.ShippingCost * x.Quantity));
+            //}
 
             #endregion
 

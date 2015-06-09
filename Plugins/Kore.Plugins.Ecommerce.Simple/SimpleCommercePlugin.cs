@@ -128,6 +128,8 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Products_dbo.Kore_Plugins_S
 	[UserId] [nvarchar](max) NULL,
 	[BillingAddressId] [int] NOT NULL,
 	[ShippingAddressId] [int] NOT NULL,
+	[ShippingTotal] [real] NOT NULL,
+	[TaxTotal] [real] NOT NULL,
 	[OrderTotal] [real] NOT NULL,
 	[IPAddress] [nvarchar](max) NULL,
 	[OrderDateUtc] [datetime] NOT NULL,

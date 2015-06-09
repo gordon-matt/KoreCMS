@@ -35,6 +35,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             WorkContext.Breadcrumbs.Add(T(LocalizableStrings.ShoppingCart));
 
             ViewBag.CurrencyCode = settings.Value.Currency;
+            ViewBag.ShippingFlatRate = settings.Value.ShippingFlatRate;
             return View();
         }
 

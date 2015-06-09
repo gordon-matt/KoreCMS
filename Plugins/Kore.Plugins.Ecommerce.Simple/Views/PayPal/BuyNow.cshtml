@@ -2,6 +2,10 @@
 @using Kore.Plugins.Ecommerce.Simple.Models
 @model PayPalModel
 
+@{
+    string billingCountryCode = ViewBag.BillingCountryCode;
+}
+
 <form id="payment-form" action="@Model.ActionUrl" method="post">
     @if (Model.PassProductNamesAndTotals)
     {
@@ -58,7 +62,7 @@
     @Html.Hidden("address1", Model.BillingAddress.AddressLine1)
     @Html.Hidden("address2", Model.BillingAddress.AddressLine2)
     @Html.Hidden("city", Model.BillingAddress.City)
-    @Html.Hidden("country", "")
+    @Html.Hidden("country", billingCountryCode)
     @Html.Hidden("zip", Model.BillingAddress.PostalCode)
     @Html.Hidden("email", Model.BillingAddress.Email)
 </form>

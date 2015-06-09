@@ -288,9 +288,6 @@
     <Content Include="Scripts\category-admin.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\checkout.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Scripts\order-admin.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

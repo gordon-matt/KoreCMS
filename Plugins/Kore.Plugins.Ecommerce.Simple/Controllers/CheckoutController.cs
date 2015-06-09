@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Kore.Collections;
 using Kore.Plugins.Ecommerce.Simple.Data.Domain;
 using Kore.Plugins.Ecommerce.Simple.Models;
 using Kore.Plugins.Ecommerce.Simple.Services;
+using Kore.Web.Common.Areas.Admin.Regions.Domain;
+using Kore.Web.Common.Areas.Admin.Regions.Services;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
+using Kore.Web;
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace Kore.Plugins.Ecommerce.Simple.Controllers
 {
@@ -16,17 +22,23 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         private readonly Lazy<IAddressService> addressService;
         private readonly Lazy<ICartService> cartService;
         private readonly Lazy<IOrderService> orderService;
+        private readonly Lazy<IRegionService> regionService;
+        private readonly Lazy<IRegionSettingsService> regionSettingsService;
         private readonly StoreSettings settings;
 
         public CheckoutController(
             Lazy<IAddressService> addressService,
             Lazy<ICartService> cartService,
             Lazy<IOrderService> orderService,
+            Lazy<IRegionService> regionService,
+            Lazy<IRegionSettingsService> regionSettingsService,
             StoreSettings settings)
         {
             this.addressService = addressService;
             this.cartService = cartService;
             this.orderService = orderService;
+            this.regionService = regionService;
+            this.regionSettingsService = regionSettingsService;
             this.settings = settings;
         }
 
@@ -79,7 +91,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 x.AddressLine1 == model.BillingAddress.AddressLine1 &&
                 x.AddressLine2 == model.BillingAddress.AddressLine2 &&
                 x.AddressLine3 == model.BillingAddress.AddressLine3 &&
-                x.City == model.BillingAddress.City &&
+                x.CityId == model.BillingAddress.CityId &&
                 x.PostalCode == model.BillingAddress.PostalCode &&
                 x.CountryId == model.BillingAddress.CountryId);
 
@@ -95,7 +107,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                     AddressLine1 = model.BillingAddress.AddressLine1,
                     AddressLine2 = model.BillingAddress.AddressLine2,
                     AddressLine3 = model.BillingAddress.AddressLine3,
-                    City = model.BillingAddress.City,
+                    CityId = model.BillingAddress.CityId,
                     PostalCode = model.BillingAddress.PostalCode,
                     CountryId = model.BillingAddress.CountryId
                 };
@@ -134,7 +146,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                     x.AddressLine1 == model.ShippingAddress.AddressLine1 &&
                     x.AddressLine2 == model.ShippingAddress.AddressLine2 &&
                     x.AddressLine3 == model.ShippingAddress.AddressLine3 &&
-                    x.City == model.ShippingAddress.City &&
+                    x.CityId == model.ShippingAddress.CityId &&
                     x.PostalCode == model.ShippingAddress.PostalCode &&
                     x.CountryId == model.ShippingAddress.CountryId);
 
@@ -150,7 +162,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                         AddressLine1 = model.ShippingAddress.AddressLine1,
                         AddressLine2 = model.ShippingAddress.AddressLine2,
                         AddressLine3 = model.ShippingAddress.AddressLine3,
-                        City = model.ShippingAddress.City,
+                        CityId = model.ShippingAddress.CityId,
                         PostalCode = model.ShippingAddress.PostalCode,
                         CountryId = model.ShippingAddress.CountryId
                     };
@@ -202,7 +214,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             //    shippingTotal += cart.Items.Sum(x => (x.ShippingCost * x.Quantity));
             //}
 
-            #endregion
+            #endregion Calculate Shipping Cost
 
             float taxtTotal = cart.Items.Sum(x => x.Tax * x.Quantity);
             float orderTotal = cart.Items.Sum(x => x.Price * x.Quantity) + shippingTotal + taxtTotal;
@@ -247,6 +259,40 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             var order = orderService.Value.FindOne(orderId);
             return View(order);
+        }
+
+        [Route("get-cities/{countryId}")]
+        public JsonResult GetCities(int countryId)
+        {
+            var cities = regionService.Value
+                .GetSubRegions(countryId, RegionType.City)
+                .ToDictionary(k => k.Id, v => v);
+
+            string settingsId = StoreRegionSettings.SettingsName.ToSlugUrl();
+
+            var settings = regionSettingsService.Value.Find(x =>
+                x.SettingsId == settingsId &&
+                cities.Keys.Contains(x.RegionId));
+
+            var records = new HashSet<Region>();
+            foreach (var setting in settings)
+            {
+                dynamic fields = JObject.Parse(setting.Fields);
+                bool isEnabled = fields.IsEnabled;
+
+                if (isEnabled)
+                {
+                    records.Add(cities[setting.RegionId]);
+                }
+            }
+
+            var data = records.Select(x => new
+            {
+                Id = x.Id,
+                Name = x.Name
+            });
+
+            return Json(new { Data = data }, JsonRequestBehavior.AllowGet);
         }
     }
 }

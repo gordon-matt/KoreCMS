@@ -39,19 +39,19 @@ namespace Kore.Plugins.Ecommerce.Simple.Models
         //[StringLength(128)]
         public string AddressLine3 { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.AddressModel.Country)]
+        //[Required]
+        public int CountryId { get; set; }
+
         [LocalizedDisplayName(LocalizableStrings.AddressModel.City)]
         //[Required]
         //[StringLength(128)]
-        public string City { get; set; }
+        public int CityId { get; set; }
 
         [LocalizedDisplayName(LocalizableStrings.AddressModel.PostalCode)]
         //[Required]
         //[StringLength(10)]
         public string PostalCode { get; set; }
-
-        [LocalizedDisplayName(LocalizableStrings.AddressModel.Country)]
-        //[Required]
-        public int CountryId { get; set; }
 
         [LocalizedDisplayName(LocalizableStrings.AddressModel.PhoneNumber)]
         //[Phone]
@@ -71,7 +71,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Models
                 AddressLine1 = other.AddressLine1,
                 AddressLine2 = other.AddressLine2,
                 AddressLine3 = other.AddressLine3,
-                City = other.City,
+                CityId = other.CityId,
                 PostalCode = other.PostalCode,
                 CountryId = other.CountryId,
                 PhoneNumber = other.PhoneNumber

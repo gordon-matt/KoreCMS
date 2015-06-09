@@ -39,7 +39,13 @@ namespace Kore.Web.Mvc.KoreUI
                     }
                     break;
 
-                case PanelSectionType.Body: writer.Write(@"<div class=""panel-body"">"); break;
+                case PanelSectionType.Body:
+                    writer.Write(@"<div class=""panel-body"">");
+                    break;
+
+                case PanelSectionType.Footer:
+                    writer.Write(@"<div class=""panel-footer"">");
+                    break;
             }
         }
 

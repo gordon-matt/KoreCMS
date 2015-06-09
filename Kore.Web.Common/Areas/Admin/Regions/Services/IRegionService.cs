@@ -15,9 +15,9 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
 
         IEnumerable<Region> GetContinents(bool includeCountries = false);
 
-        IEnumerable<Region> GetSubRegions(int regionId);
+        IEnumerable<Region> GetSubRegions(int regionId, RegionType? regionType = null);
 
-        IEnumerable<Region> GetSubRegions(int regionId, int pageIndex, int pageSize, out int total);
+        IEnumerable<Region> GetSubRegions(int regionId, int pageIndex, int pageSize, out int total, RegionType? regionType = null);
 
         IEnumerable<Region> GetCountries();
 
@@ -63,14 +63,14 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
             return Repository.Table.Where(x => x.RegionType == RegionType.Continent).OrderBy(x => x.Name).ToList();
         }
 
-        public IEnumerable<Region> GetSubRegions(int regionId)
+        public IEnumerable<Region> GetSubRegions(int regionId, RegionType? regionType = null)
         {
-            if (regionId == 0)
+            if (regionType.HasValue)
             {
                 return Repository.Table
                     .Include(x => x.Parent)
                     .Include(x => x.Children)
-                    .Where(x => x.Parent == null)
+                    .Where(x => x.Parent.Id == regionId && x.RegionType == regionType)
                     .OrderBy(x => x.Id)
                     .ToHashSet();
             }
@@ -83,42 +83,39 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
                 .ToHashSet();
         }
 
-        public IEnumerable<Region> GetSubRegions(int regionId, int pageIndex, int pageSize, out int total)
+        public IEnumerable<Region> GetSubRegions(int regionId, int pageIndex, int pageSize, out int total, RegionType? regionType = null)
         {
-            if (regionId == 0)
-            {
-                var query = Repository.Table
-                    .Include(x => x.Parent)
-                    .Include(x => x.Children)
-                    .Where(x => x.Parent == null)
-                    .OrderBy(x => x.Id);
+            var query = Repository.Table
+                .Include(x => x.Parent)
+                .Include(x => x.Children);
 
-                total = query.Count();
-                return query.ToHashSet();
+            if (regionType.HasValue)
+            {
+                query = query.Where(x => x.Parent.Id == regionId && x.RegionType == regionType);
             }
             else
             {
-                var query = Repository.Table
-                    .Include(x => x.Parent)
-                    .Include(x => x.Children)
-                    .Where(x => x.Parent.Id == regionId)
-                    .OrderBy(x => x.Id)
-                    .Skip((pageIndex - 1) * pageSize)
-                    .Take(pageSize);
-
-                total = query.Count();
-                return query.ToHashSet();
+                query = query.Where(x => x.Parent.Id == regionId);
             }
+
+            query = query.OrderBy(x => x.Id);
+
+            total = query.Count();
+
+            return query
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToHashSet();
         }
 
         public IEnumerable<Region> GetCountries()
         {
             return Repository.Table
-                    .Include(x => x.Parent)
-                    .Include(x => x.Children)
-                    .Where(x => x.RegionType == RegionType.Country)
-                    .OrderBy(x => x.Name)
-                    .ToHashSet();
+                .Include(x => x.Parent)
+                .Include(x => x.Children)
+                .Where(x => x.RegionType == RegionType.Country)
+                .OrderBy(x => x.Name)
+                .ToHashSet();
         }
 
         public IEnumerable<Region> GetStates(int countryId, bool includeCities = false)
@@ -131,6 +128,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
                     .OrderBy(x => x.Name)
                     .ToHashSet();
             }
+
             return Repository.Table
                 .Where(x => x.ParentId == countryId && x.RegionType == RegionType.State)
                 .OrderBy(x => x.Name)

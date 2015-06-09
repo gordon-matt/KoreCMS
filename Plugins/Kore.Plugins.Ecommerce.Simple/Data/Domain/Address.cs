@@ -23,11 +23,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 
         public string AddressLine3 { get; set; }
 
-        public string City { get; set; }
+        public int CountryId { get; set; }
+
+        public int CityId { get; set; }
 
         public string PostalCode { get; set; }
-
-        public int CountryId { get; set; }
 
         public string PhoneNumber { get; set; }
 
@@ -55,9 +55,9 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             Property(x => x.AddressLine1).IsRequired().HasMaxLength(128);
             Property(x => x.AddressLine2).HasMaxLength(128);
             Property(x => x.AddressLine3).HasMaxLength(128);
-            Property(x => x.City).IsRequired().HasMaxLength(128);
-            Property(x => x.PostalCode).IsRequired().HasMaxLength(10);
             Property(x => x.CountryId).IsRequired();
+            Property(x => x.CityId).IsRequired();
+            Property(x => x.PostalCode).IsRequired().HasMaxLength(10);
             Property(x => x.PhoneNumber).IsRequired().HasMaxLength(25);
         }
     }

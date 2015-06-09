@@ -4,10 +4,11 @@ using Kore.Web.Mvc.KoreUI.Providers;
 
 namespace Kore.Web.Mvc.KoreUI
 {
-    public enum PanelSectionType
+    public enum PanelSectionType : byte
     {
         Heading,
-        Body
+        Body,
+        Footer
     }
 
     public class PanelSection : IDisposable

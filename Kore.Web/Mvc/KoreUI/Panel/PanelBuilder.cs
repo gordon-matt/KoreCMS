@@ -19,6 +19,11 @@ namespace Kore.Web.Mvc.KoreUI
             return new PanelSection(base.element.Provider, PanelSectionType.Body, base.textWriter);
         }
 
+        public PanelSection BeginFooter()
+        {
+            return new PanelSection(base.element.Provider, PanelSectionType.Footer, base.textWriter);
+        }
+
         public override void Dispose()
         {
             base.Dispose();

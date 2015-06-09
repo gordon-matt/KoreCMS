@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Kore.Web.Mvc.KoreUI.Providers;
 
 namespace Kore.Web.Mvc.KoreUI
 {
@@ -12,19 +13,21 @@ namespace Kore.Web.Mvc.KoreUI
     public class PanelSection : IDisposable
     {
         private readonly TextWriter textWriter;
+        private readonly IKoreUIProvider provider;
 
         public PanelSectionType SectionType { get; private set; }
 
-        internal PanelSection(PanelSectionType sectionType, TextWriter writer, string title = null)
+        internal PanelSection(IKoreUIProvider provider, PanelSectionType sectionType, TextWriter writer, string title = null)
         {
+            this.provider = provider;
             this.SectionType = sectionType;
             this.textWriter = writer;
-            KoreUISettings.Provider.PanelProvider.BeginPanelSection(this.SectionType, this.textWriter, title);
+            provider.PanelProvider.BeginPanelSection(this.SectionType, this.textWriter, title);
         }
 
         public void Dispose()
         {
-            KoreUISettings.Provider.PanelProvider.EndPanelSection(this.SectionType, this.textWriter);
+            provider.PanelProvider.EndPanelSection(this.SectionType, this.textWriter);
         }
     }
 }

@@ -1,26 +1,29 @@
 ﻿using System;
 using System.IO;
+using Kore.Web.Mvc.KoreUI.Providers;
 
 namespace Kore.Web.Mvc.KoreUI
 {
     public class ButtonGroup : IDisposable
     {
         private readonly TextWriter textWriter;
+        private readonly IKoreUIProvider provider;
 
-        internal ButtonGroup(TextWriter writer)
+        internal ButtonGroup(IKoreUIProvider provider, TextWriter writer)
         {
+            this.provider = provider;
             this.textWriter = writer;
-            KoreUISettings.Provider.ToolbarProvider.BeginButtonGroup(this.textWriter);
+            provider.ToolbarProvider.BeginButtonGroup(this.textWriter);
         }
 
         public void Button(string text, State state, string onClick = null, object htmlAttributes = null)
         {
-            KoreUISettings.Provider.ToolbarProvider.AddButton(this.textWriter, text, state, onClick, htmlAttributes);
+            provider.ToolbarProvider.AddButton(this.textWriter, text, state, onClick, htmlAttributes);
         }
 
         public void Dispose()
         {
-            KoreUISettings.Provider.ToolbarProvider.EndButtonGroup(this.textWriter);
+            provider.ToolbarProvider.EndButtonGroup(this.textWriter);
         }
     }
 }

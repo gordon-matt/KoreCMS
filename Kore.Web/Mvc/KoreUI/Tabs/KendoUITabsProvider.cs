@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Web.Mvc;
 using Kore.Web.Mvc.KoreUI.Providers;
 
 namespace Kore.Web.Mvc.KoreUI
@@ -14,12 +15,7 @@ namespace Kore.Web.Mvc.KoreUI
 
         #region ITabsProvider Members
 
-        public string TabsTag
-        {
-            get { return "div"; }
-        }
-
-        public void BeginTabs(Tabs tabs)
+        public void BeginTabs(Tabs tabs, TextWriter writer)
         {
             uiProvider.Scripts.Add(string.Format(
 @"$('#{0}').kendoTabStrip({{
@@ -29,6 +25,12 @@ namespace Kore.Web.Mvc.KoreUI
         }}
     }}
 }});", tabs.Id));
+
+            var builder = new TagBuilder("div");
+            builder.MergeAttributes<string, object>(tabs.HtmlAttributes);
+            string tag = builder.ToString(TagRenderMode.StartTag);
+
+            writer.Write(tag);
         }
 
         public void BeginTabsHeader(TextWriter writer)
@@ -55,9 +57,9 @@ namespace Kore.Web.Mvc.KoreUI
             writer.Write("</ul>");
         }
 
-        public void EndTabs(TextWriter writer)
+        public void EndTabs(Tabs tabs, TextWriter writer)
         {
-            writer.Write("</div>");
+            writer.Write("</div></div>");
         }
 
         public void WriteTab(TextWriter writer, string label, string tabId, bool isActive)

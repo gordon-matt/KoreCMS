@@ -35,7 +35,7 @@
 
 //        public void AddButton(TextWriter writer, string text, State state, string onClick = null, object htmlAttributes = null)
 //        {
-//            var button = KoreUISettings.Provider.Button(text, state, onClick, htmlAttributes);
+//            var button = KoreUISettings.DefaultProvider.Button(text, state, onClick, htmlAttributes);
 //            writer.Write(button.ToString());
 //        }
 

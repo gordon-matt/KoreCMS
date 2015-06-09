@@ -7,16 +7,17 @@ namespace Kore.Web.Mvc.KoreUI
     {
         #region IAccordionProvider Members
 
-        public string AccordionTag
-        {
-            get { return "div"; }
-        }
-
-        public void BeginAccordion(Accordion accordion)
+        public void BeginAccordion(Accordion accordion, TextWriter writer)
         {
             accordion.EnsureClass("panel-group");
             accordion.EnsureHtmlAttribute("role", "tablist");
             accordion.EnsureHtmlAttribute("aria-multiselectable", "true");
+
+            var builder = new TagBuilder("div");
+            builder.MergeAttributes<string, object>(accordion.HtmlAttributes);
+            string tag = builder.ToString(TagRenderMode.StartTag);
+
+            writer.Write(tag);
         }
 
         public void BeginAccordionPanel(TextWriter writer, string title, string panelId, string parentAccordionId, bool expanded)
@@ -49,6 +50,11 @@ namespace Kore.Web.Mvc.KoreUI
 
             writer.Write(collapse.ToString());
             writer.Write(@"<div class=""panel-body"">");
+        }
+
+        public void EndAccordion(Accordion accordion, TextWriter writer)
+        {
+            writer.Write("</div>");
         }
 
         public void EndAccordionPanel(TextWriter writer)

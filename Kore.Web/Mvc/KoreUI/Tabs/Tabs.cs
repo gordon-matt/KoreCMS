@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Web.Mvc;
 
 namespace Kore.Web.Mvc.KoreUI
@@ -9,23 +10,8 @@ namespace Kore.Web.Mvc.KoreUI
 
         public TabPosition Position { get; set; }
 
-        public Tabs()
-            : this(null, TabPosition.Top, null)
-        {
-        }
-
-        public Tabs(string id)
-            : this(id, TabPosition.Top, null)
-        {
-        }
-
-        public Tabs(string id, TabPosition position)
-            : this(id, position, null)
-        {
-        }
-
-        public Tabs(string id, TabPosition position, object htmlAttributes)
-            : base(KoreUISettings.Provider.TabsProvider.TabsTag, htmlAttributes)
+        public Tabs(string id = null, TabPosition position = TabPosition.Top, object htmlAttributes = null)
+            : base(htmlAttributes)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -35,7 +21,16 @@ namespace Kore.Web.Mvc.KoreUI
             this.Position = position;
             this.Id = HtmlHelper.GenerateIdFromName(id);
             EnsureHtmlAttribute("id", this.Id);
-            KoreUISettings.Provider.TabsProvider.BeginTabs(this);
+        }
+
+        protected internal override void StartTag(TextWriter textWriter)
+        {
+            Provider.TabsProvider.BeginTabs(this, textWriter);
+        }
+
+        protected internal override void EndTag(TextWriter textWriter)
+        {
+            Provider.TabsProvider.EndTabs(this, textWriter);
         }
     }
 }

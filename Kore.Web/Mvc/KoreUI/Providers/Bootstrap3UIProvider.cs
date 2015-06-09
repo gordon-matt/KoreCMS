@@ -171,7 +171,7 @@ namespace Kore.Web.Mvc.KoreUI.Providers
 
         public override IToolbarProvider ToolbarProvider
         {
-            get { return toolbarProvider ?? (toolbarProvider = new Bootstrap3ToolbarProvider()); }
+            get { return toolbarProvider ?? (toolbarProvider = new Bootstrap3ToolbarProvider(this)); }
         }
 
         #endregion Special

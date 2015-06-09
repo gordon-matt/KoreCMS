@@ -11,7 +11,7 @@ namespace Kore.Web.Mvc.KoreUI
 
         public ButtonGroup BeginButtonGroup()
         {
-            return new ButtonGroup(base.textWriter);
+            return new ButtonGroup(base.element.Provider, base.textWriter);
         }
 
         public override void Dispose()

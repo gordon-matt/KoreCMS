@@ -19,7 +19,7 @@ namespace Kore.Web.Mvc.KoreUI
             this.tabIds = new Queue<string>();
             this.isHeaderClosed = false;
             this.writingContent = false;
-            KoreUISettings.Provider.TabsProvider.BeginTabsHeader(this.textWriter);
+            base.element.Provider.TabsProvider.BeginTabsHeader(this.textWriter);
         }
 
         public TabPanel BeginPanel()
@@ -34,12 +34,12 @@ namespace Kore.Web.Mvc.KoreUI
             string tabId = this.tabIds.Dequeue();
             if (tabId == activeTabId)
             {
-                KoreUISettings.Provider.TabsProvider.BeginTabContent(this.textWriter);
+                base.element.Provider.TabsProvider.BeginTabContent(this.textWriter);
                 isFirstTab = false;
-                return new TabPanel(base.textWriter, tabId, true);
+                return new TabPanel(base.element.Provider, base.textWriter, tabId, true);
             }
 
-            return new TabPanel(base.textWriter, tabId);
+            return new TabPanel(base.element.Provider, base.textWriter, tabId);
         }
 
         private void CheckBuilderState()
@@ -54,7 +54,7 @@ namespace Kore.Web.Mvc.KoreUI
         {
             if (!this.isHeaderClosed)
             {
-                KoreUISettings.Provider.TabsProvider.EndTabsHeader(this.textWriter);
+                base.element.Provider.TabsProvider.EndTabsHeader(this.textWriter);
                 this.isHeaderClosed = true;
             }
         }
@@ -64,7 +64,7 @@ namespace Kore.Web.Mvc.KoreUI
             this.CloseHeader();
 
             // Close Tab Content Div:
-            KoreUISettings.Provider.TabsProvider.EndTabs(this.textWriter);
+            //base.element.Provider.TabsProvider.EndTabs((this.element as Tabs), this.textWriter);
             base.Dispose();
         }
 
@@ -86,12 +86,12 @@ namespace Kore.Web.Mvc.KoreUI
             if (isFirstTab)
             {
                 activeTabId = tabId;
-                KoreUISettings.Provider.TabsProvider.WriteTab(this.textWriter, label, tabId, true);
+                base.element.Provider.TabsProvider.WriteTab(this.textWriter, label, tabId, true);
                 isFirstTab = false;
             }
             else
             {
-                KoreUISettings.Provider.TabsProvider.WriteTab(this.textWriter, label, tabId, false);
+                base.element.Provider.TabsProvider.WriteTab(this.textWriter, label, tabId, false);
             }
         }
     }

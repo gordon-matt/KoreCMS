@@ -20,12 +20,18 @@ namespace Kore.Web.Mvc.KoreUI
             get { return "ul"; }
         }
 
-        public void BeginAccordion(Accordion accordion)
+        public void BeginAccordion(Accordion accordion, TextWriter writer)
         {
             uiProvider.Scripts.Add(string.Format(
 @"$('#{0}').kendoPanelBar({{
     expandMode: 'single'
 }});", accordion.Id));
+
+            var builder = new TagBuilder("ul");
+            builder.MergeAttributes<string, object>(accordion.HtmlAttributes);
+            string tag = builder.ToString(TagRenderMode.StartTag);
+
+            writer.Write(tag);
         }
 
         public void BeginAccordionPanel(TextWriter writer, string title, string panelId, string parentAccordionId, bool expanded)
@@ -40,6 +46,11 @@ namespace Kore.Web.Mvc.KoreUI
             writer.Write(li.ToString());
             writer.Write(title);
             writer.Write(@"<div class=""k-content"">");
+        }
+
+        public void EndAccordion(Accordion accordion, TextWriter writer)
+        {
+            writer.Write("</ul>");
         }
 
         public void EndAccordionPanel(TextWriter writer)

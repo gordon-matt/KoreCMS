@@ -4,9 +4,7 @@ namespace Kore.Web.Mvc.KoreUI
 {
     public interface ITabsProvider
     {
-        string TabsTag { get; }
-
-        void BeginTabs(Tabs tabs);
+        void BeginTabs(Tabs tabs, TextWriter writer);
 
         void BeginTabsHeader(TextWriter writer);
 
@@ -18,7 +16,7 @@ namespace Kore.Web.Mvc.KoreUI
 
         void EndTabsHeader(TextWriter writer);
 
-        void EndTabs(TextWriter writer);
+        void EndTabs(Tabs tabs, TextWriter writer);
 
         void WriteTab(TextWriter writer, string label, string tabId, bool isActive);
     }

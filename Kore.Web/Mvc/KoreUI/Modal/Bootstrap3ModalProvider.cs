@@ -7,18 +7,19 @@ namespace Kore.Web.Mvc.KoreUI
     {
         #region IModalProvider Members
 
-        public string ModalTag
-        {
-            get { return "div"; }
-        }
-
-        public void BeginModal(Modal modal)
+        public void BeginModal(Modal modal, TextWriter writer)
         {
             modal.EnsureClass("modal fade");
             modal.EnsureHtmlAttribute("tabindex", "-1");
             modal.EnsureHtmlAttribute("role", "dialog");
             modal.EnsureHtmlAttribute("aria-labelledby", modal.Id + "-label");
             modal.EnsureHtmlAttribute("aria-hidden", "true");
+
+            var builder = new TagBuilder("div");
+            builder.MergeAttributes<string, object>(modal.HtmlAttributes);
+            string tag = builder.ToString(TagRenderMode.StartTag);
+
+            writer.Write(tag);
         }
 
         public void BeginModalSectionPanel(ModalSection section, TextWriter writer, string title = null)
@@ -64,8 +65,9 @@ namespace Kore.Web.Mvc.KoreUI
             }
         }
 
-        public void EndModal(Modal modal)
+        public void EndModal(Modal modal, TextWriter writer)
         {
+            writer.Write("</div>");
         }
 
         public MvcHtmlString ModalLaunchButton(string modalId, string text, object htmlAttributes = null)

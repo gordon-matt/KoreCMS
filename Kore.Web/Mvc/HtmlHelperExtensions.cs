@@ -15,6 +15,7 @@ using Kore.Security.Membership;
 using Kore.Web.Collections;
 using Kore.Web.Mvc.Controls;
 using Kore.Web.Mvc.KoreUI;
+using Kore.Web.Mvc.KoreUI.Providers;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -557,8 +558,18 @@ namespace Kore.Web.Mvc
             return new Kore<TModel>(html);
         }
 
-        public static KoreUI<TModel> KoreUI<TModel>(this HtmlHelper<TModel> htmlHelper)
+        public static KoreUI<TModel> KoreUI<TModel>(this HtmlHelper<TModel> htmlHelper, IKoreUIProvider provider = null)
         {
+            if (provider != null)
+            {
+                return new KoreUI<TModel>(htmlHelper, provider);
+            }
+
+            string areaName = (string)htmlHelper.ViewContext.RouteData.DataTokens["area"];
+            if (!string.IsNullOrEmpty(areaName) && KoreUISettings.AreaUIProviders.ContainsKey(areaName))
+            {
+                return new KoreUI<TModel>(htmlHelper, KoreUISettings.AreaUIProviders[areaName]);
+            }
             return new KoreUI<TModel>(htmlHelper);
         }
 

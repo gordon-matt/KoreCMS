@@ -1,21 +1,24 @@
 ﻿using System;
 using System.IO;
+using Kore.Web.Mvc.KoreUI.Providers;
 
 namespace Kore.Web.Mvc.KoreUI
 {
     public class ThumbnailCaptionPanel : IDisposable
     {
+        private readonly IKoreUIProvider provider;
         private readonly TextWriter textWriter;
 
-        internal ThumbnailCaptionPanel(TextWriter writer)
+        internal ThumbnailCaptionPanel(IKoreUIProvider provider, TextWriter writer)
         {
+            this.provider = provider;
             this.textWriter = writer;
-            KoreUISettings.Provider.ThumbnailProvider.BeginCaptionPanel(this.textWriter);
+            provider.ThumbnailProvider.BeginCaptionPanel(this.textWriter);
         }
 
         public void Dispose()
         {
-            KoreUISettings.Provider.ThumbnailProvider.EndCaptionPanel(this.textWriter);
+            provider.ThumbnailProvider.EndCaptionPanel(this.textWriter);
         }
     }
 }

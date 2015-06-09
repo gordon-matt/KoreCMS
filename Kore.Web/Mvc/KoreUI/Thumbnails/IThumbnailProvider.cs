@@ -5,13 +5,13 @@ namespace Kore.Web.Mvc.KoreUI
 {
     public interface IThumbnailProvider
     {
-        string ThumbnailTag { get; }
-
-        void BeginThumbnail(Thumbnail thumbnail);
+        void BeginThumbnail(Thumbnail thumbnail, TextWriter writer);
 
         void BeginCaptionPanel(TextWriter writer);
 
         void EndCaptionPanel(TextWriter writer);
+
+        void EndThumbnail(Thumbnail thumbnail, TextWriter writer);
 
         void WriteThumbnailImage(Thumbnail thumbnail, UrlHelper url, TextWriter writer);
 

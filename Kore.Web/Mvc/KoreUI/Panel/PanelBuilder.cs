@@ -11,17 +11,16 @@ namespace Kore.Web.Mvc.KoreUI
 
         public PanelSection BeginHeader(string title)
         {
-            return new PanelSection(PanelSectionType.Heading, base.textWriter, title);
+            return new PanelSection(base.element.Provider, PanelSectionType.Heading, base.textWriter, title);
         }
 
         public PanelSection BeginBody()
         {
-            return new PanelSection(PanelSectionType.Body, base.textWriter);
+            return new PanelSection(base.element.Provider, PanelSectionType.Body, base.textWriter);
         }
 
         public override void Dispose()
         {
-            KoreUISettings.Provider.PanelProvider.EndPanel(base.element);
             base.Dispose();
         }
     }

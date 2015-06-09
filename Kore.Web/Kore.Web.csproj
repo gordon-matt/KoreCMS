@@ -316,8 +316,6 @@
     <Compile Include="Mvc\KoreUI\Common\BuilderBase.cs" />
     <Compile Include="Mvc\KoreUI\Common\HtmlElement.cs" />
     <Compile Include="Mvc\KoreUI\Common\State.cs" />
-    <Compile Include="Mvc\KoreUI\IIconProvider.cs" />
-    <Compile Include="Mvc\KoreUI\IIconSetProvider.cs" />
     <Compile Include="Mvc\KoreUI\KoreUI.cs" />
     <Compile Include="Mvc\KoreUI\KoreUISettings.cs" />
     <Compile Include="Mvc\KoreUI\Modal\Bootstrap3ModalProvider.cs" />

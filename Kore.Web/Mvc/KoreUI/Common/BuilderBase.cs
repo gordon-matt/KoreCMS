@@ -22,13 +22,13 @@ namespace Kore.Web.Mvc.KoreUI
 
             this.element = element;
             this.textWriter = htmlHelper.ViewContext.Writer;
-            this.textWriter.Write(this.element.StartTag);
+            this.element.StartTag(textWriter);
             this.htmlHelper = htmlHelper;
         }
 
         public virtual void Dispose()
         {
-            this.textWriter.Write(this.element.EndTag);
+            this.element.EndTag(textWriter);
         }
     }
 }

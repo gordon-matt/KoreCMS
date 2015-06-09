@@ -7,12 +7,7 @@ namespace Kore.Web.Mvc.KoreUI
     {
         #region ITabsProvider Members
 
-        public string TabsTag
-        {
-            get { return "div"; }
-        }
-
-        public void BeginTabs(Tabs tabs)
+        public void BeginTabs(Tabs tabs, TextWriter writer)
         {
             tabs.EnsureHtmlAttribute("role", "tabpanel");
 
@@ -22,6 +17,12 @@ namespace Kore.Web.Mvc.KoreUI
                 case TabPosition.Right: tabs.EnsureClass("tabbable tabs-right"); break;
                 //case TabPosition.Bottom: tabs.EnsureClass("tabbable tabs-bottom"); break;
             }
+
+            var builder = new TagBuilder("div");
+            builder.MergeAttributes<string, object>(tabs.HtmlAttributes);
+            string tag = builder.ToString(TagRenderMode.StartTag);
+
+            writer.Write(tag);
         }
 
         public void BeginTabsHeader(TextWriter writer)
@@ -59,9 +60,9 @@ namespace Kore.Web.Mvc.KoreUI
             writer.Write("</ul>");
         }
 
-        public void EndTabs(TextWriter writer)
+        public void EndTabs(Tabs tabs, TextWriter writer)
         {
-            writer.Write("</div>");
+            writer.Write("</div></div>");
         }
 
         public void WriteTab(TextWriter writer, string label, string tabId, bool isActive)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Web.Mvc;
+using Kore.Web.Mvc.KoreUI.Providers;
 
 namespace Kore.Web.Mvc.KoreUI
 {
@@ -14,24 +15,26 @@ namespace Kore.Web.Mvc.KoreUI
     public class ModalSectionPanel : IDisposable
     {
         private readonly TextWriter textWriter;
+        private readonly IKoreUIProvider provider;
 
         public ModalSection Section { get; private set; }
 
-        internal ModalSectionPanel(ModalSection section, TextWriter writer, string title = null)
+        internal ModalSectionPanel(IKoreUIProvider provider, ModalSection section, TextWriter writer, string title = null)
         {
+            this.provider = provider;
             this.Section = section;
             this.textWriter = writer;
-            KoreUISettings.Provider.ModalProvider.BeginModalSectionPanel(this.Section, this.textWriter, title);
+            provider.ModalProvider.BeginModalSectionPanel(this.Section, this.textWriter, title);
         }
 
         public MvcHtmlString ModalCloseButton(string modalId, string text, object htmlAttributes = null)
         {
-            return KoreUISettings.Provider.ModalProvider.ModalCloseButton(modalId, text, htmlAttributes);
+            return provider.ModalProvider.ModalCloseButton(modalId, text, htmlAttributes);
         }
 
         public void Dispose()
         {
-            KoreUISettings.Provider.ModalProvider.EndModalSectionPanel(this.Section, this.textWriter);
+            provider.ModalProvider.EndModalSectionPanel(this.Section, this.textWriter);
         }
     }
 }

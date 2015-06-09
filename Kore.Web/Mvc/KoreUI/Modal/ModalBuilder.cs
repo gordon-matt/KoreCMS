@@ -11,22 +11,21 @@ namespace Kore.Web.Mvc.KoreUI
 
         public ModalSectionPanel BeginHeader(string title)
         {
-            return new ModalSectionPanel(ModalSection.Header, base.textWriter, title);
+            return new ModalSectionPanel(base.element.Provider, ModalSection.Header, base.textWriter, title);
         }
 
         public ModalSectionPanel BeginBody()
         {
-            return new ModalSectionPanel(ModalSection.Body, base.textWriter);
+            return new ModalSectionPanel(base.element.Provider, ModalSection.Body, base.textWriter);
         }
 
         public ModalSectionPanel BeginFooter()
         {
-            return new ModalSectionPanel(ModalSection.Footer, base.textWriter);
+            return new ModalSectionPanel(base.element.Provider, ModalSection.Footer, base.textWriter);
         }
 
         public override void Dispose()
         {
-            KoreUISettings.Provider.ModalProvider.EndModal(base.element);
             base.Dispose();
         }
     }

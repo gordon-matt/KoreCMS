@@ -1,4 +1,6 @@
-﻿namespace Kore.Web.Mvc.KoreUI
+﻿using System.IO;
+
+namespace Kore.Web.Mvc.KoreUI
 {
     public class Thumbnail : HtmlElement
     {
@@ -6,17 +8,21 @@
 
         public string ImageAltText { get; set; }
 
-        public Thumbnail(string src, string alt)
-            : this(src, alt, null, null)
-        {
-        }
-
-        public Thumbnail(string src, string alt, object divHtmlAttributes, object imgHtmlAttributes)
-            : base(KoreUISettings.Provider.ThumbnailProvider.ThumbnailTag, divHtmlAttributes)
+        public Thumbnail(string src, string alt, object divHtmlAttributes = null, object imgHtmlAttributes = null)
+            : base(divHtmlAttributes)
         {
             this.ImageSource = src;
             this.ImageAltText = alt;
-            KoreUISettings.Provider.ThumbnailProvider.BeginThumbnail(this);
+        }
+
+        protected internal override void StartTag(TextWriter textWriter)
+        {
+            Provider.ThumbnailProvider.BeginThumbnail(this, textWriter);
+        }
+
+        protected internal override void EndTag(TextWriter textWriter)
+        {
+            Provider.ThumbnailProvider.EndThumbnail(this, textWriter);
         }
     }
 }

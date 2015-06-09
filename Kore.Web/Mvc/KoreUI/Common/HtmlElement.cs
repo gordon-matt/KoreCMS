@@ -1,40 +1,24 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Web.Mvc;
+using Kore.Web.Mvc.KoreUI.Providers;
 
 namespace Kore.Web.Mvc.KoreUI
 {
     public abstract class HtmlElement
     {
-        // Fields
-        protected readonly IDictionary<string, object> htmlAttributes;
+        public IDictionary<string, object> HtmlAttributes { get; private set; }
 
-        protected string tag;
-
-        // Methods
-        public HtmlElement(string tag, object htmlAttributes)
+        public HtmlElement(object htmlAttributes)
         {
-            this.tag = tag;
-            this.htmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
+            this.HtmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
         }
 
-        // Properties
-        internal string EndTag
-        {
-            get
-            {
-                return string.Format("</{0}>", this.tag);
-            }
-        }
+        internal IKoreUIProvider Provider { get; set; }
 
-        internal virtual string StartTag
-        {
-            get
-            {
-                var builder = new TagBuilder(this.tag);
-                builder.MergeAttributes<string, object>(this.htmlAttributes);
-                return builder.ToString(TagRenderMode.StartTag);
-            }
-        }
+        protected internal abstract void StartTag(TextWriter textWriter);
+
+        protected internal abstract void EndTag(TextWriter textWriter);
 
         public void EnsureClass(string className)
         {
@@ -43,20 +27,20 @@ namespace Kore.Web.Mvc.KoreUI
 
         public void EnsureHtmlAttribute(string key, string value, bool replaceExisting = true)
         {
-            if (this.htmlAttributes.ContainsKey(key))
+            if (this.HtmlAttributes.ContainsKey(key))
             {
                 if (replaceExisting)
                 {
-                    this.htmlAttributes[key] = value;
+                    this.HtmlAttributes[key] = value;
                 }
                 else
                 {
-                    this.htmlAttributes[key] += " " + value;
+                    this.HtmlAttributes[key] += " " + value;
                 }
             }
             else
             {
-                this.htmlAttributes.Add(key, value);
+                this.HtmlAttributes.Add(key, value);
             }
         }
     }

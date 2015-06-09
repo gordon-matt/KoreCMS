@@ -17,13 +17,13 @@ namespace Kore.Web.Mvc.KoreUI
 
         #region IModalProvider Members
 
-        public string ModalTag
+        public void BeginModal(Modal modal, TextWriter writer)
         {
-            get { return "div"; }
-        }
+            var builder = new TagBuilder("div");
+            builder.MergeAttributes<string, object>(modal.HtmlAttributes);
+            string tag = builder.ToString(TagRenderMode.StartTag);
 
-        public void BeginModal(Modal modal)
-        {
+            writer.Write(tag);
         }
 
         public void BeginModalSectionPanel(ModalSection section, TextWriter writer, string title = null)
@@ -42,7 +42,7 @@ namespace Kore.Web.Mvc.KoreUI
             }
         }
 
-        public void EndModal(Modal modal)
+        public void EndModal(Modal modal, TextWriter writer)
         {
             uiProvider.Scripts.Add(string.Format(
 @"$('#{0}').kendoWindow({{
@@ -55,6 +55,8 @@ namespace Kore.Web.Mvc.KoreUI
     height: '300px',
     visible: false
 }}).data('kendoWindow').center();", modal.Id, title));
+            
+            writer.Write("</div>");
         }
 
         public void EndModalSectionPanel(ModalSection section, TextWriter writer)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Web.Mvc;
 
 namespace Kore.Web.Mvc.KoreUI
@@ -7,13 +8,8 @@ namespace Kore.Web.Mvc.KoreUI
     {
         public string Id { get; private set; }
 
-        public Toolbar(string id)
-            : this(id, null)
-        {
-        }
-
-        public Toolbar(string id, object htmlAttributes)
-            : base(KoreUISettings.Provider.ToolbarProvider.ToolbarTag, htmlAttributes)
+        public Toolbar(string id = null, object htmlAttributes = null)
+            : base(htmlAttributes)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -22,7 +18,16 @@ namespace Kore.Web.Mvc.KoreUI
 
             this.Id = HtmlHelper.GenerateIdFromName(id);
             EnsureHtmlAttribute("id", this.Id);
-            KoreUISettings.Provider.ToolbarProvider.BeginToolbar(this);
+        }
+
+        protected internal override void StartTag(TextWriter textWriter)
+        {
+            Provider.ToolbarProvider.BeginToolbar(this, textWriter);
+        }
+
+        protected internal override void EndTag(TextWriter textWriter)
+        {
+            Provider.ToolbarProvider.EndToolbar(this, textWriter);
         }
     }
 }

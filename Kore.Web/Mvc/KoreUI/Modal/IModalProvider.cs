@@ -5,13 +5,11 @@ namespace Kore.Web.Mvc.KoreUI
 {
     public interface IModalProvider
     {
-        string ModalTag { get; }
-
-        void BeginModal(Modal modal);
+        void BeginModal(Modal modal, TextWriter writer);
 
         void BeginModalSectionPanel(ModalSection section, TextWriter writer, string title = null);
 
-        void EndModal(Modal modal);
+        void EndModal(Modal modal, TextWriter writer);
 
         void EndModalSectionPanel(ModalSection section, TextWriter writer);
 

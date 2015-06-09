@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Web.Mvc;
 
 namespace Kore.Web.Mvc.KoreUI
@@ -10,7 +11,7 @@ namespace Kore.Web.Mvc.KoreUI
         public State State { get; private set; }
 
         public Panel(string id = null, State state = State.Primary, object htmlAttributes = null)
-            : base(KoreUISettings.Provider.PanelProvider.PanelTag, htmlAttributes)
+            : base(htmlAttributes)
         {
             if (id == null)
             {
@@ -19,7 +20,16 @@ namespace Kore.Web.Mvc.KoreUI
             this.Id = HtmlHelper.GenerateIdFromName(id);
             this.State = state;
             EnsureHtmlAttribute("id", this.Id);
-            KoreUISettings.Provider.PanelProvider.BeginPanel(this);
+        }
+
+        protected internal override void StartTag(TextWriter textWriter)
+        {
+            Provider.PanelProvider.BeginPanel(this, textWriter);
+        }
+
+        protected internal override void EndTag(TextWriter textWriter)
+        {
+            Provider.PanelProvider.EndPanel(this, textWriter);
         }
     }
 }

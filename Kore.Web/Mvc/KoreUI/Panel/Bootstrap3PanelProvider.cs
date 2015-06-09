@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Web.Mvc;
 
 namespace Kore.Web.Mvc.KoreUI
 {
@@ -6,12 +7,7 @@ namespace Kore.Web.Mvc.KoreUI
     {
         #region IPanelProvider Members
 
-        public string PanelTag
-        {
-            get { return "div"; }
-        }
-
-        public void BeginPanel(Panel panel)
+        public void BeginPanel(Panel panel, TextWriter writer)
         {
             switch (panel.State)
             {
@@ -23,6 +19,12 @@ namespace Kore.Web.Mvc.KoreUI
                 case State.Success: panel.EnsureClass("panel panel-success"); break;
                 case State.Warning: panel.EnsureClass("panel panel-warning"); break;
             }
+
+            var builder = new TagBuilder("div");
+            builder.MergeAttributes<string, object>(panel.HtmlAttributes);
+            string tag = builder.ToString(TagRenderMode.StartTag);
+
+            writer.Write(tag);
         }
 
         public void BeginPanelSection(PanelSectionType sectionType, TextWriter writer, string title = null)
@@ -41,8 +43,9 @@ namespace Kore.Web.Mvc.KoreUI
             }
         }
 
-        public void EndPanel(Panel panel)
+        public void EndPanel(Panel panel, TextWriter writer)
         {
+            writer.Write("</div>");
         }
 
         public void EndPanelSection(PanelSectionType sectionType, TextWriter writer)

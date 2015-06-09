@@ -4,13 +4,11 @@ namespace Kore.Web.Mvc.KoreUI
 {
     public interface IPanelProvider
     {
-        string PanelTag { get; }
-
-        void BeginPanel(Panel panel);
+        void BeginPanel(Panel panel, TextWriter writer);
 
         void BeginPanelSection(PanelSectionType sectionType, TextWriter writer, string title = null);
 
-        void EndPanel(Panel panel);
+        void EndPanel(Panel panel, TextWriter writer);
 
         void EndPanelSection(PanelSectionType sectionType, TextWriter writer);
     }

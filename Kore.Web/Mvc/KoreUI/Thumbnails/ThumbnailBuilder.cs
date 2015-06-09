@@ -8,12 +8,12 @@ namespace Kore.Web.Mvc.KoreUI
             : base(htmlHelper, thumbnail)
         {
             var urlHelper = new UrlHelper(htmlHelper.ViewContext.RequestContext);
-            KoreUISettings.Provider.ThumbnailProvider.WriteThumbnailImage(this.element, urlHelper, base.textWriter);
+            base.element.Provider.ThumbnailProvider.WriteThumbnailImage(this.element, urlHelper, base.textWriter);
         }
 
         public ThumbnailCaptionPanel BeginCaptionPanel()
         {
-            return new ThumbnailCaptionPanel(base.textWriter);
+            return new ThumbnailCaptionPanel(base.element.Provider, base.textWriter);
         }
 
         public override void Dispose()

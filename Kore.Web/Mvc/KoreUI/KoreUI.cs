@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Web.Mvc;
+using Kore.Web.Mvc.KoreUI.Providers;
 
 namespace Kore.Web.Mvc.KoreUI
 {
     public class KoreUI<TModel>
     {
         private readonly HtmlHelper<TModel> html;
+        private readonly IKoreUIProvider provider;
 
-        internal KoreUI(HtmlHelper<TModel> html)
+        internal KoreUI(HtmlHelper<TModel> html, IKoreUIProvider provider = null)
         {
             this.html = html;
+            this.provider = provider ?? KoreUISettings.DefaultProvider;
         }
 
         public MvcHtmlString RenderScripts()
         {
-            return KoreUISettings.Provider.RenderScripts();
+            return provider.RenderScripts();
         }
 
         #region Accordion
@@ -26,6 +29,7 @@ namespace Kore.Web.Mvc.KoreUI
                 throw new ArgumentNullException("accordion");
             }
 
+            accordion.Provider = provider;
             return new AccordionBuilder<TModel>(this.html, accordion);
         }
 
@@ -35,7 +39,7 @@ namespace Kore.Web.Mvc.KoreUI
 
         public MvcHtmlString Badge(string text, object htmlAttributes = null)
         {
-            return KoreUISettings.Provider.Badge(text, htmlAttributes);
+            return provider.Badge(text, htmlAttributes);
         }
 
         #endregion Badge
@@ -44,22 +48,22 @@ namespace Kore.Web.Mvc.KoreUI
 
         public MvcHtmlString ModalLaunchButton(string modalId, string text, object htmlAttributes = null)
         {
-            return KoreUISettings.Provider.ModalProvider.ModalLaunchButton(modalId, text, htmlAttributes);
+            return provider.ModalProvider.ModalLaunchButton(modalId, text, htmlAttributes);
         }
 
         public MvcHtmlString ActionLink(string text, State state, string actionName, string controllerName, object routeValues = null, object htmlAttributes = null)
         {
-            return KoreUISettings.Provider.ActionLink(html, text, state, actionName, controllerName, routeValues, htmlAttributes);
+            return provider.ActionLink(html, text, state, actionName, controllerName, routeValues, htmlAttributes);
         }
 
         public MvcHtmlString Button(string text, State state, string onClick = null, object htmlAttributes = null)
         {
-            return KoreUISettings.Provider.Button(text, state, onClick, htmlAttributes);
+            return provider.Button(text, state, onClick, htmlAttributes);
         }
 
         public MvcHtmlString SubmitButton(string text, State state, object htmlAttributes = null)
         {
-            return KoreUISettings.Provider.SubmitButton(text, state, htmlAttributes);
+            return provider.SubmitButton(text, state, htmlAttributes);
         }
 
         #endregion Buttons
@@ -68,7 +72,7 @@ namespace Kore.Web.Mvc.KoreUI
 
         public MvcHtmlString InlineLabel(string text, State state, object htmlAttributes = null)
         {
-            return KoreUISettings.Provider.InlineLabel(text, state, htmlAttributes);
+            return provider.InlineLabel(text, state, htmlAttributes);
         }
 
         #endregion Inline Label
@@ -82,6 +86,7 @@ namespace Kore.Web.Mvc.KoreUI
                 throw new ArgumentNullException("modal");
             }
 
+            modal.Provider = provider;
             return new ModalBuilder<TModel>(this.html, modal);
         }
 
@@ -91,7 +96,7 @@ namespace Kore.Web.Mvc.KoreUI
 
         public MvcHtmlString TextBoxWithAddOns(string name, object value, string prependValue, string appendValue, object htmlAttributes = null)
         {
-            return KoreUISettings.Provider.TextBoxWithAddOns(html, name, value, prependValue, appendValue, htmlAttributes);
+            return provider.TextBoxWithAddOns(html, name, value, prependValue, appendValue, htmlAttributes);
         }
 
         #endregion TextBoxWithAddOns
@@ -105,6 +110,7 @@ namespace Kore.Web.Mvc.KoreUI
                 throw new ArgumentNullException("panel");
             }
 
+            panel.Provider = provider;
             return new PanelBuilder<TModel>(this.html, panel);
         }
 
@@ -114,7 +120,7 @@ namespace Kore.Web.Mvc.KoreUI
 
         public MvcHtmlString Quote(string text, string author, string titleOfWork, object htmlAttributes = null)
         {
-            return KoreUISettings.Provider.Quote(text, author, titleOfWork, htmlAttributes);
+            return provider.Quote(text, author, titleOfWork, htmlAttributes);
         }
 
         #endregion Quotes
@@ -128,6 +134,7 @@ namespace Kore.Web.Mvc.KoreUI
                 throw new ArgumentNullException("tabs");
             }
 
+            tabs.Provider = provider;
             return new TabsBuilder<TModel>(this.html, tabs);
         }
 
@@ -137,7 +144,7 @@ namespace Kore.Web.Mvc.KoreUI
 
         public MvcHtmlString Thumbnail(string src, string alt, string href = null, object aHtmlAttributes = null, object imgHtmlAttributes = null)
         {
-            return KoreUISettings.Provider.ThumbnailProvider.Thumbnail(html, src, alt, href, aHtmlAttributes, imgHtmlAttributes);
+            return provider.ThumbnailProvider.Thumbnail(html, src, alt, href, aHtmlAttributes, imgHtmlAttributes);
         }
 
         public ThumbnailBuilder<TModel> Begin(Thumbnail thumbnail)
@@ -147,6 +154,7 @@ namespace Kore.Web.Mvc.KoreUI
                 throw new ArgumentNullException("thumbnail");
             }
 
+            thumbnail.Provider = provider;
             return new ThumbnailBuilder<TModel>(this.html, thumbnail);
         }
 
@@ -161,6 +169,7 @@ namespace Kore.Web.Mvc.KoreUI
                 throw new ArgumentNullException("toolbar");
             }
 
+            toolbar.Provider = provider;
             return new ToolbarBuilder<TModel>(this.html, toolbar);
         }
 

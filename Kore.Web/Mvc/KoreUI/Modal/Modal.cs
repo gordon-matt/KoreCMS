@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Web.Mvc;
 
 namespace Kore.Web.Mvc.KoreUI
@@ -7,18 +8,8 @@ namespace Kore.Web.Mvc.KoreUI
     {
         public string Id { get; private set; }
 
-        public Modal()
-            : this(null, null)
-        {
-        }
-
-        public Modal(string id)
-            : this(id, null)
-        {
-        }
-
-        public Modal(string id, object htmlAttributes)
-            : base(KoreUISettings.Provider.ModalProvider.ModalTag, htmlAttributes)
+        public Modal(string id = null, object htmlAttributes = null)
+            : base(htmlAttributes)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -26,7 +17,16 @@ namespace Kore.Web.Mvc.KoreUI
             }
             this.Id = HtmlHelper.GenerateIdFromName(id);
             EnsureHtmlAttribute("id", this.Id);
-            KoreUISettings.Provider.ModalProvider.BeginModal(this);
+        }
+
+        protected internal override void StartTag(TextWriter textWriter)
+        {
+            Provider.ModalProvider.BeginModal(this, textWriter);
+        }
+
+        protected internal override void EndTag(TextWriter textWriter)
+        {
+            Provider.ModalProvider.EndModal(this, textWriter);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Kore.Web.Mvc.KoreUI
 
         public AccordionPanel BeginPanel(string title, string id, bool expanded = false)
         {
-            return new AccordionPanel(base.textWriter, title, id, base.element.Id, expanded);
+            return new AccordionPanel(base.element.Provider, base.textWriter, title, id, base.element.Id, expanded);
         }
 
         public override void Dispose()

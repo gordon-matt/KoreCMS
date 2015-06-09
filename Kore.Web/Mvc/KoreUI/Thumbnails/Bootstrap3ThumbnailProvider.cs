@@ -7,14 +7,15 @@ namespace Kore.Web.Mvc.KoreUI
     {
         #region IThumbnailProvider Members
 
-        public string ThumbnailTag
-        {
-            get { return "div"; }
-        }
-
-        public void BeginThumbnail(Thumbnail thumbnail)
+        public void BeginThumbnail(Thumbnail thumbnail, TextWriter writer)
         {
             thumbnail.EnsureClass("thumbnail");
+
+            var builder = new TagBuilder("div");
+            builder.MergeAttributes<string, object>(thumbnail.HtmlAttributes);
+            string tag = builder.ToString(TagRenderMode.StartTag);
+
+            writer.Write(tag);
         }
 
         public void BeginCaptionPanel(TextWriter writer)
@@ -23,6 +24,11 @@ namespace Kore.Web.Mvc.KoreUI
         }
 
         public void EndCaptionPanel(TextWriter writer)
+        {
+            writer.Write("</div>");
+        }
+
+        public void EndThumbnail(Thumbnail thumbnail, TextWriter writer)
         {
             writer.Write("</div>");
         }

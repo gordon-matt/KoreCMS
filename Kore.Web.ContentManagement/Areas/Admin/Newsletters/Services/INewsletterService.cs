@@ -22,9 +22,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Services
         private readonly Lazy<IEventBus> eventBus;
         private readonly Localizer T;
 
-        public NewsletterService(Lazy<IMembershipService> membershipService)
+        public NewsletterService(
+            Lazy<IMembershipService> membershipService,
+            Lazy<MembershipSettings> membershipSettings,
+            Lazy<IEventBus> eventBus)
         {
             this.membershipService = membershipService;
+            this.membershipSettings = membershipSettings;
+            this.eventBus = eventBus;
             T = NullLocalizer.Instance;
         }
 

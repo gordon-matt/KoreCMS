@@ -13,12 +13,18 @@
         @Html.TextBoxFor(m => m.PrivateKey, new { @class = "form-control", data_bind = "value: privateKey" })
         @Html.ValidationMessageFor(m => m.PrivateKey)
     </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PrivateKey)
+        @Html.EnumDropDownListFor(m => m.Theme, new { @class = "form-control", data_bind = "value: theme" })
+        @Html.ValidationMessageFor(m => m.PrivateKey)
+    </div>
 </div>
 
 <script type="text/javascript">
     function updateModel(data) {
         viewModel.publicKey = ko.observable("");
         viewModel.privateKey = ko.observable("");
+        viewModel.theme = ko.observable();
 
         if (data) {
             if (data.PublicKey) {
@@ -27,18 +33,23 @@
             if (data.PrivateKey) {
                 viewModel.privateKey(data.PrivateKey);
             }
+            if (data.Theme) {
+                viewModel.theme(data.Theme);
+            }
         }
     };
 
     function cleanUp() {
         delete viewModel.publicKey;
         delete viewModel.privateKey;
+        delete viewModel.theme;
     }
 
     function onBeforeSave() {
         var data = {
             PublicKey: viewModel.publicKey(),
-            PrivateKey: viewModel.privateKey()
+            PrivateKey: viewModel.privateKey(),
+            Theme: viewModel.theme()
         };
 
         viewModel.value(ko.mapping.toJSON(data));

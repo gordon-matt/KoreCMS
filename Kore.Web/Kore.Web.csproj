@@ -358,6 +358,12 @@
     <Compile Include="Mvc\Optimization\BundleCollection.cs" />
     <Compile Include="Mvc\Optimization\CompressAttribute.cs" />
     <Compile Include="Mvc\Optimization\HtmlMinifyAttribute.cs" />
+    <Compile Include="Mvc\Recaptcha\RecaptchaHtmlHelper.cs" />
+    <Compile Include="Mvc\Recaptcha\RecaptchaKeyHelper.cs" />
+    <Compile Include="Mvc\Recaptcha\RecaptchaMvcExtensions.cs" />
+    <Compile Include="Mvc\Recaptcha\RecaptchaTheme.cs" />
+    <Compile Include="Mvc\Recaptcha\RecaptchaVerificationHelper.cs" />
+    <Compile Include="Mvc\Recaptcha\RecaptchaVerificationResult.cs" />
     <Compile Include="Mvc\Resources\BundleRegistrationException.cs" />
     <Compile Include="Mvc\Resources\IResourcesManager.cs" />
     <Compile Include="Mvc\Resources\MetaEntry.cs" />
@@ -528,6 +534,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Membership\Scripts\users.js" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

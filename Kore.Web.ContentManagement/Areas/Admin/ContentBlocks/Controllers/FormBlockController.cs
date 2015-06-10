@@ -7,9 +7,11 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using Castle.Core.Logging;
 using Kore.Net.Mail;
+using Kore.Web.Configuration;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Models;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
+using Kore.Web.Mvc.Recaptcha;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 {
@@ -19,13 +21,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
     {
         private readonly IEmailSender emailSender;
         private readonly IEnumerable<IFormBlockProcessor> processors;
+        private readonly Lazy<CaptchaSettings> captchaSettings;
 
         public FormBlockController(
             IEmailSender emailSender,
-            IEnumerable<IFormBlockProcessor> processors)
+            IEnumerable<IFormBlockProcessor> processors,
+            Lazy<CaptchaSettings> captchaSettings)
         {
             this.emailSender = emailSender;
             this.processors = processors;
+            this.captchaSettings = captchaSettings;
         }
 
         [Compress]
@@ -44,18 +49,42 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
             // Validate captcha
             if (enableCaptcha)
             {
-                var captchaChallenge = Request.Form["captcha_challenge"];
-                var captchaResponse = Request.Form["captcha_response"];
+                var recaptchaVerificationHelper = this.GetRecaptchaVerificationHelper(captchaSettings.Value.PrivateKey);
 
-                if (string.IsNullOrEmpty(captchaResponse))
+                if (string.IsNullOrEmpty(recaptchaVerificationHelper.Response))
                 {
-                    throw new InvalidOperationException(T(KoreCmsLocalizableStrings.ContentBlocks.FormBlock.PleaseEnterCaptcha));
+                    var result = new SaveResultModel
+                    {
+                        Success = false,
+                        Message = T(KoreCmsLocalizableStrings.ContentBlocks.FormBlock.PleaseEnterCaptcha).Text,
+                        RedirectUrl = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.Content("~/")
+                    };
+
+                    if (Request.IsAjaxRequest())
+                    {
+                        return Json(result);
+                    }
+
+                    return View("Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.FormBlock.SaveResult", result);
                 }
 
-                var isValidCaptcha = Crypto.VerifyHashedPassword(captchaChallenge, captchaResponse);
-                if (!isValidCaptcha)
+                var recaptchaVerificationResult = recaptchaVerificationHelper.VerifyRecaptchaResponse();
+
+                if (recaptchaVerificationResult != RecaptchaVerificationResult.Success)
                 {
-                    throw new InvalidOperationException(T(KoreCmsLocalizableStrings.ContentBlocks.FormBlock.PleaseEnterCorrectCaptcha));
+                    var result = new SaveResultModel
+                    {
+                        Success = false,
+                        Message = T(KoreCmsLocalizableStrings.ContentBlocks.FormBlock.PleaseEnterCorrectCaptcha).Text,
+                        RedirectUrl = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.Content("~/")
+                    };
+
+                    if (Request.IsAjaxRequest())
+                    {
+                        return Json(result);
+                    }
+
+                    return View("Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.FormBlock.SaveResult", result);
                 }
             }
 
@@ -119,7 +148,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 
             try
             {
-                Guid blockId = Guid.Parse(id);
                 foreach (var processor in processors)
                 {
                     processor.Process(formCollection, mailMessage);

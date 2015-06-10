@@ -102,33 +102,28 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
             values.Remove("X-Requested-With");
 
             var subject = contentBlockTitle;
-            var body = new StringBuilder();
-            body.Append(subject);
-            body.Append("<br/>");
 
-            //TODO: Make this a message template
-            body.Append("<table style=\"font-family: 'Arial' , Source Sans Pro, sans-serif; font-size: 1.2em; padding: 7px; width: 80%; border-collapse: collapse; border-spacing: 0;\">");
+            string body = string.Empty;
 
-            foreach (var value in values)
+            var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "MessageTemplate", null);
+
+            // If someone has provided a custom template (see LocationFormatProvider)
+            if (viewEngineResult.View != null)
             {
-                body.Append("<tr>");
-
-                body.Append("<td style=\"border-color: #DDDDDD; border-style: solid; border-width: 1px; color: #000000; font-size: 1.2em; padding: 7px;\">");
-                body.Append(value.Key);
-                body.Append("</td>");
-
-                body.Append("<td style=\"border-color: #DDDDDD; border-style: solid; border-width: 1px; color: #000000; font-size: 1.2em; padding: 7px;\">");
-                body.Append(value.Value);
-                body.Append("</td>");
+                body = RenderRazorPartialViewToString("MessageTemplate", values);
             }
-
-            body.Append("</table>");
+            else
+            {
+                body = RenderRazorPartialViewToString(
+                    "Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.FormBlock.MessageTemplate",
+                    values);
+            }
 
             var mailMessage = new MailMessage
             {
                 Subject = subject,
                 SubjectEncoding = Encoding.UTF8,
-                Body = body.ToString(),
+                Body = body,
                 BodyEncoding = Encoding.UTF8,
                 IsBodyHtml = true
             };

@@ -151,6 +151,7 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.ScheduledTasks.Title, "Scheduled Tasks" },
                     { KoreWebLocalizableStrings.Settings.Captcha.PrivateKey, "Private Key" },
                     { KoreWebLocalizableStrings.Settings.Captcha.PublicKey, "Public Key" },
+                    { KoreWebLocalizableStrings.Settings.Captcha.Theme, "Theme" },
                     { KoreWebLocalizableStrings.Settings.Membership.GeneratedPasswordLength, "Length" },
                     { KoreWebLocalizableStrings.Settings.Membership.GeneratedPasswordNumberOfNonAlphanumericChars, "# Non-Alphanumeric Characters" },
                     { KoreWebLocalizableStrings.Settings.Model.Name, "Name" },

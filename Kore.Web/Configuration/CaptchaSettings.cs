@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Kore.ComponentModel;
+using Kore.Web.Mvc.Recaptcha;
 
 namespace Kore.Web.Configuration
 {
@@ -10,7 +11,7 @@ namespace Kore.Web.Configuration
         [ScaffoldColumn(false)]
         public string Name
         {
-            get { return "Captcha Settings"; }
+            get { return "reCAPTCHA Settings"; }
         }
 
         public string EditorTemplatePath
@@ -27,5 +28,9 @@ namespace Kore.Web.Configuration
         [Required]
         [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Captcha.PrivateKey)]
         public string PrivateKey { get; set; }
+
+        [Required]
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Captcha.Theme)]
+        public RecaptchaTheme Theme { get; set; }
     }
 }

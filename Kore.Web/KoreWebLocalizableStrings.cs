@@ -200,6 +200,7 @@
             {
                 public const string PrivateKey = "Kore.Web/Settings.Captcha.PrivateKey";
                 public const string PublicKey = "Kore.Web/Settings.Captcha.PublicKey";
+                public const string Theme = "Kore.Web/Settings.Captcha.Theme";
             }
 
             public static class Membership

@@ -1,13 +1,18 @@
-﻿@using Kore.Localization
+﻿@using Kore.Infrastructure
+@using Kore.Localization
 @using Kore.Plugins.Widgets.Bootstrap3.FormBuilder.ContentBlocks
+@using Kore.Web.Configuration
+@using Kore.Web.Mvc.Recaptcha
 
 @model FormBuilderBlock
 
 @{
+    var captchaSettings = EngineContext.Current.Resolve<CaptchaSettings>();
     string formId = "form-block-" + Model.Id;
 }
 
 <form id="@formId" method="post" action="@Url.Action("Save", "FormBlock", new { area = string.Empty })" enctype="multipart/form-data">
+    @Html.HiddenFor(m => m.Id)
     @Html.HiddenFor(m => m.ThankYouMessage)
     @Html.HiddenFor(m => m.RedirectUrl)
     @Html.HiddenFor(m => m.EmailAddress)
@@ -20,11 +25,9 @@
     @if (Model.HtmlTemplate.Contains("[Captcha]"))
     {
         @Html.Hidden("EnableCaptcha", true)
-        string captcha = FormBuilderBlock.GenerateCaptcha();
+
+        string captcha = Html.Recaptcha(captchaSettings.PublicKey, captchaSettings.Theme).ToString();
         htmlTemplate = htmlTemplate.Replace("[Captcha]", captcha);
-        htmlTemplate = htmlTemplate.Replace("[CaptchaResponse]", string.Format(
-            "<input type=\"text\" class=\"form-control form-captcha\" name=\"captcha_response\" data-val=\"true\" data-val-required=\"{0}\" /><span data-valmsg-for=\"captcha_response\" data-valmsg-replace=\"true\"></span>",
-            T(Kore.Web.KoreWebLocalizableStrings.Validation.Required)));
     }
     else
     {

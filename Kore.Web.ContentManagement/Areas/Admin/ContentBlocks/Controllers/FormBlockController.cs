@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
-using System.Web.Helpers;
 using System.Web.Mvc;
-using Castle.Core.Logging;
 using Kore.Net.Mail;
 using Kore.Web.Configuration;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Models;
@@ -46,7 +44,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
             string emailAddress = formCollection["EmailAddress"];
             string contentBlockTitle = formCollection["ContentBlockTitle"];
 
-            // Validate captcha
+            #region Validate Captcha
+
             if (enableCaptcha)
             {
                 var recaptchaVerificationHelper = this.GetRecaptchaVerificationHelper(captchaSettings.Value.PrivateKey);
@@ -88,6 +87,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
                 }
             }
 
+            #endregion Validate Captcha
+
             var values = Request.Form.AllKeys.ToDictionary(key => key, key => (object)formCollection[key]);
 
             // Remove some items
@@ -102,6 +103,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
             values.Remove("X-Requested-With");
 
             var subject = contentBlockTitle;
+
+            #region Render Email Body
 
             string body = string.Empty;
 
@@ -118,6 +121,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
                     "Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.FormBlock.MessageTemplate",
                     values);
             }
+
+            #endregion Render Email Body
 
             var mailMessage = new MailMessage
             {
@@ -141,6 +146,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
                 }
             }
 
+            #region Custom Processing
+
             try
             {
                 foreach (var processor in processors)
@@ -152,6 +159,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
             {
                 Logger.Error("Error while trying to process form block.", x);
             }
+
+            #endregion Custom Processing
 
             try
             {

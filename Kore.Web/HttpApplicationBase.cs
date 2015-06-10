@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -83,7 +84,6 @@ namespace Kore.Web
             }
 
             FilterProviders.Providers.Add(new KoreFilterProvider());
-
 
             if (isDatabaseInstalled && KoreConfigurationSection.Instance.Tasks.Enabled)
             {

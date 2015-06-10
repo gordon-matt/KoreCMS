@@ -178,9 +178,6 @@ http://html5doctor.com/the-contenteditable-attribute/
 
 - investigate RequireJS ( see Durandal)
 
-BUGS:
-- captcha settings
-
 if normal view, use breadcrumbs.. not needed if only partial view
 
 - don't load dependencies from web dll.. instead, provide a static class which can do that (call it from main app) if the dev wants (default) or else they can override the registrations with their own in the main app

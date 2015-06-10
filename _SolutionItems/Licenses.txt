@@ -21,18 +21,48 @@ Castle.Core:
 	Version: 3.2.2
 	License: Apache 2.0
 ==================================================================================================================
+ElFinder.Net Connector:
+	Project Home: https://elfinder.codeplex.com/
+	Format: Copied Source Code
+	Version 0.9.5
+	License: New BSD
+==================================================================================================================
+EntityFramework.BulkInsert-ef6:
+	Project Home: https://efbulkinsert.codeplex.com/
+	Format: Referenced DLL
+	Version: 6.0.2.8
+	License: New BSD
+==================================================================================================================
 EntityFramework.Extended:
 	Project Home: https://github.com/loresoft/EntityFramework.Extended
 	Format: Referenced DLL
-	Version: 6.0.0.86
-	License: No Specific License. But site says free to use for anything we want:
-		"Redistribution and use in source and binary forms, with or without modification, are permitted provided that..."
+	Version: 6.1.0.120
+	License: New BSD
+==================================================================================================================
+Kendo UI Core:
+	Project Home: http://www.telerik.com/kendo-ui/open-source-core
+	Format: Referenced JavaScript
+	Version: 2014.1.318
+	License: Apache 2.0
 ==================================================================================================================
 NLog:
 	Project Home: http://nlog-project.org/
 	Format: Referenced DLL
 	Version: 2.1.0
 	License: BSD License
+==================================================================================================================
+NopCommerce
+	Project Home: https://nopcommerce.codeplex.com/
+	Format: Copied Source Code (and Modified)
+	Features Used: IoC Engine, Plugins, Theme Engine, Scheduled Tasks
+	Version: 3.?? (Don't remember exactly)
+	License: NPL
+==================================================================================================================
+Recaptcha for .NET:
+	Project Home: https://recaptchanet.codeplex.com/
+	Format: Copied Source Code
+	Version: 1.6.0
+	License: MIT
 ==================================================================================================================
 SharpSerializer:
 	Project Home: http://sharpserializer.codeplex.com/
@@ -45,11 +75,4 @@ Orchard Project 1.7.2:
 	Format: Copied Source Code (and Modified)
 	Features Used: Caching, Events, Localization
 	Version 1.7.2
-	License: New BSD
-	More Info: http://orchard.codeplex.com/discussions/436874
-==================================================================================================================
-ElFinder.Net Connector:
-	Project Home: https://elfinder.codeplex.com/
-	Format: Copied Source Code
-	Version 0.9.5
 	License: New BSD

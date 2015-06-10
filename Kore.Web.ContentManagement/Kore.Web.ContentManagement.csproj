@@ -374,6 +374,7 @@
     <EmbeddedResource Include="Areas\Admin\Newsletters\Views\Subscriber\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Newsletters\Views\Shared\DisplayTemplates\NewsletterSubscriptionBlock.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Sitemap\Views\XmlSitemap\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\FormBlock\MessageTemplate.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\RichTextFull.cshtml" />

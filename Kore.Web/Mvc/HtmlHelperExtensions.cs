@@ -226,7 +226,7 @@ namespace Kore.Web.Mvc
 
         #region Other
 
-        public static MvcHtmlString FileUpload(this HtmlHelper html, string name, object htmlAttributes)
+        public static MvcHtmlString FileUpload(this HtmlHelper html, string name, object htmlAttributes = null)
         {
             var builder = new TagBuilder("input");
             builder.MergeAttribute("type", "file");

@@ -90,9 +90,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Scripts\kore-common.js" />
     <EmbeddedResource Include="Scripts\kore-elfinder.js" />
     <EmbeddedResource Include="Scripts\kore-jqval.js" />
@@ -101,6 +98,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\moment-with-locales.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

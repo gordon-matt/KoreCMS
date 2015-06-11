@@ -7,7 +7,7 @@ using System.Web.Hosting;
 
 namespace Kore.Web
 {
-    public static class SiteRegistrar
+    internal static class SiteRegistrar
     {
         private static bool hasRun;
 
@@ -15,52 +15,61 @@ namespace Kore.Web
         {
             if (!hasRun)
             {
-                bool registered = false;
-
-                var filePath = HostingEnvironment.MapPath("~/App_Data/Registration.txt");
-                if (!File.Exists(filePath))
+                try
                 {
-                    using (File.Create(filePath))
-                    {
-                        //we use 'using' to close the file after it's created
-                    }
-                    File.WriteAllText(filePath, "Registered:False");
-                }
-                else
-                {
-                    string text = File.ReadAllText(filePath);
-                    if (!string.IsNullOrEmpty(text) && text.StartsWith("Registered:True", StringComparison.CurrentCultureIgnoreCase))
-                    {
-                        registered = true;
-                    }
-                }
+                    bool registered = false;
 
-                if (!registered)
-                {
-                    // Register this site
-                    string url = httpContext.Request.Url.ToString();
-
-                    if (!string.IsNullOrEmpty(url) && !url.ContainsAny("localhost", "127.0.0.1"))
+                    var filePath = HostingEnvironment.MapPath("~/App_Data/Registration.txt");
+                    if (!File.Exists(filePath))
                     {
-                        using (var client = new HttpClient())
+                        using (File.Create(filePath))
                         {
-                            var data = new
-                            {
-                                url = url
-                            };
+                            //we use 'using' to close the file after it's created
+                        }
+                        File.WriteAllText(filePath, "Registered:False");
+                    }
+                    else
+                    {
+                        string text = File.ReadAllText(filePath);
+                        if (!string.IsNullOrEmpty(text) && text.StartsWith("Registered:True", StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            registered = true;
+                        }
+                    }
 
-                            var stringContent = new StringContent(data.ToJson(), Encoding.UTF8, "application/json");
-                            var response = client.PostAsync("http://localhost:30864/odata/kore/plugins/widecommerce/KoreSiteRegistrationApi/Register", stringContent).Result;
+                    if (!registered)
+                    {
+                        // Register this site
+                        string url = httpContext.Request.Url.ToString();
 
-                            if (response.IsSuccessStatusCode)
+                        if (!string.IsNullOrEmpty(url) && !url.ContainsAny("localhost", "127.0.0.1"))
+                        {
+                            using (var client = new HttpClient())
                             {
-                                File.WriteAllText(filePath, "Registered:True");
+                                var data = new
+                                {
+                                    url = url
+                                };
+
+                                var stringContent = new StringContent(data.ToJson(), Encoding.UTF8, "application/json");
+                                var response = client.PostAsync("http://www.widecommerce.com/odata/kore/plugins/widecommerce/KoreSiteRegistrationApi/Register", stringContent).Result;
+
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    File.WriteAllText(filePath, "Registered:True");
+                                }
                             }
                         }
                     }
-                }
 
-                hasRun = true;
+                    hasRun = true;
+                }
+                catch
+                {
+                    // If there is a problem registering, we don't want to prevent the site from running..
+                    //  so just ignore it...
+                    hasRun = true;
+                }
             }
         }
     }

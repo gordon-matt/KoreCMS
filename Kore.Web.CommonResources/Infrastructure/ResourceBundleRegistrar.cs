@@ -23,6 +23,10 @@ namespace Kore.Web.CommonResources.Infrastructure
 
             bundles.Add(new ScriptBundle("~/bundles/js/kore/tinymce")
                 .Include("~/Scripts/Kore.Web.CommonResources.Scripts.kore-tinymce.js"));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/js/third-party/momentjs")
+                .Include("~/Scripts/Kore.Web.CommonResources.Scripts.moment-with-locales.min.js"));
         }
 
         #endregion IResourceBundleRegistrar Members

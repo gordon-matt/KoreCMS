@@ -9,6 +9,8 @@ namespace Kore.Web.CommonResources.Infrastructure
 
         public void Register(BundleCollection bundles)
         {
+            #region Scripts
+
             bundles.Add(new ScriptBundle("~/bundles/js/kore/common")
                 .Include("~/Scripts/Kore.Web.CommonResources.Scripts.kore-common.js"));
 
@@ -27,6 +29,8 @@ namespace Kore.Web.CommonResources.Infrastructure
 
             bundles.Add(new ScriptBundle("~/bundles/js/third-party/momentjs")
                 .Include("~/Scripts/Kore.Web.CommonResources.Scripts.moment-with-locales.min.js"));
+
+            #endregion
         }
 
         #endregion IResourceBundleRegistrar Members

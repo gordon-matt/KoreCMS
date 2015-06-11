@@ -10,6 +10,13 @@ PAGES:
 - Delete sub pages when delete page (or move those subpages up 1 level)? Else they become orphans
 - Page Types: should editortemplatepath be overridable? maybe only display template?
 
+- move store to plugins menu
+- broken logging
+
+- move installation pages into Kore.Web
+	
+- remove references to jUqeryUI Helpers
+
 - allow deleting of translated pages (the prob we should also see history for it, etc..)
 	- maybe this should happen when deleting the language? All pages, blocks, etc.. for that language get deleted
 
@@ -80,6 +87,11 @@ OTHER
 	Good options for players: 
 		1. http://www.webdesign-flash.ro/p/rvp/index.html#/?playlistId=0&videoId=0
 		2. http://codecanyon.cosmo-coder.com/vimuse/regular.html
+
+		
+
+- better error page handling:
+	http://benfoster.io/blog/aspnet-mvc-custom-error-pages
 
 - Make moment.js part of Kore? Can have ISettings for it.. etc. Same for TinyMCE and more.
 - allowing email as username is a problem in cases like Blog!

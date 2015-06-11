@@ -235,6 +235,7 @@
     <Compile Include="Indexing\Services\IndexingTaskExecutor.cs" />
     <Compile Include="Indexing\Services\ISearchService.cs" />
     <Compile Include="Infrastructure\ResourceBundleRegistrar.cs" />
+    <Compile Include="InstallationHelper.cs" />
     <Compile Include="IO\FileSystems\AppData\AppDataFolder.cs" />
     <Compile Include="IO\FileSystems\AppData\IAppDataFolder.cs" />
     <Compile Include="IO\FileSystems\AppData\IAppDataFolderRoot.cs" />
@@ -278,6 +279,7 @@
     <Compile Include="Localization\Services\CultureSelectorResult.cs" />
     <Compile Include="Localization\Services\ICultureSelector.cs" />
     <Compile Include="Localization\Services\SiteCultureSelector.cs" />
+    <Compile Include="Models\InstallationModel.cs" />
     <Compile Include="Mvc\ActionResults\JsonNetResult.cs" />
     <Compile Include="Mvc\ActionResults\RssActionResult.cs" />
     <Compile Include="Mvc\Attributes\ButtonAttribute.cs" />

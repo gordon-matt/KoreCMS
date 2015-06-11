@@ -135,6 +135,16 @@
             @*tinyMCEContentCss = ['@Url.Content("~/Content/bootstrap.min.css")'],['@Url.Content("~/Content/font-awesome.min.css")'];*@
             tinyMCE.baseURL = '@Url.Content("~/Scripts/tinymce/")';
         }
+        var lang = '@lang';
+
+        $(document).ready(function () {
+            if (lang && kendo && kendo.culture) {
+                kendo.culture(lang);
+            }
+            if (lang && moment) {
+                moment.locale(lang);
+            }
+        });
     </script>
 
     @RenderSection("scripts", required: false)

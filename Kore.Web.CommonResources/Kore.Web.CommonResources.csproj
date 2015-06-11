@@ -99,6 +99,9 @@
     <EmbeddedResource Include="Scripts\kore-section-switching.js" />
     <EmbeddedResource Include="Scripts\kore-tinymce.js" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\moment-with-locales.min.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

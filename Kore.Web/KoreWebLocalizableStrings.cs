@@ -15,6 +15,7 @@
             public const string CreateFormat = "Kore.Web/General.CreateFormat";
             public const string Delete = "Kore.Web/General.Delete";
             public const string Details = "Kore.Web/General.Details";
+            public const string Download = "Kore.Web/General.Download";
             public const string Edit = "Kore.Web/General.Edit";
             public const string EditFormat = "Kore.Web/General.EditFormat";
             public const string Enabled = "Kore.Web/General.Enabled";
@@ -38,6 +39,7 @@
             public const string Themes = "Kore.Web/General.Themes";
             public const string Toggle = "Kore.Web/General.Toggle";
             public const string Uninstall = "Kore.Web/General.Uninstall";
+            public const string Upload = "Kore.Web/General.Upload";
             public const string View = "Kore.Web/General.View";
             public const string ViewFormat = "Kore.Web/General.ViewFormat";
 

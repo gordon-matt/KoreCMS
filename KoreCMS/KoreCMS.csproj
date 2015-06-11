@@ -258,7 +258,6 @@
     <Compile Include="Messaging\AccountMessageTemplateTokensProvider.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\InstallationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IdentityMembershipService.cs" />
     <Compile Include="Services\MembershipService.cs" />

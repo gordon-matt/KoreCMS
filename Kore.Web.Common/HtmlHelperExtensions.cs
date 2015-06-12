@@ -7,6 +7,7 @@ using System.Web.Mvc.Html;
 using Kore.Infrastructure;
 using Kore.Web.Collections;
 using Kore.Web.Common.Areas.Admin.Regions.Services;
+using Kore.Web.Common.Html;
 using Kore.Web.Mvc;
 
 namespace Kore.Web.Common
@@ -27,6 +28,11 @@ namespace Kore.Web.Common
         internal KoreCommon(HtmlHelper<TModel> html)
         {
             this.html = html;
+        }
+
+        public Metro<TModel> Metro()
+        {
+            return new Metro<TModel>(html);
         }
 
         public MvcHtmlString CountryDropDownList(string name, int? selectedValue = null, string emptyText = null, object htmlAttributes = null)

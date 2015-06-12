@@ -23,6 +23,10 @@
                 success: function (result) {
                     alert(result.Message);
                 }
+            })
+            .done(function (json) {
+                $('#newsletter-block-email').val("");
+                $('#newsletter-block-name').val("");
             });
         };
     </script>

@@ -31,6 +31,15 @@ namespace Kore.Web.CommonResources.Infrastructure
                 .Include("~/Scripts/Kore.Web.CommonResources.Scripts.moment-with-locales.min.js"));
 
             #endregion
+
+            #region Styles
+
+            IItemTransform cssRewriteUrlTransform = new CssRewriteUrlTransform();
+
+            bundles.Add(new StyleBundle("~/bundles/content/third-party/metro")
+                .Include("~/Content/Kore.Web.CommonResources.Content.metro.blue.css", cssRewriteUrlTransform));
+
+            #endregion
         }
 
         #endregion IResourceBundleRegistrar Members

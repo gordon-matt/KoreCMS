@@ -147,6 +147,13 @@
     <Compile Include="Areas\Admin\Regions\Services\IRegionService.cs" />
     <Compile Include="Areas\Admin\Regions\Services\IRegionSettingsService.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
+    <Compile Include="Html\Metro\Metro.cs" />
+    <Compile Include="Html\Metro\MetroColor.cs" />
+    <Compile Include="Html\Metro\MetroTileSize.cs" />
+    <Compile Include="Html\Metro\Tile.cs" />
+    <Compile Include="Html\Metro\TileRow.cs" />
+    <Compile Include="Html\Metro\Tiles.cs" />
+    <Compile Include="Html\Metro\TilesBuilder.cs" />
     <Compile Include="Infrastructure\ResourceBundleRegistrar.cs" />
     <Compile Include="Permissions.cs" />
     <Compile Include="NavigationProvider.cs" />

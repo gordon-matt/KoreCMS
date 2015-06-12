@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -64,13 +63,16 @@ namespace Kore.Web
             }
 
             //register virtual path provider for embedded views
-            var embeddedViewResolver = EngineContext.Current.Resolve<IEmbeddedResourceResolver>();
-            var embeddedViewProvider = new EmbeddedViewVirtualPathProvider(embeddedViewResolver.Views);
+            var embeddedResourceResolver = EngineContext.Current.Resolve<IEmbeddedResourceResolver>();
+
+            var embeddedViewProvider = new EmbeddedViewVirtualPathProvider(embeddedResourceResolver.Views);
             HostingEnvironment.RegisterVirtualPathProvider(embeddedViewProvider);
 
-            //TODO: Test
-            var embeddedScriptsProvider = new EmbeddedScriptVirtualPathProvider(embeddedViewResolver.Scripts);
+            var embeddedScriptsProvider = new EmbeddedScriptVirtualPathProvider(embeddedResourceResolver.Scripts);
             HostingEnvironment.RegisterVirtualPathProvider(embeddedScriptsProvider);
+
+            var embeddedStylesProvider = new EmbeddedStyleVirtualPathProvider(embeddedResourceResolver.Styles);
+            HostingEnvironment.RegisterVirtualPathProvider(embeddedStylesProvider);
 
             //
             // Register Virtual Path Providers

@@ -4,6 +4,8 @@ namespace Kore.Web.Mvc.EmbeddedViews
     {
         EmbeddedResourceTable Scripts { get; }
 
+        EmbeddedResourceTable Styles { get; }
+
         EmbeddedResourceTable Views { get; }
     }
 }

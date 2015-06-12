@@ -9,6 +9,7 @@ namespace Kore.Web.Mvc.EmbeddedViews
         private ITypeFinder typeFinder;
 
         private static EmbeddedResourceTable scripts;
+        private static EmbeddedResourceTable styles;
         private static EmbeddedResourceTable views;
 
         public EmbeddedResourceResolver(ITypeFinder typeFinder)
@@ -19,6 +20,7 @@ namespace Kore.Web.Mvc.EmbeddedViews
         private void GetEmbeddedResources()
         {
             scripts = new EmbeddedResourceTable();
+            styles = new EmbeddedResourceTable();
             views = new EmbeddedResourceTable();
 
             var assemblies = typeFinder.GetAssemblies();
@@ -48,6 +50,10 @@ namespace Kore.Web.Mvc.EmbeddedViews
                     else if (key.Contains(".scripts."))
                     {
                         scripts.AddResource(name, assembly.FullName);
+                    }
+                    else if (key.Contains(".content."))
+                    {
+                        styles.AddResource(name, assembly.FullName);
                     }
                 }
             }
@@ -82,6 +88,18 @@ namespace Kore.Web.Mvc.EmbeddedViews
                     GetEmbeddedResources();
                 }
                 return scripts;
+            }
+        }
+
+        public EmbeddedResourceTable Styles
+        {
+            get
+            {
+                if (styles == null)
+                {
+                    GetEmbeddedResources();
+                }
+                return styles;
             }
         }
 

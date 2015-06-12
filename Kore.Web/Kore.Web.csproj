@@ -299,6 +299,7 @@
     <Compile Include="Mvc\EmbeddedViews\EmbeddedResourceResolver.cs" />
     <Compile Include="Mvc\EmbeddedViews\EmbeddedResourceTable.cs" />
     <Compile Include="Mvc\EmbeddedViews\EmbeddedScriptVirtualPathProvider.cs" />
+    <Compile Include="Mvc\EmbeddedViews\EmbeddedStyleVirtualPathProvider.cs" />
     <Compile Include="Mvc\EmbeddedViews\EmbeddedViewVirtualPathProvider.cs" />
     <Compile Include="Mvc\EmbeddedViews\IEmbeddedResourceResolver.cs" />
     <Compile Include="Mvc\Filters\IFilterProvider.cs" />

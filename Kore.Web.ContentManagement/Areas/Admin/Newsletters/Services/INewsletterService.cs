@@ -30,7 +30,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Services
             this.membershipService = membershipService;
             this.membershipSettings = membershipSettings;
             this.eventBus = eventBus;
-            T = NullLocalizer.Instance;
+            T = LocalizationUtilities.Resolve();
         }
 
         #region INewsletterService Members

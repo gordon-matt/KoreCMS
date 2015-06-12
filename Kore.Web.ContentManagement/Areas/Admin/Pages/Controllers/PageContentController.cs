@@ -45,7 +45,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         }
 
         //[OutputCache(Duration = 600, VaryByParam = "slug")] //TODO: Uncomment this when ready
-        [Compress]
+        //[Compress]
         public ActionResult Index(string slug)
         {
             // Hack to make it search the correct path for the view

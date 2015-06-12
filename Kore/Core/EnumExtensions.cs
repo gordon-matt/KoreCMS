@@ -9,14 +9,19 @@ namespace Kore
 {
     public static class EnumExtensions
     {
-        public static T ToEnum<T>(this string str) where T : struct
+        public static T ToEnum<T>(this string str, bool ignoreCase = true) where T : struct
         {
-            return (T)Enum.Parse(typeof(T), str);
+            return Parse<T>(str, ignoreCase);
         }
 
-        public static T ToEnum<T>(this string str, bool ignoreCase) where T : struct
+        public static T ToEnum<T>(this string str, T fallback, bool ignoreCase = true) where T : struct
         {
-            return (T)Enum.Parse(typeof(T), str, ignoreCase);
+            T result;
+            if (TryParse<T>(str, out result, ignoreCase))
+            {
+                return result;
+            }
+            return fallback;
         }
 
         public static T[] GetValues<T>()
@@ -24,12 +29,17 @@ namespace Kore
             return (T[])Enum.GetValues(typeof(T));
         }
 
-        public static T Parse<T>(string value, bool ignoreCase = true)
+        public static T Parse<T>(string value, bool ignoreCase = true) where T : struct
         {
             return (T)Enum.Parse(typeof(T), value, ignoreCase);
         }
 
-        public static IEnumerable<string> GetValuesAsWords<T>()
+        public static bool TryParse<T>(string value, out T result, bool ignoreCase = true) where T : struct
+        {
+            return Enum.TryParse<T>(value, ignoreCase, out result);
+        }
+
+        public static IEnumerable<string> GetValuesAsWords<T>() where T : struct
         {
             var values = new List<string>();
             GetValues<T>().ForEach(item => values.Add(item.ToString().SpacePascal()));

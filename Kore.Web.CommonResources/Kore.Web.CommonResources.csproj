@@ -99,9 +99,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Scripts\moment-with-locales.min.js" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Content\bootstrap-slider.min.css" />
+    <EmbeddedResource Include="Scripts\bootstrap-slider.min.js" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\metro.blue.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\bootstrap-slider-knockout-binding.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

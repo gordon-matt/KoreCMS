@@ -414,7 +414,10 @@ var ViewModel = function () {
             Name: self.name(),
             IsEnabled: self.isEnabled(),
             Order: self.order(),
-            ShowOnMenus: self.showOnMenus()
+            ShowOnMenus: self.showOnMenus(),
+            AccessRestrictions: JSON.stringify({
+                Roles: self.roles().join()
+            }),
         };
 
         if (isNew) {

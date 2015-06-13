@@ -27,6 +27,13 @@ namespace Kore.Web.CommonResources.Infrastructure
                 .Include("~/Scripts/Kore.Web.CommonResources.Scripts.kore-tinymce.js"));
 
 
+
+            bundles.Add(new ScriptBundle("~/bundles/js/third-party/bootstrap-slider")
+                .Include("~/Scripts/Kore.Web.CommonResources.Scripts.bootstrap-slider.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/third-party/bootstrap-slider-knockout")
+                .Include("~/Scripts/Kore.Web.CommonResources.Scripts.bootstrap-slider-knockout-binding.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/third-party/momentjs")
                 .Include("~/Scripts/Kore.Web.CommonResources.Scripts.moment-with-locales.min.js"));
 
@@ -35,6 +42,9 @@ namespace Kore.Web.CommonResources.Infrastructure
             #region Styles
 
             IItemTransform cssRewriteUrlTransform = new CssRewriteUrlTransform();
+
+            bundles.Add(new StyleBundle("~/bundles/content/third-party/bootstrap-slider")
+                .Include("~/Content/Kore.Web.CommonResources.Content.bootstrap-slider.min.css", cssRewriteUrlTransform));
 
             bundles.Add(new StyleBundle("~/bundles/content/third-party/metro")
                 .Include("~/Content/Kore.Web.CommonResources.Content.metro.blue.css", cssRewriteUrlTransform));

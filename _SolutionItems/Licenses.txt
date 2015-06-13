@@ -54,7 +54,7 @@ NLog:
 NopCommerce
 	Project Home: https://nopcommerce.codeplex.com/
 	Format: Copied Source Code (and Modified)
-	Features Used: IoC Engine, Plugins, Theme Engine, Scheduled Tasks
+	Features Used: IoC Engine, Plugins, Theme Engine, Scheduled Tasks, Embedded Views
 	Version: 3.?? (Don't remember exactly)
 	License: NPL
 ==================================================================================================================

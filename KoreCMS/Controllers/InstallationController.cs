@@ -26,7 +26,7 @@ namespace KoreCMS.Controllers
             {
                 return View(model);
             }
-            InstallationHelper.Install<ApplicationDbContext>(this.HttpContext.Request, model);
+            InstallationHelper.Install<ApplicationDbContext>(this.HttpContext.Request, model, "DefaultConnection");
 
             return RedirectToAction("Index", "Home");
         }

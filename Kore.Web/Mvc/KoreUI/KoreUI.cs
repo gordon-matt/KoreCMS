@@ -12,7 +12,7 @@ namespace Kore.Web.Mvc.KoreUI
         internal KoreUI(HtmlHelper<TModel> html, IKoreUIProvider provider = null)
         {
             this.html = html;
-            this.provider = provider ?? KoreUISettings.DefaultProvider;
+            this.provider = provider ?? KoreUISettings.DefaultAdminProvider;
         }
 
         public MvcHtmlString RenderScripts()

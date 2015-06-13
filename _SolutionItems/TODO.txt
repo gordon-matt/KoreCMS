@@ -10,10 +10,13 @@ PAGES:
 - Delete sub pages when delete page (or move those subpages up 1 level)? Else they become orphans
 - Page Types: should editortemplatepath be overridable? maybe only display template?
 
+- for installation problem: populate con string in db context first (probably its cached from first run)!!!!!!!!!!!!!!!
+
+
+
 - move store to plugins menu
 - broken logging
 
-- move installation pages into Kore.Web
 	
 - remove references to jUqeryUI Helpers
 

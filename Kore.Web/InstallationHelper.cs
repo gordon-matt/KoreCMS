@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
+using Kore.Data;
 using Kore.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
@@ -12,26 +13,26 @@ namespace Kore.Web
 {
     public static class InstallationHelper
     {
-        public static void Install<TDbContext>(HttpRequestBase httpRequest, InstallationModel model) where TDbContext : DbContext, ISupportSeed, new()
+        public static void Install<TDbContext>(HttpRequestBase httpRequest, InstallationModel model, string connectionStringName) where TDbContext : DbContext, IKoreDbContext, ISupportSeed, new()
         {
             var config = WebConfigurationManager.OpenWebConfiguration(httpRequest.ApplicationPath);
 
             if (model.EnterConnectionString)
             {
-                config.ConnectionStrings.ConnectionStrings["DefaultConnection"].ConnectionString = model.ConnectionString;
+                config.ConnectionStrings.ConnectionStrings[connectionStringName].ConnectionString = model.ConnectionString;
             }
             else
             {
                 if (model.UseWindowsAuthentication)
                 {
-                    config.ConnectionStrings.ConnectionStrings["DefaultConnection"].ConnectionString = string.Format(
+                    config.ConnectionStrings.ConnectionStrings[connectionStringName].ConnectionString = string.Format(
                         @"Server={0};Initial Catalog={1};Integrated Security=True;Persist Security Info=True;MultipleActiveResultSets=True",
                         model.DatabaseServer,
                         model.DatabaseName);
                 }
                 else
                 {
-                    config.ConnectionStrings.ConnectionStrings["DefaultConnection"].ConnectionString = string.Format(
+                    config.ConnectionStrings.ConnectionStrings[connectionStringName].ConnectionString = string.Format(
                         @"Server={0};Initial Catalog={1};User={2};Password={3};Persist Security Info=True;MultipleActiveResultSets=True",
                         model.DatabaseServer,
                         model.DatabaseName,
@@ -42,9 +43,15 @@ namespace Kore.Web
 
             config.Save();
 
+            var webHelper = EngineContext.Current.Resolve<IWebHelper>();
+            webHelper.RestartAppDomain();
+
             Database.SetInitializer<TDbContext>(new CreateDatabaseIfNotExists<TDbContext>());
             using (var context = new TDbContext())
             {
+                //string connectionString = WebConfigurationManager.ConnectionStrings[connectionStringName].ConnectionString;
+                //context.Database.Connection.ConnectionString = connectionString;
+
                 // This method doesn't work and throws an exception (must be an EF bug), that's why we set Initializer above...
                 //  does what we need...
                 //context.Database.Create();
@@ -56,10 +63,6 @@ namespace Kore.Web
             // TODO: Install localization strings
 
             InitializeMembership(model.AdminEmail, model.AdminPassword);
-
-            var webHelper = EngineContext.Current.Resolve<IWebHelper>();
-
-            webHelper.RestartAppDomain();
         }
 
         private static void InitializeMembership(string adminEmail, string adminPassword)

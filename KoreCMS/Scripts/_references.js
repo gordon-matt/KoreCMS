@@ -9,7 +9,6 @@
 /// <reference path="jquery-migrate-1.2.1.js" />
 /// <reference path="jquery-ui-1.11.1.js" />
 /// <reference path="jquery-ui.min-1.11.1.js" />
-/// <reference path="jquery-ui.unobtrusive-2.2.0.js" />
 /// <reference path="jquery.fancybox-buttons.js" />
 /// <reference path="jquery.fancybox-media.js" />
 /// <reference path="jquery.fancybox-thumbs.js" />

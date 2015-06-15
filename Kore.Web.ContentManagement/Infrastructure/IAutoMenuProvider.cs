@@ -7,7 +7,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
     {
         string RootUrlSlug { get; }
 
-        MenuItem GetRootMenuItem();
+        IEnumerable<MenuItem> GetMainMenuItems();
 
         IEnumerable<MenuItem> GetSubMenuItems(string currentUrlSlug);
     }

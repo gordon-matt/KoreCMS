@@ -155,7 +155,7 @@ namespace Kore.Web.ContentManagement.Controllers
             var menuProviders = EngineContext.Current.ResolveAll<IAutoMenuProvider>();
             foreach (var menuProvider in menuProviders)
             {
-                menuItems.Add(menuProvider.GetRootMenuItem());
+                menuItems.AddRange(menuProvider.GetMainMenuItems());
             }
 
             menuItems = menuItems
@@ -196,7 +196,7 @@ namespace Kore.Web.ContentManagement.Controllers
 
                 foreach (var menuProvider in menuProviders)
                 {
-                    menuItems.Add(menuProvider.GetRootMenuItem());
+                    menuItems.AddRange(menuProvider.GetMainMenuItems());
                 }
             }
 

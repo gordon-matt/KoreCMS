@@ -38,6 +38,7 @@ namespace Kore.Web.Plugins
         private static readonly ReaderWriterLockSlim Locker = new ReaderWriterLockSlim();
         private static DirectoryInfo _shadowCopyFolder;
         private static bool _clearShadowDirectoryOnStartup;
+        private static Dictionary<string, bool> installedPlugins = null;
 
         #endregion Fields
 
@@ -292,7 +293,18 @@ namespace Kore.Web.Plugins
 
         public static bool IsPluginInstalled(string systemName)
         {
-            return ReferencedPlugins.Any(x => x.SystemName == systemName && x.Installed);
+            if (installedPlugins == null)
+            {
+                installedPlugins = new Dictionary<string, bool>();
+            }
+
+            if (!installedPlugins.ContainsKey(systemName))
+            {
+                bool isInstalled = ReferencedPlugins.Any(x => x.SystemName == systemName && x.Installed);
+                installedPlugins.Add(systemName, isInstalled);
+            }
+
+            return installedPlugins[systemName];
         }
 
         #endregion Methods

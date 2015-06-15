@@ -15,9 +15,8 @@ PAGES:
 	: UPDATE, 2015-06-15: Fixed one big problem. Need to monitor it now, but seems OK.
 
 	
-- remove references to jUqeryUI Helpers
 
-- allow deleting of translated pages (the prob we should also see history for it, etc..)
+- allow deleting of translated pages (then prob we should also see history for it, etc..)
 	- maybe this should happen when deleting the language? All pages, blocks, etc.. for that language get deleted
 
 - page history must not show published version

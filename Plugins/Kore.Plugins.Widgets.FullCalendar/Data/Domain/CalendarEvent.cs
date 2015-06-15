@@ -2,6 +2,7 @@
 using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Widgets.FullCalendar.Data.Domain
 {
@@ -33,6 +34,11 @@ namespace Kore.Plugins.Widgets.FullCalendar.Data.Domain
     {
         public CalendarEntryMap()
         {
+            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
+            {
+                return;
+            }
+
             ToTable(Constants.Tables.Events);
             HasKey(x => x.Id);
             Property(x => x.CalendarId).IsRequired();

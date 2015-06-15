@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Maintenance.Watchdog.Data.Domain
 {
@@ -31,6 +32,11 @@ namespace Kore.Plugins.Maintenance.Watchdog.Data.Domain
     {
         public WatchdogInstanceMap()
         {
+            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
+            {
+                return;
+            }
+
             ToTable(Constants.Tables.WatchdogInstances);
             HasKey(x => x.Id);
             Property(x => x.Url).HasMaxLength(255).IsRequired();

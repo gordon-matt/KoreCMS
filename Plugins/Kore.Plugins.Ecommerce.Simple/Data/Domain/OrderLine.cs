@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 {
@@ -34,6 +35,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
     {
         public OrderLineMap()
         {
+            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
+            {
+                return;
+            }
+
             ToTable(Constants.Tables.OrderLines);
             HasKey(x => x.Id);
             Property(x => x.OrderId).IsRequired();

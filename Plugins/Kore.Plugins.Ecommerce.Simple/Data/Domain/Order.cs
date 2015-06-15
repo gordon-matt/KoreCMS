@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 {
@@ -67,6 +68,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
     {
         public OrderMap()
         {
+            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
+            {
+                return;
+            }
+
             ToTable(Constants.Tables.Orders);
             HasKey(x => x.Id);
             Property(x => x.BillingAddressId).IsRequired();

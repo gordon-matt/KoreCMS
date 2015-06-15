@@ -14,22 +14,11 @@ namespace Kore.Plugins.Ecommerce.Simple
 
         public void GetNavigation(NavigationBuilder builder)
         {
-            builder.Add(T(LocalizableStrings.Store), "99", BuildEcommerceMenu);
-        }
-
-        private void BuildEcommerceMenu(NavigationItemBuilder builder)
-        {
-            builder.IconCssClass("kore-icon kore-icon-shopping-cart");
-
-            builder.Add(T(LocalizableStrings.Categories), "5", item => item
-                .Action("Index", "CategoryAdmin", new { area = Constants.RouteArea })
-                .IconCssClass("kore-icon kore-icon-categories")
-                .Permission(SimpleCommercePermissions.ReadCategories));
-
-            builder.Add(T(LocalizableStrings.Orders), "5", item => item
-                .Action("Index", "OrderAdmin", new { area = Constants.RouteArea })
-                .IconCssClass("kore-icon kore-icon-orders")
-                .Permission(SimpleCommercePermissions.ReadOrders));
+            builder.Add(T(Kore.Web.KoreWebLocalizableStrings.Plugins.Title),
+                menu => menu.Add(T(LocalizableStrings.Store), "5", item => item
+                    .Action("Index", "AdminHome", new { area = Constants.RouteArea })
+                    .IconCssClass("kore-icon kore-icon-shopping-cart")
+                    .Permission(SimpleCommercePermissions.ViewMenu)));
         }
     }
 }

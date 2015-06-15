@@ -10,11 +10,7 @@ PAGES:
 - Delete sub pages when delete page (or move those subpages up 1 level)? Else they become orphans
 - Page Types: should editortemplatepath be overridable? maybe only display template?
 
-- for installation problem: populate con string in db context first (probably its cached from first run)!!!!!!!!!!!!!!!
 
-
-
-- move store to plugins menu
 - broken logging
 
 	
@@ -101,6 +97,9 @@ OTHER
 - slugify automaticlly
 - reusable image picker (Html Helper?)
 
+- idea: generic import tool
+	also: generic query tool like the one I did for GoQuo
+
 - minify HTML?
 
 - scheduled task to auto shrink log file?
@@ -149,7 +148,7 @@ OTHER
 
 - HTML Helpers for generic ui layout (can have bootstrap provider, kendo provider, foundation provider, etc)...
 
-- use output caching more
+- use output caching more?
 - plugins should be published along with site
 
 - Use HTML5 semantic tags properly everywhere

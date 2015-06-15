@@ -32,21 +32,21 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
             get { return "store"; }
         }
 
-        public MenuItem GetRootMenuItem()
+        public IEnumerable<MenuItem> GetMainMenuItems()
         {
             if (!storeSettings.ShowOnMenus)
             {
-                return null;
+                return Enumerable.Empty<MenuItem>();
             }
 
-            return new MenuItem
+            return new[]{new MenuItem
             {
                 Text = storeSettings.PageTitle,
                 Url = "/store",
                 Enabled = true,
                 ParentId = null,
                 Position = storeSettings.MenuPosition
-            };
+            }};
         }
 
         public IEnumerable<MenuItem> GetSubMenuItems(string currentUrlSlug)

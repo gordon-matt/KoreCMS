@@ -60,7 +60,7 @@ $(document).ready(function () {
         }, {
             field: "OrderDateUtc",
             title: translations.Columns.OrderDateUtc,
-            format: "{0:yyyy-MM-dd}",
+            format: "{0:G}",
             filterable: true
         }, {
             field: "OrderTotal",

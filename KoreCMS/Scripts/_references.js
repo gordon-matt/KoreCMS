@@ -353,6 +353,10 @@
 /// <reference path="kendo/2014.1.318/cultures/kendo.culture.moh-ca.min.js" />
 /// <reference path="kendo/2014.1.318/cultures/kendo.culture.moh.min.js" />
 /// <reference path="kendo/2014.1.318/cultures/kendo.culture.mr-in.min.js" />
+/// <reference path="kendo/2014.1.318/cultures/kendo.culture.mr.min.js" />
+/// <reference path="kendo/2014.1.318/cultures/kendo.culture.ms-bn.min.js" />
+/// <reference path="kendo/2014.1.318/cultures/kendo.culture.ms-my.min.js" />
+/// <reference path="kendo/2014.1.318/cultures/kendo.culture.ms.min.js" />
  
  / / /   < r e f e r e n c e   p a t h = " b r e e z e . d e b u g . j s "   / >  
  

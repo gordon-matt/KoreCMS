@@ -12,6 +12,7 @@ PAGES:
 
 
 - broken logging
+	: UPDATE, 2015-06-15: Fixed one big problem. Need to monitor it now, but seems OK.
 
 	
 - remove references to jUqeryUI Helpers

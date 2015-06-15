@@ -22,7 +22,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
 
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
-            if (!PluginManager.IsPluginInstalled("Kore.Plugins.Ecommerce.Simple"))
+            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
             {
                 return;
             }

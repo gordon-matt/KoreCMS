@@ -18,7 +18,7 @@ namespace Kore.Plugins.Widgets.FullCalendar.Infrastructure
 
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
-            if (!PluginManager.IsPluginInstalled("Kore.Plugins.Widgets.FullCalendar"))
+            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
             {
                 return;
             }

@@ -2,6 +2,7 @@
 {
     public static class Constants
     {
+        public const string PluginSystemName = "Kore.Plugins.Ecommerce.Simple";
         public const string RouteArea = "Plugins/Ecommerce/Simple";
 
         public static class Tables

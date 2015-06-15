@@ -12,7 +12,7 @@ namespace Kore.Plugins.Widgets.View360.Infrastructure
 
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
-            if (!PluginManager.IsPluginInstalled("Kore.Plugins.Widgets.View360"))
+            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
             {
                 return;
             }

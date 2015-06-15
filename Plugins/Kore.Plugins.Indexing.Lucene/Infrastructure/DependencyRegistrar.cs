@@ -14,7 +14,7 @@ namespace Kore.Plugins.Indexing.Lucene.Infrastructure
 
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
-            if (!PluginManager.IsPluginInstalled("Kore.Plugins.Indexing.Lucene"))
+            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
             {
                 return;
             }

@@ -2,6 +2,7 @@
 using Kore.Data;
 using Kore.Data.EntityFramework;
 using Kore.Web.Common.Areas.Admin.Regions.Domain;
+using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 {
@@ -47,6 +48,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
     {
         public AddressMap()
         {
+            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
+            {
+                return;
+            }
+
             ToTable(Constants.Tables.Addresses);
             HasKey(x => x.Id);
             Property(x => x.FamilyName).IsRequired().HasMaxLength(128);

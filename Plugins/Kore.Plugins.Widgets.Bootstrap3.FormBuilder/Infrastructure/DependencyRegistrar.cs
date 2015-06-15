@@ -13,7 +13,7 @@ namespace Kore.Plugins.Widgets.Bootstrap3.FormBuilder.Infrastructure
 
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
-            if (!PluginManager.IsPluginInstalled("Kore.Plugins.Widgets.Bootstrap3.FormBuilder"))
+            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
             {
                 return;
             }

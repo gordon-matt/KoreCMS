@@ -2,6 +2,7 @@
 {
     public static class Constants
     {
+        public const string PluginSystemName = "Kore.Plugins.Maintenance.Watchdog";
         public const string RouteArea = "Admin/Maintenance";
 
         public static class Tables

@@ -75,12 +75,12 @@ $(document).ready(function () {
         }, {
             field: "CreatedOnUtc",
             title: translations.Columns.CreatedOnUtc,
-            format: "{0:yyyy-MM-dd HH:mm:ss}",
+            format: "{0:G}",
             filterable: true
         }, {
             field: "SentOnUtc",
             title: translations.Columns.SentOnUtc,
-            format: "{0:yyyy-MM-dd HH:mm:ss}",
+            format: "{0:G}",
             filterable: true
         }, {
             field: "SentTries",

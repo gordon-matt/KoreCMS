@@ -399,10 +399,12 @@ $(document).ready(function () {
         }, {
             field: "StartDateTime",
             title: translations.Columns.Event.StartDateTime,
+            format: "{0:G}",
             filterable: true
         }, {
             field: "EndDateTime",
             title: translations.Columns.Event.EndDateTime,
+            format: "{0:G}",
             filterable: true
         }, {
             field: "Id",

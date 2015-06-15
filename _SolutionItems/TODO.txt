@@ -50,7 +50,6 @@ LOCALIZATION:
 		: Update: this is partly done now, but still has 2 issues:
 		1. need to provide the invariant one ("en" by default or what? maybe configurable)
 		2. need to duplicate the set of URLs for every language
-- localizable enums?
 - localize accoutn views
 - localize error pages (404, etc)
 - import/export language packs (from localized strings table)

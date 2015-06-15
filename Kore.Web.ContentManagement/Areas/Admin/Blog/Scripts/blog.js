@@ -221,7 +221,7 @@ $(document).ready(function () {
             field: "DateCreatedUtc",
             title: translations.Columns.DateCreatedUtc,
             filterable: true,
-            format: '{0:yyyy-MM-dd}'
+            format: '{0:G}'
         }, {
             field: "Id",
             title: " ",

@@ -1,0 +1,27 @@
+﻿@using Kore.Web.Common
+@using Kore.Web.Common.Html
+@using Constants = Kore.Plugins.Ecommerce.Simple.Constants
+@using LocalizableStrings = Kore.Plugins.Ecommerce.Simple.LocalizableStrings
+
+@{
+    Layout = KoreWebConstants.DefaultAdminLayoutPath;
+
+    Style.IncludeBundle("third-party/metro");
+}
+
+@using (var tiles = Html.KoreCommon().Metro().Begin(new Tiles()))
+{
+    using (var row = tiles.BeginTileRow())
+    {
+        using (var tile = row.BeginTile(Url.Action("Index", "AdminOrder", new { area = Constants.RouteArea })))
+        {
+            <i class="kore-icon kore-icon-orders kore-icon-5x"></i>
+            <h4>@T(LocalizableStrings.Orders)</h4>
+        }
+        using (var tile = row.BeginTile(Url.Action("Index", "AdminCategory", new { area = Constants.RouteArea }), MetroColor.Lime))
+        {
+            <i class="kore-icon kore-icon-categories kore-icon-5x"></i>
+            <h4>@T(LocalizableStrings.Categories)</h4>
+        }
+    }
+}

@@ -138,10 +138,10 @@
         var lang = '@lang';
 
         $(document).ready(function () {
-            if (lang && kendo && kendo.culture) {
+            if (lang && typeof kendo === 'function' && typeof kendo.culture === 'function') {
                 kendo.culture(lang);
             }
-            if (lang && moment) {
+            if (lang && typeof moment === 'function') {
                 moment.locale(lang);
             }
         });

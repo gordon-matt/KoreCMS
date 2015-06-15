@@ -4,25 +4,21 @@ using Kore.Web.Mvc.Optimization;
 
 namespace Kore.Plugins.Ecommerce.Simple.Controllers
 {
-    [Authorize]
     [RouteArea(Constants.RouteArea)]
-    [RoutePrefix("orders")]
-    public class OrderAdminController : KoreController
+    public class AdminHomeController : KoreController
     {
         [Compress]
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(SimpleCommercePermissions.ReadOrders))
+            if (!CheckPermission(SimpleCommercePermissions.ViewMenu))
             {
                 return new HttpUnauthorizedResult();
             }
 
             WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Store));
-            WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Orders));
 
             ViewBag.Title = T(LocalizableStrings.Store);
-            ViewBag.SubTitle = T(LocalizableStrings.Orders);
 
             return View();
         }

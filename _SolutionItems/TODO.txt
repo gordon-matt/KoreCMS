@@ -53,7 +53,6 @@ LOCALIZATION:
 - localize accoutn views
 - localize error pages (404, etc)
 - import/export language packs (from localized strings table)
-- use {0:G} date format in all kendo grids?
 
 FULL CALENDAR:
 - Support Google Calendar
@@ -122,7 +121,7 @@ OTHER
 - SIMPLE ECOMMERCE
   - comments/reviews
   - star ratings?
-  - product images
+  - product images (use bootstrap file upload in edit mode)
   - product attributes (filter widget based on this + generic fields like price, etc)
  - make it more secure (PayPal) by removing BuyNow.cshtml and replacing it with c# code only (use HttpClient)
 

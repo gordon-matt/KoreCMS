@@ -162,6 +162,10 @@ var ViewModel = function () {
         });
     };
 
+    self.importLanguagePack = function () {
+        switchSection($("#upload-section"));
+    };
+
     self.validator = $("#form-section-form").validate({
         rules: {
             Name: { required: true, maxlength: 255 },
@@ -175,6 +179,22 @@ var viewModel;
 $(document).ready(function () {
     viewModel = new ViewModel();
     ko.applyBindings(viewModel);
+
+    $("#Upload").fileinput({
+        uploadUrl: '/admin/localization/languages/import-language-pack',
+        uploadAsync: false,
+        maxFileCount: 1,
+        showPreview: false,
+        showRemove: false,
+        allowedFileExtensions: ['json']
+    });
+    $('#Upload').on('filebatchuploadsuccess', function (event, data, previewId, index) {
+        var response = data.response;
+        $('#Grid').data('kendoGrid').dataSource.read();
+        $('#Grid').data('kendoGrid').refresh();
+        switchSection($("#grid-section"));
+        $.notify(response.Message, "success");
+    });
 
     $("#Grid").kendoGrid({
         data: null,

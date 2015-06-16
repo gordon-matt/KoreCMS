@@ -56,9 +56,9 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers
                 return HttpNotFound();
             }
 
-            WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Regions.Title), Url.Action("Index", new { area = Constants.Areas.Regions }));
-            WorkContext.Breadcrumbs.Add(model.Name);
-            WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.General.Edit));
+            //WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Regions.Title), Url.Action("Index", new { area = Constants.Areas.Regions }));
+            //WorkContext.Breadcrumbs.Add(model.Name);
+            //WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.General.Edit));
 
             string content = RenderRazorPartialViewToString(model.EditorTemplatePath, model);
             return Json(new { Content = content }, JsonRequestBehavior.AllowGet);

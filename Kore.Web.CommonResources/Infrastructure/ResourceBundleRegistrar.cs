@@ -9,6 +9,9 @@ namespace Kore.Web.CommonResources.Infrastructure
 
         public void Register(BundleCollection bundles)
         {
+            // Note to self: don't have '-' in folder name (file name is fine)...
+            // If there's a '-' in the folder name, then the file won't be found
+
             #region Scripts
 
             bundles.Add(new ScriptBundle("~/bundles/js/kore/common")
@@ -28,6 +31,9 @@ namespace Kore.Web.CommonResources.Infrastructure
 
 
 
+            bundles.Add(new ScriptBundle("~/bundles/js/third-party/bootstrap-fileinput")
+                .Include("~/Scripts/Kore.Web.CommonResources.Scripts.bootstrapFileInput.fileinput.min.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/third-party/bootstrap-slider")
                 .Include("~/Scripts/Kore.Web.CommonResources.Scripts.bootstrap-slider.min.js"));
 
@@ -42,6 +48,9 @@ namespace Kore.Web.CommonResources.Infrastructure
             #region Styles
 
             IItemTransform cssRewriteUrlTransform = new CssRewriteUrlTransform();
+
+            bundles.Add(new StyleBundle("~/bundles/content/third-party/bootstrap-fileinput")
+                .Include("~/Content/Kore.Web.CommonResources.Content.bootstrapFileInput.css.fileinput.min.css", cssRewriteUrlTransform));
 
             bundles.Add(new StyleBundle("~/bundles/content/third-party/bootstrap-slider")
                 .Include("~/Content/Kore.Web.CommonResources.Content.bootstrap-slider.min.css", cssRewriteUrlTransform));

@@ -109,6 +109,34 @@
   <ItemGroup>
     <EmbeddedResource Include="Scripts\bootstrap-slider-knockout-binding.js" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\bootstrapFileInput\css\fileinput.css" />
+    <EmbeddedResource Include="Content\bootstrapFileInput\css\fileinput.min.css" />
+    <EmbeddedResource Include="Content\bootstrapFileInput\img\loading-sm.gif" />
+    <EmbeddedResource Include="Content\bootstrapFileInput\img\loading.gif" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput.min.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_cz.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_de.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_el.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_es.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_fr.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_hu.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_it.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_LANG.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_nl.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_pl.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_pt-BR.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_pt.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_ro.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_ru.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_sk.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_sr.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_th.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_tr.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_uk.js" />
+    <EmbeddedResource Include="Scripts\bootstrapFileInput\fileinput_locale_zh.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

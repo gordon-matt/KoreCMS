@@ -28,7 +28,6 @@ PAGES:
 - cleanup View360 editor template (use tabs or accordion)
 
 - plugin idea: live chat
-- dont load entityType configurations if plugin not loaded..
 
 - do validation for settings
 
@@ -50,9 +49,12 @@ LOCALIZATION:
 		: Update: this is partly done now, but still has 2 issues:
 		1. need to provide the invariant one ("en" by default or what? maybe configurable)
 		2. need to duplicate the set of URLs for every language
+		UPDATE 2015.06.16:
+			If 0 or 1 languages configured, then create normal sitemap
+			If 2 or more languages configured, then create the multi lang sitemap, but we need to know which of those languages is the default
 - localize accoutn views
 - localize error pages (404, etc)
-- import/export language packs (from localized strings table)
+- delete localized strings (and pages, widgets, etc) when delete language
 
 FULL CALENDAR:
 - Support Google Calendar
@@ -125,9 +127,6 @@ OTHER
   - product attributes (filter widget based on this + generic fields like price, etc)
  - make it more secure (PayPal) by removing BuyNow.cshtml and replacing it with c# code only (use HttpClient)
 
- - Move navigation under PLUGINS and make a "home page" for store.. from that page have icons (maybe metro tiles) for
-		Store management, orders, etc.. and maybe can have widgets to show sales charts or whatever..
-
   - regions: add some button for importing common public data files (like MaxMind)
   
    - admin page for blocking some IPs (inc. import IP block list files)
@@ -141,8 +140,6 @@ OTHER
   - REVISE AUTO CACHE KEYS IN Generic Service!! Because they might conflict (not unique) if have 2 entities with same name in diff library
   
 - thin arrow for treeview sub items?
-
-- consider making all odata actions return IHttpActionResult
 
 - HTML Helpers for generic ui layout (can have bootstrap provider, kendo provider, foundation provider, etc)...
 
@@ -190,12 +187,8 @@ http://html5doctor.com/the-contenteditable-attribute/
 
 - investigate RequireJS ( see Durandal)
 
-if normal view, use breadcrumbs.. not needed if only partial view
-
 - don't load dependencies from web dll.. instead, provide a static class which can do that (call it from main app) if the dev wants (default) or else they can override the registrations with their own in the main app
-- minification & bundling for script and style registers (do we even need these registers?)
 
-- HTML/CSS framework builder: interface, so can use bootstrap, foundation, etc (HTML Helpers)
 
 95% DONE:
 - CMS:
@@ -227,7 +220,6 @@ FUTURE:
 - forums plugin,
 - wiki plugin (roadkill?)
 - Visitor Groups
-- virtual path providers
 - responsive file manager
 
 IMPORTANT: Keep note of licenses for all references!

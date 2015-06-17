@@ -1,4 +1,4 @@
-﻿using Kore.EntityFramework;
+﻿using Kore.Web.Infrastructure;
 using Microsoft.Owin;
 using Owin;
 
@@ -10,7 +10,7 @@ namespace KoreCMS
     {
         public void Configuration(IAppBuilder app)
         {
-            if (!DatabaseHelper.IsDatabaseInstalled())
+            if (!DataSettingsHelper.IsDatabaseInstalled)
             {
                 return;
             }

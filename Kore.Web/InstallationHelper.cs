@@ -1,38 +1,38 @@
 ﻿using System.Data.Entity;
-using System.Linq;
+using System.Data.Entity.Infrastructure;
 using System.Web;
-using System.Web.Configuration;
 using Kore.Data;
 using Kore.EntityFramework;
 using Kore.Infrastructure;
-using Kore.Security.Membership;
+using Kore.Web.Infrastructure;
 using Kore.Web.Models;
-using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web
 {
     public static class InstallationHelper
     {
-        public static void Install<TDbContext>(HttpRequestBase httpRequest, InstallationModel model, string connectionStringName) where TDbContext : DbContext, IKoreDbContext, ISupportSeed, new()
+        public static void Install<TDbContext>(HttpRequestBase httpRequest, InstallationModel model) where TDbContext : DbContext, IKoreDbContext, ISupportSeed, new()
         {
-            var config = WebConfigurationManager.OpenWebConfiguration(httpRequest.ApplicationPath);
+            var settings = DataSettingsManager.LoadSettings();
+
+            string connectionString = string.Empty;
 
             if (model.EnterConnectionString)
             {
-                config.ConnectionStrings.ConnectionStrings[connectionStringName].ConnectionString = model.ConnectionString;
+                connectionString = model.ConnectionString;
             }
             else
             {
                 if (model.UseWindowsAuthentication)
                 {
-                    config.ConnectionStrings.ConnectionStrings[connectionStringName].ConnectionString = string.Format(
+                    connectionString = string.Format(
                         @"Server={0};Initial Catalog={1};Integrated Security=True;Persist Security Info=True;MultipleActiveResultSets=True",
                         model.DatabaseServer,
                         model.DatabaseName);
                 }
                 else
                 {
-                    config.ConnectionStrings.ConnectionStrings[connectionStringName].ConnectionString = string.Format(
+                    connectionString = string.Format(
                         @"Server={0};Initial Catalog={1};User={2};Password={3};Persist Security Info=True;MultipleActiveResultSets=True",
                         model.DatabaseServer,
                         model.DatabaseName,
@@ -41,81 +41,52 @@ namespace Kore.Web
                 }
             }
 
-            config.Save();
+            settings.ConnectionString = connectionString;
 
-            var webHelper = EngineContext.Current.Resolve<IWebHelper>();
-            webHelper.RestartAppDomain();
+            // We need to save this to settings temporarily in order to setup the login details AFTER restarting the app domain
+            //  We then delete the password from the XML file in Kore.Web.Infrastructure.StartupTask.
+            settings.AdminEmail = model.AdminEmail;
+            settings.AdminPassword = model.AdminPassword;
 
-            Database.SetInitializer<TDbContext>(new CreateDatabaseIfNotExists<TDbContext>());
+            DataSettingsManager.SaveSettings(settings);
+
             using (var context = new TDbContext())
             {
-                //string connectionString = WebConfigurationManager.ConnectionStrings[connectionStringName].ConnectionString;
-                //context.Database.Connection.ConnectionString = connectionString;
+                context.Database.Connection.ConnectionString = connectionString;
 
-                // This method doesn't work and throws an exception (must be an EF bug), that's why we set Initializer above...
-                //  does what we need...
-                //context.Database.Create();
+                bool dbExists = context.Database.Exists();
+                if (dbExists)
+                {
+                    int numberOfTables = context.Database.SqlQuery<int>(
+                        "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE table_type = 'BASE TABLE'").FirstAsync().Result;
 
-                context.Database.Initialize(true);
+                    if (numberOfTables == 0)
+                    {
+                        var dbCreationScript = ((IObjectContextAdapter)context).ObjectContext.CreateDatabaseScript();
+                        context.Database.ExecuteSqlCommand(dbCreationScript);
+                    }
+                }
+                else
+                {
+                    context.Database.Create();
+                }
                 context.Seed();
             }
 
-            // TODO: Install localization strings
+            DataSettingsHelper.ResetCache();
 
-            InitializeMembership(model.AdminEmail, model.AdminPassword);
-        }
+            // NOT WORKING YET
+            //string filePath = HostingEnvironment.MapPath(Path.Combine(httpRequest.ApplicationPath, "ConnectionStrings.config"));
+            //var fileMap = new ExeConfigurationFileMap
+            //{
+            //    ExeConfigFilename = filePath
+            //};
+            //var configFile = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+            //configFile.ConnectionStrings.ConnectionStrings["NLogConnection"].ConnectionString = connectionString;
+            //configFile.Save();
 
-        private static void InitializeMembership(string adminEmail, string adminPassword)
-        {
-            var membershipService = EngineContext.Current.Resolve<IMembershipService>();
-
-            var adminUser = membershipService.GetUserByEmail(adminEmail);
-
-            if (adminUser == null)
-            {
-                membershipService.InsertUser(new KoreUser { UserName = adminEmail, Email = adminEmail }, adminPassword);
-                adminUser = membershipService.GetUserByEmail(adminEmail);
-            }
-
-            KoreRole administratorsRole = null;
-            if (adminUser != null)
-            {
-                administratorsRole = membershipService.GetRoleByName("Administrators");
-                if (administratorsRole == null)
-                {
-                    membershipService.InsertRole(new KoreRole { Name = "Administrators" });
-                    administratorsRole = membershipService.GetRoleByName("Administrators");
-                    membershipService.AssignUserToRoles(adminUser.Id, new[] { administratorsRole.Id });
-                }
-            }
-
-            //TODO: Change this to update/add/remove permissions
-            //  actually, we should probably move this into Kore.Web (except last part where assiging Administrator role full permission)
-            if (membershipService.SupportsRolePermissions)
-            {
-                var permissions = membershipService.GetAllPermissions();
-
-                if (!permissions.Any())
-                {
-                    var permissionProviders = EngineContext.Current.ResolveAll<IPermissionProvider>();
-                    var toInsert = permissionProviders.SelectMany(x => x.GetPermissions()).Select(x => new KorePermission
-                    {
-                        Name = x.Name,
-                        Category = x.Category,
-                        Description = x.Description
-                    });
-                    foreach (var permission in toInsert)
-                    {
-                        membershipService.InsertPermission(permission);
-                    }
-
-                    if (administratorsRole != null)
-                    {
-                        var fullAccessPermission = membershipService.GetPermissionByName("FullAccess");
-                        membershipService.AssignPermissionsToRole(administratorsRole.Id, new[] { fullAccessPermission.Id });
-                    }
-                }
-            }
+            var webHelper = EngineContext.Current.Resolve<IWebHelper>();
+            webHelper.RestartAppDomain();
         }
     }
 }

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using Autofac;
 using Kore.Configuration;
-using Kore.EntityFramework;
 using Kore.Infrastructure.DependencyManagement;
+using Kore.Web.Infrastructure;
 using Kore.Web.Infrastructure.DependencyManagement;
 
 namespace Kore.Infrastructure
@@ -39,7 +38,7 @@ namespace Kore.Infrastructure
 
         private void RunStartupTasks()
         {
-            if (!DatabaseHelper.IsDatabaseInstalled())
+            if (!DataSettingsHelper.IsDatabaseInstalled)
             {
                 return;
             }

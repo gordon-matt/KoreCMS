@@ -2,7 +2,7 @@
 @using Kore.Web.Configuration
 
 @{
-    if (!Kore.EntityFramework.DatabaseHelper.IsDatabaseInstalled())
+    if (!Kore.Web.Infrastructure.DataSettingsHelper.IsDatabaseInstalled)
     {
         Layout = "~/Views/Shared/_Layout.cshtml";
         return;

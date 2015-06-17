@@ -6,10 +6,10 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.WebPages;
 using Kore.Configuration;
-using Kore.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Tasks;
 using Kore.Web.Hosting;
+using Kore.Web.Infrastructure;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.EmbeddedViews;
 using Kore.Web.Mvc.Filters;
@@ -25,7 +25,9 @@ namespace Kore.Web
 
         protected void Application_Start()
         {
+            //initialize engine context
             EngineContext.Default = new KoreWebEngine();
+            EngineContext.Initialize(false);
 
             RouteTable.Routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             RouteTable.Routes.IgnoreRoute("Content/{*pathInfo}");
@@ -52,9 +54,7 @@ namespace Kore.Web
             var dependencyResolver = new KoreDependencyResolver();
             DependencyResolver.SetResolver(dependencyResolver);
 
-            bool isDatabaseInstalled = DatabaseHelper.IsDatabaseInstalled();
-
-            if (isDatabaseInstalled)
+            if (DataSettingsHelper.IsDatabaseInstalled)
             {
                 //remove all view engines
                 ViewEngines.Engines.Clear();
@@ -87,7 +87,7 @@ namespace Kore.Web
 
             FilterProviders.Providers.Add(new KoreFilterProvider());
 
-            if (isDatabaseInstalled && KoreConfigurationSection.Instance.Tasks.Enabled)
+            if (DataSettingsHelper.IsDatabaseInstalled && KoreConfigurationSection.Instance.Tasks.Enabled)
             {
                 TaskManager.Instance.Initialize();
                 TaskManager.Instance.Start();

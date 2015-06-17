@@ -16,6 +16,11 @@ namespace Kore
 
         public static T ToEnum<T>(this string str, T fallback, bool ignoreCase = true) where T : struct
         {
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                return fallback;
+            }
+
             T result;
             if (TryParse<T>(str, out result, ignoreCase))
             {

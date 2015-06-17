@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using Kore.Collections;
+using System.Data;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -187,6 +188,11 @@ namespace Kore.IO
 
         public static DataTable ReadCsv(this FileInfo fileInfo, bool hasHeaderRow, params string[] delimeters)
         {
+            if (delimeters.IsNullOrEmpty())
+            {
+                delimeters = new[] { "," };
+            }
+
             using (var parser = new TextFieldParser(fileInfo.FullName))
             {
                 parser.TextFieldType = FieldType.Delimited;

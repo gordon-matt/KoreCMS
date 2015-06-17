@@ -178,6 +178,8 @@ namespace Kore.Web.ContentManagement.Controllers
             var menuId = Guid.NewGuid();
 
             var menuProviders = EngineContext.Current.ResolveAll<IAutoMenuProvider>();
+
+            // If home page
             if (string.IsNullOrEmpty(currentUrlSlug))
             {
                 if (blogSettings.Value.ShowOnMenus &&
@@ -196,10 +198,9 @@ namespace Kore.Web.ContentManagement.Controllers
 
                 foreach (var menuProvider in menuProviders)
                 {
-                    menuItems.AddRange(menuProvider.GetMainMenuItems());
+                    menuItems.AddRange(menuProvider.GetMainMenuItems().Where(x => x.ParentId == null));
                 }
             }
-
             foreach (var menuProvider in menuProviders)
             {
                 if (currentUrlSlug.StartsWith(menuProvider.RootUrlSlug))
@@ -211,11 +212,6 @@ namespace Kore.Web.ContentManagement.Controllers
             var pageVersionService = EngineContext.Current.Resolve<IPageVersionService>();
 
             var pageVersions = Enumerable.Empty<PageVersion>();
-
-            //var pageVersions = pageVersionService.GetCurrentVersions(
-            //    WorkContext.CurrentCultureCode,
-            //    enabledOnly: true,
-            //    shownOnMenusOnly: true);
 
             bool hasCmsPages = true;
 

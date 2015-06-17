@@ -22,16 +22,16 @@ namespace Kore.Web.Infrastructure
 
         private static void EnsureMembership()
         {
-            var settings = DataSettingsManager.LoadSettings();
+            var dataSettings = EngineContext.Current.Resolve<DataSettings>();
 
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
 
-            var adminUser = membershipService.GetUserByEmail(settings.AdminEmail);
+            var adminUser = membershipService.GetUserByEmail(dataSettings.AdminEmail);
 
             if (adminUser == null)
             {
-                membershipService.InsertUser(new KoreUser { UserName = settings.AdminEmail, Email = settings.AdminEmail }, settings.AdminPassword);
-                adminUser = membershipService.GetUserByEmail(settings.AdminEmail);
+                membershipService.InsertUser(new KoreUser { UserName = dataSettings.AdminEmail, Email = dataSettings.AdminEmail }, dataSettings.AdminPassword);
+                adminUser = membershipService.GetUserByEmail(dataSettings.AdminEmail);
             }
 
             KoreRole administratorsRole = null;
@@ -74,8 +74,8 @@ namespace Kore.Web.Infrastructure
                 }
             }
 
-            settings.AdminPassword = null;
-            DataSettingsManager.SaveSettings(settings);
+            dataSettings.AdminPassword = null;
+            DataSettingsManager.SaveSettings(dataSettings);
         }
 
         private static void EnsureSettings()

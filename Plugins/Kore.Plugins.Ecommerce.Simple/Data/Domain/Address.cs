@@ -48,11 +48,6 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
     {
         public AddressMap()
         {
-            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
-            {
-                return;
-            }
-
             ToTable(Constants.Tables.Addresses);
             HasKey(x => x.Id);
             Property(x => x.FamilyName).IsRequired().HasMaxLength(128);
@@ -66,5 +61,14 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             Property(x => x.PostalCode).IsRequired().HasMaxLength(10);
             Property(x => x.PhoneNumber).IsRequired().HasMaxLength(25);
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return PluginManager.IsPluginInstalled(Constants.PluginSystemName); }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

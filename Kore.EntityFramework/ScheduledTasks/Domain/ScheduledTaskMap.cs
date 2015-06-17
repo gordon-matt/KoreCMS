@@ -16,5 +16,14 @@ namespace Kore.ScheduledTasks.Domain
             Property(s => s.Enabled).IsRequired();
             Property(s => s.StopOnError).IsRequired();
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

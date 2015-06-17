@@ -34,5 +34,14 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Domain
             Property(m => m.SettingsId).IsRequired().HasMaxLength(255);
             Property(m => m.Fields).IsRequired().IsMaxLength();
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

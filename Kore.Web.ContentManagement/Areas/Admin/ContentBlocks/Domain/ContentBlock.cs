@@ -54,5 +54,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
             Property(x => x.CultureCode).HasMaxLength(10);
             Property(x => x.IsEnabled).IsRequired();
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

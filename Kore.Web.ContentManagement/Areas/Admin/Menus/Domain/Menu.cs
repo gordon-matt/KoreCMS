@@ -32,5 +32,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Domain
             Property(x => x.Name).HasMaxLength(255).IsRequired();
             Property(x => x.UrlFilter).HasMaxLength(255);
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

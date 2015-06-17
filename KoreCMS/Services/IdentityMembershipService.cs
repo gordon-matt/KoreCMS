@@ -40,8 +40,8 @@ namespace KoreCMS.Services
         public IdentityMembershipService(IRepository<UserProfileEntry> userProfileRepository)
         {
             var settings = DataSettingsManager.LoadSettings();
-
             dbContext = new ApplicationDbContext(settings.ConnectionString);
+
             this.userStore = new UserStore<ApplicationUser>(dbContext);
             this.roleStore = new RoleStore<IdentityRole>(dbContext);
             this.userManager = new ApplicationUserManager(userStore);

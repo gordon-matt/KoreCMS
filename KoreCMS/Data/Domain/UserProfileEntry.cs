@@ -33,5 +33,14 @@ namespace KoreCMS.Data.Domain
             Property(x => x.UserId).IsRequired();
             Property(x => x.Key).HasMaxLength(255).IsRequired();
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

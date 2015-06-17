@@ -20,5 +20,14 @@ namespace Kore.Logging.Domain
             Property(m => m.ErrorMessage).IsMaxLength();
             Property(m => m.InnerErrorMessage).IsMaxLength();
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

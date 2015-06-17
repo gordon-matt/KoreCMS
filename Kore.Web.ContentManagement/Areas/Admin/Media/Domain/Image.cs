@@ -45,5 +45,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Domain
             Property(x => x.Caption).HasMaxLength(255);
             Property(x => x.SortOrder).IsRequired();
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

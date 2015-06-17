@@ -29,5 +29,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Domain
             HasKey(x => x.Id);
             Property(x => x.Type).IsRequired().HasMaxLength(2048);
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

@@ -89,5 +89,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Domain
             Property(x => x.CreatedOnUtc).IsRequired();
             Property(x => x.SentTries).IsRequired();
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

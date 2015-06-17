@@ -42,6 +42,7 @@ namespace Kore.Web.ContentManagement
             internal const string Pages = "Kore_Pages";
             internal const string PageVersions = "Kore_PageVersions";
             internal const string PageTypes = "Kore_PageTypes";
+            internal const string PluginSupportedBlocks = "Kore_PluginSupportedContentBlocks";
             internal const string SitemapConfig = "Kore_SitemapConfig";
             internal const string QueuedEmails = "Kore_QueuedEmails";
             internal const string QueuedSMS = "Kore_QueuedSMS";

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Autofac;
 using Kore.Infrastructure;
 
@@ -16,7 +17,12 @@ namespace Kore.Data.EntityFramework
 
             foreach (var configuration in entityTypeConfigurations)
             {
-                builder.RegisterType(configuration).As(typeof(IEntityTypeConfiguration)).InstancePerLifetimeScope();
+                var isEnabled = (Activator.CreateInstance(configuration) as IEntityTypeConfiguration).IsEnabled;
+
+                if (isEnabled)
+                {
+                    builder.RegisterType(configuration).As(typeof(IEntityTypeConfiguration)).InstancePerLifetimeScope();
+                }
             }
         }
 

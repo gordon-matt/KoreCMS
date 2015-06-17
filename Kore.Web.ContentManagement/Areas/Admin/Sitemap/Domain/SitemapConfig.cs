@@ -45,5 +45,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Domain
             Property(x => x.ChangeFrequency).IsRequired();
             Property(x => x.Priority).IsRequired();
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

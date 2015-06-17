@@ -59,5 +59,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
             Property(x => x.MetaKeywords).HasMaxLength(255);
             Property(x => x.MetaDescription).HasMaxLength(255);
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

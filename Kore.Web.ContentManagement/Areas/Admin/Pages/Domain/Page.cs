@@ -55,5 +55,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
             Property(x => x.ShowOnMenus).IsRequired();
             Property(x => x.AccessRestrictions).HasColumnType("varchar").HasMaxLength(1024);
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

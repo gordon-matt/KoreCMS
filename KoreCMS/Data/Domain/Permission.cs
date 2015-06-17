@@ -44,5 +44,14 @@ namespace KoreCMS.Data.Domain
                 m.ToTable("RolePermissions");
             });
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

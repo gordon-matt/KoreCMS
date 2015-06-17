@@ -33,23 +33,26 @@ namespace Kore.Controllers
         private readonly IMessageService messageService;
         private readonly Lazy<IEnumerable<IUserProfileProvider>> userProfileProviders;
 
-        public AccountController(IMembershipService membershipService, IMessageService messageService, Lazy<IEnumerable<IUserProfileProvider>> userProfileProviders)
+        public AccountController(
+            IMembershipService membershipService,
+            IMessageService messageService,
+            Lazy<IEnumerable<IUserProfileProvider>> userProfileProviders)
         {
             this.membershipService = membershipService;
             this.messageService = messageService;
             this.userProfileProviders = userProfileProviders;
         }
 
-        public AccountController(ApplicationUserManager userManager)
-        {
-            UserManager = userManager;
-            this.membershipService = EngineContext.Current.Resolve<IMembershipService>();
-            this.messageService = EngineContext.Current.Resolve<IMessageService>();
-            this.userProfileProviders = new Lazy<IEnumerable<IUserProfileProvider>>(() =>
-            {
-                return EngineContext.Current.ResolveAll<IUserProfileProvider>();
-            });
-        }
+        //public AccountController(ApplicationUserManager userManager)
+        //{
+        //    UserManager = userManager;
+        //    this.membershipService = EngineContext.Current.Resolve<IMembershipService>();
+        //    this.messageService = EngineContext.Current.Resolve<IMessageService>();
+        //    this.userProfileProviders = new Lazy<IEnumerable<IUserProfileProvider>>(() =>
+        //    {
+        //        return EngineContext.Current.ResolveAll<IUserProfileProvider>();
+        //    });
+        //}
 
         public ApplicationUserManager UserManager
         {

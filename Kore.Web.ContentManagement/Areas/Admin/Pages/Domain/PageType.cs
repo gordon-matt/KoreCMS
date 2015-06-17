@@ -38,5 +38,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
             Property(x => x.DisplayTemplatePath).HasMaxLength(255);
             Property(x => x.EditorTemplatePath).HasMaxLength(255);
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

@@ -458,7 +458,7 @@ namespace Kore.Web
                 success = TryWriteGlobalAsax();
                 if (!success)
                 {
-                    throw new KoreException("nopCommerce needs to be restarted due to a configuration change, but was unable to do so." + System.Environment.NewLine +
+                    throw new KoreException("Kore needs to be restarted due to a configuration change, but was unable to do so." + System.Environment.NewLine +
                         "To prevent this issue in the future, a change to the web server configuration is required:" + System.Environment.NewLine +
                         "- run the application in a full trust environment, or" + System.Environment.NewLine +
                         "- give the application write access to the 'Global.asax' file.");

@@ -26,9 +26,17 @@ namespace KoreCMS.Controllers
             {
                 return View(model);
             }
-            InstallationHelper.Install<ApplicationDbContext>(this.HttpContext.Request, model, "DefaultConnection");
+            InstallationHelper.Install<ApplicationDbContext>(this.HttpContext.Request, model);
 
             return RedirectToAction("Index", "Home");
         }
+
+        //private static void TryUpdateNLogConfig()
+        //{
+        //    string path = HostingEnvironment.MapPath("~/NLog.config");
+        //    var configFile = ConfigurationManager.OpenExeConfiguration(path);
+        //    var nlogSection = configFile.GetSection("nlog");
+        //    var nLogConfig = new NLog.
+        //}
     }
 }

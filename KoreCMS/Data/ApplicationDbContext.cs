@@ -17,6 +17,7 @@ using Kore.Web.ContentManagement.Areas.Admin.Media.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using Kore.Web.Infrastructure;
 using KoreCMS.Data.Domain;
 using Microsoft.AspNet.Identity.EntityFramework;
 using LanguageEntity = Kore.Localization.Domain.Language;
@@ -39,7 +40,14 @@ namespace KoreCMS.Data
         }
 
         public ApplicationDbContext()
-            : base("DefaultConnection")
+            : base()
+        {
+            var settings = DataSettingsManager.LoadSettings();
+            this.Database.Connection.ConnectionString = settings.ConnectionString;
+        }
+
+        public ApplicationDbContext(string nameOrConnectionString)
+            : base(nameOrConnectionString)
         {
         }
 
@@ -110,7 +118,14 @@ namespace KoreCMS.Data
 
         public static ApplicationDbContext Create()
         {
-            return new ApplicationDbContext();
+            if (!DataSettingsHelper.IsDatabaseInstalled)
+            {
+                return null;
+            }
+
+            var settings = DataSettingsManager.LoadSettings();
+
+            return new ApplicationDbContext(settings.ConnectionString);
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

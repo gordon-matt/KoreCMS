@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
-using Kore.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Localization.Services;
 using Kore.Web.Configuration;
+using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Resources;
 using Kore.Web.Navigation;
 using Kore.Web.Security.Membership.Permissions;
@@ -84,7 +84,7 @@ namespace Kore.Web.Mvc
                 return;
             }
 
-            if (!DatabaseHelper.IsDatabaseInstalled())
+            if (!DataSettingsHelper.IsDatabaseInstalled)
             {
                 return;
             }

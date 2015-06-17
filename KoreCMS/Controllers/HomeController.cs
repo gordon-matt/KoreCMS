@@ -1,8 +1,6 @@
-﻿using System;
-using System.Web.Mvc;
-using Kore.EntityFramework;
+﻿using System.Web.Mvc;
+using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Optimization;
-using KoreCMS.Data;
 
 namespace KoreCMS.Controllers
 {
@@ -12,7 +10,7 @@ namespace KoreCMS.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!DatabaseHelper.IsDatabaseInstalled())
+            if (!DataSettingsHelper.IsDatabaseInstalled)
             {
                 return RedirectToAction("Index", "Installation");
             }

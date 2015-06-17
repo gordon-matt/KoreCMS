@@ -9,6 +9,7 @@ using Kore.Collections;
 using Kore.Data;
 using Kore.Exceptions;
 using Kore.Security.Membership;
+using Kore.Web.Infrastructure;
 using Kore.Web.Security.Membership;
 using KoreCMS.Data;
 using KoreCMS.Data.Domain;
@@ -17,10 +18,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace KoreCMS.Services
 {
-    public abstract class IdentityMembershipService<TDbContext> : IMembershipService, IDisposable
-        where TDbContext : IdentityDbContext<ApplicationUser>, IKoreSecurityDbContext, new()
+    public abstract class IdentityMembershipService : IMembershipService, IDisposable
     {
-        private readonly TDbContext dbContext;
+        private readonly ApplicationDbContext dbContext;
 
         private readonly UserStore<ApplicationUser> userStore;
         private readonly ApplicationUserManager userManager;
@@ -39,7 +39,9 @@ namespace KoreCMS.Services
 
         public IdentityMembershipService(IRepository<UserProfileEntry> userProfileRepository)
         {
-            dbContext = new TDbContext();
+            var settings = DataSettingsManager.LoadSettings();
+
+            dbContext = new ApplicationDbContext(settings.ConnectionString);
             this.userStore = new UserStore<ApplicationUser>(dbContext);
             this.roleStore = new RoleStore<IdentityRole>(dbContext);
             this.userManager = new ApplicationUserManager(userStore);

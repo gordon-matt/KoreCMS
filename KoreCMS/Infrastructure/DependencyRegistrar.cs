@@ -7,6 +7,7 @@ using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging;
+using Kore.Web.Infrastructure;
 using Kore.Web.Navigation;
 using KoreCMS.Areas.Admin;
 using KoreCMS.Messaging;
@@ -20,12 +21,14 @@ namespace KoreCMS.Infrastructure
 
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
+            var settings = DataSettingsManager.LoadSettings();
+
             // data layer
             builder.RegisterType<KoreCMS.Data.ApplicationDbContext>()
                 .As<DbContext>()
                 .AsSelf()
                 .Named<DbContext>("KoreCMS.ApplicationDbContext")
-                .WithParameter("nameOrConnectionString", "DefaultConnection")
+                .WithParameter("nameOrConnectionString", settings.ConnectionString)
                 .InstancePerLifetimeScope();
 
             builder.RegisterGeneric(typeof(EntityFrameworkRepository<>))

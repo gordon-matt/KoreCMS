@@ -14,9 +14,9 @@
         @Html.ValidationMessageFor(m => m.PrivateKey)
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.PrivateKey)
+        @Html.LabelFor(m => m.Theme)
         @Html.EnumDropDownListFor(m => m.Theme, new { @class = "form-control", data_bind = "value: theme" })
-        @Html.ValidationMessageFor(m => m.PrivateKey)
+        @Html.ValidationMessageFor(m => m.Theme)
     </div>
 </div>
 

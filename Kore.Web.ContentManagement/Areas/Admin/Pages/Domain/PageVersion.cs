@@ -60,5 +60,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
             Property(x => x.Fields).IsMaxLength();
             HasRequired(x => x.Page).WithMany(x => x.Versions).HasForeignKey(x => x.PageId);
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

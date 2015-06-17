@@ -12,5 +12,14 @@ namespace Kore.Localization.Domain
             Property(m => m.CultureCode).HasMaxLength(10);
             Property(m => m.TextKey).IsRequired();
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

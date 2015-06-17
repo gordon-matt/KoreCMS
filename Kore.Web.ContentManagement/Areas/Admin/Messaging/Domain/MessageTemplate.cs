@@ -55,5 +55,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Domain
             Property(x => x.Body).IsRequired();
             Property(x => x.Enabled).IsRequired();
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

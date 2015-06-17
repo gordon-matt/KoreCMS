@@ -34,11 +34,6 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
     {
         public OrderNoteMap()
         {
-            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
-            {
-                return;
-            }
-
             ToTable(Constants.Tables.OrderNotes);
             HasKey(x => x.Id);
             Property(x => x.OrderId).IsRequired();
@@ -47,5 +42,14 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             Property(x => x.DateCreatedUtc).IsRequired();
             HasRequired(x => x.Order).WithMany(x => x.Notes).HasForeignKey(x => x.OrderId);
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return PluginManager.IsPluginInstalled(Constants.PluginSystemName); }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

@@ -15,5 +15,14 @@ namespace Kore.Localization.Domain
             Property(m => m.IsEnabled).IsRequired();
             Property(m => m.SortOrder).IsRequired();
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

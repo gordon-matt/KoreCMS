@@ -32,15 +32,19 @@ namespace Kore.Plugins.Maintenance.Watchdog.Data.Domain
     {
         public WatchdogInstanceMap()
         {
-            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
-            {
-                return;
-            }
-
             ToTable(Constants.Tables.WatchdogInstances);
             HasKey(x => x.Id);
             Property(x => x.Url).HasMaxLength(255).IsRequired();
             Property(x => x.Password).HasMaxLength(255).IsRequired();
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return PluginManager.IsPluginInstalled(Constants.PluginSystemName); }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

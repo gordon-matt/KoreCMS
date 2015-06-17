@@ -13,7 +13,7 @@ namespace Kore.Web
     {
         public static void Install<TDbContext>(HttpRequestBase httpRequest, InstallationModel model) where TDbContext : DbContext, IKoreDbContext, ISupportSeed, new()
         {
-            var settings = DataSettingsManager.LoadSettings();
+            var dataSettings = EngineContext.Current.Resolve<DataSettings>();
 
             string connectionString = string.Empty;
 
@@ -41,14 +41,14 @@ namespace Kore.Web
                 }
             }
 
-            settings.ConnectionString = connectionString;
+            dataSettings.ConnectionString = connectionString;
 
             // We need to save this to settings temporarily in order to setup the login details AFTER restarting the app domain
             //  We then delete the password from the XML file in Kore.Web.Infrastructure.StartupTask.
-            settings.AdminEmail = model.AdminEmail;
-            settings.AdminPassword = model.AdminPassword;
+            dataSettings.AdminEmail = model.AdminEmail;
+            dataSettings.AdminPassword = model.AdminPassword;
 
-            DataSettingsManager.SaveSettings(settings);
+            DataSettingsManager.SaveSettings(dataSettings);
 
             using (var context = new TDbContext())
             {

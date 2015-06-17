@@ -13,5 +13,14 @@ namespace Kore.Configuration.Domain
             Property(s => s.Type).IsRequired().HasMaxLength(255);
             Property(s => s.Value).IsMaxLength();
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

@@ -68,11 +68,6 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
     {
         public OrderMap()
         {
-            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
-            {
-                return;
-            }
-
             ToTable(Constants.Tables.Orders);
             HasKey(x => x.Id);
             Property(x => x.BillingAddressId).IsRequired();
@@ -87,5 +82,14 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             HasRequired(x => x.BillingAddress).WithMany().HasForeignKey(x => x.BillingAddressId).WillCascadeOnDelete(false);
             HasRequired(x => x.ShippingAddress).WithMany().HasForeignKey(x => x.ShippingAddressId).WillCascadeOnDelete(false);
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return PluginManager.IsPluginInstalled(Constants.PluginSystemName); }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

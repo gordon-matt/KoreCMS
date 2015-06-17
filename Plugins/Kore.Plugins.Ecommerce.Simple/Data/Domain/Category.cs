@@ -57,11 +57,6 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
     {
         public CategoryMap()
         {
-            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
-            {
-                return;
-            }
-
             ToTable(Constants.Tables.Categories);
             HasKey(x => x.Id);
             Property(x => x.Name).HasMaxLength(255).IsRequired();
@@ -73,5 +68,14 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             Property(x => x.MetaDescription).HasMaxLength(255);
             HasOptional(x => x.Parent).WithMany(x => x.SubCategories).HasForeignKey(x => x.ParentId);
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return PluginManager.IsPluginInstalled(Constants.PluginSystemName); }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

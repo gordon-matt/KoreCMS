@@ -29,5 +29,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
             HasKey(x => x.Id);
             Property(x => x.Name).HasMaxLength(255).IsRequired();
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

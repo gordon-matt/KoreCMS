@@ -116,18 +116,6 @@ namespace KoreCMS.Data
 
         #endregion ISupportSeed Members
 
-        public static ApplicationDbContext Create()
-        {
-            if (!DataSettingsHelper.IsDatabaseInstalled)
-            {
-                return null;
-            }
-
-            var settings = DataSettingsManager.LoadSettings();
-
-            return new ApplicationDbContext(settings.ConnectionString);
-        }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

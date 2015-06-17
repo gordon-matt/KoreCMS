@@ -34,14 +34,18 @@ namespace Kore.Plugins.Widgets.FullCalendar.Data.Domain
     {
         public CalendarMap()
         {
-            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
-            {
-                return;
-            }
-
             ToTable(Constants.Tables.Calendars);
             HasKey(x => x.Id);
             Property(x => x.Name).IsRequired().HasMaxLength(255);
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return PluginManager.IsPluginInstalled(Constants.PluginSystemName); }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

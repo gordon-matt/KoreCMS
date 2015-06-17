@@ -34,11 +34,6 @@ namespace Kore.Plugins.Widgets.FullCalendar.Data.Domain
     {
         public CalendarEntryMap()
         {
-            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
-            {
-                return;
-            }
-
             ToTable(Constants.Tables.Events);
             HasKey(x => x.Id);
             Property(x => x.CalendarId).IsRequired();
@@ -47,5 +42,14 @@ namespace Kore.Plugins.Widgets.FullCalendar.Data.Domain
             Property(x => x.EndDateTime).IsRequired();
             HasRequired(x => x.Calendar).WithMany(x => x.Events).HasForeignKey(x => x.CalendarId);
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return PluginManager.IsPluginInstalled(Constants.PluginSystemName); }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

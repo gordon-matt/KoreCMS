@@ -1,4 +1,6 @@
 ﻿using System;
+using Kore.Infrastructure;
+using Kore.Web.Infrastructure;
 using KoreCMS.Data;
 using KoreCMS.Data.Domain;
 using Microsoft.AspNet.Identity;
@@ -16,7 +18,8 @@ namespace KoreCMS
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context and user manager to use a single instance per request
-            app.CreatePerOwinContext(ApplicationDbContext.Create);
+            var dataSettings = EngineContext.Current.Resolve<DataSettings>();
+            app.CreatePerOwinContext(() => new ApplicationDbContext(dataSettings.ConnectionString));
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create<ApplicationDbContext>);
 
             // Enable the application to use a cookie to store information for the signed in user

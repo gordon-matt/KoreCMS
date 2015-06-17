@@ -65,5 +65,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Domain
             //HasRequired(x => x.Menu).WithMany().HasForeignKey(x => x.MenuId);
             //HasOptional(x => x.Parent).WithMany().HasForeignKey(x => x.ParentId);
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

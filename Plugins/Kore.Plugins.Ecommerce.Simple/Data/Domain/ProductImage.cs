@@ -33,11 +33,6 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
     {
         public ProductImageMap()
         {
-            if (!PluginManager.IsPluginInstalled(Constants.PluginSystemName))
-            {
-                return;
-            }
-
             ToTable(Constants.Tables.ProductImages);
             HasKey(x => x.Id);
             Property(x => x.ProductId).IsRequired();
@@ -46,5 +41,14 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             Property(x => x.Caption).HasMaxLength(255);
             Property(x => x.Order).IsRequired();
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return PluginManager.IsPluginInstalled(Constants.PluginSystemName); }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

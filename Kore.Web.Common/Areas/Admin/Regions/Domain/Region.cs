@@ -51,5 +51,14 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Domain
             Property(m => m.StateCode).HasMaxLength(10);
             HasOptional(p => p.Parent).WithMany(p => p.Children).HasForeignKey(x => x.ParentId).WillCascadeOnDelete(false);
         }
+
+        #region IEntityTypeConfiguration Members
+
+        public bool IsEnabled
+        {
+            get { return true; }
+        }
+
+        #endregion IEntityTypeConfiguration Members
     }
 }

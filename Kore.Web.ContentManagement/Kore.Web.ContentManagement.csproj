@@ -143,10 +143,9 @@
     <Compile Include="Areas\Admin\Blog\Controllers\BlogController.cs" />
     <Compile Include="Areas\Admin\Blog\Domain\BlogEntry.cs" />
     <Compile Include="Areas\Admin\Blog\Services\IBlogService.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Domain\PluginSupportedBlock.cs" />
+    <Compile Include="Areas\Admin\ContentBlocks\Domain\EntityTypeContentBlock.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\IFormBlockProcessor.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\IPluginSupportedBlock.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Services\IPluginSupportedBlockService.cs" />
+    <Compile Include="Areas\Admin\ContentBlocks\Services\IEntityTypeContentBlockService.cs" />
     <Compile Include="Areas\Admin\Localization\Models\LanguagePackFile.cs" />
     <Compile Include="Areas\Admin\Media\Services\IMediaService.cs" />
     <Compile Include="Areas\Admin\Messaging\Services\IQueuedEmailService.cs" />

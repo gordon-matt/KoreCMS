@@ -14,14 +14,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
     public class ContentBlockController : KoreController
     {
         private readonly Lazy<IContentBlockService> contentBlockService;
-        private readonly Lazy<IPluginSupportedBlockService> pluginSupportedBlockService;
 
         public ContentBlockController(
-            Lazy<IContentBlockService> contentBlockService,
-            Lazy<IPluginSupportedBlockService> pluginSupportedBlockService)
+            Lazy<IContentBlockService> contentBlockService)
         {
             this.contentBlockService = contentBlockService;
-            this.pluginSupportedBlockService = pluginSupportedBlockService;
         }
 
         [Compress]
@@ -72,36 +69,5 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 
             return Json(new { Content = content }, JsonRequestBehavior.AllowGet);
         }
-
-        //[Compress]
-        //[Route("get-plugin-editor-ui/{contentBlockId}")]
-        //public ActionResult GetPluginEditorUI(Guid contentBlockId, string entityType, string entityId)
-        //{
-        //    var blockEntity = contentBlockService.Value.FindOne(contentBlockId);
-
-        //    var pluginSupportedBlockEntity = pluginSupportedBlockService.Value.FindOne(x =>
-        //        x.ContentBlockId == contentBlockId &&
-        //        x.EntityType == entityType &&
-        //        x.EntityId == entityId);
-
-        //    var blockType = Type.GetType(blockEntity.BlockType);
-
-        //    var blocks = EngineContext.Current.ResolveAll<IPluginSupportedBlock>();
-        //    var block = blocks.First(x => x.GetType() == blockType);
-
-        //    string content;
-
-        //    try
-        //    {
-        //        // TODO: See if we can make EditorTemplatePath not so specific a path (just the name), so we can override it in themes, etc
-        //        content = RenderRazorPartialViewToString(block.PluginEditorTemplatePath, block);
-        //    }
-        //    catch (NotSupportedException)
-        //    {
-        //        content = string.Empty;
-        //    }
-
-        //    return Json(new { Content = content }, JsonRequestBehavior.AllowGet);
-        //}
     }
 }

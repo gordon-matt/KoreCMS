@@ -39,6 +39,7 @@
             public const string Themes = "Kore.Web/General.Themes";
             public const string Toggle = "Kore.Web/General.Toggle";
             public const string Uninstall = "Kore.Web/General.Uninstall";
+            public const string Unspecified = "Kore.Web/General.Unspecified";
             public const string Upload = "Kore.Web/General.Upload";
             public const string View = "Kore.Web/General.View";
             public const string ViewFormat = "Kore.Web/General.ViewFormat";

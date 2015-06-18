@@ -60,6 +60,7 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.General.Themes, "Themes" },
                     { KoreWebLocalizableStrings.General.Toggle, "Toggle" },
                     { KoreWebLocalizableStrings.General.Uninstall, "Uninstall" },
+                    { KoreWebLocalizableStrings.General.Unspecified, "Unspecified" },
                     { KoreWebLocalizableStrings.General.UpdateRecordError, "There was an error when updating the record." },
                     { KoreWebLocalizableStrings.General.UpdateRecordErrorFormat, "There was an error when updating the record. Additional information as follows: {0}" },
                     { KoreWebLocalizableStrings.General.UpdateRecordSuccess, "Successfully updated record." },

@@ -676,7 +676,6 @@
     <Content Include="NLog.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="ConnectionStrings.config" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

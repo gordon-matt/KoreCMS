@@ -6,7 +6,7 @@
     Guid menuId = ViewBag.MenuId;
 }
 
-@helper BuildMenuItems(MenuItem menuItem, string currentUrl, bool isFirstLevel)
+@helper BuildMenuItems(MenuItem menuItem, string currentUrl)
 {
     bool isCurrent = currentUrl.EndsWith(menuItem.Url);
     string cssClass = (menuItem.CssClass + (isCurrent ? " active" : string.Empty)).Trim();
@@ -21,7 +21,7 @@
 
         foreach (var menuItem in Model.OrderBy(x => x.Position).ThenBy(x => x.Text))
         {
-            @BuildMenuItems(menuItem, currentUrl, true)
+            @BuildMenuItems(menuItem, currentUrl)
         }
     }
 </div>

@@ -2,7 +2,14 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Kore.Infrastructure;
 using Kore.Web;
+using Kore.Web.Infrastructure;
+using Kore.Web.Mvc.KoreUI;
+using KoreCMSPro.KoreUI;
+using NLog;
+using NLog.Targets;
+using NLog.Targets.Wrappers;
 
 namespace KoreCMS
 {
@@ -16,6 +23,33 @@ namespace KoreCMS
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             DependencyConfig.Register();
+
+            TryUpdateNLogConnectionString();
+        }
+
+        private static void TryUpdateNLogConnectionString()
+        {
+            try
+            {
+                var dataSettings = EngineContext.Current.Resolve<DataSettings>();
+                var target = LogManager.Configuration.FindTargetByName("database");
+
+                DatabaseTarget databaseTarget = null;
+                var wrapperTarget = target as WrapperTargetBase;
+
+                // Unwrap the target if necessary.
+                if (wrapperTarget == null)
+                {
+                    databaseTarget = target as DatabaseTarget;
+                }
+                else
+                {
+                    databaseTarget = wrapperTarget.WrappedTarget as DatabaseTarget;
+                }
+
+                databaseTarget.ConnectionString = dataSettings.ConnectionString;
+            }
+            catch { }
         }
     }
 }

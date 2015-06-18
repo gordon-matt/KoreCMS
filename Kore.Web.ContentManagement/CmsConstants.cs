@@ -33,6 +33,7 @@ namespace Kore.Web.ContentManagement
         {
             internal const string Blog = "Kore_Blog";
             internal const string ContentBlocks = "Kore_ContentBlocks";
+            internal const string EntityTypeContentBlocks = "Kore_EntityTypeContentBlocks";
             internal const string HistoricPages = "Kore_HistoricPages";
             internal const string ImageEntityTypes = "Kore_ImageEntityTypes";
             internal const string Images = "Kore_Images";
@@ -42,7 +43,6 @@ namespace Kore.Web.ContentManagement
             internal const string Pages = "Kore_Pages";
             internal const string PageVersions = "Kore_PageVersions";
             internal const string PageTypes = "Kore_PageTypes";
-            internal const string PluginSupportedBlocks = "Kore_PluginSupportedContentBlocks";
             internal const string SitemapConfig = "Kore_SitemapConfig";
             internal const string QueuedEmails = "Kore_QueuedEmails";
             internal const string QueuedSMS = "Kore_QueuedSMS";

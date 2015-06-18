@@ -5,8 +5,6 @@ using System.Web.Routing;
 using Kore.Infrastructure;
 using Kore.Web;
 using Kore.Web.Infrastructure;
-using Kore.Web.Mvc.KoreUI;
-using KoreCMSPro.KoreUI;
 using NLog;
 using NLog.Targets;
 using NLog.Targets.Wrappers;

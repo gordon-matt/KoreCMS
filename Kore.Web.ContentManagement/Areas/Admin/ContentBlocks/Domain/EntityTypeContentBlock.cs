@@ -5,7 +5,7 @@ using Kore.Data.EntityFramework;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
 {
-    public class PluginSupportedBlock : IEntity
+    public class EntityTypeContentBlock : IEntity
     {
         public Guid Id { get; set; }
 
@@ -27,11 +27,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
         #endregion IEntity Members
     }
 
-    public class PluginSupportedBlockMap : EntityTypeConfiguration<PluginSupportedBlock>, IEntityTypeConfiguration
+    public class PluginSupportedBlockMap : EntityTypeConfiguration<EntityTypeContentBlock>, IEntityTypeConfiguration
     {
         public PluginSupportedBlockMap()
         {
-            ToTable(CmsConstants.Tables.PluginSupportedBlocks);
+            ToTable(CmsConstants.Tables.EntityTypeContentBlocks);
             HasKey(x => x.Id);
             Property(x => x.EntityType).HasMaxLength(512).HasColumnType("varchar").IsRequired();
             Property(x => x.EntityId).HasMaxLength(50).HasColumnType("varchar").IsRequired();

@@ -5,15 +5,15 @@ using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
 {
-    public interface IPluginSupportedBlockService : IGenericDataService<PluginSupportedBlock>
+    public interface IEntityTypeContentBlockService : IGenericDataService<EntityTypeContentBlock>
     {
     }
 
-    public class PluginSupportedBlockService : GenericDataService<PluginSupportedBlock>, IPluginSupportedBlockService
+    public class EntityTypeContentBlockService : GenericDataService<EntityTypeContentBlock>, IEntityTypeContentBlockService
     {
-        public PluginSupportedBlockService(
+        public EntityTypeContentBlockService(
             ICacheManager cacheManager,
-            IRepository<PluginSupportedBlock> repository)
+            IRepository<EntityTypeContentBlock> repository)
             : base(cacheManager, repository)
         {
         }

@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Linq;
+using System.Web.Http;
+using System.Web.Http.OData;
+using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.Http.OData;
@@ -11,6 +15,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
         public EntityTypeContentBlockApiController(IEntityTypeContentBlockService service)
             : base(service)
         {
+        }
+
+        public override IHttpActionResult Post(EntityTypeContentBlock entity)
+        {
+            SetValues(entity);
+            return base.Post(entity);
+        }
+
+        public override IHttpActionResult Put([FromODataUri] Guid key, EntityTypeContentBlock entity)
+        {
+            SetValues(entity);
+            return base.Put(key, entity);
         }
 
         protected override Guid GetId(EntityTypeContentBlock entity)
@@ -31,6 +47,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
         protected override Permission WritePermission
         {
             get { return CmsPermissions.ContentBlocksWrite; }
+        }
+
+        private static void SetValues(EntityTypeContentBlock entity)
+        {
+            var blockType = Type.GetType(entity.BlockType);
+            var contentBlocks = EngineContext.Current.ResolveAll<IContentBlock>();
+            var contentBlock = contentBlocks.First(x => x.GetType() == blockType);
+            entity.BlockName = contentBlock.Name;
         }
     }
 }

@@ -23,6 +23,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
             Lazy<IRepository<Zone>> zoneRepository)
             : base(cacheManager, repository)
         {
+            this.zoneRepository = zoneRepository;
         }
 
         #region IEntityTypeContentBlockService Members

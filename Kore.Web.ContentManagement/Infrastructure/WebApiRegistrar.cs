@@ -25,6 +25,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             ODataModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<BlogEntry>("BlogApi");
             builder.EntitySet<ContentBlock>("ContentBlockApi");
+            builder.EntitySet<EntityTypeContentBlock>("EntityTypeContentBlockApi");
             builder.EntitySet<Language>("LanguageApi");
             builder.EntitySet<LocalizableString>("LocalizableStringApi");
             builder.EntitySet<Menu>("MenuApi");

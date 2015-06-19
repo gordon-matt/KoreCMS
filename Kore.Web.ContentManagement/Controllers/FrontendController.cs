@@ -325,5 +325,29 @@ namespace Kore.Web.ContentManagement.Controllers
 
             return View("Kore.Web.ContentManagement.Views.Frontend.ContentBlocksByZone", contentBlocks);
         }
+
+        [ChildActionOnly]
+        [Route("entity-type-content-blocks-by-zone")]
+        public ActionResult EntityTypeContentBlocksByZone(string zoneName, string entityType, object entityId, bool renderAsWidgets = false, WidgetColumns widgetColumns = WidgetColumns.Default)
+        {
+            var providers = EngineContext.Current.ResolveAll<IEntityTypeContentBlockProvider>();
+
+            var contentBlocks = providers
+                .SelectMany(x => x.GetContentBlocks(zoneName, entityType, entityId.ToString()))
+                .ToList();
+
+            ViewBag.RenderAsWidgets = renderAsWidgets;
+            ViewBag.WidgetColumns = widgetColumns;
+
+            var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "ContentBlocksByZone", null);
+
+            // If someone has provided a custom template (see LocationFormatProvider)
+            if (viewEngineResult.View != null)
+            {
+                return View(contentBlocks);
+            }
+
+            return View("Kore.Web.ContentManagement.Views.Frontend.ContentBlocksByZone", contentBlocks);
+        }
     }
 }

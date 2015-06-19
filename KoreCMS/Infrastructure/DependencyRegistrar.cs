@@ -22,6 +22,7 @@ namespace KoreCMS.Infrastructure
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
             var settings = DataSettingsManager.LoadSettings();
+            builder.Register(x => settings).As<DataSettings>();
 
             // data layer
             builder.RegisterType<KoreCMS.Data.ApplicationDbContext>()

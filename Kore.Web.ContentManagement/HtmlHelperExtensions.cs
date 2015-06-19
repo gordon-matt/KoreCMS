@@ -55,6 +55,19 @@ namespace Kore.Web.ContentManagement
             });
         }
 
+        public static MvcHtmlString EntityTypeContentZone(this HtmlHelper html, string zoneName, string entityType, object entityId, bool renderAsWidgets = false, WidgetColumns widgetColumns = WidgetColumns.Default)
+        {
+            return html.Action("EntityTypeContentBlocksByZone", "Frontend", new
+            {
+                area = string.Empty,
+                entityType = entityType,
+                entityId = entityId,
+                zoneName = zoneName,
+                renderAsWidgets = renderAsWidgets,
+                widgetColumns = widgetColumns
+            });
+        }
+
         public static KoreCMS<TModel> KoreCMS<TModel>(this HtmlHelper<TModel> html) where TModel : class
         {
             return new KoreCMS<TModel>(html);

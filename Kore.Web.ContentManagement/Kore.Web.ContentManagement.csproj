@@ -146,6 +146,7 @@
     <Compile Include="Areas\Admin\ContentBlocks\Controllers\Api\EntityTypeContentBlockApiController.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\Controllers\EntityTypeContentBlockController.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\Domain\EntityTypeContentBlock.cs" />
+    <Compile Include="Areas\Admin\ContentBlocks\IEntityTypeContentBlockProvider.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\IFormBlockProcessor.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\Services\IEntityTypeContentBlockService.cs" />
     <Compile Include="Areas\Admin\Localization\Models\LanguagePackFile.cs" />
@@ -379,7 +380,7 @@
     <EmbeddedResource Include="Areas\Admin\Newsletters\Views\Shared\DisplayTemplates\NewsletterSubscriptionBlock.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Sitemap\Views\XmlSitemap\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\FormBlock\MessageTemplate.cshtml" />
-    <None Include="Areas\Admin\ContentBlocks\Views\EntityTypeContentBlock\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\EntityTypeContentBlock\Index.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\RichTextFull.cshtml" />
@@ -420,7 +421,7 @@
     <EmbeddedResource Include="Areas\Admin\Media\ElFinder\mimeTypes.txt" />
     <EmbeddedResource Include="Areas\Admin\Blog\Scripts\blog.js" />
     <EmbeddedResource Include="Areas\Admin\Blog\Scripts\blogContent.js" />
-    <Content Include="Areas\Admin\ContentBlocks\Scripts\entityTypeContentBlocks.js" />
+    <EmbeddedResource Include="Areas\Admin\ContentBlocks\Scripts\entityTypeContentBlocks.js" />
     <Content Include="Areas\Admin\Media\Services\mimeTypes.txt" />
     <EmbeddedResource Include="Areas\Admin\Menus\Scripts\menus.js" />
     <EmbeddedResource Include="Areas\Admin\Pages\Scripts\index.js" />

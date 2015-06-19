@@ -75,16 +75,6 @@ namespace Kore.Web
 
             DataSettingsHelper.ResetCache();
 
-            // NOT WORKING YET
-            //string filePath = HostingEnvironment.MapPath(Path.Combine(httpRequest.ApplicationPath, "ConnectionStrings.config"));
-            //var fileMap = new ExeConfigurationFileMap
-            //{
-            //    ExeConfigFilename = filePath
-            //};
-            //var configFile = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
-            //configFile.ConnectionStrings.ConnectionStrings["NLogConnection"].ConnectionString = connectionString;
-            //configFile.Save();
-
             var webHelper = EngineContext.Current.Resolve<IWebHelper>();
             webHelper.RestartAppDomain();
         }

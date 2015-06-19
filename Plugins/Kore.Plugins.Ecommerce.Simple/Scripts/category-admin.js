@@ -44,6 +44,8 @@ var ProductModel = function () {
 
     self.tinyMCE_fullDescription = koreDefaultTinyMCEConfig;
 
+    self.showToolbar = ko.observable(false);
+
     self.create = function () {
         self.id(0);
         self.name(null);
@@ -62,6 +64,7 @@ var ProductModel = function () {
 
         self.validator.resetForm();
         switchSection($("#product-form-section"));
+        self.showToolbar(false);
         $("#product-form-section-legend").html(translations.Create);
     };
 
@@ -90,6 +93,7 @@ var ProductModel = function () {
 
             self.validator.resetForm();
             switchSection($("#product-form-section"));
+            self.showToolbar(true);
             $("#product-form-section-legend").html(translations.Edit);
         })
         .fail(function (jqXHR, textStatus, errorThrown) {

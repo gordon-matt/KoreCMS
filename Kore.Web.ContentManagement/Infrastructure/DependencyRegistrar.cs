@@ -57,6 +57,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.RegisterType<PageVersionService>().As<IPageVersionService>().InstancePerDependency();
 
             // Content Blocks
+            builder.RegisterType<EntityTypeContentBlockService>().As<IEntityTypeContentBlockService>().InstancePerDependency();
             builder.RegisterType<ContentBlockService>().As<IContentBlockService>().InstancePerDependency();
             builder.RegisterType<ZoneService>().As<IZoneService>().InstancePerDependency();
 
@@ -115,6 +116,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.RegisterType<UrlRuleProvider>().As<IRuleProvider>().InstancePerDependency();
 
             builder.RegisterType<DefaultContentBlockProvider>().As<IContentBlockProvider>().InstancePerDependency();
+            builder.RegisterType<DefaultEntityTypeContentBlockProvider>().As<IEntityTypeContentBlockProvider>().InstancePerDependency();
 
             builder.RegisterType<RuleManager>().As<IRuleManager>().InstancePerDependency();
             builder.RegisterType<ScriptExpressionEvaluator>().As<IScriptExpressionEvaluator>().InstancePerDependency();

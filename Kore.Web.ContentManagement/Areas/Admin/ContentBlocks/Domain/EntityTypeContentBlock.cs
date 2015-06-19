@@ -51,7 +51,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
             Property(x => x.ZoneId).IsRequired();
             Property(x => x.Order).IsRequired();
             Property(x => x.IsEnabled).IsRequired();
-            Property(x => x.BlockValues).IsMaxLength().IsRequired();
+            Property(x => x.BlockValues).IsMaxLength();
         }
 
         #region IEntityTypeConfiguration Members

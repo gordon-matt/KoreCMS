@@ -1,5 +1,6 @@
 ﻿@using Kore.Plugins.Ecommerce.Simple
 @using Kore.Plugins.Ecommerce.Simple.Extensions
+@using Kore.Web.ContentManagement
 @using Kore.Web.Mvc.KoreUI
 
 @{
@@ -189,6 +190,16 @@
                 </div>
 
                 <div id="product-form-section" class="row" style="display:none">
+                    <div data-bind="visible: product.showToolbar">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <a data-bind="attr: { href: '/admin/blocks/entity-type-content-blocks/Ecommerce-Simple-Product/' + product.id() }" class="btn btn-info" title="@T(KoreCmsLocalizableStrings.ContentBlocks.Title).Text">
+                                <i class="kore-icon kore-icon-content-blocks"></i> @T(KoreCmsLocalizableStrings.ContentBlocks.Title)
+                            </a>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <br />
+                    </div>
                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
                         {

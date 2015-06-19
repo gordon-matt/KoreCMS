@@ -344,7 +344,7 @@ namespace Kore.Web.ContentManagement.Controllers
             // If someone has provided a custom template (see LocationFormatProvider)
             if (viewEngineResult.View != null)
             {
-                return View(contentBlocks);
+                return View("ContentBlocksByZone", contentBlocks);
             }
 
             return View("Kore.Web.ContentManagement.Views.Frontend.ContentBlocksByZone", contentBlocks);

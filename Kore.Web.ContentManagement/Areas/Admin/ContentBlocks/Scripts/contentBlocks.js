@@ -222,7 +222,7 @@ var ViewModel = function () {
             self.refId(json.RefId);
 
             $.ajax({
-                url: "/admin/contentBlocks/get-editor-ui/" + self.id(),
+                url: "/admin/blocks/content-blocks/get-editor-ui/" + self.id(),
                 type: "GET",
                 dataType: "json",
                 async: false

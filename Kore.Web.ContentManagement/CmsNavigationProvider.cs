@@ -31,7 +31,7 @@ namespace Kore.Web.ContentManagement
 
             // Content Blocks
             builder.Add(T(KoreCmsLocalizableStrings.ContentBlocks.Title), "5", item => item
-                .Action("Index", "ContentBlock", new { area = CmsConstants.Areas.ContentBlocks, pageId = UrlParameter.Optional })
+                .Action("Index", "ContentBlock", new { area = CmsConstants.Areas.Blocks, pageId = UrlParameter.Optional })
                 .IconCssClass("kore-icon kore-icon-content-blocks")
                 .Permission(CmsPermissions.ContentBlocksRead));
 

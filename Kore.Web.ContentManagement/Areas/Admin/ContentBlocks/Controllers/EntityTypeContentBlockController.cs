@@ -11,20 +11,19 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 {
     [Authorize]
     [RouteArea(CmsConstants.Areas.Blocks)]
-    [RoutePrefix("content-blocks")]
-    public class ContentBlockController : KoreController
+    [RoutePrefix("entity-type-content-blocks")]
+    public class EntityTypeContentBlockController : KoreController
     {
-        private readonly Lazy<IContentBlockService> contentBlockService;
+        private readonly Lazy<IEntityTypeContentBlockService> entityTypeContentBlockService;
 
-        public ContentBlockController(
-            Lazy<IContentBlockService> contentBlockService)
+        public EntityTypeContentBlockController(Lazy<IEntityTypeContentBlockService> entityTypeContentBlockService)
         {
-            this.contentBlockService = contentBlockService;
+            this.entityTypeContentBlockService = entityTypeContentBlockService;
         }
 
         [Compress]
-        [Route("{pageId?}")]
-        public ActionResult Index(Guid? pageId)
+        [Route("{entityType}/{entityId}")]
+        public ActionResult Index(string entityType, string entityId)
         {
             if (!CheckPermission(CmsPermissions.ContentBlocksRead))
             {
@@ -35,22 +34,17 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 
             ViewBag.Title = T(KoreCmsLocalizableStrings.ContentBlocks.Title);
             ViewBag.SubTitle = T(KoreCmsLocalizableStrings.ContentBlocks.ManageContentBlocks);
+            ViewBag.EntityType = entityType;
+            ViewBag.EntityId = entityId;
 
-            if (pageId.HasValue)
-            {
-                WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Pages.ManagePages), Url.Action("Index", "Page", new { area = CmsConstants.Areas.Pages }));
-            }
-
-            ViewBag.PageId = pageId;
-
-            return View("Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.ContentBlock.Index");
+            return View("Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.EntityTypeContentBlock.Index");
         }
 
         [Compress]
         [Route("get-editor-ui/{contentBlockId}")]
         public ActionResult GetEditorUI(Guid contentBlockId)
         {
-            var blockEntity = contentBlockService.Value.FindOne(contentBlockId);
+            var blockEntity = entityTypeContentBlockService.Value.FindOne(contentBlockId);
             var blockType = Type.GetType(blockEntity.BlockType);
 
             var blocks = EngineContext.Current.ResolveAll<IContentBlock>();

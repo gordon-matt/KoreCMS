@@ -1,0 +1,259 @@
+﻿@using Kore.Web.ContentManagement
+@using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
+@using Kore.Web.Mvc.KoreUI
+
+@{
+    Layout = KoreWebConstants.DefaultAdminLayoutPath;
+
+    Style.IncludeBundle("kendo-ui");
+
+    Script.IncludeBundle("kendo-ui");
+    Script.IncludeBundle("knockout");
+    Script.IncludeBundle("knockout-mapping");
+    Script.IncludeBundle("tinymce");
+    Script.IncludeBundle("notify");
+
+    Script.IncludeBundle("kore/common");
+    Script.IncludeBundle("kore/elfinder");
+    Script.IncludeBundle("kore/jqueryval");
+    Script.IncludeBundle("kore/section-switching");
+    Script.IncludeBundle("kore/tinymce");
+    Script.IncludeBundle("kore-cms/entity-type-content-blocks");
+
+    string entityType = ViewBag.EntityType;
+    string entityId = ViewBag.EntityId;
+    string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
+}
+
+<div id="grid-section" class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <a data-bind="click: create" class="btn btn-primary">
+            <i class="kore-icon kore-icon-add"></i>
+            @T(KoreWebLocalizableStrings.General.Create)
+        </a>
+        <a data-bind="click: showZones" class="btn btn-default">
+            @T(KoreCmsLocalizableStrings.ContentBlocks.Zones)
+        </a>
+    </div>
+
+    <div class="clearfix"></div>
+    <br />
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="@rtlClass">
+            <div id="Grid"></div>
+        </div>
+    </div>
+</div>
+
+<div id="create-section" class="row" style="display:none">
+    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+            using (var body = panel.BeginBody())
+            {
+                <form id="create-section-form" role="form">
+                    <fieldset>
+                        <legend>@T(KoreWebLocalizableStrings.General.Create)</legend>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    @Html.Label("Create_Title", T(KoreCmsLocalizableStrings.ContentBlocks.Model.Title), new { @class = "control-label" })
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="kore-icon kore-icon-file"></i>
+                                        </span>
+                                        @Html.TextBox("Create_Title", null, new { @class = "form-control", data_bind = "value: title" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    @Html.Label("Create_Order", T(KoreCmsLocalizableStrings.ContentBlocks.Model.Order), new { @class = "control-label" })
+                                    @Html.TextBox("Create_Order", null, new { @class = "form-control", data_bind = "value: order" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    @Html.Label("Create_BlockType", T(KoreCmsLocalizableStrings.ContentBlocks.Model.BlockType), new { @class = "control-label" })
+                                    @Html.KoreCMS().ContentBlockTypesDropDownList("Create_BlockType", null, null, new { @class = "form-control", data_bind = "value: blockType" })
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    @Html.Label("Create_ZoneId", T(KoreCmsLocalizableStrings.ContentBlocks.Model.ZoneId), new { @class = "control-label" })
+                                    @Html.KoreCMS().ZonesDropDownList("Create_ZoneId", null, null, new { @class = "form-control", data_bind = "value: zoneId" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group pull-right">
+                                    <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                    <button type="button" class="btn btn-primary" data-bind="click: save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            }
+        }
+    </article>
+</div>
+
+<div id="edit-section" class="row" style="display:none">
+    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+            using (var body = panel.BeginBody())
+            {
+                <form id="edit-section-form" role="form">
+                    <fieldset>
+                        <legend>@T(KoreWebLocalizableStrings.General.Edit)</legend>
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    @Html.Label("Title", T(KoreCmsLocalizableStrings.ContentBlocks.Model.Title), new { @class = "control-label" })
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="kore-icon kore-icon-file"></i>
+                                        </span>
+                                        @Html.TextBox("Title", null, new { @class = "form-control", data_bind = "value: title" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    @Html.Label("Order", T(KoreCmsLocalizableStrings.ContentBlocks.Model.Order), new { @class = "control-label" })
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="kore-icon kore-icon-sort-numeric-asc"></i>
+                                        </span>
+                                        @Html.TextBox("Order", null, new { @class = "form-control", data_bind = "value: order" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBox("IsEnabled", new { data_bind = "checked: isEnabled" }) @T(KoreCmsLocalizableStrings.ContentBlocks.Model.IsEnabled)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    @Html.Label("ZoneId", T(KoreCmsLocalizableStrings.ContentBlocks.Model.ZoneId), new { @class = "control-label" })
+                                    @Html.KoreCMS().ZonesDropDownList("ZoneId", null, null, new { @class = "form-control", data_bind = "value: zoneId" })
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset id="block-details"></fieldset>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group pull-right">
+                                <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            }
+        }
+    </article>
+</div>
+
+<div id="zones-grid-section" class="row" style="display:none">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <a data-bind="click: zoneModel.create" class="btn btn-primary">
+            <i class="kore-icon kore-icon-add"></i>
+            @T(KoreWebLocalizableStrings.General.Create)
+        </a>
+        <a data-bind="click: zoneModel.showContentBlocks" class="btn btn-default">
+            <i class="kore-icon kore-icon-th-large"></i>
+            @T(KoreCmsLocalizableStrings.ContentBlocks.Title)
+        </a>
+    </div>
+
+    <div class="clearfix"></div>
+    <br />
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="@rtlClass">
+            <div id="ZoneGrid"></div>
+        </div>
+    </div>
+</div>
+
+<div id="zones-edit-section" class="row" style="display:none">
+    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+            using (var body = panel.BeginBody())
+            {
+                <form id="zone-edit-section-form" role="form">
+                    <fieldset>
+                        <legend id="zone-edit-section-legend"></legend>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("Zone_Name", T(KoreCmsLocalizableStrings.ContentBlocks.ZoneModel.Name), new { @class = "control-label" })
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="kore-icon kore-icon-file"></i>
+                                    </span>
+                                    @Html.TextBox("Zone_Name", null, new { @class = "form-control", data_bind = "value: zoneModel.name" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group pull-right">
+                                <button type="button" class="btn btn-default" data-bind="click: zoneModel.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: zoneModel.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            }
+        }
+    </article>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        var entityType = '@entityType';
+        var entityId = '@entityId';
+
+        var gridPageSize = @SiteSettings.DefaultGridPageSize;
+        var translations = {
+            Create: '@T(KoreWebLocalizableStrings.General.Create).Text',
+            Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
+            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
+            DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',
+            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text',
+            Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
+            GetRecordError: '@T(KoreWebLocalizableStrings.General.GetRecordError).Text',
+            InsertRecordError: '@T(KoreWebLocalizableStrings.General.InsertRecordError).Text',
+            InsertRecordSuccess: '@T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text',
+            Toggle: '@T(KoreWebLocalizableStrings.General.Toggle).Text',
+            UpdateRecordError: '@T(KoreWebLocalizableStrings.General.UpdateRecordError).Text',
+            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text',
+
+            Columns: {
+                Title: '@T(KoreCmsLocalizableStrings.ContentBlocks.Model.Title)',
+                BlockType: '@T(KoreCmsLocalizableStrings.ContentBlocks.Model.BlockType)',
+                Order: '@T(KoreCmsLocalizableStrings.ContentBlocks.Model.Order)',
+                IsEnabled: '@T(KoreCmsLocalizableStrings.ContentBlocks.Model.IsEnabled)',
+                Name: '@T(KoreCmsLocalizableStrings.ContentBlocks.ZoneModel.Name)',
+            }
+        }
+    </script>
+}

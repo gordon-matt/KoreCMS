@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Core.Logging;
 using Kore.Caching;
 using Kore.Data;
 using Kore.Data.Services;
@@ -14,10 +13,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
         IEnumerable<IContentBlock> GetContentBlocks(Guid pageId);
 
         IEnumerable<IContentBlock> GetContentBlocks(string zoneName, Guid? pageId = null, bool includeDisabled = false);
-
-        IEnumerable<IContentBlock> GetContentBlocks(IEnumerable<ContentBlock> records);
-
-        void ToggleEnabled(ContentBlock record);
     }
 
     public class ContentBlockService : GenericDataService<ContentBlock>, IContentBlockService
@@ -42,46 +37,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
             return Delete(entities);
         }
 
+        protected override void ClearCache()
+        {
+            base.ClearCache();
+            CacheManager.RemoveByPattern("Repository_ContentBlocks_ByPageId_.*");
+            CacheManager.RemoveByPattern("Repository_ContentBlocks_ByPageIdAndZoneAndIncDisabled_.*");
+        }
+
         #endregion GenericDataService<ContentBlock> Overrides
 
         #region IContentBlockService Members
-
-        public IEnumerable<IContentBlock> GetContentBlocks(IEnumerable<ContentBlock> records)
-        {
-            string ids = string.Join("|", records.Select(x => x.Id));
-            string key = string.Format("Repository_ContentBlocks_ByIds_{0}", ids);
-
-            return CacheManager.Get(key, () =>
-            {
-                var result = new List<IContentBlock>();
-                foreach (var record in records)
-                {
-                    IContentBlock contentBlock;
-                    try
-                    {
-                        var blockType = Type.GetType(record.BlockType);
-                        contentBlock = (IContentBlock)record.BlockValues.JsonDeserialize(blockType);
-                    }
-                    catch (Exception x)
-                    {
-                        Logger.Error(x.Message, x);
-                        continue;
-                    }
-
-                    contentBlock.Id = record.Id;
-                    contentBlock.Title = record.Title;
-                    contentBlock.ZoneId = record.ZoneId;
-                    contentBlock.PageId = record.PageId;
-                    contentBlock.Order = record.Order;
-                    contentBlock.Enabled = record.IsEnabled;
-                    contentBlock.DisplayCondition = record.DisplayCondition;
-                    contentBlock.CultureCode = record.CultureCode;
-                    contentBlock.RefId = record.RefId;
-                    result.Add(contentBlock);
-                }
-                return result;
-            });
-        }
 
         public IEnumerable<IContentBlock> GetContentBlocks(Guid pageId)
         {
@@ -137,13 +102,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
             }
         }
 
-        public void ToggleEnabled(ContentBlock record)
-        {
-            if (record == null) return;
-            record.IsEnabled = !record.IsEnabled;
-            base.Update(record);
-        }
-
         // TODO: TEST THIS ONE (SIMPLIFIED)
         //public IEnumerable<IContentBlock> GetContentBlocks(Guid? pageId = null, string zoneName = null, bool includeDisabled = false)
         //{
@@ -194,12 +152,37 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
 
         #endregion IContentBlockService Members
 
-        protected override void ClearCache()
+        private IEnumerable<IContentBlock> GetContentBlocks(IEnumerable<ContentBlock> records)
         {
-            base.ClearCache();
-            CacheManager.RemoveByPattern("Repository_ContentBlocks_ByIds_.*");
-            CacheManager.RemoveByPattern("Repository_ContentBlocks_ByPageId_.*");
-            CacheManager.RemoveByPattern("Repository_ContentBlocks_ByPageIdAndZoneAndIncDisabled_.*");
+            string ids = string.Join("|", records.Select(x => x.Id));
+
+            var result = new List<IContentBlock>();
+            foreach (var record in records)
+            {
+                IContentBlock contentBlock;
+                try
+                {
+                    var blockType = Type.GetType(record.BlockType);
+                    contentBlock = (IContentBlock)record.BlockValues.JsonDeserialize(blockType);
+                }
+                catch (Exception x)
+                {
+                    Logger.Error(x.Message, x);
+                    continue;
+                }
+
+                contentBlock.Id = record.Id;
+                contentBlock.Title = record.Title;
+                contentBlock.ZoneId = record.ZoneId;
+                contentBlock.PageId = record.PageId;
+                contentBlock.Order = record.Order;
+                contentBlock.Enabled = record.IsEnabled;
+                contentBlock.DisplayCondition = record.DisplayCondition;
+                contentBlock.CultureCode = record.CultureCode;
+                contentBlock.RefId = record.RefId;
+                result.Add(contentBlock);
+            }
+            return result;
         }
     }
 }

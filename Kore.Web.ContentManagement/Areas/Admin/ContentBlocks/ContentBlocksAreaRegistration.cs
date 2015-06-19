@@ -6,7 +6,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
     {
         public override string AreaName
         {
-            get { return CmsConstants.Areas.ContentBlocks; }
+            get { return CmsConstants.Areas.Blocks; }
         }
 
         public override void RegisterArea(AreaRegistrationContext context)

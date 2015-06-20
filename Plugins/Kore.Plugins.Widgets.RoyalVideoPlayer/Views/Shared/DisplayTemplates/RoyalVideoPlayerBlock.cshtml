@@ -1,0 +1,204 @@
+﻿@using Kore.Plugins.Widgets.RoyalVideoPlayer
+@using Kore.Plugins.Widgets.RoyalVideoPlayer.Extensions
+
+@model RoyalVideoPlayerBlock
+
+@{
+    Script.IncludePluginScript("FWDRVPlayer.js");
+}
+
+<!-- video holder -->
+<div id="myDiv" style="margin:auto;"></div>
+
+<!--  Playlists -->
+<ul id="playlists" style="display:none;">
+    <li data-source="playlist1" data-thumbnail-path="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/large1.jpg">
+        <p class="minimalWhiteCategoriesTitle"><span class="bold">Title: </span>My playlist 1</p>
+        <p class="minimalWhiteCategoriesType"><span class="bold">Type: </span><span class="minimalWhiteCategoriesTypeIn">HTML</span></p>
+        <p class="minimalWhiteCategoriesDescription"><span class="bold">Description: </span>Created using html elements, videos are loaded and played from the server.</p>
+    </li>
+</ul>
+
+<!--  HTML playlist -->
+<ul id="playlist1" style="display:none;">
+
+    <li data-thumb-source="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-fwd.jpg" data-video-source="Plugins/Widgets.RoyalVideoPlayer/Content/videos/fwd.mp4,Plugins/Widgets.RoyalVideoPlayer/Content/videos/fwd-mobile.mp4" data-poster-source="Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster.jpg,Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster-mobile.jpg" data-downloadable="yes">
+        <div>
+            <img class="floatLeft" src="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-fwd.jpg" width="120px" height="90px" />
+            <p class="floatP">Each video can contain a description in tooltip style, the tooltip size can be modified based on your project and of course it can contain <span class="boldDarkItalic">HTML CONTENT </span> this way it can be formatted as you like.</p>
+        </div>
+    </li>
+
+    <li data-thumb-source="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-grid.jpg" data-video-source="Plugins/Widgets.RoyalVideoPlayer/Content/videos/grid.mp4,Plugins/Widgets.RoyalVideoPlayer/Content/videos/grid-mobile.mp4" data-poster-source="Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster.jpg,Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster-mobile.jpg" data-downloadable="yes" data-ads-source="Plugins/Widgets.RoyalVideoPlayer/Content/videos/ad.mp4,Plugins/Widgets.RoyalVideoPlayer/Content/videos/ad-mobile.mp4" data-ads-page-to-open-url="http://www.webdesign-flash.ro" data-ads-page-target="_blank" data-time-to-hold-ads="4">
+        <p>Horizontal Gridfolio Pro</p>
+    </li>
+
+    <li data-thumb-source="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-r3dcov.jpg" data-video-source="Plugins/Widgets.RoyalVideoPlayer/Content/videos/r3dcov.mp4,Plugins/Widgets.RoyalVideoPlayer/Content/videos/r3dcov-mobile.mp4" data-poster-source="Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster.jpg,Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster-mobile.jpg" data-downloadable="yes">
+        <div>
+            <img class="floatLeft" src="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-r3dcov.jpg" width="120px" height="90px" />
+            <p class="floatP">Each video can contain a description in tooltip style, the tooltip size can be modified based on your project and of course it can contain <span class="boldDarkItalic">HTML CONTENT </span> this way it can be formatted as you like.</p>
+        </div>
+    </li>
+
+    <li data-thumb-source="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-rap.jpg" data-video-source="Plugins/Widgets.RoyalVideoPlayer/Content/videos/rap.mp4,Plugins/Widgets.RoyalVideoPlayer/Content/videos/rap-mobile.mp4" data-poster-source="Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster.jpg,Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster-mobile.jpg" data-downloadable="yes">
+        <p>Royal Audio Player</p>
+    </li>
+
+    <li data-thumb-source="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-u3dcar.jpg" data-video-source="Plugins/Widgets.RoyalVideoPlayer/Content/videos/u3dcar.mp4,Plugins/Widgets.RoyalVideoPlayer/Content/videos/u3dcar-mobile.mp4" data-poster-source="Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster.jpg,Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster-mobile.jpg" data-downloadable="yes">
+        <div>
+            <img class="floatLeft" src="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-u3dcar.jpg" width="120px" height="90px" />
+            <p class="floatP">Each video can contain a description in tooltip style, the tooltip size can be modified based on your project and of course it can contain <span class="boldDarkItalic">HTML CONTENT </span> this way it can be formatted as you like.</p>
+        </div>
+    </li>
+
+    <li data-thumb-source="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-360.jpg" data-video-source="Plugins/Widgets.RoyalVideoPlayer/Content/videos/360.mp4,Plugins/Widgets.RoyalVideoPlayer/Content/videos/360-mobile.mp4" data-poster-source="Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster.jpg,Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster-mobile.jpg" data-downloadable="yes">
+        <p>Easy 360° Image Viewer</p>
+    </li>
+
+    <li data-thumb-source="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-zoomer.jpg" data-video-source="Plugins/Widgets.RoyalVideoPlayer/Content/videos/mgz.mp4,Plugins/Widgets.RoyalVideoPlayer/Content/videos/mgz-mobile.mp4" data-poster-source="Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster.jpg,Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster-mobile.jpg" data-downloadable="yes" data-ads-source="Plugins/Widgets.RoyalVideoPlayer/Content/videos/ad.mp4,Plugins/Widgets.RoyalVideoPlayer/Content/videos/ad-mobile.mp4" data-ads-page-to-open-url="http://www.webdesign-flash.ro" data-ads-page-target="_blank" data-time-to-hold-ads="8">
+        <div>
+            <img class="floatLeft" src="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-zoomer.jpg" width="120px" height="90px" />
+            <p class="floatP">Each video can contain a description in tooltip style, the tooltip size can be modified based on your project and of course it can contain <span class="boldDarkItalic">HTML CONTENT </span> this way it can be formatted as you like.</p>
+        </div>
+    </li>
+
+    <li data-thumb-source="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-msp.jpg" data-video-source="Plugins/Widgets.RoyalVideoPlayer/Content/videos/msp.mp4,Plugins/Widgets.RoyalVideoPlayer/Content/videos/msp-mobile.mp4" data-poster-source="Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster.jpg,Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster-mobile.jpg" data-downloadable="yes">
+        <p>MP3 Sicky Player</p>
+    </li>
+
+    <li data-thumb-source="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-rap.jpg" data-video-source="Plugins/Widgets.RoyalVideoPlayer/Content/videos/rap.mp4,Plugins/Widgets.RoyalVideoPlayer/Content/videos/rap-mobile.mp4" data-poster-source="Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster.jpg,Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster-mobile.jpg" data-downloadable="yes">
+        <div>
+            <img class="floatLeft" src="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-rap.jpg" width="120px" height="90px" />
+            <p class="floatP">Each video can contain a description in tooltip style, the tooltip size can be modified based on your project and of course it can contain <span class="boldDarkItalic">HTML CONTENT </span> this way it can be formatted as you like.</p>
+        </div>
+    </li>
+
+    <li data-thumb-source="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-s3dcov.jpg" data-video-source="Plugins/Widgets.RoyalVideoPlayer/Content/videos/s3dcov.mp4,Plugins/Widgets.RoyalVideoPlayer/Content/videos/s3dcov-mobile.mp4" data-poster-source="Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster.jpg,Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster-mobile.jpg" data-downloadable="yes">
+        <p>Simple 3D Coverflow</p>
+    </li>
+
+    <li data-thumb-source="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-r3dcar.jpg" data-video-source="Plugins/Widgets.RoyalVideoPlayer/Content/videos/r3dcar.mp4,Plugins/Widgets.RoyalVideoPlayer/Content/videos/r3dcar-mobile.mp4" data-poster-source="Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster.jpg,Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster-mobile.jpg" data-downloadable="yes">
+        <div>
+            <img class="floatLeft" src="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-r3dcar.jpg" width="120px" height="90px" />
+            <p class="floatP">Each video can contain a description in tooltip style, the tooltip size can be modified based on your project and of course it can contain <span class="boldDarkItalic">HTML CONTENT </span> this way it can be formatted as you like.</p>
+        </div>
+    </li>
+
+    <li data-thumb-source="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/small-evp.jpg" data-video-source="Plugins/Widgets.RoyalVideoPlayer/Content/videos/evp.mp4,Plugins/Widgets.RoyalVideoPlayer/Content/videos/evp-mobile.mp4" data-poster-source="Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster.jpg,Plugins/Widgets.RoyalVideoPlayer/Content/posters/mp4-poster-mobile.jpg" data-downloadable="yes">
+        <p>Royal Video Player</p>
+    </li>
+</ul>
+
+@using (Script.AtFoot())
+{
+    <script type="text/javascript">
+        FWDRVPUtils.onReady(function () {
+
+            FWDRVPlayer.useYoutube = "yes";
+
+            new FWDRVPlayer({
+                //main settings
+                instanceName: "player1",
+                parentId: "myDiv",
+                playlistsId: "playlists",
+                mainFolderPath: "Plugins/Widgets.RoyalVideoPlayer/Content",
+                skinPath: "minimal_skin_dark",
+                displayType: "responsive",
+                facebookAppId: "213684265480896",
+                autoScale: "yes",
+                useDeepLinking: "yes",
+                rightClickContextMenu: "default",
+                addKeyboardSupport: "yes",
+                stopVideoWhenPlayComplete: "no",
+                autoPlay: "no",
+                loop: "no",
+                shuffle: "no",
+                maxWidth: 960,
+                maxHeight: 599,
+                volume: .8,
+                backgroundColor: "#000000",
+                posterBackgroundColor: "#000000",
+                //logo settings
+                showLogo: "yes",
+                hideLogoWithController: "yes",
+                logoPosition: "topRight",
+                logoMargins: 5,
+                //playlists / categories settings
+                showPlaylistsByDefault: "no",
+                thumbnailSelectedType: "opacity",
+                startAtPlaylist: 0,
+                buttonsMargins: 0,
+                thumbnailMaxWidth: 350,
+                thumbnailMaxHeight: 350,
+                horizontalSpaceBetweenThumbnails: 40,
+                verticalSpaceBetweenThumbnails: 40,
+                //playlist settings
+                playlistPosition: "right",
+                showPlaylistByDefault: "yes",
+                showPlaylistToolTips: "yes",
+                forceDisableDownloadButtonForFolder: "yes",
+                addMouseWheelSupport: "yes",
+                startAtRandomVideo: "no",
+                addMouseWheelSupport: "yes",
+                folderVideoLabel: "Video ",
+                startAtVideo: 0,
+                maxPlaylistItems: 50,
+                playlistToolTipMaxWidth: 270,
+                thumbnailWidth: 120,
+                thumbnailHeight: 90,
+                spaceBetweenControlerAndPlaylist: 1,
+                playlistToolTipFontColor: "#000000",
+                //controller settings
+                showButtonsToolTip: "yes",
+                showControllerWhenVideoIsStopped: "yes",
+                showPlaylistsButtonAndPlaylists: "yes",
+                showPlaylistButtonAndPlaylist: "yes",
+                showVolumeScrubber: "yes",
+                showVolumeButton: "yes",
+                showTime: "yes",
+                showLoopButton: "yes",
+                showShuffleButton: "yes",
+                showYoutubeQualityButton: "yes",
+                showDownloadButton: "yes",
+                showFacebookButton: "yes",
+                showEmbedButton: "yes",
+                showFullScreenButton: "yes",
+                repeatBackground: "no",
+                buttonsToolTipHideDelay: 1.5,
+                controllerHeight: 41,
+                controllerHideDelay: 3,
+                startSpaceBetweenButtons: 7,
+                spaceBetweenButtons: 8,
+                mainScrubberOffestTop: 14,
+                scrubbersOffsetWidth: 2,
+                timeOffsetLeftWidth: 5,
+                timeOffsetRightWidth: 3,
+                timeOffsetTop: 0,
+                volumeScrubberWidth: 80,
+                volumeScrubberOffsetRightWidth: 0,
+                timeColor: "#888888",
+                youtubeQualityButtonNormalColor: "#888888",
+                youtubeQualityButtonSelectedColor: "#FFFFFF",
+                buttonsToolTipFontColor: "#5a5a5a",
+                //embed window
+                embedWindowCloseButtonMargins: 0,
+                borderColor: "#333333",
+                mainLabelsColor: "#FFFFFF",
+                secondaryLabelsColor: "#a1a1a1",
+                shareAndEmbedTextColor: "#5a5a5a",
+                inputBackgroundColor: "#000000",
+                inputColor: "#FFFFFF",
+                //ads
+                openNewPageAtTheEndOfTheAds: "no",
+                playAdsOnlyOnce: "no",
+                adsButtonsPosition: "left",
+                skipToVideoText: "You can skip to video in: ",
+                skipToVideoButtonText: "Skip Ad",
+                adsTextNormalColor: "#888888",
+                adsTextSelectedColor: "#FFFFFF",
+                adsBorderNormalColor: "#666666",
+                adsBorderSelectedColor: "#FFFFFF"
+            });
+        });
+    </script>
+}

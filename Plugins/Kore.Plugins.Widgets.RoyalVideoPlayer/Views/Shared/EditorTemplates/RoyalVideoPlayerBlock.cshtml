@@ -1,0 +1,43 @@
+﻿@using Kore.Plugins.Widgets.RoyalVideoPlayer
+@using Kore.Web.ContentManagement
+
+@model RoyalVideoPlayerBlock
+
+<div id="block-content" class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Skin, new { @class = "control-label" })
+            @Html.EnumDropDownListFor(m => m.Skin, new { @class = "form-control", data_bind = "value: skin" })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var contentBlockModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.skin = ko.observable(0);
+
+            var data = ko.mapping.fromJSON(viewModel.blockValues());
+
+            if ((isFunction(data) && data()) || data) {
+                if (data.Skin == undefined) {
+                    // If this is not set, it means the contentBlock is new and we have nothing in blockValues
+                    return;
+                }
+                viewModel.skin(data.Skin());
+            }
+        };
+        f.cleanUp = function () {
+            delete viewModel.skin;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                Skin: viewModel.skin(),
+            };
+
+            viewModel.blockValues(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
+</script>

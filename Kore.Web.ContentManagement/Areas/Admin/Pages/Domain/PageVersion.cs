@@ -51,7 +51,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
             ToTable(CmsConstants.Tables.PageVersions);
             HasKey(x => x.Id);
             Property(x => x.PageId).IsRequired();
-            Property(x => x.CultureCode).HasMaxLength(10);
+            Property(x => x.CultureCode).HasMaxLength(10).HasColumnType("varchar");
             Property(x => x.DateCreatedUtc).IsRequired();
             Property(x => x.DateModifiedUtc).IsRequired();
             Property(x => x.Status).IsRequired();

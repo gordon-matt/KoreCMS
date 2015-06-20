@@ -11,7 +11,7 @@ namespace Kore.ScheduledTasks.Domain
             ToTable("Kore_ScheduledTasks");
             HasKey(s => s.Id);
             Property(s => s.Name).IsRequired().HasMaxLength(255);
-            Property(s => s.Type).IsRequired().HasMaxLength(255);
+            Property(s => s.Type).IsRequired().HasMaxLength(255).HasColumnType("varchar");
             Property(s => s.Seconds).IsRequired();
             Property(s => s.Enabled).IsRequired();
             Property(s => s.StopOnError).IsRequired();

@@ -1,0 +1,8 @@
+﻿Group: Widgets
+FriendlyName: Royal Video Player
+SystemName: Kore.Plugins.Widgets.RoyalVideoPlayer
+Version: 1.00
+SupportedVersions: 1.00
+Author: FWD / Widecommerce
+DisplayOrder: 1
+FileName: Kore.Plugins.Widgets.RoyalVideoPlayer.dll

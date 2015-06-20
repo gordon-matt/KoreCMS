@@ -9,7 +9,7 @@ namespace Kore.Localization.Domain
         {
             ToTable("Kore_LocalizableStrings");
             HasKey(m => m.Id);
-            Property(m => m.CultureCode).HasMaxLength(10);
+            Property(m => m.CultureCode).HasMaxLength(10).HasColumnType("varchar");
             Property(m => m.TextKey).IsRequired();
         }
 

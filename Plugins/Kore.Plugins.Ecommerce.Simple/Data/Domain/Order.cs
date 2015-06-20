@@ -78,7 +78,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             Property(x => x.OrderDateUtc).IsRequired();
             Property(x => x.Status).IsRequired();
             Property(x => x.PaymentStatus).IsRequired();
-            Property(x => x.AuthorizationTransactionId).HasMaxLength(255);
+            Property(x => x.AuthorizationTransactionId).HasMaxLength(255).HasColumnType("varchar");
             HasRequired(x => x.BillingAddress).WithMany().HasForeignKey(x => x.BillingAddressId).WillCascadeOnDelete(false);
             HasRequired(x => x.ShippingAddress).WithMany().HasForeignKey(x => x.ShippingAddressId).WillCascadeOnDelete(false);
         }

@@ -577,6 +577,20 @@ namespace KoreCMS.Services
             return false;
         }
 
+        public bool DeletePermissions(IEnumerable<object> permissionIds)
+        {
+            var ids = permissionIds.Select(x => x.ToString()).ToListOf<int>();
+            var toDelete = dbContext.Permissions.Where(x => ids.Contains(x.Id));
+
+            if (toDelete.Any())
+            {
+                dbContext.Permissions.RemoveRange(toDelete);
+                int rowsAffected = dbContext.SaveChanges();
+                return rowsAffected > 0;
+            }
+            return false;
+        }
+
         public void InsertPermission(KorePermission permission)
         {
             dbContext.Permissions.Add(new Permission
@@ -585,6 +599,18 @@ namespace KoreCMS.Services
                 Category = permission.Category,
                 Description = permission.Description
             });
+            dbContext.SaveChanges();
+        }
+
+        public void InsertPermissions(IEnumerable<KorePermission> permissions)
+        {
+            var toInsert = permissions.Select(x => new Permission
+            {
+                Name = x.Name,
+                Category = x.Category,
+                Description = x.Description
+            });
+            dbContext.Permissions.AddRange(toInsert);
             dbContext.SaveChanges();
         }
 

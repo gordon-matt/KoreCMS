@@ -58,7 +58,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Domain
             Property(x => x.Text).IsRequired().HasMaxLength(255);
             Property(x => x.Description).HasMaxLength(255);
             Property(x => x.Url).IsRequired().HasMaxLength(255);
-            Property(x => x.CssClass).HasMaxLength(128);
+            Property(x => x.CssClass).HasMaxLength(128).HasColumnType("varchar");
             Property(x => x.Position).IsRequired();
             Property(x => x.Enabled).IsRequired();
             Property(x => x.IsExternalUrl).IsRequired();

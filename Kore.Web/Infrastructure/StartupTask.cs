@@ -16,66 +16,83 @@ namespace Kore.Web.Infrastructure
 
         public void Execute()
         {
-            EnsureMembership();
+            var membershipService = EngineContext.Current.Resolve<IMembershipService>();
+
+            EnsurePermissions(membershipService);
+            EnsureMembership(membershipService);
             EnsureSettings();
         }
 
-        private static void EnsureMembership()
+        private static void EnsurePermissions(IMembershipService membershipService)
         {
-            var dataSettings = EngineContext.Current.Resolve<DataSettings>();
-
-            var membershipService = EngineContext.Current.Resolve<IMembershipService>();
-
-            var adminUser = membershipService.GetUserByEmail(dataSettings.AdminEmail);
-
-            if (adminUser == null)
-            {
-                membershipService.InsertUser(new KoreUser { UserName = dataSettings.AdminEmail, Email = dataSettings.AdminEmail }, dataSettings.AdminPassword);
-                adminUser = membershipService.GetUserByEmail(dataSettings.AdminEmail);
-            }
-
-            KoreRole administratorsRole = null;
-            if (adminUser != null)
-            {
-                administratorsRole = membershipService.GetRoleByName("Administrators");
-                if (administratorsRole == null)
-                {
-                    membershipService.InsertRole(new KoreRole { Name = "Administrators" });
-                    administratorsRole = membershipService.GetRoleByName("Administrators");
-                    membershipService.AssignUserToRoles(adminUser.Id, new[] { administratorsRole.Id });
-                }
-            }
-
-            //TODO: Change this to update/add/remove permissions
-            //  actually, we should probably move this into Kore.Web (except last part where assiging Administrator role full permission)
             if (membershipService.SupportsRolePermissions)
             {
-                var permissions = membershipService.GetAllPermissions();
+                var permissionProviders = EngineContext.Current.ResolveAll<IPermissionProvider>();
 
-                if (!permissions.Any())
-                {
-                    var permissionProviders = EngineContext.Current.ResolveAll<IPermissionProvider>();
-                    var toInsert = permissionProviders.SelectMany(x => x.GetPermissions()).Select(x => new KorePermission
+                var allPermissions = permissionProviders.SelectMany(x => x.GetPermissions());
+                var allPermissionNames = allPermissions.Select(x => x.Name).ToHashSet();
+
+                var installedPermissions = membershipService.GetAllPermissions();
+                var installedPermissionNames = installedPermissions.Select(x => x.Name).ToHashSet();
+
+                var permissionsToAdd = allPermissions
+                    .Where(x => !installedPermissionNames.Contains(x.Name))
+                    .Select(x => new KorePermission
                     {
                         Name = x.Name,
                         Category = x.Category,
                         Description = x.Description
-                    });
-                    foreach (var permission in toInsert)
-                    {
-                        membershipService.InsertPermission(permission);
-                    }
+                    })
+                    .OrderBy(x => x.Category)
+                    .ThenBy(x => x.Name);
 
-                    if (administratorsRole != null)
-                    {
-                        var fullAccessPermission = membershipService.GetPermissionByName("FullAccess");
-                        membershipService.AssignPermissionsToRole(administratorsRole.Id, new[] { fullAccessPermission.Id });
-                    }
+                if (!permissionsToAdd.IsNullOrEmpty())
+                {
+                    membershipService.InsertPermissions(permissionsToAdd);
+                }
+
+                var permissionIdsToDelete = installedPermissions
+                    .Where(x => !allPermissionNames.Contains(x.Name))
+                    .Select(x => x.Id);
+
+                if (!permissionIdsToDelete.IsNullOrEmpty())
+                {
+                    membershipService.DeletePermissions(permissionIdsToDelete);
                 }
             }
+        }
 
-            dataSettings.AdminPassword = null;
-            DataSettingsManager.SaveSettings(dataSettings);
+        private static void EnsureMembership(IMembershipService membershipService)
+        {
+            var dataSettings = EngineContext.Current.Resolve<DataSettings>();
+
+            var adminUser = membershipService.GetUserByEmail(dataSettings.AdminEmail);
+            if (adminUser == null)
+            {
+                membershipService.InsertUser(new KoreUser { UserName = dataSettings.AdminEmail, Email = dataSettings.AdminEmail }, dataSettings.AdminPassword);
+                adminUser = membershipService.GetUserByEmail(dataSettings.AdminEmail);
+
+                KoreRole administratorsRole = null;
+                if (adminUser != null)
+                {
+                    administratorsRole = membershipService.GetRoleByName(KoreWebConstants.Roles.Administrators);
+                    if (administratorsRole == null)
+                    {
+                        membershipService.InsertRole(new KoreRole { Name = KoreWebConstants.Roles.Administrators });
+                        administratorsRole = membershipService.GetRoleByName(KoreWebConstants.Roles.Administrators);
+                        membershipService.AssignUserToRoles(adminUser.Id, new[] { administratorsRole.Id });
+                    }
+                }
+
+                if (membershipService.SupportsRolePermissions && administratorsRole != null)
+                {
+                    var fullAccessPermission = membershipService.GetPermissionByName(StandardPermissions.FullAccess.Name);
+                    membershipService.AssignPermissionsToRole(administratorsRole.Id, new[] { fullAccessPermission.Id });
+                }
+
+                dataSettings.AdminPassword = null;
+                DataSettingsManager.SaveSettings(dataSettings);
+            }
         }
 
         private static void EnsureSettings()

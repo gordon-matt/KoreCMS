@@ -81,7 +81,11 @@ namespace Kore.Security.Membership
 
         bool DeletePermission(object permissionId);
 
+        bool DeletePermissions(IEnumerable<object> permissionIds);
+
         void InsertPermission(KorePermission permission);
+
+        void InsertPermissions(IEnumerable<KorePermission> permissions);
 
         void UpdatePermission(KorePermission permission);
 

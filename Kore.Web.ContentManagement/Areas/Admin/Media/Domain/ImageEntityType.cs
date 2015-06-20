@@ -27,7 +27,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Domain
         {
             ToTable(CmsConstants.Tables.ImageEntityTypes);
             HasKey(x => x.Id);
-            Property(x => x.Type).IsRequired().HasMaxLength(2048);
+            Property(x => x.Type).IsRequired().HasMaxLength(2048).HasColumnType("varchar");
         }
 
         #region IEntityTypeConfiguration Members

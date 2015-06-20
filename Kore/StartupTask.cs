@@ -22,12 +22,14 @@ namespace Kore
                 var installedTasks = taskRepository.Table.ToList();
                 var installedTaskNames = installedTasks.Select(x => x.Name).ToList();
 
-                var tasksToAdd = allTasks.Where(x => !installedTaskNames.Contains(x.Name)).Select(x => new ScheduledTask
-                {
-                    Name = x.Name,
-                    Type = x.GetType().AssemblyQualifiedName,
-                    Seconds = x.DefaultInterval
-                });
+                var tasksToAdd = allTasks
+                    .Where(x => !installedTaskNames.Contains(x.Name))
+                    .Select(x => new ScheduledTask
+                    {
+                        Name = x.Name,
+                        Type = x.GetType().AssemblyQualifiedName,
+                        Seconds = x.DefaultInterval
+                    });
 
                 if (!tasksToAdd.IsNullOrEmpty())
                 {

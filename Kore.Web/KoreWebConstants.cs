@@ -60,6 +60,11 @@ namespace Kore.Web
             public const string DefaultIndexName = "Search";
         }
 
+        public static class Roles
+        {
+            public const string Administrators = "Administrators";
+        }
+
         //public static class Features
         //{
         //    public const string Media = "Kore.ContentManagement.Media";

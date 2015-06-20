@@ -10,10 +10,18 @@ PAGES:
 - Delete sub pages when delete page (or move those subpages up 1 level)? Else they become orphans
 - Page Types: should editortemplatepath be overridable? maybe only display template?
 
-
 - invariant culture not showing on lang switch
-- still getting issues with install page
-- allow installation on existing db
+
+- pass admin email when register site
+- overlay when install
+- have lang switch by default?
+- admin area link
+- raven db support?
+- SMS?
+- twilio?
+- make permissions checkbox list look nicer
+
+- PAYMENT SYSTEM abtraction..like nop
 
 - broken logging
 	: UPDATE, 2015-06-15: Fixed one big problem. Need to monitor it now, but seems OK.
@@ -40,8 +48,8 @@ PAGES:
 - read through security guidlines as requested by Ran
 - page types: have a "List" template? To show all records (for that type) in a grid, for example?
 
-CONTENT BLOCK ERROR: TinyMCE should not be included by default and should be loaded from specific blocks that need it..
-	this will also affect other libs..!
+CONTENT BLOCK PROBLEM: TinyMCE should not be included by default and should be loaded from specific blocks that need it..
+	this will also affect other libs (not only TinyMCE)..!
 
 LOCALIZATION:
 - Allow editing of invariant culture strings
@@ -116,10 +124,6 @@ OTHER
 - Content Blocks: override template path (for display only)
 - dashboard widgets
 - blog, store, etc for google sitemap (some kind of IPageProvider that can be used commongly for sitemap and also auto menus?)
-- uninstall plugin should remove permissions
-
-- implement this: http://plugins.krajee.com/file-input/demo#advanced-usage
-	- for product images, import lang pack, etc..
   
 - upgrade to OData v4?
 
@@ -130,7 +134,6 @@ OTHER
   - product images (use bootstrap file upload in edit mode)
   - product attributes (filter widget based on this + generic fields like price, etc)
  - make it more secure (PayPal) by removing BuyNow.cshtml and replacing it with c# code only (use HttpClient)
- - use other plugins like 360?
 
   - regions: add some button for importing common public data files (like MaxMind)
   
@@ -208,7 +211,7 @@ http://html5doctor.com/the-contenteditable-attribute/
 - (DONE) Logging  (Needs TESTING)
 - (DONE) Caching  (Needs TESTING - especially in WinForms)- UPDATE 2014.09.11: Check if it supports distributed caching
 - (DONE) Events  (Needs TESTING)
-- Customizable Membership Service  (Needs TESTING)
+
 	TODO:
 	- Implement JQColumnAttribute class for models.. then user just needs to do: .AddColumnFor(m=> m.ColumnName)
 - web api security (its protected so only logged on users can use it, but we may need to make changes to have it open for mobile, etc.. later)
@@ -219,7 +222,6 @@ FUTURE:
 - IOC Container (DI)... make it so can use any.. Autofac, Ninject, etc..
 - Features System
 - jqGrid HTML Helper: SubGrid
-- Installation Page
 
 
 - forums plugin,
@@ -227,7 +229,6 @@ FUTURE:
 - Visitor Groups
 - responsive file manager
 
-IMPORTANT: Keep note of licenses for all references!
 
 Interesting:
 http://www.barebonescoder.com/2013/11/dapper-vs-ef-6-part-1-setting-up-dapper/

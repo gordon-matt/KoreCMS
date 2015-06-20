@@ -89,8 +89,6 @@ namespace KoreCMS.Data
 
         public DbSet<QueuedEmail> QueuedEmails { get; set; }
 
-        public DbSet<QueuedSms> QueuedSms { get; set; }
-
         public DbSet<Zone> Zones { get; set; }
 
         #endregion IKoreCmsDbContext Members

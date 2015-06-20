@@ -33,7 +33,7 @@ namespace Kore.Web.ContentManagement
 
         DbSet<QueuedEmail> QueuedEmails { get; set; }
 
-        DbSet<QueuedSms> QueuedSms { get; set; }
+        //DbSet<QueuedSms> QueuedSms { get; set; }
 
         DbSet<Zone> Zones { get; set; }
     }

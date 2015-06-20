@@ -46,9 +46,9 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Domain
             HasKey(m => m.Id);
             Property(m => m.Name).IsRequired().HasMaxLength(255);
             Property(m => m.RegionType).IsRequired();
-            Property(m => m.CountryCode).HasMaxLength(10);
+            Property(m => m.CountryCode).HasMaxLength(10).HasColumnType("varchar");
             Property(m => m.HasStates).IsRequired();
-            Property(m => m.StateCode).HasMaxLength(10);
+            Property(m => m.StateCode).HasMaxLength(10).HasColumnType("varchar");
             HasOptional(p => p.Parent).WithMany(p => p.Children).HasForeignKey(x => x.ParentId).WillCascadeOnDelete(false);
         }
 

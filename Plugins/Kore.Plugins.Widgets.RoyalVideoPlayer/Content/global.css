@@ -1,0 +1,112 @@
+/* This css files is used to format the categories description text  and playlist thumbnail tooltips*/
+.fontTest{
+	font-family:myFont;
+	font-size:30px;
+	color:#FFFFFF;
+	background-color:#000000;
+	display:inline-block;
+}
+
+/* minimal dark */
+.minimalDarkCategoriesTitle{
+	color:#BBBBBB;
+	margin:5px;
+	margin-top:6px;
+	line-height:16px;
+	font-weight:100;
+}
+
+.minimalDarkCategoriesType{
+	color:#BBBBBB;
+	margin:5px;
+	margin-top:-4px;
+	line-height:16px;
+	font-weight:100;
+}
+
+.minimalDarkCategoriesTypeIn{
+	color:#BBBBBB;
+}
+
+.minimalDarkCategoriesDescription{
+	color:#BBBBBB;
+	margin:5px;
+	margin-top:-4px;
+	line-height:16px;
+	line-height:16px;
+	font-weight:100;
+}
+
+.bold{
+	font-weight:bold;
+	color:#FFFFFF;
+}
+
+/* minimal white */
+.minimalWhiteCategoriesTitle{
+	color:#000000;
+	margin:5px;
+	margin-top:6px;
+	line-height:16px;
+	font-weight:100;
+}
+
+.minimalWhiteCategoriesType{
+	color:#000000;
+	margin:5px;
+	margin-top:-4px;
+	line-height:16px;
+	font-weight:100;
+}
+
+.minimalWhiteCategoriesTypeIn{
+	color:#222222;
+}
+
+.minimalWhiteCategoriesDescription{
+	color:#000000;
+	margin:5px;
+	margin-top:-4px;
+	line-height:16px;
+	line-height:16px;
+	font-weight:100;
+}
+
+.boldWhite{
+	font-weight:bold;
+	color:#000000;
+}
+
+/* thumbnail playlist */
+.playlistDiv{
+	margin-left:20px;
+}
+.floatLeft{
+	float:left;
+	margin-right:6px;
+	padding-top:3px;
+}
+
+.floatP{
+	margin:0px;
+	margin-bottom:0px;
+	text-align:left;
+	line-height:19px;
+}
+
+.boldDark{
+	font-weight:bold;
+	color:#000000;
+}
+
+.boldDarkItalic{
+	font-weight:bold;
+	color:#000000;
+	font-style:italic;
+}
+
+.whiteDarkItalic{
+	font-weight:bold;
+	color:#FFFFFF;
+	font-style:italic;
+}

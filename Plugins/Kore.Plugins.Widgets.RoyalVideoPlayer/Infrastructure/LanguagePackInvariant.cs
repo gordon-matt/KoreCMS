@@ -18,7 +18,7 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Infrastructure
             {
                 return new Dictionary<string, string>
                 {
-                    //{ LocalizableStrings.Mode, "Mode" },
+                    { LocalizableStrings.RoyalVideoPlayer, "Royal Video Player" },
                 };
             }
         }

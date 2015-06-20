@@ -37,6 +37,12 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Data.Domain
             ToTable(Constants.Tables.Playlists);
             HasKey(x => x.Id);
             Property(x => x.Name).IsRequired().HasMaxLength(255);
+            HasMany(c => c.Videos).WithMany(x => x.Playlists).Map(m =>
+            {
+                m.MapLeftKey("PlaylistId");
+                m.MapRightKey("VideoId");
+                m.ToTable(Constants.Tables.PlaylistVideos);
+            });
         }
 
         #region IEntityTypeConfiguration Members

@@ -1,4 +1,5 @@
-﻿using System.Data.Entity.ModelConfiguration;
+﻿using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
 using Kore.Web.Plugins;
@@ -7,9 +8,9 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Data.Domain
 {
     public class Video : IEntity
     {
-        public int Id { get; set; }
+        private ICollection<Playlist> playlists;
 
-        public int PlaylistId { get; set; }
+        public int Id { get; set; }
 
         public string ThumbailUrl { get; set; }
 
@@ -25,7 +26,11 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Data.Domain
 
         public string PopoverHtml { get; set; }
 
-        public virtual Playlist Playlist { get; set; }
+        public virtual ICollection<Playlist> Playlists
+        {
+            get { return playlists ?? (playlists = new HashSet<Playlist>()); }
+            set { playlists = value; }
+        }
 
         #region IEntity Members
 
@@ -43,7 +48,6 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Data.Domain
         {
             ToTable(Constants.Tables.Videos);
             HasKey(x => x.Id);
-            Property(x => x.PlaylistId).IsRequired();
             Property(x => x.ThumbailUrl).IsRequired().HasMaxLength(255);
             Property(x => x.VideoUrl).IsRequired().HasMaxLength(255);
             Property(x => x.MobileVideoUrl).HasMaxLength(255);
@@ -51,7 +55,6 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Data.Domain
             Property(x => x.MobilePosterUrl).HasMaxLength(255);
             Property(x => x.IsDownloadable).IsRequired();
             Property(x => x.PopoverHtml).IsMaxLength();
-            HasRequired(x => x.Playlist).WithMany(x => x.Videos).HasForeignKey(x => x.PlaylistId);
         }
 
         #region IEntityTypeConfiguration Members

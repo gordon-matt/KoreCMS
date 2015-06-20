@@ -2,6 +2,6 @@
 {
     public static class LocalizableStrings
     {
-        //public const string Mode = "Kore.Plugins.Widgets.RoyalVideoPlayer/Mode";
+        public const string RoyalVideoPlayer = "Kore.Plugins.Widgets.RoyalVideoPlayer/RoyalVideoPlayer";
     }
 }

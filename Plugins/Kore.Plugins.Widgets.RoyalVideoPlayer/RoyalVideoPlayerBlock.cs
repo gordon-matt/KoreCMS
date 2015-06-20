@@ -3,7 +3,7 @@ using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 
 namespace Kore.Plugins.Widgets.RoyalVideoPlayer
 {
-    public class RoyalVideoPlayerBlock : ContentBlockBase//, IPluginSupportedBlock
+    public class RoyalVideoPlayerBlock : ContentBlockBase
     {
         public RoyalVideoPlayerBlock()
         {

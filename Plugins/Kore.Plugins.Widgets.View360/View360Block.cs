@@ -3,7 +3,7 @@ using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 
 namespace Kore.Plugins.Widgets.View360
 {
-    public class View360Block : ContentBlockBase//, IPluginSupportedBlock
+    public class View360Block : ContentBlockBase
     {
         public View360Block()
         {

@@ -19,6 +19,15 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Infrastructure
                 return new Dictionary<string, string>
                 {
                     { LocalizableStrings.RoyalVideoPlayer, "Royal Video Player" },
+                    { LocalizableStrings.Models.Playlist.Name, "Name" },
+                    { LocalizableStrings.Models.Video.IsDownloadable, "Is Downloadable" },
+                    { LocalizableStrings.Models.Video.MobilePosterUrl, "Mobile Poster URL" },
+                    { LocalizableStrings.Models.Video.MobileVideoUrl, "Mobile Video URL" },
+                    { LocalizableStrings.Models.Video.PopoverHtml, "Popover HTML" },
+                    { LocalizableStrings.Models.Video.PosterUrl, "Poster URL" },
+                    { LocalizableStrings.Models.Video.ThumbnailUrl, "Thumbnail URL" },
+                    { LocalizableStrings.Models.Video.Title, "Title" },
+                    { LocalizableStrings.Models.Video.VideoUrl, "Video URL" }
                 };
             }
         }

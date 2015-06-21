@@ -13,7 +13,8 @@
 
             public static class Video
             {
-                public const string ThumbailUrl = "Kore.Plugins.Widgets.RoyalVideoPlayer/Models.Video.ThumbailUrl";
+                public const string Title = "Kore.Plugins.Widgets.RoyalVideoPlayer/Models.Video.Title";
+                public const string ThumbnailUrl = "Kore.Plugins.Widgets.RoyalVideoPlayer/Models.Video.ThumbailUrl";
                 public const string VideoUrl = "Kore.Plugins.Widgets.RoyalVideoPlayer/Models.Video.VideoUrl";
                 public const string MobileVideoUrl = "Kore.Plugins.Widgets.RoyalVideoPlayer/Models.Video.MobileVideoUrl";
                 public const string PosterUrl = "Kore.Plugins.Widgets.RoyalVideoPlayer/Models.Video.PosterUrl";

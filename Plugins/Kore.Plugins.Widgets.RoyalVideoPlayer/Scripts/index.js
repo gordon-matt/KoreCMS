@@ -166,11 +166,12 @@ var PlaylistModel = function () {
 
     self.id = ko.observable(0);
     self.name = ko.observable(null);
+    self.selectedVideos = ko.observableArray([]);
 
     self.availableVideos = ko.observableArray([]);
     self.availableVideosTotal = ko.observable(0);
     self.availableVideosPageIndex = ko.observable(1);
-    self.availableVideosPageSize = 25;
+    self.availableVideosPageSize = 5;
 
     self.availableVideosPageCount = function () {
         return Math.ceil(self.availableVideosTotal() / self.availableVideosPageSize);
@@ -179,6 +180,7 @@ var PlaylistModel = function () {
     self.create = function () {
         self.id(0);
         self.name(null);
+        self.selectedVideos([]);
 
         self.validator.resetForm();
         switchSection($("#playlists-form-section"));
@@ -195,6 +197,32 @@ var PlaylistModel = function () {
         .done(function (json) {
             self.id(json.Id);
             self.name(json.Name);
+            self.selectedVideos([]);
+
+            $.ajax({
+                url: playlistApiUrl + "/GetPlaylistVideos",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({
+                    playlistId: self.id()
+                }),
+                async: false
+            })
+            .done(function (json) {
+                $(json.value).each(function (index, item) {
+                    var video = ko.utils.arrayFirst(self.availableVideos(), function (video) {
+                        return video.id() === item;
+                    });
+                    if (video) {
+                        self.selectedVideos.push(video);
+                    }
+                });
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(translations.GetRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
+            });
 
             self.validator.resetForm();
             switchSection($("#playlists-form-section"));
@@ -348,14 +376,7 @@ $(document).ready(function () {
 
     $(function () {
         $("#sortable1, #sortable2").sortable({
-            connectWith: "#sortable2",
-            // Idea: maybe no need this - just grab all when ready to save...
-            //stop: function (event, ui) {
-            //    //TODO: check if its from sortable1 or sortable2. If sortable1, then add to array...
-            //    //  if sortable2, then rearrange items in array
-            //    var videoId = $(ui.item).data("video-id");
-            //    viewModel.playlist.selectedVideos.push(videoId);
-            //}
+            connectWith: "#sortable2"
         }).disableSelection();
     });
 

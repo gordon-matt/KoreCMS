@@ -27,6 +27,10 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Infrastructure
             updatePlaylistVideosAction.Parameter<int>("playlistId");
             updatePlaylistVideosAction.Parameter<string>("videoIds");
             updatePlaylistVideosAction.Returns<IHttpActionResult>();
+
+            var getPlaylistVideosAction = builder.Entity<Playlist>().Collection.Action("GetPlaylistVideos");
+            getPlaylistVideosAction.Parameter<int>("playlistId");
+            getPlaylistVideosAction.Returns<IHttpActionResult>();
         }
 
         #endregion IWebApiRegistrar Members

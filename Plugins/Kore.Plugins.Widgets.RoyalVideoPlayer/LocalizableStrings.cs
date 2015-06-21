@@ -3,6 +3,8 @@
     public static class LocalizableStrings
     {
         public const string RoyalVideoPlayer = "Kore.Plugins.Widgets.RoyalVideoPlayer/RoyalVideoPlayer";
+        public const string Playlists = "Kore.Plugins.Widgets.RoyalVideoPlayer/Playlists";
+        public const string Videos = "Kore.Plugins.Widgets.RoyalVideoPlayer/Videos";
 
         public static class Models
         {

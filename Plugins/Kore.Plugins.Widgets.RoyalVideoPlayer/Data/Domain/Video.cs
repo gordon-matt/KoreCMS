@@ -8,8 +8,6 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Data.Domain
 {
     public class Video : IEntity
     {
-        private ICollection<Playlist> playlists;
-
         public int Id { get; set; }
 
         public string Title { get; set; }
@@ -27,12 +25,6 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Data.Domain
         public bool IsDownloadable { get; set; }
 
         public string PopoverHtml { get; set; }
-
-        public virtual ICollection<Playlist> Playlists
-        {
-            get { return playlists ?? (playlists = new HashSet<Playlist>()); }
-            set { playlists = value; }
-        }
 
         #region IEntity Members
 

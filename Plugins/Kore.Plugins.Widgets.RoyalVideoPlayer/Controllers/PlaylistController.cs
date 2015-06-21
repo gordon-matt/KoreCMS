@@ -9,7 +9,7 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers
     [RouteArea(Constants.RouteArea)]
     public class PlaylistController : KoreController
     {
-        [Compress]
+        //[Compress]
         [Route("")]
         public ActionResult Index()
         {

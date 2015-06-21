@@ -18,7 +18,9 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Infrastructure
             {
                 return new Dictionary<string, string>
                 {
+                    { LocalizableStrings.Playlists, "Playlists" },
                     { LocalizableStrings.RoyalVideoPlayer, "Royal Video Player" },
+                    { LocalizableStrings.Videos, "Videos" },
                     { LocalizableStrings.Models.Playlist.Name, "Name" },
                     { LocalizableStrings.Models.Video.IsDownloadable, "Is Downloadable" },
                     { LocalizableStrings.Models.Video.MobilePosterUrl, "Mobile Poster URL" },

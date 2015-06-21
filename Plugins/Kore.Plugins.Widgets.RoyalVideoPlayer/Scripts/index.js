@@ -1,7 +1,7 @@
 ﻿'use strict'
 
-var playlistApiUrl = "/odata/kore/plugins/royal-video-player/PlaylistApi";
-var videoApiUrl = "/odata/kore/plugins/royal-video-player/VideoApi";
+var playlistApiUrl = "/odata/fwd/royal-video-player/PlaylistApi";
+var videoApiUrl = "/odata/fwd/royal-video-player/VideoApi";
 
 var VideoModel = function () {
     var self = this;
@@ -88,6 +88,7 @@ var VideoModel = function () {
         }
 
         var record = {
+            Id: self.id(),
             Title: self.title(),
             ThumbnailUrl: self.thumbnailUrl(),
             VideoUrl: self.videoUrl(),
@@ -111,7 +112,7 @@ var VideoModel = function () {
                 $('#VideoGrid').data('kendoGrid').dataSource.read();
                 $('#VideoGrid').data('kendoGrid').refresh();
 
-                switchSection($("#events-grid-section"));
+                switchSection($("#videos-grid-section"));
 
                 $.notify(translations.InsertRecordSuccess, "success");
             })
@@ -133,7 +134,7 @@ var VideoModel = function () {
                 $('#VideoGrid').data('kendoGrid').dataSource.read();
                 $('#VideoGrid').data('kendoGrid').refresh();
 
-                switchSection($("#events-grid-section"));
+                switchSection($("#videos-grid-section"));
 
                 $.notify(translations.UpdateRecordSuccess, "success");
             })
@@ -142,10 +143,6 @@ var VideoModel = function () {
                 console.log(textStatus + ': ' + errorThrown);
             });
         }
-    };
-
-    self.goBack = function () {
-        switchSection($("#playlists-grid-section"));
     };
 
     self.cancel = function () {
@@ -169,6 +166,15 @@ var PlaylistModel = function () {
 
     self.id = ko.observable(0);
     self.name = ko.observable(null);
+
+    self.availableVideos = ko.observableArray([]);
+    self.availableVideosTotal = ko.observable(0);
+    self.availableVideosPageIndex = ko.observable(1);
+    self.availableVideosPageSize = 25;
+
+    self.availableVideosPageCount = function () {
+        return Math.ceil(self.availableVideosTotal() / self.availableVideosPageSize);
+    };
 
     self.create = function () {
         self.id(0);
@@ -246,7 +252,6 @@ var PlaylistModel = function () {
                 $('#PlaylistGrid').data('kendoGrid').refresh();
 
                 switchSection($("#playlists-grid-section"));
-
                 $.notify(translations.InsertRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -265,6 +270,30 @@ var PlaylistModel = function () {
                 async: false
             })
             .done(function (json) {
+                var selectedVideos = $("#sortable2 li").map(function () {
+                    return $(this).data("video-id");
+                }).get();
+
+                if (selectedVideos.length > 0) {
+                    $.ajax({
+                        url: playlistApiUrl + "/UpdatePlaylistVideos",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify({
+                            playlistId: self.id(),
+                            videoIds: selectedVideos.join("|")
+                        }),
+                        async: false
+                    })
+                    .done(function (json) {
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        $.notify(translations.InsertRecordError, "error");
+                        console.log(textStatus + ': ' + errorThrown);
+                    });
+                }
+
                 $('#PlaylistGrid').data('kendoGrid').dataSource.read();
                 $('#PlaylistGrid').data('kendoGrid').refresh();
 
@@ -294,12 +323,41 @@ var ViewModel = function () {
     var self = this;
     self.playlist = new PlaylistModel();
     self.video = new VideoModel();
+
+    self.showPlaylists = function () {
+        switchSection($("#playlists-grid-section"));
+    };
+
+    self.showVideos = function () {
+        switchSection($("#videos-grid-section"));
+    };
 };
+
+breeze.config.initializeAdapterInstances({ dataService: "OData" });
+var manager = new breeze.EntityManager('/odata/fwd/royal-video-player');
+
+var pagerInitialized = false;
 
 var viewModel;
 $(document).ready(function () {
     viewModel = new ViewModel();
+    getAvailableVideos();
     ko.applyBindings(viewModel);
+
+    switchSection($("#playlists-grid-section"));
+
+    $(function () {
+        $("#sortable1, #sortable2").sortable({
+            connectWith: "#sortable2",
+            // Idea: maybe no need this - just grab all when ready to save...
+            //stop: function (event, ui) {
+            //    //TODO: check if its from sortable1 or sortable2. If sortable1, then add to array...
+            //    //  if sortable2, then rearrange items in array
+            //    var videoId = $(ui.item).data("video-id");
+            //    viewModel.playlist.selectedVideos.push(videoId);
+            //}
+        }).disableSelection();
+    });
 
     $("#PlaylistGrid").kendoGrid({
         data: null,
@@ -347,8 +405,8 @@ $(document).ready(function () {
             title: " ",
             template:
                 '<div class="btn-group">' +
-                '<a onclick="viewModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
-                '<a onclick="viewModel.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
+                '<a onclick="viewModel.playlist.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
+                '<a onclick="viewModel.playlist.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
                 '</div>',
             attributes: { "class": "text-center" },
             filterable: false,
@@ -414,12 +472,60 @@ $(document).ready(function () {
             title: " ",
             template:
                 '<div class="btn-group">' +
-                '<a onclick="viewModel.eventModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
-                '<a onclick="viewModel.eventModel.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
+                '<a onclick="viewModel.video.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
+                '<a onclick="viewModel.video.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
                 '</div>',
             attributes: { "class": "text-center" },
             filterable: false,
             width: 180
         }]
     });
+
+
 });
+
+function getAvailableVideos() {
+    var query = new breeze.EntityQuery()
+        .from("VideoApi")
+        .orderBy("Title asc")
+        .skip((viewModel.playlist.availableVideosPageIndex() - 1) * viewModel.playlist.availableVideosPageSize)
+        .take(viewModel.playlist.availableVideosPageSize)
+        .inlineCount();
+
+    manager.executeQuery(query).then(function (data) {
+        viewModel.playlist.availableVideos([]);
+        viewModel.playlist.availableVideosTotal(data.inlineCount);
+
+        $(data.httpResponse.data.results).each(function () {
+            var current = this;
+            var entry = new VideoModel();
+            entry.id(current.Id);
+            entry.title(current.Title);
+            entry.thumbnailUrl(current.ThumbnailUrl);
+            entry.videoUrl(current.VideoUrl);
+            entry.mobileVideoUrl(current.MobileVideoUrl);
+            entry.posterUrl(current.PosterUrl);
+            entry.mobilePosterUrl(current.MobilePosterUrl);
+            entry.isDownloadable(current.IsDownloadable);
+            entry.popoverHtml(current.PopoverHtml);
+
+            viewModel.playlist.availableVideos.push(entry);
+        });
+
+        if (!pagerInitialized) {
+            $('#pager').bootpag({
+                total: viewModel.playlist.availableVideosPageCount(),
+                page: viewModel.playlist.availableVideosPageIndex(),
+                maxVisible: 5,
+                leaps: true,
+                firstLastUse: true,
+            }).on("page", function (event, num) {
+                viewModel.playlist.availableVideosPageIndex(num);
+                getAvailableVideos();
+            });
+            pagerInitialized = true;
+        }
+    }).fail(function (e) {
+        alert(e);
+    });
+};

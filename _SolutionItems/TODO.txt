@@ -67,6 +67,7 @@ LOCALIZATION:
 - localize accoutn views
 - localize error pages (404, etc)
 - delete localized strings (and pages, widgets, etc) when delete language
+- move localization admin to Kore.Web ?
 
 FULL CALENDAR:
 - Support Google Calendar

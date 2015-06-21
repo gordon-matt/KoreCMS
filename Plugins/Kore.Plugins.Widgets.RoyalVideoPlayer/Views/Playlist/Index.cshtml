@@ -81,49 +81,6 @@
                                 @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: playlist.name" })
                             </div>
                         </div>
-
-                        @*<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                            <p>Available Videos</p>
-                            <ul id="sortable1" class="well" data-bind="foreach: playlist.availableVideos">
-                                <li data-bind="attr: { 'data-video-id': id }" class="thumbnail">
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <a href="#">
-                                                <img class="media-object" data-bind="attr: { src: thumbnailUrl, alt: title }" style="max-width:200px">
-                                            </a>
-                                        </div>
-                                        <div class="media-body">
-                                            <div>
-                                                <h4 class="media-heading pull-left" data-bind="text: title"></h4>
-                                                <button class="btn btn-danger pull-right remove-video" style="display:none">
-                                                    <i class="fa fa-remove"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                            <div class="clearfix"></div>
-                            <div id="pager"></div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                            <p>Drag Videos Here</p>
-                            <ul id="sortable2" class="well" data-bind="foreach: playlist.selectedVideos">
-                                <li data-bind="attr: { 'data-video-id': id }" class="thumbnail">
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <a href="#">
-                                                <img class="media-object" data-bind="attr: { src: thumbnailUrl, alt: title }" style="max-width:200px">
-                                            </a>
-                                        </div>
-                                        <div class="media-body">
-                                            <h4 class="media-heading" data-bind="text: title"></h4>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>*@
-
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group pull-right">
                                 <button type="button" class="btn btn-default" data-bind="click: playlist.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
@@ -132,6 +89,10 @@
                         </div>
                     </fieldset>
                 </form>
+                <hr />
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass" style="display:none" data-bind="visible: playlist.isEditMode()">
+                    <div id="PlaylistVideoGrid"></div>
+                </div>
             }
         }
     </article>

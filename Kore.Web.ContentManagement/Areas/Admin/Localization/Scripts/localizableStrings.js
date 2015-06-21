@@ -98,7 +98,7 @@ $(document).ready(function () {
                     return data.value;
                 },
                 total: function (data) {
-                    return data.value.length; // Special case (refer to note in LocalizableStringsController)
+                    return data.value.length; // Special case (refer to note in LocalizableStringApiController)
                     //return data["odata.count"];
                 },
                 model: {

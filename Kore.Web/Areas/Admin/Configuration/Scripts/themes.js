@@ -48,7 +48,7 @@ $(document).ready(function () {
             field: "PreviewImageUrl",
             title: translations.Columns.PreviewImageUrl,
             template: '<img src="#=PreviewImageUrl#" alt="#=Title#" class="thumbnail" style="max-width:200px;" />',
-            filterable: true,
+            filterable: false,
             width: 200
         }, {
             field: "Title",

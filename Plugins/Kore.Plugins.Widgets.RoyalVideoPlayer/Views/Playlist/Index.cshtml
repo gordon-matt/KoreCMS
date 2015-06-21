@@ -83,7 +83,7 @@
                                     <div class="media">
                                         <div class="media-left">
                                             <a href="#">
-                                                <img class="media-object" data-bind="attr: { src: thumbnailUrl, alt: title }">
+                                                <img class="media-object" data-bind="attr: { src: thumbnailUrl, alt: title }" style="max-width:200px">
                                             </a>
                                         </div>
                                         <div class="media-body">
@@ -97,7 +97,20 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <p>Drag Videos Here</p>
-                            <ul id="sortable2" class="well"></ul>
+                            <ul id="sortable2" class="well" data-bind="foreach: playlist.selectedVideos">
+                                <li data-bind="attr: { 'data-video-id': id }" class="thumbnail">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <a href="#">
+                                                <img class="media-object" data-bind="attr: { src: thumbnailUrl, alt: title }" style="max-width:200px">
+                                            </a>
+                                        </div>
+                                        <div class="media-body">
+                                            <h4 class="media-heading" data-bind="text: title"></h4>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
@@ -113,6 +112,31 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
             playlistVideoService.Value.Insert(toInsert);
 
             return Ok();
+        }
+
+        [HttpPost]
+        public virtual IHttpActionResult GetPlaylistVideos(ODataActionParameters parameters)
+        {
+            if (!CheckPermission(WritePermission))
+            {
+                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+            }
+
+            int playlistId = (int)parameters["playlistId"];
+
+            var playlist = Service.FindOne(playlistId);
+
+            if (playlist == null)
+            {
+                return NotFound();
+            }
+
+            var videoIds = playlistVideoService.Value.Repository.Table
+                .Where(x => x.PlaylistId == playlistId)
+                .Select(x => x.VideoId)
+                .ToList();
+
+            return Ok(videoIds);
         }
     }
 }

@@ -20,6 +20,8 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Infrastructure
                 {
                     { LocalizableStrings.Playlists, "Playlists" },
                     { LocalizableStrings.RoyalVideoPlayer, "Royal Video Player" },
+                    { LocalizableStrings.SavePlaylistsError, "There was an error when saving playlists." },
+                    { LocalizableStrings.SavePlaylistsSuccess, "Successfully saved playlists." },
                     { LocalizableStrings.Videos, "Videos" },
                     { LocalizableStrings.Models.Playlist.Name, "Name" },
                     { LocalizableStrings.Models.Video.IsDownloadable, "Is Downloadable" },

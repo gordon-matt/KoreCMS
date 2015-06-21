@@ -9,6 +9,7 @@ using Kore.Data;
 using Kore.Infrastructure;
 using Kore.Plugins.Widgets.RoyalVideoPlayer.Data.Domain;
 using Kore.Web.Collections;
+using Kore.Web.Mvc;
 
 namespace Kore.Plugins.Widgets.RoyalVideoPlayer
 {
@@ -43,6 +44,36 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer
 
             var selectList = GetPlaylistSelectList(selectedValue, emptyText);
             return html.DropDownListFor(expression, selectList, htmlAttributes);
+        }
+
+        public MvcHtmlString PlaylistCheckBoxList(
+            string name,
+            IEnumerable<string> selectedIds,
+            object labelHtmlAttributes = null,
+            object checkboxHtmlAttributes = null)
+        {
+            var selectList = GetPlaylistSelectList();
+
+            return html.CheckBoxList(
+                name,
+                selectList,
+                selectedIds,
+                labelHtmlAttributes: labelHtmlAttributes,
+                checkboxHtmlAttributes: checkboxHtmlAttributes);
+        }
+
+        public MvcHtmlString PlaylistCheckBoxListFor(
+            Expression<Func<TModel, IEnumerable<string>>> expression,
+            object labelHtmlAttributes = null,
+            object checkboxHtmlAttributes = null)
+        {
+            var selectList = GetPlaylistSelectList();
+
+            return html.CheckBoxListFor(
+                expression,
+                selectList,
+                labelHtmlAttributes: labelHtmlAttributes,
+                checkboxHtmlAttributes: checkboxHtmlAttributes);
         }
 
         private static IEnumerable<SelectListItem> GetPlaylistSelectList(int? selectedValue = null, string emptyText = null)

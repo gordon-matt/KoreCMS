@@ -11,6 +11,8 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer
 
         public Skin Skin { get; set; }
 
+        public int PlaylistId { get; set; }
+
         #region ContentBlockBase Overrides
 
         public override string Name

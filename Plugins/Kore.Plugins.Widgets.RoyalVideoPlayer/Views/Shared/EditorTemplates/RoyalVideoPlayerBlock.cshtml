@@ -4,6 +4,12 @@
 @model RoyalVideoPlayerBlock
 
 <div id="block-content" class="row">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.PlaylistId, new { @class = "control-label" })
+            @Html.RoyalVideoPlayer().PlaylistDropDownListFor(m => m.PlaylistId, new { @class = "form-control", data_bind = "value: playlistId" })
+        </div>
+    </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="form-group">
             @Html.LabelFor(m => m.Skin, new { @class = "control-label" })
@@ -16,23 +22,27 @@
     var contentBlockModel = (function () {
         var f = {};
         f.updateModel = function () {
+            viewModel.playlistId = ko.observable(0);
             viewModel.skin = ko.observable(0);
 
             var data = ko.mapping.fromJSON(viewModel.blockValues());
 
             if ((isFunction(data) && data()) || data) {
-                if (data.Skin == undefined) {
+                if (data.PlaylistId == undefined) {
                     // If this is not set, it means the contentBlock is new and we have nothing in blockValues
                     return;
                 }
+                viewModel.playlistId(data.PlaylistId());
                 viewModel.skin(data.Skin());
             }
         };
         f.cleanUp = function () {
+            delete viewModel.playlistId;
             delete viewModel.skin;
         };
         f.onBeforeSave = function () {
             var data = {
+                PlaylistId: viewModel.playlistId(),
                 Skin: viewModel.skin(),
             };
 

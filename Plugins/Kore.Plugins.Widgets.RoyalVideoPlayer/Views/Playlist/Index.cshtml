@@ -23,10 +23,10 @@
 <style type="text/css">
     #sortable1, #sortable2 {
         border: 1px solid #eee;
-        float: left;
+        /*float: left;*/
         list-style-type: none;
         margin: 0 10px 0 0;
-        min-height: 20px;
+        min-height: 70px;
         width: 100%;
         padding: 5px 0 0;
     }
@@ -34,6 +34,9 @@
             margin: 0 5px 5px;
             padding: 5px;
         }
+    .thumbnail {
+        margin-bottom: 0px !important;
+    }
 </style>
 
 <div id="playlists-grid-section" class="row">
@@ -72,6 +75,31 @@
                                 @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: playlist.name" })
                             </div>
                         </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <p>Available Videos</p>
+                            <ul id="sortable1" class="well" data-bind="foreach: playlist.availableVideos">
+                                <li data-bind="attr: { 'data-video-id': id }" class="thumbnail">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <a href="#">
+                                                <img class="media-object" data-bind="attr: { src: thumbnailUrl, alt: title }">
+                                            </a>
+                                        </div>
+                                        <div class="media-body">
+                                            <h4 class="media-heading" data-bind="text: title"></h4>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                            <div id="pager"></div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <p>Drag Videos Here</p>
+                            <ul id="sortable2" class="well"></ul>
+                        </div>
+
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group pull-right">
                                 <button type="button" class="btn btn-default" data-bind="click: playlist.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
@@ -80,30 +108,6 @@
                         </div>
                     </fieldset>
                 </form>
-            }
-        }
-        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
-        {
-            using (var header = panel.BeginHeader(T(LocalizableStrings.Videos))) { }
-            using (var body = panel.BeginBody())
-            {
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                        <ul id="sortable1" data-bind="foreach: playlist.availableVideos">
-                            <li class="thumbnail" data-bind="attr: { 'data-video-id': id }">
-                                <img data-bind="attr: { src: thumbnailUrl }" class="img-responsive" />
-                                <p data-bind="text: title"></p>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                        <div id="pager"></div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                        <ul id="sortable2">
-
-                        </ul>
-                    </div>
-                </div>
             }
         }
     </article>

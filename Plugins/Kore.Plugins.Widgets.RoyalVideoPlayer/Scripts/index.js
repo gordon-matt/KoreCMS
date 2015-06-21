@@ -462,7 +462,8 @@ $(document).ready(function () {
             field: "ThumbnailUrl",
             title: translations.Columns.Video.ThumbnailUrl,
             template: '<img src="#=ThumbnailUrl#" alt="#=Title#" class="thumbnail" style="max-width:200px;" />',
-            filterable: true
+            filterable: true,
+            width: 200
         }, {
             field: "Title",
             title: translations.Columns.Video.Title,

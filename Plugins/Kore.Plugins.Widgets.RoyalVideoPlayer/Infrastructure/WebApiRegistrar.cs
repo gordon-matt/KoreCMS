@@ -13,24 +13,27 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Infrastructure
         {
             ODataModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<Playlist>("PlaylistApi");
-            //builder.EntitySet<PlaylistVideo>("PlaylistVideoApi");
             builder.EntitySet<Video>("VideoApi");
 
             RegisterPlaylistODataActions(builder);
+            RegisterVideoODataActions(builder);
 
             config.Routes.MapODataRoute("OData_FWD_RoyalVideoPlayer", "odata/fwd/royal-video-player", builder.GetEdmModel());
         }
 
         private static void RegisterPlaylistODataActions(ODataModelBuilder builder)
         {
-            var updatePlaylistVideosAction = builder.Entity<Playlist>().Collection.Action("UpdatePlaylistVideos");
-            updatePlaylistVideosAction.Parameter<int>("playlistId");
-            updatePlaylistVideosAction.Parameter<string>("videoIds");
-            updatePlaylistVideosAction.Returns<IHttpActionResult>();
+            var getPlaylistsForVideoAction = builder.Entity<Playlist>().Collection.Action("GetPlaylistsForVideo");
+            getPlaylistsForVideoAction.Parameter<int>("videoId");
+            getPlaylistsForVideoAction.Returns<IHttpActionResult>();
+        }
 
-            var getPlaylistVideosAction = builder.Entity<Playlist>().Collection.Action("GetPlaylistVideos");
-            getPlaylistVideosAction.Parameter<int>("playlistId");
-            getPlaylistVideosAction.Returns<IHttpActionResult>();
+        private static void RegisterVideoODataActions(ODataModelBuilder builder)
+        {
+            var assignVideoToPlaylistsAction = builder.Entity<Video>().Collection.Action("AssignVideoToPlaylists");
+            assignVideoToPlaylistsAction.Parameter<int>("videoId");
+            assignVideoToPlaylistsAction.CollectionParameter<int>("playlists");
+            assignVideoToPlaylistsAction.Returns<IHttpActionResult>();
         }
 
         #endregion IWebApiRegistrar Members

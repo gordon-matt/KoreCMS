@@ -16,6 +16,8 @@ var VideoModel = function () {
     self.isDownloadable = ko.observable(null);
     self.popoverHtml = ko.observable(null);
 
+    self.playlists = ko.observableArray([]);
+
     self.create = function () {
         self.id(0);
         self.title(null);
@@ -149,7 +151,61 @@ var VideoModel = function () {
         switchSection($("#videos-grid-section"));
     };
 
-    self.validator = $("#videos-form-section-form").validate({
+    self.editPlaylists = function (id) {
+        self.id(id);
+        self.playlists([]);
+
+        $.ajax({
+            url: playlistApiUrl + "/GetPlaylistsForVideo",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ videoId: id }),
+            dataType: "json",
+            async: false
+        })
+        .done(function (json) {
+            if (json.value && json.value.length > 0) {
+                $.each(json.value, function (index, item) {
+                    self.playlists.push(item.toString());
+                });
+            }
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            $.notify(translations.GetRecordError, "error");
+            console.log(textStatus + ': ' + errorThrown);
+        });
+
+        switchSection($("#video-playlists-form-section"));
+    };
+
+    self.editPlaylists_cancel = function () {
+        switchSection($("#videos-grid-section"));
+    };
+
+    self.editPlaylists_save = function () {
+        var data = {
+            videoId: self.id(),
+            playlists: self.playlists()
+        };
+
+        $.ajax({
+            url: videoApiUrl + "/AssignVideoToPlaylists",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data),
+            async: false
+        })
+        .done(function (json) {
+            switchSection($("#videos-grid-section"));
+            $.notify(translations.SavePlaylistsSuccess, "success");
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            $.notify(translations.SavePlaylistsError, "error");
+            console.log(textStatus + ': ' + errorThrown);
+        });
+    };
+
+    self.validator = $("#video-playlists-form-section-form").validate({
         rules: {
             Title: { required: true, maxlength: 255 },
             ThumbnailUrl: { required: true, maxlength: 255 },
@@ -166,21 +222,21 @@ var PlaylistModel = function () {
 
     self.id = ko.observable(0);
     self.name = ko.observable(null);
-    self.selectedVideos = ko.observableArray([]);
+    //self.selectedVideos = ko.observableArray([]);
 
-    self.availableVideos = ko.observableArray([]);
-    self.availableVideosTotal = ko.observable(0);
-    self.availableVideosPageIndex = ko.observable(1);
-    self.availableVideosPageSize = 5;
+    //self.availableVideos = ko.observableArray([]);
+    //self.availableVideosTotal = ko.observable(0);
+    //self.availableVideosPageIndex = ko.observable(1);
+    //self.availableVideosPageSize = 5;
 
-    self.availableVideosPageCount = function () {
-        return Math.ceil(self.availableVideosTotal() / self.availableVideosPageSize);
-    };
+    //self.availableVideosPageCount = function () {
+    //    return Math.ceil(self.availableVideosTotal() / self.availableVideosPageSize);
+    //};
 
     self.create = function () {
         self.id(0);
         self.name(null);
-        self.selectedVideos([]);
+        //self.selectedVideos([]);
 
         self.validator.resetForm();
         switchSection($("#playlists-form-section"));
@@ -197,32 +253,32 @@ var PlaylistModel = function () {
         .done(function (json) {
             self.id(json.Id);
             self.name(json.Name);
-            self.selectedVideos([]);
+            //self.selectedVideos([]);
 
-            $.ajax({
-                url: playlistApiUrl + "/GetPlaylistVideos",
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                data: JSON.stringify({
-                    playlistId: self.id()
-                }),
-                async: false
-            })
-            .done(function (json) {
-                $(json.value).each(function (index, item) {
-                    var video = ko.utils.arrayFirst(self.availableVideos(), function (video) {
-                        return video.id() === item;
-                    });
-                    if (video) {
-                        self.selectedVideos.push(video);
-                    }
-                });
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(translations.GetRecordError, "error");
-                console.log(textStatus + ': ' + errorThrown);
-            });
+            //$.ajax({
+            //    url: playlistApiUrl + "/GetPlaylistVideos",
+            //    type: "POST",
+            //    contentType: "application/json; charset=utf-8",
+            //    dataType: "json",
+            //    data: JSON.stringify({
+            //        playlistId: self.id()
+            //    }),
+            //    async: false
+            //})
+            //.done(function (json) {
+            //    $(json.value).each(function (index, item) {
+            //        var video = ko.utils.arrayFirst(self.availableVideos(), function (video) {
+            //            return video.id() === item;
+            //        });
+            //        if (video) {
+            //            self.selectedVideos.push(video);
+            //        }
+            //    });
+            //})
+            //.fail(function (jqXHR, textStatus, errorThrown) {
+            //    $.notify(translations.GetRecordError, "error");
+            //    console.log(textStatus + ': ' + errorThrown);
+            //});
 
             self.validator.resetForm();
             switchSection($("#playlists-form-section"));
@@ -298,29 +354,29 @@ var PlaylistModel = function () {
                 async: false
             })
             .done(function (json) {
-                var selectedVideos = $("#sortable2 li").map(function () {
-                    return $(this).data("video-id");
-                }).get();
+                //var selectedVideos = $("#sortable2 li").map(function () {
+                //    return $(this).data("video-id");
+                //}).get();
 
-                if (selectedVideos.length > 0) {
-                    $.ajax({
-                        url: playlistApiUrl + "/UpdatePlaylistVideos",
-                        type: "POST",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        data: JSON.stringify({
-                            playlistId: self.id(),
-                            videoIds: selectedVideos.join("|")
-                        }),
-                        async: false
-                    })
-                    .done(function (json) {
-                    })
-                    .fail(function (jqXHR, textStatus, errorThrown) {
-                        $.notify(translations.InsertRecordError, "error");
-                        console.log(textStatus + ': ' + errorThrown);
-                    });
-                }
+                //if (selectedVideos.length > 0) {
+                //    $.ajax({
+                //        url: playlistApiUrl + "/UpdatePlaylistVideos",
+                //        type: "POST",
+                //        contentType: "application/json; charset=utf-8",
+                //        dataType: "json",
+                //        data: JSON.stringify({
+                //            playlistId: self.id(),
+                //            videoIds: selectedVideos.join("|")
+                //        }),
+                //        async: false
+                //    })
+                //    .done(function (json) {
+                //    })
+                //    .fail(function (jqXHR, textStatus, errorThrown) {
+                //        $.notify(translations.InsertRecordError, "error");
+                //        console.log(textStatus + ': ' + errorThrown);
+                //    });
+                //}
 
                 $('#PlaylistGrid').data('kendoGrid').dataSource.read();
                 $('#PlaylistGrid').data('kendoGrid').refresh();
@@ -361,24 +417,39 @@ var ViewModel = function () {
     };
 };
 
-breeze.config.initializeAdapterInstances({ dataService: "OData" });
-var manager = new breeze.EntityManager('/odata/fwd/royal-video-player');
+//var originList;
+//$(function () {
+//    $("#sortable1, #sortable2").sortable({
+//        connectWith: "#sortable2",
+//        start: function (event, ui) {
+//            originList = ui.item.parent().attr('id');
+//        },
+//        stop: function (event, ui) {
+//            if (originList == "sortable2") {
+//                return;
+//            }
+//            var idx = $('#sortable2').children().index($(ui.item[0]));
+//            if (idx == -1) {
+//                return;
+//            }
+//            var elm = $(ui.item[0]).clone(true).removeClass('box ui-draggable ui-draggable-dragging');
+//            $('#sortable2').children(':eq(' + idx + ')').after(elm);
+//            $(this).sortable('cancel');
+//        }
+//    }).disableSelection();
+//});
 
-var pagerInitialized = false;
+//breeze.config.initializeAdapterInstances({ dataService: "OData" });
+//var manager = new breeze.EntityManager('/odata/fwd/royal-video-player');
+//var pagerInitialized = false;
 
 var viewModel;
 $(document).ready(function () {
     viewModel = new ViewModel();
-    getAvailableVideos();
+    //getAvailableVideos();
     ko.applyBindings(viewModel);
 
     switchSection($("#playlists-grid-section"));
-
-    $(function () {
-        $("#sortable1, #sortable2").sortable({
-            connectWith: "#sortable2"
-        }).disableSelection();
-    });
 
     $("#PlaylistGrid").kendoGrid({
         data: null,
@@ -426,8 +497,8 @@ $(document).ready(function () {
             title: " ",
             template:
                 '<div class="btn-group">' +
-                '<a onclick="viewModel.playlist.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
-                '<a onclick="viewModel.playlist.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
+                '<a onclick="viewModel.playlist.edit(#=Id#)" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
+                '<a onclick="viewModel.playlist.delete(#=Id#)" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
                 '</div>',
             attributes: { "class": "text-center" },
             filterable: false,
@@ -494,60 +565,61 @@ $(document).ready(function () {
             title: " ",
             template:
                 '<div class="btn-group">' +
-                '<a onclick="viewModel.video.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
-                '<a onclick="viewModel.video.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
+                '<a onclick="viewModel.video.edit(#=Id#)" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
+                '<a onclick="viewModel.video.delete(#=Id#)" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
+                '<a onclick="viewModel.video.editPlaylists(#=Id#)" class="btn btn-default btn-xs">' + translations.Playlists + '</a>' +
                 '</div>',
             attributes: { "class": "text-center" },
             filterable: false,
-            width: 180
+            width: 210
         }]
     });
 
 
 });
 
-function getAvailableVideos() {
-    var query = new breeze.EntityQuery()
-        .from("VideoApi")
-        .orderBy("Title asc")
-        .skip((viewModel.playlist.availableVideosPageIndex() - 1) * viewModel.playlist.availableVideosPageSize)
-        .take(viewModel.playlist.availableVideosPageSize)
-        .inlineCount();
+//function getAvailableVideos() {
+//    var query = new breeze.EntityQuery()
+//        .from("VideoApi")
+//        .orderBy("Title asc")
+//        .skip((viewModel.playlist.availableVideosPageIndex() - 1) * viewModel.playlist.availableVideosPageSize)
+//        .take(viewModel.playlist.availableVideosPageSize)
+//        .inlineCount();
 
-    manager.executeQuery(query).then(function (data) {
-        viewModel.playlist.availableVideos([]);
-        viewModel.playlist.availableVideosTotal(data.inlineCount);
+//    manager.executeQuery(query).then(function (data) {
+//        viewModel.playlist.availableVideos([]);
+//        viewModel.playlist.availableVideosTotal(data.inlineCount);
 
-        $(data.httpResponse.data.results).each(function () {
-            var current = this;
-            var entry = new VideoModel();
-            entry.id(current.Id);
-            entry.title(current.Title);
-            entry.thumbnailUrl(current.ThumbnailUrl);
-            entry.videoUrl(current.VideoUrl);
-            entry.mobileVideoUrl(current.MobileVideoUrl);
-            entry.posterUrl(current.PosterUrl);
-            entry.mobilePosterUrl(current.MobilePosterUrl);
-            entry.isDownloadable(current.IsDownloadable);
-            entry.popoverHtml(current.PopoverHtml);
+//        $(data.httpResponse.data.results).each(function () {
+//            var current = this;
+//            var entry = new VideoModel();
+//            entry.id(current.Id);
+//            entry.title(current.Title);
+//            entry.thumbnailUrl(current.ThumbnailUrl);
+//            entry.videoUrl(current.VideoUrl);
+//            entry.mobileVideoUrl(current.MobileVideoUrl);
+//            entry.posterUrl(current.PosterUrl);
+//            entry.mobilePosterUrl(current.MobilePosterUrl);
+//            entry.isDownloadable(current.IsDownloadable);
+//            entry.popoverHtml(current.PopoverHtml);
 
-            viewModel.playlist.availableVideos.push(entry);
-        });
+//            viewModel.playlist.availableVideos.push(entry);
+//        });
 
-        if (!pagerInitialized) {
-            $('#pager').bootpag({
-                total: viewModel.playlist.availableVideosPageCount(),
-                page: viewModel.playlist.availableVideosPageIndex(),
-                maxVisible: 5,
-                leaps: true,
-                firstLastUse: true,
-            }).on("page", function (event, num) {
-                viewModel.playlist.availableVideosPageIndex(num);
-                getAvailableVideos();
-            });
-            pagerInitialized = true;
-        }
-    }).fail(function (e) {
-        alert(e);
-    });
-};
+//        if (!pagerInitialized) {
+//            $('#pager').bootpag({
+//                total: viewModel.playlist.availableVideosPageCount(),
+//                page: viewModel.playlist.availableVideosPageIndex(),
+//                maxVisible: 5,
+//                leaps: true,
+//                firstLastUse: true,
+//            }).on("page", function (event, num) {
+//                viewModel.playlist.availableVideosPageIndex(num);
+//                getAvailableVideos();
+//            });
+//            pagerInitialized = true;
+//        }
+//    }).fail(function (e) {
+//        alert(e);
+//    });
+//};

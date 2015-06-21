@@ -6,6 +6,9 @@
         public const string Playlists = "Kore.Plugins.Widgets.RoyalVideoPlayer/Playlists";
         public const string Videos = "Kore.Plugins.Widgets.RoyalVideoPlayer/Videos";
 
+        public const string SavePlaylistsError = "Kore.Plugins.Widgets.RoyalVideoPlayer/SavePlaylistsError";
+        public const string SavePlaylistsSuccess = "Kore.Plugins.Widgets.RoyalVideoPlayer/SavePlaylistsSuccess";
+
         public static class Models
         {
             public static class Playlist

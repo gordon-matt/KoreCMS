@@ -6,6 +6,7 @@
 @model RoyalVideoPlayerBlock
 
 @{
+    Style.IncludePluginStyle("global.css");
     Script.IncludePluginScript("FWDRVPlayer.js");
 
     var playlistService = EngineContext.Current.Resolve<IPlaylistService>();
@@ -17,6 +18,38 @@
     var videos = videoService.Find(x => videoIds.Contains(x.Id));
 
     string playlistName = playlist.Name.ToSlugUrl();
+
+    bool isDarkSkin = false;
+    string skin = string.Empty;
+    
+    switch (Model.Skin)
+    {
+        case Skin.ClassicDark: skin = "clasic_skin_dark"; isDarkSkin = true; break;
+        case Skin.ClassicWhite: skin = "clasic_skin_white"; break;
+        case Skin.MetalDark: skin = "metal_skin_dark"; isDarkSkin = true; break;
+        case Skin.MetalWhite: skin = "metal_skin_white"; break;
+        case Skin.MinimalDark: skin = "minimal_skin_dark"; isDarkSkin = true; break;
+        case Skin.MinimalWhite: skin = "minimal_skin_white"; break;
+        case Skin.ModernDark: skin = "modern_skin_dark"; isDarkSkin = true; break;
+        case Skin.ModernWhite: skin = "modern_skin_white"; break;
+    }
+
+    string categoriesTitleClass = "minimalWhiteCategoriesTitle";
+    string categoriesTypeClass = "minimalWhiteCategoriesType";
+    string categoriesTypeInClass = "minimalWhiteCategoriesTypeIn";
+    string categoriesDescriptionClass = "minimalWhiteCategoriesDescription";
+    string boldClass = "boldWhite";
+    string boldItalicClass = "boldWhiteItalic";
+
+    if (isDarkSkin)
+    {
+        categoriesTitleClass = "minimalDarkCategoriesTitle";
+        categoriesTypeClass = "minimalDarkCategoriesType";
+        categoriesTypeInClass = "minimalDarkCategoriesTypeIn";
+        categoriesDescriptionClass = "minimalDarkCategoriesDescription";
+        boldClass = "bold";
+        boldItalicClass = "boldDarkItalic";
+    }
 }
 
 <!-- video holder -->
@@ -25,9 +58,9 @@
 <!--  Playlists -->
 <ul id="playlists" style="display:none;">
     <li data-source="@playlistName" data-thumbnail-path="Plugins/Widgets.RoyalVideoPlayer/Content/thumbnails/large1.jpg">
-        <p class="minimalWhiteCategoriesTitle"><span class="bold">Title: </span>@playlist.Name</p>
-        <p class="minimalWhiteCategoriesType"><span class="bold">Type: </span><span class="minimalWhiteCategoriesTypeIn">HTML</span></p>
-        <p class="minimalWhiteCategoriesDescription"><span class="bold">Description: </span>Created using html elements, videos are loaded and played from the server.</p>
+        <p class="@categoriesTitleClass"><span class="@boldClass">Title: </span>@playlist.Name</p>
+        <p class="@categoriesTypeClass"><span class="@boldClass">Type: </span><span class="@categoriesTypeInClass">HTML</span></p>
+        <p class="@categoriesDescriptionClass"><span class="@boldClass">Description: </span>Created using html elements, videos are loaded and played from the server.</p>
     </li>
 </ul>
 
@@ -67,8 +100,8 @@
         {
             html = string.Format(@"<div>
                 <img class='floatLeft' src='{0}' width='120px' height='90px' />
-                <p class='floatP'><span class='boldDarkItalic'>{1}</span></p>
-            </div>", video.ThumbnailUrl, video.Title);
+                <p class='floatP'><span class='{1}'>{2}</span></p>
+            </div>", video.ThumbnailUrl, boldItalicClass, video.Title);
         }
         
         <li data-thumb-source="@video.ThumbnailUrl" data-video-source="@source" data-poster-source="@posterSource" data-downloadable="@downloadable">
@@ -90,9 +123,9 @@
                 parentId: "video-wrapper",
                 playlistsId: "playlists",
                 mainFolderPath: "Plugins/Widgets.RoyalVideoPlayer/Content",
-                skinPath: "minimal_skin_dark",
+                skinPath: "@skin",
                 displayType: "responsive",
-                facebookAppId: "213684265480896",
+                //facebookAppId: "213684265480896",
                 autoScale: "yes",
                 useDeepLinking: "yes",
                 rightClickContextMenu: "default",
@@ -121,7 +154,7 @@
                 horizontalSpaceBetweenThumbnails: 40,
                 verticalSpaceBetweenThumbnails: 40,
                 //playlist settings
-                playlistPosition: "right",
+                playlistPosition: "@Model.PlaylistPosition.ToString().ToLowerInvariant()",
                 showPlaylistByDefault: "yes",
                 showPlaylistToolTips: "yes",
                 forceDisableDownloadButtonForFolder: "yes",
@@ -148,7 +181,7 @@
                 showShuffleButton: "yes",
                 showYoutubeQualityButton: "yes",
                 showDownloadButton: "yes",
-                showFacebookButton: "yes",
+                showFacebookButton: "no",
                 showEmbedButton: "yes",
                 showFullScreenButton: "yes",
                 repeatBackground: "no",

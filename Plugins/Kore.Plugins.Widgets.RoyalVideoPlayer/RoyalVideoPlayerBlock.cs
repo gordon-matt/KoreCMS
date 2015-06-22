@@ -7,11 +7,14 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer
     {
         public RoyalVideoPlayerBlock()
         {
+            PlaylistPosition = PlaylistPosition.Right;
         }
 
         public Skin Skin { get; set; }
 
         public int PlaylistId { get; set; }
+
+        public PlaylistPosition PlaylistPosition { get; set; }
 
         #region ContentBlockBase Overrides
 
@@ -58,5 +61,11 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer
 
         [Display(Name = "Modern White")]
         ModernWhite = 7
+    }
+
+    public enum PlaylistPosition : byte
+    {
+        Bottom = 0,
+        Right = 1
     }
 }

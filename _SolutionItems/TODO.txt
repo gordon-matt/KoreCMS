@@ -95,11 +95,6 @@ OTHER
 - need some way to provide descriptions/tooltips using an [Attribute] of some kind for widget properties (and page type properties too)..
 - LOG FILE SETTINGS?
 - new sitemap html page (see nop for example)
-- Video Content Block
-	Good options for players: 
-		1. http://www.webdesign-flash.ro/p/rvp/index.html#/?playlistId=0&videoId=0
-		2. http://codecanyon.cosmo-coder.com/vimuse/regular.html
-
 		
 
 - better error page handling:

@@ -1,9 +1,5 @@
 ﻿'use strict'
 
-function imagePickerCallback(url) {
-    viewModel.teaserImageUrl(url);
-};
-
 var ViewModel = function () {
     var self = this;
 

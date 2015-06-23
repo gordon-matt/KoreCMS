@@ -91,7 +91,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\kore-common.js" />
-    <EmbeddedResource Include="Scripts\kore-elfinder.js" />
     <EmbeddedResource Include="Scripts\kore-jqval.js" />
     <EmbeddedResource Include="Scripts\kore-section-switching.js" />
     <EmbeddedResource Include="Scripts\kore-tinymce.js" />

@@ -1,18 +1,5 @@
 ﻿'use strict'
 
-var imagePickerField = 'category';
-function imagePickerCallback(url) {
-    if (imagePickerField == 'category') {
-        viewModel.imageUrl(url);
-    }
-    else if (imagePickerField == 'product') {
-        viewModel.product.mainImageUrl(url);
-    }
-    else {
-        console.log('Unknown Field: ' + imagePickerField);
-    }
-};
-
 var ProductImageModel = function () {
     var self = this;
 
@@ -60,8 +47,6 @@ var ProductModel = function () {
         self.metaKeywords(null);
         self.metaDescription(null);
 
-        imagePickerField = 'product';
-
         self.validator.resetForm();
         switchSection($("#product-form-section"));
         self.showToolbar(false);
@@ -88,8 +73,6 @@ var ProductModel = function () {
             self.fullDescription(json.FullDescription);
             self.metaKeywords(json.MetaKeywords);
             self.metaDescription(json.MetaDescription);
-
-            imagePickerField = 'product';
 
             self.validator.resetForm();
             switchSection($("#product-form-section"));
@@ -240,7 +223,6 @@ var ViewModel = function () {
         self.metaDescription(null);
 
         self.showToolbar(false);
-        imagePickerField = 'category';
 
         self.validator.resetForm();
         switchSection($("#form-section"));
@@ -266,7 +248,6 @@ var ViewModel = function () {
             self.metaDescription(json.MetaDescription);
 
             self.showToolbar(true);
-            imagePickerField = 'category';
 
             self.validator.resetForm();
             switchSection($("#form-section"));
@@ -390,6 +371,16 @@ var viewModel;
 $(document).ready(function () {
     viewModel = new ViewModel();
     ko.applyBindings(viewModel);
+
+    $('#categoryImageModal').on('hidden.bs.modal', function () {
+        var url = $('#ImageUrl').val();
+        viewModel.imageUrl(url);
+    });
+
+    $('#productImageModal').on('hidden.bs.modal', function () {
+        var url = $('#MainImageUrl').val();
+        viewModel.product.mainImageUrl(url);
+    });
 
     var treeviewDS = new kendo.data.HierarchicalDataSource({
         type: "odata",

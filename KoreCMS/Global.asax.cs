@@ -5,6 +5,7 @@ using System.Web.Routing;
 using Kore.Infrastructure;
 using Kore.Web;
 using Kore.Web.Infrastructure;
+using Kore.Web.Php.ViewEngines;
 using NLog;
 using NLog.Targets;
 using NLog.Targets.Wrappers;
@@ -21,6 +22,10 @@ namespace KoreCMS
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             DependencyConfig.Register();
+
+            // Kore only useds this for Responsive File Manager. Although technically you could write some PHP views as well,
+            //  as described here: https://phpviewengine.codeplex.com/
+            ViewEngines.Engines.Add(new PhpViewEngine());
 
             TryUpdateNLogConnectionString();
         }

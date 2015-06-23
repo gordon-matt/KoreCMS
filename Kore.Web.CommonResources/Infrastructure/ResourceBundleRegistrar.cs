@@ -17,9 +17,6 @@ namespace Kore.Web.CommonResources.Infrastructure
             bundles.Add(new ScriptBundle("~/bundles/js/kore/common")
                 .Include("~/Scripts/Kore.Web.CommonResources.Scripts.kore-common.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/kore/elfinder")
-                .Include("~/Scripts/Kore.Web.CommonResources.Scripts.kore-elfinder.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/js/kore/jqueryval")
                 .Include("~/Scripts/Kore.Web.CommonResources.Scripts.kore-jqval.js"));
 

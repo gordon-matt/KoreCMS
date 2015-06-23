@@ -61,6 +61,72 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Widgets.FullCa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Widgets.RoyalVideoPlayer", "Plugins\Kore.Plugins.Widgets.RoyalVideoPlayer\Kore.Plugins.Widgets.RoyalVideoPlayer.csproj", "{5F7BE6CA-FE13-4DFB-9277-40E649835AA4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{EC957D42-20C5-4CCB-B47F-6DB7742CD966}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Phalanger4", "Phalanger4", "{F70F6F7F-2D80-4F3B-B14B-A7324BF2CBC6}"
+	ProjectSection(SolutionItems) = preProject
+		_SolutionItems\Lib\Phalanger4\Phalanger.targets = _SolutionItems\Lib\Phalanger4\Phalanger.targets
+		_SolutionItems\Lib\Phalanger4\PHP.VisualStudio.PhalangerTasks.dll = _SolutionItems\Lib\Phalanger4\PHP.VisualStudio.PhalangerTasks.dll
+		_SolutionItems\Lib\Phalanger4\PHP.VisualStudio.PhalangerTasks.pdb = _SolutionItems\Lib\Phalanger4\PHP.VisualStudio.PhalangerTasks.pdb
+		_SolutionItems\Lib\Phalanger4\PHP.VisualStudio.PhalangerTasks.xml = _SolutionItems\Lib\Phalanger4\PHP.VisualStudio.PhalangerTasks.xml
+		_SolutionItems\Lib\Phalanger4\phpc.exe = _SolutionItems\Lib\Phalanger4\phpc.exe
+		_SolutionItems\Lib\Phalanger4\phpc.exe.config = _SolutionItems\Lib\Phalanger4\phpc.exe.config
+		_SolutionItems\Lib\Phalanger4\phpc.xml = _SolutionItems\Lib\Phalanger4\phpc.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetClassLibrary.dll = _SolutionItems\Lib\Phalanger4\PhpNetClassLibrary.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetClassLibrary.xml = _SolutionItems\Lib\Phalanger4\PhpNetClassLibrary.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetCore.CodeDom.dll = _SolutionItems\Lib\Phalanger4\PhpNetCore.CodeDom.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetCore.CodeDom.pdb = _SolutionItems\Lib\Phalanger4\PhpNetCore.CodeDom.pdb
+		_SolutionItems\Lib\Phalanger4\PhpNetCore.CodeDom.xml = _SolutionItems\Lib\Phalanger4\PhpNetCore.CodeDom.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetCore.dll = _SolutionItems\Lib\Phalanger4\PhpNetCore.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetCore.DuckTyping.dll = _SolutionItems\Lib\Phalanger4\PhpNetCore.DuckTyping.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetCore.DuckTyping.pdb = _SolutionItems\Lib\Phalanger4\PhpNetCore.DuckTyping.pdb
+		_SolutionItems\Lib\Phalanger4\PhpNetCore.DuckTyping.xml = _SolutionItems\Lib\Phalanger4\PhpNetCore.DuckTyping.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetCore.Parsers.dll = _SolutionItems\Lib\Phalanger4\PhpNetCore.Parsers.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetCore.Parsers.pdb = _SolutionItems\Lib\Phalanger4\PhpNetCore.Parsers.pdb
+		_SolutionItems\Lib\Phalanger4\PhpNetCore.Parsers.xml = _SolutionItems\Lib\Phalanger4\PhpNetCore.Parsers.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetCore.xml = _SolutionItems\Lib\Phalanger4\PhpNetCore.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetCurl.dll = _SolutionItems\Lib\Phalanger4\PhpNetCurl.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetCurl.pdb = _SolutionItems\Lib\Phalanger4\PhpNetCurl.pdb
+		_SolutionItems\Lib\Phalanger4\PhpNetCurl.xml = _SolutionItems\Lib\Phalanger4\PhpNetCurl.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetGd2.dll = _SolutionItems\Lib\Phalanger4\PhpNetGd2.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetGd2.pdb = _SolutionItems\Lib\Phalanger4\PhpNetGd2.pdb
+		_SolutionItems\Lib\Phalanger4\PhpNetGd2.xml = _SolutionItems\Lib\Phalanger4\PhpNetGd2.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetIconv.dll = _SolutionItems\Lib\Phalanger4\PhpNetIconv.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetIconv.xml = _SolutionItems\Lib\Phalanger4\PhpNetIconv.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetMbstring.dll = _SolutionItems\Lib\Phalanger4\PhpNetMbstring.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetMbstring.xml = _SolutionItems\Lib\Phalanger4\PhpNetMbstring.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetMsSql.dll = _SolutionItems\Lib\Phalanger4\PhpNetMsSql.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetMsSql.xml = _SolutionItems\Lib\Phalanger4\PhpNetMsSql.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetPDO.dll = _SolutionItems\Lib\Phalanger4\PhpNetPDO.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetPDO.xml = _SolutionItems\Lib\Phalanger4\PhpNetPDO.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetPDOSQLite.dll = _SolutionItems\Lib\Phalanger4\PhpNetPDOSQLite.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetPDOSQLite.pdb = _SolutionItems\Lib\Phalanger4\PhpNetPDOSQLite.pdb
+		_SolutionItems\Lib\Phalanger4\PhpNetPDOSQLite.xml = _SolutionItems\Lib\Phalanger4\PhpNetPDOSQLite.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetPDOSQLServer.dll = _SolutionItems\Lib\Phalanger4\PhpNetPDOSQLServer.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetPDOSQLServer.pdb = _SolutionItems\Lib\Phalanger4\PhpNetPDOSQLServer.pdb
+		_SolutionItems\Lib\Phalanger4\PhpNetPDOSQLServer.xml = _SolutionItems\Lib\Phalanger4\PhpNetPDOSQLServer.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetSoap.dll = _SolutionItems\Lib\Phalanger4\PhpNetSoap.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetSoap.pdb = _SolutionItems\Lib\Phalanger4\PhpNetSoap.pdb
+		_SolutionItems\Lib\Phalanger4\PhpNetSoap.xml = _SolutionItems\Lib\Phalanger4\PhpNetSoap.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetSQLite.dll = _SolutionItems\Lib\Phalanger4\PhpNetSQLite.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetSQLite.pdb = _SolutionItems\Lib\Phalanger4\PhpNetSQLite.pdb
+		_SolutionItems\Lib\Phalanger4\PhpNetSQLite.xml = _SolutionItems\Lib\Phalanger4\PhpNetSQLite.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetXml.dll = _SolutionItems\Lib\Phalanger4\PhpNetXml.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetXml.xml = _SolutionItems\Lib\Phalanger4\PhpNetXml.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetXmlDom.dll = _SolutionItems\Lib\Phalanger4\PhpNetXmlDom.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetXmlDom.xml = _SolutionItems\Lib\Phalanger4\PhpNetXmlDom.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetZip.dll = _SolutionItems\Lib\Phalanger4\PhpNetZip.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetZip.pdb = _SolutionItems\Lib\Phalanger4\PhpNetZip.pdb
+		_SolutionItems\Lib\Phalanger4\PhpNetZip.xml = _SolutionItems\Lib\Phalanger4\PhpNetZip.xml
+		_SolutionItems\Lib\Phalanger4\PhpNetZlib.dll = _SolutionItems\Lib\Phalanger4\PhpNetZlib.dll
+		_SolutionItems\Lib\Phalanger4\PhpNetZlib.xml = _SolutionItems\Lib\Phalanger4\PhpNetZlib.xml
+		_SolutionItems\Lib\Phalanger4\System.Data.SQLite.dll = _SolutionItems\Lib\Phalanger4\System.Data.SQLite.dll
+		_SolutionItems\Lib\Phalanger4\System.Data.SQLite.pdb = _SolutionItems\Lib\Phalanger4\System.Data.SQLite.pdb
+		_SolutionItems\Lib\Phalanger4\System.Data.SQLite.xml = _SolutionItems\Lib\Phalanger4\System.Data.SQLite.xml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Web.Php", "Kore.Web.Php\Kore.Web.Php.csproj", "{61DF3750-D1CB-4EC5-B69E-5DC2F1984D32}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -155,6 +221,10 @@ Global
 		{5F7BE6CA-FE13-4DFB-9277-40E649835AA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F7BE6CA-FE13-4DFB-9277-40E649835AA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F7BE6CA-FE13-4DFB-9277-40E649835AA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61DF3750-D1CB-4EC5-B69E-5DC2F1984D32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61DF3750-D1CB-4EC5-B69E-5DC2F1984D32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61DF3750-D1CB-4EC5-B69E-5DC2F1984D32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61DF3750-D1CB-4EC5-B69E-5DC2F1984D32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -176,5 +246,7 @@ Global
 		{5021B13C-A775-4F80-BA03-C1FD5C7DE4DB} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 		{E60FD47E-6ADB-4331-BFC2-FCD5D640EB35} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 		{5F7BE6CA-FE13-4DFB-9277-40E649835AA4} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
+		{EC957D42-20C5-4CCB-B47F-6DB7742CD966} = {FD60340E-B54E-4D09-B63A-58B37E79A3A2}
+		{F70F6F7F-2D80-4F3B-B14B-A7324BF2CBC6} = {EC957D42-20C5-4CCB-B47F-6DB7742CD966}
 	EndGlobalSection
 EndGlobal

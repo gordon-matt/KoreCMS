@@ -18,7 +18,6 @@ namespace KoreCMS
                 .Include("~/Scripts/q.min.js")
                 .Include("~/Scripts/breeze.min.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/elfinder").Include("~/Scripts/elfinder/elfinder.full.js"));
             bundles.Add(new ScriptBundle("~/bundles/js/jquery").Include("~/Scripts/jquery-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/js/jquery-migrate").Include("~/Scripts/jquery-migrate-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/js/jquery-ui").Include("~/Scripts/jquery-ui-{version}.js"));
@@ -60,10 +59,6 @@ namespace KoreCMS
             bundles.Add(new StyleBundle("~/bundles/content/bootstrap")
                 .Include("~/Content/bootstrap-theme.css", cssRewriteUrlTransform)
                 .Include("~/Content/bootstrap.css", cssRewriteUrlTransform));
-
-            bundles.Add(new StyleBundle("~/bundles/content/elfinder")
-                .Include("~/Content/elfinder_2_1/css/elfinder.min.css", cssRewriteUrlTransform)
-                .Include("~/Content/elfinder_2_1/css/theme.css", cssRewriteUrlTransform));
 
             bundles.Add(new StyleBundle("~/bundles/content/jquery-ui")
                 .Include("~/Content/themes/base/accordion.css", cssRewriteUrlTransform)

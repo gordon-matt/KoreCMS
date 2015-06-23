@@ -1,51 +1,5 @@
 ﻿@{
     Layout = KoreWebConstants.DefaultAdminLayoutPath;
-    
-    Style.IncludeBundle("jquery-ui");
-    Style.IncludeBundle("elfinder");
-    
-    Script.IncludeBundle("jquery-migrate");
-    Script.IncludeBundle("jquery-ui");
-    Script.IncludeBundle("elfinder");
-    Script.IncludeBundle("kore/elfinder");
 }
 
-<div id="elfinder"></div>
-
-@section scripts {
-    <script type="text/javascript">
-        $(function () {
-            var myCommands = elFinder.prototype._options.commands;
-            var disabled = ['extract', 'archive', 'help', 'select'];
-            $.each(disabled, function (i, cmd) {
-                (idx = $.inArray(cmd, myCommands)) !== -1 && myCommands.splice(idx, 1);
-            });
-            var selectedFile = null;
-            var options = {
-                url: '@Url.Action("Connector", "Media", new { area = CmsConstants.Areas.Media })',
-                commands: myCommands,
-                lang: 'en',
-                uiOptions: {
-                    toolbar: [
-                        ['back', 'forward'],
-                        ['reload'],
-                        ['home', 'up'],
-                        ['mkdir', 'mkfile', 'upload'],
-                        ['open', 'download'],
-                        ['info'],
-                        ['quicklook'],
-                        ['copy', 'cut', 'paste'],
-                        ['rm'],
-                        ['duplicate', 'rename', 'edit', 'resize'],
-                        ['view', 'sort']
-                    ]
-                }
-            };
-            $('#elfinder').elfinder(options).elfinder('instance');
-        });
-
-        $(document).ready(function () {
-            elFinderReplaceIconsLarge();
-        });
-    </script>
-}
+<iframe src="/filemanager/dialog.php?type=0" frameborder="0" style="overflow:hidden;min-height:600px; height:100%;width:100%" height="100%" width="100%"></iframe>

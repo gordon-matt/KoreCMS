@@ -51,7 +51,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                         DateModifiedUtc = DateTime.UtcNow,
                         Status = invariantVersion.Status,
                         Title = invariantVersion.Title,
-                        Slug = invariantVersion.Slug,
+                        Slug = string.Concat(currentCulture.ToLowerInvariant(), "/", invariantVersion.Slug),
                         Fields = invariantVersion.Fields
                     });
                 }

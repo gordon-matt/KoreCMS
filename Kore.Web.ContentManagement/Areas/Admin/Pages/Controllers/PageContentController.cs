@@ -60,6 +60,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             //  then if there's only 1, fine.. return it.. if more than one.. then add cultureCode as
             //  we currently do...
 
+            // First try get the latest published version for the current culture
             var pageVersion = pageVersionService.Repository.Table
                 .Include(x => x.Page)
                 .Where(x =>
@@ -69,12 +70,44 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                 .OrderByDescending(x => x.DateModifiedUtc)
                 .FirstOrDefault();
 
+            // If there isn't one...
             if (pageVersion == null)
             {
+                // ...then try get the last archived one for the current culture
+                // NOTE: there's no need to worry about the last one being a draft before being archived, because
+                //  we ONLY archive the published ones, not drafts.. so getting the last archived one will be the last published one
+                pageVersion = pageVersionService.Repository.Table
+                    .Include(x => x.Page)
+                    .Where(x =>
+                        x.Status == VersionStatus.Archived &&
+                        x.CultureCode == currentCulture &&
+                        x.Slug == slug)
+                    .OrderByDescending(x => x.DateModifiedUtc)
+                    .FirstOrDefault();
+            }
+
+            // If there isn't one...
+            if (pageVersion == null)
+            {
+                // ...then try get the latest published version for the invariant culture
                 pageVersion = pageVersionService.Repository.Table
                     .Include(x => x.Page)
                     .Where(x =>
                         x.Status == VersionStatus.Published &&
+                        x.CultureCode == null &&
+                        x.Slug == slug)
+                    .OrderByDescending(x => x.DateModifiedUtc)
+                    .FirstOrDefault();
+            }
+
+            // If there isn't one...
+            if (pageVersion == null)
+            {
+                // ...then try get the last archived one for the invariant culture (TODO: What if last archived was a draft??)
+                pageVersion = pageVersionService.Repository.Table
+                    .Include(x => x.Page)
+                    .Where(x =>
+                        x.Status == VersionStatus.Archived &&
                         x.CultureCode == null &&
                         x.Slug == slug)
                     .OrderByDescending(x => x.DateModifiedUtc)

@@ -154,7 +154,7 @@ namespace Kore.Web.ContentManagement.Controllers
             var menuProviders = EngineContext.Current.ResolveAll<IAutoMenuProvider>();
             foreach (var menuProvider in menuProviders)
             {
-                menuItems.AddRange(menuProvider.GetMainMenuItems());
+                menuItems.AddRange(menuProvider.GetMainMenuItems(User));
             }
 
             menuItems = menuItems
@@ -197,14 +197,14 @@ namespace Kore.Web.ContentManagement.Controllers
 
                 foreach (var menuProvider in menuProviders)
                 {
-                    menuItems.AddRange(menuProvider.GetMainMenuItems().Where(x => x.ParentId == null));
+                    menuItems.AddRange(menuProvider.GetMainMenuItems(User).Where(x => x.ParentId == null));
                 }
             }
             foreach (var menuProvider in menuProviders)
             {
                 if (currentUrlSlug.StartsWith(menuProvider.RootUrlSlug))
                 {
-                    menuItems.AddRange(menuProvider.GetSubMenuItems(currentUrlSlug));
+                    menuItems.AddRange(menuProvider.GetSubMenuItems(currentUrlSlug, User));
                 }
             }
 

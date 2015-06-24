@@ -38,11 +38,9 @@
             </label>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-        <div class="form-group">
-            @Html.Label("Roles", "Roles", new { @class = "control-label" })
-            @Html.Kore().RolesCheckBoxList("Roles", null, new { @class = "checkbox" }, new { data_bind = "checked: roles" })
-        </div>
+    <div class="form-group">
+        @Html.Label("Roles", "Roles", new { @class = "control-label" })
+        @Html.Kore().RolesCheckBoxList("Roles", null, new { @class = "checkbox" }, new { data_bind = "checked: roles" })
     </div>
 </div>
 
@@ -95,6 +93,7 @@
         delete viewModel.showOnMenus;
         delete viewModel.menuPosition;
         delete viewModel.useAjax;
+        delete viewModel.accessRestrictions;
         delete viewModel.roles;
     }
 

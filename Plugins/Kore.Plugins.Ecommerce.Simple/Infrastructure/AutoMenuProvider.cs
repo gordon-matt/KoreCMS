@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using Kore.Collections;
 using Kore.Data;
 using Kore.Plugins.Ecommerce.Simple.Data.Domain;
@@ -32,7 +33,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
             get { return "store"; }
         }
 
-        public IEnumerable<MenuItem> GetMainMenuItems()
+        public IEnumerable<MenuItem> GetMainMenuItems(IPrincipal user)
         {
             if (!storeSettings.ShowOnMenus)
             {
@@ -49,7 +50,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
             }};
         }
 
-        public IEnumerable<MenuItem> GetSubMenuItems(string currentUrlSlug)
+        public IEnumerable<MenuItem> GetSubMenuItems(string currentUrlSlug, IPrincipal user)
         {
             if (!storeSettings.ShowOnMenus)
             {

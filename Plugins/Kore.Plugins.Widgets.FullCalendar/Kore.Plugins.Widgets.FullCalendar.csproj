@@ -173,10 +173,6 @@
       <Name>Kore.EntityFramework</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Kore.Web.Common\Kore.Web.Common.csproj">
-      <Project>{1db0850e-9fa5-41db-9c6a-7f43d37fde8f}</Project>
-      <Name>Kore.Web.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Kore.Web.ContentManagement\Kore.Web.ContentManagement.csproj">
       <Project>{90ec17f4-d7c5-454f-9e56-947978525e88}</Project>
       <Name>Kore.Web.ContentManagement</Name>

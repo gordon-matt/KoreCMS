@@ -91,23 +91,37 @@ namespace Kore.Plugins.Ecommerce.Simple
                 x.SettingsId == settingsId &&
                 countries.Keys.Contains(x.RegionId));
 
-            var records = new HashSet<Region>();
-            foreach (var setting in settings)
+            // If no settings have been made for this plugin,
+            if (!settings.Any())
             {
-                dynamic fields = JObject.Parse(setting.Fields);
-                bool isEnabled = fields.IsEnabled;
-
-                if (isEnabled)
-                {
-                    records.Add(countries[setting.RegionId]);
-                }
+                // ... then we assume ALL countries are OK.
+                return countries.Values.OrderBy(x => x.Name).ToSelectList(
+                    value => value.Id,
+                    text => text.Name,
+                    selectedValue,
+                    emptyText);
             }
+            else
+            {
+                // Else only get the countries specified
+                var records = new HashSet<Region>();
+                foreach (var setting in settings)
+                {
+                    dynamic fields = JObject.Parse(setting.Fields);
+                    bool isEnabled = fields.IsEnabled;
 
-            return records.OrderBy(x => x.Name).ToSelectList(
-                value => value.Id,
-                text => text.Name,
-                selectedValue,
-                emptyText);
+                    if (isEnabled)
+                    {
+                        records.Add(countries[setting.RegionId]);
+                    }
+                }
+
+                return records.OrderBy(x => x.Name).ToSelectList(
+                    value => value.Id,
+                    text => text.Name,
+                    selectedValue,
+                    emptyText);
+            }
         }
     }
 }

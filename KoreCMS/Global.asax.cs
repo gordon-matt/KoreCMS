@@ -23,9 +23,9 @@ namespace KoreCMS
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             DependencyConfig.Register();
 
-            // Kore only useds this for Responsive File Manager. Although technically you could write some PHP views as well,
+            // Uncomment this if you want to write some PHP views as well,
             //  as described here: https://phpviewengine.codeplex.com/
-            ViewEngines.Engines.Add(new PhpViewEngine());
+            //ViewEngines.Engines.Add(new PhpViewEngine());
 
             TryUpdateNLogConnectionString();
         }

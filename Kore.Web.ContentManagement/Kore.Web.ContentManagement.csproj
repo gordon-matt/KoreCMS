@@ -150,7 +150,11 @@
     <Compile Include="Areas\Admin\ContentBlocks\IFormBlockProcessor.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\Services\IEntityTypeContentBlockService.cs" />
     <Compile Include="Areas\Admin\Localization\Models\LanguagePackFile.cs" />
+    <Compile Include="Areas\Admin\Media\Models\MediaFile.cs" />
+    <Compile Include="Areas\Admin\Media\Models\MediaFolder.cs" />
+    <Compile Include="Areas\Admin\Media\Services\IMediaPathProvider.cs" />
     <Compile Include="Areas\Admin\Media\Services\IMediaService.cs" />
+    <Compile Include="Areas\Admin\Media\Services\MediaService.cs" />
     <Compile Include="Areas\Admin\Messaging\Services\IQueuedEmailService.cs" />
     <Compile Include="Areas\Admin\Newsletters\Services\INewsletterService.cs" />
     <Compile Include="Areas\Admin\Pages\Controllers\Api\PageVersionApiController.cs" />
@@ -163,6 +167,13 @@
     <Compile Include="Areas\Admin\Sitemap\Models\SitemapXmlFile.cs" />
     <Compile Include="Areas\Admin\Sitemap\SitemapAreaRegistration.cs" />
     <Compile Include="CmsPermissions.cs" />
+    <Compile Include="FileSystems\Media\ConfigurationMimeTypeProvider.cs" />
+    <Compile Include="FileSystems\Media\FileSystemStorageProvider.cs" />
+    <Compile Include="FileSystems\Media\IMimeTypeProvider.cs" />
+    <Compile Include="FileSystems\Media\IStorageFile.cs" />
+    <Compile Include="FileSystems\Media\IStorageFolder.cs" />
+    <Compile Include="FileSystems\Media\IStorageProvider.cs" />
+    <Compile Include="FileSystems\PathValidation.cs" />
     <Compile Include="Infrastructure\IAutoMenuProvider.cs" />
     <Compile Include="Areas\Admin\Newsletters\ContentBlocks\NewsletterSubscriptionBlock.cs" />
     <Compile Include="Areas\Admin\Newsletters\Controllers\Api\SubscriberApiController.cs" />
@@ -178,15 +189,7 @@
     <Compile Include="Areas\Admin\Localization\LanguageSwitchBlock.cs" />
     <Compile Include="Areas\Admin\Localization\LocalizationAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Media\Controllers\MediaController.cs" />
-    <Compile Include="Areas\Admin\Media\Domain\Image.cs" />
-    <Compile Include="Areas\Admin\Media\Domain\ImageEntityType.cs" />
     <Compile Include="Areas\Admin\Media\MediaAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Media\Models\IKoreImage.cs" />
-    <Compile Include="Areas\Admin\Media\Models\MediaFile.cs" />
-    <Compile Include="Areas\Admin\Media\Models\MediaFolder.cs" />
-    <Compile Include="Areas\Admin\Media\Services\IImageService.cs" />
-    <Compile Include="Areas\Admin\Media\Services\IMediaPathProvider.cs" />
-    <Compile Include="Areas\Admin\Media\Services\MediaService.cs" />
     <Compile Include="Areas\Admin\Menus\Controllers\Api\MenuItemApiController.cs" />
     <Compile Include="Areas\Admin\Menus\Controllers\Api\MenuApiController.cs" />
     <Compile Include="Areas\Admin\Menus\Controllers\MenuController.cs" />
@@ -294,13 +297,6 @@
     <Compile Include="CmsNavigationProvider.cs" />
     <Compile Include="CmsConstants.cs" />
     <Compile Include="Controllers\FrontendController.cs" />
-    <Compile Include="FileSystems\Media\ConfigurationMimeTypeProvider.cs" />
-    <Compile Include="FileSystems\Media\FileSystemStorageProvider.cs" />
-    <Compile Include="FileSystems\Media\IMimeTypeProvider.cs" />
-    <Compile Include="FileSystems\Media\IStorageFile.cs" />
-    <Compile Include="FileSystems\Media\IStorageFolder.cs" />
-    <Compile Include="FileSystems\Media\IStorageProvider.cs" />
-    <Compile Include="FileSystems\PathValidation.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="IKoreCmsDbContext.cs" />
     <Compile Include="Infrastructure\LanguagePackInvariant.cs" />
@@ -380,7 +376,6 @@
     <EmbeddedResource Include="Areas\Admin\Blog\Scripts\blog.js" />
     <EmbeddedResource Include="Areas\Admin\Blog\Scripts\blogContent.js" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Scripts\entityTypeContentBlocks.js" />
-    <Content Include="Areas\Admin\Media\Services\mimeTypes.txt" />
     <EmbeddedResource Include="Areas\Admin\Menus\Scripts\menus.js" />
     <EmbeddedResource Include="Areas\Admin\Pages\Scripts\index.js" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Scripts\contentBlocks.js" />
@@ -389,7 +384,7 @@
     <EmbeddedResource Include="Scripts\kore-cms-localization.js" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Media\ContentBlocks\" />
+    <Content Include="Areas\Admin\Media\Services\mimeTypes.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -38,47 +38,53 @@
     <Reference Include="PhpNetClassLibrary, Version=4.0.0.0, Culture=neutral, PublicKeyToken=4af37afe3cde05fb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_SolutionItems\Lib\Phalanger4\PhpNetClassLibrary.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PhpNetCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0a8e8c4c76728c71, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_SolutionItems\Lib\Phalanger4\PhpNetCore.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PhpNetCore.CodeDom, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0a8e8c4c76728c71, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_SolutionItems\Lib\Phalanger4\PhpNetCore.CodeDom.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PhpNetCore.DuckTyping, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0a8e8c4c76728c71, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_SolutionItems\Lib\Phalanger4\PhpNetCore.DuckTyping.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PhpNetCore.Parsers, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0a8e8c4c76728c71, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_SolutionItems\Lib\Phalanger4\PhpNetCore.Parsers.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PhpNetCurl, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2771987119c16a03, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_SolutionItems\Lib\Phalanger4\PhpNetCurl.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PhpNetGd2, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2771987119c16a03, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_SolutionItems\Lib\Phalanger4\PhpNetGd2.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PhpNetIconv, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2771987119c16a03, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_SolutionItems\Lib\Phalanger4\PhpNetIconv.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PhpNetMbstring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2771987119c16a03, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_SolutionItems\Lib\Phalanger4\PhpNetMbstring.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -114,20 +120,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewEngines\PhpView.cs" />
     <Compile Include="ViewEngines\PhpViewEngine.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Kore.EntityFramework\Kore.EntityFramework.csproj">
-      <Project>{2a636196-0b16-484a-8dd8-4bab656dec08}</Project>
-      <Name>Kore.EntityFramework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Kore.Web\Kore.Web.csproj">
-      <Project>{36e2f817-e6e3-4942-9714-22547a68f79d}</Project>
-      <Name>Kore.Web</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Kore\Kore.csproj">
-      <Project>{f5b45103-1be4-401d-a90d-d4cd7a0ac5d4}</Project>
-      <Name>Kore</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

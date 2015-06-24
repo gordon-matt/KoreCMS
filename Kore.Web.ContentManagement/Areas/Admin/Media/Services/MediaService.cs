@@ -11,12 +11,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
     public class MediaService : IMediaService
     {
         private readonly IStorageProvider storageProvider;
-        private readonly IImageService mediaPartService;
 
-        public MediaService(IStorageProvider storageProvider, IImageService mediaPartService)
+        public MediaService(IStorageProvider storageProvider)
         {
             this.storageProvider = storageProvider;
-            this.mediaPartService = mediaPartService;
         }
 
         public string GetUniqueFilename(string folderPath, string filename)
@@ -87,18 +85,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
         {
             var files = storageProvider.ListFiles(relativePath);
             return files.Select(file => BuildMediaFile(relativePath, file)).ToList();
-        }
-
-        public IEnumerable<TMediaPart> GetMediaParts<TMediaPart>(IEntity entity) where TMediaPart : IKoreImage, new()
-        {
-            return mediaPartService.GetImages<TMediaPart>(entity);
-        }
-
-        public void SetMediaParts(IEntity entity, IEnumerable<IKoreImage> mediaParts, string folderName)
-        {
-            MoveFiles(mediaParts, folderName);
-
-            mediaPartService.SetImages(entity, mediaParts);
         }
 
         public bool FolderExists(string path)
@@ -236,44 +222,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
             ArgumentHelper.ThrowIfNullOrEmpty(newPath, "newPath");
 
             storageProvider.RenameFile(currentPath, newPath);
-        }
-
-        public void MoveFiles(IEnumerable<IKoreImage> mediaParts, string targetFolder)
-        {
-            if (mediaParts == null)
-            {
-                return;
-            }
-
-            // Ensure have folder
-            if (!FolderExists(targetFolder))
-            {
-                CreateFolder(null, targetFolder);
-            }
-
-            // Move media file to correct folder
-            foreach (var mediaPart in mediaParts)
-            {
-                if (string.IsNullOrEmpty(mediaPart.Url))
-                {
-                    continue;
-                }
-
-                if (mediaPart.Url.IndexOf("/UploadFiles/", StringComparison.InvariantCultureIgnoreCase) > 0)
-                {
-                    var fileName = Path.GetFileName(mediaPart.Url);
-                    var oldUrl = "UploadFiles\\" + fileName;
-                    var newUrl = targetFolder + "\\" + fileName;
-
-                    if (FileExists(newUrl))
-                    {
-                        newUrl = targetFolder + "\\" + GetUniqueFilename(targetFolder, fileName);
-                    }
-
-                    MoveFile(oldUrl, newUrl);
-                    mediaPart.Url = GetPublicUrl(newUrl);
-                }
-            }
         }
 
         /// <summary>

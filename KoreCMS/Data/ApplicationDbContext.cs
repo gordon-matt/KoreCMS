@@ -13,7 +13,6 @@ using Kore.Tasks.Domain;
 using Kore.Web.ContentManagement;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
-using Kore.Web.ContentManagement.Areas.Admin.Media.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
@@ -72,10 +71,6 @@ namespace KoreCMS.Data
         public DbSet<ContentBlock> ContentBlocks { get; set; }
 
         public DbSet<LogEntry> Log { get; set; }
-
-        public DbSet<Image> Images { get; set; }
-
-        public DbSet<ImageEntityType> ImageEntities { get; set; }
 
         public DbSet<MenuItem> MenuItems { get; set; }
 

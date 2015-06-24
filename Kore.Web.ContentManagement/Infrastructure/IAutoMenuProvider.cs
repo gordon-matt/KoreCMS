@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Principal;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
 
 namespace Kore.Web.ContentManagement.Infrastructure
@@ -7,8 +8,8 @@ namespace Kore.Web.ContentManagement.Infrastructure
     {
         string RootUrlSlug { get; }
 
-        IEnumerable<MenuItem> GetMainMenuItems();
+        IEnumerable<MenuItem> GetMainMenuItems(IPrincipal user);
 
-        IEnumerable<MenuItem> GetSubMenuItems(string currentUrlSlug);
+        IEnumerable<MenuItem> GetSubMenuItems(string currentUrlSlug, IPrincipal user);
     }
 }

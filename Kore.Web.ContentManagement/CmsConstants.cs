@@ -35,8 +35,6 @@ namespace Kore.Web.ContentManagement
             internal const string ContentBlocks = "Kore_ContentBlocks";
             internal const string EntityTypeContentBlocks = "Kore_EntityTypeContentBlocks";
             internal const string HistoricPages = "Kore_HistoricPages";
-            internal const string ImageEntityTypes = "Kore_ImageEntityTypes";
-            internal const string Images = "Kore_Images";
             internal const string MenuItems = "Kore_MenuItems";
             internal const string Menus = "Kore_Menus";
             internal const string MessageTemplates = "Kore_MessageTemplates";

@@ -40,5 +40,8 @@ namespace Kore.Web.Models
 
         [Display(Name = "Database Password")]
         public string DatabasePassword { get; set; }
+
+        [Display(Name = "Create Sample Data")]
+        public bool CreateSampleData { get; set; }
     }
 }

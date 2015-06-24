@@ -14,6 +14,8 @@ namespace Kore.Web.Infrastructure
 
         public string AdminPassword { get; set; }
 
+        public bool CreateSampleData { get; set; }
+
         public bool IsValid()
         {
             return !string.IsNullOrEmpty(this.ProviderName) && !string.IsNullOrEmpty(this.ConnectionString);

@@ -26,18 +26,16 @@
     }
 </style>
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">@Model.Title</h1>
-        </div>
-        @foreach (var image in images)
-        {
-            <div class="@thumbSizeCss thumb">
-                <a class="thumbnail" href="@image.MediaPath" target="_blank">
-                    <img class="img-responsive" src="@image.MediaPath" alt="@image.Name">
-                </a>
-            </div>
-        }
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">@Model.Title</h1>
     </div>
+    @foreach (var image in images)
+    {
+        <div class="@thumbSizeCss thumb">
+            <a class="thumbnail" href="@image.MediaPath" target="_blank">
+                <img class="img-responsive" src="@image.MediaPath" alt="@image.Name">
+            </a>
+        </div>
+    }
 </div>

@@ -2,7 +2,6 @@
 using Kore.Logging.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
-using Kore.Web.ContentManagement.Areas.Admin.Media.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
@@ -17,10 +16,6 @@ namespace Kore.Web.ContentManagement
 
         DbSet<LogEntry> Log { get; set; }
 
-        DbSet<Image> Images { get; set; }
-
-        DbSet<ImageEntityType> ImageEntities { get; set; }
-
         DbSet<MenuItem> MenuItems { get; set; }
 
         DbSet<Menu> Menus { get; set; }
@@ -32,8 +27,6 @@ namespace Kore.Web.ContentManagement
         DbSet<PageVersion> PageVersions { get; set; }
 
         DbSet<QueuedEmail> QueuedEmails { get; set; }
-
-        //DbSet<QueuedSms> QueuedSms { get; set; }
 
         DbSet<Zone> Zones { get; set; }
     }

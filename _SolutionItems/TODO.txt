@@ -35,8 +35,6 @@ PAGES:
 
 - disallow SYSTEM message templates from being deleted. Only custom templates should be allowed to be deleted.
 
-- context menu for media is far down below
-
 - cleanup View360 editor template (use tabs or accordion)
 
 - plugin idea: live chat
@@ -93,7 +91,6 @@ OTHER
 - Provide overloads for AutoMenu(), AutoSubmenu() and AutoBreadcrumbs() that don't require any template (just generate it for Bootstrap by default)
 - admin theme settings (left or top menu, which SmartAdmin colors etc)
 - need some way to provide descriptions/tooltips using an [Attribute] of some kind for widget properties (and page type properties too)..
-- LOG FILE SETTINGS?
 - new sitemap html page (see nop for example)
 		
 
@@ -110,7 +107,7 @@ OTHER
 
 - minify HTML?
 
-- scheduled task to auto shrink log file?
+- scheduled task to auto shrink db log file?
 
 - review all TODO notes
 
@@ -197,7 +194,6 @@ http://html5doctor.com/the-contenteditable-attribute/
 95% DONE:
 - CMS:
 	- (DONE) Localization (In progress)
-	- (DONE) Media
 	- (DONE) Menus
 	- (DONE) Messaging (Message Templates)
 	- (DONE) Widgets (In progress)
@@ -223,7 +219,6 @@ FUTURE:
 - forums plugin,
 - wiki plugin (roadkill?)
 - Visitor Groups
-- responsive file manager
 
 
 Interesting:

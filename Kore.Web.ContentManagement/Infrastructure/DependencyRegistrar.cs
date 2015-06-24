@@ -128,7 +128,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.RegisterType<FileSystemStorageProvider>().As<IStorageProvider>().InstancePerDependency();
             builder.RegisterType<MediaService>().As<IMediaService>().InstancePerDependency();
             builder.RegisterType<MediaPathProvider>().As<IMediaPathProvider>().InstancePerDependency();
-            builder.RegisterType<ImageService>().As<IImageService>().InstancePerDependency();
 
             #endregion Other: Media
 

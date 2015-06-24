@@ -43,10 +43,11 @@ namespace Kore.Web
 
             dataSettings.ConnectionString = connectionString;
 
-            // We need to save this to settings temporarily in order to setup the login details AFTER restarting the app domain
+            // We need to save the Password to settings temporarily in order to setup the login details AFTER restarting the app domain
             //  We then delete the password from the XML file in Kore.Web.Infrastructure.StartupTask.
             dataSettings.AdminEmail = model.AdminEmail;
             dataSettings.AdminPassword = model.AdminPassword;
+            dataSettings.CreateSampleData = model.CreateSampleData;
 
             DataSettingsManager.SaveSettings(dataSettings);
 

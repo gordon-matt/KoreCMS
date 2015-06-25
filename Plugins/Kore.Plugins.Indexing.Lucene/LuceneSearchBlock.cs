@@ -1,10 +1,22 @@
-﻿using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
+﻿using Kore.ComponentModel;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 
 namespace Kore.Plugins.Indexing.Lucene
 {
     public class LuceneSearchBlock : ContentBlockBase
     {
-        public bool RenderAsBootstrapNavbarForm { get; set; }
+        public enum LuceneSearchBlockStyle
+        {
+            Default,
+            BootstrapNavbarForm,
+            Custom
+        }
+
+        [LocalizedDisplayName(LocalizableStrings.LuceneSearchBlock.Style)]
+        public LuceneSearchBlockStyle Style { get; set; }
+
+        [LocalizedDisplayName(LocalizableStrings.LuceneSearchBlock.CustomTemplatePath)]
+        public string CustomTemplatePath { get; set; }
 
         #region ContentBlockBase Overrides
 

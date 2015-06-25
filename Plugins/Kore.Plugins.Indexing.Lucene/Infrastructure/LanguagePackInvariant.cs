@@ -18,7 +18,8 @@ namespace Kore.Plugins.Indexing.Lucene.Infrastructure
             {
                 return new Dictionary<string, string>
                 {
-                    { LocalizableStrings.LuceneSearchBlock.RenderAsBootstrapNavbarForm, "Render as Bootstrap Navbar Form" },
+                    { LocalizableStrings.LuceneSearchBlock.CustomTemplatePath, "Custom Template Path" },
+                    { LocalizableStrings.LuceneSearchBlock.Style, "Style" },
                     { LocalizableStrings.UnexpectedIndexType, "Unexpected index type" },
                 };
             }

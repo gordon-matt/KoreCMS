@@ -6,10 +6,17 @@
 
 <div id="block-content" class="row">
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-        <div class="checkbox">
-            <label>
-                @Html.CheckBoxFor(m => m.RenderAsBootstrapNavbarForm, new { data_bind = "checked: renderAsBootstrapNavbarForm" }) @T(LocalizableStrings.LuceneSearchBlock.RenderAsBootstrapNavbarForm)
-            </label>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Style, new { @class = "control-label" })
+                @Html.EnumDropDownListFor(m => m.Style, null, new { @class = "form-control", data_bind = "value: style" })
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: style() == 2">
+            <div class="form-group">
+                @Html.LabelFor(m => m.CustomTemplatePath, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.CustomTemplatePath, new { @class = "form-control", data_bind = "value: customTemplatePath" })
+            </div>
         </div>
     </div>
 </div>
@@ -18,26 +25,32 @@
     var contentBlockModel = (function () {
         var f = {};
         f.updateModel = function () {
-            viewModel.renderAsBootstrapNavbarForm = ko.observable(0);
+            viewModel.style = ko.observable("");
+            viewModel.customTemplatePath = ko.observable("");
 
             var data = ko.mapping.fromJSON(viewModel.blockValues());
 
             if ((isFunction(data) && data()) || data) {
-                if (data.RenderAsBootstrapNavbarForm == undefined) {
+                if (data.Style == undefined) {
                     // If this is not set, it means the contentBlock is new and we have nothing in blockValues
                     return;
                 }
-                if (data.RenderAsBootstrapNavbarForm) {
-                    viewModel.renderAsBootstrapNavbarForm(data.RenderAsBootstrapNavbarForm());
+                if (data.Style) {
+                    viewModel.style(data.Style());
+                }
+                if (data.CustomTemplatePath) {
+                    viewModel.customTemplatePath(data.CustomTemplatePath());
                 }
             }
         };
         f.cleanUp = function () {
-            delete viewModel.renderAsBootstrapNavbarForm;
+            delete viewModel.style;
+            delete viewModel.customTemplatePath;
         };
         f.onBeforeSave = function () {
             var data = {
-                RenderAsBootstrapNavbarForm: viewModel.renderAsBootstrapNavbarForm()
+                Style: viewModel.style(),
+                CustomTemplatePath: viewModel.customTemplatePath()
             };
 
             viewModel.blockValues(ko.mapping.toJSON(data));

@@ -104,15 +104,42 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Products_dbo.Kore_Plugins_S
 	[AddressLine1] [nvarchar](128) NOT NULL,
 	[AddressLine2] [nvarchar](128) NULL,
 	[AddressLine3] [nvarchar](128) NULL,
-	[City] [nvarchar](128) NOT NULL,
+	[CityId] [int] NOT NULL,
 	[PostalCode] [nvarchar](10) NOT NULL,
-	[Country] [nvarchar](50) NOT NULL,
+	[CountryId] [int] NOT NULL,
 	[PhoneNumber] [nvarchar](25) NOT NULL,
 	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Addresses] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC
 	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]");
+
+                if (CheckIfTableExists(dbContext, "Kore_Common_Regions"))
+                {
+                    #region Foreign Keys
+
+                    dbContext.Database.ExecuteSqlCommand(
+@"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_Addresses] WITH CHECK
+ADD CONSTRAINT [FK_Kore_Plugins_SimpleCommerce_Addresses_Kore_Common_Regions_CityId]
+FOREIGN KEY([CityId])
+REFERENCES [dbo].[Kore_Common_Regions] ([Id])");
+
+                    dbContext.Database.ExecuteSqlCommand(
+@"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_Addresses]
+CHECK CONSTRAINT [FK_Kore_Plugins_SimpleCommerce_Addresses_Kore_Common_Regions_CityId]");
+
+                    dbContext.Database.ExecuteSqlCommand(
+@"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_Addresses] WITH CHECK
+ADD CONSTRAINT [FK_Kore_Plugins_SimpleCommerce_Addresses_Kore_Common_Regions_CountryId]
+FOREIGN KEY([CountryId])
+REFERENCES [dbo].[Kore_Common_Regions] ([Id])");
+
+                    dbContext.Database.ExecuteSqlCommand(
+@"ALTER TABLE [dbo].[Kore_Plugins_SimpleCommerce_Addresses]
+CHECK CONSTRAINT [FK_Kore_Plugins_SimpleCommerce_Addresses_Kore_Common_Regions_CountryId]");
+
+                    #endregion
+                }
 
                 #endregion CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Addresses]
             }

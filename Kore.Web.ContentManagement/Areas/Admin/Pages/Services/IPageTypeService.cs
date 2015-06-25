@@ -26,8 +26,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             korePageTypes = new Lazy<IEnumerable<KorePageType>>(() =>
             {
                 var typeFinder = EngineContext.Current.Resolve<ITypeFinder>();
-                return typeFinder.FindClassesOfType<KorePageType>()
+
+                var pageTypes = typeFinder.FindClassesOfType<KorePageType>()
                     .Select(x => (KorePageType)Activator.CreateInstance(x));
+
+                return pageTypes.Where(x => x.IsEnabled);
             });
         }
 

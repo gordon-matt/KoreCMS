@@ -3,6 +3,7 @@
 @model PayPalModel
 
 @{
+    string billingCity = ViewBag.BillingCity;
     string billingCountryCode = ViewBag.BillingCountryCode;
 }
 
@@ -61,7 +62,7 @@
     @Html.Hidden("last_name", Model.BillingAddress.FamilyName)
     @Html.Hidden("address1", Model.BillingAddress.AddressLine1)
     @Html.Hidden("address2", Model.BillingAddress.AddressLine2)
-    @Html.Hidden("city", Model.BillingAddress.City)
+    @Html.Hidden("city", billingCity)
     @Html.Hidden("country", billingCountryCode)
     @Html.Hidden("zip", Model.BillingAddress.PostalCode)
     @Html.Hidden("email", Model.BillingAddress.Email)

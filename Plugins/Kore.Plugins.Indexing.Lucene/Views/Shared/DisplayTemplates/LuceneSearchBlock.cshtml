@@ -3,12 +3,6 @@
 
 @model LuceneSearchBlock
 
-@if (Model.Style == LuceneSearchBlock.LuceneSearchBlockStyle.Custom)
-{
-    @Html.Partial(Model.CustomTemplatePath, Model)
-    return;
-}
-
 @switch (Model.Style)
 {
     case LuceneSearchBlock.LuceneSearchBlockStyle.BootstrapNavbarForm:

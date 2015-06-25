@@ -49,6 +49,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
                     { KoreCmsLocalizableStrings.ContentBlocks.ManageContentBlocks, "Manage Content Blocks" },
                     { KoreCmsLocalizableStrings.ContentBlocks.ManageZones, "Manage Zones" },
                     { KoreCmsLocalizableStrings.ContentBlocks.Model.BlockType, "Block Type" },
+                    { KoreCmsLocalizableStrings.ContentBlocks.Model.CustomTemplatePath, "Custom Template Path" },
                     { KoreCmsLocalizableStrings.ContentBlocks.Model.DisplayCondition, "Display Condition" },
                     { KoreCmsLocalizableStrings.ContentBlocks.Model.IsEnabled, "Is Enabled" },
                     { KoreCmsLocalizableStrings.ContentBlocks.Model.Order, "Order" },

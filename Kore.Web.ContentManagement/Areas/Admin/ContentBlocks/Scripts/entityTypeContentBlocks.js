@@ -155,6 +155,7 @@ var ViewModel = function () {
     self.order = ko.observable(0);
     self.isEnabled = ko.observable(false);
     self.blockValues = ko.observable(null);
+    self.customTemplatePath = ko.observable(null);
 
     self.contentBlockModelStub = null;
 
@@ -171,6 +172,7 @@ var ViewModel = function () {
         self.order(0);
         self.isEnabled(false);
         self.blockValues(null);
+        self.customTemplatePath(null);
 
         // Clean up from previously injected html/scripts
         if (self.contentBlockModelStub != null && typeof self.contentBlockModelStub.cleanUp === 'function') {
@@ -214,6 +216,7 @@ var ViewModel = function () {
             self.order(json.Order);
             self.isEnabled(json.IsEnabled);
             self.blockValues(json.BlockValues);
+            self.customTemplatePath(json.CustomTemplatePath);
 
             $.ajax({
                 url: "/admin/blocks/entity-type-content-blocks/get-editor-ui/" + self.id(),
@@ -331,7 +334,8 @@ var ViewModel = function () {
             ZoneId: self.zoneId(),
             Order: self.order(),
             IsEnabled: self.isEnabled(),
-            BlockValues: self.blockValues()
+            BlockValues: self.blockValues(),
+            CustomTemplatePath: self.customTemplatePath()
         };
 
         if (isNew) {

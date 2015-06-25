@@ -18,6 +18,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
 
         string DisplayCondition { get; set; }
 
+        string CustomTemplatePath { get; set; }
+
         Guid? PageId { get; set; }
 
         bool Localized { get; set; }

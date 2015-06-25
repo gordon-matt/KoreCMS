@@ -6,5 +6,12 @@
 
 @foreach (var block in Model.OrderBy(x => x.Order))
 {
-    @Html.Partial(block.DisplayTemplatePath, block)
+    if (!string.IsNullOrEmpty(block.CustomTemplatePath))
+    {
+        @Html.Partial(block.CustomTemplatePath, block)
+    }
+    else
+    {
+        @Html.Partial(block.DisplayTemplatePath, block)
+    }
 }

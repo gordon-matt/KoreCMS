@@ -200,6 +200,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
                 contentBlock.Enabled = entity.IsEnabled;
                 contentBlock.ZoneId = entity.ZoneId;
                 contentBlock.DisplayCondition = entity.DisplayCondition;
+                contentBlock.CustomTemplatePath = entity.CustomTemplatePath;
 
                 if (string.IsNullOrEmpty(record.CultureCode)) // main record
                 {
@@ -250,6 +251,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
                 record.IsEnabled = contentBlock.Enabled;
                 record.ZoneId = contentBlock.ZoneId;
                 record.DisplayCondition = contentBlock.DisplayCondition;
+                record.CustomTemplatePath = contentBlock.CustomTemplatePath;
             }
 
             Service.Insert(toInsert);

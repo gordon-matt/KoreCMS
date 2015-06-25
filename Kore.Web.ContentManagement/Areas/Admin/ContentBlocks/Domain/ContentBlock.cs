@@ -26,6 +26,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
 
         public string DisplayCondition { get; set; }
 
+        public string CustomTemplatePath { get; set; }
+
         public Guid? PageId { get; set; }
 
         public string CultureCode { get; set; }
@@ -56,6 +58,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
             Property(x => x.IsEnabled).IsRequired();
             Property(x => x.BlockValues).IsMaxLength();
             Property(x => x.DisplayCondition).HasMaxLength(255);
+            Property(x => x.CustomTemplatePath).HasMaxLength(255);
             Property(x => x.CultureCode).HasMaxLength(10).HasColumnType("varchar");
         }
 

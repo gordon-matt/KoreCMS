@@ -79,6 +79,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 BillingAddress = order.BillingAddress
             };
 
+            ViewBag.BillingCity = regionService.Value.Get(order.BillingAddress.CityId).Name;
             ViewBag.BillingCountryCode = regionService.Value.Get(order.BillingAddress.CountryId).CountryCode;
             return View(model);
         }

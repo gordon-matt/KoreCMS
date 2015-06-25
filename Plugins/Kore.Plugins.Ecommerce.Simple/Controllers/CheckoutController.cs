@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Data.Entity;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 using Kore.Collections;
@@ -257,7 +258,18 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Checkout));
             WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Completed));
 
-            var order = orderService.Value.FindOne(orderId);
+            var order = orderService.Value.Repository.Table
+                .Include(x => x.BillingAddress)
+                .Include(x => x.BillingAddress.Country)
+                .Include(x => x.BillingAddress.City)
+                .Include(x => x.ShippingAddress)
+                .Include(x => x.ShippingAddress.Country)
+                .Include(x => x.ShippingAddress.City)
+                .Include(x => x.Lines)
+                .Include(x => x.Lines.Select(y => y.Product))
+                .FirstOrDefault(x => x.Id == orderId);
+
+            ViewBag.CurrencyCode = settings.Currency;
             return View(order);
         }
 
@@ -274,25 +286,41 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 x.SettingsId == settingsId &&
                 cities.Keys.Contains(x.RegionId));
 
-            var records = new HashSet<Region>();
-            foreach (var setting in settings)
+            // If no settings have been made for this plugin,
+            if (!settings.Any())
             {
-                dynamic fields = JObject.Parse(setting.Fields);
-                bool isEnabled = fields.IsEnabled;
-
-                if (isEnabled)
+                // ... then we assume ALL cities are OK.
+                var data = cities.Values.OrderBy(x => x.Name).Select(x => new
                 {
-                    records.Add(cities[setting.RegionId]);
-                }
+                    Id = x.Id,
+                    Name = x.Name
+                });
+
+                return Json(new { Data = data }, JsonRequestBehavior.AllowGet);
             }
-
-            var data = records.Select(x => new
+            else
             {
-                Id = x.Id,
-                Name = x.Name
-            });
+                // Else only get the cities specified
+                var records = new HashSet<Region>();
+                foreach (var setting in settings)
+                {
+                    dynamic fields = JObject.Parse(setting.Fields);
+                    bool isEnabled = fields.IsEnabled;
 
-            return Json(new { Data = data }, JsonRequestBehavior.AllowGet);
+                    if (isEnabled)
+                    {
+                        records.Add(cities[setting.RegionId]);
+                    }
+                }
+
+                var data = records.Select(x => new
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                });
+
+                return Json(new { Data = data }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

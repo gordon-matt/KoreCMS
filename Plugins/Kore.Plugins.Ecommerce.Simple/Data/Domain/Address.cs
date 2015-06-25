@@ -34,6 +34,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 
         public virtual Region Country { get; set; }
 
+        public virtual Region City { get; set; }
+
         #region IEntity Members
 
         public object[] KeyValues
@@ -60,6 +62,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             Property(x => x.CityId).IsRequired();
             Property(x => x.PostalCode).IsRequired().HasMaxLength(10);
             Property(x => x.PhoneNumber).IsRequired().HasMaxLength(25);
+            HasRequired(x => x.Country).WithMany().HasForeignKey(x => x.CountryId);
+            HasRequired(x => x.City).WithMany().HasForeignKey(x => x.CityId);
         }
 
         #region IEntityTypeConfiguration Members

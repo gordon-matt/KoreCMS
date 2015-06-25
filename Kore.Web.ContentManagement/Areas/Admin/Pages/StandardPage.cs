@@ -12,6 +12,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
             get { return "Standard Page"; }
         }
 
+        public override bool IsEnabled
+        {
+            get { return true; }
+        }
+
         public override string DisplayTemplatePath
         {
             get { return "Kore.Web.ContentManagement.Areas.Admin.Pages.Views.Shared.DisplayTemplates.StandardPage"; }

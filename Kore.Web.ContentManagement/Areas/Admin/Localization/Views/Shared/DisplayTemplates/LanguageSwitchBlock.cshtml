@@ -4,12 +4,6 @@
 @using Kore.Web.ContentManagement.Areas.Admin.Localization
 @model LanguageSwitchBlock
 
-@if (Model.Style == LanguageSwitchBlock.LanguageSwitchStyle.Custom)
-{
-    @Html.Partial(Model.CustomTemplatePath, Model)
-    return;
-}
-
 @{
     var languages = EngineContext.Current.Resolve<ILanguageService>().GetActiveLanguages().ToList();
 
@@ -36,7 +30,7 @@
                     <span class="caret"></span>
                 </a>
                 <ul role="menu" class="dropdown-menu">
-                    @if (Model.UseUrlPrefix)
+                    @*@if (Model.UseUrlPrefix)
                     {
                         foreach (var language in languages)
                         {
@@ -52,8 +46,8 @@
                         }
                     }
                     else
-                    {
-                        foreach (var language in languages)
+                    {*@
+                        @foreach (var language in languages)
                         {
                             <li>
                                 <a href="#" onclick="changeLanguage('@language.CultureCode');">
@@ -65,7 +59,7 @@
                                 </a>
                             </li>
                         }
-                    }
+                    @*}*@
                 </ul>
             </li>
         }
@@ -93,14 +87,14 @@
             @foreach (var language in languages)
             {
                 <li class="lang-@language.CultureCode">
-                    @if (Model.UseUrlPrefix)
+                    @*@if (Model.UseUrlPrefix)
                     {
                         <a href="/@language.CultureCode">@language.Name</a>
                     }
                     else
-                    {
+                    {*@
                         <a href="javascript:void(0)" onclick="changeLanguage('@language.CultureCode');">@language.Name</a>
-                    }
+                    @*}*@
                 </li>
             }
         </ul>
@@ -108,7 +102,11 @@
 }
 
 <script type="text/javascript">
-    @if (Model.UseUrlPrefix)
+    function changeLanguage(cultureCode) {
+        document.cookie = 'CurrentCulture=' + cultureCode + '; path=/';
+        window.location.reload();
+    }
+    @*@if (Model.UseUrlPrefix)
     {
         <text>
         function changeLanguage(cultureCode) {
@@ -124,5 +122,5 @@
             window.location.reload();
         }
         </text>
-    }
+    }*@
 </script>

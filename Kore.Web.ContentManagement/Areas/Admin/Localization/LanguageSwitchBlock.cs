@@ -5,22 +5,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization
 {
     public class LanguageSwitchBlock : ContentBlockBase
     {
-        public enum LanguageSwitchStyle
+        public enum LanguageSwitchStyle : byte
         {
-            BootstrapNavbarDropdown,
-            Select,
-            List,
-            Custom
+            BootstrapNavbarDropdown = 0,
+            Select = 1,
+            List = 2
         }
 
         [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.LanguageSwitchBlock.Style)]
         public LanguageSwitchStyle Style { get; set; }
 
-        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.LanguageSwitchBlock.UseUrlPrefix)]
-        public bool UseUrlPrefix { get; set; }
-
-        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.LanguageSwitchBlock.CustomTemplatePath)]
-        public string CustomTemplatePath { get; set; }
+        //[LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.LanguageSwitchBlock.UseUrlPrefix)]
+        //public bool UseUrlPrefix { get; set; }
 
         [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.LanguageSwitchBlock.IncludeInvariant)]
         public bool IncludeInvariant { get; set; }

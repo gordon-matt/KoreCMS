@@ -60,6 +60,7 @@
             public static class Model
             {
                 public const string BlockType = "Kore.Web.ContentManagement/ContentBlocks.Model.BlockType";
+                public const string CustomTemplatePath = "Kore.Web.ContentManagement/ContentBlocks.Model.CustomTemplatePath";
                 public const string DisplayCondition = "Kore.Web.ContentManagement/ContentBlocks.Model.DisplayCondition";
                 public const string IsEnabled = "Kore.Web.ContentManagement/ContentBlocks.Model.IsEnabled";
                 public const string Order = "Kore.Web.ContentManagement/ContentBlocks.Model.Order";

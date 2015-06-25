@@ -102,54 +102,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
             }
         }
 
-        // TODO: TEST THIS ONE (SIMPLIFIED)
-        //public IEnumerable<IContentBlock> GetContentBlocks(Guid? pageId = null, string zoneName = null, bool includeDisabled = false)
-        //{
-        //    var key = string.Format("ContentBlocks_GetContentBlocks_{0}_{1}_{2}", pageId, zoneName, includeDisabled);
-
-        //    return cacheManager.Get(key, () =>
-        //    {
-        //        var records = new List<ContentBlock>();
-
-        //        // Include everything
-        //        var query = Repository.Table;
-
-        //        if (!includeDisabled)
-        //        {
-        //            // Get enabled contentBlocks only
-        //            query = query.Where(x => x.IsEnabled);
-        //        }
-
-        //        // If zone name provided
-        //        if (!string.IsNullOrEmpty(zoneName))
-        //        {
-        //            var zone = zoneRepository.Value.Table.FirstOrDefault(x => x.Name == zoneName);
-
-        //            // If zone exists
-        //            if (zone != null)
-        //            {
-        //                // Get all non page-specific contentBlocks for that zone
-        //                records.AddRange(query.Where(x => x.ZoneId == zone.Id && x.PageId == null));
-
-        //                // If page Id specified...
-        //                if (pageId.HasValue)
-        //                {
-        //                    //... include contentBlocks for that page and for that zone
-        //                    records.AddRange(query.Where(x => x.ZoneId == zone.Id && x.PageId == pageId.Value));
-        //                }
-        //            }
-        //        }
-        //        // If page Id specified...
-        //        else if (pageId.HasValue)
-        //        {
-        //            //... get all contentBlocks for that page (all zones)
-        //            records.AddRange(query.Where(x => x.PageId == pageId.Value));
-        //        }
-
-        //        return GetContentBlocks(records);
-        //    });
-        //}
-
         #endregion IContentBlockService Members
 
         private IEnumerable<IContentBlock> GetContentBlocks(IEnumerable<ContentBlock> records)
@@ -178,6 +130,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
                 contentBlock.Order = record.Order;
                 contentBlock.Enabled = record.IsEnabled;
                 contentBlock.DisplayCondition = record.DisplayCondition;
+                contentBlock.CustomTemplatePath = record.CustomTemplatePath;
                 contentBlock.CultureCode = record.CultureCode;
                 contentBlock.RefId = record.RefId;
                 result.Add(contentBlock);

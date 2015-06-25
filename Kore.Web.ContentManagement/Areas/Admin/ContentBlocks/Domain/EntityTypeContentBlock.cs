@@ -27,6 +27,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
 
         public string BlockValues { get; set; }
 
+        public string CustomTemplatePath { get; set; }
+
         #region IEntity Members
 
         public object[] KeyValues
@@ -52,6 +54,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
             Property(x => x.Order).IsRequired();
             Property(x => x.IsEnabled).IsRequired();
             Property(x => x.BlockValues).IsMaxLength();
+            Property(x => x.CustomTemplatePath).HasMaxLength(255);
         }
 
         #region IEntityTypeConfiguration Members

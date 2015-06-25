@@ -56,7 +56,7 @@
                     <fieldset>
                         <legend>@T(KoreWebLocalizableStrings.General.Create)</legend>
                         <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Create_Title", T(KoreCmsLocalizableStrings.ContentBlocks.Model.Title), new { @class = "control-label" })
                                     <div class="input-group">
@@ -67,7 +67,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Create_Order", T(KoreCmsLocalizableStrings.ContentBlocks.Model.Order), new { @class = "control-label" })
                                     @Html.TextBox("Create_Order", null, new { @class = "form-control", data_bind = "value: order" })
@@ -75,13 +75,13 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Create_BlockType", T(KoreCmsLocalizableStrings.ContentBlocks.Model.BlockType), new { @class = "control-label" })
                                     @Html.KoreCMS().ContentBlockTypesDropDownList("Create_BlockType", null, null, new { @class = "form-control", data_bind = "value: blockType" })
                                 </div>
                             </div>
-                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Create_ZoneId", T(KoreCmsLocalizableStrings.ContentBlocks.Model.ZoneId), new { @class = "control-label" })
                                     @Html.KoreCMS().ZonesDropDownList("Create_ZoneId", null, null, new { @class = "form-control", data_bind = "value: zoneId" })
@@ -114,7 +114,7 @@
                     <fieldset>
                         <legend>@T(KoreWebLocalizableStrings.General.Edit)</legend>
                         <div class="row">
-                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Title", T(KoreCmsLocalizableStrings.ContentBlocks.Model.Title), new { @class = "control-label" })
                                     <div class="input-group">
@@ -125,7 +125,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Order", T(KoreCmsLocalizableStrings.ContentBlocks.Model.Order), new { @class = "control-label" })
                                     <div class="input-group">
@@ -136,25 +136,33 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                <div class="checkbox">
-                                    <label>
-                                        @Html.CheckBox("IsEnabled", new { data_bind = "checked: isEnabled" }) @T(KoreCmsLocalizableStrings.ContentBlocks.Model.IsEnabled)
-                                    </label>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("DisplayCondition", T(KoreCmsLocalizableStrings.ContentBlocks.Model.DisplayCondition), new { @class = "control-label" })
                                     @Html.TextBox("DisplayCondition", null, new { @class = "form-control", data_bind = "value: displayCondition" })
                                 </div>
                             </div>
-                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("ZoneId", T(KoreCmsLocalizableStrings.ContentBlocks.Model.ZoneId), new { @class = "control-label" })
                                     @Html.KoreCMS().ZonesDropDownList("ZoneId", null, null, new { @class = "form-control", data_bind = "value: zoneId" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    @Html.Label("CustomTemplatePath", T(KoreCmsLocalizableStrings.ContentBlocks.Model.CustomTemplatePath), new { @class = "control-label" })
+                                    @Html.TextBox("CustomTemplatePath", null, new { @class = "form-control", data_bind = "value: customTemplatePath" })
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBox("IsEnabled", new { data_bind = "checked: isEnabled" }) @T(KoreCmsLocalizableStrings.ContentBlocks.Model.IsEnabled)
+                                    </label>
                                 </div>
                             </div>
                         </div>

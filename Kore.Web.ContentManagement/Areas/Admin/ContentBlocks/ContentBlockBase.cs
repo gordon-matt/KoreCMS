@@ -32,6 +32,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
         [ExcludeFromSerialization]
         public string DisplayCondition { get; set; }
 
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.Model.CustomTemplatePath)]
+        [ExcludeFromSerialization]
+        public string CustomTemplatePath { get; set; }
+
         [ExcludeFromSerialization]
         public Guid? PageId { get; set; }
 

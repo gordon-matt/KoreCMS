@@ -5,18 +5,14 @@ namespace Kore.Plugins.Indexing.Lucene
 {
     public class LuceneSearchBlock : ContentBlockBase
     {
-        public enum LuceneSearchBlockStyle
+        public enum LuceneSearchBlockStyle : byte
         {
-            Default,
-            BootstrapNavbarForm,
-            Custom
+            Default = 0,
+            BootstrapNavbarForm = 1
         }
 
         [LocalizedDisplayName(LocalizableStrings.LuceneSearchBlock.Style)]
         public LuceneSearchBlockStyle Style { get; set; }
-
-        [LocalizedDisplayName(LocalizableStrings.LuceneSearchBlock.CustomTemplatePath)]
-        public string CustomTemplatePath { get; set; }
 
         #region ContentBlockBase Overrides
 

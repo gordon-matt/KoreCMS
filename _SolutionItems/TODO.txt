@@ -21,6 +21,13 @@ PAGES:
 - twilio?
 - make permissions checkbox list look nicer
 
+
+- add ORDER to regions (that way can have USA or whatever at top of dropdowns, for example)
+-button to reset page type to default settings
+-EXPORT app_data on publish (and plugins)
+
+
+
 - PAYMENT SYSTEM abtraction..like nop
 
 - broken logging

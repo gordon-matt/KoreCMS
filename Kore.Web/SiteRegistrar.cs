@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Web;
 using System.Web.Hosting;
+using Kore.Logging;
 
 namespace Kore.Web
 {
@@ -52,7 +53,7 @@ namespace Kore.Web
                                 };
 
                                 var stringContent = new StringContent(data.ToJson(), Encoding.UTF8, "application/json");
-                                var response = client.PostAsync("http://www.widecommerce.com/odata/kore/plugins/widecommerce/KoreSiteRegistrationApi/Register", stringContent).Result;
+                                var response = client.PostAsync("http://widecommerce.com/odata/kore/plugins/widecommerce/KoreSiteRegistrationApi/Register", stringContent).Result;
 
                                 if (response.IsSuccessStatusCode)
                                 {
@@ -64,10 +65,12 @@ namespace Kore.Web
 
                     hasRun = true;
                 }
-                catch
+                catch (Exception x)
                 {
                     // If there is a problem registering, we don't want to prevent the site from running..
                     //  so just ignore it...
+                    var logger = LoggingUtilities.Resolve();
+                    logger.Error("SiteRegistrar Error", x);
                     hasRun = true;
                 }
             }

@@ -16,13 +16,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
     public class PageVersionApiController : GenericODataController<PageVersion, Guid>
     {
         private readonly Lazy<IPageService> pageService;
+        private readonly PageSettings settings;
 
         public PageVersionApiController(
             IPageVersionService service,
-            Lazy<IPageService> pageService)
+            Lazy<IPageService> pageService,
+            PageSettings settings)
             : base(service)
         {
             this.pageService = pageService;
+            this.settings = settings;
         }
 
         public override IHttpActionResult Delete([FromODataUri] Guid key)
@@ -33,7 +36,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             var previous = Service.Repository.Table
                 .Where(x =>
                     x.Id != entity.Id &&
-                    x.PageId == entity.PageId)
+                    x.PageId == entity.PageId &&
+                    x.CultureCode == entity.CultureCode)
                 .OrderByDescending(x => x.DateModifiedUtc)
                 .FirstOrDefault();
 
@@ -71,6 +75,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
             try
             {
+                //TODO: might have a big bug here:
+                // shouldn't we be gettig BY culture code?
                 var currentVersion = Service.FindOne(entity.Id);
 
                 if (currentVersion.Status == VersionStatus.Published)
@@ -89,6 +95,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                         Fields = currentVersion.Fields,
                     };
                     Service.Insert(backup);
+
+                    RemoveOldVersions(currentVersion.CultureCode);
                 }
 
                 entity.DateModifiedUtc = DateTime.UtcNow;
@@ -152,6 +160,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                         Fields = currentVersion.Fields,
                     };
                     Service.Insert(backup);
+
+                    RemoveOldVersions(currentVersion.CultureCode);
                 }
 
                 entity.DateCreatedUtc = currentVersion.DateCreatedUtc;
@@ -223,6 +233,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             };
             Service.Insert(backup);
 
+            RemoveOldVersions(current.CultureCode);
+
             // then restore the historical page, as requested
             current.CultureCode = versionToRestore.CultureCode;
             current.DateCreatedUtc = versionToRestore.DateCreatedUtc;
@@ -279,6 +291,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         protected override Permission WritePermission
         {
             get { return CmsPermissions.PagesWrite; }
+        }
+
+        private void RemoveOldVersions(string cultureCode)
+        {
+            var pageIdsToKeep = Service.Repository.Table
+                .Where(x => x.CultureCode == cultureCode)
+                .OrderByDescending(x => x.DateModifiedUtc)
+                .Take(settings.NumberOfPageVersionsToKeep)
+                .Select(x => x.Id)
+                .ToList();
+
+            Service.Delete(x => x.CultureCode == cultureCode && !pageIdsToKeep.Contains(x.Id));
         }
     }
 

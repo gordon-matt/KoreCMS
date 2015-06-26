@@ -154,40 +154,5 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
 
             return publishedVersion;
         }
-
-        //public override int Update(PageVersion record)
-        //{
-        //    base.Update(record);
-
-        //    if (record.PageId == null)
-        //    {
-        //        //TODO: fix bug with this not working.. for now, try catch
-
-        //        try
-        //        {
-        //            return Update(x => x.PageId == record.Id, x => new PageVersion
-        //            {
-        //                Slug = record.Slug
-        //            });
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Logger.Error(ex.Message, ex);
-
-        //            var toUpdate = Find(x => x.RefId == record.Id);
-
-        //            if (toUpdate.Any())
-        //            {
-        //                foreach (var item in toUpdate)
-        //                {
-        //                    item.Slug = record.Slug;
-        //                }
-
-        //                return Update(toUpdate);
-        //            }
-        //        }
-        //    }
-        //    return 0;
-        //}
     }
 }

@@ -144,6 +144,14 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
+                                    <div class="checkbox">
+                                        @Html.CheckBoxFor(m => m.CreateSampleData)
+                                        @Html.LabelFor(m => m.CreateSampleData)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
                                     <input type="submit" class="btn btn-default" value="Install Now" />
                                 </div>
                             </div>

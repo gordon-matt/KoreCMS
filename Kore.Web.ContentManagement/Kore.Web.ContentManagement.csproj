@@ -148,6 +148,7 @@
     <Compile Include="Areas\Admin\ContentBlocks\Domain\EntityTypeContentBlock.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\IEntityTypeContentBlockProvider.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\IFormBlockProcessor.cs" />
+    <EmbeddedResource Include="Areas\Admin\ContentBlocks\Scripts\zoneModel.js" />
     <Compile Include="Areas\Admin\ContentBlocks\Services\IEntityTypeContentBlockService.cs" />
     <Compile Include="Areas\Admin\Localization\Models\LanguagePackFile.cs" />
     <Compile Include="Areas\Admin\Media\Models\MediaFile.cs" />

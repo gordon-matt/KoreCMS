@@ -14,6 +14,15 @@
 <ul>
     @foreach (var entry in entries)
     {
-        <li>@Html.ActionLink(entry.Headline, "Details", "BlogContent", new { area = string.Empty, slug = entry.Slug }, null)</li>
+        <li>
+            @if (entry.UseExternalLink)
+            {
+                @Html.Link(entry.Headline, entry.ExternalLink, PageTarget.Blank)
+            }
+            else
+            {
+                @Html.ActionLink(entry.Headline, "Details", "BlogContent", new { area = string.Empty, slug = entry.Slug }, null)
+            }
+        </li>
     }
 </ul>

@@ -46,6 +46,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
                     { KoreCmsLocalizableStrings.ContentBlocks.LanguageSwitchBlock.InvariantText, "Invariant Text" },
                     { KoreCmsLocalizableStrings.ContentBlocks.LanguageSwitchBlock.Style, "Style" },
                     { KoreCmsLocalizableStrings.ContentBlocks.LanguageSwitchBlock.UseUrlPrefix, "Use URL Prefix" },
+                    { KoreCmsLocalizableStrings.ContentBlocks.LastNBlogEntriesBlock.NumberOfEntries, "# of Entries" },
                     { KoreCmsLocalizableStrings.ContentBlocks.ManageContentBlocks, "Manage Content Blocks" },
                     { KoreCmsLocalizableStrings.ContentBlocks.ManageZones, "Manage Zones" },
                     { KoreCmsLocalizableStrings.ContentBlocks.Model.BlockType, "Block Type" },

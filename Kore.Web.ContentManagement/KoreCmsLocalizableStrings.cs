@@ -57,6 +57,11 @@
                 public const string UseUrlPrefix = "Kore.Web.ContentManagement/ContentBlocks.LanguageSwitchBlock.UseUrlPrefix";
             }
 
+            public static class LastNBlogEntriesBlock
+            {
+                public const string NumberOfEntries = "Kore.Web.ContentManagement/ContentBlocks.LastNBlogEntriesBlock.NumberOfEntries";
+            }
+
             public static class Model
             {
                 public const string BlockType = "Kore.Web.ContentManagement/ContentBlocks.Model.BlockType";

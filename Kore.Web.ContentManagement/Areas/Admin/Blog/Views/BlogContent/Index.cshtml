@@ -4,13 +4,22 @@
 @model IEnumerable<BlogEntry>
 
 @{
-    if (string.IsNullOrEmpty(SiteSettings.DefaultFrontendLayoutPath))
+    bool isChildAction = ViewBag.IsChildAction;
+    
+    if (isChildAction)
     {
-        Layout = "~/Views/Shared/_Layout.cshtml";
+        Layout = null;
     }
     else
     {
-        Layout = SiteSettings.DefaultFrontendLayoutPath;
+        if (string.IsNullOrEmpty(SiteSettings.DefaultFrontendLayoutPath))
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+        else
+        {
+            Layout = SiteSettings.DefaultFrontendLayoutPath;
+        }
     }
 
     Script.IncludeBundle("kore-cms/bootpag");

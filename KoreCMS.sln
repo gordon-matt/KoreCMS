@@ -127,6 +127,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Phalanger4", "Phalanger4", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Web.Php", "Kore.Web.Php\Kore.Web.Php.csproj", "{61DF3750-D1CB-4EC5-B69E-5DC2F1984D32}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Articles", "Articles", "{45014FBA-49D2-4A37-A629-736054A2CBF3}"
+	ProjectSection(SolutionItems) = preProject
+		_SolutionItems\Articles\CodeProject_ResponsiveFileManager.html = _SolutionItems\Articles\CodeProject_ResponsiveFileManager.html
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -248,5 +253,6 @@ Global
 		{5F7BE6CA-FE13-4DFB-9277-40E649835AA4} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 		{EC957D42-20C5-4CCB-B47F-6DB7742CD966} = {FD60340E-B54E-4D09-B63A-58B37E79A3A2}
 		{F70F6F7F-2D80-4F3B-B14B-A7324BF2CBC6} = {EC957D42-20C5-4CCB-B47F-6DB7742CD966}
+		{45014FBA-49D2-4A37-A629-736054A2CBF3} = {FD60340E-B54E-4D09-B63A-58B37E79A3A2}
 	EndGlobalSection
 EndGlobal

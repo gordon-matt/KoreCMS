@@ -4,6 +4,7 @@ using Kore.Localization;
 using Kore.Tasks;
 using Kore.Web.Configuration;
 using Kore.Web.ContentManagement.Areas.Admin.Blog;
+using Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Services;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.RuleEngine;
@@ -101,6 +102,8 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             #region Content Blocks
 
+            builder.RegisterType<BlogBlock>().As<IContentBlock>().InstancePerDependency();
+            builder.RegisterType<LastNBlogEntriesBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<FormBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<HtmlBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<LanguageSwitchBlock>().As<IContentBlock>().InstancePerDependency();

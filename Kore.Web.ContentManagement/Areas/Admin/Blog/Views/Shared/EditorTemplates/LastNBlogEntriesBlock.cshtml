@@ -1,0 +1,39 @@
+﻿@using Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks
+@model LastNBlogEntriesBlock
+
+<div id="block-content" class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.NumberOfEntries, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.NumberOfEntries, new { @class = "form-control", data_bind = "value: numberOfEntries" })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var contentBlockModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.numberOfEntries = ko.observable(5);
+
+            var data = ko.mapping.fromJSON(viewModel.blockValues());
+
+            if (data && data.NumberOfEntries) {
+                viewModel.numberOfEntries(data.NumberOfEntries());
+            }
+
+            viewModel.tinyMCEConfig = koreDefaultTinyMCEConfig;
+        };
+        f.cleanUp = function () {
+            delete viewModel.numberOfEntries;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                NumberOfEntries: viewModel.numberOfEntries()
+            };
+
+            viewModel.blockValues(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
+</script>

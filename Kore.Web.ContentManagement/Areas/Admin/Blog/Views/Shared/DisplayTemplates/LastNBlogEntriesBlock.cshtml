@@ -1,0 +1,19 @@
+﻿@using Kore.Infrastructure
+@using Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks
+@using Kore.Web.ContentManagement.Areas.Admin.Blog.Services
+@model LastNBlogEntriesBlock
+
+@{
+    var blogService = EngineContext.Current.Resolve<IBlogService>();
+    var entries = blogService.Repository.Table
+        .OrderByDescending(x => x.DateCreatedUtc)
+        .Take(5)
+        .ToList();
+}
+
+<ul>
+    @foreach (var entry in entries)
+    {
+        <li>@Html.ActionLink(entry.Headline, "Details", "BlogContent", new { area = string.Empty, slug = entry.Slug }, null)</li>
+    }
+</ul>

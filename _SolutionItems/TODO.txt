@@ -33,7 +33,7 @@ PAGES:
 - broken logging
 	: UPDATE, 2015-06-15: Fixed one big problem. Need to monitor it now, but seems OK.
 
-	
+
 
 - allow deleting of translated pages (then prob we should also see history for it, etc..)
 	- maybe this should happen when deleting the language? All pages, blocks, etc.. for that language get deleted
@@ -50,7 +50,8 @@ PAGES:
 
 - do we need a different default frontend layout path for mobile theme? probably...
 
-- read through security guidlines as requested by Ran
+- read through security guidlines as requested by Ran:
+https://sites.google.com/site/muazkh/asp-net-mvc-security-and-hacking-defense-in-depth
 - page types: have a "List" template? To show all records (for that type) in a grid, for example?
 
 CONTENT BLOCK PROBLEM: TinyMCE should not be included by default and should be loaded from specific blocks that need it..

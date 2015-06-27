@@ -138,6 +138,8 @@
     <Compile Include="Areas\Admin\Blog\BlogAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Blog\BlogIndexingContentProvider.cs" />
     <Compile Include="Areas\Admin\Blog\BlogSettings.cs" />
+    <Compile Include="Areas\Admin\Blog\ContentBlocks\BlogBlock.cs" />
+    <Compile Include="Areas\Admin\Blog\ContentBlocks\LastNBlogEntriesBlock.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\Api\BlogApiController.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\BlogContentController.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\BlogController.cs" />
@@ -338,6 +340,9 @@
     <EmbeddedResource Include="Areas\Admin\Sitemap\Views\XmlSitemap\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\FormBlock\MessageTemplate.cshtml" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\EntityTypeContentBlock\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\DisplayTemplates\BlogBlock.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\DisplayTemplates\LastNBlogEntriesBlock.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\EditorTemplates\LastNBlogEntriesBlock.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\RichTextFull.cshtml" />
@@ -387,6 +392,7 @@
   <ItemGroup>
     <Content Include="Areas\Admin\Media\Services\mimeTypes.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -38,6 +38,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 return new HttpUnauthorizedResult();
             }
 
+            bool isChildAction = ControllerContext.IsChildAction;
+            ViewBag.IsChildAction = isChildAction;
+
             // If Use Ajax
             if (blogSettings.UseAjax)
             {
@@ -46,10 +49,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 // If someone has provided a custom template (see LocationFormatProvider)
                 if (viewEngineResult.View != null)
                 {
+                    if (isChildAction)
+                    {
+                        return PartialView();
+                    }
                     return View();
                 }
 
                 // Else use default template
+                if (isChildAction)
+                {
+                    return PartialView("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.IndexAjax");
+                }
                 return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.IndexAjax");
             }
             else
@@ -83,10 +94,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 // If someone has provided a custom template (see LocationFormatProvider)
                 if (viewEngineResult.View != null)
                 {
+                    if (isChildAction)
+                    {
+                        return PartialView();
+                    }
                     return View(model);
                 }
 
                 // Else use default template
+                if (isChildAction)
+                {
+                    return PartialView("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.Index", model);
+                }
                 return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.Index", model);
             }
         }

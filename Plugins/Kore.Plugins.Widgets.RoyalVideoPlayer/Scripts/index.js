@@ -13,7 +13,7 @@ var VideoModel = function () {
     self.mobileVideoUrl = ko.observable(null);
     self.posterUrl = ko.observable(null);
     self.mobilePosterUrl = ko.observable(null);
-    self.isDownloadable = ko.observable(null);
+    self.isDownloadable = ko.observable(false);
     self.popoverHtml = ko.observable(null);
 
     self.playlists = ko.observableArray([]);
@@ -26,7 +26,7 @@ var VideoModel = function () {
         self.mobileVideoUrl(null);
         self.posterUrl(null);
         self.mobilePosterUrl(null);
-        self.isDownloadable(null);
+        self.isDownloadable(false);
         self.popoverHtml(null);
 
         self.validator.resetForm();

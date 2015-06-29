@@ -304,7 +304,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 .Select(x => x.Id)
                 .ToList();
 
-            Service.Delete(x => x.CultureCode == cultureCode && !pageIdsToKeep.Contains(x.Id));
+            Service.Delete(x =>
+                x.PageId == pageId &&
+                x.CultureCode == cultureCode &&
+                !pageIdsToKeep.Contains(x.Id));
         }
     }
 

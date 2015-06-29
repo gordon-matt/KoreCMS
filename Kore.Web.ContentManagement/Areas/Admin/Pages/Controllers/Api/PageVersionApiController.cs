@@ -96,7 +96,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     };
                     Service.Insert(backup);
 
-                    RemoveOldVersions(currentVersion.CultureCode);
+                    RemoveOldVersions(currentVersion.PageId, currentVersion.CultureCode);
                 }
 
                 entity.DateModifiedUtc = DateTime.UtcNow;
@@ -161,7 +161,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     };
                     Service.Insert(backup);
 
-                    RemoveOldVersions(currentVersion.CultureCode);
+                    RemoveOldVersions(currentVersion.PageId, currentVersion.CultureCode);
                 }
 
                 entity.DateCreatedUtc = currentVersion.DateCreatedUtc;
@@ -233,7 +233,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             };
             Service.Insert(backup);
 
-            RemoveOldVersions(current.CultureCode);
+            RemoveOldVersions(current.PageId, current.CultureCode);
 
             // then restore the historical page, as requested
             current.CultureCode = versionToRestore.CultureCode;
@@ -293,10 +293,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             get { return CmsPermissions.PagesWrite; }
         }
 
-        private void RemoveOldVersions(string cultureCode)
+        private void RemoveOldVersions(Guid pageId, string cultureCode)
         {
             var pageIdsToKeep = Service.Repository.Table
-                .Where(x => x.CultureCode == cultureCode)
+                .Where(x =>
+                    x.PageId == pageId &&
+                    x.CultureCode == cultureCode)
                 .OrderByDescending(x => x.DateModifiedUtc)
                 .Take(settings.NumberOfPageVersionsToKeep)
                 .Select(x => x.Id)

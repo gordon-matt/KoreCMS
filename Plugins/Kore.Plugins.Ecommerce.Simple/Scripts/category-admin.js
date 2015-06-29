@@ -374,11 +374,13 @@ $(document).ready(function () {
 
     $('#categoryImageModal').on('hidden.bs.modal', function () {
         var url = $('#ImageUrl').val();
+        url = "/Media/Uploads/" + url;
         viewModel.imageUrl(url);
     });
 
     $('#productImageModal').on('hidden.bs.modal', function () {
         var url = $('#MainImageUrl').val();
+        url = "/Media/Uploads/" + url;
         viewModel.product.mainImageUrl(url);
     });
 

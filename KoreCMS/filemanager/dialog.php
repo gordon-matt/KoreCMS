@@ -35,14 +35,16 @@ if (isset($_GET['fldr'])
 }
 else { $subdir = ''; }
 
-if($subdir == "")
+if (!isset($_GET['ignore_last_position']) || $_GET['ignore_last_position'] == "0")
 {
-   if(!empty($_COOKIE['last_position'])
-	&& strpos($_COOKIE['last_position'],'.') === FALSE)
-	$subdir= trim($_COOKIE['last_position']);
+    if($subdir == "")
+    {
+        if(!empty($_COOKIE['last_position']) && strpos($_COOKIE['last_position'],'.') === FALSE)
+	        $subdir= trim($_COOKIE['last_position']);
+    }
+    //remember last position
+    setcookie('last_position',$subdir,time() + (86400 * 7));
 }
-//remember last position
-setcookie('last_position',$subdir,time() + (86400 * 7));
 
 if ($subdir == "/") { $subdir = ""; }
 
@@ -424,7 +426,7 @@ $get_params = http_build_query($get_params);
 					<input type="hidden" name="view" value="<?php echo $view; ?>"/>
 					<input type="hidden" name="type" value="<?php echo $type_param; ?>"/>
 					<input type="hidden" name="field_id" value="<?php echo $field_id; ?>"/>
-          <input type="hidden" name="relative_url" value="<?php echo $return_relative_url; ?>"/>
+                    <input type="hidden" name="relative_url" value="<?php echo $return_relative_url; ?>"/>
 					<input type="hidden" name="popup" value="<?php echo $popup; ?>"/>
 					<input type="hidden" name="lang" value="<?php echo $lang; ?>"/>
 					<input type="hidden" name="filter" value="<?php echo $filter; ?>"/>

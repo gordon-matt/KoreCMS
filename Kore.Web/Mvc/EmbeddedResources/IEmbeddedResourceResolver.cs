@@ -1,4 +1,4 @@
-namespace Kore.Web.Mvc.EmbeddedViews
+namespace Kore.Web.Mvc.EmbeddedResources
 {
     public interface IEmbeddedResourceResolver
     {

@@ -4,24 +4,24 @@ using System.Web;
 using System.Web.Caching;
 using System.Web.Hosting;
 
-namespace Kore.Web.Mvc.EmbeddedViews
+namespace Kore.Web.Mvc.EmbeddedResources
 {
-    public class EmbeddedScriptVirtualPathProvider : VirtualPathProvider
+    public class EmbeddedStyleVirtualPathProvider : VirtualPathProvider
     {
-        private readonly EmbeddedResourceTable embeddedScripts;
+        private readonly EmbeddedResourceTable embeddedStyles;
 
-        public EmbeddedScriptVirtualPathProvider(EmbeddedResourceTable embeddedScripts)
+        public EmbeddedStyleVirtualPathProvider(EmbeddedResourceTable embeddedStyles)
         {
-            if (embeddedScripts == null)
+            if (embeddedStyles == null)
             {
-                throw new ArgumentNullException("embeddedScripts");
+                throw new ArgumentNullException("embeddedStyles");
             }
-            this.embeddedScripts = embeddedScripts;
+            this.embeddedStyles = embeddedStyles;
         }
 
         public override bool FileExists(string virtualPath)
         {
-            return (IsEmbeddedScript(virtualPath) || Previous.FileExists(virtualPath));
+            return (IsEmbeddedStyle(virtualPath) || Previous.FileExists(virtualPath));
         }
 
         public override CacheDependency GetCacheDependency(
@@ -29,26 +29,26 @@ namespace Kore.Web.Mvc.EmbeddedViews
             IEnumerable virtualPathDependencies,
             DateTime utcStart)
         {
-            return IsEmbeddedScript(virtualPath)
+            return IsEmbeddedStyle(virtualPath)
                 ? null
                 : Previous.GetCacheDependency(virtualPath, virtualPathDependencies, utcStart);
         }
 
         public override VirtualFile GetFile(string virtualPath)
         {
-            if (IsEmbeddedScript(virtualPath))
+            if (IsEmbeddedStyle(virtualPath))
             {
                 string virtualPathAppRelative = VirtualPathUtility.ToAppRelative(virtualPath);
                 var fullyQualifiedName = virtualPathAppRelative.Substring(virtualPathAppRelative.LastIndexOf("/") + 1, virtualPathAppRelative.Length - 1 - virtualPathAppRelative.LastIndexOf("/"));
 
-                var metadata = embeddedScripts.FindEmbeddedResource(fullyQualifiedName);
+                var metadata = embeddedStyles.FindEmbeddedResource(fullyQualifiedName);
                 return new EmbeddedResourceVirtualFile(metadata, virtualPath);
             }
 
             return Previous.GetFile(virtualPath);
         }
 
-        private bool IsEmbeddedScript(string virtualPath)
+        private bool IsEmbeddedStyle(string virtualPath)
         {
             if (string.IsNullOrEmpty(virtualPath))
             {
@@ -56,7 +56,7 @@ namespace Kore.Web.Mvc.EmbeddedViews
             }
 
             string virtualPathAppRelative = VirtualPathUtility.ToAppRelative(virtualPath);
-            if (!virtualPathAppRelative.StartsWith("~/Scripts/", StringComparison.InvariantCultureIgnoreCase))
+            if (!virtualPathAppRelative.StartsWith("~/Content/", StringComparison.InvariantCultureIgnoreCase))
             {
                 return false;
             }
@@ -65,7 +65,7 @@ namespace Kore.Web.Mvc.EmbeddedViews
                 virtualPathAppRelative.LastIndexOf("/") + 1,
                 virtualPathAppRelative.Length - 1 - virtualPathAppRelative.LastIndexOf("/"));
 
-            bool isEmbedded = embeddedScripts.ContainsEmbeddedResource(fullyQualifiedName);
+            bool isEmbedded = embeddedStyles.ContainsEmbeddedResource(fullyQualifiedName);
             return isEmbedded;
         }
     }

@@ -11,7 +11,7 @@ using Kore.Tasks;
 using Kore.Web.Hosting;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc;
-using Kore.Web.Mvc.EmbeddedViews;
+using Kore.Web.Mvc.EmbeddedResources;
 using Kore.Web.Mvc.Filters;
 using Kore.Web.Mvc.Themes;
 

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kore.Web.Mvc.EmbeddedViews
+namespace Kore.Web.Mvc.EmbeddedResources
 {
     [Serializable]
     public class EmbeddedResourceTable

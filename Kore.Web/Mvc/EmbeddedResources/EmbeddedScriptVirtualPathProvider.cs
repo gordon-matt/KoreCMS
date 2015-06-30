@@ -4,24 +4,24 @@ using System.Web;
 using System.Web.Caching;
 using System.Web.Hosting;
 
-namespace Kore.Web.Mvc.EmbeddedViews
+namespace Kore.Web.Mvc.EmbeddedResources
 {
-    public class EmbeddedViewVirtualPathProvider : VirtualPathProvider
+    public class EmbeddedScriptVirtualPathProvider : VirtualPathProvider
     {
-        private readonly EmbeddedResourceTable embeddedViews;
+        private readonly EmbeddedResourceTable embeddedScripts;
 
-        public EmbeddedViewVirtualPathProvider(EmbeddedResourceTable embeddedViews)
+        public EmbeddedScriptVirtualPathProvider(EmbeddedResourceTable embeddedScripts)
         {
-            if (embeddedViews == null)
+            if (embeddedScripts == null)
             {
-                throw new ArgumentNullException("embeddedViews");
+                throw new ArgumentNullException("embeddedScripts");
             }
-            this.embeddedViews = embeddedViews;
+            this.embeddedScripts = embeddedScripts;
         }
 
         public override bool FileExists(string virtualPath)
         {
-            return (IsEmbeddedView(virtualPath) || Previous.FileExists(virtualPath));
+            return (IsEmbeddedScript(virtualPath) || Previous.FileExists(virtualPath));
         }
 
         public override CacheDependency GetCacheDependency(
@@ -29,44 +29,34 @@ namespace Kore.Web.Mvc.EmbeddedViews
             IEnumerable virtualPathDependencies,
             DateTime utcStart)
         {
-            return IsEmbeddedView(virtualPath)
+            return IsEmbeddedScript(virtualPath)
                 ? null
                 : Previous.GetCacheDependency(virtualPath, virtualPathDependencies, utcStart);
         }
 
         public override VirtualFile GetFile(string virtualPath)
         {
-            if (IsEmbeddedView(virtualPath))
+            if (IsEmbeddedScript(virtualPath))
             {
                 string virtualPathAppRelative = VirtualPathUtility.ToAppRelative(virtualPath);
                 var fullyQualifiedName = virtualPathAppRelative.Substring(virtualPathAppRelative.LastIndexOf("/") + 1, virtualPathAppRelative.Length - 1 - virtualPathAppRelative.LastIndexOf("/"));
 
-                var metadata = embeddedViews.FindEmbeddedResource(fullyQualifiedName);
+                var metadata = embeddedScripts.FindEmbeddedResource(fullyQualifiedName);
                 return new EmbeddedResourceVirtualFile(metadata, virtualPath);
             }
 
             return Previous.GetFile(virtualPath);
         }
 
-        private bool IsEmbeddedView(string virtualPath)
+        private bool IsEmbeddedScript(string virtualPath)
         {
-            /*old validation
-            it can cause issue if we have several views with the same full path:
-            for example: both Kore.Plugin.Plugin1 and Kore.Plugin.Plugin2 can have Views\Config\Configure.cshtml files
-
-            That's why we specify FQN for views into plugin controllers
-             */
-            //string virtualPathAppRelative = VirtualPathUtility.ToAppRelative(virtualPath);
-
-            //return virtualPathAppRelative.StartsWith("~/Views/", StringComparison.InvariantCultureIgnoreCase)
-            //       && _embeddedViews.ContainsEmbeddedView(virtualPathAppRelative);
             if (string.IsNullOrEmpty(virtualPath))
             {
                 return false;
             }
 
             string virtualPathAppRelative = VirtualPathUtility.ToAppRelative(virtualPath);
-            if (!virtualPathAppRelative.StartsWith("~/Views/", StringComparison.InvariantCultureIgnoreCase))
+            if (!virtualPathAppRelative.StartsWith("~/Scripts/", StringComparison.InvariantCultureIgnoreCase))
             {
                 return false;
             }
@@ -75,7 +65,7 @@ namespace Kore.Web.Mvc.EmbeddedViews
                 virtualPathAppRelative.LastIndexOf("/") + 1,
                 virtualPathAppRelative.Length - 1 - virtualPathAppRelative.LastIndexOf("/"));
 
-            bool isEmbedded = embeddedViews.ContainsEmbeddedResource(fullyQualifiedName);
+            bool isEmbedded = embeddedScripts.ContainsEmbeddedResource(fullyQualifiedName);
             return isEmbedded;
         }
     }

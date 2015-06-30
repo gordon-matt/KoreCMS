@@ -64,6 +64,14 @@ namespace Kore.Web.Infrastructure
 
         private static void EnsureMembership(IMembershipService membershipService)
         {
+            // We only run this method to ensure that the admin user has been setup as part of the installation process.
+            //  If there are any users already in the DB...
+            if (membershipService.GetAllUsersAsQueryable().Any())
+            {
+                // ... we assume the admin user is one of them. No need for further querying...
+                return;
+            }
+
             var dataSettings = EngineContext.Current.Resolve<DataSettings>();
 
             var adminUser = membershipService.GetUserByEmail(dataSettings.AdminEmail);

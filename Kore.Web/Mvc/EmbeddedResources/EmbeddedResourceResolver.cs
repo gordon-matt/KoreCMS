@@ -2,7 +2,7 @@ using System.Reflection;
 using Kore.Collections;
 using Kore.Infrastructure;
 
-namespace Kore.Web.Mvc.EmbeddedViews
+namespace Kore.Web.Mvc.EmbeddedResources
 {
     public class EmbeddedResourceResolver : IEmbeddedResourceResolver
     {

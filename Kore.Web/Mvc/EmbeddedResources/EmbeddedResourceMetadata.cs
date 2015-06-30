@@ -1,6 +1,6 @@
 using System;
 
-namespace Kore.Web.Mvc.EmbeddedViews
+namespace Kore.Web.Mvc.EmbeddedResources
 {
     [Serializable]
     public class EmbeddedResourceMetadata

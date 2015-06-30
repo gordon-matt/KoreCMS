@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web.Hosting;
 
-namespace Kore.Web.Mvc.EmbeddedViews
+namespace Kore.Web.Mvc.EmbeddedResources
 {
     public class EmbeddedResourceVirtualFile : VirtualFile
     {

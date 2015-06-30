@@ -29,7 +29,7 @@ using Kore.Web.IO.FileSystems.VirtualPath;
 using Kore.Web.Localization;
 using Kore.Web.Localization.Services;
 using Kore.Web.Mobile;
-using Kore.Web.Mvc.EmbeddedViews;
+using Kore.Web.Mvc.EmbeddedResources;
 using Kore.Web.Mvc.Notify;
 using Kore.Web.Mvc.Resources;
 using Kore.Web.Mvc.Routing;

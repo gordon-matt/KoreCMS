@@ -96,7 +96,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 {
                     if (isChildAction)
                     {
-                        return PartialView();
+                        return PartialView(model);
                     }
                     return View(model);
                 }

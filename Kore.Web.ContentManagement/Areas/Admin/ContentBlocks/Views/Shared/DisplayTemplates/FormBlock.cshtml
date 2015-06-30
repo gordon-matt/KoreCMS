@@ -11,6 +11,12 @@
     string formId = "form-block-" + Model.Id;
 }
 
+<style type="text/css">
+    .modal-dialog {
+        width: 30% !important;
+    }
+</style>
+
 <form id="@formId" method="post" action="@Url.Action("Save", "FormBlock", new { area = string.Empty })" enctype="multipart/form-data">
     @Html.HiddenFor(m => m.Id)
     @Html.HiddenFor(m => m.ThankYouMessage)
@@ -39,30 +45,51 @@
 
 @if (Model.UseAjax)
 {
-    <script type="text/javascript">
-        if (!window.jQuery) {
-            document.write('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"><\/script>');
-        }
-    </script>
-    <script type="text/javascript">
-        $("#@formId").submit(function (e) {
-            $.ajax({
-                url: "@Url.Action("Save", "FormBlock", new { area = string.Empty })",
-                type: "POST",
-                data: $('#@formId').serialize()
-            })
-            .done(function (json) {
-                alert(json.Message);
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    @*<h4 class="modal-title">Modal Title</h4>*@
+                </div>
+                <div class="modal-body">
+                    <p id="modal-message"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    using (Script.AtFoot())
+    { 
+        <script type="text/javascript">
+            if (!window.jQuery) {
+                document.write('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"><\/script>');
+            }
+        </script>
+        <script type="text/javascript">
+            $("#@formId").submit(function (e) {
+                $.ajax({
+                    url: "@Url.Action("Save", "FormBlock", new { area = string.Empty })",
+                    type: "POST",
+                    data: $('#@formId').serialize()
+                })
+                .done(function (json) {
+                    $('#modal-message').html(json.Message);
+                    $('#myModal').show();
 
-                if (json.Success) {
-                    window.location = json.RedirectUrl;
-                }
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                alert(jqXHR.responseText || textStatus + ': ' + errorThrown);
+                    // Wait 2 seconds before redirect
+                    setTimeout(function () {
+                        if (json.Success) {
+                            window.location = json.RedirectUrl;
+                        }
+                    }, 2000);
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    alert(jqXHR.responseText || textStatus + ': ' + errorThrown);
+                });
+
+                return false;
             });
-
-            return false;
-        });
-    </script>
+        </script>
+    }
 }

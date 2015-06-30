@@ -17,10 +17,10 @@
 }
 
 <div class="row">
-    <div id="store-filter" class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+    <div id="store-filter" class="col-xs-12 col-sm-4 col-md-2 col-lg-2">
         @Html.Action("Filter", "Store", new { area = string.Empty })
     </div>
-    <div id="categories-container" class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+    <div id="categories-container" class="col-xs-12 col-sm-8 col-md-10 col-lg-10">
         @foreach (var entry in Model)
         {
             if (loopCount == 1)

@@ -19,6 +19,7 @@
             public const string Edit = "Kore.Web/General.Edit";
             public const string EditFormat = "Kore.Web/General.EditFormat";
             public const string Enabled = "Kore.Web/General.Enabled";
+            public const string Error = "Kore.Web/General.Error";
             public const string Export = "Kore.Web/General.Export";
             public const string Home = "Kore.Web/General.Home";
             public const string Import = "Kore.Web/General.Import";
@@ -36,6 +37,7 @@
             public const string SetDefault = "Kore.Web/General.SetDefault";
             public const string Settings = "Kore.Web/General.Settings";
             public const string Submit = "Kore.Web/General.Submit";
+            public const string Success = "Kore.Web/General.Success";
             public const string Themes = "Kore.Web/General.Themes";
             public const string Toggle = "Kore.Web/General.Toggle";
             public const string Uninstall = "Kore.Web/General.Uninstall";

@@ -20,6 +20,7 @@
     //force_p_newlines: false,
     //forced_root_block: '',
     height: 400,
+    allow_script_urls: true,
     external_filemanager_path: "/filemanager/",
     external_plugins: { "filemanager": "/filemanager/plugin.min.js" },
 };

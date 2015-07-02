@@ -24,7 +24,7 @@
     allow_events: true,
     external_filemanager_path: "/filemanager/",
     external_plugins: { "filemanager": "/filemanager/plugin.min.js" },
-    extended_valid_elements: "a[name|href|target|title|onclick],iframe[height|width|src],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]"
+    extended_valid_elements: "a[name|href|target|title|onclick|class|style],iframe[height|width|src],img[class|style|src|border=0|id|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]"
 };
 
 if (typeof tinyMCEContentCss !== 'undefined') {

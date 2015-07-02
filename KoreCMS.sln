@@ -132,6 +132,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Articles", "Articles", "{45
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Ecommerce.Simple", "Plugins\Kore.Plugins.Ecommerce.Simple\Kore.Plugins.Ecommerce.Simple.csproj", "{F8E56256-C629-49C7-94B7-6A0FE551ACED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Widgets.OwlCarousel", "Plugins\Kore.Plugins.Widgets.OwlCarousel\Kore.Plugins.Widgets.OwlCarousel.csproj", "{4AC641D7-94CD-449C-883D-E4C93363AF5D}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -230,6 +232,10 @@ Global
 		{F8E56256-C629-49C7-94B7-6A0FE551ACED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8E56256-C629-49C7-94B7-6A0FE551ACED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8E56256-C629-49C7-94B7-6A0FE551ACED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AC641D7-94CD-449C-883D-E4C93363AF5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AC641D7-94CD-449C-883D-E4C93363AF5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AC641D7-94CD-449C-883D-E4C93363AF5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AC641D7-94CD-449C-883D-E4C93363AF5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -254,5 +260,6 @@ Global
 		{F70F6F7F-2D80-4F3B-B14B-A7324BF2CBC6} = {EC957D42-20C5-4CCB-B47F-6DB7742CD966}
 		{45014FBA-49D2-4A37-A629-736054A2CBF3} = {FD60340E-B54E-4D09-B63A-58B37E79A3A2}
 		{F8E56256-C629-49C7-94B7-6A0FE551ACED} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
+		{4AC641D7-94CD-449C-883D-E4C93363AF5D} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 	EndGlobalSection
 EndGlobal

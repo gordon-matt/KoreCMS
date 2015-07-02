@@ -1,0 +1,36 @@
+﻿@using Kore.Infrastructure
+@using Kore.Plugins.Widgets.OwlCarousel.Extensions
+@using Kore.Plugins.Widgets.OwlCarousel.ContentBlocks
+@using Kore.Web.ContentManagement.Areas.Admin.Media.Services
+
+@model OwlCarouselBlock
+
+@{
+    Style.IncludePluginStyle("owl.carousel.css");
+    Style.IncludePluginStyle("owl.theme.css");
+    Style.IncludePluginStyle("owl.transitions.css");
+    Script.IncludePluginScript("owl.carousel.min.js");
+
+    var mediaService = EngineContext.Current.Resolve<IMediaService>();
+    var images = mediaService.GetMediaFiles(Model.MediaFolder);
+
+    var script = Model.ToHtmlString();
+}
+
+<div id="@Model.ControlId" class="owl-carousel owl-theme">
+    @foreach (var slide in images)
+    {
+        <div class="item">
+            @Html.Image(slide.MediaPath, slide.Name)
+        </div>
+    }
+</div>
+
+@using (Script.AtFoot())
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @script
+        });
+    </script>
+}

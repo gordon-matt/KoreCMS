@@ -1,0 +1,563 @@
+﻿@using Kore.Plugins.Widgets.OwlCarousel
+@using Kore.Web.ContentManagement
+@using Kore.Plugins.Widgets.OwlCarousel.ContentBlocks
+
+@model OwlCarouselBlock
+
+<div id="block-content">
+    @using (var tabs = Html.KoreUI().Begin(new Kore.Web.Mvc.KoreUI.Tabs()))
+    {
+        tabs.Tab(T(LocalizableStrings.OwlCarouselBlock.EditorTabs.General), "tab-general");
+        tabs.Tab(T(LocalizableStrings.OwlCarouselBlock.EditorTabs.ItemOptions), "tab-item-options");
+        tabs.Tab(T(LocalizableStrings.OwlCarouselBlock.EditorTabs.Advanced), "tab-advanced");
+        tabs.Tab(T(LocalizableStrings.OwlCarouselBlock.EditorTabs.Callbacks), "tab-callbacks");
+
+        using (var tab = tabs.BeginPanel())
+        {
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MediaFolder, new { @class = "control-label" })
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.MediaFolder, new { @class = "form-control", data_bind = "value: mediaFolder" })
+                        <span class="input-group-addon">
+                            <a data-toggle="modal" href="javascript:void(0);" data-target="#myModal">
+                                <i class="kore-icon kore-icon-search"></i>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ControlId, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ControlId, new { @class = "form-control", data_bind = "value: controlId" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SlideSpeed, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.SlideSpeed, new { @class = "form-control", data_bind = "value: slideSpeed" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PaginationSpeed, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.PaginationSpeed, new { @class = "form-control", data_bind = "value: paginationSpeed" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RewindSpeed, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.RewindSpeed, new { @class = "form-control", data_bind = "value: rewindSpeed" })
+                </div>
+            </div>
+             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(m => m.AutoPlay, new { data_bind = "checked: autoPlay" }) @T(LocalizableStrings.OwlCarouselBlock.AutoPlay)
+                    </label>
+                </div>
+                 <div class="checkbox">
+                     <label>
+                         @Html.CheckBoxFor(m => m.StopOnHover, new { data_bind = "checked: stopOnHover" }) @T(LocalizableStrings.OwlCarouselBlock.StopOnHover)
+                     </label>
+                 </div>
+                 <div class="checkbox">
+                     <label>
+                         @Html.CheckBoxFor(m => m.Navigation, new { data_bind = "checked: navigation" }) @T(LocalizableStrings.OwlCarouselBlock.Navigation)
+                     </label>
+                 </div>
+                 <div class="checkbox">
+                     <label>
+                         @Html.CheckBoxFor(m => m.RewindNav, new { data_bind = "checked: rewindNav" }) @T(LocalizableStrings.OwlCarouselBlock.RewindNav)
+                     </label>
+                 </div>
+                 <div class="checkbox">
+                     <label>
+                         @Html.CheckBoxFor(m => m.ScrollPerPage, new { data_bind = "checked: scrollPerPage" }) @T(LocalizableStrings.OwlCarouselBlock.ScrollPerPage)
+                     </label>
+                 </div>
+                 <div class="checkbox">
+                     <label>
+                         @Html.CheckBoxFor(m => m.Pagination, new { data_bind = "checked: pagination" }) @T(LocalizableStrings.OwlCarouselBlock.Pagination)
+                     </label>
+                 </div>
+                 <div class="checkbox">
+                     <label>
+                         @Html.CheckBoxFor(m => m.PaginationNumbers, new { data_bind = "checked: paginationNumbers" }) @T(LocalizableStrings.OwlCarouselBlock.PaginationNumbers)
+                     </label>
+                 </div>
+                 <div class="checkbox">
+                     <label>
+                         @Html.CheckBoxFor(m => m.Responsive, new { data_bind = "checked: responsive" }) @T(LocalizableStrings.OwlCarouselBlock.Responsive)
+                     </label>
+                 </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AutoPlaySpeed, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.AutoPlaySpeed, new { @class = "form-control", data_bind = "value: autoPlaySpeed" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NavigationText, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.NavigationText, new { @class = "form-control", data_bind = "value: navigationText" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ResponsiveRefreshRate, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ResponsiveRefreshRate, new { @class = "form-control", data_bind = "value: responsiveRefreshRate" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ResponsiveBaseWidth, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ResponsiveBaseWidth, new { @class = "form-control", data_bind = "value: responsiveBaseWidth" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.BaseClass, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.BaseClass, new { @class = "form-control", data_bind = "value: baseClass" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Theme, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Theme, new { @class = "form-control", data_bind = "value: theme" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(m => m.LazyLoad, new { data_bind = "checked: lazyLoad" }) @T(LocalizableStrings.OwlCarouselBlock.LazyLoad)
+                    </label>
+                </div>
+                 <div class="checkbox">
+                     <label>
+                         @Html.CheckBoxFor(m => m.AutoHeight, new { data_bind = "checked: autoHeight" }) @T(LocalizableStrings.OwlCarouselBlock.AutoHeight)
+                     </label>
+                 </div>
+                 <div class="checkbox">
+                     <label>
+                         @Html.CheckBoxFor(m => m.MouseDrag, new { data_bind = "checked: mouseDrag" }) @T(LocalizableStrings.OwlCarouselBlock.MouseDrag)
+                     </label>
+                 </div>
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(m => m.TouchDrag, new { data_bind = "checked: touchDrag" }) @T(LocalizableStrings.OwlCarouselBlock.TouchDrag)
+                    </label>
+                </div>
+            </div>
+        }
+
+        using (var tab = tabs.BeginPanel())
+        {
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Items, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Items, new { @class = "form-control", data_bind = "value: items" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ItemsDesktop, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ItemsDesktop, new { @class = "form-control", data_bind = "value: itemsDesktop" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ItemsDesktopSmall, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ItemsDesktopSmall, new { @class = "form-control", data_bind = "value: itemsDesktopSmall" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ItemsTablet, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ItemsTablet, new { @class = "form-control", data_bind = "value: itemsTablet" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ItemsTabletSmall, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ItemsTabletSmall, new { @class = "form-control", data_bind = "value: itemsTabletSmall" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ItemsMobile, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ItemsMobile, new { @class = "form-control", data_bind = "value: itemsMobile" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ItemsCustom, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.ItemsCustom, new { @class = "form-control", data_bind = "value: itemsCustom" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(m => m.SingleItem, new { data_bind = "checked: singleItem" }) @T(LocalizableStrings.OwlCarouselBlock.SingleItem)
+                    </label>
+                </div>
+                 <div class="checkbox">
+                     <label>
+                         @Html.CheckBoxFor(m => m.ItemsScaleUp, new { data_bind = "checked: itemsScaleUp" }) @T(LocalizableStrings.OwlCarouselBlock.ItemsScaleUp)
+                     </label>
+                 </div>
+            </div>
+        }
+
+        using (var tab = tabs.BeginPanel())
+        {
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(m => m.LazyFollow, new { data_bind = "checked: lazyFollow" }) @T(LocalizableStrings.OwlCarouselBlock.LazyFollow)
+                    </label>
+                </div>
+                 <div class="checkbox">
+                     <label>
+                         @Html.CheckBoxFor(m => m.DragBeforeAnimFinish, new { data_bind = "checked: dragBeforeAnimFinish" }) @T(LocalizableStrings.OwlCarouselBlock.DragBeforeAnimFinish)
+                     </label>
+                 </div>
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(m => m.AddClassActive, new { data_bind = "checked: addClassActive" }) @T(LocalizableStrings.OwlCarouselBlock.AddClassActive)
+                    </label>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.JsonPath, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.JsonPath, new { @class = "form-control", data_bind = "value: jsonPath" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.JsonSuccess, new { @class = "control-label" })
+                    @Html.TextAreaFor(m => m.JsonSuccess, new { @class = "form-control", data_bind = "value: jsonSuccess" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.LazyEffect, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.LazyEffect, new { @class = "form-control", data_bind = "value: lazyEffect" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TransitionStyle, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.TransitionStyle, new { @class = "form-control", data_bind = "value: transitionStyle" })
+                </div>
+            </div>
+        }
+
+        using (var tab = tabs.BeginPanel())
+        {
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.BeforeUpdate, new { @class = "control-label" })
+                    @Html.TextAreaFor(m => m.BeforeUpdate, new { @class = "form-control", data_bind = "value: beforeUpdate" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AfterUpdate, new { @class = "control-label" })
+                    @Html.TextAreaFor(m => m.AfterUpdate, new { @class = "form-control", data_bind = "value: afterUpdate" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.BeforeInit, new { @class = "control-label" })
+                    @Html.TextAreaFor(m => m.BeforeInit, new { @class = "form-control", data_bind = "value: beforeInit" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AfterInit, new { @class = "control-label" })
+                    @Html.TextAreaFor(m => m.AfterInit, new { @class = "form-control", data_bind = "value: afterInit" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.BeforeMove, new { @class = "control-label" })
+                    @Html.TextAreaFor(m => m.BeforeMove, new { @class = "form-control", data_bind = "value: beforeMove" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AfterMove, new { @class = "control-label" })
+                    @Html.TextAreaFor(m => m.AfterMove, new { @class = "form-control", data_bind = "value: afterMove" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AfterAction, new { @class = "control-label" })
+                    @Html.TextAreaFor(m => m.AfterAction, new { @class = "form-control", data_bind = "value: afterAction" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.StartDragging, new { @class = "control-label" })
+                    @Html.TextAreaFor(m => m.StartDragging, new { @class = "form-control", data_bind = "value: startDragging" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AfterLazyLoad, new { @class = "control-label" })
+                    @Html.TextAreaFor(m => m.AfterLazyLoad, new { @class = "form-control", data_bind = "value: afterLazyLoad" })
+                </div>
+            </div>
+        }
+    }
+
+    <style type="text/css">
+        .modal-dialog {
+            width: 80% !important;
+        }
+    </style>
+
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Select Image</h4>
+                </div>
+                <div class="modal-body">
+                    <iframe src="/filemanager/dialog.php?type=1&fldr=&relative_url=1&field_id=MediaFolder&ignore_last_position=1" frameborder="0" style="overflow:hidden;min-height:600px; height:100%;width:100%" height="100%" width="100%"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myModal').on('hidden.bs.modal', function () {
+            var url = $('#MediaFolder').val();
+            var idx = url.indexOf("Uploads");
+            url = url.substring(idx);
+            viewModel.mediaFolder(url);
+        })
+    });
+
+    var contentBlockModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.mediaFolder = ko.observable("");
+            viewModel.controlId = ko.observable("owl-carousel");
+            viewModel.slideSpeed = ko.observable(200);
+            viewModel.paginationSpeed = ko.observable(800);
+            viewModel.rewindSpeed = ko.observable(1000);
+            viewModel.autoPlay = ko.observable(false);
+            viewModel.autoPlaySpeed = ko.observable(5000);
+            viewModel.stopOnHover = ko.observable(false);
+            viewModel.navigation = ko.observable(false);
+            viewModel.navigationText = ko.observable('["prev","next"]');
+            viewModel.rewindNav = ko.observable(true);
+            viewModel.scrollPerPage = ko.observable(false);
+            viewModel.pagination = ko.observable(true);
+            viewModel.paginationNumbers = ko.observable(false);
+            viewModel.responsive = ko.observable(true);
+            viewModel.responsiveRefreshRate = ko.observable(200);
+            viewModel.responsiveBaseWidth = ko.observable('window');
+            viewModel.baseClass = ko.observable('owl-carousel');
+            viewModel.theme = ko.observable('owl-theme');
+            viewModel.lazyLoad = ko.observable(false);
+            viewModel.autoHeight = ko.observable(false);
+            viewModel.mouseDrag = ko.observable(true);
+            viewModel.touchDrag = ko.observable(true);
+            viewModel.items = ko.observable(5);
+            viewModel.itemsDesktop = ko.observable('[1199,4]');
+            viewModel.itemsDesktopSmall = ko.observable('[979,3]');
+            viewModel.itemsTablet = ko.observable('[768,2]');
+            viewModel.itemsTabletSmall = ko.observable(null);
+            viewModel.itemsMobile = ko.observable('[479,1]');
+            viewModel.itemsCustom = ko.observable(null);
+            viewModel.singleItem = ko.observable(false);
+            viewModel.itemsScaleUp = ko.observable(false);
+            viewModel.jsonPath = ko.observable(null);
+            viewModel.jsonSuccess = ko.observable(null);
+            viewModel.lazyFollow = ko.observable(true);
+            viewModel.lazyEffect = ko.observable('fade');
+            viewModel.dragBeforeAnimFinish = ko.observable(true);
+            viewModel.addClassActive = ko.observable(false);
+            viewModel.transitionStyle = ko.observable(null);
+            viewModel.beforeUpdate = ko.observable(null);
+            viewModel.afterUpdate = ko.observable(null);
+            viewModel.beforeInit = ko.observable(null);
+            viewModel.afterInit = ko.observable(null);
+            viewModel.beforeMove = ko.observable(null);
+            viewModel.afterMove = ko.observable(null);
+            viewModel.afterAction = ko.observable(null);
+            viewModel.startDragging = ko.observable(null);
+            viewModel.afterLazyLoad = ko.observable(null);
+
+            var data = ko.mapping.fromJSON(viewModel.blockValues());
+
+            if ((isFunction(data) && data()) || data) {
+                if (data.MediaFolder == undefined) {
+                    // If this is not set, it means the contentBlock is new and we have nothing in blockValues
+                    return;
+                }
+                viewModel.mediaFolder(data.MediaFolder());
+                viewModel.controlId(data.ControlId());
+                viewModel.slideSpeed(data.SlideSpeed());
+                viewModel.paginationSpeed(data.PaginationSpeed());
+                viewModel.rewindSpeed(data.RewindSpeed());
+                viewModel.autoPlay(data.AutoPlay());
+                viewModel.autoPlaySpeed(data.AutoPlaySpeed());
+                viewModel.stopOnHover(data.StopOnHover());
+                viewModel.navigation(data.Navigation());
+                viewModel.navigationText(data.NavigationText());
+                viewModel.rewindNav(data.RewindNav());
+                viewModel.scrollPerPage(data.ScrollPerPage());
+                viewModel.pagination(data.Pagination());
+                viewModel.paginationNumbers(data.PaginationNumbers());
+                viewModel.responsive(data.Responsive());
+                viewModel.responsiveRefreshRate(data.ResponsiveRefreshRate());
+                viewModel.responsiveBaseWidth(data.ResponsiveBaseWidth());
+                viewModel.baseClass(data.BaseClass());
+                viewModel.theme(data.Theme());
+                viewModel.lazyLoad(data.LazyLoad());
+                viewModel.autoHeight(data.AutoHeight());
+                viewModel.mouseDrag(data.MouseDrag());
+                viewModel.touchDrag(data.TouchDrag());
+                viewModel.items(data.Items());
+                viewModel.itemsDesktop(data.ItemsDesktop());
+                viewModel.itemsDesktopSmall(data.ItemsDesktopSmall());
+                viewModel.itemsTablet(data.ItemsTablet());
+                viewModel.itemsTabletSmall(data.ItemsTabletSmall());
+                viewModel.itemsMobile(data.ItemsMobile());
+                viewModel.itemsCustom(data.ItemsCustom());
+                viewModel.singleItem(data.SingleItem());
+                viewModel.itemsScaleUp(data.ItemsScaleUp());
+                viewModel.jsonPath(data.JsonPath());
+                viewModel.jsonSuccess(data.JsonSuccess());
+                viewModel.lazyFollow(data.LazyFollow());
+                viewModel.lazyEffect(data.LazyEffect());
+                viewModel.dragBeforeAnimFinish(data.DragBeforeAnimFinish());
+                viewModel.addClassActive(data.AddClassActive());
+                viewModel.transitionStyle(data.TransitionStyle());
+                viewModel.beforeUpdate(data.BeforeUpdate());
+                viewModel.afterUpdate(data.AfterUpdate());
+                viewModel.beforeInit(data.BeforeInit());
+                viewModel.afterInit(data.AfterInit());
+                viewModel.beforeMove(data.BeforeMove());
+                viewModel.afterMove(data.AfterMove());
+                viewModel.afterAction(data.AfterAction());
+                viewModel.startDragging(data.StartDragging());
+                viewModel.afterLazyLoad(data.AfterLazyLoad());
+            }
+        };
+        f.cleanUp = function () {
+            delete viewModel.mediaFolder;
+            delete viewModel.controlId;
+            delete viewModel.slideSpeed;
+            delete viewModel.paginationSpeed;
+            delete viewModel.rewindSpeed;
+            delete viewModel.autoPlay;
+            delete viewModel.autoPlaySpeed;
+            delete viewModel.stopOnHover;
+            delete viewModel.navigation;
+            delete viewModel.navigationText;
+            delete viewModel.rewindNav;
+            delete viewModel.scrollPerPage;
+            delete viewModel.pagination;
+            delete viewModel.paginationNumbers;
+            delete viewModel.responsive;
+            delete viewModel.responsiveRefreshRate;
+            delete viewModel.responsiveBaseWidth;
+            delete viewModel.baseClass;
+            delete viewModel.theme;
+            delete viewModel.lazyLoad;
+            delete viewModel.autoHeight;
+            delete viewModel.mouseDrag;
+            delete viewModel.touchDrag;
+            delete viewModel.items;
+            delete viewModel.itemsDesktop;
+            delete viewModel.itemsDesktopSmall;
+            delete viewModel.itemsTablet;
+            delete viewModel.itemsTabletSmall;
+            delete viewModel.itemsMobile;
+            delete viewModel.itemsCustom;
+            delete viewModel.singleItem;
+            delete viewModel.itemsScaleUp;
+            delete viewModel.jsonPath;
+            delete viewModel.jsonSuccess;
+            delete viewModel.lazyFollow;
+            delete viewModel.lazyEffect;
+            delete viewModel.dragBeforeAnimFinish;
+            delete viewModel.addClassActive;
+            delete viewModel.transitionStyle;
+            delete viewModel.beforeUpdate;
+            delete viewModel.afterUpdate;
+            delete viewModel.beforeInit;
+            delete viewModel.afterInit;
+            delete viewModel.beforeMove;
+            delete viewModel.afterMove;
+            delete viewModel.afterAction;
+            delete viewModel.startDragging;
+            delete viewModel.afterLazyLoad;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                MediaFolder: viewModel.mediaFolder(),
+                ControlId: viewModel.controlId(),
+                SlideSpeed: viewModel.slideSpeed(),
+                PaginationSpeed: viewModel.paginationSpeed(),
+                RewindSpeed: viewModel.rewindSpeed(),
+                AutoPlay: viewModel.autoPlay(),
+                AutoPlaySpeed: viewModel.autoPlaySpeed(),
+                StopOnHover: viewModel.stopOnHover(),
+                Navigation: viewModel.navigation(),
+                NavigationText: viewModel.navigationText(),
+                RewindNav: viewModel.rewindNav(),
+                ScrollPerPage: viewModel.scrollPerPage(),
+                Pagination: viewModel.pagination(),
+                PaginationNumbers: viewModel.paginationNumbers(),
+                Responsive: viewModel.responsive(),
+                ResponsiveRefreshRate: viewModel.responsiveRefreshRate(),
+                ResponsiveBaseWidth: viewModel.responsiveBaseWidth(),
+                BaseClass: viewModel.baseClass(),
+                Theme: viewModel.theme(),
+                LazyLoad: viewModel.lazyLoad(),
+                AutoHeight: viewModel.autoHeight(),
+                MouseDrag: viewModel.mouseDrag(),
+                TouchDrag: viewModel.touchDrag(),
+                Items: viewModel.items(),
+                ItemsDesktop: viewModel.itemsDesktop(),
+                ItemsDesktopSmall: viewModel.itemsDesktopSmall(),
+                ItemsTablet: viewModel.itemsTablet(),
+                ItemsTabletSmall: viewModel.itemsTabletSmall(),
+                ItemsMobile: viewModel.itemsMobile(),
+                ItemsCustom: viewModel.itemsCustom(),
+                SingleItem: viewModel.singleItem(),
+                ItemsScaleUp: viewModel.itemsScaleUp(),
+                JsonPath: viewModel.jsonPath(),
+                JsonSuccess: viewModel.jsonSuccess(),
+                LazyFollow: viewModel.lazyFollow(),
+                LazyEffect: viewModel.lazyEffect(),
+                DragBeforeAnimFinish: viewModel.dragBeforeAnimFinish(),
+                AddClassActive: viewModel.addClassActive(),
+                TransitionStyle: viewModel.transitionStyle(),
+                BeforeUpdate: viewModel.beforeUpdate(),
+                AfterUpdate: viewModel.afterUpdate(),
+                BeforeInit: viewModel.beforeInit(),
+                AfterInit: viewModel.afterInit(),
+                BeforeMove: viewModel.beforeMove(),
+                AfterMove: viewModel.afterMove(),
+                AfterAction: viewModel.afterAction(),
+                StartDragging: viewModel.startDragging(),
+                AfterLazyLoad: viewModel.afterLazyLoad(),
+            };
+            viewModel.blockValues(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
+</script>

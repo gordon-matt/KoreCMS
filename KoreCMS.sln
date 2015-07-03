@@ -22,7 +22,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_SolutionItems", "{FD60340E-B54E-4D09-B63A-58B37E79A3A2}"
 	ProjectSection(SolutionItems) = preProject
 		_SolutionItems\Licenses.txt = _SolutionItems\Licenses.txt
-		_SolutionItems\TODO.txt = _SolutionItems\TODO.txt
 		_SolutionItems\ToDo.xlsx = _SolutionItems\ToDo.xlsx
 	EndProjectSection
 EndProject

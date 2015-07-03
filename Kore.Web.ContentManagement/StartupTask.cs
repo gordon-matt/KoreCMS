@@ -33,9 +33,9 @@ namespace Kore.Web.ContentManagement
             {
                 Id = Guid.NewGuid(),
                 Name = x.Name,
-                LayoutPath = KoreWebConstants.DefaultFrontendLayoutPath,
-                DisplayTemplatePath = x.DisplayTemplatePath,
-                EditorTemplatePath = x.EditorTemplatePath
+                // Commented this out, so that if it's NULL, we will use the currently set layout path instead (no need to
+                //  remember to reset this one).
+                //LayoutPath = KoreWebConstants.DefaultFrontendLayoutPath
             }).ToList();
 
             if (!pageTypesToAdd.IsNullOrEmpty())

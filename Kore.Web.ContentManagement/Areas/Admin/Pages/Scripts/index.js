@@ -6,8 +6,6 @@ var PageTypeVM = function () {
     self.id = ko.observable(emptyGuid);
     self.name = ko.observable(null);
     self.layoutPath = ko.observable(null);
-    self.displayTemplatePath = ko.observable(null);
-    self.editorTemplatePath = ko.observable(null);
 
     self.edit = function (id) {
         $.ajax({
@@ -19,9 +17,13 @@ var PageTypeVM = function () {
         .done(function (json) {
             self.id(json.Id);
             self.name(json.Name);
-            self.layoutPath(json.LayoutPath);
-            self.displayTemplatePath(json.DisplayTemplatePath);
-            self.editorTemplatePath(json.EditorTemplatePath);
+
+            if (json.LayoutPath) {
+                self.layoutPath(json.LayoutPath);
+            }
+            else {
+                self.layoutPath(defaultFrontendLayoutPath);
+            }
 
             self.validator.resetForm();
             switchSection($("#page-type-form-section"));
@@ -64,9 +66,7 @@ var PageTypeVM = function () {
         var record = {
             Id: self.id(),
             Name: self.name(),
-            LayoutPath: self.layoutPath(),
-            DisplayTemplatePath: self.displayTemplatePath(),
-            EditorTemplatePath: self.editorTemplatePath()
+            LayoutPath: self.layoutPath()
         };
 
         if (isNew) {
@@ -125,9 +125,7 @@ var PageTypeVM = function () {
     self.validator = $("#page-type-form-section-form").validate({
         rules: {
             Name: { required: true, maxlength: 255 },
-            LayoutPath: { required: true, maxlength: 255 },
-            DisplayTemplatePath: { maxlength: 255 },
-            EditorTemplatePath: { maxlength: 255 }
+            LayoutPath: { required: true, maxlength: 255 }
         }
     });
 };

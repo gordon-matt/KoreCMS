@@ -18,7 +18,7 @@ namespace Kore.Web.Mvc.Themes
 
         internal Func<string, string> GetExtensionThunk;
 
-        private readonly string[] _emptyLocations = null;
+        private readonly string[] _emptyLocations = new string[0];
         private readonly string _mobileViewModifier = "Mobile";
 
         #endregion Fields
@@ -57,22 +57,22 @@ namespace Kore.Web.Mvc.Themes
             }
             string areaName = GetAreaName(controllerContext.RouteData);
 
-            //little hack to get Kore's admin area to be in /Administration/ instead of /Kore/Admin/ or Areas/Admin/
-            if (!string.IsNullOrEmpty(areaName) && areaName.Equals("admin", StringComparison.InvariantCultureIgnoreCase))
-            {
-                //admin area does not support mobile devices
-                if (mobile)
-                {
-                    searchedLocations = new string[0];
-                    return string.Empty;
-                }
-                var newLocations = areaLocations.ToList();
-                newLocations.Insert(0, "~/Administration/Views/{1}/{0}.cshtml");
-                newLocations.Insert(0, "~/Administration/Views/{1}/{0}.vbhtml");
-                newLocations.Insert(0, "~/Administration/Views/Shared/{0}.cshtml");
-                newLocations.Insert(0, "~/Administration/Views/Shared/{0}.vbhtml");
-                areaLocations = newLocations.ToArray();
-            }
+            ////little hack to get Kore's admin area to be in /Administration/ instead of /Kore/Admin/ or Areas/Admin/
+            //if (!string.IsNullOrEmpty(areaName) && areaName.Equals("admin", StringComparison.InvariantCultureIgnoreCase))
+            //{
+            //    //admin area does not support mobile devices
+            //    if (mobile)
+            //    {
+            //        searchedLocations = new string[0];
+            //        return string.Empty;
+            //    }
+            //    var newLocations = areaLocations.ToList();
+            //    newLocations.Insert(0, "~/Administration/Views/{1}/{0}.cshtml");
+            //    newLocations.Insert(0, "~/Administration/Views/{1}/{0}.vbhtml");
+            //    newLocations.Insert(0, "~/Administration/Views/Shared/{0}.cshtml");
+            //    newLocations.Insert(0, "~/Administration/Views/Shared/{0}.vbhtml");
+            //    areaLocations = newLocations.ToArray();
+            //}
 
             bool hasAreaName = !string.IsNullOrEmpty(areaName);
             List<ViewLocation> viewLocations = GetViewLocations(locations, hasAreaName ? areaLocations : null, controllerContext);
@@ -268,7 +268,7 @@ namespace Kore.Web.Mvc.Themes
 
         protected virtual ViewEngineResult FindThemeablePartialView(ControllerContext controllerContext, string partialViewName, bool useCache, bool mobile)
         {
-            string[] partialViewPathSearchedLocations;
+            string[] partialViewPathSearchedLocations = new string[0];
 
             if (controllerContext == null)
             {

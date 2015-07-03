@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_Solution
 	ProjectSection(SolutionItems) = preProject
 		_SolutionItems\Licenses.txt = _SolutionItems\Licenses.txt
 		_SolutionItems\TODO.txt = _SolutionItems\TODO.txt
+		_SolutionItems\ToDo.xlsx = _SolutionItems\ToDo.xlsx
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}"

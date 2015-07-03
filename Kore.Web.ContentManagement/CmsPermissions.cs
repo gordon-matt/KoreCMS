@@ -53,6 +53,13 @@ namespace Kore.Web.ContentManagement
 
         #endregion Messaging
 
+        #region Newsletter
+
+        public static readonly Permission NewsletterRead = new Permission { Name = "Newsletter_Read", Category = "Content Management", Description = "Newsletter: Read" };
+        public static readonly Permission NewsletterWrite = new Permission { Name = "Newsletter_Write", Category = "Content Management", Description = "Newsletter: Write" };
+
+        #endregion Newsletter
+
         #region Pages
 
         public static readonly Permission PageHistoryRead = new Permission { Name = "PageHistory_Read", Category = "Content Management", Description = "Page History: Read" };
@@ -95,6 +102,10 @@ namespace Kore.Web.ContentManagement
 
             yield return MessageTemplatesRead;
             yield return MessageTemplatesWrite;
+
+            yield return NewsletterRead;
+            yield return NewsletterWrite;
+
             yield return QueuedEmailsRead;
             yield return QueuedEmailsWrite;
 

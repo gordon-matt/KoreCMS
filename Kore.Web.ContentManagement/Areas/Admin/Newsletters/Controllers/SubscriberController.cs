@@ -39,7 +39,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(StandardPermissions.FullAccess))
+            if (!CheckPermission(CmsPermissions.NewsletterRead))
             {
                 return new HttpUnauthorizedResult();
             }

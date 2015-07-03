@@ -30,7 +30,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
         [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         public IQueryable<Subscriber> Get()
         {
-            if (!CheckPermission(StandardPermissions.FullAccess))
+            if (!CheckPermission(CmsPermissions.NewsletterRead))
             {
                 return Enumerable.Empty<Subscriber>().AsQueryable();
             }
@@ -54,7 +54,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
         [EnableQuery]
         public SingleResult<Subscriber> Get([FromODataUri] string key)
         {
-            if (!CheckPermission(StandardPermissions.FullAccess))
+            if (!CheckPermission(CmsPermissions.NewsletterRead))
             {
                 return SingleResult.Create(Enumerable.Empty<Subscriber>().AsQueryable());
             }
@@ -71,7 +71,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
 
         public IHttpActionResult Delete([FromODataUri] string key)
         {
-            if (!CheckPermission(StandardPermissions.FullAccess))
+            if (!CheckPermission(CmsPermissions.NewsletterWrite))
             {
                 return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
             }

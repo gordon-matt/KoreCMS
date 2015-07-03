@@ -28,7 +28,7 @@ namespace Kore.Web.Mvc.Resources
 
         protected override string VirtualBasePath
         {
-            get { return KoreWebConfigurationSection.WebInstance.Resources.Styles.VirtualBasePath; }
+            get { return KoreWebConfigurationSection.Instance.Resources.Styles.VirtualBasePath; }
         }
 
         //public override void IncludeBundle(string bundleName, int? order = null)

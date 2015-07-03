@@ -298,18 +298,6 @@
                                                 @Html.TextBox("PageType_LayoutPath", null, new { @class = "form-control", data_bind = "value: pageType.layoutPath" })
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <div class="form-group">
-                                                @Html.Label("PageType_DisplayTemplatePath", T(KoreCmsLocalizableStrings.Pages.PageTypeModel.DisplayTemplatePath), new { @class = "control-label" })
-                                                @Html.TextBox("PageType_DisplayTemplatePath", null, new { @class = "form-control", data_bind = "value: pageType.displayTemplatePath" })
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <div class="form-group">
-                                                @Html.Label("PageType_EditorTemplatePath", T(KoreCmsLocalizableStrings.Pages.PageTypeModel.EditorTemplatePath), new { @class = "control-label" })
-                                                @Html.TextBox("PageType_EditorTemplatePath", null, new { @class = "form-control", data_bind = "value: pageType.editorTemplatePath" })
-                                            </div>
-                                        </div>
                                     </fieldset>
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="form-group pull-right">
@@ -331,6 +319,7 @@
     <script type="text/javascript">
         var currentCulture = '@WorkContext.CurrentCultureCode';
         var gridPageSize = @SiteSettings.DefaultGridPageSize;
+        var defaultFrontendLayoutPath = '@KoreWebConstants.DefaultFrontendLayoutPath';
         var translations = {
             CircularRelationshipError: '@T(KoreCmsLocalizableStrings.Messages.CircularRelationshipError).Text',
             Create: '@T(KoreWebLocalizableStrings.General.Create).Text',

@@ -130,13 +130,17 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                 var korePageType = pageTypeService.GetKorePageType(pageType.Name);
                 korePageType.InstanceName = pageVersion.Title;
                 korePageType.InstanceParentId = pageVersion.Page.ParentId;
-                korePageType.LayoutPath = pageType.LayoutPath;
+
+                korePageType.LayoutPath = string.IsNullOrWhiteSpace(pageType.LayoutPath)
+                    ? KoreWebConstants.DefaultFrontendLayoutPath
+                    : pageType.LayoutPath;
+
                 korePageType.InitializeInstance(pageVersion);
 
                 var contentBlocks = contentBlockService.GetContentBlocks(pageVersion.PageId);
                 korePageType.ReplaceContentTokens(x => InsertContentBlocks(x, contentBlocks));
 
-                return View(pageType.DisplayTemplatePath, korePageType);
+                return View(korePageType.DisplayTemplatePath, korePageType);
             }
 
             return HttpNotFound();

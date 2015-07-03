@@ -33,7 +33,7 @@ namespace Kore.Web.Mvc.Resources
 
         protected override string VirtualBasePath
         {
-            get { return KoreWebConfigurationSection.WebInstance.Resources.Scripts.VirtualBasePath; }
+            get { return KoreWebConfigurationSection.Instance.Resources.Scripts.VirtualBasePath; }
         }
 
         public IDisposable AtFoot()

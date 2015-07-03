@@ -4,15 +4,11 @@ namespace Kore.Web.Configuration
 {
     public class KoreWebConfigurationSection : ConfigurationSection
     {
-        private static KoreWebConfigurationSection webInstance;
+        private static KoreWebConfigurationSection instance;
 
-        public static KoreWebConfigurationSection WebInstance
+        public static KoreWebConfigurationSection Instance
         {
-            get
-            {
-                return webInstance ??
-                       (webInstance = (KoreWebConfigurationSection)ConfigurationManager.GetSection("kore.web"));
-            }
+            get { return instance ?? (instance = (KoreWebConfigurationSection)ConfigurationManager.GetSection("kore.web")); }
         }
 
         [ConfigurationProperty("themes", IsRequired = false)]
@@ -25,6 +21,12 @@ namespace Kore.Web.Configuration
         public MobileConfigurationElement Mobile
         {
             get { return (MobileConfigurationElement)base["mobile"]; }
+        }
+
+        [ConfigurationProperty("httpCompression", IsRequired = false)]
+        public HttpCompressionConfigurationElement HttpCompression
+        {
+            get { return (HttpCompressionConfigurationElement)base["httpCompression"]; }
         }
 
         [ConfigurationProperty("resources", IsRequired = false)]

@@ -58,7 +58,7 @@ namespace Kore.Web.Mobile
         /// <returns>Result</returns>
         public virtual bool IsMobileDevice(HttpContextBase httpContext)
         {
-            if (KoreWebConfigurationSection.WebInstance.Mobile.EmulateMobileDevice)
+            if (KoreWebConfigurationSection.Instance.Mobile.EmulateMobileDevice)
             {
                 return true;
             }
@@ -92,7 +92,7 @@ namespace Kore.Web.Mobile
         /// </summary>
         public virtual bool MobileDevicesSupported()
         {
-            return KoreWebConfigurationSection.WebInstance.Mobile.MobileDevicesSupported;
+            return KoreWebConfigurationSection.Instance.Mobile.MobileDevicesSupported;
         }
 
         /// <summary>

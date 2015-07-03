@@ -20,7 +20,7 @@ namespace Kore.Web.Mvc.Themes
 
         public ThemeProvider(IWebHelper webHelper)
         {
-            basePath = webHelper.MapPath(KoreWebConfigurationSection.WebInstance.Themes.BasePath);
+            basePath = webHelper.MapPath(KoreWebConfigurationSection.Instance.Themes.BasePath);
             LoadConfigurations();
         }
 

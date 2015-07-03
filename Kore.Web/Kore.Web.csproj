@@ -178,6 +178,7 @@
     <Compile Include="Areas\Admin\ScheduledTasks\ScheduledTasksPermissions.cs" />
     <Compile Include="Collections\EnumerableExtensions.cs" />
     <Compile Include="Configuration\CaptchaSettings.cs" />
+    <Compile Include="Configuration\HttpCompressionConfigurationElement.cs" />
     <Compile Include="Configuration\ISettings.cs" />
     <Compile Include="Configuration\ISettingService.cs" />
     <Compile Include="Configuration\KoreWebConfigurationSection.cs" />

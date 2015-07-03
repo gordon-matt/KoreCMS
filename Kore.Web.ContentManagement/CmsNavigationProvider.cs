@@ -75,7 +75,7 @@ namespace Kore.Web.ContentManagement
             builder.Add(T(KoreCmsLocalizableStrings.Newsletters.Subscribers), "5", item => item
                 .Action("Index", "Subscriber", new { area = CmsConstants.Areas.Newsletters })
                 .IconCssClass("kore-icon kore-icon-subscribers")
-                .Permission(StandardPermissions.FullAccess));
+                .Permission(CmsPermissions.NewsletterRead));
 
             // XML Sitemap
             builder.Add(T(KoreCmsLocalizableStrings.Sitemap.XMLSitemap), "5", item => item

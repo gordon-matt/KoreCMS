@@ -8,7 +8,6 @@ PAGES:
 - move Page Types to separate page? Alternatively, make it more intuitive..
 - make custom tinymce config (cant have widget zones in other editors- its for pages only)
 - Delete sub pages when delete page (or move those subpages up 1 level)? Else they become orphans
-- Page Types: should editortemplatepath be overridable? maybe only display template?
 
 - invariant culture not showing on lang switch
 
@@ -23,10 +22,7 @@ PAGES:
 
 
 - add ORDER to regions (that way can have USA or whatever at top of dropdowns, for example)
--button to reset page type to default settings
 -EXPORT app_data on publish (and plugins)
-
-
 
 - PAYMENT SYSTEM abtraction..like nop
 
@@ -97,10 +93,8 @@ CACHE
 
 OTHER
 - Provide overloads for AutoMenu(), AutoSubmenu() and AutoBreadcrumbs() that don't require any template (just generate it for Bootstrap by default)
-- admin theme settings (left or top menu, which SmartAdmin colors etc)
 - need some way to provide descriptions/tooltips using an [Attribute] of some kind for widget properties (and page type properties too)..
 - new sitemap html page (see nop for example)
-		
 
 - better error page handling:
 	http://benfoster.io/blog/aspnet-mvc-custom-error-pages
@@ -119,10 +113,7 @@ OTHER
 
 - review all TODO notes
 
--remove media entities?
 - KoreUI: Icons
-- Content Blocks: Localization
-- Content Blocks: override template path (for display only)
 - dashboard widgets
 - blog, store, etc for google sitemap (some kind of IPageProvider that can be used commongly for sitemap and also auto menus?)
   
@@ -149,8 +140,6 @@ OTHER
   - REVISE AUTO CACHE KEYS IN Generic Service!! Because they might conflict (not unique) if have 2 entities with same name in diff library
   
 - thin arrow for treeview sub items?
-
-- HTML Helpers for generic ui layout (can have bootstrap provider, kendo provider, foundation provider, etc)...
 
 - use output caching more?
 - plugins should be published along with site
@@ -183,11 +172,6 @@ GOOGLE:
 OLDER NOTES
 ============================================================================================
 TODO:
-- CMS
-	- Lists
-	- SEO (Later)
-	- Backups (Later)
-	- Aliases (Later)
 - Razor intellisense not working for class libraries
 
 
@@ -199,29 +183,10 @@ http://html5doctor.com/the-contenteditable-attribute/
 - don't load dependencies from web dll.. instead, provide a static class which can do that (call it from main app) if the dev wants (default) or else they can override the registrations with their own in the main app
 
 
-95% DONE:
-- CMS:
-	- (DONE) Localization (In progress)
-	- (DONE) Menus
-	- (DONE) Messaging (Message Templates)
-	- (DONE) Widgets (In progress)
-	- (DONE) Pages
-- (DONE) Localization: Use some kind of interface so that any storage medium can be used (DB, XML, even RESX, etc)
-		NOTE: Might convert to NOP Localization or merge some of their ideas (like Localized Routes)
-- (DONE) Logging  (Needs TESTING)
-- (DONE) Caching  (Needs TESTING - especially in WinForms)- UPDATE 2014.09.11: Check if it supports distributed caching
-- (DONE) Events  (Needs TESTING)
-
-	TODO:
-	- Implement JQColumnAttribute class for models.. then user just needs to do: .AddColumnFor(m=> m.ColumnName)
-- web api security (its protected so only logged on users can use it, but we may need to make changes to have it open for mobile, etc.. later)
-	
-
 FUTURE:
 - Tenants (FUTURE VERSION - NOT INITIAL RELEASE)
 - IOC Container (DI)... make it so can use any.. Autofac, Ninject, etc..
 - Features System
-- jqGrid HTML Helper: SubGrid
 
 
 - forums plugin,
@@ -238,3 +203,10 @@ http://www.barebonescoder.com/2013/11/dapper-vs-ef-6-part-1-setting-up-dapper/
 
 IPlugin: a list of features can go here
 
+
+
+- web api security (its protected so only logged on users can use it, but we may need to make changes to have it open for mobile, etc.. later)
+	
+NOT REALLY NEEDED ANYMORE:
+- Implement JQColumnAttribute class for models.. then user just needs to do: .AddColumnFor(m=> m.ColumnName)
+- jqGrid HTML Helper: SubGrid

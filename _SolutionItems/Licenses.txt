@@ -50,7 +50,7 @@ NopCommerce
 	Format: Copied Source Code (and Modified)
 	Features Used: IoC Engine, Plugins, Theme Engine, Scheduled Tasks, Embedded Views
 	Version: 3.?? (Don't remember exactly)
-	License: NPL
+	License: NPL (Special Permission Given By nopCommerce Team)
 ==================================================================================================================
 Recaptcha for .NET:
 	Project Home: https://recaptchanet.codeplex.com/

@@ -153,6 +153,7 @@
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Scripts\zoneModel.js" />
     <Compile Include="Areas\Admin\ContentBlocks\Services\IEntityTypeContentBlockService.cs" />
     <Compile Include="Areas\Admin\Localization\Models\LanguagePackFile.cs" />
+    <Compile Include="Areas\Admin\Media\ContentBlocks\VideoBlock.cs" />
     <Compile Include="Areas\Admin\Media\Models\MediaFile.cs" />
     <Compile Include="Areas\Admin\Media\Models\MediaFolder.cs" />
     <Compile Include="Areas\Admin\Media\Services\IMediaPathProvider.cs" />
@@ -343,6 +344,8 @@
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\DisplayTemplates\BlogBlock.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\DisplayTemplates\LastNBlogEntriesBlock.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\EditorTemplates\LastNBlogEntriesBlock.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Media\Views\Shared\DisplayTemplates\VideoBlock.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Media\Views\Shared\EditorTemplates\VideoBlock.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\RichTextFull.cshtml" />

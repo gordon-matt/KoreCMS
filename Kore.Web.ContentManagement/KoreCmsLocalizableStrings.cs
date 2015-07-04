@@ -82,6 +82,17 @@
                 public const string SignUpLabel = "Kore.Web.ContentManagement/ContentBlocks.NewsletterSubscriptionBlock.SignUpLabel";
             }
 
+            public static class VideoBlock
+            {
+                public const string ControlId = "Kore.Web.ContentManagement/ContentBlocks.VideoBlock.ControlId";
+                public const string Type = "Kore.Web.ContentManagement/ContentBlocks.VideoBlock.Type";
+                public const string Source = "Kore.Web.ContentManagement/ContentBlocks.VideoBlock.Source";
+                public const string ShowControls = "Kore.Web.ContentManagement/ContentBlocks.VideoBlock.ShowControls";
+                public const string AutoPlay = "Kore.Web.ContentManagement/ContentBlocks.VideoBlock.AutoPlay";
+                public const string Loop = "Kore.Web.ContentManagement/ContentBlocks.VideoBlock.Loop";
+                public const string VideoTagNotSupported = "Kore.Web.ContentManagement/ContentBlocks.VideoBlock.VideoTagNotSupported";
+            }
+
             public static class ZoneModel
             {
                 public const string Name = "Kore.Web.ContentManagement/ContentBlocks.ZoneModel.Name";

@@ -11,6 +11,7 @@ using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.RuleEngine;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Localization;
+using Kore.Web.ContentManagement.Areas.Admin.Media.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging;
@@ -108,6 +109,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.RegisterType<HtmlBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<LanguageSwitchBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<NewsletterSubscriptionBlock>().As<IContentBlock>().InstancePerDependency();
+            builder.RegisterType<VideoBlock>().As<IContentBlock>().InstancePerDependency();
 
             #endregion Content Blocks
 

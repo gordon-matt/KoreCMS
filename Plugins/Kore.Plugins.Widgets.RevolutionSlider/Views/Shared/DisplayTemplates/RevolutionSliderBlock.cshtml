@@ -1,0 +1,39 @@
+﻿@using Kore.Infrastructure
+@using Kore.Plugins.Widgets.RevolutionSlider.Extensions
+@using Kore.Plugins.Widgets.RevolutionSlider.ContentBlocks
+@using Kore.Web.ContentManagement.Areas.Admin.Media.Services
+
+@model RevolutionSliderBlock
+
+@{
+    Style.IncludePluginStyle("settings.css");
+    Script.IncludePluginScript("jquery.themepunch.tools.min.js");
+    Script.IncludePluginScript("jquery.themepunch.revolution.min.js");
+
+    var mediaService = EngineContext.Current.Resolve<IMediaService>();
+    var images = mediaService.GetMediaFiles(Model.MediaFolder);
+
+    var script = Model.ToHtmlString();
+}
+
+<div class="bannercontainer">
+    <div id="@Model.ControlId" class="banner">
+        <ul>
+            @foreach (var slide in images)
+            {
+                <li>
+                    @Html.Image(slide.MediaPath, slide.Name)
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@using (Script.AtFoot())
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @script
+        });
+    </script>
+}

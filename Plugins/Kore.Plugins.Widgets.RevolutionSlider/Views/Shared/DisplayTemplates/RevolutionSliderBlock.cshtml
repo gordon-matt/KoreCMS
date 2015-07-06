@@ -22,7 +22,7 @@
             @foreach (var slide in images)
             {
                 <li>
-                    @Html.Image(slide.MediaPath, slide.Name)
+                    @Html.Image("http://placehold.it/350x150", slide.Name, new { data_lazyload = slide.MediaPath })
                 </li>
             }
         </ul>

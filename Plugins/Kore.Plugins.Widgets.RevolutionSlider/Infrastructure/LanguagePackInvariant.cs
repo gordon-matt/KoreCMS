@@ -30,6 +30,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Infrastructure
                     { LocalizableStrings.RevolutionSliderBlock.Delay, "Delay" },
                     { LocalizableStrings.RevolutionSliderBlock.StartHeight, "Start Height" },
                     { LocalizableStrings.RevolutionSliderBlock.StartWidth, "Start Width" },
+                    { LocalizableStrings.RevolutionSliderBlock.Shuffle, "Shuffle" },
                     { LocalizableStrings.RevolutionSliderBlock.KeyboardNavigation, "Keyboard Navigation" },
                     { LocalizableStrings.RevolutionSliderBlock.OnHoverStop, "On Hover Stop" },
                     { LocalizableStrings.RevolutionSliderBlock.ThumbWidth, "Thumb Width" },

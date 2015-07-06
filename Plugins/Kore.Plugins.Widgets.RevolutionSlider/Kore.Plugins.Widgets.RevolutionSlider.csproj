@@ -103,12 +103,24 @@
     <Compile Include="ContentBlocks\RevolutionSliderBlock.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\assets\arrows.psd" />
-    <None Include="Content\assets\bullets.psd" />
-    <None Include="Content\assets\small_arrows.psd" />
-    <None Include="Content\font\revicons.eot" />
-    <None Include="Content\font\revicons.ttf" />
-    <None Include="Content\font\revicons.woff" />
+    <None Include="Content\assets\arrows.psd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\assets\bullets.psd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\assets\small_arrows.psd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\font\revicons.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\font\revicons.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\font\revicons.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Views\Shared\DisplayTemplates\RevolutionSliderBlock.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -147,58 +159,156 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\assets\arrowleft.png" />
-    <Content Include="Content\assets\arrowright.png" />
-    <Content Include="Content\assets\arrow_large_left.png" />
-    <Content Include="Content\assets\arrow_large_right.png" />
-    <Content Include="Content\assets\arrow_left.png" />
-    <Content Include="Content\assets\arrow_left2.png" />
-    <Content Include="Content\assets\arrow_right.png" />
-    <Content Include="Content\assets\arrow_right2.png" />
-    <Content Include="Content\assets\black50.png" />
-    <Content Include="Content\assets\boxed_bgtile.png" />
-    <Content Include="Content\assets\bullet.png" />
-    <Content Include="Content\assets\bullets.png" />
-    <Content Include="Content\assets\bullets2.png" />
-    <Content Include="Content\assets\bullet_boxed.png" />
-    <Content Include="Content\assets\coloredbg.png" />
-    <Content Include="Content\assets\grain.png" />
-    <Content Include="Content\assets\gridtile.png" />
-    <Content Include="Content\assets\gridtile_3x3.png" />
-    <Content Include="Content\assets\gridtile_3x3_white.png" />
-    <Content Include="Content\assets\gridtile_white.png" />
-    <Content Include="Content\assets\large_left.png" />
-    <Content Include="Content\assets\large_right.png" />
-    <Content Include="Content\assets\loader.gif" />
-    <Content Include="Content\assets\loader2.gif" />
-    <Content Include="Content\assets\navigdots.png" />
-    <Content Include="Content\assets\navigdots_bgtile.png" />
-    <Content Include="Content\assets\shadow1.png" />
-    <Content Include="Content\assets\shadow2.png" />
-    <Content Include="Content\assets\shadow3.png" />
-    <Content Include="Content\assets\small_left.png" />
-    <Content Include="Content\assets\small_left_boxed.png" />
-    <Content Include="Content\assets\small_right.png" />
-    <Content Include="Content\assets\small_right_boxed.png" />
-    <Content Include="Content\assets\timer.png" />
-    <Content Include="Content\assets\timerdot.png" />
-    <Content Include="Content\assets\transparent.jpg" />
-    <Content Include="Content\assets\white50.png" />
-    <Content Include="Content\css\settings-ie8.css" />
-    <Content Include="Content\css\settings.css" />
-    <Content Include="Content\font\revicons.svg" />
-    <Content Include="Content\images\decor_inside.png" />
-    <Content Include="Content\images\decor_inside_white.png" />
-    <Content Include="Content\images\decor_testimonial.png" />
-    <Content Include="Content\images\gradient\g30.png" />
-    <Content Include="Content\images\gradient\g40.png" />
+    <Content Include="Content\assets\arrowleft.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\arrowright.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\arrow_large_left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\arrow_large_right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\arrow_left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\arrow_left2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\arrow_right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\arrow_right2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\black50.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\boxed_bgtile.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\bullet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\bullets.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\bullets2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\bullet_boxed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\coloredbg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\grain.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\gridtile.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\gridtile_3x3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\gridtile_3x3_white.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\gridtile_white.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\large_left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\large_right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\loader.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\loader2.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\navigdots.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\navigdots_bgtile.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\shadow1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\shadow2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\shadow3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\small_left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\small_left_boxed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\small_right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\small_right_boxed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\timer.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\timerdot.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\transparent.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\white50.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\css\settings-ie8.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\css\settings.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\font\revicons.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\decor_inside.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\decor_inside_white.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\decor_testimonial.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\gradient\g30.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\gradient\g40.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Description.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\jquery.themepunch.enablelog.js" />
-    <Content Include="Scripts\jquery.themepunch.revolution.js" />
-    <Content Include="Scripts\jquery.themepunch.revolution.min.js" />
-    <Content Include="Scripts\jquery.themepunch.tools.min.js" />
+    <Content Include="Scripts\jquery.themepunch.enablelog.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\jquery.themepunch.revolution.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\jquery.themepunch.revolution.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\jquery.themepunch.tools.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,8 @@
+﻿Group: Widgets
+FriendlyName: RevolutionSlider
+SystemName: Kore.Plugins.Widgets.RevolutionSlider
+Version: 1.3.3
+SupportedVersions: 1.00
+Author: Widecommerce
+DisplayOrder: 1
+FileName: Kore.Plugins.Widgets.RevolutionSlider.dll

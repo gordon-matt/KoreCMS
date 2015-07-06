@@ -3,11 +3,11 @@ using Kore.Web;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
 
-namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers
+namespace Kore.Plugins.Widgets.RevolutionSlider.Controllers
 {
     [Authorize]
     [RouteArea(Constants.RouteArea)]
-    public class PlaylistController : KoreController
+    public class SliderController : KoreController
     {
         [Compress]
         [Route("")]
@@ -19,9 +19,9 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers
             }
 
             WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.Plugins.Title));
-            WorkContext.Breadcrumbs.Add(T(LocalizableStrings.RoyalVideoPlayer));
+            WorkContext.Breadcrumbs.Add(T(LocalizableStrings.RevolutionSlider));
 
-            ViewBag.Title = T(LocalizableStrings.RoyalVideoPlayer);
+            ViewBag.Title = T(LocalizableStrings.RevolutionSlider);
 
             return View();
         }

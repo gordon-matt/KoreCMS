@@ -412,76 +412,77 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.ContentBlocks
             var sb = new StringBuilder(512);
 
             sb.AppendFormat(@"$('#{0}').revolution({{", ControlId);
-            sb.AppendFormat("delay : {0},", Delay);
-            sb.AppendFormat("startheight : {0},", StartHeight);
-            sb.AppendFormat("startwidth : {0},", StartWidth);
+            sb.Append("lazyLoad: 'on',");
+            sb.AppendFormat("delay: {0},", Delay);
+            sb.AppendFormat("startheight: {0},", StartHeight);
+            sb.AppendFormat("startwidth: {0},", StartWidth);
 
-            sb.AppendFormat("keyboardNavigation : '{0}',", KeyboardNavigation ? "on" : "off");
-            sb.AppendFormat("onHoverStop : '{0}',", OnHoverStop ? "on" : "off");
-            sb.AppendFormat("thumbWidth : {0},", ThumbWidth);
-            sb.AppendFormat("thumbHeight : {0},", ThumbHeight);
-            sb.AppendFormat("thumbAmount : {0},", ThumbAmount);
-            sb.AppendFormat("hideThumbs : {0},", HideThumbs);
-            sb.AppendFormat("navigationType : '{0}',", NavigationType.ToString().ToLowerInvariant());
-            sb.AppendFormat("navigationArrows : '{0}',", NavigationArrows.ToString().ToLowerInvariant());
-            sb.AppendFormat("navigationStyle : '{0}',", ConvertNavigationStyle(NavigationStyle));
-            sb.AppendFormat("navigationHAlign : '{0}',", NavigationHAlign.ToString().ToLowerInvariant());
-            sb.AppendFormat("navigationVAlign : '{0}',", NavigationVAlign.ToString().ToLowerInvariant());
-            sb.AppendFormat("navigationHOffset : {0},", NavigationHOffset);
-            sb.AppendFormat("navigationVOffset : {0},", NavigationVOffset);
-            sb.AppendFormat("soloArrowLeftHalign : '{0}',", SoloArrowLeftHAlign.ToString().ToLowerInvariant());
-            sb.AppendFormat("soloArrowRightHalign : '{0}',", SoloArrowRightHAlign.ToString().ToLowerInvariant());
-            sb.AppendFormat("soloArrowLeftValign : '{0}',", SoloArrowLeftVAlign.ToString().ToLowerInvariant());
-            sb.AppendFormat("soloArrowRightValign : '{0}',", SoloArrowRightVAlign.ToString().ToLowerInvariant());
-            sb.AppendFormat("soloArrowLeftHOffset : {0},", SoloArrowLeftHOffset);
-            sb.AppendFormat("soloArrowLeftVOffset : {0},", SoloArrowLeftVOffset);
-            sb.AppendFormat("soloArrowRightVOffset : {0},", SoloArrowRightVOffset);
-            sb.AppendFormat("soloArrowRightVOffset : {0},", SoloArrowRightVOffset);
-            sb.AppendFormat("touchenabled : '{0}',", TouchEnabled ? "on" : "off");
-            sb.AppendFormat("swipe_velocity : {0},", SwipeVelocity.ToString("N1"));
-            sb.AppendFormat("swipe_max_touches : {0},", SwipeMaxTouches);
-            sb.AppendFormat("swipe_min_touches : {0},", SwipeMinTouches);
-            sb.AppendFormat("drag_block_vertical : {0},", DragBlockVertical.ToString().ToLowerInvariant());
+            sb.AppendFormat("keyboardNavigation: '{0}',", KeyboardNavigation ? "on" : "off");
+            sb.AppendFormat("onHoverStop: '{0}',", OnHoverStop ? "on" : "off");
+            sb.AppendFormat("thumbWidth: {0},", ThumbWidth);
+            sb.AppendFormat("thumbHeight: {0},", ThumbHeight);
+            sb.AppendFormat("thumbAmount: {0},", ThumbAmount);
+            sb.AppendFormat("hideThumbs: {0},", HideThumbs);
+            sb.AppendFormat("navigationType: '{0}',", NavigationType.ToString().ToLowerInvariant());
+            sb.AppendFormat("navigationArrows: '{0}',", NavigationArrows.ToString().ToLowerInvariant());
+            sb.AppendFormat("navigationStyle: '{0}',", ConvertNavigationStyle(NavigationStyle));
+            sb.AppendFormat("navigationHAlign: '{0}',", NavigationHAlign.ToString().ToLowerInvariant());
+            sb.AppendFormat("navigationVAlign: '{0}',", NavigationVAlign.ToString().ToLowerInvariant());
+            sb.AppendFormat("navigationHOffset: {0},", NavigationHOffset);
+            sb.AppendFormat("navigationVOffset: {0},", NavigationVOffset);
+            sb.AppendFormat("soloArrowLeftHalign: '{0}',", SoloArrowLeftHAlign.ToString().ToLowerInvariant());
+            sb.AppendFormat("soloArrowRightHalign: '{0}',", SoloArrowRightHAlign.ToString().ToLowerInvariant());
+            sb.AppendFormat("soloArrowLeftValign: '{0}',", SoloArrowLeftVAlign.ToString().ToLowerInvariant());
+            sb.AppendFormat("soloArrowRightValign: '{0}',", SoloArrowRightVAlign.ToString().ToLowerInvariant());
+            sb.AppendFormat("soloArrowLeftHOffset: {0},", SoloArrowLeftHOffset);
+            sb.AppendFormat("soloArrowLeftVOffset: {0},", SoloArrowLeftVOffset);
+            sb.AppendFormat("soloArrowRightVOffset: {0},", SoloArrowRightVOffset);
+            sb.AppendFormat("soloArrowRightVOffset: {0},", SoloArrowRightVOffset);
+            sb.AppendFormat("touchenabled: '{0}',", TouchEnabled ? "on" : "off");
+            sb.AppendFormat("swipe_velocity: {0},", SwipeVelocity.ToString("N1"));
+            sb.AppendFormat("swipe_max_touches: {0},", SwipeMaxTouches);
+            sb.AppendFormat("swipe_min_touches: {0},", SwipeMinTouches);
+            sb.AppendFormat("drag_block_vertical: {0},", DragBlockVertical.ToString().ToLowerInvariant());
 
-            sb.AppendFormat("startWithSlide : {0},", StartWithSlide);
-            sb.AppendFormat("stopAtSlide : {0},", StopAtSlide);
-            sb.AppendFormat("stopAfterLoops : {0},", StopAfterLoops);
+            sb.AppendFormat("startWithSlide: {0},", StartWithSlide);
+            sb.AppendFormat("stopAtSlide: {0},", StopAtSlide);
+            sb.AppendFormat("stopAfterLoops: {0},", StopAfterLoops);
 
-            sb.AppendFormat("hideCaptionAtLimit : {0},", HideCaptionAtLimit);
-            sb.AppendFormat("hideAllCaptionAtLimit : {0},", HideAllCaptionAtLimit);
-            sb.AppendFormat("hideSliderAtLimit : {0},", HideSliderAtLimit);
-            sb.AppendFormat("hideNavDelayOnMobile : {0},", HideNavDelayOnMobile);
-            sb.AppendFormat("hideThumbsOnMobile : '{0}',", HideThumbsOnMobile ? "on" : "off");
-            sb.AppendFormat("hideBulletsOnMobile : '{0}',", HideBulletsOnMobile ? "on" : "off");
-            sb.AppendFormat("hideArrowsOnMobile : '{0}',", HideArrowsOnMobile ? "on" : "off");
-            sb.AppendFormat("hideThumbsUnderResoluition : {0},", HideThumbsUnderResolution);
+            sb.AppendFormat("hideCaptionAtLimit: {0},", HideCaptionAtLimit);
+            sb.AppendFormat("hideAllCaptionAtLimit: {0},", HideAllCaptionAtLimit);
+            sb.AppendFormat("hideSliderAtLimit: {0},", HideSliderAtLimit);
+            sb.AppendFormat("hideNavDelayOnMobile: {0},", HideNavDelayOnMobile);
+            sb.AppendFormat("hideThumbsOnMobile: '{0}',", HideThumbsOnMobile ? "on" : "off");
+            sb.AppendFormat("hideBulletsOnMobile: '{0}',", HideBulletsOnMobile ? "on" : "off");
+            sb.AppendFormat("hideArrowsOnMobile: '{0}',", HideArrowsOnMobile ? "on" : "off");
+            sb.AppendFormat("hideThumbsUnderResoluition: {0},", HideThumbsUnderResolution);
 
-            sb.AppendFormat("spinner : '{0}',", Spinner.ToString().ToLowerInvariant());
-            sb.AppendFormat("hideTimerBar : '{0}',", HideTimerBar ? "on" : "off");
-            sb.AppendFormat("fullWidth : '{0}',", FullWidth ? "on" : "off");
-            sb.AppendFormat("autoHeight : '{0}',", AutoHeight ? "on" : "off");
-            sb.AppendFormat("minHeight : {0},", MinHeight);
-            sb.AppendFormat("fullScreenAlignForce : '{0}',", FullScreenAlignForce ? "on" : "off");
-            sb.AppendFormat("forceFullWidth : '{0}',", ForceFullWidth ? "on" : "off");
-            sb.AppendFormat("fullScreen : '{0}',", FullScreen ? "on" : "off");
+            sb.AppendFormat("spinner: '{0}',", Spinner.ToString().ToLowerInvariant());
+            sb.AppendFormat("hideTimerBar: '{0}',", HideTimerBar ? "on" : "off");
+            sb.AppendFormat("fullWidth: '{0}',", FullWidth ? "on" : "off");
+            sb.AppendFormat("autoHeight: '{0}',", AutoHeight ? "on" : "off");
+            sb.AppendFormat("minHeight: {0},", MinHeight);
+            sb.AppendFormat("fullScreenAlignForce: '{0}',", FullScreenAlignForce ? "on" : "off");
+            sb.AppendFormat("forceFullWidth: '{0}',", ForceFullWidth ? "on" : "off");
+            sb.AppendFormat("fullScreen: '{0}',", FullScreen ? "on" : "off");
 
             if (!string.IsNullOrEmpty(FullScreenOffsetContainer))
             {
-                sb.AppendFormat("fullScreenOffsetContainer : '{0}',", FullScreenOffsetContainer);
+                sb.AppendFormat("fullScreenOffsetContainer: '{0}',", FullScreenOffsetContainer);
             }
 
-            sb.AppendFormat("fullScreenOffset : '{0}{1}',", FullScreenOffset, FullScreenOffsetUnit == ScreenUnit.Percentage ? "%" : "px");
-            sb.AppendFormat("shadow : {0},", ConvertShadow(Shadow));
-            sb.AppendFormat("dottedOverlay : '{0}',", DottedOverlay.ToString().ToLowerInvariant());
+            sb.AppendFormat("fullScreenOffset: '{0}{1}',", FullScreenOffset, FullScreenOffsetUnit == ScreenUnit.Percentage ? "%" : "px");
+            sb.AppendFormat("shadow: {0},", ConvertShadow(Shadow));
+            sb.AppendFormat("dottedOverlay: '{0}',", DottedOverlay.ToString().ToLowerInvariant());
 
-            sb.AppendFormat("parallax : '{0}',", Parallax.ToString().ToLowerInvariant());
-            sb.AppendFormat("parallaxBgFreeze : '{0}',", ParallaxBgFreeze ? "on" : "off");
-            sb.AppendFormat("parallaxLevels : [{0}],", ParallaxLevels);
-            sb.AppendFormat("parallaxDisableOnMobile : '{0}',", ParallaxDisableOnMobile ? "on" : "off");
+            sb.AppendFormat("parallax: '{0}',", Parallax.ToString().ToLowerInvariant());
+            sb.AppendFormat("parallaxBgFreeze: '{0}',", ParallaxBgFreeze ? "on" : "off");
+            sb.AppendFormat("parallaxLevels: [{0}],", ParallaxLevels);
+            sb.AppendFormat("parallaxDisableOnMobile: '{0}',", ParallaxDisableOnMobile ? "on" : "off");
 
-            sb.AppendFormat("panZoomDisableOnMobile : '{0}',", PanZoomDisableOnMobile ? "on" : "off");
+            sb.AppendFormat("panZoomDisableOnMobile: '{0}',", PanZoomDisableOnMobile ? "on" : "off");
 
-            sb.AppendFormat("simplifyAll : '{0}',", SimplifyAll ? "on" : "off");
+            sb.AppendFormat("simplifyAll: '{0}',", SimplifyAll ? "on" : "off");
 
             sb.Remove(sb.Length - 1, 1); // Remove last comma
 

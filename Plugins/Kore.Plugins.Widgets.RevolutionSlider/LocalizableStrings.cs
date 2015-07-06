@@ -23,6 +23,7 @@
             public const string Delay = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.Delay";
             public const string StartHeight = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.StartHeight";
             public const string StartWidth = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.StartWidth";
+            public const string Shuffle = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.Shuffle";
             public const string KeyboardNavigation = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.KeyboardNavigation";
             public const string OnHoverStop = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.OnHoverStop";
             public const string ThumbWidth = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.ThumbWidth";

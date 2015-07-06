@@ -38,6 +38,9 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.ContentBlocks
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.StartWidth)]
         public short StartWidth { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.Shuffle)]
+        public bool Shuffle { get; set; }
+
         #endregion General
 
         #region Navigation
@@ -206,14 +209,14 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.ContentBlocks
         /// <para>loop at slide X which defined. -1 means do not stop at any slide. stopAfterLoops has no sinn in this case.</para>
         /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.StopAtSlide)]
-        public byte StopAtSlide { get; set; }
+        public sbyte StopAtSlide { get; set; }
 
         /// <summary>
         /// <para>Stop Timer if All slides has been played "x" times. IT will stop at THe slide which is defined via stopAtSlide:x,</para>
         /// <para>if set to -1 slide never stop automatic.</para>
         /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.StopAfterLoops)]
-        public byte StopAfterLoops { get; set; }
+        public sbyte StopAfterLoops { get; set; }
 
         #endregion Loops
 
@@ -461,7 +464,12 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.ContentBlocks
             sb.AppendFormat("fullScreenAlignForce : '{0}',", FullScreenAlignForce ? "on" : "off");
             sb.AppendFormat("forceFullWidth : '{0}',", ForceFullWidth ? "on" : "off");
             sb.AppendFormat("fullScreen : '{0}',", FullScreen ? "on" : "off");
-            sb.AppendFormat("fullScreenOffsetContainer : '{0}',", FullScreenOffsetContainer);
+
+            if (!string.IsNullOrEmpty(FullScreenOffsetContainer))
+            {
+                sb.AppendFormat("fullScreenOffsetContainer : '{0}',", FullScreenOffsetContainer);
+            }
+
             sb.AppendFormat("fullScreenOffset : '{0}{1}',", FullScreenOffset, FullScreenOffsetUnit == ScreenUnit.Percentage ? "%" : "px");
             sb.AppendFormat("shadow : {0},", ConvertShadow(Shadow));
             sb.AppendFormat("dottedOverlay : '{0}',", DottedOverlay.ToString().ToLowerInvariant());
@@ -515,7 +523,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.ContentBlocks
 
         public override string Name
         {
-            get { return "Owl Carousel"; }
+            get { return "Revolution Slider"; }
         }
 
         public override string DisplayTemplatePath

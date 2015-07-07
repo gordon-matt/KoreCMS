@@ -10,6 +10,12 @@ if (typeof String.prototype.endsWith != 'function') {
         return this.slice(-str.length) == str;
     };
 }
+function stringToNullIfEmpty(s) {
+    if (s == '') {
+        return null;
+    }
+    return s;
+};
 
 function getLocalStorageKeys() {
     var keys = [];

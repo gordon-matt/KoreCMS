@@ -159,7 +159,7 @@ var SlideModel = function () {
 
     self.create = function () {
         self.id(0);
-        self.sliderId(0);
+        self.sliderId(viewModel.selectedSliderId());
         self.order(0);
         self.transition(null);
         self.randomTransition(false);
@@ -259,29 +259,28 @@ var SlideModel = function () {
 
         var record = {
             Id: self.id(),
-            Name: self.name(),
             SliderId: self.sliderId(),
             Order: self.order(),
-            Transition: self.transition(),
+            Transition: stringToNullIfEmpty(self.transition()),
             RandomTransition: self.randomTransition(),
             SlotAmount: self.slotAmount(),
             MasterSpeed: self.masterSpeed(),
             Delay: self.delay(),
             Link: self.link(),
-            Target: self.target(),
+            Target: stringToNullIfEmpty(self.target()),
             SlideIndex: self.slideIndex(),
             Thumb: self.thumb(),
             Title: self.title(),
             LazyLoad: self.lazyLoad(),
-            BackgroundRepeat: self.backgroundRepeat(),
-            BackgroundFit: self.backgroundFit(),
+            BackgroundRepeat: stringToNullIfEmpty(self.backgroundRepeat()),
+            BackgroundFit: stringToNullIfEmpty(self.backgroundFit()),
             BackgroundFitCustomValue: self.backgroundFitCustomValue(),
             BackgroundFitEnd: self.backgroundFitEnd(),
-            BackgroundPosition: self.backgroundPosition(),
-            BackgroundPositionEnd: self.backgroundPositionEnd(),
+            BackgroundPosition: stringToNullIfEmpty(self.backgroundPosition()),
+            BackgroundPositionEnd: stringToNullIfEmpty(self.backgroundPositionEnd()),
             KenBurnsEffect: self.kenBurnsEffect(),
             Duration: self.duration(),
-            Easing: self.easing(),
+            Easing: stringToNullIfEmpty(self.easing()),
         };
 
         if (self.id() == 0) {
@@ -352,7 +351,10 @@ var ViewModel = function () {
     self.slider = new SliderModel();
     self.slide = new SlideModel();
 
+    self.selectedSliderId = ko.observable(0);
+
     self.showSlides = function (id) {
+        self.selectedSliderId(id);
         var grid = $('#SlideGrid').data('kendoGrid');
         grid.dataSource.transport.options.read.url = slideApiUrl + "?$filter=SliderId eq " + id;
         grid.dataSource.page(1);
@@ -464,7 +466,8 @@ $(document).ready(function () {
         columns: [{
             field: "Order",
             title: translations.Columns.Slide.Order,
-            filterable: true
+            filterable: true,
+            width: 50
         }, {
             field: "Title",
             title: translations.Columns.Slide.Title,
@@ -483,7 +486,7 @@ $(document).ready(function () {
                 '</div>',
             attributes: { "class": "text-center" },
             filterable: false,
-            width: 210
+            width: 130
         }]
     });
 });

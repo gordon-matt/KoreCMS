@@ -83,7 +83,7 @@
             <i class="kore-icon kore-icon-add"></i>
             @T(KoreWebLocalizableStrings.General.Create)
         </a>
-        <a data-bind="click: slide.showSliders" class="btn btn-default">
+        <a data-bind="click: slide.goBack" class="btn btn-default">
             <i class="kore-icon kore-icon-arrow-left"></i>
             @T(KoreWebLocalizableStrings.General.Back)
         </a>
@@ -295,21 +295,25 @@
             GetRecordError: '@T(KoreWebLocalizableStrings.General.GetRecordError).Text',
             InsertRecordError: '@T(KoreWebLocalizableStrings.General.InsertRecordError).Text',
             InsertRecordSuccess: '@T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text',
-            Playlists: '@T(LocalizableStrings.Playlists).Text',
-            SavePlaylistsError: '@T(LocalizableStrings.SavePlaylistsError).Text',
-            SavePlaylistsSuccess: '@T(LocalizableStrings.SavePlaylistsSuccess).Text',
+            Sliders: '@T(LocalizableStrings.Sliders).Text',
+            Slides: '@T(LocalizableStrings.Slides).Text',
             UpdateRecordError: '@T(KoreWebLocalizableStrings.General.UpdateRecordError).Text',
             UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text',
 
             Columns:{
-                Playlist: {
-                    Name: '@T(LocalizableStrings.Models.Playlist.Name).Text'
+                Slider: {
+                    Name: '@T(LocalizableStrings.Models.Slider.Name).Text'
                 },
-                Video: {
-                    ThumbnailUrl: '@T(LocalizableStrings.Models.Video.ThumbnailUrl).Text',
-                    Title: '@T(LocalizableStrings.Models.Video.Title).Text'
+                Slide: {
+                    Order: '@T(LocalizableStrings.Models.Slide.Order).Text',
+                    Title: '@T(LocalizableStrings.Models.Slide.Title).Text',
+                    Link: '@T(LocalizableStrings.Models.Slide.Link).Text',
                 }
             }
         }
+
+        $(document).ready(function() {
+            currentSection = $("#sliders-grid-section");
+        });
     </script>
 }

@@ -1,7 +1,7 @@
 ﻿'use strict'
 
-var sliderApiUrl = "/odata/kore/revolution-slider/SliderApi";
-var slideApiUrl = "/odata/kore/revolution-slider/SlideApi";
+var sliderApiUrl = "/odata/kore/revolution-slider/RevolutionSliderApi";
+var slideApiUrl = "/odata/kore/revolution-slider/RevolutionSlideApi";
 
 var SliderModel = function () {
     var self = this;
@@ -119,10 +119,6 @@ var SliderModel = function () {
 
     self.cancel = function () {
         switchSection($("#sliders-grid-section"));
-    };
-
-    self.showSlides = function () {
-        switchSection($("#slides-grid-section"));
     };
 
     self.validator = $("#sliders-form-section-form").validate({
@@ -339,7 +335,8 @@ var SlideModel = function () {
         switchSection($("#slides-grid-section"));
     };
 
-    self.showSliders = function () {
+    self.goBack = function () {
+        switchSection($("#sliders-grid-section"));
     };
 
     self.validator = $("#slides-form-section-form").validate({
@@ -355,11 +352,11 @@ var ViewModel = function () {
     self.slider = new SliderModel();
     self.slide = new SlideModel();
 
-    self.showSliders = function () {
-        switchSection($("#sliders-grid-section"));
-    };
+    self.showSlides = function (id) {
+        var grid = $('#SlideGrid').data('kendoGrid');
+        grid.dataSource.transport.options.read.url = slideApiUrl + "?$filter=SliderId eq " + id;
+        grid.dataSource.page(1);
 
-    self.showSlides = function () {
         switchSection($("#slides-grid-section"));
     };
 };
@@ -368,8 +365,6 @@ var viewModel;
 $(document).ready(function () {
     viewModel = new ViewModel();
     ko.applyBindings(viewModel);
-
-    switchSection($("#slides-grid-section"));
 
     $("#SliderGrid").kendoGrid({
         data: null,
@@ -419,7 +414,7 @@ $(document).ready(function () {
                 '<div class="btn-group">' +
                 '<a onclick="viewModel.slider.edit(#=Id#)" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
                 '<a onclick="viewModel.slider.delete(#=Id#)" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
-                '<a onclick="viewModel.slider.showSlides(#=Id#)" class="btn btn-danger btn-xs">' + translations.Slides + '</a>' +
+                '<a onclick="viewModel.showSlides(#=Id#)" class="btn btn-info btn-xs">' + translations.Slides + '</a>' +
                 '</div>',
             attributes: { "class": "text-center" },
             filterable: false,

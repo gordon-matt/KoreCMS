@@ -21,13 +21,13 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.Mvc
 {
-    public enum PageTarget
+    public enum PageTarget : byte
     {
         Default = 0,
-        Blank,
-        Parent,
-        Self,
-        Top
+        Blank = 1,
+        Parent = 2,
+        Self = 3,
+        Top = 4
     }
 
     public static class HtmlHelperExtensions

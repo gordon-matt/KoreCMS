@@ -12,7 +12,23 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
 
         public int SliderId { get; set; }
 
-        public int Order { get; set; }
+        public short Order { get; set; }
+
+        /// <summary>
+        /// <para>In Navigation Style Preview1- preview4 mode you can show the Title of the Slides also.</para>
+        /// <para>Due this option you can define for each slide its own Title.</para>
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
+        /// A link on the whole slide pic.
+        /// </summary>
+        public string Link { get; set; }
+
+        /// <summary>
+        /// The target of the Link for the whole slide pic. (i.e. "_blank", "_self").
+        /// </summary>
+        public PageTarget? Target { get; set; }
 
         /// <summary>
         /// <para>The appearance transition of this slide. You can define more than one, so in each loop the</para>
@@ -42,16 +58,6 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
         public short? Delay { get; set; }
 
         /// <summary>
-        /// A link on the whole slide pic.
-        /// </summary>
-        public string Link { get; set; }
-
-        /// <summary>
-        /// The target of the Link for the whole slide pic. (i.e. "_blank", "_self").
-        /// </summary>
-        public PageTarget? Target { get; set; }
-
-        /// <summary>
         /// <para>Possible values:  next,back, 1-x (where x is the max. Amount of slide).</para>
         /// <para>If this value is set, click on slide will call the next / previous, or  n th Slide.</para>
         /// </summary>
@@ -61,12 +67,6 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
         /// An Alternative Source for thumbs. If not defined a copy of the background image will be used in resized form.
         /// </summary>
         public string Thumb { get; set; }
-
-        /// <summary>
-        /// <para>In Navigation Style Preview1- preview4 mode you can show the Title of the Slides also.</para>
-        /// <para>Due this option you can define for each slide its own Title.</para>
-        /// </summary>
-        public string Title { get; set; }
 
         public bool LazyLoad { get; set; }
 

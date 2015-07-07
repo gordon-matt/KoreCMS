@@ -9,8 +9,8 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.ContentBlocks
     {
         #region General
 
-        [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.MediaFolder)]
-        public string MediaFolder { get; set; }
+        [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.SliderId)]
+        public int SliderId { get; set; }
 
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.ControlId)]
         public string ControlId { get; set; }

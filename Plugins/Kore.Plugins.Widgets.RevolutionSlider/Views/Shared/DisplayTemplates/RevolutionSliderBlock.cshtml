@@ -1,6 +1,7 @@
 ﻿@using Kore.Infrastructure
 @using Kore.Plugins.Widgets.RevolutionSlider.Extensions
 @using Kore.Plugins.Widgets.RevolutionSlider.ContentBlocks
+@using Kore.Plugins.Widgets.RevolutionSlider.Services
 @using Kore.Web.ContentManagement.Areas.Admin.Media.Services
 
 @model RevolutionSliderBlock
@@ -10,8 +11,11 @@
     Script.IncludePluginScript("jquery.themepunch.tools.min.js");
     Script.IncludePluginScript("jquery.themepunch.revolution.min.js");
 
-    var mediaService = EngineContext.Current.Resolve<IMediaService>();
-    var images = mediaService.GetMediaFiles(Model.MediaFolder);
+    var slideService = EngineContext.Current.Resolve<ISlideService>();
+    var images = slideService.Repository.Table
+        .Where(x => x.SliderId == Model.SliderId)
+        .Select(x => new { Src = x.ImageUrl, Alt = x.Title })
+        .ToList();
 
     var script = Model.ToHtmlString();
 }
@@ -22,7 +26,7 @@
             @foreach (var slide in images)
             {
                 <li>
-                    @Html.Image("http://placehold.it/350x150", slide.Name, new { data_lazyload = slide.MediaPath })
+                    @Html.Image("http://placehold.it/350x150", slide.Alt, new { data_lazyload = slide.Src })
                 </li>
             }
         </ul>

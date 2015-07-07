@@ -3,6 +3,42 @@
     public static class LocalizableStrings
     {
         public const string RevolutionSlider = "Plugins.Widgets.RevolutionSlider/RevolutionSlider";
+        public const string Sliders = "Plugins.Widgets.RevolutionSlider/Sliders";
+        public const string Slides = "Plugins.Widgets.RevolutionSlider/Slides";
+
+        public static class Models
+        {
+            public static class Slider
+            {
+                public const string Name = "Plugins.Widgets.RevolutionSlider/Models.Slider.Name";
+            }
+
+            public static class Slide
+            {
+                public const string SliderId = "Plugins.Widgets.RevolutionSlider/Models.Slide.SliderId";
+                public const string Order = "Plugins.Widgets.RevolutionSlider/Models.Slide.Order";
+                public const string Transition = "Plugins.Widgets.RevolutionSlider/Models.Slide.Transition";
+                public const string RandomTransition = "Plugins.Widgets.RevolutionSlider/Models.Slide.RandomTransition";
+                public const string SlotAmount = "Plugins.Widgets.RevolutionSlider/Models.Slide.SlotAmount";
+                public const string MasterSpeed = "Plugins.Widgets.RevolutionSlider/Models.Slide.MasterSpeed";
+                public const string Delay = "Plugins.Widgets.RevolutionSlider/Models.Slide.Delay";
+                public const string Link = "Plugins.Widgets.RevolutionSlider/Models.Slide.Link";
+                public const string Target = "Plugins.Widgets.RevolutionSlider/Models.Slide.Target";
+                public const string SlideIndex = "Plugins.Widgets.RevolutionSlider/Models.Slide.SlideIndex";
+                public const string Thumb = "Plugins.Widgets.RevolutionSlider/Models.Slide.Thumb";
+                public const string Title = "Plugins.Widgets.RevolutionSlider/Models.Slide.Title";
+                public const string LazyLoad = "Plugins.Widgets.RevolutionSlider/Models.Slide.LazyLoad";
+                public const string BackgroundRepeat = "Plugins.Widgets.RevolutionSlider/Models.Slide.BackgroundRepeat";
+                public const string BackgroundFit = "Plugins.Widgets.RevolutionSlider/Models.Slide.BackgroundFit";
+                public const string BackgroundFitCustomValue = "Plugins.Widgets.RevolutionSlider/Models.Slide.BackgroundFitCustomValue";
+                public const string BackgroundFitEnd = "Plugins.Widgets.RevolutionSlider/Models.Slide.BackgroundFitEnd";
+                public const string BackgroundPosition = "Plugins.Widgets.RevolutionSlider/Models.Slide.BackgroundPosition";
+                public const string BackgroundPositionEnd = "Plugins.Widgets.RevolutionSlider/Models.Slide.BackgroundPositionEnd";
+                public const string KenBurnsEffect = "Plugins.Widgets.RevolutionSlider/Models.Slide.KenBurnsEffect";
+                public const string Duration = "Plugins.Widgets.RevolutionSlider/Models.Slide.Duration";
+                public const string Easing = "Plugins.Widgets.RevolutionSlider/Models.Slide.Easing";
+            }
+        }
 
         public static class RevolutionSliderBlock
         {

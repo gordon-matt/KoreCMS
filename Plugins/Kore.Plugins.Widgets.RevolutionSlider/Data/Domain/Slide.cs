@@ -12,6 +12,8 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
 
         public int SliderId { get; set; }
 
+        public int Order { get; set; }
+
         /// <summary>
         /// <para>The appearance transition of this slide. You can define more than one, so in each loop the</para>
         /// <para>next slide transition type will be shown.</para>
@@ -127,6 +129,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
             ToTable(Constants.Tables.Slides);
             HasKey(x => x.Id);
             Property(x => x.SliderId).IsRequired();
+            Property(x => x.Order).IsRequired();
             Property(x => x.RandomTransition).IsRequired();
             Property(x => x.Link).HasMaxLength(255);
             Property(x => x.Thumb).HasMaxLength(255);

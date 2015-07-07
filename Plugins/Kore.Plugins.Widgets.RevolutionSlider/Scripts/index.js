@@ -144,6 +144,7 @@ var SlideModel = function () {
     self.slideIndex = ko.observable(null);
     self.thumb = ko.observable(null);
     self.title = ko.observable(null);
+    self.imageUrl = ko.observable(null)
     self.lazyLoad = ko.observable(true);
     self.backgroundRepeat = ko.observable(null);
     self.backgroundFit = ko.observable(null);
@@ -171,6 +172,7 @@ var SlideModel = function () {
         self.slideIndex(null);
         self.thumb(null);
         self.title(null);
+        self.imageUrl(null);
         self.lazyLoad(true);
         self.backgroundRepeat(null);
         self.backgroundFit(null);
@@ -209,6 +211,7 @@ var SlideModel = function () {
             self.slideIndex(json.SlideIndex);
             self.thumb(json.Thumb);
             self.title(json.Title);
+            self.imageUrl(json.ImageUrl);
             self.lazyLoad(json.LazyLoad);
             self.backgroundRepeat(json.BackgroundRepeat);
             self.backgroundFit(json.BackgroundFit);
@@ -271,6 +274,7 @@ var SlideModel = function () {
             SlideIndex: self.slideIndex(),
             Thumb: self.thumb(),
             Title: self.title(),
+            ImageUrl: self.imageUrl(),
             LazyLoad: self.lazyLoad(),
             BackgroundRepeat: stringToNullIfEmpty(self.backgroundRepeat()),
             BackgroundFit: stringToNullIfEmpty(self.backgroundFit()),

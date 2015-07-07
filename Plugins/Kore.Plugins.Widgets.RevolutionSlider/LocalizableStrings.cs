@@ -27,6 +27,7 @@
                 public const string SlideIndex = "Plugins.Widgets.RevolutionSlider/Models.Slide.SlideIndex";
                 public const string Thumb = "Plugins.Widgets.RevolutionSlider/Models.Slide.Thumb";
                 public const string Title = "Plugins.Widgets.RevolutionSlider/Models.Slide.Title";
+                public const string ImageUrl = "Plugins.Widgets.RevolutionSlider/Models.Slide.ImageUrl";
                 public const string LazyLoad = "Plugins.Widgets.RevolutionSlider/Models.Slide.LazyLoad";
                 public const string BackgroundRepeat = "Plugins.Widgets.RevolutionSlider/Models.Slide.BackgroundRepeat";
                 public const string BackgroundFit = "Plugins.Widgets.RevolutionSlider/Models.Slide.BackgroundFit";
@@ -54,7 +55,7 @@
                 public const string Other = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.EditorTabs.Other";
             }
 
-            public const string MediaFolder = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.MediaFolder";
+            public const string SliderId = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.SliderId";
             public const string ControlId = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.ControlId";
             public const string Delay = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.Delay";
             public const string StartHeight = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.StartHeight";

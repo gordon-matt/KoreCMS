@@ -19,17 +19,10 @@
 
         using (var tab = tabs.BeginPanel())
         {
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.MediaFolder, new { @class = "control-label" })
-                    <div class="input-group">
-                        @Html.TextBoxFor(m => m.MediaFolder, new { @class = "form-control", data_bind = "value: mediaFolder" })
-                        <span class="input-group-addon">
-                            <a data-toggle="modal" href="javascript:void(0);" data-target="#myModal">
-                                <i class="kore-icon kore-icon-search"></i>
-                            </a>
-                        </span>
-                    </div>
+                    @Html.LabelFor(m => m.SliderId, new { @class = "control-label" })
+                    @Html.RevolutionSlider().SliderDropDownListFor(m => m.SliderId, new { @class = "form-control", data_bind = "value: sliderId" })
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -424,42 +417,13 @@
             </div>
         }
     }
-
-    <style type="text/css">
-        .modal-dialog {
-            width: 80% !important;
-        }
-    </style>
-
-    <div class="modal fade" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Select Image</h4>
-                </div>
-                <div class="modal-body">
-                    <iframe src="/filemanager/dialog.php?type=1&fldr=&relative_url=1&field_id=MediaFolder&ignore_last_position=1" frameborder="0" style="overflow:hidden;min-height:600px; height:100%;width:100%" height="100%" width="100%"></iframe>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#myModal').on('hidden.bs.modal', function () {
-            var url = $('#MediaFolder').val();
-            var idx = url.indexOf("Uploads");
-            url = url.substring(idx);
-            viewModel.mediaFolder(url);
-        })
-    });
-
     var contentBlockModel = (function () {
         var f = {};
         f.updateModel = function () {
-            viewModel.mediaFolder = ko.observable("");
+            viewModel.sliderId = ko.observable(0);
             viewModel.controlId = ko.observable("revolution-slider");
             viewModel.delay = ko.observable(9000);
             viewModel.startHeight = ko.observable(500);
@@ -529,7 +493,7 @@
                     // If this is not set, it means the contentBlock is new and we have nothing in blockValues
                     return;
                 }
-                viewModel.mediaFolder(data.MediaFolder());
+                viewModel.sliderId(data.SliderId());
                 viewModel.controlId(data.ControlId());
                 viewModel.delay(data.Delay());
                 viewModel.startHeight(data.StartHeight());
@@ -594,7 +558,7 @@
             }
         };
         f.cleanUp = function () {
-            delete viewModel.mediaFolder;
+            delete viewModel.sliderId;
             delete viewModel.controlId;
             delete viewModel.delay;
             delete viewModel.startHeight;
@@ -659,7 +623,7 @@
         };
         f.onBeforeSave = function () {
             var data = {
-                MediaFolder: viewModel.mediaFolder(),
+                SliderId: viewModel.sliderId(),
                 ControlId: viewModel.controlId(),
                 Delay: viewModel.delay(),
                 StartHeight: viewModel.startHeight(),

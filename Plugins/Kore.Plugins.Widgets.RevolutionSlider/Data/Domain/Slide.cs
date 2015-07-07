@@ -8,11 +8,17 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
 {
     public class Slide : IEntity
     {
+        #region General
+
         public int Id { get; set; }
 
         public int SliderId { get; set; }
 
         public short Order { get; set; }
+
+        #endregion General
+
+        #region <li> Element
 
         /// <summary>
         /// <para>In Navigation Style Preview1- preview4 mode you can show the Title of the Slides also.</para>
@@ -68,6 +74,12 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
         /// </summary>
         public string Thumb { get; set; }
 
+        #endregion <li> Element
+
+        #region Main <img> Element
+
+        public string ImageUrl { get; set; }
+
         public bool LazyLoad { get; set; }
 
         /// <summary>
@@ -112,6 +124,8 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
         /// </summary>
         public EasingMethod? Easing { get; set; }
 
+        #endregion Main <img> Element
+
         #region IEntity Members
 
         public object[] KeyValues
@@ -134,6 +148,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
             Property(x => x.Link).HasMaxLength(255);
             Property(x => x.Thumb).HasMaxLength(255);
             Property(x => x.Title).HasMaxLength(255);
+            Property(x => x.ImageUrl).IsRequired().HasMaxLength(255);
             Property(x => x.LazyLoad).IsRequired();
             Property(x => x.KenBurnsEffect).IsRequired();
         }

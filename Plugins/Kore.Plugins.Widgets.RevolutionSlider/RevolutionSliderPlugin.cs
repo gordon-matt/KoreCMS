@@ -51,6 +51,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider
 	[Delay] [smallint] NULL,
 	[SlideIndex] [tinyint] NULL,
 	[Thumb] [nvarchar](255) NULL,
+	[ImageUrl] [nvarchar](255) NOT NULL,
 	[LazyLoad] [bit] NOT NULL,
 	[BackgroundRepeat] [tinyint] NULL,
 	[BackgroundFit] [tinyint] NULL,
@@ -58,7 +59,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider
 	[BackgroundFitEnd] [smallint] NULL,
 	[BackgroundPosition] [tinyint] NULL,
 	[BackgroundPositionEnd] [tinyint] NULL,
-	[KenBurnsEffect] [tinyint] NOT NULL,
+	[KenBurnsEffect] [bit] NOT NULL,
 	[Duration] [smallint] NULL,
 	[Easing] [tinyint] NULL,
 	CONSTRAINT [PK_Kore_Plugins_RevolutionSlider_Slides] PRIMARY KEY CLUSTERED

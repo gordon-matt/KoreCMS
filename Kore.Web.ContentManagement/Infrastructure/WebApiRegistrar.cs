@@ -27,6 +27,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             // Blog
             builder.EntitySet<Category>("BlogCategoryApi");
             builder.EntitySet<Post>("BlogPostApi");
+            builder.EntitySet<PostTag>("BlogPostTagApi").EntityType.HasKey(x => new { x.PostId, x.TagId });
             builder.EntitySet<Tag>("BlogTagApi");
 
             // Content Blocks

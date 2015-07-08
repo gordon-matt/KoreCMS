@@ -7,7 +7,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 {
     public class Tag : IEntity
     {
-        private ICollection<Post> posts;
+        private ICollection<PostTag> posts;
 
         public int Id { get; set; }
 
@@ -17,9 +17,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 
         public int NumberOfOccurrences { get; set; }
 
-        public ICollection<Post> Posts
+        public ICollection<PostTag> Posts
         {
-            get { return posts ?? (posts = new HashSet<Post>()); }
+            get { return posts ?? (posts = new HashSet<PostTag>()); }
             set { posts = value; }
         }
 

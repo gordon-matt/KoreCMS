@@ -21,7 +21,7 @@ namespace Kore.Data.EntityFramework
         where TEntity : class, IEntity
     {
         private readonly DbContext context;
-        private IDbSet<TEntity> entities;
+        private IDbSet<TEntity> set;
 
         private ILogger logger;
 
@@ -30,9 +30,9 @@ namespace Kore.Data.EntityFramework
             get { return context; }
         }
 
-        protected IDbSet<TEntity> Entities
+        protected IDbSet<TEntity> Set
         {
-            get { return entities ?? (entities = context.Set<TEntity>()); }
+            get { return set ?? (set = context.Set<TEntity>()); }
         }
 
         public EntityFrameworkRepository(DbContext context)
@@ -45,22 +45,22 @@ namespace Kore.Data.EntityFramework
 
         public IQueryable<TEntity> Table
         {
-            get { return Entities.AsNoTracking(); }
+            get { return Set.AsNoTracking(); }
         }
 
         public TEntity Find(params object[] keyValues)
         {
-            return Entities.Find(keyValues);
+            return Set.Find(keyValues);
         }
 
         public int Count()
         {
-            return Entities.Count();
+            return Set.Count();
         }
 
         public int Count(Expression<Func<TEntity, bool>> countExpression)
         {
-            return Entities.Count(countExpression);
+            return Set.Count(countExpression);
         }
 
         public int DeleteAll()
@@ -88,7 +88,7 @@ namespace Kore.Data.EntityFramework
         {
             if (Context.Entry(entity).State == EntityState.Detached)
             {
-                var localEntity = Entities.Local.FirstOrDefault(x => x.KeyValues.ArrayEquals(entity.KeyValues));
+                var localEntity = Set.Local.FirstOrDefault(x => x.KeyValues.ArrayEquals(entity.KeyValues));
 
                 if (localEntity != null)
                 {
@@ -96,13 +96,13 @@ namespace Kore.Data.EntityFramework
                 }
                 else
                 {
-                    Entities.Attach(entity);
+                    Set.Attach(entity);
                     Context.Entry(entity).State = EntityState.Deleted;
                 }
             }
             else
             {
-                Entities.Remove(entity);
+                Set.Remove(entity);
             }
             return Context.SaveChanges();
         }
@@ -113,7 +113,7 @@ namespace Kore.Data.EntityFramework
             {
                 if (Context.Entry(entity).State == EntityState.Detached)
                 {
-                    var localEntity = Entities.Local.FirstOrDefault(x => x.KeyValues.ArrayEquals(entity.KeyValues));
+                    var localEntity = Set.Local.FirstOrDefault(x => x.KeyValues.ArrayEquals(entity.KeyValues));
 
                     if (localEntity != null)
                     {
@@ -121,13 +121,13 @@ namespace Kore.Data.EntityFramework
                     }
                     else
                     {
-                        Entities.Attach(entity);
+                        Set.Attach(entity);
                         Context.Entry(entity).State = EntityState.Deleted;
                     }
                 }
                 else
                 {
-                    Entities.Remove(entity);
+                    Set.Remove(entity);
                 }
             }
             return Context.SaveChanges();
@@ -145,7 +145,7 @@ namespace Kore.Data.EntityFramework
 
         public int Insert(TEntity entity)
         {
-            Entities.Add(entity);
+            Set.Add(entity);
             return Context.SaveChanges();
         }
 
@@ -160,7 +160,7 @@ namespace Kore.Data.EntityFramework
             {
                 foreach (var entity in entities)
                 {
-                    Entities.Add(entity);
+                    Set.Add(entity);
                 }
                 return Context.SaveChanges();
             }
@@ -199,7 +199,7 @@ namespace Kore.Data.EntityFramework
 
                 if (Context.Entry(entity).State == EntityState.Detached)
                 {
-                    var localEntity = Entities.Local.FirstOrDefault(x => x.KeyValues.ArrayEquals(entity.KeyValues));
+                    var localEntity = Set.Local.FirstOrDefault(x => x.KeyValues.ArrayEquals(entity.KeyValues));
 
                     if (localEntity != null)
                     {
@@ -207,7 +207,7 @@ namespace Kore.Data.EntityFramework
                     }
                     else
                     {
-                        entity = Entities.Attach(entity);
+                        entity = Set.Attach(entity);
                         Context.Entry(entity).State = EntityState.Modified;
                     }
                 }
@@ -243,7 +243,7 @@ namespace Kore.Data.EntityFramework
                 {
                     if (Context.Entry(entity).State == EntityState.Detached)
                     {
-                        var localEntity = Entities.Local.FirstOrDefault(x => x.KeyValues.ArrayEquals(entity.KeyValues));
+                        var localEntity = Set.Local.FirstOrDefault(x => x.KeyValues.ArrayEquals(entity.KeyValues));
 
                         if (localEntity != null)
                         {
@@ -251,7 +251,7 @@ namespace Kore.Data.EntityFramework
                         }
                         else
                         {
-                            Entities.Attach(entity);
+                            Set.Attach(entity);
                             Context.Entry(entity).State = EntityState.Modified;
                         }
                     }

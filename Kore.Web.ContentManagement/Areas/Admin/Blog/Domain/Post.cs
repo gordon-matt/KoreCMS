@@ -8,7 +8,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 {
     public class Post : IEntity
     {
-        private ICollection<Tag> tags;
+        private ICollection<PostTag> tags;
 
         public Guid Id { get; set; }
 
@@ -38,9 +38,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 
         public virtual Category Category { get; set; }
 
-        public virtual ICollection<Tag> Tags
+        public virtual ICollection<PostTag> Tags
         {
-            get { return tags ?? (tags = new HashSet<Tag>()); }
+            get { return tags ?? (tags = new HashSet<PostTag>()); }
             set { tags = value; }
         }
 
@@ -73,12 +73,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
             Property(x => x.MetaKeywords).HasMaxLength(255);
             Property(x => x.MetaDescription).HasMaxLength(255);
             HasRequired(x => x.Category).WithMany(x => x.Posts).HasForeignKey(x => x.CategoryId);
-            HasMany(c => c.Tags).WithMany(x => x.Posts).Map(m =>
-            {
-                m.MapLeftKey("PostId");
-                m.MapRightKey("TagId");
-                m.ToTable("Kore_BlogPostTags");
-            });
+            //HasMany(c => c.Tags).WithMany(x => x.Posts).Map(m =>
+            //{
+            //    m.MapLeftKey("PostId");
+            //    m.MapRightKey("TagId");
+            //    m.ToTable("Kore_BlogPostTags");
+            //});
         }
 
         #region IEntityTypeConfiguration Members

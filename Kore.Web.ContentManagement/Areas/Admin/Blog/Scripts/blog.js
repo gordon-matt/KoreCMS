@@ -279,6 +279,9 @@ var PostModel = function () {
     self.metaKeywords = ko.observable(null);
     self.metaDescription = ko.observable(null);
 
+    self.availableTags = ko.observableArray([]);
+    self.chosenTags = ko.observableArray([]);
+
     self.create = function () {
         self.id(emptyGuid);
         self.categoryId(0);
@@ -453,12 +456,29 @@ var ViewModel = function () {
     };
 };
 
+breeze.config.initializeAdapterInstances({ dataService: "OData" });
+var manager = new breeze.EntityManager('/odata/kore/cms');
+
 var viewModel;
 $(document).ready(function () {
     viewModel = new ViewModel();
     ko.applyBindings(viewModel);
 
-    switchSection($("#grid-section"));
+    var query = new breeze.EntityQuery()
+        .from("BlogTagApi")
+        .orderBy("Name asc");
+
+    manager.executeQuery(query).then(function (data) {
+        viewModel.postModel.availableTags([]);
+        viewModel.postModel.chosenTags([]);
+
+        $(data.httpResponse.data.results).each(function () {
+            var current = this;
+            viewModel.postModel.availableTags.push({ Id: current.Id, Name: current.Name });
+        });
+    }).fail(function (e) {
+        alert(e);
+    });
 
     $("#PostGrid").kendoGrid({
         data: null,

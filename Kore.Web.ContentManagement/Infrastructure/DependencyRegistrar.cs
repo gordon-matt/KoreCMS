@@ -40,7 +40,9 @@ namespace Kore.Web.ContentManagement.Infrastructure
             #region Services
 
             // Blog
-            builder.RegisterType<BlogService>().As<IBlogService>().InstancePerDependency();
+            builder.RegisterType<CategoryService>().As<ICategoryService>().InstancePerDependency();
+            builder.RegisterType<PostService>().As<IPostService>().InstancePerDependency();
+            builder.RegisterType<TagService>().As<ITagService>().InstancePerDependency();
 
             // Menus
             builder.RegisterType<MenuService>().As<IMenuService>().InstancePerDependency();

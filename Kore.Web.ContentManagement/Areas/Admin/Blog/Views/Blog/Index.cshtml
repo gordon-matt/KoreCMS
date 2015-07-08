@@ -28,11 +28,19 @@
     }
 </style>
 
-<div id="grid-section" class="row">
+<div id="post-grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <a data-bind="click: create" class="btn btn-primary">
+        <a data-bind="click: postModel.create" class="btn btn-primary">
             <i class="kore-icon kore-icon-add"></i>
             @T(KoreWebLocalizableStrings.General.Create)
+        </a>
+        <a data-bind="click: showCategories" class="btn btn-info">
+            <i class="kore-icon kore-icon-categories"></i>
+            @T(KoreCmsLocalizableStrings.Blog.Categories)
+        </a>
+        <a data-bind="click: showTags" class="btn btn-success">
+            <i class="kore-icon kore-icon-tags"></i>
+            @T(KoreCmsLocalizableStrings.Blog.Tags)
         </a>
     </div>
 
@@ -40,52 +48,52 @@
     <br />
 
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
-        <div id="Grid"></div>
+        <div id="PostGrid"></div>
     </div>
 </div>
 
-<div id="form-section" class="row" style="display:none">
+<div id="post-form-section" class="row" style="display:none">
     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
         {
-            using (var header = panel.BeginHeader(T(KoreWebLocalizableStrings.General.Details))) { }
+            using (var header = panel.BeginHeader(T(KoreCmsLocalizableStrings.Blog.Posts))) { }
             using (var body = panel.BeginBody())
             {
-                <form id="form-section-form" role="form">
+                <form id="post-form-section-form" role="form">
                     <fieldset>
-                        <legend id="form-section-legend"></legend>
+                        <legend id="post-form-section-legend"></legend>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
-                                @Html.Label("Headline", T(KoreCmsLocalizableStrings.Blog.Model.Headline), new { @class = "control-label" })
+                                @Html.Label("Headline", T(KoreCmsLocalizableStrings.Blog.PostModel.Headline), new { @class = "control-label" })
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="kore-icon kore-icon-blog"></i>
                                     </span>
-                                    @Html.TextBox("Headline", null, new { @class = "form-control", data_bind = "value: headline" })
+                                    @Html.TextBox("Headline", null, new { @class = "form-control", data_bind = "value: postModel.headline" })
                                 </div>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
-                                @Html.Label("Slug", T(KoreCmsLocalizableStrings.Blog.Model.Slug), new { @class = "control-label" })
-                                @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: slug" })
+                                @Html.Label("Slug", T(KoreCmsLocalizableStrings.Blog.PostModel.Slug), new { @class = "control-label" })
+                                @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: postModel.slug" })
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <div data-bind="if: teaserImageUrl">
-                                    <img data-bind="attr: { src: teaserImageUrl }" class="img-responsive img-thumbnail" />
+                                <div data-bind="if: postModel.teaserImageUrl">
+                                    <img data-bind="attr: { src: postModel.teaserImageUrl }" class="img-responsive img-thumbnail" />
                                 </div>
-                                <div data-bind="ifnot: teaserImageUrl">
+                                <div data-bind="ifnot: postModel.teaserImageUrl">
                                     <img src="http://placehold.it/320x240&text=Image+Missing" class="img-responsive img-thumbnail" />
                                 </div>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                             <div class="form-group">
-                                @Html.Label("TeaserImageUrl", T(KoreCmsLocalizableStrings.Blog.Model.TeaserImageUrl), new { @class = "control-label" })
+                                @Html.Label("TeaserImageUrl", T(KoreCmsLocalizableStrings.Blog.PostModel.TeaserImageUrl), new { @class = "control-label" })
                                 <div class="input-group">
-                                    @Html.TextBox("TeaserImageUrl", null, new { @class = "form-control", data_bind = "value: teaserImageUrl" })
+                                    @Html.TextBox("TeaserImageUrl", null, new { @class = "form-control", data_bind = "value: postModel.teaserImageUrl" })
                                     <span class="input-group-addon">
                                         <a data-toggle="modal" href="javascript:void(0);" data-target="#myModal">
                                             <i class="kore-icon kore-icon-search"></i>
@@ -96,47 +104,165 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
-                                @Html.Label("ShortDescription", T(KoreCmsLocalizableStrings.Blog.Model.ShortDescription), new { @class = "control-label" })
-                                @Html.TextArea("ShortDescription", null, new { @class = "form-control", data_bind = "value: shortDescription" })
+                                @Html.Label("ShortDescription", T(KoreCmsLocalizableStrings.Blog.PostModel.ShortDescription), new { @class = "control-label" })
+                                @Html.TextArea("ShortDescription", null, new { @class = "form-control", data_bind = "value: postModel.shortDescription" })
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <div class="checkbox">
                                     <label>
-                                        @Html.CheckBox("UseExternalLink", new { data_bind = "checked: useExternalLink" }) @T(KoreCmsLocalizableStrings.Blog.Model.UseExternalLink)
+                                        @Html.CheckBox("UseExternalLink", new { data_bind = "checked: postModel.useExternalLink" }) @T(KoreCmsLocalizableStrings.Blog.PostModel.UseExternalLink)
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: useExternalLink() == true">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: postModel.useExternalLink() == true">
                             <div class="form-group">
-                                @Html.Label("ExternalLink", T(KoreCmsLocalizableStrings.Blog.Model.ExternalLink), new { @class = "control-label" })
-                                @Html.TextBox("ExternalLink", null, new { @class = "form-control", data_bind = "value: externalLink" })
+                                @Html.Label("ExternalLink", T(KoreCmsLocalizableStrings.Blog.PostModel.ExternalLink), new { @class = "control-label" })
+                                @Html.TextBox("ExternalLink", null, new { @class = "form-control", data_bind = "value: postModel.externalLink" })
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: useExternalLink() == false">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: postModel.useExternalLink() == false">
                             <div class="form-group">
-                                @Html.Label("FullDescription", T(KoreCmsLocalizableStrings.Blog.Model.FullDescription), new { @class = "control-label" })
-                                @Html.TextArea("FullDescription", null, new { @class = "form-control", data_bind = "wysiwyg: fullDescription, wysiwygConfig: tinyMCE_fullDescription" })
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                @Html.Label("MetaKeywords", T(KoreCmsLocalizableStrings.Blog.Model.MetaKeywords), new { @class = "control-label" })
-                                @Html.TextBox("MetaKeywords", null, new { @class = "form-control", data_bind = "value: metaKeywords" })
+                                @Html.Label("FullDescription", T(KoreCmsLocalizableStrings.Blog.PostModel.FullDescription), new { @class = "control-label" })
+                                @Html.TextArea("FullDescription", null, new { @class = "form-control", data_bind = "wysiwyg: postModel.fullDescription, wysiwygConfig: tinyMCE_fullDescription" })
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
-                                @Html.Label("MetaDescription", T(KoreCmsLocalizableStrings.Blog.Model.MetaDescription), new { @class = "control-label" })
-                                @Html.TextBox("MetaDescription", null, new { @class = "form-control", data_bind = "value: metaDescription" })
+                                @Html.Label("MetaKeywords", T(KoreCmsLocalizableStrings.Blog.PostModel.MetaKeywords), new { @class = "control-label" })
+                                @Html.TextBox("MetaKeywords", null, new { @class = "form-control", data_bind = "value: postModel.metaKeywords" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("MetaDescription", T(KoreCmsLocalizableStrings.Blog.PostModel.MetaDescription), new { @class = "control-label" })
+                                @Html.TextBox("MetaDescription", null, new { @class = "form-control", data_bind = "value: postModel.metaDescription" })
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group pull-right">
-                                <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                                <button type="button" class="btn btn-primary" data-bind="click: save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                                <button type="button" class="btn btn-default" data-bind="click: postModel.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: postModel.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            }
+        }
+    </article>
+</div>
+
+<div id="category-grid-section" class="row" style="display:none">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <a data-bind="click: categoryModel.create" class="btn btn-primary">
+            <i class="kore-icon kore-icon-add"></i>
+            @T(KoreWebLocalizableStrings.General.Create)
+        </a>
+        <a data-bind="click: showPosts" class="btn btn-info">
+            <i class="kore-icon kore-icon-edit"></i>
+            @T(KoreCmsLocalizableStrings.Blog.Posts)
+        </a>
+        <a data-bind="click: showTags" class="btn btn-success">
+            <i class="kore-icon kore-icon-tags"></i>
+            @T(KoreCmsLocalizableStrings.Blog.Tags)
+        </a>
+    </div>
+
+    <div class="clearfix"></div>
+    <br />
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
+        <div id="CategoryGrid"></div>
+    </div>
+</div>
+
+<div id="category-form-section" class="row" style="display:none">
+    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreCmsLocalizableStrings.Blog.Categories))) { }
+            using (var body = panel.BeginBody())
+            {
+                <form id="category-form-section-form" role="form">
+                    <fieldset>
+                        <legend id="category-form-section-legend"></legend>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("Category_Name", T(KoreCmsLocalizableStrings.Blog.CategoryModel.Name), new { @class = "control-label" })
+                                @Html.TextBox("Category_Name", null, new { @class = "form-control", data_bind = "value: categoryModel.name" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("Category_UrlSlug", T(KoreCmsLocalizableStrings.Blog.CategoryModel.UrlSlug), new { @class = "control-label" })
+                                @Html.TextBox("Category_UrlSlug", null, new { @class = "form-control", data_bind = "value: categoryModel.urlSlug" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group pull-right">
+                                <button type="button" class="btn btn-default" data-bind="click: categoryModel.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: categoryModel.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            }
+        }
+    </article>
+</div>
+
+<div id="tag-grid-section" class="row" style="display:none">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <a data-bind="click: tagModel.create" class="btn btn-primary">
+            <i class="kore-icon kore-icon-add"></i>
+            @T(KoreWebLocalizableStrings.General.Create)
+        </a>
+        <a data-bind="click: showPosts" class="btn btn-info">
+            <i class="kore-icon kore-icon-edit"></i>
+            @T(KoreCmsLocalizableStrings.Blog.Posts)
+        </a>
+        <a data-bind="click: showCategories" class="btn btn-success">
+            <i class="kore-icon kore-icon-categories"></i>
+            @T(KoreCmsLocalizableStrings.Blog.Categories)
+        </a>
+    </div>
+
+    <div class="clearfix"></div>
+    <br />
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
+        <div id="TagGrid"></div>
+    </div>
+</div>
+
+<div id="tag-form-section" class="row" style="display:none">
+    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+        {
+            using (var header = panel.BeginHeader(T(KoreCmsLocalizableStrings.Blog.Tags))) { }
+            using (var body = panel.BeginBody())
+            {
+                <form id="tag-form-section-form" role="form">
+                    <fieldset>
+                        <legend id="tag-form-section-legend"></legend>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("Tag_Name", T(KoreCmsLocalizableStrings.Blog.CategoryModel.Name), new { @class = "control-label" })
+                                @Html.TextBox("Tag_Name", null, new { @class = "form-control", data_bind = "value: tagModel.name" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("Tag_UrlSlug", T(KoreCmsLocalizableStrings.Blog.CategoryModel.UrlSlug), new { @class = "control-label" })
+                                @Html.TextBox("Tag_UrlSlug", null, new { @class = "form-control", data_bind = "value: tagModel.urlSlug" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group pull-right">
+                                <button type="button" class="btn btn-default" data-bind="click: tagModel.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: tagModel.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
                             </div>
                         </div>
                     </fieldset>
@@ -181,17 +307,22 @@
             UpdateRecordError: '@T(KoreWebLocalizableStrings.General.UpdateRecordError).Text',
             UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text',
 
-            Columns:{
-                Headline: '@T(KoreCmsLocalizableStrings.Blog.Model.Headline).Text',
-                DateCreatedUtc: '@T(KoreCmsLocalizableStrings.Blog.Model.DateCreatedUtc).Text',
+            Columns: {
+                Category: {
+                    Name: '@T(KoreCmsLocalizableStrings.Blog.CategoryModel.Name).Text',
+                },
+                Post: {
+                    Headline: '@T(KoreCmsLocalizableStrings.Blog.PostModel.Headline).Text',
+                    DateCreatedUtc: '@T(KoreCmsLocalizableStrings.Blog.PostModel.DateCreatedUtc).Text',
+                },
+                Tag: {
+                    Name: '@T(KoreCmsLocalizableStrings.Blog.TagModel.Name).Text',
+                }
             }
         }
 
-        $(document).ready(function(){
-            $('#myModal').on('hidden.bs.modal', function () {
-                var url = $('#TeaserImageUrl').val();
-                viewModel.teaserImageUrl(url);
-            })
+        $(document).ready(function() {
+            currentSection = $("#post-grid-section");
         });
     </script>
 }

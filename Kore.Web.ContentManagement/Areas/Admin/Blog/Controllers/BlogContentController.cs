@@ -15,12 +15,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
     public class BlogContentController : KoreController
     {
         private readonly BlogSettings blogSettings;
-        private readonly Lazy<IRepository<BlogEntry>> blogRepository;
+        private readonly Lazy<IRepository<Post>> blogRepository;
         private readonly Lazy<IMembershipService> membershipService;
 
         public BlogContentController(
             BlogSettings blogSettings,
-            Lazy<IRepository<BlogEntry>> blogRepository,
+            Lazy<IRepository<Post>> blogRepository,
             Lazy<IMembershipService> membershipService)
         {
             this.blogSettings = blogSettings;

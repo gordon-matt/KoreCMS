@@ -31,7 +31,10 @@ namespace Kore.Web.ContentManagement
 
         internal static class Tables
         {
-            internal const string Blog = "Kore_Blog";
+            internal const string BlogPosts = "Kore_BlogPosts";
+            internal const string BlogPostTags = "Kore_BlogPostTags";
+            internal const string BlogCategories = "Kore_BlogCategories";
+            internal const string BlogTags = "Kore_BlogTags";
             internal const string ContentBlocks = "Kore_ContentBlocks";
             internal const string EntityTypeContentBlocks = "Kore_EntityTypeContentBlocks";
             internal const string HistoricPages = "Kore_HistoricPages";

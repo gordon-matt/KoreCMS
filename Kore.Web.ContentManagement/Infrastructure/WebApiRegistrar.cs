@@ -23,24 +23,38 @@ namespace Kore.Web.ContentManagement.Infrastructure
         public void Register(HttpConfiguration config)
         {
             ODataModelBuilder builder = new ODataConventionModelBuilder();
-            builder.EntitySet<BlogEntry>("BlogApi");
+
+            // Blog
+            builder.EntitySet<Category>("BlogCategoryApi");
+            builder.EntitySet<Post>("BlogPostApi");
+            builder.EntitySet<Tag>("BlogTagApi");
+
+            // Content Blocks
             builder.EntitySet<ContentBlock>("ContentBlockApi");
             builder.EntitySet<EntityTypeContentBlock>("EntityTypeContentBlockApi");
+            builder.EntitySet<Zone>("ZoneApi");
+
+            // Localization
             builder.EntitySet<Language>("LanguageApi");
             builder.EntitySet<LocalizableString>("LocalizableStringApi");
+
+            // Menus
             builder.EntitySet<Menu>("MenuApi");
             builder.EntitySet<MenuItem>("MenuItemApi");
+
+            // Messaging
             builder.EntitySet<MessageTemplate>("MessageTemplateApi");
+            builder.EntitySet<QueuedEmail>("QueuedEmailApi");
+
+            // Pages
             builder.EntitySet<Page>("PageApi");
             builder.EntitySet<PageType>("PageTypeApi");
             builder.EntitySet<PageVersion>("PageVersionApi");
-            builder.EntitySet<QueuedEmail>("QueuedEmailApi");
+            builder.EntitySet<PageTreeItem>("PageTreeApi");
+
+            // Other
             builder.EntitySet<SitemapConfig>("XmlSitemapApi");
             builder.EntitySet<Subscriber>("SubscriberApi");
-            builder.EntitySet<Zone>("ZoneApi");
-
-            // Special
-            builder.EntitySet<PageTreeItem>("PageTreeApi");
 
             // Action Configurations
             RegisterContentBlockODataActions(builder);

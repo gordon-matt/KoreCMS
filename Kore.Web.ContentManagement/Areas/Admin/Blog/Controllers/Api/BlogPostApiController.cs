@@ -14,12 +14,12 @@ using Kore.Web.Security.Membership.Permissions;
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 {
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class BlogApiController : GenericODataController<BlogEntry, Guid>
+    public class BlogPostApiController : GenericODataController<Post, Guid>
     {
         private readonly Lazy<IMembershipService> membershipService;
 
-        public BlogApiController(
-            IBlogService service,
+        public BlogPostApiController(
+            IPostService service,
             Lazy<IMembershipService> membershipService)
             : base(service)
         {
@@ -28,26 +28,26 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 
         [AllowAnonymous]
         [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public override IQueryable<BlogEntry> Get()
+        public override IQueryable<Post> Get()
         {
             return base.Get();
         }
 
         [AllowAnonymous]
         [EnableQuery]
-        public override SingleResult<BlogEntry> Get([FromODataUri] Guid key)
+        public override SingleResult<Post> Get([FromODataUri] Guid key)
         {
             return base.Get(key);
         }
 
-        public override IHttpActionResult Post(BlogEntry entity)
+        public override IHttpActionResult Post(Post entity)
         {
             entity.DateCreatedUtc = DateTime.UtcNow;
             entity.UserId = membershipService.Value.GetUserByName(User.Identity.Name).Id;
             return base.Post(entity);
         }
 
-        public override IHttpActionResult Put([FromODataUri] Guid key, BlogEntry entity)
+        public override IHttpActionResult Put([FromODataUri] Guid key, Post entity)
         {
             var currentEntry = Service.FindOne(entity.Id);
             entity.UserId = currentEntry.UserId;
@@ -55,12 +55,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
             return base.Put(key, entity);
         }
 
-        protected override Guid GetId(BlogEntry entity)
+        protected override Guid GetId(Post entity)
         {
             return entity.Id;
         }
 
-        protected override void SetNewId(BlogEntry entity)
+        protected override void SetNewId(Post entity)
         {
             entity.Id = Guid.NewGuid();
         }

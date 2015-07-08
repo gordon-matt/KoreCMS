@@ -117,7 +117,7 @@ function getBlogs() {
     userIds = [];
 
     var query = new breeze.EntityQuery()
-        .from("BlogApi")
+        .from("PostApi")
         .orderBy("DateCreatedUtc desc")
         .skip((viewModel.pageIndex() - 1) * viewModel.pageSize)
         .take(viewModel.pageSize)

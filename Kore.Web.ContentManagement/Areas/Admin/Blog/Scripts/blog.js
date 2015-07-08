@@ -64,7 +64,7 @@ var TagModel = function () {
     };
 
     self.save = function () {
-        var isNew = (self.id() == emptyGuid);
+        var isNew = (self.id() == 0);
 
         if (!$("#tag-form-section-form").valid()) {
             return false;
@@ -194,7 +194,7 @@ var CategoryModel = function () {
     };
 
     self.save = function () {
-        var isNew = (self.id() == emptyGuid);
+        var isNew = (self.id() == 0);
 
         if (!$("#category-form-section-form").valid()) {
             return false;
@@ -268,6 +268,7 @@ var PostModel = function () {
     var self = this;
 
     self.id = ko.observable(emptyGuid);
+    self.categoryId = ko.observable(0);
     self.headline = ko.observable(null);
     self.slug = ko.observable(null);
     self.teaserImageUrl = ko.observable(null);
@@ -280,6 +281,7 @@ var PostModel = function () {
 
     self.create = function () {
         self.id(emptyGuid);
+        self.categoryId(0);
         self.headline(null);
         self.slug(null);
         self.teaserImageUrl(null);
@@ -304,6 +306,7 @@ var PostModel = function () {
         })
         .done(function (json) {
             self.id(json.Id);
+            self.categoryId(json.CategoryId);
             self.headline(json.Headline);
             self.slug(json.Slug);
             self.teaserImageUrl(json.TeaserImageUrl);
@@ -353,6 +356,7 @@ var PostModel = function () {
 
         var record = {
             Id: self.id(),
+            CategoryId: self.categoryId(),
             Headline: self.headline(),
             Slug: self.slug(),
             TeaserImageUrl: self.teaserImageUrl(),
@@ -416,6 +420,7 @@ var PostModel = function () {
 
     self.validator = $("#post-form-section-form").validate({
         rules: {
+            CategoryId: { required: true },
             Headline: { required: true, maxlength: 255 },
             Slug: { required: true, maxlength: 255 },
             TeaserImageUrl: { maxlength: 255 },
@@ -501,7 +506,8 @@ $(document).ready(function () {
             field: "DateCreatedUtc",
             title: translations.Columns.Post.DateCreatedUtc,
             filterable: true,
-            format: '{0:G}'
+            format: '{0:G}',
+            width: 200
         }, {
             field: "Id",
             title: " ",

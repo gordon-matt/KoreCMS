@@ -19,6 +19,7 @@
 
             public static class PostModel
             {
+                public const string CategoryId = "Kore.Web.ContentManagement/Blog.PostModel.CategoryId";
                 public const string DateCreatedUtc = "Kore.Web.ContentManagement/Blog.PostModel.DateCreatedUtc";
                 public const string ExternalLink = "Kore.Web.ContentManagement/Blog.PostModel.ExternalLink";
                 public const string FullDescription = "Kore.Web.ContentManagement/Blog.PostModel.FullDescription";

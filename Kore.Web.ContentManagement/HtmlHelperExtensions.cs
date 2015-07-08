@@ -7,6 +7,7 @@ using System.Web.Mvc.Html;
 using Kore.Data;
 using Kore.Infrastructure;
 using Kore.Web.Collections;
+using Kore.Web.ContentManagement.Areas.Admin.Blog.Services;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
@@ -103,6 +104,21 @@ namespace Kore.Web.ContentManagement
             this.html = html;
         }
 
+        public MvcHtmlString BlogCategoryDropDownList(string name, int? selectedValue = null, string emptyText = null, object htmlAttributes = null)
+        {
+            var selectList = GetBlogCategorySelectList(selectedValue, emptyText);
+            return html.DropDownList(name, selectList, htmlAttributes);
+        }
+
+        public MvcHtmlString BlogCategoryDropDownListFor(Expression<Func<TModel, int>> expression, object htmlAttributes = null, string emptyText = null)
+        {
+            var func = expression.Compile();
+            var selectedValue = func(html.ViewData.Model);
+
+            var selectList = GetBlogCategorySelectList(selectedValue, emptyText);
+            return html.DropDownListFor(expression, selectList, htmlAttributes);
+        }
+
         public MvcHtmlString ContentBlockTypesDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
         {
             var selectList = GetContentBlockTypesSelectList(selectedValue, emptyText);
@@ -161,6 +177,18 @@ namespace Kore.Web.ContentManagement
 
             var selectList = GetZonesSelectList(selectedValue, emptyText);
             return html.DropDownListFor(expression, selectList, htmlAttributes);
+        }
+
+        private static IEnumerable<SelectListItem> GetBlogCategorySelectList(int? selectedValue = null, string emptyText = null)
+        {
+            var categoryService = EngineContext.Current.Resolve<ICategoryService>();
+
+            return categoryService.Find()
+                .ToSelectList(
+                    value => value.Id,
+                    text => text.Name,
+                    selectedValue,
+                    emptyText);
         }
 
         private static IEnumerable<SelectListItem> GetContentBlockTypesSelectList(string selectedValue = null, string emptyText = null)

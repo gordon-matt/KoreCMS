@@ -43,6 +43,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.RegisterType<CategoryService>().As<ICategoryService>().InstancePerDependency();
             builder.RegisterType<PostService>().As<IPostService>().InstancePerDependency();
             builder.RegisterType<TagService>().As<ITagService>().InstancePerDependency();
+            builder.RegisterType<PostTagService>().As<IPostTagService>().InstancePerDependency();
 
             // Menus
             builder.RegisterType<MenuService>().As<IMenuService>().InstancePerDependency();

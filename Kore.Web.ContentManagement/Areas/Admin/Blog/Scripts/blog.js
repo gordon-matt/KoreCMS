@@ -357,6 +357,12 @@ var PostModel = function () {
             return false;
         }
 
+        var tags = self.chosenTags().map(function (item) {
+            return {
+                TagId: item
+            }
+        });
+
         var record = {
             Id: self.id(),
             CategoryId: self.categoryId(),
@@ -368,7 +374,8 @@ var PostModel = function () {
             UseExternalLink: self.useExternalLink(),
             ExternalLink: self.externalLink(),
             MetaKeywords: self.metaKeywords(),
-            MetaDescription: self.metaDescription()
+            MetaDescription: self.metaDescription(),
+            Tags: tags
         };
 
         if (isNew) {

@@ -142,14 +142,17 @@
     <Compile Include="Areas\Admin\Blog\ContentBlocks\LastNBlogEntriesBlock.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\Api\BlogCategoryApiController.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\Api\BlogPostApiController.cs" />
+    <Compile Include="Areas\Admin\Blog\Controllers\Api\BlogPostTagApiController.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\Api\BlogTagApiController.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\BlogContentController.cs" />
     <Compile Include="Areas\Admin\Blog\Controllers\BlogController.cs" />
     <Compile Include="Areas\Admin\Blog\Domain\Post.cs" />
     <Compile Include="Areas\Admin\Blog\Domain\Category.cs" />
+    <Compile Include="Areas\Admin\Blog\Domain\PostTag.cs" />
     <Compile Include="Areas\Admin\Blog\Domain\Tag.cs" />
     <Compile Include="Areas\Admin\Blog\Services\ICategoryService.cs" />
     <Compile Include="Areas\Admin\Blog\Services\IPostService.cs" />
+    <Compile Include="Areas\Admin\Blog\Services\IPostTagService.cs" />
     <Compile Include="Areas\Admin\Blog\Services\ITagService.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\Controllers\Api\EntityTypeContentBlockApiController.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\Controllers\EntityTypeContentBlockController.cs" />

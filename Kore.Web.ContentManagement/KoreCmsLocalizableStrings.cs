@@ -4,22 +4,37 @@
     {
         public static class Blog
         {
+            public const string Categories = "Kore.Web.ContentManagement/Blog.Categories";
             public const string ManageBlog = "Kore.Web.ContentManagement/Blog.ManageBlog";
             public const string PostedByXOnX = "Kore.Web.ContentManagement/Blog.PostedByXOnX";
+            public const string Posts = "Kore.Web.ContentManagement/Blog.Posts";
+            public const string Tags = "Kore.Web.ContentManagement/Blog.Tags";
             public const string Title = "Kore.Web.ContentManagement/Blog.Title";
 
-            public static class Model
+            public static class CategoryModel
             {
-                public const string DateCreatedUtc = "Kore.Web.ContentManagement/Blog.Model.DateCreatedUtc";
-                public const string ExternalLink = "Kore.Web.ContentManagement/Blog.Model.ExternalLink";
-                public const string FullDescription = "Kore.Web.ContentManagement/Blog.Model.FullDescription";
-                public const string Headline = "Kore.Web.ContentManagement/Blog.Model.Headline";
-                public const string MetaDescription = "Kore.Web.ContentManagement/Blog.Model.MetaDescription";
-                public const string MetaKeywords = "Kore.Web.ContentManagement/Blog.Model.MetaKeywords";
-                public const string ShortDescription = "Kore.Web.ContentManagement/Blog.Model.ShortDescription";
-                public const string Slug = "Kore.Web.ContentManagement/Blog.Model.Slug";
-                public const string TeaserImageUrl = "Kore.Web.ContentManagement/Blog.Model.TeaserImageUrl";
-                public const string UseExternalLink = "Kore.Web.ContentManagement/Blog.Model.UseExternalLink";
+                public const string Name = "Kore.Web.ContentManagement/Blog.CategoryModel.Name";
+                public const string UrlSlug = "Kore.Web.ContentManagement/Blog.CategoryModel.UrlSlug";
+            }
+
+            public static class PostModel
+            {
+                public const string DateCreatedUtc = "Kore.Web.ContentManagement/Blog.PostModel.DateCreatedUtc";
+                public const string ExternalLink = "Kore.Web.ContentManagement/Blog.PostModel.ExternalLink";
+                public const string FullDescription = "Kore.Web.ContentManagement/Blog.PostModel.FullDescription";
+                public const string Headline = "Kore.Web.ContentManagement/Blog.PostModel.Headline";
+                public const string MetaDescription = "Kore.Web.ContentManagement/Blog.PostModel.MetaDescription";
+                public const string MetaKeywords = "Kore.Web.ContentManagement/Blog.PostModel.MetaKeywords";
+                public const string ShortDescription = "Kore.Web.ContentManagement/Blog.PostModel.ShortDescription";
+                public const string Slug = "Kore.Web.ContentManagement/Blog.PostModel.Slug";
+                public const string TeaserImageUrl = "Kore.Web.ContentManagement/Blog.PostModel.TeaserImageUrl";
+                public const string UseExternalLink = "Kore.Web.ContentManagement/Blog.PostModel.UseExternalLink";
+            }
+
+            public static class TagModel
+            {
+                public const string Name = "Kore.Web.ContentManagement/Blog.TagModel.Name";
+                public const string UrlSlug = "Kore.Web.ContentManagement/Blog.TagModel.UrlSlug";
             }
         }
 

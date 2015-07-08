@@ -66,7 +66,7 @@ namespace KoreCMS.Data
 
         #region IKoreCmsDbContext Members
 
-        public DbSet<BlogEntry> Blog { get; set; }
+        public DbSet<Post> Blog { get; set; }
 
         public DbSet<ContentBlock> ContentBlocks { get; set; }
 

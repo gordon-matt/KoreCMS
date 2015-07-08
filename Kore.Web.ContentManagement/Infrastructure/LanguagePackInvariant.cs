@@ -22,6 +22,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
                     { KoreCmsLocalizableStrings.Blog.ManageBlog, "Manage Blog" },
                     { KoreCmsLocalizableStrings.Blog.CategoryModel.Name, "Name" },
                     { KoreCmsLocalizableStrings.Blog.CategoryModel.UrlSlug, "URL Slug" },
+                    { KoreCmsLocalizableStrings.Blog.PostModel.CategoryId, "Category" },
                     { KoreCmsLocalizableStrings.Blog.PostModel.DateCreatedUtc, "Date Created (UTC)" },
                     { KoreCmsLocalizableStrings.Blog.PostModel.ExternalLink, "External Link" },
                     { KoreCmsLocalizableStrings.Blog.PostModel.FullDescription, "Full Description" },

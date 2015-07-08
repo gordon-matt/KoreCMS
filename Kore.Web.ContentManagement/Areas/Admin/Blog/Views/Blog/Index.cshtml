@@ -64,6 +64,17 @@
                         <legend id="post-form-section-legend"></legend>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
+                                @Html.Label("CategoryId", T(KoreCmsLocalizableStrings.Blog.PostModel.CategoryId), new { @class = "control-label" })
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="kore-icon kore-icon-categories"></i>
+                                    </span>
+                                    @Html.KoreCMS().BlogCategoryDropDownList("CategoryId", htmlAttributes: new { @class = "form-control", data_bind = "value: postModel.categoryId" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
                                 @Html.Label("Headline", T(KoreCmsLocalizableStrings.Blog.PostModel.Headline), new { @class = "control-label" })
                                 <div class="input-group">
                                     <span class="input-group-addon">
@@ -291,7 +302,7 @@
         $('#myModal').on('hidden.bs.modal', function () {
             var url = $('#TeaserImageUrl').val();
             url = "/Media/Uploads/" + url;
-            viewModel.teaserImageUrl(url);
+            viewModel.postModel.teaserImageUrl(url);
         });
         var gridPageSize = @SiteSettings.DefaultGridPageSize;
         var translations = {

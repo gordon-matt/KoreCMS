@@ -20,6 +20,9 @@ namespace Kore.Web.CommonResources.Infrastructure
             bundles.Add(new ScriptBundle("~/bundles/js/kore/jqueryval")
                 .Include("~/Scripts/Kore.Web.CommonResources.Scripts.kore-jqval.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/kore/knockout-chosen")
+                .Include("~/Scripts/Kore.Web.CommonResources.Scripts.kore-knockout-chosen.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/kore/section-switching")
                 .Include("~/Scripts/Kore.Web.CommonResources.Scripts.kore-section-switching.js"));
 

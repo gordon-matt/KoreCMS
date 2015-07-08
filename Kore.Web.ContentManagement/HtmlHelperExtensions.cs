@@ -119,6 +119,21 @@ namespace Kore.Web.ContentManagement
             return html.DropDownListFor(expression, selectList, htmlAttributes);
         }
 
+        //public MvcHtmlString BlogTagListBox(string name, IEnumerable<int> selectedValues = null, string emptyText = null, object htmlAttributes = null)
+        //{
+        //    var multiSelectList = GetBlogTagMultiSelectList(selectedValues, emptyText);
+        //    return html.ListBox(name, multiSelectList, htmlAttributes);
+        //}
+
+        //public MvcHtmlString BlogTagListBoxFor(Expression<Func<TModel, IEnumerable<int>>> expression, object htmlAttributes = null, string emptyText = null)
+        //{
+        //    var func = expression.Compile();
+        //    var selectedValues = func(html.ViewData.Model);
+
+        //    var multiSelectList = GetBlogTagMultiSelectList(selectedValues, emptyText);
+        //    return html.ListBoxFor(expression, multiSelectList, htmlAttributes);
+        //}
+
         public MvcHtmlString ContentBlockTypesDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
         {
             var selectList = GetContentBlockTypesSelectList(selectedValue, emptyText);
@@ -190,6 +205,19 @@ namespace Kore.Web.ContentManagement
                     selectedValue,
                     emptyText);
         }
+
+        //private static MultiSelectList GetBlogTagMultiSelectList(IEnumerable<int> selectedValues = null, string emptyText = null)
+        //{
+        //    var tagService = EngineContext.Current.Resolve<ITagService>();
+
+        //    return tagService.Find()
+        //        .ToMultiSelectList(
+        //            value => value.Id,
+        //            text => text.Name,
+        //            selectedValues,
+        //            emptyText);
+        //}
+
 
         private static IEnumerable<SelectListItem> GetContentBlockTypesSelectList(string selectedValue = null, string emptyText = null)
         {

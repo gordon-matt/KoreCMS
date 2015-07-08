@@ -6,20 +6,31 @@
     Layout = KoreWebConstants.DefaultAdminLayoutPath;
 
     Style.IncludeBundle("kendo-ui");
+    Style.IncludeBundle("chosen");
 
     Script.IncludeBundle("kendo-ui");
     Script.IncludeBundle("knockout");
     Script.IncludeBundle("knockout-mapping");
     Script.IncludeBundle("tinymce");
     Script.IncludeBundle("notify");
+    Script.IncludeBundle("chosen");
+    Script.IncludeBundle("breeze");
 
     Script.IncludeBundle("kore/common");
+    Script.IncludeBundle("kore/knockout-chosen");
     Script.IncludeBundle("kore/section-switching");
     Script.IncludeBundle("kore/jqueryval");
     Script.IncludeBundle("kore/tinymce");
     Script.IncludeBundle("kore-cms/blog");
 
-    string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
+    string rtlClass = string.Empty;
+    string chosenRtlClass = string.Empty;
+    
+    if (IsRightToLeft)
+    {
+        rtlClass = "k-rtl";
+        chosenRtlClass = "chosen-rtl";
+    }
 }
 
 <style type="text/css">
@@ -140,6 +151,19 @@
                                 @Html.TextArea("FullDescription", null, new { @class = "form-control", data_bind = "wysiwyg: postModel.fullDescription, wysiwygConfig: tinyMCE_fullDescription" })
                             </div>
                         </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.Label("Tags", T(KoreCmsLocalizableStrings.Blog.Tags), new { @class = "control-label" })
+                                <select id="Tags"
+                                        name="Tags"
+                                        class="form-control @chosenRtlClass"
+                                        multiple="multiple"
+                                        data-bind="options: postModel.availableTags, optionsText: 'Name', optionsValue: 'Id', selectedOptions: postModel.chosenTags, chosen: {width: '100%'}">
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 @Html.Label("MetaKeywords", T(KoreCmsLocalizableStrings.Blog.PostModel.MetaKeywords), new { @class = "control-label" })

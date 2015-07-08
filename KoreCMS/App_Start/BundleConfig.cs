@@ -18,6 +18,8 @@ namespace KoreCMS
                 .Include("~/Scripts/q.min.js")
                 .Include("~/Scripts/breeze.min.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/chosen").Include("~/Scripts/chosen.jquery.min.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/jquery").Include("~/Scripts/jquery-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/js/jquery-migrate").Include("~/Scripts/jquery-migrate-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/js/jquery-ui").Include("~/Scripts/jquery-ui-{version}.js"));
@@ -59,6 +61,9 @@ namespace KoreCMS
             bundles.Add(new StyleBundle("~/bundles/content/bootstrap")
                 .Include("~/Content/bootstrap-theme.css", cssRewriteUrlTransform)
                 .Include("~/Content/bootstrap.css", cssRewriteUrlTransform));
+
+            bundles.Add(new StyleBundle("~/bundles/content/chosen")
+                .Include("~/Content/bootstrap-chosen.css", cssRewriteUrlTransform));
 
             bundles.Add(new StyleBundle("~/bundles/content/jquery-ui")
                 .Include("~/Content/themes/base/accordion.css", cssRewriteUrlTransform)

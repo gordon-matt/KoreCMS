@@ -182,6 +182,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
                     { KoreCmsLocalizableStrings.Settings.Blog.PageTitle, "Page Title" },
                     { KoreCmsLocalizableStrings.Settings.Blog.ShowOnMenus, "Show on Menus" },
                     { KoreCmsLocalizableStrings.Settings.Blog.UseAjax, "Use Ajax" },
+                    { KoreCmsLocalizableStrings.Settings.Blog.LayoutPathOverride, "Layout Path (Override)" },
                     { KoreCmsLocalizableStrings.Settings.Pages.NumberOfPageVersionsToKeep, "# Page Versions to Keep" },
                     { KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequency, "Change Frequency" },
                     { KoreCmsLocalizableStrings.Sitemap.Model.Id, "ID" },

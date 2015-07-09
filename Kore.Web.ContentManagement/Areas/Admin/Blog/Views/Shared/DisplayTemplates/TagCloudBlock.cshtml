@@ -1,6 +1,7 @@
 ﻿@using Kore.Infrastructure
 @using Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks
 @using Kore.Web.ContentManagement.Areas.Admin.Blog.Services
+@using Kore.Web.Mvc.KoreUI
 @model TagCloudBlock
 
 @{
@@ -14,7 +15,7 @@
         .GroupBy(x => x.TagId)
         .ToDictionary(k => k.Key, v => v.Count());
 
-    var tags = tagService.Repository.Table.ToDictionary(k => k.Id, v => v.Name);
+    var tags = tagService.Repository.Table.ToDictionary(k => k.Id, v => v);
 
     string controlId = "blog-tag-cloud-" + Guid.NewGuid();
 }
@@ -31,7 +32,14 @@
         }
 </style>
 
-<div id="@controlId" class="tag-cloud"></div>
+@using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+{
+    using (var header = panel.BeginHeader(T(KoreCmsLocalizableStrings.Blog.Tags))) { }
+    using (var body = panel.BeginBody())
+    {
+        <div id="@controlId" class="tag-cloud"></div>
+    }
+}
 
 @using (Script.AtFoot())
 {
@@ -39,7 +47,7 @@
         var words = [
             @foreach (var item in data)
             {
-                @:{ text: '@tags[item.Key]', weight: @item.Value },
+                @:{ text: '@tags[item.Key].Name', weight: @item.Value, link: '/blog/tag/@tags[item.Key].UrlSlug' },
             }
         ];
         $('#@controlId').jQCloud(words);

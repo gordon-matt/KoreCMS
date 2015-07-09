@@ -302,7 +302,7 @@ var PostModel = function () {
 
     self.edit = function (id) {
         $.ajax({
-            url: postApiUrl + "(guid'" + id + "')",
+            url: postApiUrl + "(guid'" + id + "')?$expand=Tags",
             type: "GET",
             dataType: "json",
             async: false
@@ -319,6 +319,11 @@ var PostModel = function () {
             self.externalLink(json.ExternalLink);
             self.metaKeywords(json.MetaKeywords);
             self.metaDescription(json.MetaDescription);
+
+            self.chosenTags([]);
+            $(json.Tags).each(function (index, item) {
+                self.chosenTags.push(item.TagId);
+            });
 
             self.validator.resetForm();
             switchSection($("#post-form-section"));

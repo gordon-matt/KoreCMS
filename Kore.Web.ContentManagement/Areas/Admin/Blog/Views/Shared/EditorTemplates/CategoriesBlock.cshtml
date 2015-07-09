@@ -1,0 +1,39 @@
+﻿@using Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks
+@model CategoriesBlock
+
+<div id="block-content" class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.NumberOfCategories, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.NumberOfCategories, new { @class = "form-control", data_bind = "value: numberOfCategories" })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var contentBlockModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.numberOfCategories = ko.observable(5);
+
+            var data = ko.mapping.fromJSON(viewModel.blockValues());
+
+            if (data && data.NumberOfCategories) {
+                viewModel.numberOfCategories(data.NumberOfCategories());
+            }
+
+            viewModel.tinyMCEConfig = koreDefaultTinyMCEConfig;
+        };
+        f.cleanUp = function () {
+            delete viewModel.numberOfCategories;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                NumberOfCategories: viewModel.numberOfCategories()
+            };
+
+            viewModel.blockValues(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
+</script>

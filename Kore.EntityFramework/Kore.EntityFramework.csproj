@@ -76,6 +76,7 @@
     <Compile Include="Data\EntityFramework\QueryableExtensions.cs" />
     <Compile Include="Data\IKoreDbContext.cs" />
     <Compile Include="DropCreateSeedDatabaseIfModelChanges.cs" />
+    <Compile Include="EntityNotFoundException.cs" />
     <Compile Include="ISupportSeed.cs" />
     <Compile Include="Localization\Domain\LanguageMap.cs" />
     <Compile Include="Localization\Domain\LocalizableStringMap.cs" />

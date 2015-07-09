@@ -4,13 +4,15 @@
 @model Post
 
 @{
-    if (string.IsNullOrEmpty(SiteSettings.DefaultFrontendLayoutPath))
+    var settings = EngineContext.Current.Resolve<BlogSettings>();
+
+    if (!string.IsNullOrEmpty(settings.LayoutPathOverride))
     {
-        Layout = "~/Views/Shared/_Layout.cshtml";
+        Layout = settings.LayoutPathOverride;
     }
     else
     {
-        Layout = SiteSettings.DefaultFrontendLayoutPath;
+        Layout = KoreWebConstants.DefaultFrontendLayoutPath;
     }
 
     ViewBag.Title = Model.Headline;

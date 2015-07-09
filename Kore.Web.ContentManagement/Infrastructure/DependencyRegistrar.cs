@@ -110,6 +110,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.RegisterType<AllPostsBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<LastNPostsBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<TagCloudBlock>().As<IContentBlock>().InstancePerDependency();
+            builder.RegisterType<CategoriesBlock>().As<IContentBlock>().InstancePerDependency();
 
             // Other
             builder.RegisterType<FormBlock>().As<IContentBlock>().InstancePerDependency();

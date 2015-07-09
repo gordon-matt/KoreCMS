@@ -300,6 +300,7 @@
                 public const string PageTitle = "Kore.Web.ContentManagement/Settings.Blog.PageTitle";
                 public const string ShowOnMenus = "Kore.Web.ContentManagement/Settings.Blog.ShowOnMenus";
                 public const string UseAjax = "Kore.Web.ContentManagement/Settings.Blog.UseAjax";
+                public const string LayoutPathOverride = "Kore.Web.ContentManagement/Settings.Blog.LayoutPathOverride";
             }
 
             public static class Pages

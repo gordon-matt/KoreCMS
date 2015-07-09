@@ -1,0 +1,40 @@
+﻿@using Kore.Infrastructure
+@using Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks
+@using Kore.Web.ContentManagement.Areas.Admin.Blog.Services
+@using Kore.Web.Mvc.KoreUI
+@model CategoriesBlock
+
+@{
+    var categoryService = EngineContext.Current.Resolve<ICategoryService>();
+    List<Kore.Web.ContentManagement.Areas.Admin.Blog.Domain.Category> entries = null;
+    
+    if (Model.NumberOfCategories > 0)
+    {
+        entries = categoryService.Repository.Table
+            .OrderBy(x => x.Name)
+            .Take(Model.NumberOfCategories)
+            .ToList();
+    }
+    else
+    {
+        entries = categoryService.Repository.Table
+            .OrderBy(x => x.Name)
+            .ToList();
+    }
+}
+
+@using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+{
+    using (var header = panel.BeginHeader(T(KoreCmsLocalizableStrings.Blog.Categories))) { }
+    using (var body = panel.BeginBody())
+    {
+        <ul class="blog-categories-list">
+            @foreach (var entry in entries)
+            {
+                <li>
+                    @Html.ActionLink(entry.Name, "Category", "BlogContent", new { area = string.Empty, categorySlug = entry.UrlSlug }, null)
+                </li>
+            }
+        </ul>
+    }
+}

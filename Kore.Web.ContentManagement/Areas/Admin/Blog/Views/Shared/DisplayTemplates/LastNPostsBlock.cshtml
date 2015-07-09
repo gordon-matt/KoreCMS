@@ -1,28 +1,36 @@
 ﻿@using Kore.Infrastructure
 @using Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks
 @using Kore.Web.ContentManagement.Areas.Admin.Blog.Services
+@using Kore.Web.Mvc.KoreUI
 @model LastNPostsBlock
 
 @{
-    var blogService = EngineContext.Current.Resolve<IBlogService>();
+    var blogService = EngineContext.Current.Resolve<IPostService>();
     var entries = blogService.Repository.Table
         .OrderByDescending(x => x.DateCreatedUtc)
-        .Take(5)
+        .Take(Model.NumberOfEntries)
         .ToList();
 }
 
-<ul id="latest-blog-entries-list">
-    @foreach (var entry in entries)
+@using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+{
+    using (var header = panel.BeginHeader(T(KoreCmsLocalizableStrings.Blog.Posts))) { }
+    using (var body = panel.BeginBody())
     {
-        <li>
-            @if (entry.UseExternalLink)
+        <ul class="latest-blog-entries-list">
+            @foreach (var entry in entries)
             {
-                @Html.Link(entry.Headline, entry.ExternalLink, PageTarget.Blank)
+                <li>
+                    @if (entry.UseExternalLink)
+                    {
+                        @Html.Link(entry.Headline, entry.ExternalLink, PageTarget.Blank)
+                    }
+                    else
+                    {
+                        @Html.ActionLink(entry.Headline, "Details", "BlogContent", new { area = string.Empty, slug = entry.Slug }, null)
+                    }
+                </li>
             }
-            else
-            {
-                @Html.ActionLink(entry.Headline, "Details", "BlogContent", new { area = string.Empty, slug = entry.Slug }, null)
-            }
-        </li>
+        </ul>
     }
-</ul>
+}

@@ -35,6 +35,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog
         [LocalizedDisplayName(KoreCmsLocalizableStrings.Settings.Blog.AccessRestrictions)]
         public string AccessRestrictions { get; set; }
 
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.Settings.Blog.LayoutPathOverride)]
+        public string LayoutPathOverride { get; set; }
+
         #region ISettings Members
 
         public string Name

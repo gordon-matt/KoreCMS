@@ -3,13 +3,13 @@ using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks
 {
-    public class BlogBlock : ContentBlockBase
+    public class AllPostsBlock : ContentBlockBase
     {
         #region ContentBlockBase Overrides
 
         public override string Name
         {
-            get { return "Blog Block"; }
+            get { return "Blog: All Posts"; }
         }
 
         public override string DisplayTemplatePath

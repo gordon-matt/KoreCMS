@@ -9,8 +9,17 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
         public void Register(BundleCollection bundles)
         {
+            #region Scripts
+
+            #region 3rd Party
+
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/bootpag")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Scripts.jquery.bootpag.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/third-party/jQCloud")
+                .Include("~/Scripts/Kore.Web.ContentManagement.Scripts.jqcloud.min.js"));
+
+            #endregion
 
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/blog")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Blog.Scripts.blog.js"));
@@ -54,6 +63,17 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/xml-sitemap")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Sitemap.Scripts.index.js"));
+
+            #endregion
+
+            #region Styles
+
+            IItemTransform cssRewriteUrlTransform = new CssRewriteUrlTransform();
+
+            bundles.Add(new StyleBundle("~/bundles/content/third-party/jQCloud")
+                .Include("~/Content/Kore.Web.ContentManagement.Content.jqcloud.min.css", cssRewriteUrlTransform));
+
+            #endregion
         }
 
         #endregion IResourceBundleRegistrar Members

@@ -106,8 +106,12 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             #region Content Blocks
 
-            builder.RegisterType<BlogBlock>().As<IContentBlock>().InstancePerDependency();
-            builder.RegisterType<LastNBlogEntriesBlock>().As<IContentBlock>().InstancePerDependency();
+            // Blogs
+            builder.RegisterType<AllPostsBlock>().As<IContentBlock>().InstancePerDependency();
+            builder.RegisterType<LastNPostsBlock>().As<IContentBlock>().InstancePerDependency();
+            builder.RegisterType<TagCloudBlock>().As<IContentBlock>().InstancePerDependency();
+
+            // Other
             builder.RegisterType<FormBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<HtmlBlock>().As<IContentBlock>().InstancePerDependency();
             builder.RegisterType<LanguageSwitchBlock>().As<IContentBlock>().InstancePerDependency();

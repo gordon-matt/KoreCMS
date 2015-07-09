@@ -1,0 +1,65 @@
+﻿@using Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks
+@model TagCloudBlock
+
+<div id="block-content" class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Colors, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Colors, new { @class = "form-control", data_bind = "value: colors" })
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.FontSizeFrom, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FontSizeFrom, new { @class = "form-control", data_bind = "value: fontSizeFrom" })
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.FontSizeTo, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.FontSizeTo, new { @class = "form-control", data_bind = "value: fontSizeTo" })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var contentBlockModel = (function () {
+        var f = {};
+        f.updateModel = function () {
+            viewModel.colors = ko.observable(null);
+            viewModel.fontSizeFrom = ko.observable(null);
+            viewModel.fontSizeTo = ko.observable(null);
+
+            var data = ko.mapping.fromJSON(viewModel.blockValues());
+
+            if (data) {
+                if (data.Colors) {
+                    viewModel.colors(data.Colors());
+                }
+                if (data.FontSizeFrom) {
+                    viewModel.fontSizeFrom(data.FontSizeFrom());
+                }
+                if (data.FontSizeTo) {
+                    viewModel.fontSizeTo(data.FontSizeTo());
+                }
+            }
+
+            viewModel.tinyMCEConfig = koreDefaultTinyMCEConfig;
+        };
+        f.cleanUp = function () {
+            delete viewModel.colors;
+            delete viewModel.fontSizeFrom;
+            delete viewModel.fontSizeTo;
+        };
+        f.onBeforeSave = function () {
+            var data = {
+                Colors: viewModel.colors(),
+                FontSizeFrom: viewModel.fontSizeFrom(),
+                FontSizeTo: viewModel.fontSizeTo()
+            };
+
+            viewModel.blockValues(ko.mapping.toJSON(data));
+        };
+        return f;
+    })();
+</script>

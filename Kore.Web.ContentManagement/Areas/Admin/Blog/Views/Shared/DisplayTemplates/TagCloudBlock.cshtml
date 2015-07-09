@@ -1,0 +1,47 @@
+﻿@using Kore.Infrastructure
+@using Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks
+@using Kore.Web.ContentManagement.Areas.Admin.Blog.Services
+@model TagCloudBlock
+
+@{
+    Style.IncludeBundle("third-party/jQCloud");
+    Script.IncludeBundle("third-party/jQCloud");
+
+    var postTagService = EngineContext.Current.Resolve<IPostTagService>();
+    var tagService = EngineContext.Current.Resolve<ITagService>();
+    
+    var data = postTagService.Repository.Table
+        .GroupBy(x => x.TagId)
+        .ToDictionary(k => k.Key, v => v.Count());
+
+    var tags = tagService.Repository.Table.ToDictionary(k => k.Id, v => v.Name);
+
+    string controlId = "blog-tag-cloud-" + Guid.NewGuid();
+}
+
+<style type="text/css">
+    .tag-cloud {
+        margin: 0 auto;
+        width: 80%;
+        max-width: 600px;
+        height: 250px;
+    }
+        .tag-cloud span {
+            text-shadow: 0px 1px 1px #fff;
+        }
+</style>
+
+<div id="@controlId" class="tag-cloud"></div>
+
+@using (Script.AtFoot())
+{
+    <script type="text/javascript">
+        var words = [
+            @foreach (var item in data)
+            {
+                @:{ text: '@tags[item.Key]', weight: @item.Value },
+            }
+        ];
+        $('#@controlId').jQCloud(words);
+    </script>
+}

@@ -3,7 +3,7 @@ using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks
 {
-    public class LastNBlogEntriesBlock : ContentBlockBase
+    public class LastNPostsBlock : ContentBlockBase
     {
         [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.LastNBlogEntriesBlock.NumberOfEntries)]
         public byte NumberOfEntries { get; set; }
@@ -12,17 +12,17 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks
 
         public override string Name
         {
-            get { return "Last (N) Blog Entries Block"; }
+            get { return "Blog: Last (N) Posts"; }
         }
 
         public override string DisplayTemplatePath
         {
-            get { return "Kore.Web.ContentManagement.Areas.Admin.Blog.Views.Shared.DisplayTemplates.LastNBlogEntriesBlock"; }
+            get { return "Kore.Web.ContentManagement.Areas.Admin.Blog.Views.Shared.DisplayTemplates.LastNPostsBlock"; }
         }
 
         public override string EditorTemplatePath
         {
-            get { return "Kore.Web.ContentManagement.Areas.Admin.Blog.Views.Shared.EditorTemplates.LastNBlogEntriesBlock"; }
+            get { return "Kore.Web.ContentManagement.Areas.Admin.Blog.Views.Shared.EditorTemplates.LastNPostsBlock"; }
         }
 
         #endregion ContentBlockBase Overrides

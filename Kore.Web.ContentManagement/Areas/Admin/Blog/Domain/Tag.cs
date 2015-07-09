@@ -15,8 +15,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 
         public string UrlSlug { get; set; }
 
-        public int NumberOfOccurrences { get; set; }
-
         public ICollection<PostTag> Posts
         {
             get { return posts ?? (posts = new HashSet<PostTag>()); }
@@ -41,7 +39,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
             HasKey(x => x.Id);
             Property(x => x.Name).HasMaxLength(255).IsRequired();
             Property(x => x.UrlSlug).HasMaxLength(255).IsRequired();
-            Property(x => x.NumberOfOccurrences).IsRequired();
         }
 
         #region IEntityTypeConfiguration Members

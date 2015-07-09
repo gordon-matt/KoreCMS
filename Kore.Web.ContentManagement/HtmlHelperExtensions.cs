@@ -119,20 +119,20 @@ namespace Kore.Web.ContentManagement
             return html.DropDownListFor(expression, selectList, htmlAttributes);
         }
 
-        //public MvcHtmlString BlogTagListBox(string name, IEnumerable<int> selectedValues = null, string emptyText = null, object htmlAttributes = null)
-        //{
-        //    var multiSelectList = GetBlogTagMultiSelectList(selectedValues, emptyText);
-        //    return html.ListBox(name, multiSelectList, htmlAttributes);
-        //}
+        public MvcHtmlString BlogTagDropDownList(string name, int? selectedValue = null, string emptyText = null, object htmlAttributes = null)
+        {
+            var selectList = GetBlogTagSelectList(selectedValue, emptyText);
+            return html.DropDownList(name, selectList, htmlAttributes);
+        }
 
-        //public MvcHtmlString BlogTagListBoxFor(Expression<Func<TModel, IEnumerable<int>>> expression, object htmlAttributes = null, string emptyText = null)
-        //{
-        //    var func = expression.Compile();
-        //    var selectedValues = func(html.ViewData.Model);
+        public MvcHtmlString BlogTagDropDownListFor(Expression<Func<TModel, int>> expression, object htmlAttributes = null, string emptyText = null)
+        {
+            var func = expression.Compile();
+            var selectedValue = func(html.ViewData.Model);
 
-        //    var multiSelectList = GetBlogTagMultiSelectList(selectedValues, emptyText);
-        //    return html.ListBoxFor(expression, multiSelectList, htmlAttributes);
-        //}
+            var selectList = GetBlogTagSelectList(selectedValue, emptyText);
+            return html.DropDownListFor(expression, selectList, htmlAttributes);
+        }
 
         public MvcHtmlString ContentBlockTypesDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
         {
@@ -148,21 +148,6 @@ namespace Kore.Web.ContentManagement
             var selectList = GetContentBlockTypesSelectList(selectedValue, emptyText);
             return html.DropDownListFor(expression, selectList, htmlAttributes);
         }
-
-        //public MvcHtmlString MediaFoldersDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
-        //{
-        //    var selectList = GetMediaFoldersSelectList(selectedValue, emptyText);
-        //    return html.DropDownList(name, selectList, htmlAttributes);
-        //}
-
-        //public MvcHtmlString MediaFoldersDropDownListFor(Expression<Func<TModel, string>> expression, object htmlAttributes = null, string emptyText = null)
-        //{
-        //    var func = expression.Compile();
-        //    var selectedValue = func(html.ViewData.Model);
-
-        //    var selectList = GetMediaFoldersSelectList(selectedValue, emptyText);
-        //    return html.DropDownListFor(expression, selectList, htmlAttributes);
-        //}
 
         public MvcHtmlString PageTypesDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
         {
@@ -206,18 +191,17 @@ namespace Kore.Web.ContentManagement
                     emptyText);
         }
 
-        //private static MultiSelectList GetBlogTagMultiSelectList(IEnumerable<int> selectedValues = null, string emptyText = null)
-        //{
-        //    var tagService = EngineContext.Current.Resolve<ITagService>();
+        private static IEnumerable<SelectListItem> GetBlogTagSelectList(int? selectedValue = null, string emptyText = null)
+        {
+            var tagService = EngineContext.Current.Resolve<ITagService>();
 
-        //    return tagService.Find()
-        //        .ToMultiSelectList(
-        //            value => value.Id,
-        //            text => text.Name,
-        //            selectedValues,
-        //            emptyText);
-        //}
-
+            return tagService.Find()
+                .ToSelectList(
+                    value => value.Id,
+                    text => text.Name,
+                    selectedValue,
+                    emptyText);
+        }
 
         private static IEnumerable<SelectListItem> GetContentBlockTypesSelectList(string selectedValue = null, string emptyText = null)
         {
@@ -238,40 +222,6 @@ namespace Kore.Web.ContentManagement
                 selectedValue,
                 emptyText);
         }
-
-        //private static void GetMediaFolders(IMediaService service, List<Tuple<string, string>> folders, string path, byte level = 0)
-        //{
-        //    var mediaFolders = service.GetMediaFolders(path);
-
-        //    foreach (var folder in mediaFolders)
-        //    {
-        //        if (level != 0)
-        //        {
-        //            string folderName = string.Concat("---".Repeat(level), " ", folder.Name);
-        //            folders.Add(new Tuple<string, string>(folderName, folder.MediaPath));
-        //        }
-        //        else
-        //        {
-        //            folders.Add(new Tuple<string, string>(folder.Name, folder.MediaPath));
-        //        }
-        //        GetMediaFolders(service, folders, folder.MediaPath, (byte)(level + 1));
-        //    }
-        //}
-
-        //private static IEnumerable<SelectListItem> GetMediaFoldersSelectList(string selectedValue = null, string emptyText = null)
-        //{
-        //    var service = EngineContext.Current.Resolve<IMediaService>();
-
-        //    var folders = new List<Tuple<string, string>>();
-        //    GetMediaFolders(service, folders, null);
-
-        //    return folders
-        //        .ToSelectList(
-        //            value => value.Item2,
-        //            text => text.Item1,
-        //            selectedValue,
-        //            emptyText);
-        //}
 
         private static IEnumerable<SelectListItem> GetPageTypesSelectList(string selectedValue = null, string emptyText = null)
         {

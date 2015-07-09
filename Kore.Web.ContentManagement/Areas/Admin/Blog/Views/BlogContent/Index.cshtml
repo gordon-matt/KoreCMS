@@ -29,6 +29,8 @@
     ViewBag.Title = settings.PageTitle;
 
     var userNames = (IDictionary<string, string>)ViewBag.UserNames;
+    var tags = (IDictionary<int, string>)ViewBag.Tags;
+    var tagUrls = (IDictionary<int, string>)ViewBag.TagUrls;
     int pageCount = ViewBag.PageCount;
     int pageIndex = ViewBag.PageIndex;
 }
@@ -38,38 +40,54 @@
         <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
             @foreach (var entry in Model)
             {
-                <article class="blog-teaser row">
-                    <h2 class="blog-headline">
-                        @if (entry.UseExternalLink)
-                        {
-                            @Html.Link(entry.Headline, entry.ExternalLink, PageTarget.Blank)
-                        }
-                        else
-                        {
-                            @Html.ActionLink(entry.Headline, "Details", "BlogContent", new { area = string.Empty, slug = entry.Slug }, null)
-                        }
-                    </h2>
-                    <p>
-                        @Html.Raw(string.Format(
-                            T(KoreCmsLocalizableStrings.Blog.PostedByXOnX),
-                            string.Concat("<strong>", userNames[entry.UserId], "</strong>"),
-                            string.Concat("<strong>", entry.DateCreatedUtc, "</strong>")))
-                    </p>
-                    
-                    @{
-                        string teaserImageUrl = string.IsNullOrEmpty(entry.TeaserImageUrl)
-                            ? "http://placehold.it/280x136&text=Image+Missing"
-                            : entry.TeaserImageUrl;
-                    }
-
-                    <div class="pull-left">
-                        <img class="img-responsive" src="@teaserImageUrl" style="max-width:400px" />
+                string teaserImageUrl = string.IsNullOrEmpty(entry.TeaserImageUrl)
+                    ? "http://placehold.it/280x136&text=Image+Missing"
+                    : entry.TeaserImageUrl;
+                
+                <article class="media blog-teaser">
+                    <div class="media-left">
+                        <img class="img-responsive" src="@teaserImageUrl" style="width:200px" />
                     </div>
-                    <div class="pull-right">
-                        <p class="blog-short-desc col-xs-9 col-sm-9 col-md-9 col-lg-9">@entry.ShortDescription</p>
+                    <div class="media-body">
+                        <h4 class="media-heading blog-headline">
+                            @if (entry.UseExternalLink)
+                            {
+                                @Html.Link(entry.Headline, entry.ExternalLink, PageTarget.Blank)
+                            }
+                            else
+                            {
+                                @Html.ActionLink(entry.Headline, "Details", "BlogContent", new { area = string.Empty, slug = entry.Slug }, null)
+                            }
+                        </h4>
+                        <p>
+                            @Html.Raw(string.Format(
+                                T(KoreCmsLocalizableStrings.Blog.PostedByXOnX),
+                                string.Concat("<strong>", userNames[entry.UserId], "</strong>"),
+                                string.Concat("<strong>", entry.DateCreatedUtc, "</strong>")))
+                        </p>
+                        @if (!entry.Tags.IsNullOrEmpty())
+                        {
+                            <p>
+                                <i class="kore-icon kore-icon-tags"></i>
+                                @foreach (var postTag in entry.Tags)
+                                {
+                                    @Html.ActionLink(
+                                        tags[postTag.TagId],
+                                        "Tag",
+                                        "BlogContent",
+                                        new { tagSlug = tagUrls[postTag.TagId] },
+                                        new { @class = "badge" style = "margin-right:5px" })
+                                }
+                            </p>
+                        }
+                        <p class="blog-short-desc">
+                            @entry.ShortDescription
+                        </p>
                     </div>
+                    <div class="clearfix"></div>
                     <hr />
                 </article>
+                <div class="clearfix"></div>
             }
         </div>
         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">

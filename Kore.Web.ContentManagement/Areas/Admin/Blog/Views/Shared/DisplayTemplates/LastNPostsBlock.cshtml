@@ -17,7 +17,7 @@
     using (var header = panel.BeginHeader(T(KoreCmsLocalizableStrings.Blog.Posts))) { }
     using (var body = panel.BeginBody())
     {
-        <ul class="latest-blog-entries-list">
+        <ul class="list-unstyled latest-blog-entries-list">
             @foreach (var entry in entries)
             {
                 <li>

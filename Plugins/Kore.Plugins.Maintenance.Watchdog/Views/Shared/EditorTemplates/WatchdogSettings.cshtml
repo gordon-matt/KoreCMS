@@ -26,10 +26,10 @@
         viewModel.allowAddRemove = ko.observable(true);
 
         if (data) {
-            if (typeof data.OnlyShowWatched === 'boolean') {
+            if (data.OnlyShowWatched && typeof data.OnlyShowWatched === 'boolean') {
                 viewModel.onlyShowWatched(data.OnlyShowWatched);
             }
-            if (typeof data.AllowAddRemove === 'boolean') {
+            if (data.AllowAddRemove && typeof data.AllowAddRemove === 'boolean') {
                 viewModel.allowAddRemove(data.AllowAddRemove);
             }
         }

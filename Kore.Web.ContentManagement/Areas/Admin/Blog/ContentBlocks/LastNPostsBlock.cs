@@ -5,7 +5,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks
 {
     public class LastNPostsBlock : ContentBlockBase
     {
-        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.LastNBlogEntriesBlock.NumberOfEntries)]
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.LastNPostsBlock.NumberOfEntries)]
         public byte NumberOfEntries { get; set; }
 
         #region ContentBlockBase Overrides

@@ -46,6 +46,22 @@
             public const string Title = "Kore.Web.ContentManagement/ContentBlocks.Title";
             public const string Zones = "Kore.Web.ContentManagement/ContentBlocks.Zones";
 
+            #region Blog
+
+            public static class AllPostsBlock
+            {
+                public const string CategoryId = "Kore.Web.ContentManagement/ContentBlocks.AllPostsBlock.CategoryId";
+                public const string FilterType = "Kore.Web.ContentManagement/ContentBlocks.AllPostsBlock.FilterType";
+                public const string TagId = "Kore.Web.ContentManagement/ContentBlocks.AllPostsBlock.TagId";
+            }
+
+            public static class LastNPostsBlock
+            {
+                public const string NumberOfEntries = "Kore.Web.ContentManagement/ContentBlocks.LastNPostsBlock.NumberOfEntries";
+            }
+
+            #endregion
+
             public static class FormBlock
             {
                 public const string EmailAddress = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.EmailAddress";
@@ -71,11 +87,6 @@
                 public const string InvariantText = "Kore.Web.ContentManagement/ContentBlocks.LanguageSwitchBlock.InvariantText";
                 public const string Style = "Kore.Web.ContentManagement/ContentBlocks.LanguageSwitchBlock.Style";
                 public const string UseUrlPrefix = "Kore.Web.ContentManagement/ContentBlocks.LanguageSwitchBlock.UseUrlPrefix";
-            }
-
-            public static class LastNBlogEntriesBlock
-            {
-                public const string NumberOfEntries = "Kore.Web.ContentManagement/ContentBlocks.LastNBlogEntriesBlock.NumberOfEntries";
             }
 
             public static class Model

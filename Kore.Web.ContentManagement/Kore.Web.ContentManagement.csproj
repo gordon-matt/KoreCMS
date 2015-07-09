@@ -138,7 +138,7 @@
     <Compile Include="Areas\Admin\Blog\BlogAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Blog\BlogIndexingContentProvider.cs" />
     <Compile Include="Areas\Admin\Blog\BlogSettings.cs" />
-    <Compile Include="Areas\Admin\Blog\ContentBlocks\AllPostsBlock.cs" />
+    <Compile Include="Areas\Admin\Blog\ContentBlocks\FilteredPostsBlock.cs" />
     <Compile Include="Areas\Admin\Blog\ContentBlocks\CategoriesBlock.cs" />
     <Compile Include="Areas\Admin\Blog\ContentBlocks\TagCloudBlock.cs" />
     <Compile Include="Areas\Admin\Blog\ContentBlocks\LastNPostsBlock.cs" />
@@ -352,7 +352,7 @@
     <EmbeddedResource Include="Areas\Admin\Sitemap\Views\XmlSitemap\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\FormBlock\MessageTemplate.cshtml" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\EntityTypeContentBlock\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\DisplayTemplates\BlogBlock.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\DisplayTemplates\FilteredPostsBlock.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\DisplayTemplates\LastNPostsBlock.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\EditorTemplates\LastNPostsBlock.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Media\Views\Shared\DisplayTemplates\VideoBlock.cshtml" />
@@ -361,6 +361,7 @@
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\EditorTemplates\TagCloudBlock.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\DisplayTemplates\CategoriesBlock.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\EditorTemplates\CategoriesBlock.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\EditorTemplates\FilteredPostsBlock.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\RichTextFull.cshtml" />

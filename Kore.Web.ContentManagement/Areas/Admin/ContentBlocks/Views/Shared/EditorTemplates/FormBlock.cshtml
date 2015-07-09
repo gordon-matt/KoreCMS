@@ -65,7 +65,7 @@
                 if (data.EmailAddress) {
                     viewModel.emailAddress(data.EmailAddress());
                 }
-                if (typeof data.UseAjax() === 'boolean') {
+                if (data.UseAjax && typeof data.UseAjax() === 'boolean') {
                     viewModel.useAjax(data.UseAjax());
                 }
             }

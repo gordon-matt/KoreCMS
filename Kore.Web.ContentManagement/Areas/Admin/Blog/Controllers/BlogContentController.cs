@@ -10,6 +10,7 @@ using Kore.Web.ContentManagement.Areas.Admin.Blog.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
+using System.Collections.Generic;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
 {
@@ -47,30 +48,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            bool isChildAction = ControllerContext.IsChildAction;
-            ViewBag.IsChildAction = isChildAction;
-
-            // If Use Ajax
             if (blogSettings.UseAjax)
             {
-                var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "IndexAjax", null);
-
-                // If someone has provided a custom template (see LocationFormatProvider)
-                if (viewEngineResult.View != null)
-                {
-                    if (isChildAction)
-                    {
-                        return PartialView("IndexAjax");
-                    }
-                    return View("IndexAjax");
-                }
-
-                // Else use default template
-                if (isChildAction)
-                {
-                    return PartialView("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.IndexAjax");
-                }
-                return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.IndexAjax");
+                return PostsAjax();
             }
             else
             {
@@ -85,37 +65,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                     .Take(blogSettings.ItemsPerPage)
                     .ToList();
 
-                var userNames = model
-                    .Select(x => x.UserId)
-                    .Distinct()
-                    .ToDictionary(
-                        k => k,
-                        v => membershipService.Value.GetUserById(v).UserName);
-
-                int total = postService.Value.Count();
-
-                ViewBag.PageCount = (int)Math.Ceiling((double)total / blogSettings.ItemsPerPage);
-                ViewBag.PageIndex = pageIndex;
-                ViewBag.UserNames = userNames;
-
-                var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "Index", null);
-
-                // If someone has provided a custom template (see LocationFormatProvider)
-                if (viewEngineResult.View != null)
-                {
-                    if (isChildAction)
-                    {
-                        return PartialView(model);
-                    }
-                    return View(model);
-                }
-
-                // Else use default template
-                if (isChildAction)
-                {
-                    return PartialView("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.Index", model);
-                }
-                return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.Index", model);
+                return Posts(pageIndex, model);
             }
         }
 
@@ -137,32 +87,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                     "Could not find a blog category with slug, '", categorySlug, "'"));
             }
 
-            bool isChildAction = ControllerContext.IsChildAction;
-            ViewBag.IsChildAction = isChildAction;
-
-            // If Use Ajax
             if (blogSettings.UseAjax)
             {
                 ViewBag.CategoryId = category.Id;
-
-                var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "IndexAjax", null);
-
-                // If someone has provided a custom template (see LocationFormatProvider)
-                if (viewEngineResult.View != null)
-                {
-                    if (isChildAction)
-                    {
-                        return PartialView("IndexAjax");
-                    }
-                    return View("IndexAjax");
-                }
-
-                // Else use default template
-                if (isChildAction)
-                {
-                    return PartialView("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.IndexAjax");
-                }
-                return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.IndexAjax");
+                return PostsAjax();
             }
             else
             {
@@ -179,37 +107,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                     .Take(blogSettings.ItemsPerPage)
                     .ToList();
 
-                var userNames = model
-                    .Select(x => x.UserId)
-                    .Distinct()
-                    .ToDictionary(
-                        k => k,
-                        v => membershipService.Value.GetUserById(v).UserName);
-
-                int total = postService.Value.Count();
-
-                ViewBag.PageCount = (int)Math.Ceiling((double)total / blogSettings.ItemsPerPage);
-                ViewBag.PageIndex = pageIndex;
-                ViewBag.UserNames = userNames;
-
-                var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "Index", null);
-
-                // If someone has provided a custom template (see LocationFormatProvider)
-                if (viewEngineResult.View != null)
-                {
-                    if (isChildAction)
-                    {
-                        return PartialView("Index", model);
-                    }
-                    return View("Index", model);
-                }
-
-                // Else use default template
-                if (isChildAction)
-                {
-                    return PartialView("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.Index", model);
-                }
-                return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.Index", model);
+                return Posts(pageIndex, model);
             }
         }
 
@@ -217,12 +115,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
         [Route("tag/{tagSlug}")]
         public ActionResult Tag(string tagSlug)
         {
-            // If there are access restrictions
-            if (!PageSecurityHelper.CheckUserHasAccessToBlog(User))
-            {
-                return new HttpUnauthorizedResult();
-            }
-
             var tag = tagService.Value.FindOne(x => x.UrlSlug == tagSlug);
 
             if (tag == null)
@@ -231,32 +123,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                     "Could not find a blog tag with slug, '", tagSlug, "'"));
             }
 
-            bool isChildAction = ControllerContext.IsChildAction;
-            ViewBag.IsChildAction = isChildAction;
-
-            // If Use Ajax
             if (blogSettings.UseAjax)
             {
                 ViewBag.TagId = tag.Id;
-
-                var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "IndexAjax", null);
-
-                // If someone has provided a custom template (see LocationFormatProvider)
-                if (viewEngineResult.View != null)
-                {
-                    if (isChildAction)
-                    {
-                        return PartialView("IndexAjax");
-                    }
-                    return View("IndexAjax");
-                }
-
-                // Else use default template
-                if (isChildAction)
-                {
-                    return PartialView("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.IndexAjax");
-                }
-                return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.IndexAjax");
+                return PostsAjax();
             }
             else
             {
@@ -273,38 +143,76 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                     .Take(blogSettings.ItemsPerPage)
                     .ToList();
 
-                var userNames = model
-                    .Select(x => x.UserId)
-                    .Distinct()
-                    .ToDictionary(
-                        k => k,
-                        v => membershipService.Value.GetUserById(v).UserName);
+                return Posts(pageIndex, model);
+            }
+        }
 
-                int total = postService.Value.Count();
+        private ActionResult Posts(int pageIndex, IEnumerable<Post> model)
+        {
+            bool isChildAction = ControllerContext.IsChildAction;
+            ViewBag.IsChildAction = isChildAction;
 
-                ViewBag.PageCount = (int)Math.Ceiling((double)total / blogSettings.ItemsPerPage);
-                ViewBag.PageIndex = pageIndex;
-                ViewBag.UserNames = userNames;
+            var userNames = model
+                .Select(x => x.UserId)
+                .Distinct()
+                .ToDictionary(
+                    k => k,
+                    v => membershipService.Value.GetUserById(v).UserName);
 
-                var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "Index", null);
+            int total = postService.Value.Count();
 
-                // If someone has provided a custom template (see LocationFormatProvider)
-                if (viewEngineResult.View != null)
-                {
-                    if (isChildAction)
-                    {
-                        return PartialView("Index", model);
-                    }
-                    return View("Index", model);
-                }
+            ViewBag.PageCount = (int)Math.Ceiling((double)total / blogSettings.ItemsPerPage);
+            ViewBag.PageIndex = pageIndex;
+            ViewBag.UserNames = userNames;
 
-                // Else use default template
+            var tags = tagService.Value.Find();
+
+            ViewBag.Tags = tags.ToDictionary(k => k.Id, v => v.Name);
+            ViewBag.TagUrls = tags.ToDictionary(k => k.Id, v => v.UrlSlug);
+
+            var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "Index", null);
+
+            // If someone has provided a custom template (see LocationFormatProvider)
+            if (viewEngineResult.View != null)
+            {
                 if (isChildAction)
                 {
-                    return PartialView("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.Index", model);
+                    return PartialView(model);
                 }
-                return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.Index", model);
+                return View(model);
             }
+
+            // Else use default template
+            if (isChildAction)
+            {
+                return PartialView("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.Index", model);
+            }
+            return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.Index", model);
+        }
+
+        private ActionResult PostsAjax()
+        {
+            bool isChildAction = ControllerContext.IsChildAction;
+            ViewBag.IsChildAction = isChildAction;
+
+            var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "IndexAjax", null);
+
+            // If someone has provided a custom template (see LocationFormatProvider)
+            if (viewEngineResult.View != null)
+            {
+                if (isChildAction)
+                {
+                    return PartialView("IndexAjax");
+                }
+                return View("IndexAjax");
+            }
+
+            // Else use default template
+            if (isChildAction)
+            {
+                return PartialView("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.IndexAjax");
+            }
+            return View("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.BlogContent.IndexAjax");
         }
 
         [Compress]

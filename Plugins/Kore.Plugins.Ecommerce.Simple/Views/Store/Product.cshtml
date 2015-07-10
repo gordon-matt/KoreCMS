@@ -26,12 +26,15 @@
             <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
                 <h1>@Model.Name</h1>
                 <p><strong>@T(LocalizableStrings.Price)</strong> @settings.Currency @Model.Price.ToString("N2")</p>
-                <p><strong>@T(LocalizableStrings.Tax)</strong> @settings.Currency @Model.Tax.ToString("N2")</p>
-                <p><strong>@T(LocalizableStrings.Shipping)</strong> @settings.Currency @Model.ShippingCost.ToString("N2")</p>
-
-                <a href="javascript:void(0);" onclick="addToCart(@Model.Id)" class="btn btn-primary">
-                    @T(LocalizableStrings.AddToCart)
-                </a>
+                @if (!settings.CatalogMode)
+                {
+                    <p><strong>@T(LocalizableStrings.Tax)</strong> @settings.Currency @Model.Tax.ToString("N2")</p>
+                    <p><strong>@T(LocalizableStrings.Shipping)</strong> @settings.Currency @Model.ShippingCost.ToString("N2")</p>
+                
+                    <a href="javascript:void(0);" onclick="addToCart(@Model.Id)" class="btn btn-primary">
+                        @T(LocalizableStrings.AddToCart)
+                    </a>
+                }
             </div>
         </div>
         <div class="row">
@@ -47,25 +50,28 @@
     </div>
 </div>
 
-@using (Script.AtFoot())
+@if (!settings.CatalogMode)
 {
-    <script type="text/javascript">
-        function addToCart(productId) {
-            $.ajax({
-                url: "/store/cart/add-item-to-cart",
-                type: "POST",
-                dataType: "json",
-                data: {
-                    productId: productId
-                }
-            })
-            .done(function (json) {
-                alert("Added to cart.");
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                alert(errorThrown);
-                console.log(textStatus + ': ' + errorThrown);
-            });
-        }
-    </script>
+    using (Script.AtFoot())
+    {
+        <script type="text/javascript">
+            function addToCart(productId) {
+                $.ajax({
+                    url: "/store/cart/add-item-to-cart",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        productId: productId
+                    }
+                })
+                .done(function (json) {
+                    alert("Added to cart.");
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                    console.log(textStatus + ': ' + errorThrown);
+                });
+            }
+        </script>
+    }
 }

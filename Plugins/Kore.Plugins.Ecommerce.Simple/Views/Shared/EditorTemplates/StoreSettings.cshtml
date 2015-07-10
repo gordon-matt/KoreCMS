@@ -53,6 +53,13 @@
         @Html.TextBoxFor(m => m.LayoutPathOverride, new { @class = "form-control", data_bind = "value: layoutPathOverride" })
         @Html.ValidationMessageFor(m => m.LayoutPathOverride)
     </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.CatalogMode, new { data_bind = "checked: catalogMode" }) @T(LocalizableStrings.Settings.Store.CatalogMode)
+            </label>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -66,6 +73,7 @@
         viewModel.menuPosition = ko.observable(0);
         viewModel.useAjax = ko.observable(false);
         viewModel.layoutPathOverride = ko.observable(null);
+        viewModel.catalogMode = ko.observable(false);
 
         if (data) {
             if (data.PageTitle) {
@@ -95,6 +103,9 @@
             if (data.LayoutPathOverride) {
                 viewModel.layoutPathOverride(data.LayoutPathOverride);
             }
+            if (data.CatalogMode && typeof data.CatalogMode === 'boolean') {
+                viewModel.catalogMode(data.CatalogMode);
+            }
         }
     };
 
@@ -108,6 +119,7 @@
         delete viewModel.menuPosition;
         delete viewModel.useAjax;
         delete viewModel.layoutPathOverride;
+        delete viewModel.catalogMode;
     }
 
     function onBeforeSave() {
@@ -120,7 +132,8 @@
             ShowOnMenus: viewModel.showOnMenus(),
             MenuPosition: viewModel.menuPosition(),
             UseAjax: viewModel.useAjax(),
-            LayoutPathOverride: viewModel.layoutPathOverride()
+            LayoutPathOverride: viewModel.layoutPathOverride(),
+            CatalogMode: viewModel.catalogMode()
         };
 
         viewModel.value(ko.mapping.toJSON(data));

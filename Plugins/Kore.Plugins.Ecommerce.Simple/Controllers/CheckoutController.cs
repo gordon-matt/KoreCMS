@@ -47,6 +47,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         [Route("")]
         public ActionResult Index()
         {
+            if (settings.CatalogMode)
+            {
+                return RedirectToAction("Index", "Store", new { area = string.Empty });
+            }
+
             var cart = cartService.Value.GetCart(this.HttpContext);
 
             if (cart.Items.IsNullOrEmpty())
@@ -78,6 +83,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         [Route("confirm")]
         public ActionResult Confirm(CheckoutModel model)
         {
+            if (settings.CatalogMode)
+            {
+                return RedirectToAction("Index", "Store", new { area = string.Empty });
+            }
+
             var cart = cartService.Value.GetCart(this.HttpContext);
 
             if (cart.Items.Count == 0)

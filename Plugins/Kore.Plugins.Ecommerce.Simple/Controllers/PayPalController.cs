@@ -28,26 +28,34 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         private readonly Lazy<IOrderService> orderService;
         private readonly Lazy<IProductService> productService;
         private readonly Lazy<IRegionService> regionService;
-        private readonly PayPalSettings settings;
+        private readonly StoreSettings storeSettings;
+        private readonly PayPalSettings payPalSettings;
 
         public PayPalController(
             Lazy<ICartService> cartService,
             Lazy<IOrderService> orderService,
             Lazy<IProductService> productService,
             Lazy<IRegionService> regionService,
-            PayPalSettings settings)
+            StoreSettings storeSettings,
+            PayPalSettings payPalSettings)
         {
             this.cartService = cartService;
             this.orderService = orderService;
             this.productService = productService;
             this.regionService = regionService;
-            this.settings = settings;
+            this.storeSettings = storeSettings;
+            this.payPalSettings = payPalSettings;
         }
 
         [Compress]
         [Route("buy-now")]
         public ActionResult BuyNow()
         {
+            if (storeSettings.CatalogMode)
+            {
+                return RedirectToAction("Index", "Store", new { area = string.Empty });
+            }
+
             var cart = cartService.Value.GetCart(this.HttpContext);
 
             if (!cart.OrderId.HasValue)
@@ -62,15 +70,15 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             var model = new PayPalModel
             {
                 PassProductNamesAndTotals = true,
-                Merchant = settings.Merchant,
-                UseSandboxMode = settings.UseSandboxMode,
-                ActionUrl = settings.UseSandboxMode
-                    ? settings.SandboxUrl
-                    : settings.ProductionUrl,
+                Merchant = payPalSettings.Merchant,
+                UseSandboxMode = payPalSettings.UseSandboxMode,
+                ActionUrl = payPalSettings.UseSandboxMode
+                    ? payPalSettings.SandboxUrl
+                    : payPalSettings.ProductionUrl,
                 ReturnUrl = Url.AbsoluteAction("Return", "PayPal", new { orderId = order.Id }),
                 CancelReturnUrl = Url.AbsoluteAction("CancelReturn", "PayPal", new { orderId = order.Id }),
                 NotificationUrl = Url.AbsoluteAction("Notification", "PayPal", new { orderId = order.Id }),
-                CurrencyCode = settings.CurrencyCode,
+                CurrencyCode = payPalSettings.CurrencyCode,
                 Items = cart.Items,
                 OrderId = order.Id,
                 OrderTotal = order.OrderTotal,
@@ -499,15 +507,15 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
         private bool GetPDTDetails(string tx, out Dictionary<string, string> values, out string response)
         {
-            string payPalUrl = settings.UseSandboxMode
-                ? settings.SandboxUrl
-                : settings.ProductionUrl;
+            string payPalUrl = payPalSettings.UseSandboxMode
+                ? payPalSettings.SandboxUrl
+                : payPalSettings.ProductionUrl;
 
             var request = (HttpWebRequest)WebRequest.Create(payPalUrl);
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
 
-            string formContent = string.Format("cmd=_notify-synch&at={0}&tx={1}", settings.PdtToken, tx);
+            string formContent = string.Format("cmd=_notify-synch&at={0}&tx={1}", payPalSettings.PdtToken, tx);
             request.ContentLength = formContent.Length;
 
             using (var sw = new StreamWriter(request.GetRequestStream(), Encoding.ASCII))
@@ -547,9 +555,9 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
         private bool VerifyIPN(string formParams, out Dictionary<string, string> values)
         {
-            string payPalUrl = settings.UseSandboxMode
-                ? settings.SandboxUrl
-                : settings.ProductionUrl;
+            string payPalUrl = payPalSettings.UseSandboxMode
+                ? payPalSettings.SandboxUrl
+                : payPalSettings.ProductionUrl;
 
             var request = (HttpWebRequest)WebRequest.Create(payPalUrl);
             request.Method = "POST";

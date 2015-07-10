@@ -129,6 +129,7 @@
 
             public static class Store
             {
+                public const string CatalogMode = "Plugins.Ecommerce.Simple/Settings.Store.CatalogMode";
                 public const string CategoriesPerPage = "Plugins.Ecommerce.Simple/Settings.Store.CategoriesPerPage";
                 public const string Currency = "Plugins.Ecommerce.Simple/Settings.Store.Currency";
                 public const string LayoutPathOverride = "Plugins.Ecommerce.Simple/Settings.Store.LayoutPathOverride";

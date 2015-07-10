@@ -31,6 +31,11 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         [Route("")]
         public ActionResult Index()
         {
+            if (settings.Value.CatalogMode)
+            {
+                return RedirectToAction("Index", "Store", new { area = string.Empty });
+            }
+
             WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Store), Url.Action("Index", "Store", new { area = string.Empty }));
             WorkContext.Breadcrumbs.Add(T(LocalizableStrings.ShoppingCart));
 

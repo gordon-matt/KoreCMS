@@ -42,6 +42,9 @@ namespace Kore.Plugins.Ecommerce.Simple
         [LocalizedDisplayName(LocalizableStrings.Settings.Store.LayoutPathOverride)]
         public string LayoutPathOverride { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.Store.CatalogMode)]
+        public bool CatalogMode { get; set; }
+
         #region ISettings Members
 
         public string Name

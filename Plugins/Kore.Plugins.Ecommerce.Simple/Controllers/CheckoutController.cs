@@ -47,6 +47,13 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         [Route("")]
         public ActionResult Index()
         {
+            var cart = cartService.Value.GetCart(this.HttpContext);
+
+            if (cart.Items.IsNullOrEmpty())
+            {
+                return RedirectToAction("Index", "Store", new { area = string.Empty });
+            }
+
             WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Store), Url.Action("Index", "Store", new { area = string.Empty }));
             WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Checkout));
 
@@ -54,8 +61,6 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             ViewBag.SubTitle = T(LocalizableStrings.Checkout);
 
             ViewBag.CurrencyCode = settings.Currency;
-
-            var cart = cartService.Value.GetCart(this.HttpContext);
 
             var model = new CheckoutModel
             {

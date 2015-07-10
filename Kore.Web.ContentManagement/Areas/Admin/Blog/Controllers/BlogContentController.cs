@@ -177,9 +177,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
             {
                 if (isChildAction)
                 {
-                    return PartialView(model);
+                    return PartialView("Index", model);
                 }
-                return View(model);
+                return View("Index", model);
             }
 
             // Else use default template

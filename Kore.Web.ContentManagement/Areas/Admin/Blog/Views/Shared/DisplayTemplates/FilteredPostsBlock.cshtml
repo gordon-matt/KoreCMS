@@ -1,7 +1,7 @@
 ﻿@using Kore.Infrastructure
 @using Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks
 @using Kore.Web.ContentManagement.Areas.Admin.Blog.Services
-@model AllPostsBlock
+@model FilteredPostsBlock
 
 @if (Model.FilterType == FilterType.Category && Model.CategoryId.HasValue)
 {
@@ -14,7 +14,7 @@
 else if (Model.FilterType == FilterType.Tag && Model.TagId.HasValue)
 {
     int id = Model.TagId.Value;
-    var tagService = EngineContext.Current.Resolve<ITagService>();
+    var tagService = EngineContext.Current.Resolve<IBlogTagService>();
     var tag = tagService.FindOne(id);
 
     @Html.Action("Tag", "BlogContent", new { area = string.Empty, tagSlug = tag.UrlSlug })

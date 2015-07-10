@@ -44,7 +44,7 @@
                             </h6>
                         </div>
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <input type="text" class="form-control input-sm" data-bind="value: quantity" />
+                            <input type="text" class="form-control input-sm" data-bind="value: quantity" onkeyup="viewModel.onQuantityChanged();" />
                         </div>
                         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                             <button type="button" class="btn btn-link btn-xs" data-bind="click: $root.removeItem">
@@ -55,7 +55,10 @@
                 </div>
                 <hr>
             </div>
-            <div class="row">
+            <div data-bind="visible: items().length == 0">
+                Your cart is empty
+            </div>
+            <div class="row" data-bind="visible: hasChanges() == true">
                 <div class="text-center">
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                         <h6 class="text-right">@T(LocalizableStrings.MadeChanges)</h6>
@@ -76,10 +79,7 @@
                     <h6 class="text-right">@T(LocalizableStrings.TaxTotal) <strong data-bind="text: currencyCode + ' ' + taxTotal()"></strong></h6>
                     <h4 class="text-right">@T(LocalizableStrings.Total) <strong data-bind="text: currencyCode + ' ' + totalPrice()"></strong></h4>
                 </div>
-                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    @*<a href="@Url.Action("BuyNow", "PayPal", new { area = string.Empty })" class="btn btn-success btn-block">
-                            @T(LocalizableStrings.Checkout)
-                        </a>*@
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" data-bind="visible: items().length > 0">
                     <a href="@Url.Action("Index", "Checkout", new { area = string.Empty })" class="btn btn-success btn-block">
                         @T(LocalizableStrings.Checkout)
                     </a>

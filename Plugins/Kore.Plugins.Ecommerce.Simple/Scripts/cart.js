@@ -17,6 +17,8 @@ var ViewModel = function () {
     var self = this;
     self.items = ko.observableArray([]);
 
+    self.hasChanges = ko.observable(false);
+
     self.subTotal = ko.computed(function () {
         var total = 0;
         for (var i = 0; i < self.items().length; i++) {
@@ -57,6 +59,7 @@ var ViewModel = function () {
 
     self.removeItem = function (item) {
         self.items.remove(item);
+        self.updateCart(); // delete immediately.. only manually click update when changing quantities
     };
 
     self.updateCart = function () {
@@ -70,11 +73,17 @@ var ViewModel = function () {
         })
         .done(function (json) {
             alert(json.Message);
+            self.hasChanges(false);
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
             alert(errorThrown);
             console.log(textStatus + ': ' + errorThrown);
         });
+    };
+
+    self.onQuantityChanged = function () {
+        console.log('quantity changed!');
+        self.hasChanges(true);
     };
 };
 

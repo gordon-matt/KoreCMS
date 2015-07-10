@@ -5,15 +5,15 @@ using Kore.Data.EntityFramework;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 {
-    public class PostTag : IEntity
+    public class BlogPostTag : IEntity
     {
         public Guid PostId { get; set; }
 
         public int TagId { get; set; }
 
-        public Post Post { get; set; }
+        public BlogPost Post { get; set; }
 
-        public Tag Tag { get; set; }
+        public BlogTag Tag { get; set; }
 
         #region IEntity Members
 
@@ -25,7 +25,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
         #endregion IEntity Members
     }
 
-    public class PostTagMap : EntityTypeConfiguration<PostTag>, IEntityTypeConfiguration
+    public class PostTagMap : EntityTypeConfiguration<BlogPostTag>, IEntityTypeConfiguration
     {
         public PostTagMap()
         {

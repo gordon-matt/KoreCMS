@@ -13,15 +13,15 @@ using Kore.Web.Security.Membership.Permissions;
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 {
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class BlogPostApiController : GenericODataController<Post, Guid>
+    public class BlogPostApiController : GenericODataController<BlogPost, Guid>
     {
         private readonly Lazy<IMembershipService> membershipService;
-        private readonly Lazy<IPostTagService> postTagService;
+        private readonly Lazy<IBlogPostTagService> postTagService;
 
         public BlogPostApiController(
-            IPostService service,
+            IBlogPostService service,
             Lazy<IMembershipService> membershipService,
-            Lazy<IPostTagService> postTagService)
+            Lazy<IBlogPostTagService> postTagService)
             : base(service)
         {
             this.membershipService = membershipService;
@@ -30,19 +30,19 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 
         [AllowAnonymous]
         [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public override IQueryable<Post> Get()
+        public override IQueryable<BlogPost> Get()
         {
             return base.Get();
         }
 
         [AllowAnonymous]
         [EnableQuery]
-        public override SingleResult<Post> Get([FromODataUri] Guid key)
+        public override SingleResult<BlogPost> Get([FromODataUri] Guid key)
         {
             return base.Get(key);
         }
 
-        public override IHttpActionResult Post(Post entity)
+        public override IHttpActionResult Post(BlogPost entity)
         {
             entity.DateCreatedUtc = DateTime.UtcNow;
             entity.UserId = membershipService.Value.GetUserByName(User.Identity.Name).Id;
@@ -54,7 +54,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 
             if (!tags.IsNullOrEmpty())
             {
-                var toInsert = tags.Select(x => new PostTag
+                var toInsert = tags.Select(x => new BlogPostTag
                 {
                     PostId = entity.Id,
                     TagId = x.TagId
@@ -65,7 +65,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
             return result;
         }
 
-        public override IHttpActionResult Put([FromODataUri] Guid key, Post entity)
+        public override IHttpActionResult Put([FromODataUri] Guid key, BlogPost entity)
         {
             var currentEntry = Service.FindOne(entity.Id);
             entity.UserId = currentEntry.UserId;
@@ -79,7 +79,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
                 var existingTagIds = existingTags.Select(x => x.TagId);
 
                 var toDelete = existingTags.Where(x => !chosenTagIds.Contains(x.TagId));
-                var toInsert = chosenTagIds.Where(x => !existingTagIds.Contains(x)).Select(x => new PostTag
+                var toInsert = chosenTagIds.Where(x => !existingTagIds.Contains(x)).Select(x => new BlogPostTag
                 {
                     PostId = entity.Id,
                     TagId = x
@@ -92,12 +92,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
             return result;
         }
 
-        protected override Guid GetId(Post entity)
+        protected override Guid GetId(BlogPost entity)
         {
             return entity.Id;
         }
 
-        protected override void SetNewId(Post entity)
+        protected override void SetNewId(BlogPost entity)
         {
             entity.Id = Guid.NewGuid();
         }

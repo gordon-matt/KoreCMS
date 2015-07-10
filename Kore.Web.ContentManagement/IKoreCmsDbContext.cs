@@ -10,7 +10,7 @@ namespace Kore.Web.ContentManagement
 {
     public interface IKoreCmsDbContext
     {
-        DbSet<Post> Blog { get; set; }
+        DbSet<BlogPost> Blog { get; set; }
 
         DbSet<ContentBlock> ContentBlocks { get; set; }
 

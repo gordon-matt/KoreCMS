@@ -5,13 +5,13 @@ using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Services
 {
-    public interface ICategoryService : IGenericDataService<Category>
+    public interface IBlogTagService : IGenericDataService<BlogTag>
     {
     }
 
-    public class CategoryService : GenericDataService<Category>, ICategoryService
+    public class BlogTagService : GenericDataService<BlogTag>, IBlogTagService
     {
-        public CategoryService(ICacheManager cacheManager, IRepository<Category> repository)
+        public BlogTagService(ICacheManager cacheManager, IRepository<BlogTag> repository)
             : base(cacheManager, repository)
         {
         }

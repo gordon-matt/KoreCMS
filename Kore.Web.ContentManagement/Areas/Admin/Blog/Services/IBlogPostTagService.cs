@@ -5,13 +5,13 @@ using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Services
 {
-    public interface ITagService : IGenericDataService<Tag>
+    public interface IBlogPostTagService : IGenericDataService<BlogPostTag>
     {
     }
 
-    public class TagService : GenericDataService<Tag>, ITagService
+    public class BlogPostTagService : GenericDataService<BlogPostTag>, IBlogPostTagService
     {
-        public TagService(ICacheManager cacheManager, IRepository<Tag> repository)
+        public BlogPostTagService(ICacheManager cacheManager, IRepository<BlogPostTag> repository)
             : base(cacheManager, repository)
         {
         }

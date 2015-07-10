@@ -5,7 +5,7 @@
 @model LastNPostsBlock
 
 @{
-    var blogService = EngineContext.Current.Resolve<IPostService>();
+    var blogService = EngineContext.Current.Resolve<IBlogPostService>();
     var entries = blogService.Repository.Table
         .OrderByDescending(x => x.DateCreatedUtc)
         .Take(Model.NumberOfEntries)

@@ -8,8 +8,8 @@
     Style.IncludeBundle("third-party/jQCloud");
     Script.IncludeBundle("third-party/jQCloud");
 
-    var postTagService = EngineContext.Current.Resolve<IPostTagService>();
-    var tagService = EngineContext.Current.Resolve<ITagService>();
+    var postTagService = EngineContext.Current.Resolve<IBlogPostTagService>();
+    var tagService = EngineContext.Current.Resolve<IBlogTagService>();
     
     var data = postTagService.Repository.Table
         .GroupBy(x => x.TagId)

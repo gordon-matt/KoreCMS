@@ -1,12 +1,13 @@
 ﻿@using Kore.Infrastructure
 @using Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks
+@using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 @using Kore.Web.ContentManagement.Areas.Admin.Blog.Services
 @using Kore.Web.Mvc.KoreUI
 @model CategoriesBlock
 
 @{
-    var categoryService = EngineContext.Current.Resolve<ICategoryService>();
-    List<Kore.Web.ContentManagement.Areas.Admin.Blog.Domain.Category> entries = null;
+    var categoryService = EngineContext.Current.Resolve<IBlogCategoryService>();
+    List<BlogCategory> entries = null;
     
     if (Model.NumberOfCategories > 0)
     {

@@ -2,6 +2,87 @@
 @model TagCloudBlock
 
 <div id="block-content" class="row">
+    @*<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Width, new { @class = "control-label" })
+            <div class="input-group">
+                @Html.TextBoxFor(m => m.Width, new { @class = "form-control", data_bind = "value: width" })
+                <div class="input-group-addon">
+                    @Html.EnumDropDownListFor(m => m.WidthUnit, new { @class = "form-control", data_bind = "value: widthUnit", style = "background:transparent;border: 0;" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Height, new { @class = "control-label" })
+            <div class="input-group">
+                @Html.TextBoxFor(m => m.Height, new { @class = "form-control", data_bind = "value: height" })
+                <div class="input-group-addon">
+                    @Html.EnumDropDownListFor(m => m.HeightUnit, new { @class = "form-control", data_bind = "value: heightUnit", style = "background:transparent;border: 0;" })
+                </div>
+            </div>
+        </div>
+    </div>*@
+    @*<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.CenterX, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.CenterX, new { @class = "form-control", data_bind = "value: centerX" })
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.CenterY, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.CenterY, new { @class = "form-control", data_bind = "value: centerY" })
+        </div>
+    </div>*@
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.AutoResize, new { data_bind = "checked: autoResize" }) @T(KoreCmsLocalizableStrings.ContentBlocks.TagCloudBlock.AutoResize)
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.RemoveOverflowing, new { data_bind = "checked: removeOverflowing" }) @T(KoreCmsLocalizableStrings.ContentBlocks.TagCloudBlock.RemoveOverflowing)
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.EncodeURI, new { data_bind = "checked: encodeURI" }) @T(KoreCmsLocalizableStrings.ContentBlocks.TagCloudBlock.EncodeURI)
+            </label>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Steps, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Steps, new { @class = "form-control", data_bind = "value: steps" })
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.ClassPattern, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.ClassPattern, new { @class = "form-control", data_bind = "value: classPattern" })
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.AfterCloudRender, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.AfterCloudRender, new { @class = "form-control", data_bind = "value: afterCloudRender" })
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Delay, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Delay, new { @class = "form-control", data_bind = "value: delay" })
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Shape, new { @class = "control-label" })
+            @Html.EnumDropDownListFor(m => m.Shape, new { @class = "form-control", data_bind = "value: shape" })
+        </div>
+    </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="form-group">
             @Html.LabelFor(m => m.Colors, new { @class = "control-label" })
@@ -26,6 +107,20 @@
     var contentBlockModel = (function () {
         var f = {};
         f.updateModel = function () {
+            //viewModel.width = ko.observable(100);
+            //viewModel.widthUnit = ko.observable(1);
+            //viewModel.height = ko.observable(250);
+            //viewModel.heightUnit = ko.observable(0);
+            //viewModel.centerX = ko.observable(0.5);
+            //viewModel.centerY = ko.observable(0.5);
+            viewModel.autoResize = ko.observable(false);
+            viewModel.steps = ko.observable(10);
+            viewModel.classPattern = ko.observable('w{n}');
+            viewModel.afterCloudRender = ko.observable(null);
+            viewModel.delay = ko.observable(null);
+            viewModel.shape = ko.observable(0);
+            viewModel.removeOverflowing = ko.observable(true);
+            viewModel.encodeURI = ko.observable(true);
             viewModel.colors = ko.observable(null);
             viewModel.fontSizeFrom = ko.observable(null);
             viewModel.fontSizeTo = ko.observable(null);
@@ -33,6 +128,48 @@
             var data = ko.mapping.fromJSON(viewModel.blockValues());
 
             if (data) {
+                //if (data.Width) {
+                //    viewModel.width(data.Width());
+                //}
+                //if (data.WidthUnit) {
+                //    viewModel.widthUnit(data.WidthUnit());
+                //}
+                //if (data.Height) {
+                //    viewModel.height(data.Height());
+                //}
+                //if (data.HeightUnit) {
+                //    viewModel.heightUnit(data.HeightUnit());
+                //}
+                //if (data.CenterX) {
+                //    viewModel.centerX(data.CenterX());
+                //}
+                //if (data.CenterY) {
+                //    viewModel.centerY(data.CenterY());
+                //}
+                if (data.AutoResize && typeof data.AutoResize() === 'boolean') {
+                    viewModel.autoResize(data.AutoResize());
+                }
+                if (data.Steps) {
+                    viewModel.steps(data.Steps());
+                }
+                if (data.ClassPattern) {
+                    viewModel.classPattern(data.ClassPattern());
+                }
+                if (data.AfterCloudRender) {
+                    viewModel.afterCloudRender(data.AfterCloudRender());
+                }
+                if (data.Delay) {
+                    viewModel.delay(data.Delay());
+                }
+                if (data.Shape) {
+                    viewModel.shape(data.Shape());
+                }
+                if (data.RemoveOverflowing && typeof data.RemoveOverflowing() === 'boolean') {
+                    viewModel.removeOverflowing(data.RemoveOverflowing());
+                }
+                if (data.EncodeURI && typeof data.EncodeURI() === 'boolean') {
+                    viewModel.encodeURI(data.EncodeURI());
+                }
                 if (data.Colors) {
                     viewModel.colors(data.Colors());
                 }
@@ -47,12 +184,40 @@
             viewModel.tinyMCEConfig = koreDefaultTinyMCEConfig;
         };
         f.cleanUp = function () {
+            //delete viewModel.width;
+            //delete viewModel.widthUnit;
+            //delete viewModel.height;
+            //delete viewModel.heightUnit;
+            //delete viewModel.centerX;
+            //delete viewModel.centerY;
+            delete viewModel.autoResize;
+            delete viewModel.steps;
+            delete viewModel.classPattern;
+            delete viewModel.afterCloudRender;
+            delete viewModel.delay;
+            delete viewModel.shape;
+            delete viewModel.removeOverflowing;
+            delete viewModel.encodeURI;
             delete viewModel.colors;
             delete viewModel.fontSizeFrom;
             delete viewModel.fontSizeTo;
         };
         f.onBeforeSave = function () {
             var data = {
+                //Width: viewModel.width(),
+                //WidthUnit: viewModel.widthUnit(),
+                //Height: viewModel.height(),
+                //HeightUnit: viewModel.heightUnit(),
+                //CenterX: viewModel.centerX(),
+                //CenterY: viewModel.centerY(),
+                AutoResize: viewModel.autoResize(),
+                Steps: viewModel.steps(),
+                ClassPattern: viewModel.classPattern(),
+                AfterCloudRender: viewModel.afterCloudRender(),
+                Delay: viewModel.delay(),
+                Shape: viewModel.shape(),
+                RemoveOverflowing: viewModel.removeOverflowing(),
+                EncodeURI: viewModel.encodeURI(),
                 Colors: viewModel.colors(),
                 FontSizeFrom: viewModel.fontSizeFrom(),
                 FontSizeTo: viewModel.fontSizeTo()

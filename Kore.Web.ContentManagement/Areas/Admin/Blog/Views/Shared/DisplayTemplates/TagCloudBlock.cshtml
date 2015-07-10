@@ -18,9 +18,10 @@
     var tags = tagService.Repository.Table.ToDictionary(k => k.Id, v => v);
 
     string controlId = "blog-tag-cloud-" + Guid.NewGuid();
+    string options = Model.GetOptions();
 }
 
-<style type="text/css">
+@*<style type="text/css">
     .tag-cloud {
         margin: 0 auto;
         width: 100%;
@@ -30,7 +31,7 @@
         .tag-cloud span {
             text-shadow: 0px 1px 1px #fff;
         }
-</style>
+</style>*@
 
 @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
 {
@@ -50,6 +51,6 @@
                 @:{ text: '@tags[item.Key].Name', weight: @item.Value, link: '/blog/tag/@tags[item.Key].UrlSlug' },
             }
         ];
-        $('#@controlId').jQCloud(words);
+        $('#@controlId').jQCloud(words, @Html.Raw(options));
     </script>
 }

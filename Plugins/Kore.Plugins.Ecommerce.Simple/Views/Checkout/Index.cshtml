@@ -86,7 +86,7 @@
                             @Html.ValidationMessageFor(m => m.BillingAddress.AddressLine3)
                         </div>
                     </div>*@
-                    <div class="form-group">
+                    <div id="billing-country-group" class="form-group">
                         @Html.LabelFor(m => m.BillingAddress.CountryId, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
                         <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                             <div class="input-group">
@@ -207,7 +207,7 @@
                                 @Html.ValidationMessageFor(m => m.ShippingAddress.AddressLine3)
                             </div>
                         </div>*@
-                        <div class="form-group">
+                        <div id="shipping-country-group" class="form-group">
                             @Html.LabelFor(m => m.ShippingAddress.CountryId, new { @class = "control-label col-xs-3 col-sm-3 col-md-3 col-lg-3" })
                             <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                 <div class="input-group">
@@ -306,81 +306,90 @@
 @using (Script.AtFoot())
 {
     <script type="text/javascript">
-        $(document).ready(function () {
-            var checkbox = $('#ShippingAddressIsSameAsBillingAddress');
-            toggleShippingAddressSection(checkbox);
+    var billingCountryId = '@Html.IdFor(m => m.BillingAddress.CountryId)';
+    var shippingCountryId = '@Html.IdFor(m => m.ShippingAddress.CountryId)';
 
-            $("#checkout-form").validate({
-                rules: {
-                    BillingAddress_GivenNames: { required: true, maxlength: 128 },
-                    BillingAddress_FamilyName: { required: true, maxlength: 128 },
-                    BillingAddress_Email: { required: true, maxlength: 255 },
-                    BillingAddress_AddressLine1: { required: true, maxlength: 128 },
-                    BillingAddress_AddressLine2: { maxlength: 128 },
-                    BillingAddress_AddressLine3: { maxlength: 128 },
-                    BillingAddress_CountryId: { required: true },
-                    BillingAddress_CityId: { required: true },
-                    BillingAddress_PostalCode: { required: true, maxlength: 10 },
-                    BillingAddress_PhoneNumber: { required: true, maxlength: 25 },
+    $(document).ready(function () {
+        var checkbox = $('#ShippingAddressIsSameAsBillingAddress');
+        toggleShippingAddressSection(checkbox);
 
-                    ShippingAddress_GivenNames: { required: checkIfShippingAddressSameAsBillingAddress(), maxlength: 128 },
-                    ShippingAddress_FamilyName: { required: checkIfShippingAddressSameAsBillingAddress(), maxlength: 128 },
-                    ShippingAddress_Email: { required: checkIfShippingAddressSameAsBillingAddress(), maxlength: 255 },
-                    ShippingAddress_AddressLine1: { required: checkIfShippingAddressSameAsBillingAddress(), maxlength: 128 },
-                    ShippingAddress_AddressLine2: { maxlength: 128 },
-                    ShippingAddress_AddressLine3: { maxlength: 128 },
-                    ShippingAddress_CountryId: { required: checkIfShippingAddressSameAsBillingAddress() },
-                    ShippingAddress_CityId: { required: checkIfShippingAddressSameAsBillingAddress() },
-                    ShippingAddress_PostalCode: { required: checkIfShippingAddressSameAsBillingAddress(), maxlength: 10 },
-                    ShippingAddress_PhoneNumber: { required: checkIfShippingAddressSameAsBillingAddress(), maxlength: 25 }
-                }
-            });
+        $("#checkout-form").validate({
+            rules: {
+                BillingAddress_GivenNames: { required: true, maxlength: 128 },
+                BillingAddress_FamilyName: { required: true, maxlength: 128 },
+                BillingAddress_Email: { required: true, maxlength: 255 },
+                BillingAddress_AddressLine1: { required: true, maxlength: 128 },
+                BillingAddress_AddressLine2: { maxlength: 128 },
+                BillingAddress_AddressLine3: { maxlength: 128 },
+                BillingAddress_CountryId: { required: true },
+                BillingAddress_CityId: { required: true },
+                BillingAddress_PostalCode: { required: true, maxlength: 10 },
+                BillingAddress_PhoneNumber: { required: true, maxlength: 25 },
 
-            billingCountry_onChange($('#@Html.IdFor(m => m.BillingAddress.CountryId)'));
-            shippingCountry_onChange($('#@Html.IdFor(m => m.ShippingAddress.CountryId)'));
+                ShippingAddress_GivenNames: { required: checkIfShippingAddressSameAsBillingAddress(), maxlength: 128 },
+                ShippingAddress_FamilyName: { required: checkIfShippingAddressSameAsBillingAddress(), maxlength: 128 },
+                ShippingAddress_Email: { required: checkIfShippingAddressSameAsBillingAddress(), maxlength: 255 },
+                ShippingAddress_AddressLine1: { required: checkIfShippingAddressSameAsBillingAddress(), maxlength: 128 },
+                ShippingAddress_AddressLine2: { maxlength: 128 },
+                ShippingAddress_AddressLine3: { maxlength: 128 },
+                ShippingAddress_CountryId: { required: checkIfShippingAddressSameAsBillingAddress() },
+                ShippingAddress_CityId: { required: checkIfShippingAddressSameAsBillingAddress() },
+                ShippingAddress_PostalCode: { required: checkIfShippingAddressSameAsBillingAddress(), maxlength: 10 },
+                ShippingAddress_PhoneNumber: { required: checkIfShippingAddressSameAsBillingAddress(), maxlength: 25 }
+            }
         });
 
-        function toggleShippingAddressSection() {
-            if (checkIfShippingAddressSameAsBillingAddress()) {
-                $('#shipping-address').hide();
-            }
-            else {
-                $('#shipping-address').show();
-            }
-        };
+        billingCountry_onChange($('#' + billingCountryId));
+        shippingCountry_onChange($('#' + shippingCountryId));
 
-        function checkIfShippingAddressSameAsBillingAddress() {
-            return $("#ShippingAddressIsSameAsBillingAddress").is(":checked");
-        };
+        var numberOfCountries = $('select#' + billingCountryId + ' option').length;
+        if (numberOfCountries <= 1) {
+            $("#billing-country-group").hide();
+            $("#shipping-country-group").hide();
+        }
+    });
 
-        function billingCountry_onChange(element) {
-            $('#@Html.IdFor(m => m.BillingAddress.CityId)').find('option').remove()
+    function toggleShippingAddressSection() {
+        if (checkIfShippingAddressSameAsBillingAddress()) {
+            $('#shipping-address').hide();
+        }
+        else {
+            $('#shipping-address').show();
+        }
+    };
 
-            var countryId = $(element).val();
+    function checkIfShippingAddressSameAsBillingAddress() {
+        return $("#ShippingAddressIsSameAsBillingAddress").is(":checked");
+    };
 
-            $.get("/store/checkout/get-cities/" + countryId, function (json) {
-                $(json.Data).each(function (i, val) {
-                    $('#@Html.IdFor(m => m.BillingAddress.CityId)').append($('<option>', {
-                        value: val.Id,
-                        text: val.Name
-                    }));
-                });
+    function billingCountry_onChange(element) {
+        $('#@Html.IdFor(m => m.BillingAddress.CityId)').find('option').remove()
+
+        var countryId = $(element).val();
+
+        $.get("/store/checkout/get-cities/" + countryId, function (json) {
+            $(json.Data).each(function (i, val) {
+                $('#@Html.IdFor(m => m.BillingAddress.CityId)').append($('<option>', {
+                    value: val.Id,
+                    text: val.Name
+                }));
             });
-        };
+        });
+    };
 
-        function shippingCountry_onChange(element) {
-            $('#@Html.IdFor(m => m.ShippingAddress.CityId)').find('option').remove()
+    function shippingCountry_onChange(element) {
+        $('#@Html.IdFor(m => m.ShippingAddress.CityId)').find('option').remove()
 
-            var countryId = $(element).val();
+        var countryId = $(element).val();
 
-            $.get("/store/checkout/get-cities/" + countryId, function (json) {
-                $(json.Data).each(function (i, val) {
-                    $('#@Html.IdFor(m => m.ShippingAddress.CityId)').append($('<option>', {
-                        value: val.Id,
-                        text: val.Name
-                    }));
-                });
+        $.get("/store/checkout/get-cities/" + countryId, function (json) {
+            $(json.Data).each(function (i, val) {
+                $('#@Html.IdFor(m => m.ShippingAddress.CityId)').append($('<option>', {
+                    value: val.Id,
+                    text: val.Name
+                }));
             });
-        };
+        });
+    };
     </script>
 }

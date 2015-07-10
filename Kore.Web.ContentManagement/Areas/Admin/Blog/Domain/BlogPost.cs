@@ -6,9 +6,9 @@ using Kore.Data.EntityFramework;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 {
-    public class Post : IEntity
+    public class BlogPost : IEntity
     {
-        private ICollection<PostTag> tags;
+        private ICollection<BlogPostTag> tags;
 
         public Guid Id { get; set; }
 
@@ -36,11 +36,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 
         public string MetaDescription { get; set; }
 
-        public virtual Category Category { get; set; }
+        public virtual BlogCategory Category { get; set; }
 
-        public virtual ICollection<PostTag> Tags
+        public virtual ICollection<BlogPostTag> Tags
         {
-            get { return tags ?? (tags = new HashSet<PostTag>()); }
+            get { return tags ?? (tags = new HashSet<BlogPostTag>()); }
             set { tags = value; }
         }
 
@@ -54,7 +54,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
         #endregion IEntity Members
     }
 
-    public class PostMap : EntityTypeConfiguration<Post>, IEntityTypeConfiguration
+    public class PostMap : EntityTypeConfiguration<BlogPost>, IEntityTypeConfiguration
     {
         public PostMap()
         {

@@ -5,9 +5,9 @@ using Kore.Data.EntityFramework;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 {
-    public class Tag : IEntity
+    public class BlogTag : IEntity
     {
-        private ICollection<PostTag> posts;
+        private ICollection<BlogPostTag> posts;
 
         public int Id { get; set; }
 
@@ -15,9 +15,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 
         public string UrlSlug { get; set; }
 
-        public ICollection<PostTag> Posts
+        public ICollection<BlogPostTag> Posts
         {
-            get { return posts ?? (posts = new HashSet<PostTag>()); }
+            get { return posts ?? (posts = new HashSet<BlogPostTag>()); }
             set { posts = value; }
         }
 
@@ -31,7 +31,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
         #endregion IEntity Members
     }
 
-    public class TagMap : EntityTypeConfiguration<Tag>, IEntityTypeConfiguration
+    public class TagMap : EntityTypeConfiguration<BlogTag>, IEntityTypeConfiguration
     {
         public TagMap()
         {

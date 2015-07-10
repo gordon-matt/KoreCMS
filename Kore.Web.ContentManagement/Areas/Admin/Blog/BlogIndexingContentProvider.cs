@@ -11,12 +11,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog
 {
     public class BlogIndexingContentProvider : IIndexingContentProvider
     {
-        private readonly IPostService blogService;
+        private readonly IBlogPostService blogService;
         private readonly UrlHelper urlHelper;
         private readonly static char[] trimCharacters = { ' ', '\r', '\n', '\t' };
 
         public BlogIndexingContentProvider(
-            IPostService blogService,
+            IBlogPostService blogService,
             UrlHelper urlHelper)
         {
             this.blogService = blogService;

@@ -19,16 +19,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
     public class BlogContentController : KoreController
     {
         private readonly BlogSettings blogSettings;
-        private readonly Lazy<IPostService> postService;
-        private readonly Lazy<ICategoryService> categoryService;
-        private readonly Lazy<ITagService> tagService;
+        private readonly Lazy<IBlogPostService> postService;
+        private readonly Lazy<IBlogCategoryService> categoryService;
+        private readonly Lazy<IBlogTagService> tagService;
         private readonly Lazy<IMembershipService> membershipService;
 
         public BlogContentController(
             BlogSettings blogSettings,
-            Lazy<IPostService> postService,
-            Lazy<ICategoryService> categoryService,
-            Lazy<ITagService> tagService,
+            Lazy<IBlogPostService> postService,
+            Lazy<IBlogCategoryService> categoryService,
+            Lazy<IBlogTagService> tagService,
             Lazy<IMembershipService> membershipService)
         {
             this.blogSettings = blogSettings;
@@ -147,7 +147,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
             }
         }
 
-        private ActionResult Posts(int pageIndex, IEnumerable<Post> model)
+        private ActionResult Posts(int pageIndex, IEnumerable<BlogPost> model)
         {
             bool isChildAction = ControllerContext.IsChildAction;
             ViewBag.IsChildAction = isChildAction;

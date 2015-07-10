@@ -5,19 +5,19 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 {
-    public class BlogTagApiController : GenericODataController<Tag, int>
+    public class BlogTagApiController : GenericODataController<BlogTag, int>
     {
-        public BlogTagApiController(ITagService service)
+        public BlogTagApiController(IBlogTagService service)
             : base(service)
         {
         }
 
-        protected override int GetId(Tag entity)
+        protected override int GetId(BlogTag entity)
         {
             return entity.Id;
         }
 
-        protected override void SetNewId(Tag entity)
+        protected override void SetNewId(BlogTag entity)
         {
         }
 

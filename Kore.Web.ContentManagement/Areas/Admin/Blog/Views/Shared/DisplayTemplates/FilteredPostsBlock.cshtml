@@ -6,7 +6,7 @@
 @if (Model.FilterType == FilterType.Category && Model.CategoryId.HasValue)
 {
     int id = Model.CategoryId.Value;
-    var categoryService = EngineContext.Current.Resolve<ICategoryService>();
+    var categoryService = EngineContext.Current.Resolve<IBlogCategoryService>();
     var category = categoryService.FindOne(id);
     
     @Html.Action("Category", "BlogContent", new { area = string.Empty, categorySlug = category.UrlSlug })

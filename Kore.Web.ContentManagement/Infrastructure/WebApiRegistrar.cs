@@ -25,10 +25,10 @@ namespace Kore.Web.ContentManagement.Infrastructure
             ODataModelBuilder builder = new ODataConventionModelBuilder();
 
             // Blog
-            builder.EntitySet<Category>("BlogCategoryApi");
-            builder.EntitySet<Post>("BlogPostApi");
-            builder.EntitySet<PostTag>("BlogPostTagApi").EntityType.HasKey(x => new { x.PostId, x.TagId });
-            builder.EntitySet<Tag>("BlogTagApi");
+            builder.EntitySet<BlogCategory>("BlogCategoryApi");
+            builder.EntitySet<BlogPost>("BlogPostApi");
+            builder.EntitySet<BlogPostTag>("BlogPostTagApi").EntityType.HasKey(x => new { x.PostId, x.TagId });
+            builder.EntitySet<BlogTag>("BlogTagApi");
 
             // Content Blocks
             builder.EntitySet<ContentBlock>("ContentBlockApi");

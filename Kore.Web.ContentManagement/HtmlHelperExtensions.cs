@@ -181,7 +181,7 @@ namespace Kore.Web.ContentManagement
 
         private static IEnumerable<SelectListItem> GetBlogCategorySelectList(int? selectedValue = null, string emptyText = null)
         {
-            var categoryService = EngineContext.Current.Resolve<ICategoryService>();
+            var categoryService = EngineContext.Current.Resolve<IBlogCategoryService>();
 
             return categoryService.Find()
                 .ToSelectList(
@@ -193,7 +193,7 @@ namespace Kore.Web.ContentManagement
 
         private static IEnumerable<SelectListItem> GetBlogTagSelectList(int? selectedValue = null, string emptyText = null)
         {
-            var tagService = EngineContext.Current.Resolve<ITagService>();
+            var tagService = EngineContext.Current.Resolve<IBlogTagService>();
 
             return tagService.Find()
                 .ToSelectList(

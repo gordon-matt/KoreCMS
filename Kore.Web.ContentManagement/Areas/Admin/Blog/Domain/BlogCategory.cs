@@ -9,9 +9,9 @@ using Kore.Data.EntityFramework;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 {
-    public class Category : IEntity
+    public class BlogCategory : IEntity
     {
-        private ICollection<Post> posts;
+        private ICollection<BlogPost> posts;
 
         public int Id { get; set; }
 
@@ -19,9 +19,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 
         public string UrlSlug { get; set; }
 
-        public ICollection<Post> Posts
+        public ICollection<BlogPost> Posts
         {
-            get { return posts ?? (posts = new HashSet<Post>()); }
+            get { return posts ?? (posts = new HashSet<BlogPost>()); }
             set { posts = value; }
         }
 
@@ -35,7 +35,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
         #endregion IEntity Members
     }
 
-    public class CategoryMap : EntityTypeConfiguration<Category>, IEntityTypeConfiguration
+    public class CategoryMap : EntityTypeConfiguration<BlogCategory>, IEntityTypeConfiguration
     {
         public CategoryMap()
         {

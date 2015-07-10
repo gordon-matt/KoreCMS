@@ -1,9 +1,11 @@
-﻿using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
+﻿using Kore.ComponentModel;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks
 {
     public class CategoriesBlock : ContentBlockBase
     {
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.CategoriesBlock.NumberOfCategories)]
         public byte NumberOfCategories { get; set; }
 
         #region ContentBlockBase Overrides

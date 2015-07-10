@@ -321,6 +321,7 @@
     <Compile Include="Mvc\Html5\SourceList.cs" />
     <Compile Include="Mvc\Html5\SourceListItem.cs" />
     <Compile Include="Mvc\HtmlHelperExtensions.cs" />
+    <Compile Include="Mvc\Html\CssUnit.cs" />
     <Compile Include="Mvc\Html\GroupedSelectExtensions.cs" />
     <Compile Include="Mvc\Controls\TreeView.cs" />
     <Compile Include="Mvc\KoreController.cs" />

@@ -55,9 +55,35 @@
                 public const string TagId = "Kore.Web.ContentManagement/ContentBlocks.AllPostsBlock.TagId";
             }
 
+            public static class CategoriesBlock
+            {
+                public const string NumberOfCategories = "Kore.Web.ContentManagement/ContentBlocks.CategoriesBlock.NumberOfCategories";
+            }
+
             public static class LastNPostsBlock
             {
                 public const string NumberOfEntries = "Kore.Web.ContentManagement/ContentBlocks.LastNPostsBlock.NumberOfEntries";
+            }
+
+            public static class TagCloudBlock
+            {
+                //public const string Width = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.Width";
+                //public const string WidthUnit = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.WidthUnit";
+                //public const string Height = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.Height";
+                //public const string HeightUnit = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.HeightUnit";
+                //public const string CenterX = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.CenterX";
+                //public const string CenterY = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.CenterY";
+                public const string AutoResize = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.AutoResize";
+                public const string Steps = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.Steps";
+                public const string ClassPattern = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.ClassPattern";
+                public const string AfterCloudRender = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.AfterCloudRender";
+                public const string Delay = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.Delay";
+                public const string Shape = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.Shape";
+                public const string RemoveOverflowing = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.RemoveOverflowing";
+                public const string EncodeURI = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.EncodeURI";
+                public const string Colors = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.Colors";
+                public const string FontSizeFrom = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.FontSizeFrom";
+                public const string FontSizeTo = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.FontSizeTo";
             }
 
             #endregion

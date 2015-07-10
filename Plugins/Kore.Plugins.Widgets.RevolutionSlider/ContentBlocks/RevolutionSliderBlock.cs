@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using Kore.ComponentModel;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
+using Kore.Web.Mvc.Html;
 
 namespace Kore.Plugins.Widgets.RevolutionSlider.ContentBlocks
 {
@@ -340,7 +341,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.ContentBlocks
         public short FullScreenOffset { get; set; }
 
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.FullScreenOffsetUnit)]
-        public ScreenUnit FullScreenOffsetUnit { get; set; }
+        public CssUnit FullScreenOffsetUnit { get; set; }
 
         /// <summary>
         /// Possible values: 0,1,2,3 (0 == no Shadow, 1,2,3 - Different Shadow Types).
@@ -471,7 +472,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.ContentBlocks
                 sb.AppendFormat("fullScreenOffsetContainer: '{0}',", FullScreenOffsetContainer);
             }
 
-            sb.AppendFormat("fullScreenOffset: '{0}{1}',", FullScreenOffset, FullScreenOffsetUnit == ScreenUnit.Percentage ? "%" : "px");
+            sb.AppendFormat("fullScreenOffset: '{0}{1}',", FullScreenOffset, FullScreenOffsetUnit == CssUnit.Percentage ? "%" : "px");
             sb.AppendFormat("shadow: {0},", ConvertShadow(Shadow));
             sb.AppendFormat("dottedOverlay: '{0}',", DottedOverlay.ToString().ToLowerInvariant());
 
@@ -596,12 +597,6 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.ContentBlocks
         Spinner3 = 2,
         Spinner4 = 3,
         Spinner5 = 4
-    }
-
-    public enum ScreenUnit : byte
-    {
-        Pixels = 0,
-        Percentage = 1
     }
 
     public enum Shadow : byte

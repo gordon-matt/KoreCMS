@@ -31,6 +31,9 @@ namespace Kore.Web.CommonResources.Infrastructure
 
 
 
+            bundles.Add(new ScriptBundle("~/bundles/js/third-party/bootpag")
+                .Include("~/Scripts/Kore.Web.CommonResources.Scripts.jquery.bootpag.min.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/third-party/bootstrap-fileinput")
                 .Include("~/Scripts/Kore.Web.CommonResources.Scripts.bootstrapFileInput.fileinput.min.js"));
 

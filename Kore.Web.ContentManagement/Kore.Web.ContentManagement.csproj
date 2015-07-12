@@ -393,7 +393,6 @@
     <EmbeddedResource Include="Areas\Admin\Sitemap\Scripts\index.js" />
     <EmbeddedResource Include="Areas\Admin\Newsletters\Scripts\subscribers.js" />
     <EmbeddedResource Include="Scripts\moment.js" />
-    <EmbeddedResource Include="Scripts\jquery.bootpag.min.js" />
     <EmbeddedResource Include="Areas\Admin\Messaging\Scripts\queuedEmails.js" />
     <EmbeddedResource Include="Areas\Admin\Messaging\Scripts\messageTemplates.js" />
     <EmbeddedResource Include="Areas\Admin\Localization\Scripts\index.js" />

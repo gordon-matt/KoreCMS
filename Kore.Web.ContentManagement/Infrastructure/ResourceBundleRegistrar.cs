@@ -13,9 +13,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             #region 3rd Party
 
-            bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/bootpag")
-                .Include("~/Scripts/Kore.Web.ContentManagement.Scripts.jquery.bootpag.min.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/js/third-party/jQCloud")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Scripts.jqcloud.min.js"));
 

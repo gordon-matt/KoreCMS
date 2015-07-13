@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Kore.Web.Common.Areas.Admin.Regions.Models;
+using Kore.Web.Common.Areas.Admin.Regions.Domain;
 using Kore.Web.Common.Areas.Admin.Regions.Services;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
@@ -13,10 +13,14 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers
     [RouteArea(Constants.Areas.Regions)]
     public class RegionController : KoreController
     {
+        private readonly Lazy<IRegionService> regionService;
         private readonly Lazy<IEnumerable<IRegionSettings>> regionSettings;
 
-        public RegionController(Lazy<IEnumerable<IRegionSettings>> regionSettings)
+        public RegionController(
+            Lazy<IRegionService> regionService,
+            Lazy<IEnumerable<IRegionSettings>> regionSettings)
         {
+            this.regionService = regionService;
             this.regionSettings = regionSettings;
         }
 
@@ -62,6 +66,23 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers
 
             string content = RenderRazorPartialViewToString(model.EditorTemplatePath, model);
             return Json(new { Content = content }, JsonRequestBehavior.AllowGet);
+        }
+
+        [AllowAnonymous]
+        [Route("get-cities/{countryId}")]
+        public JsonResult GetCities(int countryId)
+        {
+            var cities = regionService.Value
+                .GetSubRegions(countryId, RegionType.City)
+                .ToDictionary(k => k.Id, v => v);
+
+            var data = cities.Select(x => new
+            {
+                Id = x.Key,
+                Name = x.Value.Name
+            });
+
+            return Json(new { Data = data }, JsonRequestBehavior.AllowGet);
         }
     }
 }

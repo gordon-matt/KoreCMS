@@ -34,7 +34,7 @@ namespace Kore.Web.Collections
 
             if (emptyText != null) // we don't check for empty, because empty string can be valid for emptyText value.
             {
-                values.Insert(0, new { ValueField = "", TextField = emptyText });
+                values.Insert(0, new { ValueField = string.Empty, TextField = emptyText });
             }
 
             return new SelectList(values, "ValueField", "TextField");
@@ -62,7 +62,7 @@ namespace Kore.Web.Collections
 
             if (emptyText != null) // we don't check for empty, because empty string can be valid for emptyText value.
             {
-                values.Insert(0, new { ValueField = "", TextField = emptyText });
+                values.Insert(0, new { ValueField = string.Empty, TextField = emptyText });
             }
             return new SelectList(values, "ValueField", "TextField", selectedValue);
         }
@@ -78,7 +78,7 @@ namespace Kore.Web.Collections
 
             if (emptyText != null) // we don't check for empty, because empty string can be valid for emptyText value.
             {
-                values.Insert(0, new { ValueField = "", TextField = emptyText });
+                values.Insert(0, new { ValueField = string.Empty, TextField = emptyText });
             }
 
             return new MultiSelectList(values, "ValueField", "TextField", selectedValues);

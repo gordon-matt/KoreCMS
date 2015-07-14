@@ -164,19 +164,7 @@ namespace Kore.Web.Mvc
 
         #region NumbersDropDown
 
-        //TODO: Review if need this. I think HTML5 has some number or range input type now to replace this.
-
-        public static MvcHtmlString NumbersDropDown(this HtmlHelper html, string name, int min, int max)
-        {
-            return html.NumbersDropDown(name, min, max, min, null);
-        }
-
-        public static MvcHtmlString NumbersDropDown(this HtmlHelper html, string name, int min, int max, int selected)
-        {
-            return html.NumbersDropDown(name, min, max, selected, null);
-        }
-
-        public static MvcHtmlString NumbersDropDown(this HtmlHelper html, string name, int min, int max, int selected, object htmlAttributes)
+        public static MvcHtmlString NumbersDropDown(this HtmlHelper html, string name, int min, int max, int? selected = null, string emptyText = null, object htmlAttributes = null)
         {
             var items = new List<SelectListItem>();
 
@@ -190,17 +178,18 @@ namespace Kore.Web.Mvc
                 };
                 items.Add(item);
             }
+
+            if (emptyText != null) // we don't check for empty, because empty string can be valid for emptyText value.
+            {
+                items.Insert(0, new SelectListItem { Value = string.Empty, Text = emptyText });
+            }
+
             var selectList = new SelectList(items, "Value", "Text");
 
             return html.DropDownList(name, selectList, htmlAttributes);
         }
 
-        public static MvcHtmlString NumbersDropDownFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, int min, int max)
-        {
-            return html.NumbersDropDownFor(expression, min, max, null);
-        }
-
-        public static MvcHtmlString NumbersDropDownFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, int min, int max, object htmlAttributes)
+        public static MvcHtmlString NumbersDropDownFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, int min, int max, string emptyText = null, object htmlAttributes = null)
         {
             var func = expression.Compile();
             var selectedValue = func(html.ViewData.Model);
@@ -217,6 +206,12 @@ namespace Kore.Web.Mvc
                 };
                 items.Add(item);
             }
+
+            if (emptyText != null) // we don't check for empty, because empty string can be valid for emptyText value.
+            {
+                items.Insert(0, new SelectListItem { Value = string.Empty, Text = emptyText });
+            }
+
             var selectList = new SelectList(items, "Value", "Text");
 
             return html.DropDownListFor(expression, selectList, htmlAttributes);

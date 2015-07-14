@@ -62,8 +62,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
             Property(x => x.CityId).IsRequired();
             Property(x => x.PostalCode).IsRequired().HasMaxLength(10);
             Property(x => x.PhoneNumber).IsRequired().HasMaxLength(25);
-            HasRequired(x => x.Country).WithMany().HasForeignKey(x => x.CountryId);
-            HasRequired(x => x.City).WithMany().HasForeignKey(x => x.CityId);
+            HasRequired(x => x.Country).WithMany().HasForeignKey(x => x.CountryId).WillCascadeOnDelete(false);
+            HasRequired(x => x.City).WithMany().HasForeignKey(x => x.CityId).WillCascadeOnDelete(false);
         }
 
         #region IEntityTypeConfiguration Members

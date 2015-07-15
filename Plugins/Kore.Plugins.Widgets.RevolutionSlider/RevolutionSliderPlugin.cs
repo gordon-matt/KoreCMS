@@ -103,7 +103,7 @@ CHECK CONSTRAINT [FK_Kore_Plugins_RevolutionSlider_Slides_Kore_Plugins_Revolutio
             base.Uninstall();
 
             var dbContext = EngineContext.Current.Resolve<DbContext>();
-            DropTable(dbContext, Constants.Tables.Captions);
+            DropTable(dbContext, Constants.Tables.Layers);
             DropTable(dbContext, Constants.Tables.Slides);
             DropTable(dbContext, Constants.Tables.Sliders);
 

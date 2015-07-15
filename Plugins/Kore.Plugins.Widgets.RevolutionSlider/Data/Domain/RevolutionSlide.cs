@@ -1,4 +1,5 @@
-﻿using System.Data.Entity.ModelConfiguration;
+﻿using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
 using Kore.Web.Mvc;
@@ -6,8 +7,10 @@ using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
 {
-    public class Slide : IEntity
+    public class RevolutionSlide : IEntity
     {
+        private ICollection<RevolutionLayer> layers;
+
         #region General
 
         public int Id { get; set; }
@@ -126,6 +129,12 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
 
         #endregion Main <img> Element
 
+        public virtual ICollection<RevolutionLayer> Layers
+        {
+            get { return layers ?? (layers = new List<RevolutionLayer>()); }
+            set { layers = value; }
+        }
+
         #region IEntity Members
 
         public object[] KeyValues
@@ -136,7 +145,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
         #endregion IEntity Members
     }
 
-    public class SlideMap : EntityTypeConfiguration<Slide>, IEntityTypeConfiguration
+    public class SlideMap : EntityTypeConfiguration<RevolutionSlide>, IEntityTypeConfiguration
     {
         public SlideMap()
         {

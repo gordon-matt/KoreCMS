@@ -5,7 +5,7 @@ using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
 {
-    public class Slider : IEntity
+    public class RevolutionSlider : IEntity
     {
         public int Id { get; set; }
 
@@ -21,7 +21,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
         #endregion IEntity Members
     }
 
-    public class SliderMap : EntityTypeConfiguration<Slider>, IEntityTypeConfiguration
+    public class SliderMap : EntityTypeConfiguration<RevolutionSlider>, IEntityTypeConfiguration
     {
         public SliderMap()
         {

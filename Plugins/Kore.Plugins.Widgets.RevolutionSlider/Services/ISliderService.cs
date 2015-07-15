@@ -5,13 +5,13 @@ using Kore.Plugins.Widgets.RevolutionSlider.Data.Domain;
 
 namespace Kore.Plugins.Widgets.RevolutionSlider.Services
 {
-    public interface ISliderService : IGenericDataService<Slider>
+    public interface ISliderService : IGenericDataService<RevolutionSlider>
     {
     }
 
-    public class SliderService : GenericDataService<Slider>, ISliderService
+    public class SliderService : GenericDataService<RevolutionSlider>, ISliderService
     {
-        public SliderService(ICacheManager cacheManager, IRepository<Slider> repository)
+        public SliderService(ICacheManager cacheManager, IRepository<RevolutionSlider> repository)
             : base(cacheManager, repository)
         {
         }

@@ -80,6 +80,22 @@ CHECK CONSTRAINT [FK_Kore_Plugins_RevolutionSlider_Slides_Kore_Plugins_Revolutio
 
                 #endregion CREATE TABLE [dbo].[Kore_Plugins_RevolutionSlider_Slides]
             }
+
+            if (!CheckIfTableExists(dbContext, Constants.Tables.Slides))
+            {
+                #region CREATE TABLE [dbo].[Kore_Plugins_RevolutionSlider_Slides]
+
+                dbContext.Database.ExecuteSqlCommand(
+@"");
+
+                dbContext.Database.ExecuteSqlCommand(
+@"");
+
+                dbContext.Database.ExecuteSqlCommand(
+@"");
+
+                #endregion CREATE TABLE [dbo].[Kore_Plugins_RevolutionSlider_Slides]
+            }
         }
 
         public override void Uninstall()
@@ -87,8 +103,9 @@ CHECK CONSTRAINT [FK_Kore_Plugins_RevolutionSlider_Slides_Kore_Plugins_Revolutio
             base.Uninstall();
 
             var dbContext = EngineContext.Current.Resolve<DbContext>();
-            DropTable(dbContext, Constants.Tables.Sliders);
+            DropTable(dbContext, Constants.Tables.Captions);
             DropTable(dbContext, Constants.Tables.Slides);
+            DropTable(dbContext, Constants.Tables.Sliders);
 
             UninstallLanguagePack<LanguagePackInvariant>();
         }

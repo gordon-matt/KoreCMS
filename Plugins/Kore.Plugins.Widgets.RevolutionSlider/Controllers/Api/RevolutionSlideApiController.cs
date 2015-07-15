@@ -5,19 +5,19 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Plugins.Widgets.RevolutionSlider.Controllers.Api
 {
-    public class RevolutionSlideApiController : GenericODataController<Slide, int>
+    public class RevolutionSlideApiController : GenericODataController<RevolutionSlide, int>
     {
         public RevolutionSlideApiController(ISlideService service)
             : base(service)
         {
         }
 
-        protected override int GetId(Slide entity)
+        protected override int GetId(RevolutionSlide entity)
         {
             return entity.Id;
         }
 
-        protected override void SetNewId(Slide entity)
+        protected override void SetNewId(RevolutionSlide entity)
         {
         }
 

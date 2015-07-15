@@ -130,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\Api\RevolutionLayerApiController.cs" />
     <Compile Include="Controllers\Api\RevolutionSlideApiController.cs" />
     <Compile Include="Controllers\Api\RevolutionSliderApiController.cs" />
     <Compile Include="Controllers\SliderController.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RevolutionSliderPlugin.cs" />
     <Compile Include="ContentBlocks\RevolutionSliderBlock.cs" />
+    <Compile Include="Services\ILayerService.cs" />
     <Compile Include="Services\ISliderService.cs" />
     <Compile Include="Services\ISlideService.cs" />
   </ItemGroup>

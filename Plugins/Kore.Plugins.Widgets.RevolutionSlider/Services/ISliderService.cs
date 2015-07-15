@@ -2,16 +2,17 @@
 using Kore.Data;
 using Kore.Data.Services;
 using Kore.Plugins.Widgets.RevolutionSlider.Data.Domain;
+using Slider = Kore.Plugins.Widgets.RevolutionSlider.Data.Domain.RevolutionSlider;
 
 namespace Kore.Plugins.Widgets.RevolutionSlider.Services
 {
-    public interface ISliderService : IGenericDataService<RevolutionSlider>
+    public interface ISliderService : IGenericDataService<Slider>
     {
     }
 
-    public class SliderService : GenericDataService<RevolutionSlider>, ISliderService
+    public class SliderService : GenericDataService<Slider>, ISliderService
     {
-        public SliderService(ICacheManager cacheManager, IRepository<RevolutionSlider> repository)
+        public SliderService(ICacheManager cacheManager, IRepository<Slider> repository)
             : base(cacheManager, repository)
         {
         }

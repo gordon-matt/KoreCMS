@@ -7,8 +7,8 @@ using System.Web.Mvc.Html;
 using Kore.Collections;
 using Kore.Data;
 using Kore.Infrastructure;
-using Kore.Plugins.Widgets.RevolutionSlider.Data.Domain;
 using Kore.Web.Collections;
+using Slider = Kore.Plugins.Widgets.RevolutionSlider.Data.Domain.RevolutionSlider;
 
 namespace Kore.Plugins.Widgets.RevolutionSlider
 {
@@ -47,7 +47,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider
 
         private static IEnumerable<SelectListItem> GetSliderSelectList(int? selectedValue = null, string emptyText = null)
         {
-            var repository = EngineContext.Current.Resolve<IRepository<RevolutionSlider>>();
+            var repository = EngineContext.Current.Resolve<IRepository<Slider>>();
 
             return repository.Table
                 .OrderBy(x => x.Name)

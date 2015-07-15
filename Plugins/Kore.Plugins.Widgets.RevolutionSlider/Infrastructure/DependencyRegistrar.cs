@@ -28,8 +28,10 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Infrastructure
             builder.RegisterType<RevolutionSliderBlock>().As<IContentBlock>().InstancePerDependency();
 
             builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();
+
             builder.RegisterType<SliderService>().As<ISliderService>().InstancePerDependency();
             builder.RegisterType<SlideService>().As<ISlideService>().InstancePerDependency();
+            builder.RegisterType<LayerService>().As<ILayerService>().InstancePerDependency();
         }
 
         public int Order

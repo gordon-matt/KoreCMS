@@ -18,6 +18,30 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
         public string CaptionText { get; set; }
 
         /// <summary>
+        /// The timepoint in millisecond when/at the Caption should move in to the slide.
+        /// </summary>
+        public short Start { get; set; }
+
+        /// <summary>
+        /// The speed in milliseconds of the transition to move the Caption in the Slide at the defined timepoint.
+        /// </summary>
+        public short Speed { get; set; }
+
+        /// <summary>
+        /// <para>Possible Values are "left", "center", "right", or any Value between -2500  and 2500.</para>
+        /// <para>If left/center/right is set, the caption will be simple aligned to the position.</para>
+        /// <para>Any other "number" will simple set the left position in px of tha caption.</para>
+        /// </summary>
+        public NavigationHAlign X { get; set; }
+
+        /// <summary>
+        /// <para>Possible Values are "top", "center", "bottom", or any Value between -2500  and 2500.</para>
+        /// <para>If top/center/bottom is set, the caption will be siple aligned to the position.</para>
+        /// <para>Any other "number" will simple set the top position in px of tha caption.</para>
+        /// </summary>
+        public NavigationVAlign Y { get; set; }
+
+        /// <summary>
         /// <para>(like "big_white", "big_orange", "medium_grey" etc...)</para>
         /// <para>These are Styling classes created in the settings.css  You can add unlimited amount of Styles in your own css file,</para>
         /// <para>to style your captions at the top level already.</para>
@@ -37,20 +61,6 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
         public OutgoingAnimation? OutgoingAnimation { get; set; }
 
         /// <summary>
-        /// <para>Possible Values are "left", "center", "right", or any Value between -2500  and 2500.</para>
-        /// <para>If left/center/right is set, the caption will be simple aligned to the position.</para>
-        /// <para>Any other "number" will simple set the left position in px of tha caption.</para>
-        /// </summary>
-        public NavigationHAlign? X { get; set; }
-
-        /// <summary>
-        /// <para>Possible Values are "top", "center", "bottom", or any Value between -2500  and 2500.</para>
-        /// <para>If top/center/bottom is set, the caption will be siple aligned to the position.</para>
-        /// <para>Any other "number" will simple set the top position in px of tha caption.</para>
-        /// </summary>
-        public NavigationVAlign? Y { get; set; }
-
-        /// <summary>
         /// <para>Only works if data-x set to left/center/right. It will move the Caption with the defined "px" from the</para>
         /// <para>aligned position. i.e. data-x="center" data-hoffset="-100" will put the caption 100px left from the</para>
         /// <para>slide center horizontaly.</para>
@@ -63,11 +73,6 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
         /// <para>slide center vertically.</para>
         /// </summary>
         public short? VerticalOffset { get; set; }
-
-        /// <summary>
-        /// The speed in milliseconds of the transition to move the Caption in the Slide at the defined timepoint.
-        /// </summary>
-        public short? Speed { get; set; }
 
         /// <summary>
         /// <para>Split Text Animation (incoming transition) to "words", "chars" or "lines". This will create amazing</para>
@@ -91,11 +96,6 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
         /// <para>Higher the amount of words or chars, you should decrease that number!</para>
         /// </summary>
         public float? EndElementDelay { get; set; }
-
-        /// <summary>
-        /// The timepoint in millisecond when/at the Caption should move in to the slide.
-        /// </summary>
-        public short? Start { get; set; }
 
         /// <summary>
         /// The Easing Art how the caption is moved in to the slide (note! Animation art set via Classes!).
@@ -236,14 +236,39 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
         #endregion IEntity Members
     }
 
-    public class CaptionMap : EntityTypeConfiguration<RevolutionLayer>, IEntityTypeConfiguration
+    public class LayerMap : EntityTypeConfiguration<RevolutionLayer>, IEntityTypeConfiguration
     {
-        public CaptionMap()
+        public LayerMap()
         {
-            ToTable(Constants.Tables.Captions);
+            ToTable(Constants.Tables.Layers);
             HasKey(x => x.Id);
             Property(x => x.SlideId).IsRequired();
+            Property(x => x.CaptionText).HasMaxLength(255);
+            Property(x => x.X).IsRequired();
+            Property(x => x.Y).IsRequired();
+            Property(x => x.Speed).IsRequired();
+            Property(x => x.Start).IsRequired();
             Property(x => x.StyleClass).HasMaxLength(50);
+            Property(x => x.SplitIn).IsRequired();
+            Property(x => x.SplitOut).IsRequired();
+            Property(x => x.AutoPlay).IsRequired();
+            Property(x => x.AutoPlayOnlyFirstTime).IsRequired();
+            Property(x => x.NextSlideAtEnd).IsRequired();
+            Property(x => x.VideoPoster).HasMaxLength(255);
+            Property(x => x.ForceCover).IsRequired();
+            Property(x => x.ForceRewind).IsRequired();
+            Property(x => x.Mute).IsRequired();
+            Property(x => x.VideoWidthUnit).IsRequired();
+            Property(x => x.VideoHeightUnit).IsRequired();
+            Property(x => x.VideoPreload).IsRequired();
+            Property(x => x.VideoMp4).HasMaxLength(255);
+            Property(x => x.VideoWebM).HasMaxLength(255);
+            Property(x => x.VideoOgv).HasMaxLength(255);
+            Property(x => x.YouTubeId).HasMaxLength(50);
+            Property(x => x.VimeoId).HasMaxLength(50);
+            Property(x => x.ShowVideoControls).IsRequired();
+            Property(x => x.VideoAttributes).HasMaxLength(128);
+            Property(x => x.VideoLoop).IsRequired();
             HasRequired(x => x.Slide).WithMany(x => x.Layers).HasForeignKey(x => x.SlideId);
         }
 

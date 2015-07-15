@@ -2,6 +2,7 @@
 
 var sliderApiUrl = "/odata/kore/revolution-slider/RevolutionSliderApi";
 var slideApiUrl = "/odata/kore/revolution-slider/RevolutionSlideApi";
+var layerApiUrl = "/odata/kore/revolution-slider/RevolutionLayerApi";
 
 var SliderModel = function () {
     var self = this;
@@ -350,12 +351,322 @@ var SlideModel = function () {
     });
 };
 
+var LayerModel = function () {
+    var self = this;
+
+    self.id = ko.observable(0);
+    self.slideId = ko.observable(0);
+    self.captionText = ko.observable(null);
+    self.styleClass = ko.observable(null);
+    self.incomingAnimation = ko.observable(null);
+    self.outgoingAnimation = ko.observable(null);
+    self.x = ko.observable(null);
+    self.y = ko.observable(null);
+    self.horizontalOffset = ko.observable(null);
+    self.verticalOffset = ko.observable(null);
+    self.speed = ko.observable(null);
+    self.splitIn = ko.observable('None');
+    self.elementDelay = ko.observable(null);
+    self.splitOut = ko.observable('None');
+    self.endElementDelay = ko.observable(null);
+    self.start = ko.observable(null);
+    self.easing = ko.observable(null);
+    self.endSpeed = ko.observable(null);
+    self.end = ko.observable(null);
+    self.endEasing = ko.observable(null);
+
+    self.autoPlay = ko.observable(false);
+    self.autoPlayOnlyFirstTime = ko.observable(false);
+    self.nextSlideAtEnd = ko.observable(true);
+    self.videoPoster = ko.observable(null);
+    self.forceCover = ko.observable(false);
+    self.forceRewind = ko.observable(false);
+    self.mute = ko.observable(false);
+    self.videoWidth = ko.observable(null);
+    self.videoWidthUnit = ko.observable('Pixels');
+    self.videoHeight = ko.observable(null);
+    self.videoHeightUnit = ko.observable('Pixels');
+    self.aspectRatio = ko.observable(null);
+    self.videoPreload = ko.observable('None');
+    self.videoType = ko.observable(null);
+    self.videoMp4 = ko.observable(null);
+    self.videoWebM = ko.observable(null);
+    self.videoOgv = ko.observable(null);
+    self.youTubeId = ko.observable(null);
+    self.vimeoId = ko.observable(null);
+    self.showVideoControls = ko.observable(true);
+    self.videoAttributes = ko.observable(null);
+    self.videoLoop = ko.observable('None');
+
+    self.create = function () {
+        self.id(0);
+        self.slideId(viewModel.selectedSlideId());
+        self.captionText(null);
+        self.styleClass(null);
+        self.incomingAnimation(null);
+        self.outgoingAnimation(null);
+        self.x(null);
+        self.y(null);
+        self.horizontalOffset(null);
+        self.verticalOffset(null);
+        self.speed(null);
+        self.splitIn('None');
+        self.elementDelay(null);
+        self.splitOut('None');
+        self.endElementDelay(null);
+        self.start(null);
+        self.easing(null);
+        self.endSpeed(null);
+        self.end(null);
+        self.endEasing(null);
+
+        self.autoPlay(false);
+        self.autoPlayOnlyFirstTime(false);
+        self.nextSlideAtEnd(true);
+        self.videoPoster(null);
+        self.forceCover(false);
+        self.forceRewind(false);
+        self.mute(false);
+        self.videoWidth(null);
+        self.videoWidthUnit('Pixels');
+        self.videoHeight(null);
+        self.videoHeightUnit('Pixels');
+        self.aspectRatio(null);
+        self.videoPreload('None');
+        self.videoType(null);
+        self.videoMp4(null);
+        self.videoWebM(null);
+        self.videoOgv(null);
+        self.youTubeId(null);
+        self.vimeoId(null);
+        self.showVideoControls(true);
+        self.videoAttributes(null);
+        self.videoLoop('None');
+
+        self.validator.resetForm();
+        switchSection($("#layers-form-section"));
+        $("#layers-form-section-legend").html(translations.Create);
+    };
+
+    self.edit = function (id) {
+        $.ajax({
+            url: layerApiUrl + "(" + id + ")",
+            type: "GET",
+            dataType: "json",
+            async: false
+        })
+        .done(function (json) {
+            self.id(json.Id);
+            self.slideId(json.SlideId);
+            self.captionText(json.CaptionText);
+            self.styleClass(json.StyleClass);
+            self.incomingAnimation(json.IncomingAnimation);
+            self.outgoingAnimation(json.OutgoingAnimation);
+            self.x(json.X);
+            self.y(json.Y);
+            self.horizontalOffset(json.HorizontalOffset);
+            self.verticalOffset(json.VerticalOffset);
+            self.speed(json.Speed);
+            self.splitIn(json.SplitIn);
+            self.elementDelay(json.ElementDelay);
+            self.splitOut(json.SplitOut);
+            self.endElementDelay(json.EndElementDelay);
+            self.start(json.Start);
+            self.easing(json.Easing);
+            self.endSpeed(json.EndSpeed);
+            self.end(json.End);
+            self.endEasing(json.EndEasing);
+
+            self.autoPlay(json.AutoPlay);
+            self.autoPlayOnlyFirstTime(json.AutoPlayOnlyFirstTime);
+            self.nextSlideAtEnd(json.NextSlideAtEnd);
+            self.videoPoster(json.VideoPoster);
+            self.forceCover(json.ForceCover);
+            self.forceRewind(json.ForceRewind);
+            self.mute(json.Mute);
+            self.videoWidth(json.VideoWidth);
+            self.videoWidthUnit(json.VideoWidthUnit);
+            self.videoHeight(json.VideoHeight);
+            self.videoHeightUnit(json.VideoHeightUnit);
+            self.aspectRatio(json.AspectRatio);
+            self.videoPreload(json.VideoPreload);
+            self.videoType(json.VideoType);
+            self.videoMp4(json.VideoMp4);
+            self.videoWebM(json.VideoWebM);
+            self.videoOgv(json.VideoOgv);
+            self.youTubeId(json.YouTubeId);
+            self.vimeoId(json.VimeoId);
+            self.showVideoControls(json.ShowVideoControls);
+            self.videoAttributes(json.VideoAttributes);
+            self.videoLoop(json.VideoLoop);
+
+            self.validator.resetForm();
+            switchSection($("#layers-form-section"));
+            $("#layers-form-section-legend").html(translations.Edit);
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            $.notify(translations.GetRecordError, "error");
+            console.log(textStatus + ': ' + errorThrown);
+        });
+    };
+
+    self.delete = function (id) {
+        if (confirm(translations.DeleteRecordConfirm)) {
+            $.ajax({
+                url: layerApiUrl + "(" + id + ")",
+                type: "DELETE",
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                $('#LayerGrid').data('kendoGrid').dataSource.read();
+                $('#LayerGrid').data('kendoGrid').refresh();
+                $.notify(translations.DeleteRecordSuccess, "success");
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(translations.DeleteRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
+            });
+        }
+    };
+
+    self.save = function () {
+        var isNew = (self.id() == 0);
+
+        if (!$("#layers-form-section-form").valid()) {
+            return false;
+        }
+
+        var record = {
+            Id: self.id(),
+            SlideId: self.slideId(),
+            CaptionText: self.captionText(),
+            StyleClass: self.styleClass(),
+            IncomingAnimation: self.incomingAnimation(),
+            OutgoingAnimation: self.outgoingAnimation(),
+            X: self.x(),
+            Y: self.y(),
+            HorizontalOffset: self.horizontalOffset(),
+            VerticalOffset: self.verticalOffset(),
+            Speed: self.speed(),
+            SplitIn: self.splitIn(),
+            ElementDelay: self.elementDelay(),
+            SplitOut: self.splitOut(),
+            EndElementDelay: self.endElementDelay(),
+            Start: self.start(),
+            Easing: self.easing(),
+            EndSpeed: self.endSpeed(),
+            End: self.end(),
+            EndEasing: self.endEasing(),
+
+            AutoPlay: self.autoPlay(),
+            AutoPlayOnlyFirstTime: self.autoPlayOnlyFirstTime(),
+            NextSlideAtEnd: self.nextSlideAtEnd(),
+            VideoPoster: self.videoPoster(),
+            ForceCover: self.forceCover(),
+            ForceRewind: self.forceRewind(),
+            Mute: self.mute(),
+            VideoWidth: self.videoWidth(),
+            VideoWidthUnit: self.videoWidthUnit(),
+            VideoHeight: self.videoHeight(),
+            VideoHeightUnit: self.videoHeightUnit(),
+            AspectRatio: self.aspectRatio(),
+            VideoPreload: self.videoPreload(),
+            VideoType: self.videoType(),
+            VideoMp4: self.videoMp4(),
+            VideoWebM: self.videoWebM(),
+            VideoOgv: self.videoOgv(),
+            YouTubeId: self.youTubeId(),
+            VimeoId: self.vimeoId(),
+            ShowVideoControls: self.showVideoControls(),
+            VideoAttributes: self.videoAttributes(),
+            VideoLoop: self.videoLoop(),
+        };
+
+        if (isNew) {
+            $.ajax({
+                url: layerApiUrl,
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(record),
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                $('#LayerGrid').data('kendoGrid').dataSource.read();
+                $('#LayerGrid').data('kendoGrid').refresh();
+
+                switchSection($("#layers-grid-section"));
+
+                $.notify(translations.InsertRecordSuccess, "success");
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(translations.InsertRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
+            });
+        }
+        else {
+            $.ajax({
+                url: layerApiUrl + "(" + self.id() + ")",
+                type: "PUT",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(record),
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                $('#LayerGrid').data('kendoGrid').dataSource.read();
+                $('#LayerGrid').data('kendoGrid').refresh();
+
+                switchSection($("#layers-grid-section"));
+
+                $.notify(translations.UpdateRecordSuccess, "success");
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(translations.UpdateRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
+            });
+        }
+    };
+
+    self.cancel = function () {
+        switchSection($("#layers-grid-section"));
+    };
+
+    self.validator = $("#layers-form-section-form").validate({
+        rules: {
+            Layer_SlideId: { required: true },
+            Layer_CaptionText: { maxlength: 255 },
+            Layer_X: { required: true },
+            Layer_Y: { required: true },
+            Layer_Speed: { required: true },
+            Layer_Start: { required: true },
+            Layer_StyleClass: { maxlength: 50 },
+            Layer_SplitIn: { required: true },
+            Layer_SplitOut: { required: true },
+            Layer_VideoPoster: { maxlength: 255 },
+            Layer_VideoWidthUnit: { required: true },
+            Layer_VideoHeightUnit: { required: true },
+            Layer_VideoPreload: { required: true },
+            Layer_VideoMp4: { maxlength: 255 },
+            Layer_VideoWebM: { maxlength: 255 },
+            Layer_VideoOgv: { maxlength: 255 },
+            Layer_YouTubeId: { maxlength: 255 },
+            Layer_VimeoId: { maxlength: 255 },
+            Layer_VideoAttributes: { maxlength: 128 },
+            Layer_VideoLoop: { required: true },
+        }
+    });
+};
+
 var ViewModel = function () {
     var self = this;
     self.slider = new SliderModel();
     self.slide = new SlideModel();
+    self.layer = new LayerModel();
 
     self.selectedSliderId = ko.observable(0);
+    self.selectedSlideId = ko.observable(0);
 
     self.showSlides = function (id) {
         self.selectedSliderId(id);
@@ -364,6 +675,15 @@ var ViewModel = function () {
         grid.dataSource.page(1);
 
         switchSection($("#slides-grid-section"));
+    };
+
+    self.showLayers = function (id) {
+        self.selectedSlideId(id);
+        var grid = $('#LayerGrid').data('kendoGrid');
+        grid.dataSource.transport.options.read.url = slideApiUrl + "?$filter=SlideId eq " + id;
+        grid.dataSource.page(1);
+
+        switchSection($("#layer-grid-section"));
     };
 };
 
@@ -487,10 +807,86 @@ $(document).ready(function () {
                 '<div class="btn-group">' +
                 '<a onclick="viewModel.slide.edit(#=Id#)" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
                 '<a onclick="viewModel.slide.delete(#=Id#)" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
+                '<a onclick="viewModel.showLayers(#=Id#)" class="btn btn-info btn-xs">' + translations.Layers + '</a>' +
                 '</div>',
             attributes: { "class": "text-center" },
             filterable: false,
             width: 130
+        }]
+    });
+
+    $("#LayerGrid").kendoGrid({
+        data: null,
+        dataSource: {
+            type: "odata",
+            transport: {
+                read: {
+                    url: layerApiUrl,
+                    dataType: "json"
+                }
+            },
+            schema: {
+                data: function (data) {
+                    return data.value;
+                },
+                total: function (data) {
+                    return data["odata.count"];
+                },
+                model: {
+                    fields: {
+                        Start: { type: "number" },
+                        CaptionText: { type: "string" },
+                        Speed: { type: "number" },
+                        X: { type: "number" },
+                        Y: { type: "number" },
+                    }
+                }
+            },
+            pageSize: gridPageSize,
+            serverPaging: true,
+            serverFiltering: true,
+            serverSorting: true,
+            sort: { field: "Start", dir: "asc" }
+        },
+        filterable: true,
+        sortable: {
+            allowUnsort: false
+        },
+        pageable: {
+            refresh: true
+        },
+        scrollable: false,
+        columns: [{
+            field: "Start",
+            title: translations.Columns.Layer.Start,
+            filterable: true
+        }, {
+            field: "Speed",
+            title: translations.Columns.Layer.Speed,
+            filterable: true
+        }, {
+            field: "CaptionText",
+            title: translations.Columns.Layer.CaptionText,
+            filterable: true
+        }, {
+            field: "X",
+            title: translations.Columns.Layer.X,
+            filterable: true
+        }, {
+            field: "Y",
+            title: translations.Columns.Layer.Y,
+            filterable: true
+        }, {
+            field: "Id",
+            title: " ",
+            template:
+                '<div class="btn-group">' +
+                '<a onclick="viewModel.layer.edit(#=Id#)" class="btn btn-default btn-xs">' + translations.Edit + '</a>' +
+                '<a onclick="viewModel.layer.delete(#=Id#)" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
+                '</div>',
+            attributes: { "class": "text-center" },
+            filterable: false,
+            width: 180
         }]
     });
 });

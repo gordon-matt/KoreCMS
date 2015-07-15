@@ -133,9 +133,10 @@
     <Compile Include="Controllers\Api\RevolutionSlideApiController.cs" />
     <Compile Include="Controllers\Api\RevolutionSliderApiController.cs" />
     <Compile Include="Controllers\SliderController.cs" />
+    <Compile Include="Data\Domain\RevolutionLayer.cs" />
     <Compile Include="Data\Domain\Enums.cs" />
-    <Compile Include="Data\Domain\Slide.cs" />
-    <Compile Include="Data\Domain\Slider.cs" />
+    <Compile Include="Data\Domain\RevolutionSlide.cs" />
+    <Compile Include="Data\Domain\RevolutionSlider.cs" />
     <Compile Include="Extensions\ScriptRegisterExtensions.cs" />
     <Compile Include="Extensions\StyleRegisterExtensions.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />

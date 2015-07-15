@@ -12,8 +12,8 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Infrastructure
         public void Register(HttpConfiguration config)
         {
             ODataModelBuilder builder = new ODataConventionModelBuilder();
-            builder.EntitySet<Slider>("RevolutionSliderApi");
-            builder.EntitySet<Slide>("RevolutionSlideApi");
+            builder.EntitySet<RevolutionSlider>("RevolutionSliderApi");
+            builder.EntitySet<RevolutionSlide>("RevolutionSlideApi");
 
             config.Routes.MapODataRoute("OData_Kore_RevolutionSlider", "odata/kore/revolution-slider", builder.GetEdmModel());
         }

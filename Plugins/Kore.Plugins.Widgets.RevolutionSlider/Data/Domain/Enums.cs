@@ -1,5 +1,7 @@
 ﻿namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
 {
+    #region Slides
+
     public enum Transition : byte
     {
         SlideUp = 0,
@@ -101,4 +103,81 @@
         easeOutBounce = 28,
         easeInOutBounce = 29,
     }
+
+    #endregion Slides
+
+    #region Layers
+
+    public enum IncomingAnimation : byte
+    {
+        ShortFromTop = 0,
+        ShortFromBottom = 1,
+        ShortFromRight = 2,
+        ShortFromLeft = 3,
+        LongFromTop = 4,
+        LongFromBottom = 5,
+        LongFromRight = 6,
+        LongFromLeft = 7,
+        SkewFromLeft = 8,
+        SkewFromRight = 9,
+        SkewFromLeftShort = 10,
+        SkewFromRightShort = 11,
+        Fade = 12,
+        RandomRotate = 13
+    }
+
+    public enum OutgoingAnimation : byte
+    {
+        ShortToTop = 0,
+        ShortToBottom = 1,
+        ShortToRight = 2,
+        ShortToLeft = 3,
+        LongToTop = 4,
+        LongToBottom = 5,
+        LongToRight = 6,
+        LongToLeft = 7,
+        SkewToLeft = 8,
+        SkewToRight = 9,
+        SkewToLeftShort = 10,
+        SkewToRightShort = 11,
+        FadeOut = 12,
+        RandomRotateOut = 13
+    }
+
+    public enum CaptionSplitType : byte
+    {
+        None = 0,
+        Words = 1,
+        Chars = 2,
+        Lines = 3,
+    }
+
+    public enum AspectRatio : byte
+    {
+        _16x9 = 0,
+        _4x3 = 1
+    }
+
+    public enum VideoPreloadOption : byte
+    {
+        None = 0,
+        Meta = 1,
+        Auto = 2
+    }
+
+    public enum VideoType : byte
+    {
+        Html5 = 0,
+        YouTube = 1,
+        Vimeo = 2
+    }
+
+    public enum VideoLoop : byte
+    {
+        None = 0,
+        Loop = 1,
+        LoopAndNoSlideStop = 2
+    }
+
+    #endregion Layers
 }

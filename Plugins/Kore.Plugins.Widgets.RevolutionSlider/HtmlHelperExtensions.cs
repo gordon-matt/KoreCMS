@@ -47,7 +47,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider
 
         private static IEnumerable<SelectListItem> GetSliderSelectList(int? selectedValue = null, string emptyText = null)
         {
-            var repository = EngineContext.Current.Resolve<IRepository<Slider>>();
+            var repository = EngineContext.Current.Resolve<IRepository<RevolutionSlider>>();
 
             return repository.Table
                 .OrderBy(x => x.Name)

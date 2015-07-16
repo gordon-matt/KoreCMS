@@ -633,6 +633,10 @@ var LayerModel = function () {
         switchSection($("#layers-grid-section"));
     };
 
+    self.goBack = function () {
+        switchSection($("#slides-grid-section"));
+    };
+
     self.validator = $("#layers-form-section-form").validate({
         rules: {
             Layer_SlideId: { required: true },

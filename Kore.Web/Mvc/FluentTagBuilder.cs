@@ -94,6 +94,12 @@ namespace Kore.Web.Mvc
             return this;
         }
 
+        public FluentTagBuilder MergeAttribute(string key, object value)
+        {
+            tagBuilder.MergeAttribute(key, value.ToString());
+            return this;
+        }
+
         public FluentTagBuilder MergeAttribute(string key, string value, bool replaceExisting)
         {
             tagBuilder.MergeAttribute(key, value, replaceExisting);

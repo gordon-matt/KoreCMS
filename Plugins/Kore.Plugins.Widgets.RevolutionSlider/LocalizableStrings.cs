@@ -2,12 +2,63 @@
 {
     public static class LocalizableStrings
     {
+        public const string Layers = "Plugins.Widgets.RevolutionSlider/Layers";
         public const string RevolutionSlider = "Plugins.Widgets.RevolutionSlider/RevolutionSlider";
         public const string Sliders = "Plugins.Widgets.RevolutionSlider/Sliders";
         public const string Slides = "Plugins.Widgets.RevolutionSlider/Slides";
 
         public static class Models
         {
+            public static class Layer
+            {
+                public static class Tabs
+                {
+                    public const string General = "Plugins.Widgets.RevolutionSlider/Models.Layer.Tabs.General";
+                    public const string Video = "Plugins.Widgets.RevolutionSlider/Models.Layer.Tabs.Video";
+                }
+
+                public const string CaptionText = "Plugins.Widgets.RevolutionSlider/Models.Layer.CaptionText";
+                public const string Start = "Plugins.Widgets.RevolutionSlider/Models.Layer.Start";
+                public const string Speed = "Plugins.Widgets.RevolutionSlider/Models.Layer.Speed";
+                public const string X = "Plugins.Widgets.RevolutionSlider/Models.Layer.X";
+                public const string Y = "Plugins.Widgets.RevolutionSlider/Models.Layer.Y";
+                public const string StyleClass = "Plugins.Widgets.RevolutionSlider/Models.Layer.StyleClass";
+                public const string IncomingAnimation = "Plugins.Widgets.RevolutionSlider/Models.Layer.IncomingAnimation";
+                public const string OutgoingAnimation = "Plugins.Widgets.RevolutionSlider/Models.Layer.OutgoingAnimation";
+                public const string HorizontalOffset = "Plugins.Widgets.RevolutionSlider/Models.Layer.HorizontalOffset";
+                public const string VerticalOffset = "Plugins.Widgets.RevolutionSlider/Models.Layer.VerticalOffset";
+                public const string SplitIn = "Plugins.Widgets.RevolutionSlider/Models.Layer.SplitIn";
+                public const string ElementDelay = "Plugins.Widgets.RevolutionSlider/Models.Layer.ElementDelay";
+                public const string SplitOut = "Plugins.Widgets.RevolutionSlider/Models.Layer.SplitOut";
+                public const string EndElementDelay = "Plugins.Widgets.RevolutionSlider/Models.Layer.EndElementDelay";
+                public const string Easing = "Plugins.Widgets.RevolutionSlider/Models.Layer.Easing";
+                public const string EndSpeed = "Plugins.Widgets.RevolutionSlider/Models.Layer.EndSpeed";
+                public const string End = "Plugins.Widgets.RevolutionSlider/Models.Layer.End";
+                public const string EndEasing = "Plugins.Widgets.RevolutionSlider/Models.Layer.EndEasing";
+                public const string AutoPlay = "Plugins.Widgets.RevolutionSlider/Models.Layer.AutoPlay";
+                public const string AutoPlayOnlyFirstTime = "Plugins.Widgets.RevolutionSlider/Models.Layer.AutoPlayOnlyFirstTime";
+                public const string NextSlideAtEnd = "Plugins.Widgets.RevolutionSlider/Models.Layer.NextSlideAtEnd";
+                public const string VideoPoster = "Plugins.Widgets.RevolutionSlider/Models.Layer.VideoPoster";
+                public const string ForceCover = "Plugins.Widgets.RevolutionSlider/Models.Layer.ForceCover";
+                public const string ForceRewind = "Plugins.Widgets.RevolutionSlider/Models.Layer.ForceRewind";
+                public const string Mute = "Plugins.Widgets.RevolutionSlider/Models.Layer.Mute";
+                public const string VideoWidth = "Plugins.Widgets.RevolutionSlider/Models.Layer.VideoWidth";
+                public const string VideoWidthUnit = "Plugins.Widgets.RevolutionSlider/Models.Layer.VideoWidthUnit";
+                public const string VideoHeight = "Plugins.Widgets.RevolutionSlider/Models.Layer.VideoHeight";
+                public const string VideoHeightUnit = "Plugins.Widgets.RevolutionSlider/Models.Layer.VideoHeightUnit";
+                public const string AspectRatio = "Plugins.Widgets.RevolutionSlider/Models.Layer.AspectRatio";
+                public const string VideoPreload = "Plugins.Widgets.RevolutionSlider/Models.Layer.VideoPreload";
+                public const string VideoType = "Plugins.Widgets.RevolutionSlider/Models.Layer.VideoType";
+                public const string VideoMp4 = "Plugins.Widgets.RevolutionSlider/Models.Layer.VideoMp4";
+                public const string VideoWebM = "Plugins.Widgets.RevolutionSlider/Models.Layer.VideoWebM";
+                public const string VideoOgv = "Plugins.Widgets.RevolutionSlider/Models.Layer.VideoOgv";
+                public const string YouTubeId = "Plugins.Widgets.RevolutionSlider/Models.Layer.YouTubeId";
+                public const string VimeoId = "Plugins.Widgets.RevolutionSlider/Models.Layer.VimeoId";
+                public const string ShowVideoControls = "Plugins.Widgets.RevolutionSlider/Models.Layer.ShowVideoControls";
+                public const string VideoAttributes = "Plugins.Widgets.RevolutionSlider/Models.Layer.VideoAttributes";
+                public const string VideoLoop = "Plugins.Widgets.RevolutionSlider/Models.Layer.VideoLoop";
+            }
+
             public static class Slider
             {
                 public const string Name = "Plugins.Widgets.RevolutionSlider/Models.Slider.Name";

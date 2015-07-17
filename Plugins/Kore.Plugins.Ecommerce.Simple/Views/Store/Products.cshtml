@@ -42,11 +42,20 @@
                             imageUrl,
                             entry.Name,
                             Url.Action("Product", "Store", new { area = string.Empty, categorySlug = categorySlug, productSlug = entry.Slug }))
+                        
                         <div class="caption">
-                            <h3>@Html.ActionLink(entry.Name, "Product", "Store", new { area = string.Empty, categorySlug = categorySlug, productSlug = entry.Slug }, null)</h3>
+                            @if (entry.UseExternalLink)
+                            {
+                                <h3>@Html.Link(entry.Name, entry.ExternalLink, PageTarget.Blank)</h3>
+                            }
+                            else
+                            {
+                                <h3>@Html.ActionLink(entry.Name, "Product", "Store", new { area = string.Empty, categorySlug = categorySlug, productSlug = entry.Slug }, null)</h3>
+                            }
                             <p>@settings.Currency @entry.Price.ToString("N2")</p>
                             <p>@entry.ShortDescription.Left(128)</p>
-                            @if (!settings.CatalogMode)
+
+                            @if (!settings.CatalogMode && !entry.UseExternalLink)
                             {
                                 <a href="javascript:void(0);" onclick="addToCart(@entry.Id)" class="btn btn-primary">
                                     @T(LocalizableStrings.AddToCart)

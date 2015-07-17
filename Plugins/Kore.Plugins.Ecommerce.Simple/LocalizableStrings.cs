@@ -50,12 +50,14 @@
         public static class CategoryModel
         {
             public const string Description = "Plugins.Ecommerce.Simple/CategoryModel.Description";
+            public const string ExternalLink = "Plugins.Ecommerce.Simple/CategoryModel.ExternalLink";
             public const string ImageUrl = "Plugins.Ecommerce.Simple/CategoryModel.ImageUrl";
             public const string MetaDescription = "Plugins.Ecommerce.Simple/CategoryModel.MetaDescription";
             public const string MetaKeywords = "Plugins.Ecommerce.Simple/CategoryModel.MetaKeywords";
             public const string Name = "Plugins.Ecommerce.Simple/CategoryModel.Name";
             public const string Order = "Plugins.Ecommerce.Simple/CategoryModel.Order";
             public const string Slug = "Plugins.Ecommerce.Simple/CategoryModel.Slug";
+            public const string UseExternalLink = "Plugins.Ecommerce.Simple/CategoryModel.UseExternalLink";
         }
 
         public static class CheckoutCompleted

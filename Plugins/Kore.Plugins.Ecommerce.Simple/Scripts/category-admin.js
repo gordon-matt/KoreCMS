@@ -30,6 +30,8 @@ var ProductModel = function () {
     self.fullDescription = ko.observable(null);
     self.metaKeywords = ko.observable(null);
     self.metaDescription = ko.observable(null);
+    self.useExternalLink = ko.observable(false);
+    self.externalLink = ko.observable(null);
 
     self.images = ko.observableArray([]);
 
@@ -50,6 +52,8 @@ var ProductModel = function () {
         self.fullDescription('');
         self.metaKeywords(null);
         self.metaDescription(null);
+        self.useExternalLink(false);
+        self.externalLink(null);
 
         self.validator.resetForm();
         switchSection($("#product-form-section"));
@@ -77,6 +81,8 @@ var ProductModel = function () {
             self.fullDescription(json.FullDescription);
             self.metaKeywords(json.MetaKeywords);
             self.metaDescription(json.MetaDescription);
+            self.useExternalLink(json.UseExternalLink);
+            self.externalLink(json.ExternalLink);
 
             self.validator.resetForm();
             switchSection($("#product-form-section"));
@@ -126,7 +132,9 @@ var ProductModel = function () {
             ShortDescription: self.shortDescription(),
             FullDescription: self.fullDescription(),
             MetaKeywords: self.metaKeywords(),
-            MetaDescription: self.metaDescription()
+            MetaDescription: self.metaDescription(),
+            UseExternalLink: self.useExternalLink(),
+            ExternalLink: self.externalLink()
         };
 
         if (self.id() == 0) {
@@ -193,7 +201,8 @@ var ProductModel = function () {
             ShortDescription: { required: true },
             FullDescription: { required: true },
             MetaKeywords: { maxlength: 255 },
-            MetaDescription: { maxlength: 255 }
+            MetaDescription: { maxlength: 255 },
+            ExternalLink: { maxlength: 255 }
         }
     });
 };

@@ -5,21 +5,19 @@ using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 {
-    public class OrderLine : IEntity
+    public class SimpleCommerceProductImage : IEntity
     {
         public int Id { get; set; }
 
-        public int OrderId { get; set; }
-
         public int ProductId { get; set; }
 
-        public float UnitPrice { get; set; }
+        public string Url { get; set; }
 
-        public short Quantity { get; set; }
+        public string ThumbnailUrl { get; set; }
 
-        public virtual Order Order { get; set; }
+        public string Caption { get; set; }
 
-        public virtual Product Product { get; set; }
+        public int Order { get; set; }
 
         #region IEntity Members
 
@@ -31,18 +29,17 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
         #endregion IEntity Members
     }
 
-    public class OrderLineMap : EntityTypeConfiguration<OrderLine>, IEntityTypeConfiguration
+    public class ProductImageMap : EntityTypeConfiguration<SimpleCommerceProductImage>, IEntityTypeConfiguration
     {
-        public OrderLineMap()
+        public ProductImageMap()
         {
-            ToTable(Constants.Tables.OrderLines);
+            ToTable(Constants.Tables.ProductImages);
             HasKey(x => x.Id);
-            Property(x => x.OrderId).IsRequired();
             Property(x => x.ProductId).IsRequired();
-            Property(x => x.UnitPrice).IsRequired();
-            Property(x => x.Quantity).IsRequired();
-            HasRequired(x => x.Order).WithMany(x => x.Lines).HasForeignKey(x => x.OrderId);
-            HasRequired(x => x.Product).WithMany().HasForeignKey(x => x.ProductId);
+            Property(x => x.Url).IsRequired().HasMaxLength(255);
+            Property(x => x.ThumbnailUrl).IsRequired().HasMaxLength(255);
+            Property(x => x.Caption).HasMaxLength(255);
+            Property(x => x.Order).IsRequired();
         }
 
         #region IEntityTypeConfiguration Members

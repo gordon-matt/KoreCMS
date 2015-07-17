@@ -159,7 +159,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                     sb.AppendLine("payment_fee: " + paymentFee);
 
                     //order note
-                    order.Notes.Add(new OrderNote()
+                    order.Notes.Add(new SimpleCommerceOrderNote()
                     {
                         Text = sb.ToString(),
                         DisplayToCustomer = false,
@@ -188,7 +188,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                         order.DatePaidUtc = DateTime.UtcNow;
 
                         //add a note
-                        order.Notes.Add(new OrderNote()
+                        order.Notes.Add(new SimpleCommerceOrderNote()
                         {
                             Text = "Order has been marked as paid",
                             DisplayToCustomer = false,
@@ -209,7 +209,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             else if (order != null)
             {
                 //order note
-                order.Notes.Add(new OrderNote()
+                order.Notes.Add(new SimpleCommerceOrderNote()
                 {
                     Text = "PayPal PDT failed. " + response,
                     DisplayToCustomer = false,
@@ -327,7 +327,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                             if (order != null)
                             {
                                 //order note
-                                order.Notes.Add(new OrderNote()
+                                order.Notes.Add(new SimpleCommerceOrderNote()
                                 {
                                     Text = sb.ToString(),
                                     DisplayToCustomer = false,
@@ -344,7 +344,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                                                 order.PaymentStatus = PaymentStatus.Authorized;
 
                                                 //add a note
-                                                order.Notes.Add(new OrderNote()
+                                                order.Notes.Add(new SimpleCommerceOrderNote()
                                                 {
                                                     Text = "Order has been marked as authorized",
                                                     DisplayToCustomer = false,
@@ -364,7 +364,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                                                 order.DatePaidUtc = DateTime.UtcNow;
 
                                                 //add a note
-                                                order.Notes.Add(new OrderNote()
+                                                order.Notes.Add(new SimpleCommerceOrderNote()
                                                 {
                                                     Text = "Order has been marked as paid",
                                                     DisplayToCustomer = false,
@@ -475,7 +475,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return result;
         }
 
-        private bool CanMarkOrderAsAuthorized(Order order)
+        private bool CanMarkOrderAsAuthorized(SimpleCommerceOrder order)
         {
             if (order.Status == OrderStatus.Cancelled)
             {
@@ -490,7 +490,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return false;
         }
 
-        private bool CanMarkOrderAsPaid(Order order)
+        private bool CanMarkOrderAsPaid(SimpleCommerceOrder order)
         {
             if (order.Status == OrderStatus.Cancelled)
             {

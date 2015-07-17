@@ -9,11 +9,11 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Plugins.Ecommerce.Simple.Controllers.Api
 {
-    public class CategoryTreeApiController : ODataController
+    public class SimpleCommerceCategoryTreeApiController : ODataController
     {
-        private readonly IRepository<Category> categoryRepository;
+        private readonly IRepository<SimpleCommerceCategory> categoryRepository;
 
-        public CategoryTreeApiController(IRepository<Category> categoryRepository)
+        public SimpleCommerceCategoryTreeApiController(IRepository<SimpleCommerceCategory> categoryRepository)
         {
             this.categoryRepository = categoryRepository;
         }
@@ -43,7 +43,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers.Api
             return hierarchy.ToHashSet();
         }
 
-        private static IEnumerable<CategoryTreeItem> GetSubPages(IEnumerable<Category> pages, int parentId)
+        private static IEnumerable<CategoryTreeItem> GetSubPages(IEnumerable<SimpleCommerceCategory> pages, int parentId)
         {
             return pages
                 .Where(x => x.ParentId == parentId)

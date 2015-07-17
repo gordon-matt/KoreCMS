@@ -6,31 +6,30 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Plugins.Ecommerce.Simple.Controllers.Api
 {
-    //[Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class CategoryApiController : GenericODataController<Category, int>
+    public class SimpleCommerceProductImageApiController : GenericODataController<SimpleCommerceProductImage, int>
     {
-        public CategoryApiController(ICategoryService service)
+        public SimpleCommerceProductImageApiController(IProductImageService service)
             : base(service)
         {
         }
 
-        protected override int GetId(Category entity)
+        protected override int GetId(SimpleCommerceProductImage entity)
         {
             return entity.Id;
         }
 
-        protected override void SetNewId(Category entity)
+        protected override void SetNewId(SimpleCommerceProductImage entity)
         {
         }
 
         protected override Permission ReadPermission
         {
-            get { return SimpleCommercePermissions.ReadCategories; }
+            get { return SimpleCommercePermissions.ReadProducts; }
         }
 
         protected override Permission WritePermission
         {
-            get { return SimpleCommercePermissions.WriteCategories; }
+            get { return SimpleCommercePermissions.WriteProducts; }
         }
     }
 }

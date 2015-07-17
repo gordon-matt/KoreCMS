@@ -6,7 +6,7 @@ using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 {
-    public class OrderNote : IEntity
+    public class SimpleCommerceOrderNote : IEntity
     {
         public int Id { get; set; }
 
@@ -18,7 +18,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 
         public DateTime DateCreatedUtc { get; set; }
 
-        public virtual Order Order { get; set; }
+        public virtual SimpleCommerceOrder Order { get; set; }
 
         #region IEntity Members
 
@@ -30,7 +30,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
         #endregion IEntity Members
     }
 
-    public class OrderNoteMap : EntityTypeConfiguration<OrderNote>, IEntityTypeConfiguration
+    public class OrderNoteMap : EntityTypeConfiguration<SimpleCommerceOrderNote>, IEntityTypeConfiguration
     {
         public OrderNoteMap()
         {

@@ -7,10 +7,10 @@ using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 {
-    public class Order : IEntity
+    public class SimpleCommerceOrder : IEntity
     {
-        private ICollection<OrderLine> lines;
-        private ICollection<OrderNote> notes;
+        private ICollection<SimpleCommerceOrderLine> lines;
+        private ICollection<SimpleCommerceOrderNote> notes;
 
         public int Id { get; set; }
 
@@ -38,19 +38,19 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 
         public DateTime? DatePaidUtc { get; set; }
 
-        public virtual Address BillingAddress { get; set; }
+        public virtual SimpleCommerceAddress BillingAddress { get; set; }
 
-        public virtual Address ShippingAddress { get; set; }
+        public virtual SimpleCommerceAddress ShippingAddress { get; set; }
 
-        public virtual ICollection<OrderLine> Lines
+        public virtual ICollection<SimpleCommerceOrderLine> Lines
         {
-            get { return lines ?? (lines = new List<OrderLine>()); }
+            get { return lines ?? (lines = new List<SimpleCommerceOrderLine>()); }
             set { lines = value; }
         }
 
-        public virtual ICollection<OrderNote> Notes
+        public virtual ICollection<SimpleCommerceOrderNote> Notes
         {
-            get { return notes ?? (notes = new List<OrderNote>()); }
+            get { return notes ?? (notes = new List<SimpleCommerceOrderNote>()); }
             set { notes = value; }
         }
 
@@ -64,7 +64,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
         #endregion IEntity Members
     }
 
-    public class OrderMap : EntityTypeConfiguration<Order>, IEntityTypeConfiguration
+    public class OrderMap : EntityTypeConfiguration<SimpleCommerceOrder>, IEntityTypeConfiguration
     {
         public OrderMap()
         {

@@ -5,19 +5,19 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Plugins.Ecommerce.Simple.Controllers.Api
 {
-    public class OrderLineApiController : GenericODataController<OrderLine, int>
+    public class SimpleCommerceOrderLineApiController : GenericODataController<SimpleCommerceOrderLine, int>
     {
-        public OrderLineApiController(IOrderLineService service)
+        public SimpleCommerceOrderLineApiController(IOrderLineService service)
             : base(service)
         {
         }
 
-        protected override int GetId(OrderLine entity)
+        protected override int GetId(SimpleCommerceOrderLine entity)
         {
             return entity.Id;
         }
 
-        protected override void SetNewId(OrderLine entity)
+        protected override void SetNewId(SimpleCommerceOrderLine entity)
         {
         }
 

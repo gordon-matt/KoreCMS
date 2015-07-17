@@ -1,5 +1,9 @@
 ﻿'use strict'
 
+var categoryApiUrl = "/odata/kore/plugins/simple-commerce/SimpleCommerceCategoryApi";
+var categoryTreeApiUrl = "/odata/kore/plugins/simple-commerce/SimpleCommerceCategoryTreeApi";
+var productApiUrl = "/odata/kore/plugins/simple-commerce/SimpleCommerceProductApi";
+
 var ProductImageModel = function () {
     var self = this;
 
@@ -55,7 +59,7 @@ var ProductModel = function () {
 
     self.edit = function (id) {
         $.ajax({
-            url: "/odata/kore/plugins/simple-commerce/ProductApi(" + id + ")",
+            url: productApiUrl + "(" + id + ")",
             type: "GET",
             dataType: "json",
             async: false
@@ -88,7 +92,7 @@ var ProductModel = function () {
     self.delete = function (id) {
         if (confirm(translations.DeleteRecordConfirm)) {
             $.ajax({
-                url: "/odata/kore/plugins/simple-commerce/ProductApi(" + id + ")",
+                url: productApiUrl + "(" + id + ")",
                 type: "DELETE",
                 async: false
             })
@@ -128,7 +132,7 @@ var ProductModel = function () {
         if (self.id() == 0) {
             // INSERT
             $.ajax({
-                url: "/odata/kore/plugins/simple-commerce/ProductApi",
+                url: productApiUrl,
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -151,7 +155,7 @@ var ProductModel = function () {
         else {
             // UPDATE
             $.ajax({
-                url: "/odata/kore/plugins/simple-commerce/ProductApi(" + self.id() + ")",
+                url: productApiUrl + "(" + self.id() + ")",
                 type: "PUT",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -231,7 +235,7 @@ var ViewModel = function () {
 
     self.edit = function (id) {
         $.ajax({
-            url: "/odata/kore/plugins/simple-commerce/CategoryApi(" + id + ")",
+            url: categoryApiUrl + "(" + id + ")",
             type: "GET",
             dataType: "json",
             async: false
@@ -262,7 +266,7 @@ var ViewModel = function () {
     self.delete = function (id) {
         if (confirm(translations.DeleteRecordConfirm)) {
             $.ajax({
-                url: "/odata/kore/plugins/simple-commerce/CategoryApi(" + id + ")",
+                url: categoryApiUrl + "(" + id + ")",
                 type: "DELETE",
                 async: false
             })
@@ -298,7 +302,7 @@ var ViewModel = function () {
         if (self.id() == 0) {
             // INSERT
             $.ajax({
-                url: "/odata/kore/plugins/simple-commerce/CategoryApi",
+                url: categoryApiUrl,
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -317,7 +321,7 @@ var ViewModel = function () {
         else {
             // UPDATE
             $.ajax({
-                url: "/odata/kore/plugins/simple-commerce/CategoryApi(" + self.id() + ")",
+                url: categoryApiUrl + "(" + self.id() + ")",
                 type: "PUT",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -388,7 +392,7 @@ $(document).ready(function () {
         type: "odata",
         transport: {
             read: {
-                url: "/odata/kore/plugins/simple-commerce/CategoryTreeApi?$expand=SubCategories/SubCategories",
+                url: categoryTreeApiUrl + "?$expand=SubCategories/SubCategories",
                 dataType: "json"
             }
         },
@@ -440,7 +444,7 @@ $(document).ready(function () {
             }
             else {
                 $.ajax({
-                    url: "/odata/kore/plugins/simple-commerce/CategoryApi(" + destinationId + ")",
+                    url: categoryApiUrl + "(" + destinationId + ")",
                     type: "GET",
                     dataType: "json",
                     async: false
@@ -478,7 +482,7 @@ $(document).ready(function () {
             };
 
             $.ajax({
-                url: "/odata/kore/plugins/simple-commerce/CategoryApi(" + sourceId + ")",
+                url: categoryApiUrl + "(" + sourceId + ")",
                 type: "PATCH",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(patch),
@@ -502,7 +506,7 @@ $(document).ready(function () {
             transport: {
                 read: {
                     url: function () {
-                        return "/odata/kore/plugins/simple-commerce/ProductApi?$filter=CategoryId eq " + viewModel.id()
+                        return productApiUrl + "?$filter=CategoryId eq " + viewModel.id()
                     },
                     dataType: "json"
                 }

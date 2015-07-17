@@ -1,5 +1,7 @@
 ﻿'use strict'
 
+var orderApiUrl = "/odata/kore/plugins/simple-commerce/SimpleCommerceOrderApi";
+
 function viewDetails(id) {
 }
 
@@ -10,7 +12,7 @@ $(document).ready(function () {
             type: "odata",
             transport: {
                 read: {
-                    url: "/odata/kore/plugins/simple-commerce/OrderApi",
+                    url: orderApiUrl,
                     dataType: "json"
                 }
             },

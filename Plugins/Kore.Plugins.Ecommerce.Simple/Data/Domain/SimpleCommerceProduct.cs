@@ -5,7 +5,7 @@ using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 {
-    public class Product : IEntity
+    public class SimpleCommerceProduct : IEntity
     {
         public int Id { get; set; }
 
@@ -31,7 +31,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 
         public string MetaDescription { get; set; }
 
-        public virtual Category Category { get; set; }
+        public virtual SimpleCommerceCategory Category { get; set; }
 
         #region IEntity Members
 
@@ -43,7 +43,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
         #endregion IEntity Members
     }
 
-    public class ProductMap : EntityTypeConfiguration<Product>, IEntityTypeConfiguration
+    public class ProductMap : EntityTypeConfiguration<SimpleCommerceProduct>, IEntityTypeConfiguration
     {
         public ProductMap()
         {

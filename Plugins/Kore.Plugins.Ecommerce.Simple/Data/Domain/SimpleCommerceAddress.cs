@@ -6,7 +6,7 @@ using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 {
-    public class Address : IEntity
+    public class SimpleCommerceAddress : IEntity
     {
         public int Id { get; set; }
 
@@ -46,7 +46,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
         #endregion IEntity Members
     }
 
-    public class AddressMap : EntityTypeConfiguration<Address>, IEntityTypeConfiguration
+    public class AddressMap : EntityTypeConfiguration<SimpleCommerceAddress>, IEntityTypeConfiguration
     {
         public AddressMap()
         {

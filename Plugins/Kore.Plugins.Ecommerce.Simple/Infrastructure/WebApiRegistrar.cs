@@ -14,15 +14,15 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
         {
             ODataModelBuilder builder = new ODataConventionModelBuilder();
             //builder.EntitySet<ShoppingCartItem>("CartApi");
-            builder.EntitySet<Address>("AddressApi");
-            builder.EntitySet<Category>("CategoryApi");
-            builder.EntitySet<Order>("OrderApi");
-            builder.EntitySet<OrderLine>("OrderLineApi");
-            builder.EntitySet<OrderNote>("OrderNoteApi");
-            builder.EntitySet<Product>("ProductApi");
+            builder.EntitySet<SimpleCommerceAddress>("SimpleCommerceAddressApi");
+            builder.EntitySet<SimpleCommerceCategory>("SimpleCommerceCategoryApi");
+            builder.EntitySet<SimpleCommerceOrder>("SimpleCommerceOrderApi");
+            builder.EntitySet<SimpleCommerceOrderLine>("SimpleCommerceOrderLineApi");
+            builder.EntitySet<SimpleCommerceOrderNote>("SimpleCommerceOrderNoteApi");
+            builder.EntitySet<SimpleCommerceProduct>("SimpleCommerceProductApi");
 
             // Special
-            builder.EntitySet<CategoryTreeItem>("CategoryTreeApi");
+            builder.EntitySet<CategoryTreeItem>("SimpleCommerceCategoryTreeApi");
 
             config.Routes.MapODataRoute("OData_Kore_Plugin_SimpleCommerce", "odata/kore/plugins/simple-commerce", builder.GetEdmModel());
         }

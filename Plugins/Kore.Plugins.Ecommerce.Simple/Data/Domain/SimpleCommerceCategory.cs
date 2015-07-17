@@ -6,10 +6,10 @@ using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 {
-    public class Category : IEntity
+    public class SimpleCommerceCategory : IEntity
     {
-        private ICollection<Product> products;
-        private ICollection<Category> subCategories;
+        private ICollection<SimpleCommerceProduct> products;
+        private ICollection<SimpleCommerceCategory> subCategories;
 
         public int Id { get; set; }
 
@@ -29,17 +29,17 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
 
         public string MetaDescription { get; set; }
 
-        public virtual Category Parent { get; set; }
+        public virtual SimpleCommerceCategory Parent { get; set; }
 
-        public virtual ICollection<Product> Products
+        public virtual ICollection<SimpleCommerceProduct> Products
         {
-            get { return products ?? (products = new List<Product>()); }
+            get { return products ?? (products = new List<SimpleCommerceProduct>()); }
             set { products = value; }
         }
 
-        public virtual ICollection<Category> SubCategories
+        public virtual ICollection<SimpleCommerceCategory> SubCategories
         {
-            get { return subCategories ?? (subCategories = new List<Category>()); }
+            get { return subCategories ?? (subCategories = new List<SimpleCommerceCategory>()); }
             set { subCategories = value; }
         }
 
@@ -53,7 +53,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Data.Domain
         #endregion IEntity Members
     }
 
-    public class CategoryMap : EntityTypeConfiguration<Category>, IEntityTypeConfiguration
+    public class CategoryMap : EntityTypeConfiguration<SimpleCommerceCategory>, IEntityTypeConfiguration
     {
         public CategoryMap()
         {

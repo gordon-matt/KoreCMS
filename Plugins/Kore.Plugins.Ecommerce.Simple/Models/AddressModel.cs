@@ -59,7 +59,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Models
         //[StringLength(25)]
         public string PhoneNumber { get; set; }
 
-        public static implicit operator AddressModel(Address other)
+        public static implicit operator AddressModel(SimpleCommerceAddress other)
         {
             return new AddressModel
             {

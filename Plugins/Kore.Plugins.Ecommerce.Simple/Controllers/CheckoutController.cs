@@ -95,8 +95,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 RedirectToAction("Index");
             }
 
-            Address billingAddress;
-            Address shippingAddress;
+            SimpleCommerceAddress billingAddress;
+            SimpleCommerceAddress shippingAddress;
 
             #region Get Billing Address
 
@@ -113,7 +113,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             if (billingAddress == null)
             {
-                billingAddress = new Address
+                billingAddress = new SimpleCommerceAddress
                 {
                     FamilyName = model.BillingAddress.FamilyName,
                     GivenNames = model.BillingAddress.GivenNames,
@@ -168,7 +168,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
                 if (shippingAddress == null)
                 {
-                    shippingAddress = new Address
+                    shippingAddress = new SimpleCommerceAddress
                     {
                         FamilyName = model.ShippingAddress.FamilyName,
                         GivenNames = model.ShippingAddress.GivenNames,
@@ -235,7 +235,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             float taxtTotal = cart.Items.Sum(x => x.Tax * x.Quantity);
             float orderTotal = cart.Items.Sum(x => x.Price * x.Quantity) + shippingTotal + taxtTotal;
 
-            var order = new Order
+            var order = new SimpleCommerceOrder
             {
                 UserId = WorkContext.CurrentUser == null ? null : WorkContext.CurrentUser.Id,
                 PaymentStatus = PaymentStatus.Pending,
@@ -251,7 +251,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             foreach (var item in cart.Items)
             {
-                order.Lines.Add(new OrderLine
+                order.Lines.Add(new SimpleCommerceOrderLine
                 {
                     ProductId = item.ProductId,
                     Quantity = item.Quantity,

@@ -12,13 +12,13 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
 {
     public class AutoMenuProvider : IAutoMenuProvider
     {
-        private readonly Lazy<IRepository<Category>> categoryRepository;
-        private readonly Lazy<IRepository<Product>> productRepository;
+        private readonly Lazy<IRepository<SimpleCommerceCategory>> categoryRepository;
+        private readonly Lazy<IRepository<SimpleCommerceProduct>> productRepository;
         private readonly StoreSettings storeSettings;
 
         public AutoMenuProvider(
-            Lazy<IRepository<Category>> categoryRepository,
-            Lazy<IRepository<Product>> productRepository,
+            Lazy<IRepository<SimpleCommerceCategory>> categoryRepository,
+            Lazy<IRepository<SimpleCommerceProduct>> productRepository,
             StoreSettings storeSettings)
         {
             this.categoryRepository = categoryRepository;

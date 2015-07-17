@@ -66,7 +66,7 @@ namespace Kore.Plugins.Ecommerce.Simple
 
         private static IEnumerable<SelectListItem> GetCategoriesSelectList(string selectedValue = null, string emptyText = null)
         {
-            var repository = EngineContext.Current.Resolve<IRepository<Category>>();
+            var repository = EngineContext.Current.Resolve<IRepository<SimpleCommerceCategory>>();
 
             return repository.Table
                 .OrderBy(x => x.Name)

@@ -5,15 +5,15 @@ using Kore.Plugins.Ecommerce.Simple.Data.Domain;
 
 namespace Kore.Plugins.Ecommerce.Simple.Services
 {
-    public interface IProductImageService : IGenericDataService<ProductImage>
+    public interface IProductImageService : IGenericDataService<SimpleCommerceProductImage>
     {
     }
 
-    public class ProductImageService : GenericDataService<ProductImage>, IProductImageService
+    public class ProductImageService : GenericDataService<SimpleCommerceProductImage>, IProductImageService
     {
         public ProductImageService(
             ICacheManager cacheManager,
-            IRepository<ProductImage> repository)
+            IRepository<SimpleCommerceProductImage> repository)
             : base(cacheManager, repository)
         {
         }

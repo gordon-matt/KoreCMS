@@ -5,15 +5,15 @@ using Kore.Plugins.Ecommerce.Simple.Data.Domain;
 
 namespace Kore.Plugins.Ecommerce.Simple.Services
 {
-    public interface IOrderNoteService : IGenericDataService<OrderNote>
+    public interface IOrderNoteService : IGenericDataService<SimpleCommerceOrderNote>
     {
     }
 
-    public class OrderNoteService : GenericDataService<OrderNote>, IOrderNoteService
+    public class OrderNoteService : GenericDataService<SimpleCommerceOrderNote>, IOrderNoteService
     {
         public OrderNoteService(
             ICacheManager cacheManager,
-            IRepository<OrderNote> repository)
+            IRepository<SimpleCommerceOrderNote> repository)
             : base(cacheManager, repository)
         {
         }

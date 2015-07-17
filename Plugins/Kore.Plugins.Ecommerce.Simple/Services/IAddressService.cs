@@ -5,13 +5,13 @@ using Kore.Plugins.Ecommerce.Simple.Data.Domain;
 
 namespace Kore.Plugins.Ecommerce.Simple.Services
 {
-    public interface IAddressService : IGenericDataService<Address>
+    public interface IAddressService : IGenericDataService<SimpleCommerceAddress>
     {
     }
 
-    public class AddressService : GenericDataService<Address>, IAddressService
+    public class AddressService : GenericDataService<SimpleCommerceAddress>, IAddressService
     {
-        public AddressService(ICacheManager cacheManager, IRepository<Address> repository)
+        public AddressService(ICacheManager cacheManager, IRepository<SimpleCommerceAddress> repository)
             : base(cacheManager, repository)
         {
         }

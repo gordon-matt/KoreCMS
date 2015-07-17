@@ -265,20 +265,37 @@
                                                 @Html.TextArea("ShortDescription", null, new { @class = "form-control", data_bind = "value: product.shortDescription" })
                                             </div>
                                         </div>
+
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        @Html.CheckBox("UseExternalLink", new { data_bind = "checked: product.useExternalLink" }) @T(LocalizableStrings.CategoryModel.UseExternalLink)
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: product.useExternalLink() == true">
+                                            <div class="form-group">
+                                                @Html.Label("ExternalLink", T(LocalizableStrings.CategoryModel.ExternalLink), new { @class = "control-label" })
+                                                @Html.TextBox("ExternalLink", null, new { @class = "form-control", data_bind = "value: product.externalLink" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: product.useExternalLink() == false">
                                             <div class="form-group">
                                                 @Html.Label("FullDescription", T(LocalizableStrings.ProductModel.FullDescription), new { @class = "control-label" })
                                                 @Html.TextArea("FullDescription", null, new { @class = "form-control", data_bind = "wysiwyg: product.fullDescription, wysiwygConfig: product.tinyMCE_fullDescription" })
                                             </div>
                                         </div>
 
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: product.useExternalLink() == false">
                                             <div class="form-group">
                                                 @Html.Label("MetaKeywords", T(LocalizableStrings.ProductModel.MetaKeywords), new { @class = "control-label" })
                                                 @Html.TextBox("MetaKeywords", null, new { @class = "form-control", data_bind = "value: product.metaKeywords" })
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: product.useExternalLink() == false">
                                             <div class="form-group">
                                                 @Html.Label("MetaDescription", T(LocalizableStrings.ProductModel.MetaDescription), new { @class = "control-label" })
                                                 @Html.TextBox("MetaDescription", null, new { @class = "form-control", data_bind = "value: product.metaDescription" })

@@ -684,10 +684,10 @@ var ViewModel = function () {
     self.showLayers = function (id) {
         self.selectedSlideId(id);
         var grid = $('#LayerGrid').data('kendoGrid');
-        grid.dataSource.transport.options.read.url = slideApiUrl + "?$filter=SlideId eq " + id;
+        grid.dataSource.transport.options.read.url = layerApiUrl + "?$filter=SlideId eq " + id;
         grid.dataSource.page(1);
 
-        switchSection($("#layer-grid-section"));
+        switchSection($("#layers-grid-section"));
     };
 };
 
@@ -815,7 +815,7 @@ $(document).ready(function () {
                 '</div>',
             attributes: { "class": "text-center" },
             filterable: false,
-            width: 130
+            width: 180
         }]
     });
 

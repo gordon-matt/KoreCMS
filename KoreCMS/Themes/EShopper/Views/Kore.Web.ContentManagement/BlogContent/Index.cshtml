@@ -13,7 +13,7 @@
         Layout = SiteSettings.DefaultFrontendLayoutPath;
     }
 
-    Script.IncludeBundle("kore-cms/bootpag");
+    Script.IncludeBundle("third-party/bootpag");
 
     var settings = EngineContext.Current.Resolve<BlogSettings>();
     ViewBag.Title = settings.PageTitle;

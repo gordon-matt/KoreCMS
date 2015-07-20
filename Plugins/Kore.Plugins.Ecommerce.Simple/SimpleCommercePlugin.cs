@@ -69,6 +69,8 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_Categories_dbo.Kore_Plugins
 	[FullDescription] [nvarchar](max) NOT NULL,
 	[MetaKeywords] [nvarchar](255) NULL,
 	[MetaDescription] [nvarchar](255) NULL,
+    [UseExternalLink] bit NOT NULL,
+    [ExternalLink] nvarchar(255) NULL
 	CONSTRAINT [PK_dbo.Kore_Plugins_SimpleCommerce_Products] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC

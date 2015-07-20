@@ -537,13 +537,39 @@ var LayerModel = function () {
             return false;
         }
 
+        var aspectRatio = null;
+        var easing = null;
+        var endEasing = null;
+        var incomingAnimation = null;
+        var outgoingAnimation = null;
+        var videoType = null;
+
+        if (self.aspectRatio()) {
+            aspectRatio = self.aspectRatio();
+        }
+        if (self.easing()) {
+            easing = self.easing();
+        }
+        if (self.endEasing()) {
+            endEasing = self.endEasing();
+        }
+        if (self.incomingAnimation()) {
+            incomingAnimation = self.incomingAnimation();
+        }
+        if (self.outgoingAnimation()) {
+            outgoingAnimation = self.outgoingAnimation();
+        }
+        if (self.videoType()) {
+            videoType = self.videoType();
+        }
+
         var record = {
             Id: self.id(),
             SlideId: self.slideId(),
             CaptionText: self.captionText(),
             StyleClass: self.styleClass(),
-            IncomingAnimation: self.incomingAnimation(),
-            OutgoingAnimation: self.outgoingAnimation(),
+            IncomingAnimation: incomingAnimation,
+            OutgoingAnimation: outgoingAnimation,
             X: self.x(),
             Y: self.y(),
             HorizontalOffset: self.horizontalOffset(),
@@ -554,10 +580,10 @@ var LayerModel = function () {
             SplitOut: self.splitOut(),
             EndElementDelay: self.endElementDelay(),
             Start: self.start(),
-            Easing: self.easing(),
+            Easing: easing,
             EndSpeed: self.endSpeed(),
             End: self.end(),
-            EndEasing: self.endEasing(),
+            EndEasing: endEasing,
 
             AutoPlay: self.autoPlay(),
             AutoPlayOnlyFirstTime: self.autoPlayOnlyFirstTime(),
@@ -570,9 +596,9 @@ var LayerModel = function () {
             VideoWidthUnit: self.videoWidthUnit(),
             VideoHeight: self.videoHeight(),
             VideoHeightUnit: self.videoHeightUnit(),
-            AspectRatio: self.aspectRatio(),
+            AspectRatio: aspectRatio,
             VideoPreload: self.videoPreload(),
-            VideoType: self.videoType(),
+            VideoType: videoType,
             VideoMp4: self.videoMp4(),
             VideoWebM: self.videoWebM(),
             VideoOgv: self.videoOgv(),

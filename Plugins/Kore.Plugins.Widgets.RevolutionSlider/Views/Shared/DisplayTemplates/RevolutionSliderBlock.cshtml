@@ -35,16 +35,18 @@
         <ul>
             @foreach (RevolutionSlide slide in slides)
             {
-                var currentLayers = layers[slide.Id];
-                
                 @Html.Raw(slide.ToHtmlString()) @* <li> *@
                     @Html.Raw(slide.ImageToHtmlString()) @* <img> *@
-
-                    @if (!currentLayers.IsNullOrEmpty())
+                
+                    if (layers.ContainsKey(slide.Id))
                     {
-                        foreach (RevolutionLayer layer in currentLayers)
+                        var currentLayers = layers[slide.Id];
+                        if (!currentLayers.IsNullOrEmpty())
                         {
-                            @Html.Raw(layer.ToHtmlString())
+                            foreach (RevolutionLayer layer in currentLayers)
+                            {
+                                @Html.Raw(layer.ToHtmlString())
+                            }
                         }
                     }
                 @Html.Raw("</li>")

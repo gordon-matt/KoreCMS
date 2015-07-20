@@ -241,8 +241,8 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
             var tagBuilder = new FluentTagBuilder("div")
             .AddCssClass("caption")
             .AddCssClass(StyleClass)
-            .MergeAttribute("data-x", X)
-            .MergeAttribute("data-y", Y)
+            .MergeAttribute("data-x", X.ToString().ToLowerInvariant())
+            .MergeAttribute("data-y", Y.ToString().ToLowerInvariant())
             .MergeAttribute("data-speed", Speed)
             .MergeAttribute("data-start", Start);
 
@@ -338,6 +338,10 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
             // Video
             if (VideoType.HasValue)
             {
+                tagBuilder = tagBuilder
+                    .AddCssClass("tp-videolayer")
+                    .AddCssClass("tp-caption");
+
                 tagBuilder = tagBuilder
                     .MergeAttribute("data-autoplay", AutoPlay.ToString().ToLowerInvariant())
                     .MergeAttribute("data-autoplayonlyfirsttime", AutoPlayOnlyFirstTime.ToString().ToLowerInvariant())

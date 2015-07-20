@@ -120,8 +120,8 @@ CHECK CONSTRAINT [FK_Kore_Plugins_RevolutionSlider_Slides_Kore_Plugins_Revolutio
 	[VideoHeight] [smallint] NULL,
 	[VideoHeightUnit] [tinyint] NOT NULL,
 	[AspectRatio] [tinyint] NULL,
-	[VideoPreload] [bit] NOT NULL,
-	[VideoType] [bit] NULL,
+	[VideoPreload] [tinyint] NOT NULL,
+	[VideoType] [tinyint] NULL,
 	[VideoMp4] [nvarchar](255) NULL,
 	[VideoWebM] [nvarchar](255) NULL,
 	[VideoOgv] [nvarchar](255) NULL,
@@ -129,7 +129,7 @@ CHECK CONSTRAINT [FK_Kore_Plugins_RevolutionSlider_Slides_Kore_Plugins_Revolutio
 	[VimeoId] [nvarchar](50) NULL,
 	[ShowVideoControls] [bit] NOT NULL,
 	[VideoAttributes] [nvarchar](128) NULL,
-	[VideoLoop] [bit] NOT NULL,
+	[VideoLoop] [tinyint] NOT NULL,
 	CONSTRAINT [PK_Kore_Plugins_RevolutionSlider_Layers] PRIMARY KEY CLUSTERED
 	(
 		[Id] ASC

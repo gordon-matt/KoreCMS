@@ -216,7 +216,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
             {
                 tagBuilder = tagBuilder
                     .MergeAttribute("src", "http://placehold.it/350x150")
-                    .MergeAttribute("lazyload", ImageUrl);
+                    .MergeAttribute("data-lazyload", ImageUrl);
             }
             else
             {

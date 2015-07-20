@@ -81,20 +81,72 @@ CHECK CONSTRAINT [FK_Kore_Plugins_RevolutionSlider_Slides_Kore_Plugins_Revolutio
                 #endregion CREATE TABLE [dbo].[Kore_Plugins_RevolutionSlider_Slides]
             }
 
-            if (!CheckIfTableExists(dbContext, Constants.Tables.Slides))
+            if (!CheckIfTableExists(dbContext, Constants.Tables.Layers))
             {
-                #region CREATE TABLE [dbo].[Kore_Plugins_RevolutionSlider_Slides]
+                #region CREATE TABLE [dbo].[Kore_Plugins_RevolutionSlider_Layers]
 
                 dbContext.Database.ExecuteSqlCommand(
-@"");
+@"CREATE TABLE [dbo].[Kore_Plugins_RevolutionSlider_Layers]
+(
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[SlideId] [int] NOT NULL,
+	[CaptionText] [nvarchar](255) NULL,
+	[Start] [smallint] NOT NULL,
+	[Speed] [smallint] NOT NULL,
+	[X] [tinyint] NOT NULL,
+	[Y] [tinyint] NOT NULL,
+	[StyleClass] [nvarchar](50) NULL,
+	[IncomingAnimation] [tinyint] NULL,
+	[OutgoingAnimation] [tinyint] NULL,
+	[HorizontalOffset] [smallint] NULL,
+	[VerticalOffset] [smallint] NULL,
+	[SplitIn] [tinyint] NOT NULL,
+	[ElementDelay] [smallint] NULL,
+	[SplitOut] [tinyint] NOT NULL,
+	[EndElementDelay] [smallint] NULL,
+	[Easing] [tinyint] NULL,
+	[EndSpeed] [smallint] NULL,
+	[End] [smallint] NULL,
+	[EndEasing] [tinyint] NULL,
+	[AutoPlay] [bit] NOT NULL,
+	[AutoPlayOnlyFirstTime] [bit] NOT NULL,
+	[NextSlideAtEnd] [bit] NOT NULL,
+	[VideoPoster] [nvarchar](255) NULL,
+	[ForceCover] [bit] NOT NULL,
+	[ForceRewind] [bit] NOT NULL,
+	[Mute] [bit] NOT NULL,
+	[VideoWidth] [smallint] NULL,
+	[VideoWidthUnit] [tinyint] NOT NULL,
+	[VideoHeight] [smallint] NULL,
+	[VideoHeightUnit] [tinyint] NOT NULL,
+	[AspectRatio] [tinyint] NULL,
+	[VideoPreload] [bit] NOT NULL,
+	[VideoType] [bit] NULL,
+	[VideoMp4] [nvarchar](255) NULL,
+	[VideoWebM] [nvarchar](255) NULL,
+	[VideoOgv] [nvarchar](255) NULL,
+	[YouTubeId] [nvarchar](50) NULL,
+	[VimeoId] [nvarchar](50) NULL,
+	[ShowVideoControls] [bit] NOT NULL,
+	[VideoAttributes] [nvarchar](128) NULL,
+	[VideoLoop] [bit] NOT NULL,
+	CONSTRAINT [PK_Kore_Plugins_RevolutionSlider_Layers] PRIMARY KEY CLUSTERED
+	(
+		[Id] ASC
+	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]");
 
                 dbContext.Database.ExecuteSqlCommand(
-@"");
+@"ALTER TABLE [dbo].[Kore_Plugins_RevolutionSlider_Layers] WITH CHECK
+ADD CONSTRAINT [FK_Kore_Plugins_RevolutionSlider_Layers_Kore_Plugins_RevolutionSlider_Slides]
+FOREIGN KEY([SlideId])
+REFERENCES [dbo].[Kore_Plugins_RevolutionSlider_Slides] ([Id])");
 
                 dbContext.Database.ExecuteSqlCommand(
-@"");
+@"ALTER TABLE [dbo].[Kore_Plugins_RevolutionSlider_Layers]
+CHECK CONSTRAINT [FK_Kore_Plugins_RevolutionSlider_Layers_Kore_Plugins_RevolutionSlider_Slides]");
 
-                #endregion CREATE TABLE [dbo].[Kore_Plugins_RevolutionSlider_Slides]
+                #endregion CREATE TABLE [dbo].[Kore_Plugins_RevolutionSlider_Layers]
             }
         }
 

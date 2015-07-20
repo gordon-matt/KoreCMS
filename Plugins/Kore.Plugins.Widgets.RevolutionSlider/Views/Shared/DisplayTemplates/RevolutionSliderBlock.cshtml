@@ -18,7 +18,6 @@
     
     var slides = slideService.Repository.Table
         .Where(x => x.SliderId == Model.SliderId)
-        .Select(x => new { Id = x.Id, Src = x.ImageUrl, Alt = x.Title })
         .ToList();
         
     var slideIds = slides.Select(x => x.Id);
@@ -38,17 +37,17 @@
             {
                 var currentLayers = layers[slide.Id];
                 
-                <li>
-                    @Html.Image("http://placehold.it/350x150", slide.Alt, new { data_lazyload = slide.Src })
+                @Html.Raw(slide.ToHtmlString()) @* <li> *@
+                    @Html.Raw(slide.ImageToHtmlString()) @* <img> *@
 
                     @if (!currentLayers.IsNullOrEmpty())
                     {
                         foreach (RevolutionLayer layer in currentLayers)
                         {
-                            @Html.Raw(GetLayerHtml(layer))
+                            @Html.Raw(layer.ToHtmlString())
                         }
                     }
-                </li>
+                @Html.Raw("</li>")
             }
         </ul>
     </div>
@@ -61,177 +60,4 @@
             @script
         });
     </script>
-}
-
-@functions{
-    string GetLayerHtml(RevolutionLayer layer)
-    {
-        var tagBuilder = new FluentTagBuilder("div")
-            .AddCssClass("caption")
-            .AddCssClass(layer.StyleClass)
-            .MergeAttribute("data-x", layer.X)
-            .MergeAttribute("data-y", layer.Y)
-            .MergeAttribute("data-speed", layer.Speed)
-            .MergeAttribute("data-start", layer.Start);
-        
-        // General
-        if (!string.IsNullOrEmpty(layer.CaptionText))
-        {
-            tagBuilder = tagBuilder.SetInnerText(layer.CaptionText);
-        }
-        
-        if (layer.IncomingAnimation.HasValue)
-        {
-            switch (layer.IncomingAnimation.Value)
-            {
-                case IncomingAnimation.ShortFromTop: tagBuilder = tagBuilder.AddCssClass("sft"); break;
-                case IncomingAnimation.ShortFromBottom: tagBuilder = tagBuilder.AddCssClass("sfb"); break;
-                case IncomingAnimation.ShortFromRight: tagBuilder = tagBuilder.AddCssClass("sfr"); break;
-                case IncomingAnimation.ShortFromLeft: tagBuilder = tagBuilder.AddCssClass("sfl"); break;
-                case IncomingAnimation.LongFromTop: tagBuilder = tagBuilder.AddCssClass("lft"); break;
-                case IncomingAnimation.LongFromBottom: tagBuilder = tagBuilder.AddCssClass("lfb"); break;
-                case IncomingAnimation.LongFromRight: tagBuilder = tagBuilder.AddCssClass("lfr"); break;
-                case IncomingAnimation.LongFromLeft: tagBuilder = tagBuilder.AddCssClass("lfl"); break;
-                case IncomingAnimation.SkewFromLeft: tagBuilder = tagBuilder.AddCssClass("skewfromleft"); break;
-                case IncomingAnimation.SkewFromRight: tagBuilder = tagBuilder.AddCssClass("skewfromright"); break;
-                case IncomingAnimation.SkewFromLeftShort: tagBuilder = tagBuilder.AddCssClass("skewfromleftshort"); break;
-                case IncomingAnimation.SkewFromRightShort: tagBuilder = tagBuilder.AddCssClass("skewfromrightshort"); break;
-                case IncomingAnimation.Fade: tagBuilder = tagBuilder.AddCssClass("fade"); break;
-                case IncomingAnimation.RandomRotate: tagBuilder = tagBuilder.AddCssClass("randomrotate"); break;
-            }
-        }
-
-        if (layer.OutgoingAnimation.HasValue)
-        {
-            switch (layer.OutgoingAnimation.Value)
-            {
-                case OutgoingAnimation.ShortToTop: tagBuilder = tagBuilder.AddCssClass("stt"); break;
-                case OutgoingAnimation.ShortToBottom: tagBuilder = tagBuilder.AddCssClass("stb"); break;
-                case OutgoingAnimation.ShortToRight: tagBuilder = tagBuilder.AddCssClass("str"); break;
-                case OutgoingAnimation.ShortToLeft: tagBuilder = tagBuilder.AddCssClass("stl"); break;
-                case OutgoingAnimation.LongToTop: tagBuilder = tagBuilder.AddCssClass("ltt"); break;
-                case OutgoingAnimation.LongToBottom: tagBuilder = tagBuilder.AddCssClass("ltb"); break;
-                case OutgoingAnimation.LongToRight: tagBuilder = tagBuilder.AddCssClass("ltr"); break;
-                case OutgoingAnimation.LongToLeft: tagBuilder = tagBuilder.AddCssClass("ltl"); break;
-                case OutgoingAnimation.SkewToLeft: tagBuilder = tagBuilder.AddCssClass("skewtoleft"); break;
-                case OutgoingAnimation.SkewToRight: tagBuilder = tagBuilder.AddCssClass("skewtoright"); break;
-                case OutgoingAnimation.SkewToLeftShort: tagBuilder = tagBuilder.AddCssClass("skewtoleftshort"); break;
-                case OutgoingAnimation.SkewToRightShort: tagBuilder = tagBuilder.AddCssClass("skewtorightshort"); break;
-                case OutgoingAnimation.FadeOut: tagBuilder = tagBuilder.AddCssClass("fadeout"); break;
-                case OutgoingAnimation.RandomRotateOut: tagBuilder = tagBuilder.AddCssClass("randomrotateout"); break;
-            }
-        }
-        
-        if (layer.HorizontalOffset.HasValue)
-        {
-            tagBuilder = tagBuilder.MergeAttribute("data-hoffset", layer.HorizontalOffset.Value);
-        }
-        if (layer.VerticalOffset.HasValue)
-        {
-            tagBuilder = tagBuilder.MergeAttribute("data-voffset", layer.VerticalOffset.Value);
-        }
-        if (layer.SplitIn != CaptionSplitType.None)
-        {
-            tagBuilder = tagBuilder.MergeAttribute("data-splitin", layer.SplitIn.ToString().ToLowerInvariant());
-        }
-        if (layer.ElementDelay.HasValue)
-        {
-            tagBuilder = tagBuilder.MergeAttribute("data-elementdelay", layer.ElementDelay.Value);
-        }
-        if (layer.SplitOut != CaptionSplitType.None)
-        {
-            tagBuilder = tagBuilder.MergeAttribute("data-splitout", layer.SplitOut.ToString().ToLowerInvariant());
-        }
-        if (layer.EndElementDelay.HasValue)
-        {
-            tagBuilder = tagBuilder.MergeAttribute("data-endelementdelay", layer.EndElementDelay.Value);
-        }
-        if (layer.Easing.HasValue)
-        {
-            tagBuilder = tagBuilder.MergeAttribute("data-easing", layer.Easing.Value.ToString());
-        }
-        if (layer.EndSpeed.HasValue)
-        {
-            tagBuilder = tagBuilder.MergeAttribute("data-endspeed", layer.EndSpeed.Value);
-        }
-        if (layer.End.HasValue)
-        {
-            tagBuilder = tagBuilder.MergeAttribute("data-end", layer.End.Value);
-        }
-        if (layer.EndEasing.HasValue)
-        {
-            tagBuilder = tagBuilder.MergeAttribute("data-endeasing", layer.EndEasing.Value.ToString());
-        }
-        
-        // Video
-        if (layer.VideoType.HasValue)
-        {
-            tagBuilder = tagBuilder
-                .MergeAttribute("data-autoplay", layer.AutoPlay.ToString().ToLowerInvariant())
-                .MergeAttribute("data-autoplayonlyfirsttime", layer.AutoPlayOnlyFirstTime.ToString().ToLowerInvariant())
-                .MergeAttribute("data-nextslideatend", layer.NextSlideAtEnd.ToString().ToLowerInvariant())
-                .MergeAttribute("data-forcecover", layer.ForceCover.ToString().ToLowerInvariant())
-                .MergeAttribute("data-forcerewind", layer.ForceRewind.ToString().ToLowerInvariant())
-                .MergeAttribute("data-videocontrols", layer.ShowVideoControls ? "controls" : "none");
-        
-            if (!string.IsNullOrEmpty(layer.VideoPoster))
-            {
-                tagBuilder = tagBuilder.MergeAttribute("data-videoposter", layer.VideoPoster);
-            }
-        
-            if (layer.Mute)
-            {
-                tagBuilder = tagBuilder.MergeAttribute("data-volume", "mute");
-            }
-            if (layer.VideoWidth.HasValue)
-            {
-                tagBuilder = tagBuilder.MergeAttribute(
-                    "data-videowidth",
-                    string.Format("{0}{1}", layer.VideoWidth, layer.VideoWidthUnit == CssUnit.Percentage ? "%" : "px"));
-            }
-            if (layer.VideoHeight.HasValue)
-            {
-                tagBuilder = tagBuilder.MergeAttribute(
-                    "data-videoheight",
-                    string.Format("{0}{1}", layer.VideoHeight, layer.VideoHeightUnit == CssUnit.Percentage ? "%" : "px"));
-            }
-            if (layer.AspectRatio.HasValue)
-            {
-                tagBuilder = tagBuilder.MergeAttribute("data-aspectratio", layer.AspectRatio == AspectRatio._16x9 ? "16:9" : "4:3");
-            }
-            
-            tagBuilder = tagBuilder.MergeAttribute("data-videopreload", layer.VideoPreload.ToString().ToLowerInvariant());
-        
-            switch (layer.VideoType.Value)
-            {
-                case VideoType.Html5:
-                    {
-                        if (!string.IsNullOrEmpty(layer.VideoMp4))
-                        {
-                            tagBuilder = tagBuilder.MergeAttribute("data-videomp4", layer.VideoMp4);
-                        }
-                        if (!string.IsNullOrEmpty(layer.VideoWebM))
-                        {
-                            tagBuilder = tagBuilder.MergeAttribute("data-videowebm", layer.VideoWebM);
-                        }
-                        if (!string.IsNullOrEmpty(layer.VideoOgv))
-                        {
-                            tagBuilder = tagBuilder.MergeAttribute("data-videoogv", layer.VideoOgv);
-                        }
-                    }
-                    break;
-                case VideoType.YouTube: tagBuilder = tagBuilder.MergeAttribute("data-ytid", layer.YouTubeId); break;
-                case VideoType.Vimeo: tagBuilder = tagBuilder.MergeAttribute("data-vimeoid", layer.VimeoId); break;
-            }
-            
-            if (!string.IsNullOrEmpty(layer.VideoAttributes))
-            {
-                tagBuilder = tagBuilder.MergeAttribute("data-videoattributes", layer.VideoAttributes);
-            }
-            
-            tagBuilder = tagBuilder.MergeAttribute("data-videoloop", layer.VideoLoop.ToString().ToLowerInvariant());
-        }
-        
-        return tagBuilder.ToString();
-    }
 }

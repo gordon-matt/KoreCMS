@@ -3,7 +3,7 @@
 @{
     Layout = KoreWebConstants.DefaultFrontendLayoutPath;
 
-    Script.IncludeBundle("kore-cms/bootpag");
+    Script.IncludeBundle("third-party/bootpag");
 
     var settings = EngineContext.Current.Resolve<StoreSettings>();
     ViewBag.Title = settings.PageTitle;

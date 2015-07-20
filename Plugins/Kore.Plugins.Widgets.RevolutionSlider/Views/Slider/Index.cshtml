@@ -1,7 +1,8 @@
 ﻿@using Kore.Plugins.Widgets.RevolutionSlider
+@using Kore.Plugins.Widgets.RevolutionSlider.ContentBlocks
 @using Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
 @using Kore.Plugins.Widgets.RevolutionSlider.Extensions
-@using Kore.Web.Mvc.Html.
+@using Kore.Web.Mvc.Html
 @using Kore.Web.Mvc.KoreUI
 @using WebEnumExtensions = Kore.Web.EnumExtensions
 
@@ -15,7 +16,7 @@
     Script.IncludeBundle("knockout");
     Script.IncludeBundle("notify");
 
-    Script.IncludeBundle("kore-cms/bootpag");
+    //Script.IncludeBundle("third-party/bootpag");
     Script.IncludeBundle("kore/common");
     Script.IncludeBundle("kore/section-switching");
     Script.IncludeBundle("kore/jqueryval");
@@ -345,13 +346,19 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         @Html.Label("X", T(LocalizableStrings.Models.Layer.X), new { @class = "control-label" })
-                                        @Html.TextBox("X", null, new { @class = "form-control", data_bind = "value: layer.x" })
+                                        @Html.DropDownList(
+                                            "X",
+                                            WebEnumExtensions.ToSelectList<NavigationHAlign>(emptyText: string.Empty, nameIsId: true),
+                                            new { @class = "form-control", data_bind = "value: layer.x" })
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         @Html.Label("Y", T(LocalizableStrings.Models.Layer.Y), new { @class = "control-label" })
-                                        @Html.TextBox("Y", null, new { @class = "form-control", data_bind = "value: layer.y" })
+                                        @Html.DropDownList(
+                                            "Y",
+                                            WebEnumExtensions.ToSelectList<NavigationVAlign>(emptyText: string.Empty, nameIsId: true),
+                                            new { @class = "form-control", data_bind = "value: layer.y" })
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -555,7 +562,7 @@
                                             new { @class = "form-control", data_bind = "value: layer.videoType" })
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: layer.videoType() == 'Html5'">
                                     <div class="form-group">
                                         @Html.Label("VideoMp4", T(LocalizableStrings.Models.Layer.VideoMp4), new { @class = "control-label" })
                                         <div class="input-group">
@@ -568,7 +575,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: layer.videoType() == 'Html5'">
                                     <div class="form-group">
                                         @Html.Label("VideoWebM", T(LocalizableStrings.Models.Layer.VideoWebM), new { @class = "control-label" })
                                         <div class="input-group">
@@ -581,7 +588,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: layer.videoType() == 'Html5'">
                                     <div class="form-group">
                                         @Html.Label("VideoOgv", T(LocalizableStrings.Models.Layer.VideoOgv), new { @class = "control-label" })
                                         <div class="input-group">
@@ -594,13 +601,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: layer.videoType() == 'YouTube'">
                                     <div class="form-group">
                                         @Html.Label("YouTubeId", T(LocalizableStrings.Models.Layer.YouTubeId), new { @class = "control-label" })
                                         @Html.TextBox("YouTubeId", null, new { @class = "form-control", data_bind = "value: layer.youTubeId" })
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: layer.videoType() == 'Vimeo'">
                                     <div class="form-group">
                                         @Html.Label("VimeoId", T(LocalizableStrings.Models.Layer.VimeoId), new { @class = "control-label" })
                                         @Html.TextBox("VimeoId", null, new { @class = "form-control", data_bind = "value: layer.vimeoId" })

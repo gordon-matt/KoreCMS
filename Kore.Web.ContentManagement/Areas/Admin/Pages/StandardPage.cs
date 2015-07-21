@@ -35,6 +35,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
             }
 
             dynamic fields = JObject.Parse(pageVersion.Fields);
+            MetaTitle = fields.MetaTitle;
             MetaKeywords = fields.MetaKeywords;
             MetaDescription = fields.MetaDescription;
             BodyContent = fields.BodyContent;

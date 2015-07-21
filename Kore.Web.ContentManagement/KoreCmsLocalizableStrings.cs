@@ -322,6 +322,7 @@
                     public const string BodyContent = "Kore.Web.ContentManagement/Pages.PageTypes.StandardPage.BodyContent";
                     public const string MetaDescription = "Kore.Web.ContentManagement/Pages.PageTypes.StandardPage.MetaDescription";
                     public const string MetaKeywords = "Kore.Web.ContentManagement/Pages.PageTypes.StandardPage.MetaKeywords";
+                    public const string MetaTitle = "Kore.Web.ContentManagement/Pages.PageTypes.StandardPage.MetaTitle";
                 }
             }
         }

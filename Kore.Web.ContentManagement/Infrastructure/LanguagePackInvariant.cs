@@ -188,6 +188,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
                     { KoreCmsLocalizableStrings.Pages.PageTypes.StandardPage.BodyContent, "Body Content" },
                     { KoreCmsLocalizableStrings.Pages.PageTypes.StandardPage.MetaDescription, "Meta Description" },
                     { KoreCmsLocalizableStrings.Pages.PageTypes.StandardPage.MetaKeywords, "Meta Keywords" },
+                    { KoreCmsLocalizableStrings.Pages.PageTypes.StandardPage.MetaTitle, "Meta Title" },
                     { KoreCmsLocalizableStrings.Pages.PageTypes.Title, "Page Types" },
                     { KoreCmsLocalizableStrings.Pages.Restore, "Restore" },
                     { KoreCmsLocalizableStrings.Pages.RestoreVersion, "Restore Version" },

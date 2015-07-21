@@ -3,6 +3,12 @@
 <div id="fields-content">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="form-group">
+            @Html.Label("MetaTitle", T(KoreCmsLocalizableStrings.Pages.PageTypes.StandardPage.MetaTitle), new { @class = "control-label" })
+            @Html.TextBox("MetaTitle", null, new { @class = "form-control", data_bind = "value: pageVersion.metaTitle" })
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
             @Html.Label("MetaKeywords", T(KoreCmsLocalizableStrings.Pages.PageTypes.StandardPage.MetaKeywords), new { @class = "control-label" })
             @Html.TextBox("MetaKeywords", null, new { @class = "form-control", data_bind = "value: pageVersion.metaKeywords" })
         </div>
@@ -25,6 +31,7 @@
     var pageModel = (function () {
         var f = {};
         f.updateModel = function () {
+            viewModel.pageVersion.metaTitle = ko.observable("");
             viewModel.pageVersion.metaKeywords = ko.observable("");
             viewModel.pageVersion.metaDescription = ko.observable("");
             viewModel.pageVersion.bodyContent = ko.observable("");
@@ -32,6 +39,9 @@
             var data = ko.mapping.fromJSON(viewModel.pageVersion.fields());
 
             if (data) {
+                if (data.MetaTitle) {
+                    viewModel.metaTitle.metaKeywords(data.MetaTitle());
+                }
                 if (data.MetaKeywords) {
                     viewModel.pageVersion.metaKeywords(data.MetaKeywords());
                 }
@@ -46,6 +56,7 @@
             viewModel.pageVersion.tinyMCE_bodyContent = koreDefaultTinyMCEConfig;
         };
         f.cleanUp = function () {
+            delete viewModel.pageVersion.metaTitle;
             delete viewModel.pageVersion.metaKeywords;
             delete viewModel.pageVersion.metaDescription;
             delete viewModel.pageVersion.bodyContent;
@@ -53,6 +64,7 @@
         };
         f.onBeforeSave = function () {
             var data = {
+                MetaTitle: viewModel.pageVersion.metaTitle(),
                 MetaKeywords: viewModel.pageVersion.metaKeywords(),
                 MetaDescription: viewModel.pageVersion.metaDescription(),
                 BodyContent: viewModel.pageVersion.bodyContent()

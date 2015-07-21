@@ -14,11 +14,12 @@
 
 <style type="text/css">
     .modal-dialog {
-        width: 50% !important;
+        width: 80% !important;
     }
 </style>
 
 <form id="@formId" method="post" action="@Url.Action("Save", "FormBlock", new { area = string.Empty })" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Id)
     @Html.HiddenFor(m => m.ThankYouMessage)
     @Html.HiddenFor(m => m.RedirectUrl)
@@ -89,7 +90,10 @@
                     }
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    alert(jqXHR.responseText || textStatus + ': ' + errorThrown);
+                    $('#modal-title').html('@T(KoreWebLocalizableStrings.General.Error) - ' + errorThrown);
+                    $('#modal-message').html(jqXHR.responseText || textStatus + ': ' + errorThrown);
+                    $('#myModal').modal('show');
+                    //alert(jqXHR.responseText || textStatus + ': ' + errorThrown);
                 });
 
                 return false;

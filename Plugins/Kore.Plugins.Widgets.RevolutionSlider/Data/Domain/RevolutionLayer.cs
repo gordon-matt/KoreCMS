@@ -236,7 +236,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
 
         #endregion IEntity Members
 
-        public string ToHtmlString()
+        public string ToHtmlString(bool isFullScreen)
         {
             var tagBuilder = new FluentTagBuilder("div")
             .AddCssClass("caption")
@@ -249,7 +249,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
             // General
             if (!string.IsNullOrEmpty(CaptionText))
             {
-                tagBuilder = tagBuilder.SetInnerText(CaptionText);
+                tagBuilder = tagBuilder.SetInnerHtml(CaptionText);
             }
 
             if (IncomingAnimation.HasValue)
@@ -341,6 +341,11 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
                 tagBuilder = tagBuilder
                     .AddCssClass("tp-videolayer")
                     .AddCssClass("tp-caption");
+
+                if (isFullScreen)
+                {
+                    tagBuilder.AddCssClass("fullscreenvideo");
+                }
 
                 tagBuilder = tagBuilder
                     .MergeAttribute("data-autoplay", AutoPlay.ToString().ToLowerInvariant())

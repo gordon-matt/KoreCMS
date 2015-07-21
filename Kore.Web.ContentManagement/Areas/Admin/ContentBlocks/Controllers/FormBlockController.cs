@@ -34,7 +34,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
         [Compress]
         [HttpPost]
         [Route("form-content-block/save")]
-        [ValidateInput(false)]
+        //[ValidateInput(false)]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(FormCollection formCollection)
         {
             string id = formCollection["Id"];

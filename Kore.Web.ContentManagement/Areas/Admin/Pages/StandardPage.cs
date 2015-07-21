@@ -43,6 +43,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
         public override void PopulateDocumentIndex(IDocumentIndex document, out string description)
         {
             document.Add("title", InstanceName).Analyze().Store();
+            document.Add("meta_title", MetaTitle).Analyze();
             document.Add("meta_keywords", MetaKeywords).Analyze();
             document.Add("meta_description", MetaDescription).Analyze();
             document.Add("body", BodyContent).Analyze().Store();
@@ -53,6 +54,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
         {
             BodyContent = func(BodyContent);
         }
+
+        [Searchable]
+        public string MetaTitle { get; set; }
 
         [Searchable]
         public string MetaKeywords { get; set; }

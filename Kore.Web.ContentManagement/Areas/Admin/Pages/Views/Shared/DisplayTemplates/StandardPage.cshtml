@@ -2,10 +2,10 @@
 
 @{
     Layout = Model.LayoutPath;
-    ViewBag.Title = Model.InstanceName;
+    ViewBag.Title = Model.MetaTitle;
     SetMeta("keywords", Model.MetaKeywords);
     SetMeta("description", Model.MetaDescription);
-    SetMeta("title", Model.InstanceName);
+    SetMeta("title", Model.MetaTitle);
 }
 
 @Html.Raw(Model.BodyContent)

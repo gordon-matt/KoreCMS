@@ -328,7 +328,7 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         @Html.Label("CaptionText", T(LocalizableStrings.Models.Layer.CaptionText), new { @class = "control-label" })
-                                        @Html.TextBox("CaptionText", null, new { @class = "form-control", data_bind = "value: layer.captionText" })
+                                        @Html.TextArea("CaptionText", null, new { @class = "form-control", data_bind = "value: layer.captionText" })
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -463,32 +463,32 @@
                                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                     <div class="checkbox">
                                         <label>
-                                            @Html.CheckBox("AutoPlay", new { data_bind = "checked: slide.autoPlay" }) @T(LocalizableStrings.Models.Layer.AutoPlay)
+                                            @Html.CheckBox("AutoPlay", new { data_bind = "checked: layer.autoPlay" }) @T(LocalizableStrings.Models.Layer.AutoPlay)
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            @Html.CheckBox("AutoPlayOnlyFirstTime", new { data_bind = "checked: slide.autoPlayOnlyFirstTime" }) @T(LocalizableStrings.Models.Layer.AutoPlayOnlyFirstTime)
+                                            @Html.CheckBox("AutoPlayOnlyFirstTime", new { data_bind = "checked: layer.autoPlayOnlyFirstTime" }) @T(LocalizableStrings.Models.Layer.AutoPlayOnlyFirstTime)
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            @Html.CheckBox("NextSlideAtEnd", new { data_bind = "checked: slide.nextSlideAtEnd" }) @T(LocalizableStrings.Models.Layer.NextSlideAtEnd)
+                                            @Html.CheckBox("NextSlideAtEnd", new { data_bind = "checked: layer.nextSlideAtEnd" }) @T(LocalizableStrings.Models.Layer.NextSlideAtEnd)
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            @Html.CheckBox("ForceCover", new { data_bind = "checked: slide.forceCover" }) @T(LocalizableStrings.Models.Layer.ForceCover)
+                                            @Html.CheckBox("ForceCover", new { data_bind = "checked: layer.forceCover" }) @T(LocalizableStrings.Models.Layer.ForceCover)
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            @Html.CheckBox("ForceRewind", new { data_bind = "checked: slide.forceRewind" }) @T(LocalizableStrings.Models.Layer.ForceRewind)
+                                            @Html.CheckBox("ForceRewind", new { data_bind = "checked: layer.forceRewind" }) @T(LocalizableStrings.Models.Layer.ForceRewind)
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            @Html.CheckBox("Mute", new { data_bind = "checked: slide.mute" }) @T(LocalizableStrings.Models.Layer.Mute)
+                                            @Html.CheckBox("Mute", new { data_bind = "checked: layer.mute" }) @T(LocalizableStrings.Models.Layer.Mute)
                                         </label>
                                     </div>
                                 </div>
@@ -616,7 +616,7 @@
                                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                     <div class="checkbox">
                                         <label>
-                                            @Html.CheckBox("ShowVideoControls", new { data_bind = "checked: slide.showVideoControls" }) @T(LocalizableStrings.Models.Layer.ShowVideoControls)
+                                            @Html.CheckBox("ShowVideoControls", new { data_bind = "checked: layer.showVideoControls" }) @T(LocalizableStrings.Models.Layer.ShowVideoControls)
                                         </label>
                                     </div>
                                 </div>

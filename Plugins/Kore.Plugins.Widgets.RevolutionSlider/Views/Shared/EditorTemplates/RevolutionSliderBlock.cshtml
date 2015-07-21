@@ -489,7 +489,7 @@
             var data = ko.mapping.fromJSON(viewModel.blockValues());
 
             if ((isFunction(data) && data()) || data) {
-                if (data.MediaFolder == undefined) {
+                if (data.SliderId == undefined) {
                     // If this is not set, it means the contentBlock is new and we have nothing in blockValues
                     return;
                 }

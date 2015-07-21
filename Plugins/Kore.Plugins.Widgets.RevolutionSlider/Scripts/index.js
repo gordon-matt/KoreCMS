@@ -28,7 +28,7 @@ var SliderModel = function () {
         })
         .done(function (json) {
             self.id(json.Id);
-            self.title(json.Name);
+            self.name(json.Name);
 
             self.validator.resetForm();
             switchSection($("#sliders-form-section"));
@@ -867,8 +867,8 @@ $(document).ready(function () {
                         Start: { type: "number" },
                         CaptionText: { type: "string" },
                         Speed: { type: "number" },
-                        X: { type: "number" },
-                        Y: { type: "number" },
+                        X: { type: "string" },
+                        Y: { type: "string" },
                     }
                 }
             },

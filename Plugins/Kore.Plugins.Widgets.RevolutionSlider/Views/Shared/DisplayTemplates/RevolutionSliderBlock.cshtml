@@ -28,6 +28,8 @@
         .ToDictionary(x => x.Key, v => v.ToList());
 
     var script = Model.ToHtmlString();
+
+    bool isFullScreen = Model.FullWidth || Model.ForceFullWidth || Model.FullScreen;
 }
 
 <div class="bannercontainer">
@@ -45,7 +47,7 @@
                         {
                             foreach (RevolutionLayer layer in currentLayers)
                             {
-                                @Html.Raw(layer.ToHtmlString())
+                                @Html.Raw(layer.ToHtmlString(isFullScreen))
                             }
                         }
                     }

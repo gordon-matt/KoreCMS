@@ -43,3 +43,11 @@ body {
     border: 3px solid #ddd;
     padding: 5px;
 }
+
+label.checkbox-list-group-label {
+    border:1px solid #000;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    display:block;
+    padding: 10px 15px;
+}

@@ -38,6 +38,7 @@ namespace KoreCMS.Infrastructure
                     { LocalizableStrings.Account.RememberMe, "Remember Me?" },
                     { LocalizableStrings.Account.Title, "Account" },
                     { LocalizableStrings.Account.UserDoesNotExistOrIsNotConfirmed, "The user either does not exist or is not confirmed." },
+                    { LocalizableStrings.Dashboard.Administration, "Administration" },
                     { LocalizableStrings.Dashboard.Frontend, "Frontend" },
                     { LocalizableStrings.Dashboard.Title, "Dashboard" },
                     { LocalizableStrings.Dashboard.ToggleNavigation, "Toggle Navigation" },

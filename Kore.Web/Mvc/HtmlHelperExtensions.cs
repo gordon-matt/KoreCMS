@@ -279,7 +279,7 @@ namespace Kore.Web.Mvc
 
                 foreach (var @group in groups)
                 {
-                    sb.AppendFormat("<strong>{0}</strong>", group.Key);
+                    sb.AppendFormat(@"<label class=""checkbox-list-group-label"">{0}</label>", group.Key);
 
                     foreach (var item in group)
                     {

@@ -102,6 +102,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
             values.Remove("EmailAddress");
             values.Remove("ContentBlockTitle");
             values.Remove("X-Requested-With");
+            values.Remove("__RequestVerificationToken");
 
             var subject = contentBlockTitle;
 

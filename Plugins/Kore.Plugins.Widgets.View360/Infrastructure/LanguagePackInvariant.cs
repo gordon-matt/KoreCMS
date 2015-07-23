@@ -18,6 +18,12 @@ namespace Kore.Plugins.Widgets.View360.Infrastructure
             {
                 return new Dictionary<string, string>
                 {
+                    
+                    { LocalizableStrings.EditorTabs.General, "General" },
+                    { LocalizableStrings.EditorTabs.LoaderInfoConfig, "Loader Info Config" },
+                    { LocalizableStrings.EditorTabs.MainConfiguration, "Main Config" },
+                    { LocalizableStrings.EditorTabs.Navigation, "Navigation" },
+
                     { LocalizableStrings.Mode, "Mode" },
                     { LocalizableStrings.ImagesPattern, "Images Pattern" },
                     { LocalizableStrings.ImagesDirectory, "Images Directory" },

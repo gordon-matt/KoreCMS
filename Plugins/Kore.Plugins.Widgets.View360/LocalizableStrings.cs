@@ -2,6 +2,14 @@
 {
     public static class LocalizableStrings
     {
+        public static class EditorTabs
+        {
+            public const string General = "Kore.Plugins.Widgets.View360/EditorTabs.General";
+            public const string MainConfiguration = "Kore.Plugins.Widgets.View360/EditorTabs.MainConfiguration";
+            public const string Navigation = "Kore.Plugins.Widgets.View360/EditorTabs.Navigation";
+            public const string LoaderInfoConfig = "Kore.Plugins.Widgets.View360/EditorTabs.LoaderInfoConfig";
+        }
+
         public const string Mode = "Kore.Plugins.Widgets.View360/Mode";
         public const string ImagesPattern = "Kore.Plugins.Widgets.View360/ImagesPattern";
         public const string ImagesDirectory = "Kore.Plugins.Widgets.View360/ImagesDirectory";

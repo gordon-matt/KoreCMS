@@ -45,9 +45,14 @@ body {
 }
 
 label.checkbox-list-group-label {
-    border:1px solid #000;
+    background-image:linear-gradient(to bottom, #fff 0px, #e0e0e0 100%);
+    border:1px solid #ccc;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
     display:block;
-    padding: 10px 15px;
+    padding: 5px 7px;
 }
+
+    label.checkbox-list-group-label ~ label.checkbox {
+        margin-left:20px;
+    }

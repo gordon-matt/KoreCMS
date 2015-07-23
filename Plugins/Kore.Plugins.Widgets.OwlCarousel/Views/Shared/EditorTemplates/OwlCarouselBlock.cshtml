@@ -16,139 +16,265 @@
         {
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.MediaFolder, new { @class = "control-label" })
-                    <div class="input-group">
-                        @Html.TextBoxFor(m => m.MediaFolder, new { @class = "form-control", data_bind = "value: mediaFolder" })
-                        <span class="input-group-addon">
-                            <a data-toggle="modal" href="javascript:void(0);" data-target="#myModal">
-                                <i class="kore-icon kore-icon-search"></i>
-                            </a>
-                        </span>
+                    @Html.LabelFor(m => m.MediaFolder, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.MediaFolder, new { @class = "form-control", data_bind = "value: mediaFolder" })
+                            <span class="input-group-addon">
+                                <a data-toggle="modal" href="javascript:void(0);" data-target="#myModal">
+                                    <i class="kore-icon kore-icon-search"></i>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ControlId, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.ControlId, new { @class = "form-control", data_bind = "value: controlId" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SlideSpeed, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.SlideSpeed, new { @class = "form-control", data_bind = "value: slideSpeed" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PaginationSpeed, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.PaginationSpeed, new { @class = "form-control", data_bind = "value: paginationSpeed" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RewindSpeed, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.RewindSpeed, new { @class = "form-control", data_bind = "value: rewindSpeed" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-12 col-sm-4 col-md-3 col-lg-3"></label>
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.AutoPlay, new { data_bind = "checked: autoPlay" }) @T(LocalizableStrings.OwlCarouselBlock.AutoPlay)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.StopOnHover, new { data_bind = "checked: stopOnHover" }) @T(LocalizableStrings.OwlCarouselBlock.StopOnHover)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.Navigation, new { data_bind = "checked: navigation" }) @T(LocalizableStrings.OwlCarouselBlock.Navigation)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.RewindNav, new { data_bind = "checked: rewindNav" }) @T(LocalizableStrings.OwlCarouselBlock.RewindNav)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.ScrollPerPage, new { data_bind = "checked: scrollPerPage" }) @T(LocalizableStrings.OwlCarouselBlock.ScrollPerPage)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.Pagination, new { data_bind = "checked: pagination" }) @T(LocalizableStrings.OwlCarouselBlock.Pagination)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.PaginationNumbers, new { data_bind = "checked: paginationNumbers" }) @T(LocalizableStrings.OwlCarouselBlock.PaginationNumbers)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.Responsive, new { data_bind = "checked: responsive" }) @T(LocalizableStrings.OwlCarouselBlock.Responsive)
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.ControlId, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.ControlId, new { @class = "form-control", data_bind = "value: controlId" })
+                    @Html.LabelFor(m => m.AutoPlaySpeed, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.AutoPlaySpeed, new { @class = "form-control", data_bind = "value: autoPlaySpeed" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NavigationText, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.NavigationText, new { @class = "form-control", data_bind = "value: navigationText" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ResponsiveRefreshRate, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.ResponsiveRefreshRate, new { @class = "form-control", data_bind = "value: responsiveRefreshRate" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ResponsiveBaseWidth, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.ResponsiveBaseWidth, new { @class = "form-control", data_bind = "value: responsiveBaseWidth" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.BaseClass, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.BaseClass, new { @class = "form-control", data_bind = "value: baseClass" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Theme, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.Theme, new { @class = "form-control", data_bind = "value: theme" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-12 col-sm-4 col-md-3 col-lg-3"></label>
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.LazyLoad, new { data_bind = "checked: lazyLoad" }) @T(LocalizableStrings.OwlCarouselBlock.LazyLoad)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.AutoHeight, new { data_bind = "checked: autoHeight" }) @T(LocalizableStrings.OwlCarouselBlock.AutoHeight)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.MouseDrag, new { data_bind = "checked: mouseDrag" }) @T(LocalizableStrings.OwlCarouselBlock.MouseDrag)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.TouchDrag, new { data_bind = "checked: touchDrag" }) @T(LocalizableStrings.OwlCarouselBlock.TouchDrag)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        using (var tab = tabs.BeginPanel())
+        {
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Items, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.Items, new { @class = "form-control", data_bind = "value: items" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ItemsDesktop, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.ItemsDesktop, new { @class = "form-control", data_bind = "value: itemsDesktop" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ItemsDesktopSmall, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.ItemsDesktopSmall, new { @class = "form-control", data_bind = "value: itemsDesktopSmall" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ItemsTablet, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.ItemsTablet, new { @class = "form-control", data_bind = "value: itemsTablet" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ItemsTabletSmall, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.ItemsTabletSmall, new { @class = "form-control", data_bind = "value: itemsTabletSmall" })
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.SlideSpeed, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.SlideSpeed, new { @class = "form-control", data_bind = "value: slideSpeed" })
+                    @Html.LabelFor(m => m.ItemsMobile, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.ItemsMobile, new { @class = "form-control", data_bind = "value: itemsMobile" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ItemsCustom, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.ItemsCustom, new { @class = "form-control", data_bind = "value: itemsCustom" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-12 col-sm-4 col-md-3 col-lg-3"></label>
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.SingleItem, new { data_bind = "checked: singleItem" }) @T(LocalizableStrings.OwlCarouselBlock.SingleItem)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.ItemsScaleUp, new { data_bind = "checked: itemsScaleUp" }) @T(LocalizableStrings.OwlCarouselBlock.ItemsScaleUp)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        using (var tab = tabs.BeginPanel())
+        {
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <label class="control-label col-xs-12 col-sm-4 col-md-3 col-lg-3"></label>
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.LazyFollow, new { data_bind = "checked: lazyFollow" }) @T(LocalizableStrings.OwlCarouselBlock.LazyFollow)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.DragBeforeAnimFinish, new { data_bind = "checked: dragBeforeAnimFinish" }) @T(LocalizableStrings.OwlCarouselBlock.DragBeforeAnimFinish)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.AddClassActive, new { data_bind = "checked: addClassActive" }) @T(LocalizableStrings.OwlCarouselBlock.AddClassActive)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.JsonPath, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.JsonPath, new { @class = "form-control", data_bind = "value: jsonPath" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.JsonSuccess, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextAreaFor(m => m.JsonSuccess, new { @class = "form-control", data_bind = "value: jsonSuccess" })
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.PaginationSpeed, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.PaginationSpeed, new { @class = "form-control", data_bind = "value: paginationSpeed" })
+                    @Html.LabelFor(m => m.LazyEffect, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.LazyEffect, new { @class = "form-control", data_bind = "value: lazyEffect" })
+                    </div>
                 </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.RewindSpeed, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.RewindSpeed, new { @class = "form-control", data_bind = "value: rewindSpeed" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.AutoPlay, new { data_bind = "checked: autoPlay" }) @T(LocalizableStrings.OwlCarouselBlock.AutoPlay)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.StopOnHover, new { data_bind = "checked: stopOnHover" }) @T(LocalizableStrings.OwlCarouselBlock.StopOnHover)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.Navigation, new { data_bind = "checked: navigation" }) @T(LocalizableStrings.OwlCarouselBlock.Navigation)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.RewindNav, new { data_bind = "checked: rewindNav" }) @T(LocalizableStrings.OwlCarouselBlock.RewindNav)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.ScrollPerPage, new { data_bind = "checked: scrollPerPage" }) @T(LocalizableStrings.OwlCarouselBlock.ScrollPerPage)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.Pagination, new { data_bind = "checked: pagination" }) @T(LocalizableStrings.OwlCarouselBlock.Pagination)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.PaginationNumbers, new { data_bind = "checked: paginationNumbers" }) @T(LocalizableStrings.OwlCarouselBlock.PaginationNumbers)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.Responsive, new { data_bind = "checked: responsive" }) @T(LocalizableStrings.OwlCarouselBlock.Responsive)
-                    </label>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.AutoPlaySpeed, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.AutoPlaySpeed, new { @class = "form-control", data_bind = "value: autoPlaySpeed" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.NavigationText, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.NavigationText, new { @class = "form-control", data_bind = "value: navigationText" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.ResponsiveRefreshRate, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.ResponsiveRefreshRate, new { @class = "form-control", data_bind = "value: responsiveRefreshRate" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.ResponsiveBaseWidth, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.ResponsiveBaseWidth, new { @class = "form-control", data_bind = "value: responsiveBaseWidth" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.BaseClass, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.BaseClass, new { @class = "form-control", data_bind = "value: baseClass" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Theme, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.Theme, new { @class = "form-control", data_bind = "value: theme" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.LazyLoad, new { data_bind = "checked: lazyLoad" }) @T(LocalizableStrings.OwlCarouselBlock.LazyLoad)
-                    </label>
-                </div>
-                 <div class="checkbox">
-                     <label>
-                         @Html.CheckBoxFor(m => m.AutoHeight, new { data_bind = "checked: autoHeight" }) @T(LocalizableStrings.OwlCarouselBlock.AutoHeight)
-                     </label>
-                 </div>
-                 <div class="checkbox">
-                     <label>
-                         @Html.CheckBoxFor(m => m.MouseDrag, new { data_bind = "checked: mouseDrag" }) @T(LocalizableStrings.OwlCarouselBlock.MouseDrag)
-                     </label>
-                 </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.TouchDrag, new { data_bind = "checked: touchDrag" }) @T(LocalizableStrings.OwlCarouselBlock.TouchDrag)
-                    </label>
+                    @Html.LabelFor(m => m.TransitionStyle, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.TransitionStyle, new { @class = "form-control", data_bind = "value: transitionStyle" })
+                    </div>
                 </div>
             </div>
         }
@@ -157,159 +283,60 @@
         {
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Items, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.Items, new { @class = "form-control", data_bind = "value: items" })
+                    @Html.LabelFor(m => m.BeforeUpdate, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextAreaFor(m => m.BeforeUpdate, new { @class = "form-control", data_bind = "value: beforeUpdate" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AfterUpdate, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextAreaFor(m => m.AfterUpdate, new { @class = "form-control", data_bind = "value: afterUpdate" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.BeforeInit, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextAreaFor(m => m.BeforeInit, new { @class = "form-control", data_bind = "value: beforeInit" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AfterInit, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextAreaFor(m => m.AfterInit, new { @class = "form-control", data_bind = "value: afterInit" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.BeforeMove, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextAreaFor(m => m.BeforeMove, new { @class = "form-control", data_bind = "value: beforeMove" })
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.ItemsDesktop, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.ItemsDesktop, new { @class = "form-control", data_bind = "value: itemsDesktop" })
+                    @Html.LabelFor(m => m.AfterMove, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextAreaFor(m => m.AfterMove, new { @class = "form-control", data_bind = "value: afterMove" })
+                    </div>
                 </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.ItemsDesktopSmall, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.ItemsDesktopSmall, new { @class = "form-control", data_bind = "value: itemsDesktopSmall" })
+                    @Html.LabelFor(m => m.AfterAction, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextAreaFor(m => m.AfterAction, new { @class = "form-control", data_bind = "value: afterAction" })
+                    </div>
                 </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.ItemsTablet, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.ItemsTablet, new { @class = "form-control", data_bind = "value: itemsTablet" })
+                    @Html.LabelFor(m => m.StartDragging, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextAreaFor(m => m.StartDragging, new { @class = "form-control", data_bind = "value: startDragging" })
+                    </div>
                 </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.ItemsTabletSmall, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.ItemsTabletSmall, new { @class = "form-control", data_bind = "value: itemsTabletSmall" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.ItemsMobile, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.ItemsMobile, new { @class = "form-control", data_bind = "value: itemsMobile" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.ItemsCustom, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.ItemsCustom, new { @class = "form-control", data_bind = "value: itemsCustom" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.SingleItem, new { data_bind = "checked: singleItem" }) @T(LocalizableStrings.OwlCarouselBlock.SingleItem)
-                    </label>
-                </div>
-                 <div class="checkbox">
-                     <label>
-                         @Html.CheckBoxFor(m => m.ItemsScaleUp, new { data_bind = "checked: itemsScaleUp" }) @T(LocalizableStrings.OwlCarouselBlock.ItemsScaleUp)
-                     </label>
-                 </div>
-            </div>
-        }
-
-        using (var tab = tabs.BeginPanel())
-        {
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.LazyFollow, new { data_bind = "checked: lazyFollow" }) @T(LocalizableStrings.OwlCarouselBlock.LazyFollow)
-                    </label>
-                </div>
-                 <div class="checkbox">
-                     <label>
-                         @Html.CheckBoxFor(m => m.DragBeforeAnimFinish, new { data_bind = "checked: dragBeforeAnimFinish" }) @T(LocalizableStrings.OwlCarouselBlock.DragBeforeAnimFinish)
-                     </label>
-                 </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.AddClassActive, new { data_bind = "checked: addClassActive" }) @T(LocalizableStrings.OwlCarouselBlock.AddClassActive)
-                    </label>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.JsonPath, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.JsonPath, new { @class = "form-control", data_bind = "value: jsonPath" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.JsonSuccess, new { @class = "control-label" })
-                    @Html.TextAreaFor(m => m.JsonSuccess, new { @class = "form-control", data_bind = "value: jsonSuccess" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.LazyEffect, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.LazyEffect, new { @class = "form-control", data_bind = "value: lazyEffect" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.TransitionStyle, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.TransitionStyle, new { @class = "form-control", data_bind = "value: transitionStyle" })
-                </div>
-            </div>
-        }
-
-        using (var tab = tabs.BeginPanel())
-        {
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.BeforeUpdate, new { @class = "control-label" })
-                    @Html.TextAreaFor(m => m.BeforeUpdate, new { @class = "form-control", data_bind = "value: beforeUpdate" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.AfterUpdate, new { @class = "control-label" })
-                    @Html.TextAreaFor(m => m.AfterUpdate, new { @class = "form-control", data_bind = "value: afterUpdate" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.BeforeInit, new { @class = "control-label" })
-                    @Html.TextAreaFor(m => m.BeforeInit, new { @class = "form-control", data_bind = "value: beforeInit" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.AfterInit, new { @class = "control-label" })
-                    @Html.TextAreaFor(m => m.AfterInit, new { @class = "form-control", data_bind = "value: afterInit" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.BeforeMove, new { @class = "control-label" })
-                    @Html.TextAreaFor(m => m.BeforeMove, new { @class = "form-control", data_bind = "value: beforeMove" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.AfterMove, new { @class = "control-label" })
-                    @Html.TextAreaFor(m => m.AfterMove, new { @class = "form-control", data_bind = "value: afterMove" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.AfterAction, new { @class = "control-label" })
-                    @Html.TextAreaFor(m => m.AfterAction, new { @class = "form-control", data_bind = "value: afterAction" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.StartDragging, new { @class = "control-label" })
-                    @Html.TextAreaFor(m => m.StartDragging, new { @class = "form-control", data_bind = "value: startDragging" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.AfterLazyLoad, new { @class = "control-label" })
-                    @Html.TextAreaFor(m => m.AfterLazyLoad, new { @class = "form-control", data_bind = "value: afterLazyLoad" })
+                    @Html.LabelFor(m => m.AfterLazyLoad, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextAreaFor(m => m.AfterLazyLoad, new { @class = "form-control", data_bind = "value: afterLazyLoad" })
+                    </div>
                 </div>
             </div>
         }

@@ -1,10 +1,12 @@
 ﻿@model Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.HtmlBlock
 
-<div id="block-content" class="row">
+<div id="block-content">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="form-group">
-            @Html.LabelFor(m => m.BodyContent, new { @class = "control-label" })
-            @Html.TextAreaFor(m => m.BodyContent, new { @class = "form-control", data_bind = "wysiwyg: bodyContent, wysiwygConfig: tinyMCEConfig" })
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                @Html.LabelFor(m => m.BodyContent, new { @class = "control-label" })
+                @Html.TextAreaFor(m => m.BodyContent, new { @class = "form-control", data_bind = "wysiwyg: bodyContent, wysiwygConfig: tinyMCEConfig" })
+            </div>
         </div>
     </div>
 </div>

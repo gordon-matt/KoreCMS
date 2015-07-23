@@ -19,221 +19,212 @@
 
         using (var tab = tabs.BeginPanel())
         {
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.SliderId, new { @class = "control-label" })
-                    @Html.RevolutionSlider().SliderDropDownListFor(m => m.SliderId, new { @class = "form-control", data_bind = "value: sliderId" })
+                    @Html.LabelFor(m => m.SliderId, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.RevolutionSlider().SliderDropDownListFor(m => m.SliderId, new { @class = "form-control", data_bind = "value: sliderId" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ControlId, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.ControlId, new { @class = "form-control", data_bind = "value: controlId" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Delay, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.Delay, new { @class = "form-control", data_bind = "value: delay" })
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.ControlId, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.ControlId, new { @class = "form-control", data_bind = "value: controlId" })
+                    @Html.LabelFor(m => m.StartHeight, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.StartHeight, new { @class = "form-control", data_bind = "value: startHeight" })
+                    </div>
                 </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Delay, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.Delay, new { @class = "form-control", data_bind = "value: delay" })
+                    @Html.LabelFor(m => m.StartWidth, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.StartWidth, new { @class = "form-control", data_bind = "value: startWidth" })
+                    </div>
                 </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.StartHeight, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.StartHeight, new { @class = "form-control", data_bind = "value: startHeight" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.StartWidth, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.StartWidth, new { @class = "form-control", data_bind = "value: startWidth" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.Shuffle, new { data_bind = "checked: shuffle" }) @T(LocalizableStrings.RevolutionSliderBlock.Shuffle)
-                    </label>
+                    <label class="control-label col-xs-12 col-sm-4 col-md-3 col-lg-3"></label>
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.Shuffle, new { data_bind = "checked: shuffle" }) @T(LocalizableStrings.RevolutionSliderBlock.Shuffle)
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         }
-
-        using (var tab = tabs.BeginPanel())
-        {
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.KeyboardNavigation, new { data_bind = "checked: keyboardNavigation" }) @T(LocalizableStrings.RevolutionSliderBlock.KeyboardNavigation)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.OnHoverStop, new { data_bind = "checked: onHoverStop" }) @T(LocalizableStrings.RevolutionSliderBlock.OnHoverStop)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.DragBlockVertical, new { data_bind = "checked: dragBlockVertical" }) @T(LocalizableStrings.RevolutionSliderBlock.DragBlockVertical)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.TouchEnabled, new { data_bind = "checked: touchEnabled" }) @T(LocalizableStrings.RevolutionSliderBlock.TouchEnabled)
-                    </label>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.ThumbWidth, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.ThumbWidth, new { @class = "form-control", data_bind = "value: thumbWidth" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.ThumbHeight, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.ThumbHeight, new { @class = "form-control", data_bind = "value: thumbHeight" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.ThumbAmount, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.ThumbAmount, new { @class = "form-control", data_bind = "value: thumbAmount" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.HideThumbs, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.HideThumbs, new { @class = "form-control", data_bind = "value: hideThumbs" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.NavigationType, new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(m => m.NavigationType, new { @class = "form-control", data_bind = "value: navigationType" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.NavigationArrows, new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(m => m.NavigationArrows, new { @class = "form-control", data_bind = "value: navigationArrows" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.NavigationStyle, new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(m => m.NavigationStyle, new { @class = "form-control", data_bind = "value: navigationStyle" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.NavigationHAlign, new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(m => m.NavigationHAlign, new { @class = "form-control", data_bind = "value: navigationHAlign" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.NavigationVAlign, new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(m => m.NavigationVAlign, new { @class = "form-control", data_bind = "value: navigationVAlign" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.NavigationHOffset, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.NavigationHOffset, new { @class = "form-control", data_bind = "value: navigationHOffset" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.NavigationVOffset, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.NavigationVOffset, new { @class = "form-control", data_bind = "value: navigationVOffset" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.SoloArrowLeftHAlign, new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(m => m.SoloArrowLeftHAlign, new { @class = "form-control", data_bind = "value: soloArrowLeftHAlign" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.SoloArrowRightHAlign, new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(m => m.SoloArrowRightHAlign, new { @class = "form-control", data_bind = "value: soloArrowRightHAlign" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.SoloArrowLeftVAlign, new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(m => m.SoloArrowLeftVAlign, new { @class = "form-control", data_bind = "value: soloArrowLeftVAlign" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.SoloArrowRightVAlign, new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(m => m.SoloArrowRightVAlign, new { @class = "form-control", data_bind = "value: soloArrowRightVAlign" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.SoloArrowLeftHOffset, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.SoloArrowLeftHOffset, new { @class = "form-control", data_bind = "value: soloArrowLeftHOffset" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.SoloArrowRightHOffset, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.SoloArrowRightHOffset, new { @class = "form-control", data_bind = "value: soloArrowRightHOffset" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.SoloArrowLeftVOffset, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.SoloArrowLeftVOffset, new { @class = "form-control", data_bind = "value: soloArrowLeftVOffset" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.SoloArrowRightVOffset, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.SoloArrowRightVOffset, new { @class = "form-control", data_bind = "value: soloArrowRightVOffset" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.SwipeVelocity, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.SwipeVelocity, new { @class = "form-control", data_bind = "value: swipeVelocity" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.SwipeMaxTouches, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.SwipeMaxTouches, new { @class = "form-control", data_bind = "value: swipeMaxTouches" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.SwipeMinTouches, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.SwipeMinTouches, new { @class = "form-control", data_bind = "value: swipeMinTouches" })
-                </div>
-            </div>
-        }
-
         using (var tab = tabs.BeginPanel())
         {
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.StartWithSlide, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.StartWithSlide, new { @class = "form-control", data_bind = "value: startWithSlide" })
+                    <label class="control-label col-xs-12 col-sm-4 col-md-3 col-lg-3"></label>
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.KeyboardNavigation, new { data_bind = "checked: keyboardNavigation" }) @T(LocalizableStrings.RevolutionSliderBlock.KeyboardNavigation)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.OnHoverStop, new { data_bind = "checked: onHoverStop" }) @T(LocalizableStrings.RevolutionSliderBlock.OnHoverStop)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.DragBlockVertical, new { data_bind = "checked: dragBlockVertical" }) @T(LocalizableStrings.RevolutionSliderBlock.DragBlockVertical)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.TouchEnabled, new { data_bind = "checked: touchEnabled" }) @T(LocalizableStrings.RevolutionSliderBlock.TouchEnabled)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ThumbWidth, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.ThumbWidth, new { @class = "form-control", data_bind = "value: thumbWidth" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ThumbHeight, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.ThumbHeight, new { @class = "form-control", data_bind = "value: thumbHeight" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ThumbAmount, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.ThumbAmount, new { @class = "form-control", data_bind = "value: thumbAmount" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.HideThumbs, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.HideThumbs, new { @class = "form-control", data_bind = "value: hideThumbs" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NavigationType, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.EnumDropDownListFor(m => m.NavigationType, new { @class = "form-control", data_bind = "value: navigationType" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NavigationArrows, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.EnumDropDownListFor(m => m.NavigationArrows, new { @class = "form-control", data_bind = "value: navigationArrows" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NavigationStyle, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.EnumDropDownListFor(m => m.NavigationStyle, new { @class = "form-control", data_bind = "value: navigationStyle" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NavigationHAlign, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.EnumDropDownListFor(m => m.NavigationHAlign, new { @class = "form-control", data_bind = "value: navigationHAlign" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NavigationVAlign, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.EnumDropDownListFor(m => m.NavigationVAlign, new { @class = "form-control", data_bind = "value: navigationVAlign" })
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.StopAtSlide, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.StopAtSlide, new { @class = "form-control", data_bind = "value: stopAtSlide" })
+                    @Html.LabelFor(m => m.NavigationHOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.NavigationHOffset, new { @class = "form-control", data_bind = "value: navigationHOffset" })
+                    </div>
                 </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.StopAfterLoops, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.StopAfterLoops, new { @class = "form-control", data_bind = "value: stopAfterLoops" })
+                    @Html.LabelFor(m => m.NavigationVOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.NavigationVOffset, new { @class = "form-control", data_bind = "value: navigationVOffset" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SoloArrowLeftHAlign, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.EnumDropDownListFor(m => m.SoloArrowLeftHAlign, new { @class = "form-control", data_bind = "value: soloArrowLeftHAlign" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SoloArrowRightHAlign, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.EnumDropDownListFor(m => m.SoloArrowRightHAlign, new { @class = "form-control", data_bind = "value: soloArrowRightHAlign" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SoloArrowLeftVAlign, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.EnumDropDownListFor(m => m.SoloArrowLeftVAlign, new { @class = "form-control", data_bind = "value: soloArrowLeftVAlign" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SoloArrowRightVAlign, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.EnumDropDownListFor(m => m.SoloArrowRightVAlign, new { @class = "form-control", data_bind = "value: soloArrowRightVAlign" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SoloArrowLeftHOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.SoloArrowLeftHOffset, new { @class = "form-control", data_bind = "value: soloArrowLeftHOffset" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SoloArrowRightHOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.SoloArrowRightHOffset, new { @class = "form-control", data_bind = "value: soloArrowRightHOffset" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SoloArrowLeftVOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.SoloArrowLeftVOffset, new { @class = "form-control", data_bind = "value: soloArrowLeftVOffset" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SoloArrowRightVOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.SoloArrowRightVOffset, new { @class = "form-control", data_bind = "value: soloArrowRightVOffset" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SwipeVelocity, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.SwipeVelocity, new { @class = "form-control", data_bind = "value: swipeVelocity" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SwipeMaxTouches, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.SwipeMaxTouches, new { @class = "form-control", data_bind = "value: swipeMaxTouches" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SwipeMinTouches, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.SwipeMinTouches, new { @class = "form-control", data_bind = "value: swipeMinTouches" })
+                    </div>
                 </div>
             </div>
         }
@@ -242,49 +233,24 @@
         {
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.HideCaptionAtLimit, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.HideCaptionAtLimit, new { @class = "form-control", data_bind = "value: hideCaptionAtLimit" })
+                    @Html.LabelFor(m => m.StartWithSlide, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.StartWithSlide, new { @class = "form-control", data_bind = "value: startWithSlide" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.StopAtSlide, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.StopAtSlide, new { @class = "form-control", data_bind = "value: stopAtSlide" })
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.HideAllCaptionAtLimit, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.HideAllCaptionAtLimit, new { @class = "form-control", data_bind = "value: hideAllCaptionAtLimit" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.HideSliderAtLimit, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.HideSliderAtLimit, new { @class = "form-control", data_bind = "value: hideSliderAtLimit" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.HideNavDelayOnMobile, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.HideNavDelayOnMobile, new { @class = "form-control", data_bind = "value: hideNavDelayOnMobile" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.HideThumbsUnderResolution, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.HideThumbsUnderResolution, new { @class = "form-control", data_bind = "value: hideThumbsUnderResolution" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.HideThumbsOnMobile, new { data_bind = "checked: hideThumbsOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.HideThumbsOnMobile)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.HideBulletsOnMobile, new { data_bind = "checked: hideBulletsOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.HideBulletsOnMobile)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.HideArrowsOnMobile, new { data_bind = "checked: hideArrowsOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.HideArrowsOnMobile)
-                    </label>
+                    @Html.LabelFor(m => m.StopAfterLoops, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.StopAfterLoops, new { @class = "form-control", data_bind = "value: stopAfterLoops" })
+                    </div>
                 </div>
             </div>
         }
@@ -293,76 +259,175 @@
         {
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Spinner, new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(m => m.Spinner, new { @class = "form-control", data_bind = "value: spinner" })
+                    @Html.LabelFor(m => m.HideCaptionAtLimit, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.HideCaptionAtLimit, new { @class = "form-control", data_bind = "value: hideCaptionAtLimit" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.HideAllCaptionAtLimit, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.HideAllCaptionAtLimit, new { @class = "form-control", data_bind = "value: hideAllCaptionAtLimit" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.HideSliderAtLimit, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.HideSliderAtLimit, new { @class = "form-control", data_bind = "value: hideSliderAtLimit" })
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.MinHeight, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.MinHeight, new { @class = "form-control", data_bind = "value: minHeight" })
+                    @Html.LabelFor(m => m.HideNavDelayOnMobile, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.HideNavDelayOnMobile, new { @class = "form-control", data_bind = "value: hideNavDelayOnMobile" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.HideThumbsUnderResolution, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.HideThumbsUnderResolution, new { @class = "form-control", data_bind = "value: hideThumbsUnderResolution" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-12 col-sm-4 col-md-3 col-lg-3"></label>
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.HideThumbsOnMobile, new { data_bind = "checked: hideThumbsOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.HideThumbsOnMobile)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.HideBulletsOnMobile, new { data_bind = "checked: hideBulletsOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.HideBulletsOnMobile)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.HideArrowsOnMobile, new { data_bind = "checked: hideArrowsOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.HideArrowsOnMobile)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        }
+
+        using (var tab = tabs.BeginPanel())
+        {
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Spinner, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.EnumDropDownListFor(m => m.Spinner, new { @class = "form-control", data_bind = "value: spinner" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MinHeight, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.MinHeight, new { @class = "form-control", data_bind = "value: minHeight" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FullScreenOffsetContainer, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.FullScreenOffsetContainer, new { @class = "form-control", data_bind = "value: fullScreenOffsetContainer" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FullScreenOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.FullScreenOffset, new { @class = "form-control", data_bind = "value: fullScreenOffset" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FullScreenOffsetUnit, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.EnumDropDownListFor(m => m.FullScreenOffsetUnit, new { @class = "form-control", data_bind = "value: fullScreenOffsetUnit" })
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.FullScreenOffsetContainer, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.FullScreenOffsetContainer, new { @class = "form-control", data_bind = "value: fullScreenOffsetContainer" })
+                    @Html.LabelFor(m => m.Shadow, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.EnumDropDownListFor(m => m.Shadow, new { @class = "form-control", data_bind = "value: shadow" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DottedOverlay, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.EnumDropDownListFor(m => m.DottedOverlay, new { @class = "form-control", data_bind = "value: dottedOverlay" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-12 col-sm-4 col-md-3 col-lg-3"></label>
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.HideTimerBar, new { data_bind = "checked: hideTimerBar" }) @T(LocalizableStrings.RevolutionSliderBlock.HideTimerBar)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.FullWidth, new { data_bind = "checked: fullWidth" }) @T(LocalizableStrings.RevolutionSliderBlock.FullWidth)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.AutoHeight, new { data_bind = "checked: autoHeight" }) @T(LocalizableStrings.RevolutionSliderBlock.AutoHeight)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.FullScreenAlignForce, new { data_bind = "checked: fullScreenAlignForce" }) @T(LocalizableStrings.RevolutionSliderBlock.FullScreenAlignForce)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.ForceFullWidth, new { data_bind = "checked: forceFullWidth" }) @T(LocalizableStrings.RevolutionSliderBlock.ForceFullWidth)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.FullScreen, new { data_bind = "checked: fullScreen" }) @T(LocalizableStrings.RevolutionSliderBlock.FullScreen)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        }
+        using (var tab = tabs.BeginPanel())
+        {
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Parallax, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.EnumDropDownListFor(m => m.Parallax, new { @class = "form-control", data_bind = "value: parallax" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ParallaxLevels, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.ParallaxLevels, new { @class = "form-control", data_bind = "value: parallaxLevels" })
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.FullScreenOffset, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.FullScreenOffset, new { @class = "form-control", data_bind = "value: fullScreenOffset" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.FullScreenOffsetUnit, new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(m => m.FullScreenOffsetUnit, new { @class = "form-control", data_bind = "value: fullScreenOffsetUnit" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Shadow, new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(m => m.Shadow, new { @class = "form-control", data_bind = "value: shadow" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.DottedOverlay, new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(m => m.DottedOverlay, new { @class = "form-control", data_bind = "value: dottedOverlay" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.HideTimerBar, new { data_bind = "checked: hideTimerBar" }) @T(LocalizableStrings.RevolutionSliderBlock.HideTimerBar)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.FullWidth, new { data_bind = "checked: fullWidth" }) @T(LocalizableStrings.RevolutionSliderBlock.FullWidth)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.AutoHeight, new { data_bind = "checked: autoHeight" }) @T(LocalizableStrings.RevolutionSliderBlock.AutoHeight)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.FullScreenAlignForce, new { data_bind = "checked: fullScreenAlignForce" }) @T(LocalizableStrings.RevolutionSliderBlock.FullScreenAlignForce)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.ForceFullWidth, new { data_bind = "checked: forceFullWidth" }) @T(LocalizableStrings.RevolutionSliderBlock.ForceFullWidth)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.FullScreen, new { data_bind = "checked: fullScreen" }) @T(LocalizableStrings.RevolutionSliderBlock.FullScreen)
-                    </label>
+                    <label class="control-label col-xs-12 col-sm-4 col-md-3 col-lg-3"></label>
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.ParallaxBgFreeze, new { data_bind = "checked: parallaxBgFreeze" }) @T(LocalizableStrings.RevolutionSliderBlock.ParallaxBgFreeze)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.ParallaxDisableOnMobile, new { data_bind = "checked: parallaxDisableOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.ParallaxDisableOnMobile)
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         }
@@ -371,48 +436,30 @@
         {
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Parallax, new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(m => m.Parallax, new { @class = "form-control", data_bind = "value: parallax" })
+                    <label class="control-label col-xs-12 col-sm-4 col-md-3 col-lg-3"></label>
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.PanZoomDisableOnMobile, new { data_bind = "checked: panZoomDisableOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.PanZoomDisableOnMobile)
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
+        }
+
+        using (var tab = tabs.BeginPanel())
+        {
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.ParallaxLevels, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.ParallaxLevels, new { @class = "form-control", data_bind = "value: parallaxLevels" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.ParallaxBgFreeze, new { data_bind = "checked: parallaxBgFreeze" }) @T(LocalizableStrings.RevolutionSliderBlock.ParallaxBgFreeze)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.ParallaxDisableOnMobile, new { data_bind = "checked: parallaxDisableOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.ParallaxDisableOnMobile)
-                    </label>
-                </div>
-            </div>
-        }
-
-        using (var tab = tabs.BeginPanel())
-        {
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.PanZoomDisableOnMobile, new { data_bind = "checked: panZoomDisableOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.PanZoomDisableOnMobile)
-                    </label>
-                </div>
-            </div>
-        }
-
-        using (var tab = tabs.BeginPanel())
-        {
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.SimplifyAll, new { data_bind = "checked: simplifyAll" }) @T(LocalizableStrings.RevolutionSliderBlock.SimplifyAll)
-                    </label>
+                    <label class="control-label col-xs-12 col-sm-4 col-md-3 col-lg-3"></label>
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.SimplifyAll, new { data_bind = "checked: simplifyAll" }) @T(LocalizableStrings.RevolutionSliderBlock.SimplifyAll)
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         }

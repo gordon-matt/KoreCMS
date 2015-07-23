@@ -5,7 +5,7 @@
 
 @model FullCalendarBlock
 
-<div id="block-content" class="row">
+<div id="block-content">
     @using (var tabs = Html.KoreUI().Begin(new Tabs()))
     {
         tabs.Tab(T(LocalizableStrings.ContentBlocks.FullCalendarBlock.EditorTabs.General), "General");
@@ -17,112 +17,54 @@
         {
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.CalendarId, new { @class = "control-label" })
-                    @Html.FullCalendar().CalendarDropDownListFor(m => m.CalendarId, new { @class = "form-control", data_bind = "value: calendarId" })
+                    @Html.LabelFor(m => m.CalendarId, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.FullCalendar().CalendarDropDownListFor(m => m.CalendarId, new { @class = "form-control", data_bind = "value: calendarId" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FirstDay, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.EnumDropDownListFor(m => m.FirstDay, new { @class = "form-control", data_bind = "value: firstDay" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AspectRatio, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.AspectRatio, new { @class = "form-control", data_bind = "value: aspectRatio" })
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.FirstDay, new { @class = "control-label" })
-                    @Html.EnumDropDownListFor(m => m.FirstDay, new { @class = "form-control", data_bind = "value: firstDay" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBox("Theme", new { data_bind = "checked: theme" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.Theme)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBox("Weekends", new { data_bind = "checked: weekends" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.Weekends)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBox("FixedWeekCount", new { data_bind = "checked: fixedWeekCount" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.FixedWeekCount)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBox("WeekNumbers", new { data_bind = "checked: weekNumbers" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.WeekNumbers)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBox("HandleWindowResize", new { data_bind = "checked: handleWindowResize" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.HandleWindowResize)
-                    </label>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.AspectRatio, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.AspectRatio, new { @class = "form-control", data_bind = "value: aspectRatio" })
-                </div>
-            </div>
-        }
-        using (var panel = tabs.BeginPanel())
-        {
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBox("SlotEventOverlap", new { data_bind = "checked: slotEventOverlap" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.SlotEventOverlap)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBox("AllDaySlot", new { data_bind = "checked: allDaySlot" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.AllDaySlot)
-                    </label>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.AllDayText, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.AllDayText, new { @class = "form-control", data_bind = "value: allDayText" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.SlotDuration, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.SlotDuration, new { @class = "form-control", data_bind = "value: slotDuration" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.ScrollTime, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.ScrollTime, new { @class = "form-control", data_bind = "value: scrollTime" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.MinTime, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.MinTime, new { @class = "form-control", data_bind = "value: minTime" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.MaxTime, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.MaxTime, new { @class = "form-control", data_bind = "value: maxTime" })
-                </div>
-            </div>
-        }
-        using (var panel = tabs.BeginPanel())
-        {
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBox("Selectable", new { data_bind = "checked: selectable" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.Selectable)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBox("UnselectAuto", new { data_bind = "checked: unselectAuto" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.UnselectAuto)
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBox("SelectOverlap", new { data_bind = "checked: selectOverlap" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.SelectOverlap)
-                    </label>
+                    <label class="control-label col-xs-12 col-sm-4 col-md-3 col-lg-3"></label>
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBox("Theme", new { data_bind = "checked: theme" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.Theme)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBox("Weekends", new { data_bind = "checked: weekends" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.Weekends)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBox("FixedWeekCount", new { data_bind = "checked: fixedWeekCount" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.FixedWeekCount)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBox("WeekNumbers", new { data_bind = "checked: weekNumbers" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.WeekNumbers)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBox("HandleWindowResize", new { data_bind = "checked: handleWindowResize" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.HandleWindowResize)
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         }
@@ -130,32 +72,113 @@
         {
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.EventColor, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.EventColor, new { @class = "form-control", data_bind = "value: eventColor" })
+                    <label class="control-label col-xs-12 col-sm-4 col-md-3 col-lg-3"></label>
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBox("SlotEventOverlap", new { data_bind = "checked: slotEventOverlap" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.SlotEventOverlap)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBox("AllDaySlot", new { data_bind = "checked: allDaySlot" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.AllDaySlot)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AllDayText, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.AllDayText, new { @class = "form-control", data_bind = "value: allDayText" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SlotDuration, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.SlotDuration, new { @class = "form-control", data_bind = "value: slotDuration" })
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.EventBackgroundColor, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.EventBackgroundColor, new { @class = "form-control", data_bind = "value: eventBackgroundColor" })
+                    @Html.LabelFor(m => m.ScrollTime, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.ScrollTime, new { @class = "form-control", data_bind = "value: scrollTime" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MinTime, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.MinTime, new { @class = "form-control", data_bind = "value: minTime" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MaxTime, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.MaxTime, new { @class = "form-control", data_bind = "value: maxTime" })
+                    </div>
+                </div>
+            </div>
+        }
+        using (var panel = tabs.BeginPanel())
+        {
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <label class="control-label col-xs-12 col-sm-4 col-md-3 col-lg-3"></label>
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBox("Selectable", new { data_bind = "checked: selectable" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.Selectable)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBox("UnselectAuto", new { data_bind = "checked: unselectAuto" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.UnselectAuto)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBox("SelectOverlap", new { data_bind = "checked: selectOverlap" }) @T(LocalizableStrings.ContentBlocks.FullCalendarBlock.SelectOverlap)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        using (var panel = tabs.BeginPanel())
+        {
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EventColor, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.EventColor, new { @class = "form-control", data_bind = "value: eventColor" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EventBackgroundColor, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.EventBackgroundColor, new { @class = "form-control", data_bind = "value: eventBackgroundColor" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EventBorderColor, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.EventBorderColor, new { @class = "form-control", data_bind = "value: eventBorderColor" })
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.EventBorderColor, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.EventBorderColor, new { @class = "form-control", data_bind = "value: eventBorderColor" })
+                    @Html.LabelFor(m => m.EventTextColor, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.EventTextColor, new { @class = "form-control", data_bind = "value: eventTextColor" })
+                    </div>
                 </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.EventTextColor, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.EventTextColor, new { @class = "form-control", data_bind = "value: eventTextColor" })
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.NextDayThreshold, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.NextDayThreshold, new { @class = "form-control", data_bind = "value: nextDayThreshold" })
+                    @Html.LabelFor(m => m.NextDayThreshold, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                        @Html.TextBoxFor(m => m.NextDayThreshold, new { @class = "form-control", data_bind = "value: nextDayThreshold" })
+                    </div>
                 </div>
             </div>
         }

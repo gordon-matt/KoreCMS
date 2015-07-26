@@ -136,6 +136,31 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Widgets.OwlCar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Widgets.RevolutionSlider", "Plugins\Kore.Plugins.Widgets.RevolutionSlider\Kore.Plugins.Widgets.RevolutionSlider.csproj", "{35687B32-99C8-4BF2-A1CA-E2E130B770CD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UpdateScripts", "UpdateScripts", "{9A627991-C98D-4E16-B915-036B4B20EB01}"
+	ProjectSection(SolutionItems) = preProject
+		_SolutionItems\UpdateScripts\Regions.sql = _SolutionItems\UpdateScripts\Regions.sql
+		_SolutionItems\UpdateScripts\Script_20150422 - 01.sql = _SolutionItems\UpdateScripts\Script_20150422 - 01.sql
+		_SolutionItems\UpdateScripts\Script_20150422 - 02.sql = _SolutionItems\UpdateScripts\Script_20150422 - 02.sql
+		_SolutionItems\UpdateScripts\Script_20150423 - 01.sql = _SolutionItems\UpdateScripts\Script_20150423 - 01.sql
+		_SolutionItems\UpdateScripts\Script_20150423 - 02.sql = _SolutionItems\UpdateScripts\Script_20150423 - 02.sql
+		_SolutionItems\UpdateScripts\Script_20150424.sql = _SolutionItems\UpdateScripts\Script_20150424.sql
+		_SolutionItems\UpdateScripts\Script_20150429.sql = _SolutionItems\UpdateScripts\Script_20150429.sql
+		_SolutionItems\UpdateScripts\Script_20150501.sql = _SolutionItems\UpdateScripts\Script_20150501.sql
+		_SolutionItems\UpdateScripts\Script_20150513.sql = _SolutionItems\UpdateScripts\Script_20150513.sql
+		_SolutionItems\UpdateScripts\Script_20150519.sql = _SolutionItems\UpdateScripts\Script_20150519.sql
+		_SolutionItems\UpdateScripts\Script_20150524.sql = _SolutionItems\UpdateScripts\Script_20150524.sql
+		_SolutionItems\UpdateScripts\Script_20150530.sql = _SolutionItems\UpdateScripts\Script_20150530.sql
+		_SolutionItems\UpdateScripts\Script_20150531.sql = _SolutionItems\UpdateScripts\Script_20150531.sql
+		_SolutionItems\UpdateScripts\Script_20150604.sql = _SolutionItems\UpdateScripts\Script_20150604.sql
+		_SolutionItems\UpdateScripts\Script_20150619.sql = _SolutionItems\UpdateScripts\Script_20150619.sql
+		_SolutionItems\UpdateScripts\Script_20150624.sql = _SolutionItems\UpdateScripts\Script_20150624.sql
+		_SolutionItems\UpdateScripts\Script_20150625.sql = _SolutionItems\UpdateScripts\Script_20150625.sql
+		_SolutionItems\UpdateScripts\Script_20150702.sql = _SolutionItems\UpdateScripts\Script_20150702.sql
+		_SolutionItems\UpdateScripts\Script_20150703 - 01.sql = _SolutionItems\UpdateScripts\Script_20150703 - 01.sql
+		_SolutionItems\UpdateScripts\Script_20150703 - 02.sql = _SolutionItems\UpdateScripts\Script_20150703 - 02.sql
+		_SolutionItems\UpdateScripts\Script_20150708.sql = _SolutionItems\UpdateScripts\Script_20150708.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -268,5 +293,6 @@ Global
 		{F8E56256-C629-49C7-94B7-6A0FE551ACED} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 		{4AC641D7-94CD-449C-883D-E4C93363AF5D} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 		{35687B32-99C8-4BF2-A1CA-E2E130B770CD} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
+		{9A627991-C98D-4E16-B915-036B4B20EB01} = {FD60340E-B54E-4D09-B63A-58B37E79A3A2}
 	EndGlobalSection
 EndGlobal

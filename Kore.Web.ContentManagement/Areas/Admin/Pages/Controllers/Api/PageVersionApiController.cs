@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.OData;
+using System.Web.Http.OData.Query;
 using System.Web.Http.Results;
 using Kore.Localization;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
@@ -27,6 +28,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             this.pageService = pageService;
             this.settings = settings;
         }
+
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        //public override IQueryable<PageVersion> Get()
+        //{
+        //    if (!CheckPermission(ReadPermission))
+        //    {
+        //        return Enumerable.Empty<PageVersion>().AsQueryable();
+        //    };
+        //}
 
         public override IHttpActionResult Delete([FromODataUri] Guid key)
         {

@@ -27,6 +27,7 @@ namespace Kore.Web.Common
 	[HasStates] [bit] NOT NULL,
 	[StateCode] [nvarchar](10) NULL,
 	[ParentId] [int] NULL,
+    [Order] [smallint] NULL,
 	CONSTRAINT [PK_dbo.Kore_Common_Regions] PRIMARY KEY CLUSTERED
 	(
 		[Id] ASC

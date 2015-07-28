@@ -1,6 +1,5 @@
 ﻿@using Kore.Web.Common
 @using Kore.Web.Common.Areas.Admin.Regions
-@using Kore.Web.Common.Areas.Admin.Regions.Models
 @using Kore.Web.Mvc
 @using Kore.Web.Mvc.KoreUI
 @using LocalizableStrings = Kore.Web.Common.LocalizableStrings;
@@ -81,13 +80,19 @@
                                 @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: country.name" })
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <div class="form-group">
                                 @Html.Label("CountryCode", T(LocalizableStrings.Regions.Model.CountryCode), new { @class = "control-label" })
                                 @Html.TextBox("CountryCode", null, new { @class = "form-control", data_bind = "value: country.countryCode" })
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Order", T(LocalizableStrings.Regions.Model.Order), new { @class = "control-label" })
+                                @Html.TextBox("Order", null, new { @class = "form-control", data_bind = "value: country.order" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <div class="checkbox">
                                     <label>
@@ -145,10 +150,16 @@
                                 @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: state.name" })
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <div class="form-group">
                                 @Html.Label("StateCode", T(LocalizableStrings.Regions.Model.StateCode), new { @class = "control-label" })
                                 @Html.TextBox("StateCode", null, new { @class = "form-control", data_bind = "value: state.stateCode" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Order", T(LocalizableStrings.Regions.Model.Order), new { @class = "control-label" })
+                                @Html.TextBox("Order", null, new { @class = "form-control", data_bind = "value: state.order" })
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -198,6 +209,12 @@
                             <div class="form-group">
                                 @Html.Label("Name", T(LocalizableStrings.Regions.Model.Name), new { @class = "control-label" })
                                 @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: city.name" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Order", T(LocalizableStrings.Regions.Model.Order), new { @class = "control-label" })
+                                @Html.TextBox("Order", null, new { @class = "form-control", data_bind = "value: city.order" })
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

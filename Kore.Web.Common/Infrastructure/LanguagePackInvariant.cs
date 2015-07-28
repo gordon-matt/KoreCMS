@@ -24,6 +24,7 @@ namespace Kore.Web.Common.Infrastructure
                     { LocalizableStrings.Regions.Model.CountryCode, "Country Code" },
                     { LocalizableStrings.Regions.Model.HasStates, "Has States" },
                     { LocalizableStrings.Regions.Model.Name, "Name" },
+                    { LocalizableStrings.Regions.Model.Order, "Order" },
                     { LocalizableStrings.Regions.Model.RegionType, "Region Type" },
                     { LocalizableStrings.Regions.Model.StateCode, "State Code" },
                 };

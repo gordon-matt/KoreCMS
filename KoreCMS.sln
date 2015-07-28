@@ -159,6 +159,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UpdateScripts", "UpdateScri
 		_SolutionItems\UpdateScripts\Script_20150703 - 01.sql = _SolutionItems\UpdateScripts\Script_20150703 - 01.sql
 		_SolutionItems\UpdateScripts\Script_20150703 - 02.sql = _SolutionItems\UpdateScripts\Script_20150703 - 02.sql
 		_SolutionItems\UpdateScripts\Script_20150708.sql = _SolutionItems\UpdateScripts\Script_20150708.sql
+		_SolutionItems\UpdateScripts\Script_20150728.sql = _SolutionItems\UpdateScripts\Script_20150728.sql
 	EndProjectSection
 EndProject
 Global

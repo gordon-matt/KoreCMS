@@ -11,6 +11,7 @@
                 public const string CountryCode = "Kore.Web.Common/Regions.Model.CountryCode";
                 public const string HasStates = "Kore.Web.Common/Regions.Model.HasStates";
                 public const string StateCode = "Kore.Web.Common/Regions.Model.StateCode";
+                public const string Order = "Kore.Web.Common/Regions.Model.Order";
             }
 
             public const string Cities = "Kore.Web.Common/Regions.Cities";

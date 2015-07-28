@@ -95,11 +95,15 @@ namespace Kore.Plugins.Ecommerce.Simple
             if (!settings.Any())
             {
                 // ... then we assume ALL countries are OK.
-                return countries.Values.OrderBy(x => x.Name).ToSelectList(
-                    value => value.Id,
-                    text => text.Name,
-                    selectedValue,
-                    emptyText);
+                return countries.Values
+                    .OrderBy(x => x.Order == null)
+                    .ThenBy(x => x.Order)
+                    .ThenBy(x => x.Name)
+                    .ToSelectList(
+                        value => value.Id,
+                        text => text.Name,
+                        selectedValue,
+                        emptyText);
             }
             else
             {
@@ -116,11 +120,15 @@ namespace Kore.Plugins.Ecommerce.Simple
                     }
                 }
 
-                return records.OrderBy(x => x.Name).ToSelectList(
-                    value => value.Id,
-                    text => text.Name,
-                    selectedValue,
-                    emptyText);
+                return records
+                    .OrderBy(x => x.Order == null)
+                    .ThenBy(x => x.Order)
+                    .ThenBy(x => x.Name)
+                    .ToSelectList(
+                        value => value.Id,
+                        text => text.Name,
+                        selectedValue,
+                        emptyText);
             }
         }
     }

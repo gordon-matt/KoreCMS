@@ -58,9 +58,16 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
                 return Repository.Table
                     .Include(x => x.Children)
                     .Where(x => x.RegionType == RegionType.Continent)
-                    .OrderBy(x => x.Name).ToList();
+                    .OrderBy(x => x.Order == null)
+                    .ThenBy(x => x.Order)
+                    .ThenBy(x => x.Name)
+                    .ToList();
             }
-            return Repository.Table.Where(x => x.RegionType == RegionType.Continent).OrderBy(x => x.Name).ToList();
+            return Repository.Table.Where(x => x.RegionType == RegionType.Continent)
+                .OrderBy(x => x.Order == null)
+                .ThenBy(x => x.Order)
+                .ThenBy(x => x.Name)
+                .ToList();
         }
 
         public IEnumerable<Region> GetSubRegions(int regionId, RegionType? regionType = null)
@@ -71,7 +78,9 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
                     .Include(x => x.Parent)
                     .Include(x => x.Children)
                     .Where(x => x.Parent.Id == regionId && x.RegionType == regionType)
-                    .OrderBy(x => x.Id)
+                    .OrderBy(x => x.Order == null)
+                    .ThenBy(x => x.Order)
+                    .ThenBy(x => x.Name)
                     .ToHashSet();
             }
 
@@ -79,7 +88,9 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
                 .Include(x => x.Parent)
                 .Include(x => x.Children)
                 .Where(x => x.Parent.Id == regionId)
-                .OrderBy(x => x.Id)
+                .OrderBy(x => x.Order == null)
+                .ThenBy(x => x.Order)
+                .ThenBy(x => x.Name)
                 .ToHashSet();
         }
 
@@ -98,7 +109,10 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
                 query = query.Where(x => x.Parent.Id == regionId);
             }
 
-            query = query.OrderBy(x => x.Id);
+            query = query
+                .OrderBy(x => x.Order == null)
+                .ThenBy(x => x.Order)
+                .ThenBy(x => x.Name);
 
             total = query.Count();
 
@@ -114,7 +128,9 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
                 .Include(x => x.Parent)
                 .Include(x => x.Children)
                 .Where(x => x.RegionType == RegionType.Country)
-                .OrderBy(x => x.Name)
+                .OrderBy(x => x.Order == null)
+                .ThenBy(x => x.Order)
+                .ThenBy(x => x.Name)
                 .ToHashSet();
         }
 
@@ -125,13 +141,17 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
                 return Repository.Table
                     .Include(x => x.Children)
                     .Where(x => x.ParentId == countryId && x.RegionType == RegionType.State)
-                    .OrderBy(x => x.Name)
+                    .OrderBy(x => x.Order == null)
+                    .ThenBy(x => x.Order)
+                    .ThenBy(x => x.Name)
                     .ToHashSet();
             }
 
             return Repository.Table
                 .Where(x => x.ParentId == countryId && x.RegionType == RegionType.State)
-                .OrderBy(x => x.Name)
+                .OrderBy(x => x.Order == null)
+                .ThenBy(x => x.Order)
+                .ThenBy(x => x.Name)
                 .ToHashSet();
         }
 

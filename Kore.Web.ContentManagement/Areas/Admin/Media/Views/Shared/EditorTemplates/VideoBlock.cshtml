@@ -61,7 +61,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <button type="button" class="close" onclick="dismissModal();" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Select Video</h4>
                 </div>
                 <div class="modal-body">
@@ -74,10 +74,20 @@
 </div>
 
 <script type="text/javascript">
+    var modalDismissed = false;
+
+    function dismissModal() {
+        modalDismissed = true;
+        $('#myModal').modal('hide');
+    };
+
     $('#myModal').on('hidden.bs.modal', function () {
-        var url = $('#Source').val();
-        url = "/Media/Uploads/" + url;
-        viewModel.source(url);
+        if (!modalDismissed) {
+            var url = $('#Source').val();
+            url = "/Media/Uploads/" + url;
+            viewModel.source(url);
+        }
+        modalDismissed = false;
     });
     var contentBlockModel = (function () {
         var f = {};

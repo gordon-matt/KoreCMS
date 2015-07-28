@@ -654,7 +654,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" class="close" onclick="dismissModal('imageUrlModal');" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Select Image</h4>
             </div>
             <div class="modal-body">
@@ -668,7 +668,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" class="close" onclick="dismissModal('videoPosterModal');" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Select Image</h4>
             </div>
             <div class="modal-body">
@@ -682,7 +682,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" class="close" onclick="dismissModal('videoMp4Modal');" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Select Video</h4>
             </div>
             <div class="modal-body">
@@ -696,7 +696,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" class="close" onclick="dismissModal('videoWebMModal');" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Select Video</h4>
             </div>
             <div class="modal-body">
@@ -710,7 +710,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" class="close" onclick="dismissModal('videoOgvModal');" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Select Video</h4>
             </div>
             <div class="modal-body">
@@ -722,31 +722,53 @@
 
 @section scripts {
     <script type="text/javascript">
+        var modalDismissed = false;
+        
+        function dismissModal(modalId) {
+            modalDismissed = true;
+            $('#' + modalId).modal('hide');
+        };
+
         $(document).ready(function () {
             $('#imageUrlModal').on('hidden.bs.modal', function () {
-                var url = $('#ImageUrl').val();
-                url = "/Media/Uploads/" + url;
-                viewModel.slide.imageUrl(url);
+                if (!modalDismissed) {
+                    var url = $('#ImageUrl').val();
+                    url = "/Media/Uploads/" + url;
+                    viewModel.slide.imageUrl(url);
+                }
+                modalDismissed = false;
             });
             $('#videoPosterModal').on('hidden.bs.modal', function () {
-                var url = $('#VideoPoster').val();
-                url = "/Media/Uploads/" + url;
-                viewModel.layer.videoPoster(url);
+                if (!modalDismissed) {
+                    var url = $('#VideoPoster').val();
+                    url = "/Media/Uploads/" + url;
+                    viewModel.layer.videoPoster(url);
+                }
+                modalDismissed = false;
             });
             $('#videoMp4Modal').on('hidden.bs.modal', function () {
-                var url = $('#VideoMp4').val();
-                url = "/Media/Uploads/" + url;
-                viewModel.layer.videoMp4(url);
+                if (!modalDismissed) {
+                    var url = $('#VideoMp4').val();
+                    url = "/Media/Uploads/" + url;
+                    viewModel.layer.videoMp4(url);
+                }
+                modalDismissed = false;
             });
             $('#videoWebMModal').on('hidden.bs.modal', function () {
-                var url = $('#VideoWebM').val();
-                url = "/Media/Uploads/" + url;
-                viewModel.layer.videoWebM(url);
+                if (!modalDismissed) {
+                    var url = $('#VideoWebM').val();
+                    url = "/Media/Uploads/" + url;
+                    viewModel.layer.videoWebM(url);
+                }
+                modalDismissed = false;
             });
             $('#videoOgvModal').on('hidden.bs.modal', function () {
-                var url = $('#VideoOgv').val();
-                url = "/Media/Uploads/" + url;
-                viewModel.layer.videoOgv(url);
+                if (!modalDismissed) {
+                    var url = $('#VideoOgv').val();
+                    url = "/Media/Uploads/" + url;
+                    viewModel.layer.videoOgv(url);
+                }
+                modalDismissed = false;
             });
         });
 

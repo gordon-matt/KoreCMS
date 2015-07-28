@@ -44,15 +44,15 @@ define([
       $("#components .tab-pane").first().addClass("active");
       $("#formtabs li").first().addClass("active");
 
-      $('#toggle_bs_style').on('click', function(e) {
-        e.preventDefault();
-        if ($('#bootstrap-classic-theme').attr('href') == '') {
-          $('#bootstrap-classic-theme').attr('href', 'assets/css/lib/bootstrap-3.0.0/dist/css/bootstrap-theme.min.css');
-        } else {
-          $('#bootstrap-classic-theme').attr('href', '');
-        }
+      //$('#toggle_bs_style').on('click', function(e) {
+      //  e.preventDefault();
+      //  if ($('#bootstrap-classic-theme').attr('href') == '') {
+      //    $('#bootstrap-classic-theme').attr('href', 'assets/css/lib/bootstrap-3.0.0/dist/css/bootstrap-theme.min.css');
+      //  } else {
+      //    $('#bootstrap-classic-theme').attr('href', '');
+      //  }
 
-      });
+      //});
 
       // Bootstrap "My Form" with 'Form Name' snippet.
       new MyFormView({

@@ -386,15 +386,21 @@ $(document).ready(function () {
     ko.applyBindings(viewModel);
 
     $('#categoryImageModal').on('hidden.bs.modal', function () {
-        var url = $('#ImageUrl').val();
-        url = "/Media/Uploads/" + url;
-        viewModel.imageUrl(url);
+        if (!modalDismissed) {
+            var url = $('#ImageUrl').val();
+            url = "/Media/Uploads/" + url;
+            viewModel.imageUrl(url);
+        }
+        modalDismissed = false;
     });
 
     $('#productImageModal').on('hidden.bs.modal', function () {
-        var url = $('#MainImageUrl').val();
-        url = "/Media/Uploads/" + url;
-        viewModel.product.mainImageUrl(url);
+        if (!modalDismissed) {
+            var url = $('#MainImageUrl').val();
+            url = "/Media/Uploads/" + url;
+            viewModel.product.mainImageUrl(url);
+        }
+        modalDismissed = false;
     });
 
     var treeviewDS = new kendo.data.HierarchicalDataSource({

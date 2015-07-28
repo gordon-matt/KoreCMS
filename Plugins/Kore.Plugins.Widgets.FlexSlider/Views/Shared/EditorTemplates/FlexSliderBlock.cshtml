@@ -349,7 +349,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <button type="button" class="close" onclick="dismissModal();" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Select Image</h4>
                 </div>
                 <div class="modal-body">
@@ -361,12 +361,22 @@
 </div>
 
 <script type="text/javascript">
+    var modalDismissed = false;
+
+    function dismissModal() {
+        modalDismissed = true;
+        $('#myModal').modal('hide');
+    };
+
     $(document).ready(function () {
         $('#myModal').on('hidden.bs.modal', function () {
-            var url = $('#MediaFolder').val();
-            var idx = url.indexOf("Uploads");
-            url = url.substring(idx);
-            viewModel.mediaFolder(url);
+            if (!modalDismissed) {
+                var url = $('#MediaFolder').val();
+                var idx = url.indexOf("Uploads");
+                url = url.substring(idx);
+                viewModel.mediaFolder(url);
+            }
+            modalDismissed = false;
         })
     });
 

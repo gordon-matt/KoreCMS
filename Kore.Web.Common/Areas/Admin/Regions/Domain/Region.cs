@@ -24,6 +24,8 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Domain
 
         public int? ParentId { get; set; }
 
+        public short? Order { get; set; }
+
         public virtual Region Parent { get; set; }
 
         public virtual ICollection<Region> Children { get; set; }

@@ -305,11 +305,15 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             if (!settings.Any())
             {
                 // ... then we assume ALL cities are OK.
-                var data = cities.Values.OrderBy(x => x.Name).Select(x => new
-                {
-                    Id = x.Id,
-                    Name = x.Name
-                });
+                var data = cities.Values
+                    .OrderBy(x => x.Order == null)
+                    .ThenBy(x => x.Order)
+                    .ThenBy(x => x.Name)
+                    .Select(x => new
+                    {
+                        Id = x.Id,
+                        Name = x.Name
+                    });
 
                 return Json(new { Data = data }, JsonRequestBehavior.AllowGet);
             }

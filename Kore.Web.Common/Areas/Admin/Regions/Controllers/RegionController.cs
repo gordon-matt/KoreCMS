@@ -76,11 +76,15 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers
                 .GetSubRegions(countryId, RegionType.City)
                 .ToDictionary(k => k.Id, v => v);
 
-            var data = cities.Select(x => new
-            {
-                Id = x.Key,
-                Name = x.Value.Name
-            });
+            var data = cities
+                .OrderBy(x => x.Value.Order == null)
+                .ThenBy(x => x.Value.Order)
+                .ThenBy(x => x.Value.Name)
+                .Select(x => new
+                {
+                    Id = x.Key,
+                    Name = x.Value.Name
+                });
 
             return Json(new { Data = data }, JsonRequestBehavior.AllowGet);
         }

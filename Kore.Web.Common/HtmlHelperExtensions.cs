@@ -84,7 +84,10 @@ namespace Kore.Web.Common
         {
             var service = EngineContext.Current.Resolve<IRegionService>();
 
-            var records = service.GetCountries().OrderBy(x => x.Name);
+            var records = service.GetCountries()
+                .OrderBy(x => x.Order == null)
+                .ThenBy(x => x.Order)
+                .ThenBy(x => x.Name);
 
             return records.ToSelectList(
                 value => value.Id,

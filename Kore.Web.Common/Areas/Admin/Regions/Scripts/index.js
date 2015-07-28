@@ -134,6 +134,7 @@ var CountryModel = function () {
     self.countryCode = ko.observable(null);
     self.hasStates = ko.observable(false);
     self.parentId = ko.observable(null);
+    self.order = ko.observable(null);
 
     self.create = function () {
         self.id(0);
@@ -141,6 +142,7 @@ var CountryModel = function () {
         self.countryCode(null);
         self.hasStates(false);
         self.parentId(viewModel.selectedContinentId());
+        self.order(null);
 
         self.validator.resetForm();
         switchSection($("#country-form-section"));
@@ -160,6 +162,7 @@ var CountryModel = function () {
             self.countryCode(json.CountryCode);
             self.hasStates(json.HasStates);
             self.parentId(json.ParentId);
+            self.order(json.Order);
 
             self.validator.resetForm();
             switchSection($("#country-form-section"));
@@ -198,13 +201,19 @@ var CountryModel = function () {
             return false;
         }
 
+        var order = self.order();
+        if (!order) {
+            order = null;
+        }
+
         var record = {
             Id: self.id(),
             Name: self.name(),
             RegionType: 'Country',
             CountryCode: self.countryCode(),
             HasStates: self.hasStates(),
-            ParentId: self.parentId()
+            ParentId: self.parentId(),
+            Order: order,
         };
 
         if (isNew) {
@@ -305,12 +314,14 @@ var StateModel = function () {
     self.name = ko.observable(null);
     self.stateCode = ko.observable(null);
     self.parentId = ko.observable(null);
+    self.order = ko.observable(null);
 
     self.create = function () {
         self.id(0);
         self.name(null);
         self.stateCode(null);
         self.parentId(viewModel.selectedCountryId());
+        self.order(null);
 
         self.validator.resetForm();
         switchSection($("#state-form-section"));
@@ -329,6 +340,7 @@ var StateModel = function () {
             self.name(json.Name);
             self.stateCode(json.StateCode);
             self.parentId(json.ParentId);
+            self.order(json.Order);
 
             self.validator.resetForm();
             switchSection($("#state-form-section"));
@@ -367,12 +379,18 @@ var StateModel = function () {
             return false;
         }
 
+        var order = self.order();
+        if (!order) {
+            order = null;
+        }
+
         var record = {
             Id: self.id(),
             Name: self.name(),
             RegionType: 'State',
             StateCode: self.stateCode(),
-            ParentId: self.parentId()
+            ParentId: self.parentId(),
+            Order: order,
         };
 
         if (isNew) {
@@ -457,10 +475,12 @@ var CityModel = function () {
     self.id = ko.observable(0);
     self.name = ko.observable(null);
     self.parentId = ko.observable(null);
+    self.order = ko.observable(null);
 
     self.create = function () {
         self.id(0);
         self.name(null);
+        self.order(null);
 
         if (viewModel.selectedStateId()) {
             self.parentId(viewModel.selectedStateId());
@@ -485,6 +505,7 @@ var CityModel = function () {
             self.id(json.Id);
             self.name(json.Name);
             self.parentId(json.ParentId);
+            self.order(json.Order);
 
             self.validator.resetForm();
             switchSection($("#city-form-section"));
@@ -523,11 +544,17 @@ var CityModel = function () {
             return false;
         }
 
+        var order = self.order();
+        if (!order) {
+            order = null;
+        }
+
         var record = {
             Id: self.id(),
             Name: self.name(),
             RegionType: 'City',
-            ParentId: self.parentId()
+            ParentId: self.parentId(),
+            Order: order,
         };
 
         if (isNew) {

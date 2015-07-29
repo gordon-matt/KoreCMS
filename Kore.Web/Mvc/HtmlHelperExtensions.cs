@@ -9,6 +9,7 @@ using System.Text;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
+using Kore.ComponentModel;
 using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Security.Membership;
@@ -546,6 +547,35 @@ namespace Kore.Web.Mvc
             var multiSelectList = EnumExtensions.ToMultiSelectList<TEnum>(parsedSelectedValues, emptyText);
 
             return html.ListBoxFor(expression, multiSelectList, htmlAttributes);
+        }
+
+        public static MvcHtmlString HelpText(this HtmlHelper html, string helpText, object htmlAttributes = null)
+        {
+            var tagBuilder = new FluentTagBuilder("p")
+                .AddCssClass("help-block")
+                .MergeAttributes(htmlAttributes)
+                .SetInnerHtml(helpText);
+
+            return new MvcHtmlString(tagBuilder.ToString());
+        }
+
+        public static MvcHtmlString HelpTextFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null)
+        {
+            var memberExpression = expression.Body as MemberExpression;
+            var propertyInfo = (memberExpression.Member as PropertyInfo);
+            var attribute = propertyInfo.GetCustomAttributes().OfType<LocalizedHelpTextAttribute>().FirstOrDefault();
+
+            if (attribute == null)
+            {
+                return MvcHtmlString.Empty;
+            }
+
+            var tagBuilder = new FluentTagBuilder("p")
+                .AddCssClass("help-block")
+                .MergeAttributes(htmlAttributes)
+                .SetInnerHtml(attribute.HelpText);
+
+            return new MvcHtmlString(tagBuilder.ToString());
         }
 
         public static Kore<TModel> Kore<TModel>(this HtmlHelper<TModel> html) where TModel : class

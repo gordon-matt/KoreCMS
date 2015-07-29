@@ -123,6 +123,7 @@
                             <div class="form-group">
                                 @Html.Label("Title", T(LocalizableStrings.Models.Slide.Title), new { @class = "control-label" })
                                 @Html.TextBox("Title", null, new { @class = "form-control", data_bind = "value: slide.title" })
+                                @Html.HelpText(T(LocalizableStrings.Models.Slide.HelpText.Title))
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -138,6 +139,7 @@
                                     "Transition",
                                     WebEnumExtensions.ToSelectList<Transition>(emptyText: string.Empty, nameIsId: true),
                                     new { @class = "form-control", data_bind = "value: slide.transition" })
+                                @Html.HelpText(T(LocalizableStrings.Models.Slide.HelpText.Transition))
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -145,38 +147,43 @@
                                 <label>
                                     @Html.CheckBox("RandomTransition", new { data_bind = "checked: slide.randomTransition" }) @T(LocalizableStrings.Models.Slide.RandomTransition)
                                 </label>
+                                @Html.HelpText(T(LocalizableStrings.Models.Slide.HelpText.RandomTransition))
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 @Html.Label("SlotAmount", T(LocalizableStrings.Models.Slide.SlotAmount), new { @class = "control-label" })
                                 @Html.TextBox("SlotAmount", null, new { @class = "form-control", data_bind = "value: slide.slotAmount" })
+                                @Html.HelpText(T(LocalizableStrings.Models.Slide.HelpText.SlotAmount))
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 @Html.Label("MasterSpeed", T(LocalizableStrings.Models.Slide.MasterSpeed), new { @class = "control-label" })
                                 @Html.TextBox("MasterSpeed", null, new { @class = "form-control", data_bind = "value: slide.masterSpeed" })
+                                @Html.HelpText(T(LocalizableStrings.Models.Slide.HelpText.MasterSpeed))
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 @Html.Label("Delay", T(LocalizableStrings.Models.Slide.Delay), new { @class = "control-label" })
                                 @Html.TextBox("Delay", null, new { @class = "form-control", data_bind = "value: slide.delay" })
+                                @Html.HelpText(T(LocalizableStrings.Models.Slide.HelpText.Delay))
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 @Html.Label("Link", T(LocalizableStrings.Models.Slide.Link), new { @class = "control-label" })
                                 @Html.TextBox("Link", null, new { @class = "form-control", data_bind = "value: slide.link" })
+                                @Html.HelpText(T(LocalizableStrings.Models.Slide.HelpText.Link))
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        @*<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 @Html.Label("Order", T(LocalizableStrings.Models.Slide.Order), new { @class = "control-label" })
                                 @Html.TextBox("Order", null, new { @class = "form-control", data_bind = "value: slide.order" })
                             </div>
-                        </div>
+                        </div>*@
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 @Html.Label("Target", T(LocalizableStrings.Models.Slide.Target), new { @class = "control-label" })
@@ -184,18 +191,21 @@
                                     "Target",
                                     WebEnumExtensions.ToSelectList<PageTarget>(emptyText: string.Empty, nameIsId: true),
                                     new { @class = "form-control", data_bind = "value: slide.target" })
+                                @Html.HelpText(T(LocalizableStrings.Models.Slide.HelpText.Target))
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 @Html.Label("SlideIndex", T(LocalizableStrings.Models.Slide.SlideIndex), new { @class = "control-label" })
                                 @Html.TextBox("SlideIndex", null, new { @class = "form-control", data_bind = "value: slide.slideIndex" })
+                                @Html.HelpText(T(LocalizableStrings.Models.Slide.HelpText.SlideIndex))
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 @Html.Label("Thumb", T(LocalizableStrings.Models.Slide.Thumb), new { @class = "control-label" })
                                 @Html.TextBox("Thumb", null, new { @class = "form-control", data_bind = "value: slide.thumb" })
+                                @Html.HelpText(T(LocalizableStrings.Models.Slide.HelpText.Thumb))
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -212,6 +222,7 @@
                                     "BackgroundRepeat",
                                     WebEnumExtensions.ToSelectList<BackgroundRepeat>(emptyText: string.Empty, nameIsId: true),
                                     new { @class = "form-control", data_bind = "value: slide.backgroundRepeat" })
+                                @Html.HelpText(T(LocalizableStrings.Models.Slide.HelpText.BackgroundRepeat))
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -221,6 +232,7 @@
                                     "BackgroundFit",
                                     WebEnumExtensions.ToSelectList<BackgroundFit>(emptyText: string.Empty, nameIsId: true),
                                     new { @class = "form-control", data_bind = "value: slide.backgroundFit" })
+                                @Html.HelpText(T(LocalizableStrings.Models.Slide.HelpText.BackgroundFit))
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -233,6 +245,7 @@
                             <div class="form-group">
                                 @Html.Label("BackgroundFitEnd", T(LocalizableStrings.Models.Slide.BackgroundFitEnd), new { @class = "control-label" })
                                 @Html.TextBox("BackgroundFitEnd", null, new { @class = "form-control", data_bind = "value: slide.backgroundFitEnd" })
+                                @Html.HelpText(T(LocalizableStrings.Models.Slide.HelpText.BackgroundFitEnd))
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -251,6 +264,7 @@
                                     "BackgroundPosition",
                                     WebEnumExtensions.ToSelectList<BackgroundPosition>(emptyText: string.Empty, nameIsId: true),
                                     new { @class = "form-control", data_bind = "value: slide.backgroundPositionEnd" })
+                                @Html.HelpText(T(LocalizableStrings.Models.Slide.HelpText.BackgroundPositionEnd))
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -258,12 +272,14 @@
                                 <label>
                                     @Html.CheckBox("KenBurnsEffect", new { data_bind = "checked: slide.kenBurnsEffect" }) @T(LocalizableStrings.Models.Slide.KenBurnsEffect)
                                 </label>
+                                @Html.HelpText(T(LocalizableStrings.Models.Slide.HelpText.KenBurnsEffect))
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 @Html.Label("Duration", T(LocalizableStrings.Models.Slide.Duration), new { @class = "control-label" })
                                 @Html.TextBox("Duration", null, new { @class = "form-control", data_bind = "value: slide.duration" })
+                                @Html.HelpText(T(LocalizableStrings.Models.Slide.HelpText.Duration))
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -273,6 +289,7 @@
                                     "Easing",
                                     WebEnumExtensions.ToSelectList<EasingMethod>(emptyText: string.Empty, nameIsId: true),
                                     new { @class = "form-control", data_bind = "value: slide.easing" })
+                                @Html.HelpText(T(LocalizableStrings.Models.Slide.HelpText.Easing))
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -335,12 +352,14 @@
                                     <div class="form-group">
                                         @Html.Label("Start", T(LocalizableStrings.Models.Layer.Start), new { @class = "control-label" })
                                         @Html.TextBox("Start", null, new { @class = "form-control", data_bind = "value: layer.start" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.Start))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         @Html.Label("Speed", T(LocalizableStrings.Models.Layer.Speed), new { @class = "control-label" })
                                         @Html.TextBox("Speed", null, new { @class = "form-control", data_bind = "value: layer.speed" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.Speed))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -365,6 +384,7 @@
                                     <div class="form-group">
                                         @Html.Label("StyleClass", T(LocalizableStrings.Models.Layer.StyleClass), new { @class = "control-label" })
                                         @Html.TextBox("StyleClass", null, new { @class = "form-control", data_bind = "value: layer.styleClass" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.StyleClass))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -374,6 +394,7 @@
                                             "IncomingAnimation",
                                             WebEnumExtensions.ToSelectList<IncomingAnimation>(emptyText: string.Empty, nameIsId: true),
                                             new { @class = "form-control", data_bind = "value: layer.incomingAnimation" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.IncomingAnimation))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -383,18 +404,21 @@
                                             "OutgoingAnimation",
                                             WebEnumExtensions.ToSelectList<OutgoingAnimation>(emptyText: string.Empty, nameIsId: true),
                                             new { @class = "form-control", data_bind = "value: layer.outgoingAnimation" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.OutgoingAnimation))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         @Html.Label("HorizontalOffset", T(LocalizableStrings.Models.Layer.HorizontalOffset), new { @class = "control-label" })
                                         @Html.TextBox("HorizontalOffset", null, new { @class = "form-control", data_bind = "value: layer.horizontalOffset" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.HorizontalOffset))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         @Html.Label("VerticalOffset", T(LocalizableStrings.Models.Layer.VerticalOffset), new { @class = "control-label" })
                                         @Html.TextBox("VerticalOffset", null, new { @class = "form-control", data_bind = "value: layer.verticalOffset" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.VerticalOffset))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -404,12 +428,14 @@
                                             "SplitIn",
                                             WebEnumExtensions.ToSelectList<CaptionSplitType>(nameIsId: true),
                                             new { @class = "form-control", data_bind = "value: layer.splitIn" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.SplitIn))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         @Html.Label("ElementDelay", T(LocalizableStrings.Models.Layer.ElementDelay), new { @class = "control-label" })
                                         @Html.TextBox("ElementDelay", null, new { @class = "form-control", data_bind = "value: layer.elementDelay" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.ElementDelay))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -419,12 +445,14 @@
                                             "SplitOut",
                                             WebEnumExtensions.ToSelectList<CaptionSplitType>(nameIsId: true),
                                             new { @class = "form-control", data_bind = "value: layer.splitOut" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.SplitOut))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         @Html.Label("EndElementDelay", T(LocalizableStrings.Models.Layer.EndElementDelay), new { @class = "control-label" })
                                         @Html.TextBox("EndElementDelay", null, new { @class = "form-control", data_bind = "value: layer.endElementDelay" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.EndElementDelay))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -434,18 +462,21 @@
                                             "Easing",
                                             WebEnumExtensions.ToSelectList<EasingMethod>(emptyText: string.Empty, nameIsId: true),
                                             new { @class = "form-control", data_bind = "value: layer.easing" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.Easing))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         @Html.Label("EndSpeed", T(LocalizableStrings.Models.Layer.EndSpeed), new { @class = "control-label" })
                                         @Html.TextBox("EndSpeed", null, new { @class = "form-control", data_bind = "value: layer.endSpeed" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.EndSpeed))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         @Html.Label("End", T(LocalizableStrings.Models.Layer.End), new { @class = "control-label" })
                                         @Html.TextBox("End", null, new { @class = "form-control", data_bind = "value: layer.end" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.End))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -455,6 +486,7 @@
                                             "EndEasing",
                                             WebEnumExtensions.ToSelectList<EasingMethod>(emptyText: string.Empty, nameIsId: true),
                                             new { @class = "form-control", data_bind = "value: layer.endEasing" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.EndEasing))
                                     </div>
                                 </div>
                             }
@@ -465,26 +497,31 @@
                                         <label>
                                             @Html.CheckBox("AutoPlay", new { data_bind = "checked: layer.autoPlay" }) @T(LocalizableStrings.Models.Layer.AutoPlay)
                                         </label>
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.AutoPlay))
                                     </div>
                                     <div class="checkbox">
                                         <label>
                                             @Html.CheckBox("AutoPlayOnlyFirstTime", new { data_bind = "checked: layer.autoPlayOnlyFirstTime" }) @T(LocalizableStrings.Models.Layer.AutoPlayOnlyFirstTime)
                                         </label>
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.AutoPlayOnlyFirstTime))
                                     </div>
                                     <div class="checkbox">
                                         <label>
                                             @Html.CheckBox("NextSlideAtEnd", new { data_bind = "checked: layer.nextSlideAtEnd" }) @T(LocalizableStrings.Models.Layer.NextSlideAtEnd)
                                         </label>
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.NextSlideAtEnd))
                                     </div>
                                     <div class="checkbox">
                                         <label>
                                             @Html.CheckBox("ForceCover", new { data_bind = "checked: layer.forceCover" }) @T(LocalizableStrings.Models.Layer.ForceCover)
                                         </label>
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.ForceCover))
                                     </div>
                                     <div class="checkbox">
                                         <label>
                                             @Html.CheckBox("ForceRewind", new { data_bind = "checked: layer.forceRewind" }) @T(LocalizableStrings.Models.Layer.ForceRewind)
                                         </label>
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.ForceRewind))
                                     </div>
                                     <div class="checkbox">
                                         <label>
@@ -503,12 +540,14 @@
                                                 </a>
                                             </span>
                                         </div>
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.VideoPoster))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         @Html.Label("VideoWidth", T(LocalizableStrings.Models.Layer.VideoWidth), new { @class = "control-label" })
                                         @Html.TextBox("VideoWidth", null, new { @class = "form-control", data_bind = "value: layer.videoWidth" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.VideoWidth))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -524,6 +563,7 @@
                                     <div class="form-group">
                                         @Html.Label("VideoHeight", T(LocalizableStrings.Models.Layer.VideoHeight), new { @class = "control-label" })
                                         @Html.TextBox("VideoHeight", null, new { @class = "form-control", data_bind = "value: layer.videoHeight" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.VideoHeight))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -551,6 +591,7 @@
                                             "VideoPreload",
                                             WebEnumExtensions.ToSelectList<VideoPreloadOption>(nameIsId: true),
                                             new { @class = "form-control", data_bind = "value: layer.videoPreload" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.VideoPreload))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -573,6 +614,7 @@
                                                 </a>
                                             </span>
                                         </div>
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.VideoMp4))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: layer.videoType() == 'Html5'">
@@ -586,6 +628,7 @@
                                                 </a>
                                             </span>
                                         </div>
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.VideoWebM))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: layer.videoType() == 'Html5'">
@@ -599,18 +642,21 @@
                                                 </a>
                                             </span>
                                         </div>
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.VideoOgv))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: layer.videoType() == 'YouTube'">
                                     <div class="form-group">
                                         @Html.Label("YouTubeId", T(LocalizableStrings.Models.Layer.YouTubeId), new { @class = "control-label" })
                                         @Html.TextBox("YouTubeId", null, new { @class = "form-control", data_bind = "value: layer.youTubeId" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.YouTubeId))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-bind="visible: layer.videoType() == 'Vimeo'">
                                     <div class="form-group">
                                         @Html.Label("VimeoId", T(LocalizableStrings.Models.Layer.VimeoId), new { @class = "control-label" })
                                         @Html.TextBox("VimeoId", null, new { @class = "form-control", data_bind = "value: layer.vimeoId" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.VimeoId))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -618,12 +664,14 @@
                                         <label>
                                             @Html.CheckBox("ShowVideoControls", new { data_bind = "checked: layer.showVideoControls" }) @T(LocalizableStrings.Models.Layer.ShowVideoControls)
                                         </label>
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.ShowVideoControls))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         @Html.Label("VideoAttributes", T(LocalizableStrings.Models.Layer.VideoAttributes), new { @class = "control-label" })
                                         @Html.TextBox("VideoAttributes", null, new { @class = "form-control", data_bind = "value: layer.videoAttributes" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.VideoAttributes))
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -633,6 +681,7 @@
                                             "VideoLoop",
                                             WebEnumExtensions.ToSelectList<VideoLoop>(nameIsId: true),
                                             new { @class = "form-control", data_bind = "value: layer.videoLoop" })
+                                        @Html.HelpText(T(LocalizableStrings.Models.Layer.HelpText.VideoLoop))
                                     </div>
                                 </div>
                             }

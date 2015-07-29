@@ -17,6 +17,42 @@
                     public const string Video = "Plugins.Widgets.RevolutionSlider/Models.Layer.Tabs.Video";
                 }
 
+                public static class HelpText
+                {
+                    public const string Start = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.Start";
+                    public const string Speed = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.Speed";
+                    public const string StyleClass = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.StyleClass";
+                    public const string IncomingAnimation = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.IncomingAnimation";
+                    public const string OutgoingAnimation = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.OutgoingAnimation";
+                    public const string HorizontalOffset = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.HorizontalOffset";
+                    public const string VerticalOffset = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.VerticalOffset";
+                    public const string SplitIn = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.SplitIn";
+                    public const string ElementDelay = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.ElementDelay";
+                    public const string SplitOut = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.SplitOut";
+                    public const string EndElementDelay = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.EndElementDelay";
+                    public const string Easing = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.Easing";
+                    public const string EndSpeed = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.EndSpeed";
+                    public const string End = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.End";
+                    public const string EndEasing = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.EndEasing";
+                    public const string AutoPlay = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.AutoPlay";
+                    public const string AutoPlayOnlyFirstTime = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.AutoPlayOnlyFirstTime";
+                    public const string NextSlideAtEnd = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.NextSlideAtEnd";
+                    public const string VideoPoster = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.VideoPoster";
+                    public const string ForceCover = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.ForceCover";
+                    public const string ForceRewind = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.ForceRewind";
+                    public const string VideoWidth = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.VideoWidth";
+                    public const string VideoHeight = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.VideoHeight";
+                    public const string VideoPreload = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.VideoPreload";
+                    public const string VideoMp4 = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.VideoMp4";
+                    public const string VideoWebM = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.VideoWebM";
+                    public const string VideoOgv = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.VideoOgv";
+                    public const string YouTubeId = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.YouTubeId";
+                    public const string VimeoId = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.VimeoId";
+                    public const string ShowVideoControls = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.ShowVideoControls";
+                    public const string VideoAttributes = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.VideoAttributes";
+                    public const string VideoLoop = "Plugins.Widgets.RevolutionSlider/Models.Layer.HelpText.VideoLoop";
+                }
+
                 public const string CaptionText = "Plugins.Widgets.RevolutionSlider/Models.Layer.CaptionText";
                 public const string Start = "Plugins.Widgets.RevolutionSlider/Models.Layer.Start";
                 public const string Speed = "Plugins.Widgets.RevolutionSlider/Models.Layer.Speed";
@@ -66,6 +102,27 @@
 
             public static class Slide
             {
+                public static class HelpText
+                {
+                    public const string Transition = "Plugins.Widgets.RevolutionSlider/Models.Slide.HelpText.Transition";
+                    public const string RandomTransition = "Plugins.Widgets.RevolutionSlider/Models.Slide.HelpText.RandomTransition";
+                    public const string SlotAmount = "Plugins.Widgets.RevolutionSlider/Models.Slide.HelpText.SlotAmount";
+                    public const string MasterSpeed = "Plugins.Widgets.RevolutionSlider/Models.Slide.HelpText.MasterSpeed";
+                    public const string Delay = "Plugins.Widgets.RevolutionSlider/Models.Slide.HelpText.Delay";
+                    public const string Link = "Plugins.Widgets.RevolutionSlider/Models.Slide.HelpText.Link";
+                    public const string Target = "Plugins.Widgets.RevolutionSlider/Models.Slide.HelpText.Target";
+                    public const string SlideIndex = "Plugins.Widgets.RevolutionSlider/Models.Slide.HelpText.SlideIndex";
+                    public const string Thumb = "Plugins.Widgets.RevolutionSlider/Models.Slide.HelpText.Thumb";
+                    public const string Title = "Plugins.Widgets.RevolutionSlider/Models.Slide.HelpText.Title";
+                    public const string BackgroundRepeat = "Plugins.Widgets.RevolutionSlider/Models.Slide.HelpText.BackgroundRepeat";
+                    public const string BackgroundFit = "Plugins.Widgets.RevolutionSlider/Models.Slide.HelpText.BackgroundFit";
+                    public const string BackgroundFitEnd = "Plugins.Widgets.RevolutionSlider/Models.Slide.HelpText.BackgroundFitEnd";
+                    public const string BackgroundPositionEnd = "Plugins.Widgets.RevolutionSlider/Models.Slide.HelpText.BackgroundPositionEnd";
+                    public const string KenBurnsEffect = "Plugins.Widgets.RevolutionSlider/Models.Slide.HelpText.KenBurnsEffect";
+                    public const string Duration = "Plugins.Widgets.RevolutionSlider/Models.Slide.HelpText.Duration";
+                    public const string Easing = "Plugins.Widgets.RevolutionSlider/Models.Slide.HelpText.Easing";
+                }
+
                 public const string SliderId = "Plugins.Widgets.RevolutionSlider/Models.Slide.SliderId";
                 public const string Order = "Plugins.Widgets.RevolutionSlider/Models.Slide.Order";
                 public const string Transition = "Plugins.Widgets.RevolutionSlider/Models.Slide.Transition";
@@ -104,6 +161,63 @@
                 public const string Parallax = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.EditorTabs.Parallax";
                 public const string PanZoom = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.EditorTabs.PanZoom";
                 public const string Other = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.EditorTabs.Other";
+            }
+
+            public static class HelpText
+            {
+                public const string Delay = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.Delay";
+                public const string StartHeight = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.StartHeight";
+                public const string StartWidth = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.StartWidth";
+                public const string KeyboardNavigation = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.KeyboardNavigation";
+                public const string OnHoverStop = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.OnHoverStop";
+                public const string ThumbWidth = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.ThumbWidth";
+                public const string ThumbHeight = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.ThumbHeight";
+                public const string ThumbAmount = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.ThumbAmount";
+                public const string HideThumbs = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.HideThumbs";
+                public const string NavigationType = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.NavigationType";
+                public const string NavigationArrows = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.NavigationArrows";
+                public const string NavigationStyle = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.NavigationStyle";
+                public const string NavigationHAlign = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.NavigationHAlign";
+                public const string NavigationVAlign = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.NavigationVAlign";
+                public const string NavigationHOffset = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.NavigationHOffset";
+                public const string NavigationVOffset = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.NavigationVOffset";
+                public const string SoloArrowLeftHOffset = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.SoloArrowLeftHOffset";
+                public const string SoloArrowRightHOffset = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.SoloArrowRightHOffset";
+                public const string SoloArrowLeftVOffset = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.SoloArrowLeftVOffset";
+                public const string SoloArrowRightVOffset = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.SoloArrowRightVOffset";
+                public const string SwipeVelocity = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.SwipeVelocity";
+                public const string SwipeMaxTouches = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.SwipeMaxTouches";
+                public const string SwipeMinTouches = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.SwipeMinTouches";
+                public const string DragBlockVertical = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.DragBlockVertical";
+                public const string StartWithSlide = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.StartWithSlide";
+                public const string StopAtSlide = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.StopAtSlide";
+                public const string StopAfterLoops = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.StopAfterLoops";
+                public const string HideCaptionAtLimit = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.HideCaptionAtLimit";
+                public const string HideAllCaptionAtLimit = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.HideAllCaptionAtLimit";
+                public const string HideSliderAtLimit = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.HideSliderAtLimit";
+                public const string HideNavDelayOnMobile = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.HideNavDelayOnMobile";
+                public const string HideThumbsOnMobile = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.HideThumbsOnMobile";
+                public const string HideBulletsOnMobile = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.HideBulletsOnMobile";
+                public const string HideArrowsOnMobile = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.HideArrowsOnMobile";
+                public const string HideThumbsUnderResolution = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.HideThumbsUnderResolution";
+                public const string Spinner = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.Spinner";
+                public const string HideTimerBar = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.HideTimerBar";
+                public const string FullWidth = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.FullWidth";
+                public const string AutoHeight = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.AutoHeight";
+                public const string MinHeight = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.MinHeight";
+                public const string FullScreenAlignForce = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.FullScreenAlignForce";
+                public const string ForceFullWidth = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.ForceFullWidth";
+                public const string FullScreen = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.FullScreen";
+                public const string FullScreenOffsetContainer = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.FullScreenOffsetContainer";
+                public const string FullScreenOffset = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.FullScreenOffset";
+                public const string Shadow = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.Shadow";
+                public const string DottedOverlay = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.DottedOverlay";
+                public const string Parallax = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.Parallax";
+                public const string ParallaxBgFreeze = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.ParallaxBgFreeze";
+                public const string ParallaxLevels = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.ParallaxLevels";
+                public const string ParallaxDisableOnMobile = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.ParallaxDisableOnMobile";
+                public const string PanZoomDisableOnMobile = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.PanZoomDisableOnMobile";
+                public const string SimplifyAll = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.HelpText.SimplifyAll";
             }
 
             public const string SliderId = "Plugins.Widgets.RevolutionSlider/RevolutionSliderBlock.SliderId";

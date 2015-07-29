@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Kore.Linq
 {
@@ -8,26 +9,26 @@ namespace Kore.Linq
     {
         public static string GetFullPropertyName<TElement, TValue>(Expression<Func<TElement, TValue>> expression)
         {
-            MemberExpression me;
+            MemberExpression memberExpression;
             switch (expression.Body.NodeType)
             {
                 case ExpressionType.Convert:
                 case ExpressionType.ConvertChecked:
                     var ue = expression.Body as UnaryExpression;
-                    me = ((ue != null) ? ue.Operand : null) as MemberExpression;
+                    memberExpression = ((ue != null) ? ue.Operand : null) as MemberExpression;
                     break;
 
                 default:
-                    me = expression.Body as MemberExpression;
+                    memberExpression = expression.Body as MemberExpression;
                     break;
             }
 
             var names = new List<string>();
 
-            while (me != null)
+            while (memberExpression != null)
             {
-                names.Add(me.Member.Name);
-                me = me.Expression as MemberExpression;
+                names.Add(memberExpression.Member.Name);
+                memberExpression = memberExpression.Expression as MemberExpression;
             }
 
             names.Reverse();

@@ -16,27 +16,16 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.ContentBlocks
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.ControlId)]
         public string ControlId { get; set; }
 
-        /// <summary>
-        /// <para>The time one slide stays on the screen in Milliseconds. Global Setting.</para>
-        /// <para>You can set per Slide extra local delay time via the data-delay in the &lt;li&gt; element (Default: 9000).</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.Delay)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.Delay)]
         public short Delay { get; set; }
 
-        /// <summary>
-        /// <para>This Height of the Grid where the Captions are displayed in Pixel. This Height is the Max height of Slider in</para>
-        /// <para>Fullwidth Layout and in Responsive Layout. In Fullscreen Layout the Gird will be centered Vertically in case</para>
-        /// <para>the Slider is higher then this value.</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.StartHeight)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.StartHeight)]
         public short StartHeight { get; set; }
 
-        /// <summary>
-        /// <para>This Height of the Grid where the Captions are displayed in Pixel. This Width is the Max Width of Slider in</para>
-        /// <para>Responsive Layout.  In Fullscreen and in FullWidth Layout the Gird will be centered Horizontally in case the</para>
-        /// <para>Slider is wider then this value.</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.StartWidth)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.StartWidth)]
         public short StartWidth { get; set; }
 
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.Shuffle)]
@@ -46,86 +35,56 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.ContentBlocks
 
         #region Navigation
 
-        /// <summary>
-        /// Possible Values: "on", "off" - Allows to use the Left/Right Arrow for Keyboard navigation when Slider is in Focus.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.KeyboardNavigation)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.KeyboardNavigation)]
         public bool KeyboardNavigation { get; set; }
 
-        /// <summary>
-        /// <para>Possible Values: "on", "off" - Stop the Timer if mouse is hovering the Slider.</para>
-        /// <para>Caption animations are not stopped !! They will just play to the end.</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.OnHoverStop)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.OnHoverStop)]
         public bool OnHoverStop { get; set; }
 
-        /// <summary>
-        /// <para>The width of the thumbs in pixels. Thumbs are not responsive from basic.</para>
-        /// <para>For Responsive Thumbs you will need to create media query based thumb sizes.</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.ThumbWidth)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.ThumbWidth)]
         public short ThumbWidth { get; set; }
 
-        /// <summary>
-        /// <para>The height of the thumbs in pixels. Thumbs are not responsive from basic.</para>
-        /// <para>For Responsive Thumbs you will need to create media query based thumb sizes.</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.ThumbHeight)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.ThumbHeight)]
         public short ThumbHeight { get; set; }
 
-        /// <summary>
-        /// The Amount of visible Thumbs in the same time. The rest of the thumbs are only visible on hover, or at slide change.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.ThumbAmount)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.ThumbAmount)]
         public byte ThumbAmount { get; set; }
 
-        /// <summary>
-        /// <para>0 - Never hide Thumbs.  1000- 100000 (ms) hide thumbs and navigation arrows, bullets after the predefined</para>
-        /// <para>ms (1000ms == 1 sec,  1500 == 1,5 sec etc..)</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.HideThumbs)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.HideThumbs)]
         public short HideThumbs { get; set; }
 
-        /// <summary>
-        /// Display type of the "bullet/thumbnail" bar (Default:"none")
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.NavigationType)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.NavigationType)]
         public NavigationType NavigationType { get; set; }
 
-        /// <summary>
-        /// Display position of the Navigation Arrows (Default: "nexttobullets")
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.NavigationArrows)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.NavigationArrows)]
         public NavigationArrows NavigationArrows { get; set; }
 
-        /// <summary>
-        /// Look of the navigation bullets if navigationType "bullet" selected.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.NavigationStyle)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.NavigationStyle)]
         public NavigationStyle NavigationStyle { get; set; }
 
-        /// <summary>
-        /// Horizontal Align of the Navigation bullets / thumbs (depending on which Style has been selected).
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.NavigationHAlign)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.NavigationHAlign)]
         public NavigationHAlign NavigationHAlign { get; set; }
 
-        /// <summary>
-        /// Vertical Align of the Navigation bullets / thumbs (depending on which Style has been selected).
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.NavigationVAlign)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.NavigationVAlign)]
         public NavigationVAlign NavigationVAlign { get; set; }
 
-        /// <summary>
-        /// The Offset position of the navigation depending on the aligned position. From -1000 to +1000 any value in px. i.e. -30
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.NavigationHOffset)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.NavigationHOffset)]
         public short NavigationHOffset { get; set; }
 
-        /// <summary>
-        /// The Offset position of the navigation depending on the aligned position. From -1000 to +1000 any value in px. i.e. -30
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.NavigationVOffset)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.NavigationVOffset)]
         public short NavigationVOffset { get; set; }
 
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.SoloArrowLeftHAlign)]
@@ -140,270 +99,182 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.ContentBlocks
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.SoloArrowRightVAlign)]
         public NavigationVAlign SoloArrowRightVAlign { get; set; }
 
-        /// <summary>
-        /// <para>The Offset position of the navigation depending on the aligned position. From -1000 to +1000 any value in px. i.e. -30.</para>
-        /// <para>Each Arrow independent.</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.SoloArrowLeftHOffset)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.SoloArrowLeftHOffset)]
         public short SoloArrowLeftHOffset { get; set; }
 
-        /// <summary>
-        /// <para>The Offset position of the navigation depending on the aligned position. From -1000 to +1000 any value in px. i.e. -30.</para>
-        /// <para>Each Arrow independent.</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.SoloArrowRightHOffset)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.SoloArrowRightHOffset)]
         public short SoloArrowRightHOffset { get; set; }
 
-        /// <summary>
-        /// <para>The Offset position of the navigation depending on the aligned position. From -1000 to +1000 any value in px. i.e. -30.</para>
-        /// <para>Each Arrow independent.</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.SoloArrowLeftVOffset)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.SoloArrowLeftVOffset)]
         public short SoloArrowLeftVOffset { get; set; }
 
-        /// <summary>
-        /// <para>The Offset position of the navigation depending on the aligned position. From -1000 to +1000 any value in px. i.e. -30.</para>
-        /// <para>Each Arrow independent.</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.SoloArrowRightVOffset)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.SoloArrowRightVOffset)]
         public short SoloArrowRightVOffset { get; set; }
 
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.TouchEnabled)]
         public bool TouchEnabled { get; set; }
 
-        /// <summary>
-        /// The Sensibility of Swipe Gesture (lower is more sensible) (Default: 0.7). Possible values: 0 - 1
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.SwipeVelocity)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.SwipeVelocity)]
         public float SwipeVelocity { get; set; }
 
-        /// <summary>
-        /// Max Amount of Fingers to touch (Default: 1). Possible values: 1 - 5.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.SwipeMaxTouches)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.SwipeMaxTouches)]
         public byte SwipeMaxTouches { get; set; }
 
-        /// <summary>
-        /// Min Amount of Fingers to touch (Default: 1). Possible values: 1 - 5.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.SwipeMinTouches)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.SwipeMinTouches)]
         public byte SwipeMinTouches { get; set; }
 
-        /// <summary>
-        /// Prevent Vertical Scroll on Drag (Default: false)
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.DragBlockVertical)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.DragBlockVertical)]
         public bool DragBlockVertical { get; set; }
 
         #endregion Navigation
 
         #region Loops
 
-        /// <summary>
-        /// Start with a Predefined Slide (index of the slide).
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.StartWithSlide)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.StartWithSlide)]
         public byte StartWithSlide { get; set; }
 
-        /// <summary>
-        /// <para>Stop Timer if Slide "x" has been Reached. If stopAfterLoops set to 0, then it stops already in the first</para>
-        /// <para>loop at slide X which defined. -1 means do not stop at any slide. stopAfterLoops has no sinn in this case.</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.StopAtSlide)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.StopAtSlide)]
         public sbyte StopAtSlide { get; set; }
 
-        /// <summary>
-        /// <para>Stop Timer if All slides has been played "x" times. IT will stop at THe slide which is defined via stopAtSlide:x,</para>
-        /// <para>if set to -1 slide never stop automatic.</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.StopAfterLoops)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.StopAfterLoops)]
         public sbyte StopAfterLoops { get; set; }
 
         #endregion Loops
 
         #region Mobile Visibility
 
-        /// <summary>
-        /// It Defines if a caption should be shown under a Screen Resolution ( Basod on The Width of Browser).
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.HideCaptionAtLimit)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.HideCaptionAtLimit)]
         public short HideCaptionAtLimit { get; set; }
 
-        /// <summary>
-        /// Hide all The Captions if Width of Browser is less then this value.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.HideAllCaptionAtLimit)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.HideAllCaptionAtLimit)]
         public short HideAllCaptionAtLimit { get; set; }
 
-        /// <summary>
-        /// Hide the whole slider, and stop also functions if Width of Browser is less than this value.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.HideSliderAtLimit)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.HideSliderAtLimit)]
         public short HideSliderAtLimit { get; set; }
 
-        /// <summary>
-        /// Hide all navigation after a while on Mobile (touch and release events based).
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.HideNavDelayOnMobile)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.HideNavDelayOnMobile)]
         public short HideNavDelayOnMobile { get; set; }
 
-        /// <summary>
-        /// Possible Values: "on", "off"  - if set to "on", Thumbs are not shown on Mobile Devices.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.HideThumbsOnMobile)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.HideThumbsOnMobile)]
         public bool HideThumbsOnMobile { get; set; }
 
-        /// <summary>
-        /// Possible Values: "on", "off"  - if set to "on", Bullets are not shown on Mobile Devices.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.HideBulletsOnMobile)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.HideBulletsOnMobile)]
         public bool HideBulletsOnMobile { get; set; }
 
-        /// <summary>
-        /// Possible Values: "on", "off"  - if set to "on", Arrows are not shown on Mobile Devices.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.HideArrowsOnMobile)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.HideArrowsOnMobile)]
         public bool HideArrowsOnMobile { get; set; }
 
-        /// <summary>
-        /// Possible Values: 0 - 1900. Defines under which resolution the Thumbs should be hidden. (only if hideThumbonMobile set to off.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.HideThumbsUnderResolution)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.HideThumbsUnderResolution)]
         public short HideThumbsUnderResolution { get; set; }
 
         #endregion Mobile Visibility
 
         #region Layout Styles
 
-        /// <summary>
-        /// The Layout of Loader. If not defined, it will use the basic spinner.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.Spinner)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.Spinner)]
         public Spinner Spinner { get; set; }
 
-        /// <summary>
-        /// It will hide or show the banner timer
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.HideTimerBar)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.HideTimerBar)]
         public bool HideTimerBar { get; set; }
 
-        /// <summary>
-        /// Defines if the fullwidth/autoresponsive mode is activated
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.FullWidth)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.FullWidth)]
         public bool FullWidth { get; set; }
 
-        /// <summary>
-        /// <para>Defines if in fullwidth mode the height of the Slider proportional always can grow. If it is set to "off" the</para>
-        /// <para>max height is == startheight.</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.AutoHeight)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.AutoHeight)]
         public bool AutoHeight { get; set; }
 
-        /// <summary>
-        /// <para>Defines the min height of the Slider. The Slider container height will never be smaller than this value.</para>
-        /// <para>The Content container is still shrinks linear to the browser width and original width of Container, and will</para>
-        /// <para>be centered vertically in the Slider.</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.MinHeight)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.MinHeight)]
         public short MinHeight { get; set; }
 
-        /// <summary>
-        /// <para>Allowed only in FullScreen Mode. It lets the Caption Grid to be the full screen, means all position should happen with</para>
-        /// <para>aligns and offsets. This allow you to use the faresst corner of the slider to present any caption there.</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.FullScreenAlignForce)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.FullScreenAlignForce)]
         public bool FullScreenAlignForce { get; set; }
 
-        /// <summary>
-        /// <para>Force the FullWidth Size even if the slider embeded in a boxed container. It can provide higher Performance usage on CPU.</para>
-        /// <para>Try first set it to "off" and use fullwidth container instead of using this option.</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.ForceFullWidth)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.ForceFullWidth)]
         public bool ForceFullWidth { get; set; }
 
-        /// <summary>
-        /// Defines if the fullscreen mode is activated
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.FullScreen)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.FullScreen)]
         public bool FullScreen { get; set; }
 
-        /// <summary>
-        /// The value is a Container ID or Class i.e. "#topheader" - The Height of Fullheight will be increased with this Container height!
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.FullScreenOffsetContainer)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.FullScreenOffsetContainer)]
         public string FullScreenOffsetContainer { get; set; }
 
-        /// <summary>
-        /// A px or % value which will be added/reduced of the Full Height Container calculation.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.FullScreenOffset)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.FullScreenOffset)]
         public short FullScreenOffset { get; set; }
 
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.FullScreenOffsetUnit)]
         public CssUnit FullScreenOffsetUnit { get; set; }
 
-        /// <summary>
-        /// Possible values: 0,1,2,3 (0 == no Shadow, 1,2,3 - Different Shadow Types).
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.Shadow)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.Shadow)]
         public Shadow Shadow { get; set; }
 
-        /// <summary>
-        /// <para>Creates a Dotted Overlay for the Background images extra. Best use for FullScreen / fullwidth sliders, where images</para>
-        /// <para>are too pixaleted.</para>
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.DottedOverlay)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.DottedOverlay)]
         public DottedOverlay DottedOverlay { get; set; }
 
         #endregion Layout Styles
 
         #region Parallax
 
-        /// <summary>
-        /// How the Parallax should act. On Mouse Hover movements and Tilts on Mobile Devices, or on Scroll (scroll is disabled on Mobiles!)
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.Parallax)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.Parallax)]
         public ParallaxMode Parallax { get; set; }
 
-        /// <summary>
-        /// If it is off, the Main slide images will also move with Parallax Level 1 on Scroll.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.ParallaxBgFreeze)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.ParallaxBgFreeze)]
         public bool ParallaxBgFreeze { get; set; }
 
-        /// <summary>
-        /// An array which defines the Parallax depths (0 - 10). Depending on the value it will define the Strength of the Parallax
-        /// offsets on mousemove or scroll. In Layers you can use the class like rs-parallaxlevel-1 for the different levels.
-        /// If one tp-caption layer has rs-parallaxlevel-X (x 1-10) then it activates the Parallax movements on that layer.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.ParallaxLevels)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.ParallaxLevels)]
         public string ParallaxLevels { get; set; }
 
-        /// <summary>
-        /// Turn on/ off Parallax Effect on Mobile Devices.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.ParallaxDisableOnMobile)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.ParallaxDisableOnMobile)]
         public bool ParallaxDisableOnMobile { get; set; }
 
         #endregion Parallax
 
         #region Pan Zoom
 
-        /// <summary>
-        /// Turn on/ off Pan Zoom Effects on Mobile Devices.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.PanZoomDisableOnMobile)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.PanZoomDisableOnMobile)]
         public bool PanZoomDisableOnMobile { get; set; }
 
         #endregion Pan Zoom
 
         #region Other
 
-        /// <summary>
-        /// Set all Animation on older Browsers like IE8 and iOS4 Safari to Fade, without splitting letters to save performance.
-        /// </summary>
         [LocalizedDisplayName(LocalizableStrings.RevolutionSliderBlock.SimplifyAll)]
+        [LocalizedHelpText(LocalizableStrings.RevolutionSliderBlock.HelpText.SimplifyAll)]
         public bool SimplifyAll { get; set; }
 
         #endregion Other

@@ -18,209 +18,88 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
 
         public string CaptionText { get; set; }
 
-        /// <summary>
-        /// The timepoint in millisecond when/at the Caption should move in to the slide.
-        /// </summary>
         public short Start { get; set; }
 
-        /// <summary>
-        /// The speed in milliseconds of the transition to move the Caption in the Slide at the defined timepoint.
-        /// </summary>
         public short Speed { get; set; }
 
-        /// <summary>
-        /// <para>Possible Values are "left", "center", "right", or any Value between -2500  and 2500.</para>
-        /// <para>If left/center/right is set, the caption will be simple aligned to the position.</para>
-        /// <para>Any other "number" will simple set the left position in px of tha caption.</para>
-        /// </summary>
         public NavigationHAlign X { get; set; }
 
-        /// <summary>
-        /// <para>Possible Values are "top", "center", "bottom", or any Value between -2500  and 2500.</para>
-        /// <para>If top/center/bottom is set, the caption will be siple aligned to the position.</para>
-        /// <para>Any other "number" will simple set the top position in px of tha caption.</para>
-        /// </summary>
         public NavigationVAlign Y { get; set; }
 
-        /// <summary>
-        /// <para>(like "big_white", "big_orange", "medium_grey" etc...)</para>
-        /// <para>These are Styling classes created in the settings.css  You can add unlimited amount of Styles in your own css file,</para>
-        /// <para>to style your captions at the top level already.</para>
-        /// </summary>
         public string StyleClass { get; set; }
 
         //public string ParallaxClass { get; set; }
 
-        /// <summary>
-        /// Defines the start animation on Captions
-        /// </summary>
         public IncomingAnimation? IncomingAnimation { get; set; }
 
-        /// <summary>
-        /// Defines the end animation on Captions
-        /// </summary>
         public OutgoingAnimation? OutgoingAnimation { get; set; }
 
-        /// <summary>
-        /// <para>Only works if data-x set to left/center/right. It will move the Caption with the defined "px" from the</para>
-        /// <para>aligned position. i.e. data-x="center" data-hoffset="-100" will put the caption 100px left from the</para>
-        /// <para>slide center horizontaly.</para>
-        /// </summary>
         public short? HorizontalOffset { get; set; }
 
-        /// <summary>
-        /// <para>Only works if data-y set to top/center/bottom. It will move the Caption with the defined "px" from the</para>
-        /// <para>aligned position. i.e. data-x="center" data-hoffset="-100" will put the caption 100px left from the</para>
-        /// <para>slide center vertically.</para>
-        /// </summary>
         public short? VerticalOffset { get; set; }
 
-        /// <summary>
-        /// <para>Split Text Animation (incoming transition) to "words", "chars" or "lines". This will create amazing</para>
-        /// <para>Animation Effects on one go, without the needs to create more captions.</para>
-        /// </summary>
         public CaptionSplitType SplitIn { get; set; }
 
-        /// <summary>
-        /// <para>A Value between 0 and 1 like 0.1 to make delays between the Splitted Text Element (start) Animations.</para>
-        /// <para>Higher the amount of words or chars, you should decrease that number!</para>
-        /// </summary>
         public float? ElementDelay { get; set; }
 
-        /// <summary>
-        /// Split Text Animation (outgoing transition) to "words", "chars" or "lines". Only available if data-end is set!
-        /// </summary>
         public CaptionSplitType SplitOut { get; set; }
 
-        /// <summary>
-        /// <para>A Value between 0 and 1 like 0.1 to make delays between the Splitted Text Element (end) Animations.</para>
-        /// <para>Higher the amount of words or chars, you should decrease that number!</para>
-        /// </summary>
         public float? EndElementDelay { get; set; }
 
-        /// <summary>
-        /// The Easing Art how the caption is moved in to the slide (note! Animation art set via Classes!).
-        /// </summary>
         public EasingMethod? Easing { get; set; }
 
-        /// <summary>
-        /// The speed in milliseconds of the transition to move the Caption out from the Slide at the defined  timepoint.
-        /// </summary>
         public short? EndSpeed { get; set; }
 
-        /// <summary>
-        /// The timepoint in millisecond when/at the Caption should move out from the slide.
-        /// </summary>
         public short? End { get; set; }
 
-        /// <summary>
-        /// The Easing Art how the caption is moved out from the slide (note! Animation art set via Classes!).
-        /// </summary>
         public EasingMethod? EndEasing { get; set; }
 
         #endregion General
 
         #region Video
 
-        /// <summary>
-        /// Will play the Video Directly when slider has been loaded.
-        /// </summary>
         public bool AutoPlay { get; set; }
 
-        /// <summary>
-        /// After first Autplay the video will not be played automatically.
-        /// </summary>
         public bool AutoPlayOnlyFirstTime { get; set; }
 
-        /// <summary>
-        /// After video come to the end position, it swaps to the next slide automatically.
-        /// </summary>
         public bool NextSlideAtEnd { get; set; }
 
-        /// <summary>
-        /// <para>The full path to an image which will be shown as Thumbnail for the Video. (only if autoplay set to false,</para>
-        /// <para>or autoplayonlyfirsttime set to true).</para>
-        /// </summary>
         public string VideoPoster { get; set; }
 
-        /// <summary>
-        /// Used only at HTML5 Videos. In case it is selected, the Videos will be resized to cover the full Slider size.
-        /// </summary>
         public bool ForceCover { get; set; }
 
-        /// <summary>
-        /// Every time the Slide is shown, the Video will rewind to the start.
-        /// </summary>
         public bool ForceRewind { get; set; }
 
         public bool Mute { get; set; }
 
-        /// <summary>
-        /// Width of Video (i.e. 500 for 500px, or 100% for 100%
-        /// </summary>
         public short? VideoWidth { get; set; }
 
         public CssUnit VideoWidthUnit { get; set; }
 
-        /// <summary>
-        /// Height of Video (i.e. 500 for 500px, or 100% for 100%
-        /// </summary>
         public short? VideoHeight { get; set; }
 
         public CssUnit VideoHeightUnit { get; set; }
 
-        /// <summary>
-        /// "16:9" or "4:3"
-        /// </summary>
         public AspectRatio? AspectRatio { get; set; }
 
-        /// <summary>
-        /// Which content of Video should be preloaded. "none", "meta", "auto".
-        /// </summary>
         public VideoPreloadOption VideoPreload { get; set; }
 
         public VideoType? VideoType { get; set; }
 
-        /// <summary>
-        /// The MP4 Source for the HTML5 Video.
-        /// </summary>
         public string VideoMp4 { get; set; }
 
-        /// <summary>
-        /// The WEBM Source for the HTML5 Video.
-        /// </summary>
         public string VideoWebM { get; set; }
 
-        /// <summary>
-        /// The OGV Source for the HTML5 Video.
-        /// </summary>
         public string VideoOgv { get; set; }
 
-        /// <summary>
-        /// The YouTube ID of the Video.
-        /// </summary>
         public string YouTubeId { get; set; }
 
-        /// <summary>
-        /// The Vimeo ID of the Video.
-        /// </summary>
         public string VimeoId { get; set; }
 
-        /// <summary>
-        /// Show/Hide the controls of the Video.
-        /// </summary>
         public bool ShowVideoControls { get; set; }
 
-        /// <summary>
-        /// <para>Further Video Attributes for not listed Options and Settings of Video.</para>
-        /// <para>Used for YouTube and Vimeo like "enablejsapi=1&html5=1&hd=1&wmode=opaque&showinfo=0&rel=0".</para>
-        /// </summary>
         public string VideoAttributes { get; set; }
 
-        /// <summary>
-        /// <para>Loop HTML5 Videos - "none", "loop", "loopandnoslidestop" loop and no slide stop will</para>
-        /// <para>loop the video, but as soon the video Timer reached the endpoint, next slide will be started.</para>
-        /// </summary>
         public VideoLoop VideoLoop { get; set; }
 
         #endregion Video
@@ -401,6 +280,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
                             }
                         }
                         break;
+
                     case Domain.VideoType.YouTube: tagBuilder = tagBuilder.MergeAttribute("data-ytid", YouTubeId); break;
                     case Domain.VideoType.Vimeo: tagBuilder = tagBuilder.MergeAttribute("data-vimeoid", VimeoId); break;
                 }

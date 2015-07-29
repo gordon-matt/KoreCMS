@@ -5,6 +5,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
     public class HtmlBlock : ContentBlockBase
     {
         [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.HtmlBlock.BodyContent)]
+        //[LocalizedHelpText(KoreCmsLocalizableStrings.ContentBlocks.HtmlBlock.BodyContent)]
         public string BodyContent { get; set; }
 
         #region IContentBlock Members

@@ -1,7 +1,9 @@
 ﻿using System.Data.Entity;
 using Kore.Infrastructure;
 using Kore.Plugins.Ecommerce.Simple.Infrastructure;
+using Kore.Web.Infrastructure;
 using Kore.Web.Plugins;
+using LanguagePackInvariant = Kore.Plugins.Ecommerce.Simple.Infrastructure.LanguagePackInvariant;
 
 namespace Kore.Plugins.Ecommerce.Simple
 {
@@ -267,6 +269,13 @@ ON DELETE CASCADE");
 CHECK CONSTRAINT [FK_dbo.Kore_Plugins_SimpleCommerce_OrderNotes_dbo.Kore_Plugins_SimpleCommerce_Orders_OrderId]");
 
                 #endregion CREATE TABLE [dbo].[Kore_Plugins_SimpleCommerce_Orders]
+            }
+
+            var dataSettings = EngineContext.Current.Resolve<DataSettings>();
+
+            if (dataSettings.CreateSampleData)
+            {
+                //TODO
             }
         }
 

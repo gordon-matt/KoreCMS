@@ -1,0 +1,35 @@
+﻿@{
+    SetMeta("apple-mobile-web-app-capable", "yes");
+    SetMeta("apple-mobile-web-app-status-bar-style", "black");
+    SetMeta("format-detection", "telephone=no");
+
+    Style.Include("ie10mobile.css");
+    Style.Include("durandal.css");
+    Style.Include("starterkit.css");
+
+    Script.IncludeJQuery();
+    Script.IncludeBootstrap();
+    Script.IncludeKnockout();
+}
+
+@section styles {
+    <link rel="apple-touch-startup-image" href="~/Content/images/ios-startup-image-landscape.png" media="(orientation:landscape)" />
+    <link rel="apple-touch-startup-image" href="~/Content/images/ios-startup-image-portrait.png" media="(orientation:portrait)" />
+    <link rel="apple-touch-icon" href="~/Content/images/icon.png" />
+}
+
+<div id="applicationHost">
+    @Html.Partial("_splash")
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+            var msViewportStyle = document.createElement("style");
+            var mq = "@@-ms-viewport{width:auto!important}";
+            msViewportStyle.appendChild(document.createTextNode(mq));
+            document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+        }
+    </script>
+    <script type="text/javascript" src="~/Scripts/require.js" data-main="/Areas/Admin/Scripts/App/main"></script>
+}

@@ -25,7 +25,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers
             ViewBag.Title = T(KoreCmsLocalizableStrings.Messaging.Title);
             ViewBag.SubTitle = T(KoreCmsLocalizableStrings.Messaging.QueuedEmails);
 
-            return View("Kore.Web.ContentManagement.Areas.Admin.Messaging.Views.QueuedEmail.Index");
+            return PartialView("Kore.Web.ContentManagement.Areas.Admin.Messaging.Views.QueuedEmail.Index");
         }
     }
 }

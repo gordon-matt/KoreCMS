@@ -25,61 +25,71 @@ namespace Kore.Web.ContentManagement
 
             // Blog
             builder.Add(T(KoreCmsLocalizableStrings.Blog.Title), "5", item => item
-                .Action("Index", "Blog", new { area = CmsConstants.Areas.Blog })
+                .Url("/admin/#blog")
+                //.Action("Index", "Blog", new { area = CmsConstants.Areas.Blog })
                 .IconCssClass("kore-icon kore-icon-blog")
                 .Permission(CmsPermissions.BlogRead));
 
             // Content Blocks
             builder.Add(T(KoreCmsLocalizableStrings.ContentBlocks.Title), "5", item => item
-                .Action("Index", "ContentBlock", new { area = CmsConstants.Areas.Blocks, pageId = UrlParameter.Optional })
+                .Url("/admin/#blocks/content-blocks")
+                //.Action("Index", "ContentBlock", new { area = CmsConstants.Areas.Blocks, pageId = UrlParameter.Optional })
                 .IconCssClass("kore-icon kore-icon-content-blocks")
                 .Permission(CmsPermissions.ContentBlocksRead));
 
             // Localization
             builder.Add(T(KoreCmsLocalizableStrings.Localization.Title), "5", item => item
-                .Action("Index", "Language", new { area = CmsConstants.Areas.Localization })
+                .Url("/admin/#localization/languages")
+                //.Action("Index", "Language", new { area = CmsConstants.Areas.Localization })
                 .IconCssClass("kore-icon kore-icon-localization")
                 .Permission(StandardPermissions.FullAccess));
 
             // Media
             builder.Add(T(KoreCmsLocalizableStrings.Media.Title), "5", item => item
-                .Action("Index", "Media", new { area = CmsConstants.Areas.Media })
+                .Url("/admin/#media")
+                //.Action("Index", "Media", new { area = CmsConstants.Areas.Media })
                 .IconCssClass("kore-icon kore-icon-media")
                 .Permission(CmsPermissions.MediaRead));
 
             // Menus
             builder.Add(T(KoreCmsLocalizableStrings.Menus.Title), "5", item => item
-                .Action("Index", "Menu", new { area = CmsConstants.Areas.Menus })
+                .Url("/admin/#menus")
+                //.Action("Index", "Menu", new { area = CmsConstants.Areas.Menus })
                 .IconCssClass("kore-icon kore-icon-menus")
                 .Permission(CmsPermissions.MenusRead));
 
             // Messaging
             builder.Add(T(KoreCmsLocalizableStrings.Messaging.MessageTemplates), "5", item => item
-                .Action("Index", "MessageTemplate", new { area = CmsConstants.Areas.Messaging })
+                .Url("/admin/#messaging/templates")
+                //.Action("Index", "MessageTemplate", new { area = CmsConstants.Areas.Messaging })
                 .IconCssClass("kore-icon kore-icon-message-templates")
                 .Permission(CmsPermissions.MessageTemplatesRead));
 
             // Pages
             builder.Add(T(KoreCmsLocalizableStrings.Pages.Title), "5", item => item
-                .Action("Index", "Page", new { area = CmsConstants.Areas.Pages })
+                .Url("/admin/#pages")
+                //.Action("Index", "Page", new { area = CmsConstants.Areas.Pages })
                 .IconCssClass("kore-icon kore-icon-pages")
                 .Permission(CmsPermissions.PagesRead));
 
             // Queued Emails
             builder.Add(T(KoreCmsLocalizableStrings.Messaging.QueuedEmails), "5", item => item
-                .Action("Index", "QueuedEmail", new { area = CmsConstants.Areas.Messaging })
+                .Url("/admin/#messaging/queued-email")
+                //.Action("Index", "QueuedEmail", new { area = CmsConstants.Areas.Messaging })
                 .IconCssClass("kore-icon kore-icon-message-queue")
                 .Permission(CmsPermissions.QueuedEmailsRead));
 
             // Subscribers
             builder.Add(T(KoreCmsLocalizableStrings.Newsletters.Subscribers), "5", item => item
-                .Action("Index", "Subscriber", new { area = CmsConstants.Areas.Newsletters })
+                .Url("/admin/#newsletters/subscribers")
+                //.Action("Index", "Subscriber", new { area = CmsConstants.Areas.Newsletters })
                 .IconCssClass("kore-icon kore-icon-subscribers")
                 .Permission(CmsPermissions.NewsletterRead));
 
             // XML Sitemap
             builder.Add(T(KoreCmsLocalizableStrings.Sitemap.XMLSitemap), "5", item => item
-                .Action("Index", "XmlSitemap", new { area = CmsConstants.Areas.Sitemap })
+                .Url("/admin/#sitemap/xml-sitemap")
+                //.Action("Index", "XmlSitemap", new { area = CmsConstants.Areas.Sitemap })
                 .IconCssClass("kore-icon kore-icon-sitemap")
                 .Permission(CmsPermissions.SitemapRead));
         }

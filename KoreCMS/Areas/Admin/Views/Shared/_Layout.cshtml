@@ -9,9 +9,9 @@
     Style.IncludeExternal("~/Areas/Admin/Content/css/dashboard.css");
 
     Script.IncludeJQuery();
-    Script.IncludeJQueryUI();
+    //Script.IncludeJQueryUI();
     Script.IncludeBootstrap();
-    Script.IncludeJQueryValidate();
+    //Script.IncludeJQueryValidate();
 
     string dir = IsRightToLeft ? "rtl" : string.Empty;
     string lang = WorkContext.CurrentCultureCode.LeftOf('-');
@@ -59,7 +59,7 @@
         @Html.AntiForgeryToken()
     }
 
-    <header class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
@@ -97,7 +97,7 @@
                 </ul>
             </div>
         </div>
-    </header>
+    </nav>
 
     <div class="container">
         @*<div class="row">
@@ -138,6 +138,9 @@
         var lang = '@lang';
 
         $(document).ready(function () {
+            @* This line should not be necessary, but seems to be when using Durandal/RequireJS *@
+            $('a[data-toggle=dropdown').dropdown();
+
             if (lang && typeof kendo === 'function' && typeof kendo.culture === 'function') {
                 kendo.culture(lang);
             }

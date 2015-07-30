@@ -3,26 +3,6 @@
 @using Kore.Web.Mvc.KoreUI
 
 @{
-    Layout = KoreWebConstants.DefaultAdminLayoutPath;
-
-    Style.IncludeBundle("kendo-ui");
-    Style.IncludeBundle("chosen");
-
-    Script.IncludeBundle("kendo-ui");
-    Script.IncludeBundle("knockout");
-    Script.IncludeBundle("knockout-mapping");
-    Script.IncludeBundle("tinymce");
-    Script.IncludeBundle("notify");
-    Script.IncludeBundle("chosen");
-    Script.IncludeBundle("breeze");
-
-    Script.IncludeBundle("kore/common");
-    Script.IncludeBundle("kore/knockout-chosen");
-    Script.IncludeBundle("kore/section-switching");
-    Script.IncludeBundle("kore/jqueryval");
-    Script.IncludeBundle("kore/tinymce");
-    Script.IncludeBundle("kore-cms/blog");
-
     string rtlClass = string.Empty;
     string chosenRtlClass = string.Empty;
     
@@ -33,11 +13,16 @@
     }
 }
 
+<link rel="stylesheet" type="text/css" href="@Style.GetBundleUrl("kendo-ui")" />
+<link rel="stylesheet" type="text/css" href="@Style.GetBundleUrl("chosen")" />
+
 <style type="text/css">
     .modal-dialog {
         width: 80% !important;
     }
 </style>
+
+@Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
 
 <div id="post-grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -320,54 +305,3 @@
         </div>
     </div>
 </div>
-
-@section scripts {
-    <script type="text/javascript">
-        var modalDismissed = false;
-
-        function dismissModal() {
-            modalDismissed = true;
-            $('#myModal').modal('hide');
-        };
-
-        $('#myModal').on('hidden.bs.modal', function () {
-            if (!modalDismissed) {
-                var url = $('#TeaserImageUrl').val();
-                url = "/Media/Uploads/" + url;
-                viewModel.postModel.teaserImageUrl(url);
-            }
-            modalDismissed = false;
-        });
-        var gridPageSize = @SiteSettings.DefaultGridPageSize;
-        var translations = {
-            Create: '@T(KoreWebLocalizableStrings.General.Create).Text',
-            Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
-            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
-            DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',
-            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text',
-            Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
-            GetRecordError: '@T(KoreWebLocalizableStrings.General.GetRecordError).Text',
-            InsertRecordError: '@T(KoreWebLocalizableStrings.General.InsertRecordError).Text',
-            InsertRecordSuccess: '@T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text',
-            UpdateRecordError: '@T(KoreWebLocalizableStrings.General.UpdateRecordError).Text',
-            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text',
-
-            Columns: {
-                Category: {
-                    Name: '@T(KoreCmsLocalizableStrings.Blog.CategoryModel.Name).Text',
-                },
-                Post: {
-                    Headline: '@T(KoreCmsLocalizableStrings.Blog.PostModel.Headline).Text',
-                    DateCreatedUtc: '@T(KoreCmsLocalizableStrings.Blog.PostModel.DateCreatedUtc).Text',
-                },
-                Tag: {
-                    Name: '@T(KoreCmsLocalizableStrings.Blog.TagModel.Name).Text',
-                }
-            }
-        }
-
-        $(document).ready(function() {
-            currentSection = $("#post-grid-section");
-        });
-    </script>
-}

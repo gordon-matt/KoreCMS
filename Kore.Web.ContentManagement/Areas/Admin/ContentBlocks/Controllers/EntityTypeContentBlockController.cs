@@ -6,6 +6,7 @@ using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
+using Newtonsoft.Json.Linq;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 {
@@ -37,7 +38,54 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
             ViewBag.EntityType = entityType;
             ViewBag.EntityId = entityId;
 
-            return View("Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.EntityTypeContentBlock.Index");
+            return PartialView("Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.EntityTypeContentBlock.Index");
+        }
+
+        [Route("get-translations")]
+        public JsonResult GetTranslations()
+        {
+            string json = string.Format(
+@"{{
+    Create: '{0}',
+    Delete: '{1}',
+    DeleteRecordConfirm: '{2}',
+    DeleteRecordError: '{3}',
+    DeleteRecordSuccess: '{4}',
+    Edit: '{5}',
+    GetRecordError: '{6}',
+    InsertRecordError: '{7}',
+    InsertRecordSuccess: '{8}',
+    Toggle: '{9}',
+    UpdateRecordError: '{10}',
+    UpdateRecordSuccess: '{11}',
+
+    Columns: {{
+        Title: '{12}',
+        BlockType: '{13}',
+        Order: '{14}',
+        IsEnabled: '{15}',
+        Name: '{16}',
+    }}
+}}",
+   T(KoreWebLocalizableStrings.General.Create),
+   T(KoreWebLocalizableStrings.General.Delete),
+   T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord),
+   T(KoreWebLocalizableStrings.General.DeleteRecordError),
+   T(KoreWebLocalizableStrings.General.DeleteRecordSuccess),
+   T(KoreWebLocalizableStrings.General.Edit),
+   T(KoreWebLocalizableStrings.General.GetRecordError),
+   T(KoreWebLocalizableStrings.General.InsertRecordError),
+   T(KoreWebLocalizableStrings.General.InsertRecordSuccess),
+   T(KoreWebLocalizableStrings.General.Toggle),
+   T(KoreWebLocalizableStrings.General.UpdateRecordError),
+   T(KoreWebLocalizableStrings.General.UpdateRecordSuccess),
+   T(KoreCmsLocalizableStrings.ContentBlocks.Model.Title),
+   T(KoreCmsLocalizableStrings.ContentBlocks.Model.BlockType),
+   T(KoreCmsLocalizableStrings.ContentBlocks.Model.Order),
+   T(KoreCmsLocalizableStrings.ContentBlocks.Model.IsEnabled),
+   T(KoreCmsLocalizableStrings.ContentBlocks.ZoneModel.Name));
+
+            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
         }
 
         [Compress]

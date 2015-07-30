@@ -1,99 +1,125 @@
-﻿'use strict'
+﻿var viewModel;
 
-var ViewModel = function () {
-    var self = this;
+define(function (require) {
+    'use strict'
 
-    self.delete = function (id) {
-        if (confirm(translations.DeleteRecordConfirm)) {
+    var $ = require('jquery');
+    var ko = require('knockout');
+    var kendo = require('kendo');
+    //var ko_kendo = require('kendo-knockout');
+    var notify = require('notify');
+
+    var ViewModel = function () {
+        var self = this;
+
+        self.gridPageSize = 10;
+        self.translations = false;
+
+        self.attached = function () {
+            // Load translations first, else will have errors
             $.ajax({
-                url: "/odata/kore/cms/SubscriberApi('" + id + "')",
-                type: "DELETE",
+                url: "/admin/newsletters/subscribers/get-translations",
+                type: "GET",
+                dataType: "json",
                 async: false
             })
             .done(function (json) {
-                $('#Grid').data('kendoGrid').dataSource.read();
-                $('#Grid').data('kendoGrid').refresh();
-
-                $.notify(translations.DeleteRecordSuccess, "success");
+                self.translations = json;
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(translations.DeleteRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
-        }
+
+            self.gridPageSize = $("#GridPageSize").val();
+
+            $("#Grid").kendoGrid({
+                data: null,
+                dataSource: {
+                    type: "odata",
+                    transport: {
+                        read: {
+                            url: "/odata/kore/cms/SubscriberApi",
+                            dataType: "json"
+                        }
+                    },
+                    schema: {
+                        data: function (data) {
+                            return data.value;
+                        },
+                        total: function (data) {
+                            return data["odata.count"];
+                        },
+                        model: {
+                            fields: {
+                                Name: { type: "string" },
+                                Email: { type: "string" }
+                            }
+                        }
+                    },
+                    pageSize: self.gridPageSize,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true,
+                    sort: { field: "Name", dir: "asc" }
+                },
+                filterable: true,
+                sortable: {
+                    allowUnsort: false
+                },
+                pageable: {
+                    refresh: true
+                },
+                scrollable: false,
+                columns: [{
+                    field: "Name",
+                    title: self.translations.Columns.Name,
+                    filterable: true
+                }, {
+                    field: "Email",
+                    title: self.translations.Columns.Email,
+                    filterable: true
+                }, {
+                    field: "Id",
+                    title: " ",
+                    template:
+                        '<div class="btn-group">' +
+                        '<a onclick="viewModel.remove(\'#=Id#\')" class="btn btn-danger btn-xs">' + self.translations.Delete + '</a>' +
+                        '</div>',
+                    attributes: { "class": "text-center" },
+                    filterable: false,
+                    width: 120
+                }]
+            });
+        };
+        self.remove = function (id) {
+            if (confirm(self.translations.DeleteRecordConfirm)) {
+                $.ajax({
+                    url: "/odata/kore/cms/SubscriberApi('" + id + "')",
+                    type: "DELETE",
+                    async: false
+                })
+                .done(function (json) {
+                    $('#Grid').data('kendoGrid').dataSource.read();
+                    $('#Grid').data('kendoGrid').refresh();
+
+                    $.notify(self.translations.DeleteRecordSuccess, "success");
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    $.notify(self.translations.DeleteRecordError, "error");
+                    console.log(textStatus + ': ' + errorThrown);
+                });
+            }
+        };
+        self.downloadCsv = function () {
+            var downloadForm = $("<form>")
+                .attr("method", "POST")
+                .attr("action", "/admin/newsletters/subscribers/download-csv");
+            $("body").append(downloadForm);
+            downloadForm.submit();
+            downloadForm.remove();
+        };
     };
 
-    self.downloadCsv = function () {
-        var downloadForm = $("<form>")
-            .attr("method", "POST")
-            .attr("action", "/admin/newsletters/subscribers/download-csv");
-        $("body").append(downloadForm);
-        downloadForm.submit();
-        downloadForm.remove();
-    };
-};
-
-var viewModel;
-$(document).ready(function () {
     viewModel = new ViewModel();
-    ko.applyBindings(viewModel);
-
-    $("#Grid").kendoGrid({
-        data: null,
-        dataSource: {
-            type: "odata",
-            transport: {
-                read: {
-                    url: "/odata/kore/cms/SubscriberApi",
-                    dataType: "json"
-                }
-            },
-            schema: {
-                data: function (data) {
-                    return data.value;
-                },
-                total: function (data) {
-                    return data["odata.count"];
-                },
-                model: {
-                    fields: {
-                        Name: { type: "string" },
-                        Email: { type: "string" }
-                    }
-                }
-            },
-            pageSize: gridPageSize,
-            serverPaging: true,
-            serverFiltering: true,
-            serverSorting: true,
-            sort: { field: "Name", dir: "asc" }
-        },
-        filterable: true,
-        sortable: {
-            allowUnsort: false
-        },
-        pageable: {
-            refresh: true
-        },
-        scrollable: false,
-        columns: [{
-            field: "Name",
-            title: translations.Columns.Name,
-            filterable: true
-        }, {
-            field: "Email",
-            title: translations.Columns.Email,
-            filterable: true
-        }, {
-            field: "Id",
-            title: " ",
-            template:
-                '<div class="btn-group">' +
-                '<a onclick="viewModel.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + translations.Delete + '</a>' +
-                '</div>',
-            attributes: { "class": "text-center" },
-            filterable: false,
-            width: 120
-        }]
-    });
+    return viewModel;
 });

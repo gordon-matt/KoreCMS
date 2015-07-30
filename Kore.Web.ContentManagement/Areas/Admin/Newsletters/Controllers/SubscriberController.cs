@@ -10,6 +10,7 @@ using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
 using Kore.Web.Security.Membership;
 using Kore.Web.Security.Membership.Permissions;
+using Newtonsoft.Json.Linq;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
 {
@@ -50,7 +51,31 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
             ViewBag.Title = T(KoreCmsLocalizableStrings.Newsletters.Title);
             ViewBag.SubTitle = T(KoreCmsLocalizableStrings.Newsletters.Subscribers);
 
-            return View("Kore.Web.ContentManagement.Areas.Admin.Newsletters.Views.Subscriber.Index");
+            return PartialView("Kore.Web.ContentManagement.Areas.Admin.Newsletters.Views.Subscriber.Index");
+        }
+
+        [Route("get-translations")]
+        public JsonResult GetTranslations()
+        {
+            string json = string.Format(
+@"{{
+    Delete: '{0}',
+    DeleteRecordConfirm: '{1}',
+    DeleteRecordError: '{2}',
+    DeleteRecordSuccess: '{3}',
+    Columns: {{
+        Email: '{4}',
+        Name: '{5}',
+    }}
+}}",
+   T(KoreWebLocalizableStrings.General.Delete),
+   T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord),
+   T(KoreWebLocalizableStrings.General.DeleteRecordError),
+   T(KoreWebLocalizableStrings.General.DeleteRecordSuccess),
+   T(KoreCmsLocalizableStrings.ContentBlocks.NewsletterSubscriptionBlock.Email),
+   T(KoreCmsLocalizableStrings.ContentBlocks.NewsletterSubscriptionBlock.Name));
+
+            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
         }
 
         [AllowAnonymous]

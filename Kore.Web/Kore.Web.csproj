@@ -233,6 +233,8 @@
     <Compile Include="Indexing\Services\IndexingStatus.cs" />
     <Compile Include="Indexing\Services\IndexingTaskExecutor.cs" />
     <Compile Include="Indexing\Services\ISearchService.cs" />
+    <Compile Include="Infrastructure\IDurandalRouteProvider.cs" />
+    <Compile Include="Infrastructure\IRequireJSConfigProvider.cs" />
     <Compile Include="Infrastructure\ResourceBundleRegistrar.cs" />
     <Compile Include="InstallationHelper.cs" />
     <Compile Include="IO\FileSystems\AppData\AppDataFolder.cs" />

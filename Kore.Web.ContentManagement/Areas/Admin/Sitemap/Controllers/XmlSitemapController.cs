@@ -23,7 +23,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers
 
             ViewBag.Title = T(KoreCmsLocalizableStrings.Sitemap.XMLSitemap);
 
-            return View("Kore.Web.ContentManagement.Areas.Admin.Sitemap.Views.XmlSitemap.Index");
+            return PartialView("Kore.Web.ContentManagement.Areas.Admin.Sitemap.Views.XmlSitemap.Index");
         }
     }
 }

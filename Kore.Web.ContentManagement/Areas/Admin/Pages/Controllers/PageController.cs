@@ -54,7 +54,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             ViewBag.Title = T(KoreCmsLocalizableStrings.Pages.Title);
             ViewBag.SubTitle = T(KoreCmsLocalizableStrings.Pages.ManagePages);
 
-            return View("Kore.Web.ContentManagement.Areas.Admin.Pages.Views.Page.Index");
+            return PartialView("Kore.Web.ContentManagement.Areas.Admin.Pages.Views.Page.Index");
         }
 
         [Compress]

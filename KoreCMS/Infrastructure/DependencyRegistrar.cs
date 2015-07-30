@@ -37,6 +37,9 @@ namespace KoreCMS.Infrastructure
                 .WithParameter(ResolvedParameter.ForNamed<DbContext>("KoreCMS.ApplicationDbContext"))
                 .InstancePerLifetimeScope();
 
+            // SPA Routes
+            builder.RegisterType<DurandalRouteProvider>().As<IDurandalRouteProvider>().SingleInstance();
+
             // services
             builder.RegisterType<MembershipService>().As<IMembershipService>().InstancePerDependency();
 

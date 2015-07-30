@@ -2,18 +2,10 @@
 @using Kore.Web.ContentManagement
 
 @{
-    Layout = KoreWebConstants.DefaultAdminLayoutPath;
-
-    Style.IncludeBundle("kendo-ui");
-
-    Script.IncludeBundle("kendo-ui");
-    Script.IncludeBundle("knockout");
-    Script.IncludeBundle("notify");
-
-    Script.IncludeBundle("kore-cms/newsletters/subscribers");
-
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
+
+<link rel="stylesheet" type="text/css" href="@Style.GetBundleUrl("kendo-ui")" />
 
 <div id="grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -31,19 +23,4 @@
     </div>
 </div>
 
-@section scripts {
-    <script type="text/javascript">
-        var gridPageSize = @SiteSettings.DefaultGridPageSize;
-        var translations = {
-            Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
-            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
-            DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',
-            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text',
-
-            Columns: {
-                Email: '@T(KoreCmsLocalizableStrings.ContentBlocks.NewsletterSubscriptionBlock.Email).Text',
-                Name: '@T(KoreCmsLocalizableStrings.ContentBlocks.NewsletterSubscriptionBlock.Name).Text',
-            }
-        }
-</script>
-}
+@Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)

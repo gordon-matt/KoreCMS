@@ -189,6 +189,7 @@
     <Compile Include="FileSystems\Media\IStorageFolder.cs" />
     <Compile Include="FileSystems\Media\IStorageProvider.cs" />
     <Compile Include="FileSystems\PathValidation.cs" />
+    <Compile Include="Infrastructure\DurandalRouteProvider.cs" />
     <Compile Include="Infrastructure\IAutoMenuProvider.cs" />
     <Compile Include="Areas\Admin\Newsletters\ContentBlocks\NewsletterSubscriptionBlock.cs" />
     <Compile Include="Areas\Admin\Newsletters\Controllers\Api\SubscriberApiController.cs" />
@@ -302,6 +303,7 @@
     <Compile Include="Areas\Admin\ContentBlocks\Services\IContentBlockService.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\Services\IZoneService.cs" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\FormBlock\SaveResult.cshtml" />
+    <Compile Include="Infrastructure\RequireJSConfigProvider.cs" />
     <Compile Include="StartupTask.cs" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\Shared\DisplayTemplates\FormBlock.cshtml" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\Shared\DisplayTemplates\HtmlBlock.cshtml" />

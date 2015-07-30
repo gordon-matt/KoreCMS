@@ -37,6 +37,8 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
+            builder.RegisterType<DurandalRouteProvider>().As<IDurandalRouteProvider>().SingleInstance();
+
             #region Services
 
             // Blog

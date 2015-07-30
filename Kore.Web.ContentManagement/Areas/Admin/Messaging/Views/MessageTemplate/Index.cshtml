@@ -2,10 +2,6 @@
 @using Kore.Web.Mvc.KoreUI
 
 @{
-    Layout = KoreWebConstants.DefaultAdminLayoutPath;
-
-    Style.IncludeBundle("kendo-ui");
-
     Script.IncludeBundle("kendo-ui");
     Script.IncludeBundle("knockout");
     Script.IncludeBundle("knockout-mapping");
@@ -21,6 +17,8 @@
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
 
+<link rel="stylesheet" type="text/css" href="@Style.GetBundleUrl("kendo-ui")" />
+
 <div id="grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <a data-bind="click: create" class="btn btn-primary">
@@ -32,7 +30,7 @@
     <div class="clearfix"></div>
     <br />
 
-    <div class="col-md-12 @rtlClass">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
         <div id="Grid"></div>
     </div>
 </div>

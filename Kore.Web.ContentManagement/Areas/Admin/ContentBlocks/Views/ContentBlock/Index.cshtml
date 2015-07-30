@@ -3,26 +3,15 @@
 @using Kore.Web.Mvc.KoreUI
 
 @{
-    Layout = KoreWebConstants.DefaultAdminLayoutPath;
-    
-    Style.IncludeBundle("kendo-ui");
-    
-    Script.IncludeBundle("kendo-ui");
-    Script.IncludeBundle("knockout");
-    Script.IncludeBundle("knockout-mapping");
-    Script.IncludeBundle("tinymce");
-    Script.IncludeBundle("notify");
-
-    Script.IncludeBundle("kore/common");
-    Script.IncludeBundle("kore/jqueryval");
-    Script.IncludeBundle("kore/section-switching");
-    Script.IncludeBundle("kore/tinymce");
-    Script.IncludeBundle("kore-cms/content-blocks");
-
     var nullablePageId = (Guid?)ViewBag.PageId;
     string pageId = nullablePageId.HasValue ? nullablePageId.Value.ToString() : null;
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
+
+<link rel="stylesheet" type="text/css" href="@Style.GetBundleUrl("kendo-ui")" />
+
+@Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
+@Html.Hidden("PageId", pageId)
 
 <div id="grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -38,10 +27,8 @@
     <div class="clearfix"></div>
     <br />
 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="@rtlClass">
-            <div id="Grid"></div>
-        </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
+        <div id="Grid"></div>
     </div>
 </div>
 
@@ -200,10 +187,8 @@
     <div class="clearfix"></div>
     <br />
 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="@rtlClass">
-            <div id="ZoneGrid"></div>
-        </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
+        <div id="ZoneGrid"></div>
     </div>
 </div>
 
@@ -240,40 +225,3 @@
         }
     </article>
 </div>
-
-@section scripts {
-    <script type="text/javascript">
-        @if (string.IsNullOrEmpty(pageId))
-        {
-            @:var pageId = null;
-        }
-        else
-        {
-            @:var pageId = '@pageId';
-        }
-        
-        var gridPageSize = @SiteSettings.DefaultGridPageSize;
-        var translations = {
-            Create: '@T(KoreWebLocalizableStrings.General.Create).Text',
-            Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
-            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
-            DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',
-            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text',
-            Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
-            GetRecordError: '@T(KoreWebLocalizableStrings.General.GetRecordError).Text',
-            InsertRecordError: '@T(KoreWebLocalizableStrings.General.InsertRecordError).Text',
-            InsertRecordSuccess: '@T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text',
-            Toggle: '@T(KoreWebLocalizableStrings.General.Toggle).Text',
-            UpdateRecordError: '@T(KoreWebLocalizableStrings.General.UpdateRecordError).Text',
-            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text',
-
-            Columns: {
-                Title: '@T(KoreCmsLocalizableStrings.ContentBlocks.Model.Title)',
-                BlockType: '@T(KoreCmsLocalizableStrings.ContentBlocks.Model.BlockType)',
-                Order: '@T(KoreCmsLocalizableStrings.ContentBlocks.Model.Order)',
-                IsEnabled: '@T(KoreCmsLocalizableStrings.ContentBlocks.Model.IsEnabled)',
-                Name: '@T(KoreCmsLocalizableStrings.ContentBlocks.ZoneModel.Name)',
-            }
-        }
-    </script>
-}

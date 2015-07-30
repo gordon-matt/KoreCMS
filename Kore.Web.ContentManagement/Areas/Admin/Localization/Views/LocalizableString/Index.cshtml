@@ -2,19 +2,17 @@
 @using Kore.Web.ContentManagement
 
 @{
-    Layout = KoreWebConstants.DefaultAdminLayoutPath;
-    
-    Style.IncludeBundle("kendo-ui");
-
-    Script.IncludeBundle("kendo-ui");
-    Script.IncludeBundle("kore-cms/localizable-strings");
-
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
 
+<link rel="stylesheet" type="text/css" href="@Style.GetBundleUrl("kendo-ui")" />
+
+@Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
+@Html.Hidden("CultureCode", ViewBag.CultureCode)
+
 <div id="grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <a onclick="exportFile();" class="btn btn-success">
+        <a onclick="viewModel.exportFile();" class="btn btn-success">
             <i class="kore-icon kore-icon-export"></i>
             @T(KoreWebLocalizableStrings.General.Export)
         </a>
@@ -23,28 +21,7 @@
     <div class="clearfix"></div>
     <br />
 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="@rtlClass">
-            <div id="Grid"></div>
-        </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
+        <div id="Grid"></div>
     </div>
 </div>
-
-@section scripts {
-    <script type="text/javascript">
-    var gridPageSize = @SiteSettings.DefaultGridPageSize;
-    var cultureCode = '@ViewBag.CultureCode';
-
-        if (cultureCode == "") {
-            cultureCode = null;
-        }
-
-        var translations = {
-            Columns:{
-                InvariantValue: '@T(KoreCmsLocalizableStrings.Localization.LocalizableStringModel.InvariantValue).Text',
-                Key: '@T(KoreCmsLocalizableStrings.Localization.LocalizableStringModel.Key).Text',
-                LocalizedValue: '@T(KoreCmsLocalizableStrings.Localization.LocalizableStringModel.LocalizedValue).Text',
-            }
-        }
-</script>
-}

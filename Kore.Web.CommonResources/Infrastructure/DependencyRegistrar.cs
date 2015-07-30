@@ -11,6 +11,7 @@ namespace Kore.Web.CommonResources.Infrastructure
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
             builder.RegisterType<ResourceBundleRegistrar>().As<IResourceBundleRegistrar>().SingleInstance();
+            builder.RegisterType<RequireJSConfigProvider>().As<IRequireJSConfigProvider>().SingleInstance();
         }
 
         public int Order

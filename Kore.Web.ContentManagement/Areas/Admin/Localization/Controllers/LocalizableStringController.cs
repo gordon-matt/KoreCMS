@@ -8,6 +8,7 @@ using Kore.Web.ContentManagement.Areas.Admin.Localization.Models;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
 using Kore.Web.Security.Membership.Permissions;
+using Newtonsoft.Json.Linq;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
 {
@@ -50,7 +51,25 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
 
             ViewBag.CultureCode = language.CultureCode;
 
-            return View("Kore.Web.ContentManagement.Areas.Admin.Localization.Views.LocalizableString.Index");
+            return PartialView("Kore.Web.ContentManagement.Areas.Admin.Localization.Views.LocalizableString.Index");
+        }
+
+        [Route("get-translations")]
+        public JsonResult GetTranslations()
+        {
+            string json = string.Format(
+@"{{
+    Columns: {{
+        InvariantValue: '{0}',
+        Key: '{1}',
+        LocalizedValue: '{2}',
+    }}
+}}",
+   T(KoreCmsLocalizableStrings.Localization.LocalizableStringModel.InvariantValue),
+   T(KoreCmsLocalizableStrings.Localization.LocalizableStringModel.Key),
+   T(KoreCmsLocalizableStrings.Localization.LocalizableStringModel.LocalizedValue));
+
+            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
         }
 
         [Compress]

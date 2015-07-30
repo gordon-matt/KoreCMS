@@ -185,6 +185,7 @@
     <Compile Include="StoreSettings.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Views\AdminHome\Index.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

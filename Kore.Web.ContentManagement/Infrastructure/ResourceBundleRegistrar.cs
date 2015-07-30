@@ -27,11 +27,9 @@ namespace Kore.Web.ContentManagement.Infrastructure
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Blog.Scripts.blogContent.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/content-blocks")
-                .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripts.zoneModel.js")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripts.contentBlocks.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/entity-type-content-blocks")
-                .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripts.zoneModel.js")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripts.entityTypeContentBlocks.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/languages")
@@ -51,9 +49,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/pages")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Pages.Scripts.index.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/pages-history")
-                .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Pages.Scripts.history.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/queued-emails")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Messaging.Scripts.queuedEmails.js"));

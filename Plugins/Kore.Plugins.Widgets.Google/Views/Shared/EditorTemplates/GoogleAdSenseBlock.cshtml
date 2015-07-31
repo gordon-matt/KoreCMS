@@ -6,13 +6,13 @@
         <div class="form-group">
             @Html.LabelFor(m => m.AdClient, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                @Html.TextBoxFor(m => m.AdClient, new { @class = "form-control", data_bind = "value: adClient" })
+                @Html.TextBoxFor(m => m.AdClient, new { @class = "form-control", data_bind = "value: blockModel.adClient" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.AdSlot, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                @Html.TextBoxFor(m => m.AdSlot, new { @class = "form-control", data_bind = "value: adSlot" })
+                @Html.TextBoxFor(m => m.AdSlot, new { @class = "form-control", data_bind = "value: blockModel.adSlot" })
             </div>
         </div>
         <div class="form-group">
@@ -20,7 +20,7 @@
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                 <div class="checkbox">
                     <label>
-                        @Html.CheckBoxFor(m => m.EnableLazyLoadAd, new { data_bind = "checked: enableLazyLoadAd" }) @T(LocalizableStrings.ContentBlocks.AdSenseBlock.EnableLazyLoadAd)
+                        @Html.CheckBoxFor(m => m.EnableLazyLoadAd, new { data_bind = "checked: blockModel.enableLazyLoadAd" }) @T(LocalizableStrings.ContentBlocks.AdSenseBlock.EnableLazyLoadAd)
                     </label>
                 </div>
             </div>
@@ -30,13 +30,13 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Width, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                @Html.TextBoxFor(m => m.Width, new { @class = "form-control", data_bind = "value: width" })
+                @Html.TextBoxFor(m => m.Width, new { @class = "form-control", data_bind = "value: blockModel.width" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Height, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                @Html.TextBoxFor(m => m.Height, new { @class = "form-control", data_bind = "value: height" })
+                @Html.TextBoxFor(m => m.Height, new { @class = "form-control", data_bind = "value: blockModel.height" })
             </div>
         </div>
     </div>
@@ -46,49 +46,49 @@
     var contentBlockModel = (function () {
         var f = {};
         f.updateModel = function () {
-            viewModel.adClient = ko.observable("");
-            viewModel.adSlot = ko.observable("");
-            viewModel.width = ko.observable(0);
-            viewModel.height = ko.observable(0);
-            viewModel.enableLazyLoadAd = ko.observable(false);
+            viewModel.blockModel.adClient = ko.observable("");
+            viewModel.blockModel.adSlot = ko.observable("");
+            viewModel.blockModel.width = ko.observable(0);
+            viewModel.blockModel.height = ko.observable(0);
+            viewModel.blockModel.enableLazyLoadAd = ko.observable(false);
 
-            var data = ko.mapping.fromJSON(viewModel.blockValues());
+            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
 
             if (data) {
                 if (data.AdClient) {
-                    viewModel.adClient(data.AdClient());
+                    viewModel.blockModel.adClient(data.AdClient());
                 }
                 if (data.AdSlot) {
-                    viewModel.adSlot(data.AdSlot());
+                    viewModel.blockModel.adSlot(data.AdSlot());
                 }
                 if (data.Width) {
-                    viewModel.width(data.Width());
+                    viewModel.blockModel.width(data.Width());
                 }
                 if (data.Height) {
-                    viewModel.height(data.Height());
+                    viewModel.blockModel.height(data.Height());
                 }
                 if (data.EnableLazyLoadAd) {
-                    viewModel.enableLazyLoadAd(data.EnableLazyLoadAd());
+                    viewModel.blockModel.enableLazyLoadAd(data.EnableLazyLoadAd());
                 }
             }
         };
         f.cleanUp = function () {
-            delete viewModel.adClient;
-            delete viewModel.adSlot;
-            delete viewModel.width;
-            delete viewModel.height;
-            delete viewModel.enableLazyLoadAd;
+            delete viewModel.blockModel.adClient;
+            delete viewModel.blockModel.adSlot;
+            delete viewModel.blockModel.width;
+            delete viewModel.blockModel.height;
+            delete viewModel.blockModel.enableLazyLoadAd;
         };
         f.onBeforeSave = function () {
             var data = {
-                AdClient: viewModel.adClient(),
-                AdSlot: viewModel.adSlot(),
-                Width: viewModel.width(),
-                Height: viewModel.height(),
-                EnableLazyLoadAd: viewModel.enableLazyLoadAd()
+                AdClient: viewModel.blockModel.adClient(),
+                AdSlot: viewModel.blockModel.adSlot(),
+                Width: viewModel.blockModel.width(),
+                Height: viewModel.blockModel.height(),
+                EnableLazyLoadAd: viewModel.blockModel.enableLazyLoadAd()
             };
 
-            viewModel.blockValues(ko.mapping.toJSON(data));
+            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

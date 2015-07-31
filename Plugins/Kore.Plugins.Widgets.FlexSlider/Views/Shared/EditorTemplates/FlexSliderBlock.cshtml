@@ -19,7 +19,7 @@
                     @Html.LabelFor(m => m.MediaFolder, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                         <div class="input-group">
-                            @Html.TextBoxFor(m => m.MediaFolder, new { @class = "form-control", data_bind = "value: mediaFolder" })
+                            @Html.TextBoxFor(m => m.MediaFolder, new { @class = "form-control", data_bind = "value: blockModel.mediaFolder" })
                             <span class="input-group-addon">
                                 <a data-toggle="modal" href="javascript:void(0);" data-target="#myModal">
                                     <i class="kore-icon kore-icon-search"></i>
@@ -31,19 +31,19 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.ControlId, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.ControlId, new { @class = "form-control", data_bind = "value: controlId" })
+                        @Html.TextBoxFor(m => m.ControlId, new { @class = "form-control", data_bind = "value: blockModel.controlId" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Namespace, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.Namespace, new { @class = "form-control", data_bind = "value: namespace" })
+                        @Html.TextBoxFor(m => m.Namespace, new { @class = "form-control", data_bind = "value: blockModel.namespace" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Selector, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.Selector, new { @class = "form-control", data_bind = "value: selector" })
+                        @Html.TextBoxFor(m => m.Selector, new { @class = "form-control", data_bind = "value: blockModel.selector" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -51,32 +51,32 @@
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("Randomize", new { data_bind = "checked: randomize" }) @T(LocalizableStrings.FlexSliderBlock.Randomize)
+                                @Html.CheckBox("Randomize", new { data_bind = "checked: blockModel.randomize" }) @T(LocalizableStrings.FlexSliderBlock.Randomize)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("PauseOnAction", new { data_bind = "checked: pauseOnAction" }) @T(LocalizableStrings.FlexSliderBlock.PauseOnAction)
+                                @Html.CheckBox("PauseOnAction", new { data_bind = "checked: blockModel.pauseOnAction" }) @T(LocalizableStrings.FlexSliderBlock.PauseOnAction)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("PauseOnHover", new { data_bind = "checked: pauseOnHover" }) @T(LocalizableStrings.FlexSliderBlock.PauseOnHover)
+                                @Html.CheckBox("PauseOnHover", new { data_bind = "checked: blockModel.pauseOnHover" }) @T(LocalizableStrings.FlexSliderBlock.PauseOnHover)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("Touch", new { data_bind = "checked: touch" }) @T(LocalizableStrings.FlexSliderBlock.Touch)
+                                @Html.CheckBox("Touch", new { data_bind = "checked: blockModel.touch" }) @T(LocalizableStrings.FlexSliderBlock.Touch)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("Video", new { data_bind = "checked: video" }) @T(LocalizableStrings.FlexSliderBlock.Video)
+                                @Html.CheckBox("Video", new { data_bind = "checked: blockModel.video" }) @T(LocalizableStrings.FlexSliderBlock.Video)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("Slideshow", new { data_bind = "checked: slideshow" }) @T(LocalizableStrings.FlexSliderBlock.Slideshow)
+                                @Html.CheckBox("Slideshow", new { data_bind = "checked: blockModel.slideshow" }) @T(LocalizableStrings.FlexSliderBlock.Slideshow)
                             </label>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.SlideshowSpeed, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.SlideshowSpeed, new { @class = "form-control", data_bind = "value: slideshowSpeed" })
+                        @Html.TextBoxFor(m => m.SlideshowSpeed, new { @class = "form-control", data_bind = "value: blockModel.slideshowSpeed" })
                     </div>
                 </div>
             </div>
@@ -92,49 +92,49 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.StartAt, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.StartAt, new { @class = "form-control", data_bind = "value: startAt" })
+                        @Html.TextBoxFor(m => m.StartAt, new { @class = "form-control", data_bind = "value: blockModel.startAt" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.InitDelay, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.InitDelay, new { @class = "form-control", data_bind = "value: initDelay" })
+                        @Html.TextBoxFor(m => m.InitDelay, new { @class = "form-control", data_bind = "value: blockModel.initDelay" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Sync, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.Sync, new { @class = "form-control", data_bind = "value: sync" })
+                        @Html.TextBoxFor(m => m.Sync, new { @class = "form-control", data_bind = "value: blockModel.sync" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.AsNavFor, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.AsNavFor, new { @class = "form-control", data_bind = "value: asNavFor" })
+                        @Html.TextBoxFor(m => m.AsNavFor, new { @class = "form-control", data_bind = "value: blockModel.asNavFor" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.ItemWidth, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.ItemWidth, new { @class = "form-control", data_bind = "value: itemWidth" })
+                        @Html.TextBoxFor(m => m.ItemWidth, new { @class = "form-control", data_bind = "value: blockModel.itemWidth" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.ItemMargin, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.ItemMargin, new { @class = "form-control", data_bind = "value: itemMargin" })
+                        @Html.TextBoxFor(m => m.ItemMargin, new { @class = "form-control", data_bind = "value: blockModel.itemMargin" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.MinItems, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.MinItems, new { @class = "form-control", data_bind = "value: minItems" })
+                        @Html.TextBoxFor(m => m.MinItems, new { @class = "form-control", data_bind = "value: blockModel.minItems" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.MaxItems, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.MaxItems, new { @class = "form-control", data_bind = "value: maxItems" })
+                        @Html.TextBoxFor(m => m.MaxItems, new { @class = "form-control", data_bind = "value: blockModel.maxItems" })
                     </div>
                 </div>
             </div>
@@ -145,25 +145,25 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.Animation, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.Animation, new { @class = "form-control", data_bind = "value: animation" })
+                        @Html.EnumDropDownListFor(m => m.Animation, new { @class = "form-control", data_bind = "value: blockModel.animation" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Easing, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.Easing, new { @class = "form-control", data_bind = "value: easing" })
+                        @Html.EnumDropDownListFor(m => m.Easing, new { @class = "form-control", data_bind = "value: blockModel.easing" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.AnimationSpeed, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.AnimationSpeed, new { @class = "form-control", data_bind = "value: animationSpeed" })
+                        @Html.TextBoxFor(m => m.AnimationSpeed, new { @class = "form-control", data_bind = "value: blockModel.animationSpeed" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Move, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.Move, new { @class = "form-control", data_bind = "value: move" })
+                        @Html.TextBoxFor(m => m.Move, new { @class = "form-control", data_bind = "value: blockModel.move" })
                     </div>
                 </div>
             </div>
@@ -171,7 +171,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.Direction, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.Direction, new { @class = "form-control", data_bind = "value: direction" })
+                        @Html.EnumDropDownListFor(m => m.Direction, new { @class = "form-control", data_bind = "value: blockModel.direction" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -179,22 +179,22 @@
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("Reverse", new { data_bind = "checked: reverse" }) @T(LocalizableStrings.FlexSliderBlock.Reverse)
+                                @Html.CheckBox("Reverse", new { data_bind = "checked: blockModel.reverse" }) @T(LocalizableStrings.FlexSliderBlock.Reverse)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("AnimationLoop", new { data_bind = "checked: animationLoop" }) @T(LocalizableStrings.FlexSliderBlock.AnimationLoop)
+                                @Html.CheckBox("AnimationLoop", new { data_bind = "checked: blockModel.animationLoop" }) @T(LocalizableStrings.FlexSliderBlock.AnimationLoop)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("SmoothHeight", new { data_bind = "checked: smoothHeight" }) @T(LocalizableStrings.FlexSliderBlock.SmoothHeight)
+                                @Html.CheckBox("SmoothHeight", new { data_bind = "checked: blockModel.smoothHeight" }) @T(LocalizableStrings.FlexSliderBlock.SmoothHeight)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("UseCSS", new { data_bind = "checked: useCSS" }) @T(LocalizableStrings.FlexSliderBlock.UseCSS)
+                                @Html.CheckBox("UseCSS", new { data_bind = "checked: blockModel.useCSS" }) @T(LocalizableStrings.FlexSliderBlock.UseCSS)
                             </label>
                         </div>
                     </div>
@@ -210,7 +210,7 @@
                         <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                             <div class="checkbox">
                                 <label>
-                                    @Html.CheckBox("DirectionNav", new { data_bind = "checked: directionNav" }) @T(LocalizableStrings.FlexSliderBlock.DirectionNav)
+                                    @Html.CheckBox("DirectionNav", new { data_bind = "checked: blockModel.directionNav" }) @T(LocalizableStrings.FlexSliderBlock.DirectionNav)
                                 </label>
                             </div>
                         </div>
@@ -218,32 +218,32 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.PrevText, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                         <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                            @Html.TextBoxFor(m => m.PrevText, new { @class = "form-control", data_bind = "value: prevText" })
+                            @Html.TextBoxFor(m => m.PrevText, new { @class = "form-control", data_bind = "value: blockModel.prevText" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.NextText, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                         <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                            @Html.TextBoxFor(m => m.NextText, new { @class = "form-control", data_bind = "value: nextText" })
+                            @Html.TextBoxFor(m => m.NextText, new { @class = "form-control", data_bind = "value: blockModel.nextText" })
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.ControlNav, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.ControlNav, new { @class = "form-control", data_bind = "value: controlNav" })
+                        @Html.EnumDropDownListFor(m => m.ControlNav, new { @class = "form-control", data_bind = "value: blockModel.controlNav" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.ControlsContainer, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.ControlsContainer, new { @class = "form-control", data_bind = "value: controlsContainer" })
+                        @Html.TextBoxFor(m => m.ControlsContainer, new { @class = "form-control", data_bind = "value: blockModel.controlsContainer" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.ManualControls, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.ManualControls, new { @class = "form-control", data_bind = "value: manualControls" })
+                        @Html.TextBoxFor(m => m.ManualControls, new { @class = "form-control", data_bind = "value: blockModel.manualControls" })
                     </div>
                 </div>
             </div>
@@ -254,7 +254,7 @@
                         <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                             <div class="checkbox">
                                 <label>
-                                    @Html.CheckBox("PausePlay", new { data_bind = "checked: pausePlay" }) @T(LocalizableStrings.FlexSliderBlock.PausePlay)
+                                    @Html.CheckBox("PausePlay", new { data_bind = "checked: blockModel.pausePlay" }) @T(LocalizableStrings.FlexSliderBlock.PausePlay)
                                 </label>
                             </div>
                         </div>
@@ -262,13 +262,13 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.PauseText, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                         <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                            @Html.TextBoxFor(m => m.PauseText, new { @class = "form-control", data_bind = "value: pauseText" })
+                            @Html.TextBoxFor(m => m.PauseText, new { @class = "form-control", data_bind = "value: blockModel.pauseText" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.PlayText, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                         <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                            @Html.TextBoxFor(m => m.PlayText, new { @class = "form-control", data_bind = "value: playText" })
+                            @Html.TextBoxFor(m => m.PlayText, new { @class = "form-control", data_bind = "value: blockModel.playText" })
                         </div>
                     </div>
                 </div>
@@ -277,17 +277,17 @@
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("Keyboard", new { data_bind = "checked: keyboard" }) @T(LocalizableStrings.FlexSliderBlock.Keyboard)
+                                @Html.CheckBox("Keyboard", new { data_bind = "checked: blockModel.keyboard" }) @T(LocalizableStrings.FlexSliderBlock.Keyboard)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("MultipleKeyboard", new { data_bind = "checked: multipleKeyboard" }) @T(LocalizableStrings.FlexSliderBlock.MultipleKeyboard)
+                                @Html.CheckBox("MultipleKeyboard", new { data_bind = "checked: blockModel.multipleKeyboard" }) @T(LocalizableStrings.FlexSliderBlock.MultipleKeyboard)
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBox("Mousewheel", new { data_bind = "checked: mousewheel" }) @T(LocalizableStrings.FlexSliderBlock.Mousewheel)
+                                @Html.CheckBox("Mousewheel", new { data_bind = "checked: blockModel.mousewheel" }) @T(LocalizableStrings.FlexSliderBlock.Mousewheel)
                             </label>
                         </div>
                     </div>
@@ -300,19 +300,19 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.OnStart, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextAreaFor(m => m.OnStart, new { @class = "form-control", data_bind = "value: onStart" })
+                        @Html.TextAreaFor(m => m.OnStart, new { @class = "form-control", data_bind = "value: blockModel.onStart" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.OnEnd, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextAreaFor(m => m.OnEnd, new { @class = "form-control", data_bind = "value: onEnd" })
+                        @Html.TextAreaFor(m => m.OnEnd, new { @class = "form-control", data_bind = "value: blockModel.onEnd" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.OnBefore, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextAreaFor(m => m.OnBefore, new { @class = "form-control", data_bind = "value: onBefore" })
+                        @Html.TextAreaFor(m => m.OnBefore, new { @class = "form-control", data_bind = "value: blockModel.onBefore" })
                     </div>
                 </div>
             </div>
@@ -320,19 +320,19 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.OnAfter, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextAreaFor(m => m.OnAfter, new { @class = "form-control", data_bind = "value: onAfter" })
+                        @Html.TextAreaFor(m => m.OnAfter, new { @class = "form-control", data_bind = "value: blockModel.onAfter" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.OnAdded, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextAreaFor(m => m.OnAdded, new { @class = "form-control", data_bind = "value: onAdded" })
+                        @Html.TextAreaFor(m => m.OnAdded, new { @class = "form-control", data_bind = "value: blockModel.onAdded" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.OnRemoved, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextAreaFor(m => m.OnRemoved, new { @class = "form-control", data_bind = "value: onRemoved" })
+                        @Html.TextAreaFor(m => m.OnRemoved, new { @class = "form-control", data_bind = "value: blockModel.onRemoved" })
                     </div>
                 </div>
             </div>
@@ -374,7 +374,7 @@
                 var url = $('#MediaFolder').val();
                 var idx = url.indexOf("Uploads");
                 url = url.substring(idx);
-                viewModel.mediaFolder(url);
+                viewModel.blockModel.mediaFolder(url);
             }
             modalDismissed = false;
         })
@@ -383,206 +383,206 @@
     var contentBlockModel = (function () {
         var f = {};
         f.updateModel = function () {
-            viewModel.mediaFolder = ko.observable("");
-            viewModel.controlId = ko.observable("slider");
-            viewModel.namespace = ko.observable(null);
-            viewModel.selector = ko.observable(null);
-            viewModel.startAt = ko.observable(0);
-            viewModel.slideshow = ko.observable(true);
-            viewModel.slideshowSpeed = ko.observable(7000);
-            viewModel.initDelay = ko.observable(0);
-            viewModel.randomize = ko.observable(false);
-            viewModel.pauseOnAction = ko.observable(true);
-            viewModel.pauseOnHover = ko.observable(false);
-            viewModel.touch = ko.observable(true);
-            viewModel.video = ko.observable(false);
-            viewModel.sync = ko.observable("");
-            viewModel.asNavFor = ko.observable("");
-            viewModel.itemWidth = ko.observable(0);
-            viewModel.itemMargin = ko.observable(0);
-            viewModel.minItems = ko.observable(0);
-            viewModel.maxItems = ko.observable(0);
-            viewModel.animation = ko.observable(0);
-            viewModel.animationSpeed = ko.observable(600);
-            viewModel.direction = ko.observable(0);
-            viewModel.reverse = ko.observable(false);
-            viewModel.move = ko.observable(0);
-            viewModel.animationLoop = ko.observable(true);
-            viewModel.smoothHeight = ko.observable(false);
-            viewModel.easing = ko.observable(1);
-            viewModel.useCSS = ko.observable(true);
-            viewModel.controlNav = ko.observable(1);
-            viewModel.directionNav = ko.observable(true);
-            viewModel.prevText = ko.observable("Previous");
-            viewModel.nextText = ko.observable("Next");
-            viewModel.pausePlay = ko.observable(false);
-            viewModel.pauseText = ko.observable("Pause");
-            viewModel.playText = ko.observable("Play");
-            viewModel.controlsContainer = ko.observable("");
-            viewModel.manualControls = ko.observable("");
-            viewModel.keyboard = ko.observable(true);
-            viewModel.multipleKeyboard = ko.observable(false);
-            viewModel.mousewheel = ko.observable(false);
-            viewModel.onStart = ko.observable(null);
-            viewModel.onEnd = ko.observable(null);
-            viewModel.onBefore = ko.observable(null);
-            viewModel.onAfter = ko.observable(null);
-            viewModel.onAdded = ko.observable(null);
-            viewModel.onRemoved = ko.observable(null);
+            viewModel.blockModel.mediaFolder = ko.observable("");
+            viewModel.blockModel.controlId = ko.observable("slider");
+            viewModel.blockModel.namespace = ko.observable(null);
+            viewModel.blockModel.selector = ko.observable(null);
+            viewModel.blockModel.startAt = ko.observable(0);
+            viewModel.blockModel.slideshow = ko.observable(true);
+            viewModel.blockModel.slideshowSpeed = ko.observable(7000);
+            viewModel.blockModel.initDelay = ko.observable(0);
+            viewModel.blockModel.randomize = ko.observable(false);
+            viewModel.blockModel.pauseOnAction = ko.observable(true);
+            viewModel.blockModel.pauseOnHover = ko.observable(false);
+            viewModel.blockModel.touch = ko.observable(true);
+            viewModel.blockModel.video = ko.observable(false);
+            viewModel.blockModel.sync = ko.observable("");
+            viewModel.blockModel.asNavFor = ko.observable("");
+            viewModel.blockModel.itemWidth = ko.observable(0);
+            viewModel.blockModel.itemMargin = ko.observable(0);
+            viewModel.blockModel.minItems = ko.observable(0);
+            viewModel.blockModel.maxItems = ko.observable(0);
+            viewModel.blockModel.animation = ko.observable(0);
+            viewModel.blockModel.animationSpeed = ko.observable(600);
+            viewModel.blockModel.direction = ko.observable(0);
+            viewModel.blockModel.reverse = ko.observable(false);
+            viewModel.blockModel.move = ko.observable(0);
+            viewModel.blockModel.animationLoop = ko.observable(true);
+            viewModel.blockModel.smoothHeight = ko.observable(false);
+            viewModel.blockModel.easing = ko.observable(1);
+            viewModel.blockModel.useCSS = ko.observable(true);
+            viewModel.blockModel.controlNav = ko.observable(1);
+            viewModel.blockModel.directionNav = ko.observable(true);
+            viewModel.blockModel.prevText = ko.observable("Previous");
+            viewModel.blockModel.nextText = ko.observable("Next");
+            viewModel.blockModel.pausePlay = ko.observable(false);
+            viewModel.blockModel.pauseText = ko.observable("Pause");
+            viewModel.blockModel.playText = ko.observable("Play");
+            viewModel.blockModel.controlsContainer = ko.observable("");
+            viewModel.blockModel.manualControls = ko.observable("");
+            viewModel.blockModel.keyboard = ko.observable(true);
+            viewModel.blockModel.multipleKeyboard = ko.observable(false);
+            viewModel.blockModel.mousewheel = ko.observable(false);
+            viewModel.blockModel.onStart = ko.observable(null);
+            viewModel.blockModel.onEnd = ko.observable(null);
+            viewModel.blockModel.onBefore = ko.observable(null);
+            viewModel.blockModel.onAfter = ko.observable(null);
+            viewModel.blockModel.onAdded = ko.observable(null);
+            viewModel.blockModel.onRemoved = ko.observable(null);
 
-            var data = ko.mapping.fromJSON(viewModel.blockValues());
+            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
 
             if ((isFunction(data) && data()) || data) {
                 if (data.MediaFolder == undefined) {
                     // If this is not set, it means the contentBlock is new and we have nothing in blockValues
                     return;
                 }
-                viewModel.mediaFolder(data.MediaFolder());
-                viewModel.controlId(data.ControlId());
-                viewModel.namespace(data.Namespace());
-                viewModel.selector(data.Selector());
-                viewModel.startAt(data.StartAt());
-                viewModel.slideshow(data.Slideshow());
-                viewModel.slideshowSpeed(data.SlideshowSpeed());
-                viewModel.initDelay(data.InitDelay());
-                viewModel.randomize(data.Randomize());
-                viewModel.pauseOnAction(data.PauseOnAction());
-                viewModel.pauseOnHover(data.PauseOnHover());
-                viewModel.touch(data.Touch());
-                viewModel.video(data.Video());
-                viewModel.sync(data.Sync());
-                viewModel.asNavFor(data.AsNavFor());
-                viewModel.itemWidth(data.ItemWidth());
-                viewModel.itemMargin(data.ItemMargin());
-                viewModel.minItems(data.MinItems());
-                viewModel.maxItems(data.MaxItems());
-                viewModel.animation(data.Animation());
-                viewModel.animationSpeed(data.AnimationSpeed());
-                viewModel.direction(data.Direction());
-                viewModel.reverse(data.Reverse());
-                viewModel.move(data.Move());
-                viewModel.animationLoop(data.AnimationLoop());
-                viewModel.smoothHeight(data.SmoothHeight());
-                viewModel.easing(data.Easing());
-                viewModel.useCSS(data.UseCSS());
-                viewModel.controlNav(data.ControlNav());
-                viewModel.directionNav(data.DirectionNav());
-                viewModel.prevText(data.PrevText());
-                viewModel.nextText(data.NextText());
-                viewModel.pausePlay(data.PausePlay());
-                viewModel.pauseText(data.PauseText());
-                viewModel.playText(data.PlayText());
-                viewModel.controlsContainer(data.ControlsContainer());
-                viewModel.manualControls(data.ManualControls());
-                viewModel.keyboard(data.Keyboard());
-                viewModel.multipleKeyboard(data.MultipleKeyboard());
-                viewModel.mousewheel(data.Mousewheel());
-                viewModel.onStart(data.OnStart());
-                viewModel.onEnd(data.OnEnd());
-                viewModel.onBefore(data.OnBefore());
-                viewModel.onAfter(data.OnAfter());
-                viewModel.onAdded(data.OnAdded());
-                viewModel.onRemoved(data.OnRemoved());
+                viewModel.blockModel.mediaFolder(data.MediaFolder());
+                viewModel.blockModel.controlId(data.ControlId());
+                viewModel.blockModel.namespace(data.Namespace());
+                viewModel.blockModel.selector(data.Selector());
+                viewModel.blockModel.startAt(data.StartAt());
+                viewModel.blockModel.slideshow(data.Slideshow());
+                viewModel.blockModel.slideshowSpeed(data.SlideshowSpeed());
+                viewModel.blockModel.initDelay(data.InitDelay());
+                viewModel.blockModel.randomize(data.Randomize());
+                viewModel.blockModel.pauseOnAction(data.PauseOnAction());
+                viewModel.blockModel.pauseOnHover(data.PauseOnHover());
+                viewModel.blockModel.touch(data.Touch());
+                viewModel.blockModel.video(data.Video());
+                viewModel.blockModel.sync(data.Sync());
+                viewModel.blockModel.asNavFor(data.AsNavFor());
+                viewModel.blockModel.itemWidth(data.ItemWidth());
+                viewModel.blockModel.itemMargin(data.ItemMargin());
+                viewModel.blockModel.minItems(data.MinItems());
+                viewModel.blockModel.maxItems(data.MaxItems());
+                viewModel.blockModel.animation(data.Animation());
+                viewModel.blockModel.animationSpeed(data.AnimationSpeed());
+                viewModel.blockModel.direction(data.Direction());
+                viewModel.blockModel.reverse(data.Reverse());
+                viewModel.blockModel.move(data.Move());
+                viewModel.blockModel.animationLoop(data.AnimationLoop());
+                viewModel.blockModel.smoothHeight(data.SmoothHeight());
+                viewModel.blockModel.easing(data.Easing());
+                viewModel.blockModel.useCSS(data.UseCSS());
+                viewModel.blockModel.controlNav(data.ControlNav());
+                viewModel.blockModel.directionNav(data.DirectionNav());
+                viewModel.blockModel.prevText(data.PrevText());
+                viewModel.blockModel.nextText(data.NextText());
+                viewModel.blockModel.pausePlay(data.PausePlay());
+                viewModel.blockModel.pauseText(data.PauseText());
+                viewModel.blockModel.playText(data.PlayText());
+                viewModel.blockModel.controlsContainer(data.ControlsContainer());
+                viewModel.blockModel.manualControls(data.ManualControls());
+                viewModel.blockModel.keyboard(data.Keyboard());
+                viewModel.blockModel.multipleKeyboard(data.MultipleKeyboard());
+                viewModel.blockModel.mousewheel(data.Mousewheel());
+                viewModel.blockModel.onStart(data.OnStart());
+                viewModel.blockModel.onEnd(data.OnEnd());
+                viewModel.blockModel.onBefore(data.OnBefore());
+                viewModel.blockModel.onAfter(data.OnAfter());
+                viewModel.blockModel.onAdded(data.OnAdded());
+                viewModel.blockModel.onRemoved(data.OnRemoved());
             }
         };
         f.cleanUp = function () {
-            delete viewModel.mediaFolder;
-            delete viewModel.controlId;
-            delete viewModel.namespace;
-            delete viewModel.selector;
-            delete viewModel.startAt;
-            delete viewModel.slideshow;
-            delete viewModel.slideshowSpeed;
-            delete viewModel.initDelay;
-            delete viewModel.randomize;
-            delete viewModel.pauseOnAction;
-            delete viewModel.pauseOnHover;
-            delete viewModel.touch;
-            delete viewModel.video;
-            delete viewModel.sync;
-            delete viewModel.asNavFor;
-            delete viewModel.itemWidth;
-            delete viewModel.itemMargin;
-            delete viewModel.minItems;
-            delete viewModel.maxItems;
-            delete viewModel.animation;
-            delete viewModel.animationSpeed;
-            delete viewModel.direction;
-            delete viewModel.reverse;
-            delete viewModel.move;
-            delete viewModel.animationLoop;
-            delete viewModel.smoothHeight;
-            delete viewModel.easing;
-            delete viewModel.useCSS;
-            delete viewModel.controlNav;
-            delete viewModel.directionNav;
-            delete viewModel.prevText;
-            delete viewModel.nextText;
-            delete viewModel.pausePlay;
-            delete viewModel.pauseText;
-            delete viewModel.playText;
-            delete viewModel.controlsContainer;
-            delete viewModel.manualControls;
-            delete viewModel.keyboard;
-            delete viewModel.multipleKeyboard;
-            delete viewModel.mousewheel;
-            delete viewModel.onStart;
-            delete viewModel.onEnd;
-            delete viewModel.onBefore;
-            delete viewModel.onAfter;
-            delete viewModel.onAdded;
-            delete viewModel.onRemoved;
+            delete viewModel.blockModel.mediaFolder;
+            delete viewModel.blockModel.controlId;
+            delete viewModel.blockModel.namespace;
+            delete viewModel.blockModel.selector;
+            delete viewModel.blockModel.startAt;
+            delete viewModel.blockModel.slideshow;
+            delete viewModel.blockModel.slideshowSpeed;
+            delete viewModel.blockModel.initDelay;
+            delete viewModel.blockModel.randomize;
+            delete viewModel.blockModel.pauseOnAction;
+            delete viewModel.blockModel.pauseOnHover;
+            delete viewModel.blockModel.touch;
+            delete viewModel.blockModel.video;
+            delete viewModel.blockModel.sync;
+            delete viewModel.blockModel.asNavFor;
+            delete viewModel.blockModel.itemWidth;
+            delete viewModel.blockModel.itemMargin;
+            delete viewModel.blockModel.minItems;
+            delete viewModel.blockModel.maxItems;
+            delete viewModel.blockModel.animation;
+            delete viewModel.blockModel.animationSpeed;
+            delete viewModel.blockModel.direction;
+            delete viewModel.blockModel.reverse;
+            delete viewModel.blockModel.move;
+            delete viewModel.blockModel.animationLoop;
+            delete viewModel.blockModel.smoothHeight;
+            delete viewModel.blockModel.easing;
+            delete viewModel.blockModel.useCSS;
+            delete viewModel.blockModel.controlNav;
+            delete viewModel.blockModel.directionNav;
+            delete viewModel.blockModel.prevText;
+            delete viewModel.blockModel.nextText;
+            delete viewModel.blockModel.pausePlay;
+            delete viewModel.blockModel.pauseText;
+            delete viewModel.blockModel.playText;
+            delete viewModel.blockModel.controlsContainer;
+            delete viewModel.blockModel.manualControls;
+            delete viewModel.blockModel.keyboard;
+            delete viewModel.blockModel.multipleKeyboard;
+            delete viewModel.blockModel.mousewheel;
+            delete viewModel.blockModel.onStart;
+            delete viewModel.blockModel.onEnd;
+            delete viewModel.blockModel.onBefore;
+            delete viewModel.blockModel.onAfter;
+            delete viewModel.blockModel.onAdded;
+            delete viewModel.blockModel.onRemoved;
         };
         f.onBeforeSave = function () {
             var data = {
-                MediaFolder: viewModel.mediaFolder(),
-                ControlId: viewModel.controlId(),
-                Namespace: viewModel.namespace(),
-                Selector: viewModel.selector(),
-                StartAt: viewModel.startAt(),
-                Slideshow: viewModel.slideshow(),
-                SlideshowSpeed: viewModel.slideshowSpeed(),
-                InitDelay: viewModel.initDelay(),
-                Randomize: viewModel.randomize(),
-                PauseOnAction: viewModel.pauseOnAction(),
-                PauseOnHover: viewModel.pauseOnHover(),
-                Touch: viewModel.touch(),
-                Video: viewModel.video(),
-                Sync: viewModel.sync(),
-                AsNavFor: viewModel.asNavFor(),
-                ItemWidth: viewModel.itemWidth(),
-                ItemMargin: viewModel.itemMargin(),
-                MinItems: viewModel.minItems(),
-                MaxItems: viewModel.maxItems(),
-                Animation: viewModel.animation(),
-                AnimationSpeed: viewModel.animationSpeed(),
-                Direction: viewModel.direction(),
-                Reverse: viewModel.reverse(),
-                Move: viewModel.move(),
-                AnimationLoop: viewModel.animationLoop(),
-                SmoothHeight: viewModel.smoothHeight(),
-                Easing: viewModel.easing(),
-                UseCSS: viewModel.useCSS(),
-                ControlNav: viewModel.controlNav(),
-                DirectionNav: viewModel.directionNav(),
-                PrevText: viewModel.prevText(),
-                NextText: viewModel.nextText(),
-                PausePlay: viewModel.pausePlay(),
-                PauseText: viewModel.pauseText(),
-                PlayText: viewModel.playText(),
-                ControlsContainer: viewModel.controlsContainer(),
-                ManualControls: viewModel.manualControls(),
-                Keyboard: viewModel.keyboard(),
-                MultipleKeyboard: viewModel.multipleKeyboard(),
-                Mousewheel: viewModel.mousewheel(),
-                OnStart: viewModel.onStart(),
-                OnEnd: viewModel.onEnd(),
-                OnBefore: viewModel.onBefore(),
-                OnAfter: viewModel.onAfter(),
-                OnAdded: viewModel.onAdded(),
-                OnRemoved: viewModel.onRemoved()
+                MediaFolder: viewModel.blockModel.mediaFolder(),
+                ControlId: viewModel.blockModel.controlId(),
+                Namespace: viewModel.blockModel.namespace(),
+                Selector: viewModel.blockModel.selector(),
+                StartAt: viewModel.blockModel.startAt(),
+                Slideshow: viewModel.blockModel.slideshow(),
+                SlideshowSpeed: viewModel.blockModel.slideshowSpeed(),
+                InitDelay: viewModel.blockModel.initDelay(),
+                Randomize: viewModel.blockModel.randomize(),
+                PauseOnAction: viewModel.blockModel.pauseOnAction(),
+                PauseOnHover: viewModel.blockModel.pauseOnHover(),
+                Touch: viewModel.blockModel.touch(),
+                Video: viewModel.blockModel.video(),
+                Sync: viewModel.blockModel.sync(),
+                AsNavFor: viewModel.blockModel.asNavFor(),
+                ItemWidth: viewModel.blockModel.itemWidth(),
+                ItemMargin: viewModel.blockModel.itemMargin(),
+                MinItems: viewModel.blockModel.minItems(),
+                MaxItems: viewModel.blockModel.maxItems(),
+                Animation: viewModel.blockModel.animation(),
+                AnimationSpeed: viewModel.blockModel.animationSpeed(),
+                Direction: viewModel.blockModel.direction(),
+                Reverse: viewModel.blockModel.reverse(),
+                Move: viewModel.blockModel.move(),
+                AnimationLoop: viewModel.blockModel.animationLoop(),
+                SmoothHeight: viewModel.blockModel.smoothHeight(),
+                Easing: viewModel.blockModel.easing(),
+                UseCSS: viewModel.blockModel.useCSS(),
+                ControlNav: viewModel.blockModel.controlNav(),
+                DirectionNav: viewModel.blockModel.directionNav(),
+                PrevText: viewModel.blockModel.prevText(),
+                NextText: viewModel.blockModel.nextText(),
+                PausePlay: viewModel.blockModel.pausePlay(),
+                PauseText: viewModel.blockModel.pauseText(),
+                PlayText: viewModel.blockModel.playText(),
+                ControlsContainer: viewModel.blockModel.controlsContainer(),
+                ManualControls: viewModel.blockModel.manualControls(),
+                Keyboard: viewModel.blockModel.keyboard(),
+                MultipleKeyboard: viewModel.blockModel.multipleKeyboard(),
+                Mousewheel: viewModel.blockModel.mousewheel(),
+                OnStart: viewModel.blockModel.onStart(),
+                OnEnd: viewModel.blockModel.onEnd(),
+                OnBefore: viewModel.blockModel.onBefore(),
+                OnAfter: viewModel.blockModel.onAfter(),
+                OnAdded: viewModel.blockModel.onAdded(),
+                OnRemoved: viewModel.blockModel.onRemoved()
             };
-            viewModel.blockValues(ko.mapping.toJSON(data));
+            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

@@ -395,9 +395,6 @@ define(function (require) {
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
-        self.showZones = function () {
-            switchSection($("#zones-grid-section"));
-        };
     };
 
     var ZoneModel = function () {
@@ -625,12 +622,6 @@ define(function (require) {
             self.gridPageSize = $("#GridPageSize").val();
             self.entityType = $('#EntityType').val();
             self.entityId = $('#EntityId').val();
-
-            if (!self.pageId) {
-                // we don't want undefined or an empty string, since this value will be posted over OData,
-                //  which expects Edm.Guid or a null
-                self.pageId = null;
-            }
 
             self.blockModel.init();
             self.zoneModel.init();

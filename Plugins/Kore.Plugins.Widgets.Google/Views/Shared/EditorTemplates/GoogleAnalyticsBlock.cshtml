@@ -7,7 +7,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.AccountNumber, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                @Html.TextBoxFor(m => m.AccountNumber, new { @class = "form-control", data_bind = "value: accountNumber" })
+                @Html.TextBoxFor(m => m.AccountNumber, new { @class = "form-control", data_bind = "value: blockModel.accountNumber" })
             </div>
         </div>
     </div>
@@ -15,7 +15,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.DomainName, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                @Html.TextBoxFor(m => m.DomainName, new { @class = "form-control", data_bind = "value: domainName" })
+                @Html.TextBoxFor(m => m.DomainName, new { @class = "form-control", data_bind = "value: blockModel.domainName" })
             </div>
         </div>
     </div>
@@ -25,10 +25,10 @@
     var contentBlockModel = (function () {
         var f = {};
         f.updateModel = function () {
-            viewModel.accountNumber = ko.observable(0);
-            viewModel.domainName = ko.observable(0);
+            viewModel.blockModel.accountNumber = ko.observable(0);
+            viewModel.blockModel.domainName = ko.observable(0);
 
-            var data = ko.mapping.fromJSON(viewModel.blockValues());
+            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
 
             if ((isFunction(data) && data()) || data) {
                 if (data.accountNumber == undefined) {
@@ -36,24 +36,24 @@
                     return;
                 }
                 if (data.AccountNumber) {
-                    viewModel.accountNumber(data.AccountNumber());
+                    viewModel.blockModel.accountNumber(data.AccountNumber());
                 }
                 if (data.DomainName) {
-                    viewModel.domainName(data.DomainName());
+                    viewModel.blockModel.domainName(data.DomainName());
                 }
             }
         };
         f.cleanUp = function () {
-            delete viewModel.accountNumber;
-            delete viewModel.domainName;
+            delete viewModel.blockModel.accountNumber;
+            delete viewModel.blockModel.domainName;
         };
         f.onBeforeSave = function () {
             var data = {
-                AccountNumber: viewModel.accountNumber(),
-                DomainName: viewModel.domainName()
+                AccountNumber: viewModel.blockModel.accountNumber(),
+                DomainName: viewModel.blockModel.domainName()
             };
 
-            viewModel.blockValues(ko.mapping.toJSON(data));
+            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

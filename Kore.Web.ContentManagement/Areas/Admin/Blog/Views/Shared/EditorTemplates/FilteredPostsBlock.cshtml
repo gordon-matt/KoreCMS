@@ -11,7 +11,7 @@
                 @Html.DropDownList(
                 "FilterType",
                 WebEnumExtensions.ToSelectList<FilterType>(),
-                new { @class = "form-control", data_bind = "value: filterType" })
+                new { @class = "form-control", data_bind = "value: blockModel.filterType" })
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
                     @Html.KoreCMS().BlogCategoryDropDownList(
                         "CategoryId",
                         emptyText: string.Empty,
-                        htmlAttributes: new { @class = "form-control", data_bind = "value: categoryId" })
+                        htmlAttributes: new { @class = "form-control", data_bind = "value: blockModel.categoryId" })
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
                     @Html.KoreCMS().BlogTagDropDownList(
                         "TagId",
                         emptyText: string.Empty,
-                        htmlAttributes: new { @class = "form-control", data_bind = "value: tagId" })
+                        htmlAttributes: new { @class = "form-control", data_bind = "value: blockModel.tagId" })
                 </div>
             </div>
         </div>
@@ -51,39 +51,37 @@
     var contentBlockModel = (function () {
         var f = {};
         f.updateModel = function () {
-            viewModel.filterType = ko.observable(0);
-            viewModel.categoryId = ko.observable(null);
-            viewModel.tagId = ko.observable(null);
+            viewModel.blockModel.filterType = ko.observable(0);
+            viewModel.blockModel.categoryId = ko.observable(null);
+            viewModel.blockModel.tagId = ko.observable(null);
 
-            var data = ko.mapping.fromJSON(viewModel.blockValues());
+            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
 
             if (data) {
                 if (data.FilterType) {
-                    viewModel.filterType(data.FilterType());
+                    viewModel.blockModel.filterType(data.FilterType());
                 }
                 if (data.CategoryId) {
-                    viewModel.categoryId(data.CategoryId());
+                    viewModel.blockModel.categoryId(data.CategoryId());
                 }
                 if (data.TagId) {
-                    viewModel.tagId(data.TagId());
+                    viewModel.blockModel.tagId(data.TagId());
                 }
             }
-
-            viewModel.tinyMCEConfig = koreDefaultTinyMCEConfig;
         };
         f.cleanUp = function () {
-            delete viewModel.filterType;
-            delete viewModel.categoryId;
-            delete viewModel.tagId;
+            delete viewModel.blockModel.filterType;
+            delete viewModel.blockModel.categoryId;
+            delete viewModel.blockModel.tagId;
         };
         f.onBeforeSave = function () {
             var data = {
-                FilterType: viewModel.filterType(),
-                CategoryId: viewModel.categoryId(),
-                TagId: viewModel.tagId()
+                FilterType: viewModel.blockModel.filterType(),
+                CategoryId: viewModel.blockModel.categoryId(),
+                TagId: viewModel.blockModel.tagId()
             };
 
-            viewModel.blockValues(ko.mapping.toJSON(data));
+            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

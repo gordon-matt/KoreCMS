@@ -23,19 +23,19 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.SliderId, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.RevolutionSlider().SliderDropDownListFor(m => m.SliderId, new { @class = "form-control", data_bind = "value: sliderId" })
+                        @Html.RevolutionSlider().SliderDropDownListFor(m => m.SliderId, new { @class = "form-control", data_bind = "value: blockModel.sliderId" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.ControlId, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.ControlId, new { @class = "form-control", data_bind = "value: controlId" })
+                        @Html.TextBoxFor(m => m.ControlId, new { @class = "form-control", data_bind = "value: blockModel.controlId" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Delay, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.Delay, new { @class = "form-control", data_bind = "value: delay" })
+                        @Html.TextBoxFor(m => m.Delay, new { @class = "form-control", data_bind = "value: blockModel.delay" })
                         @Html.HelpTextFor(m => m.Delay)
                     </div>
                 </div>
@@ -44,14 +44,14 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.StartHeight, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.StartHeight, new { @class = "form-control", data_bind = "value: startHeight" })
+                        @Html.TextBoxFor(m => m.StartHeight, new { @class = "form-control", data_bind = "value: blockModel.startHeight" })
                         @Html.HelpTextFor(m => m.StartHeight)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.StartWidth, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.StartWidth, new { @class = "form-control", data_bind = "value: startWidth" })
+                        @Html.TextBoxFor(m => m.StartWidth, new { @class = "form-control", data_bind = "value: blockModel.startWidth" })
                         @Html.HelpTextFor(m => m.StartWidth)
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.Shuffle, new { data_bind = "checked: shuffle" }) @T(LocalizableStrings.RevolutionSliderBlock.Shuffle)
+                                @Html.CheckBoxFor(m => m.Shuffle, new { data_bind = "checked: blockModel.shuffle" }) @T(LocalizableStrings.RevolutionSliderBlock.Shuffle)
                             </label>
                         </div>
                     </div>
@@ -75,25 +75,25 @@
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.KeyboardNavigation, new { data_bind = "checked: keyboardNavigation" }) @T(LocalizableStrings.RevolutionSliderBlock.KeyboardNavigation)
+                                @Html.CheckBoxFor(m => m.KeyboardNavigation, new { data_bind = "checked: blockModel.keyboardNavigation" }) @T(LocalizableStrings.RevolutionSliderBlock.KeyboardNavigation)
                             </label>
                             @Html.HelpTextFor(m => m.KeyboardNavigation)
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.OnHoverStop, new { data_bind = "checked: onHoverStop" }) @T(LocalizableStrings.RevolutionSliderBlock.OnHoverStop)
+                                @Html.CheckBoxFor(m => m.OnHoverStop, new { data_bind = "checked: blockModel.onHoverStop" }) @T(LocalizableStrings.RevolutionSliderBlock.OnHoverStop)
                             </label>
                             @Html.HelpTextFor(m => m.OnHoverStop)
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.DragBlockVertical, new { data_bind = "checked: dragBlockVertical" }) @T(LocalizableStrings.RevolutionSliderBlock.DragBlockVertical)
+                                @Html.CheckBoxFor(m => m.DragBlockVertical, new { data_bind = "checked: blockModel.dragBlockVertical" }) @T(LocalizableStrings.RevolutionSliderBlock.DragBlockVertical)
                             </label>
                             @Html.HelpTextFor(m => m.DragBlockVertical)
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.TouchEnabled, new { data_bind = "checked: touchEnabled" }) @T(LocalizableStrings.RevolutionSliderBlock.TouchEnabled)
+                                @Html.CheckBoxFor(m => m.TouchEnabled, new { data_bind = "checked: blockModel.touchEnabled" }) @T(LocalizableStrings.RevolutionSliderBlock.TouchEnabled)
                             </label>
                         </div>
                     </div>
@@ -101,63 +101,63 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.ThumbWidth, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.ThumbWidth, new { @class = "form-control", data_bind = "value: thumbWidth" })
+                        @Html.TextBoxFor(m => m.ThumbWidth, new { @class = "form-control", data_bind = "value: blockModel.thumbWidth" })
                         @Html.HelpTextFor(m => m.ThumbWidth)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.ThumbHeight, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.ThumbHeight, new { @class = "form-control", data_bind = "value: thumbHeight" })
+                        @Html.TextBoxFor(m => m.ThumbHeight, new { @class = "form-control", data_bind = "value: blockModel.thumbHeight" })
                         @Html.HelpTextFor(m => m.ThumbHeight)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.ThumbAmount, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.ThumbAmount, new { @class = "form-control", data_bind = "value: thumbAmount" })
+                        @Html.TextBoxFor(m => m.ThumbAmount, new { @class = "form-control", data_bind = "value: blockModel.thumbAmount" })
                         @Html.HelpTextFor(m => m.ThumbAmount)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.HideThumbs, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.HideThumbs, new { @class = "form-control", data_bind = "value: hideThumbs" })
+                        @Html.TextBoxFor(m => m.HideThumbs, new { @class = "form-control", data_bind = "value: blockModel.hideThumbs" })
                         @Html.HelpTextFor(m => m.HideThumbs)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.NavigationType, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.NavigationType, new { @class = "form-control", data_bind = "value: navigationType" })
+                        @Html.EnumDropDownListFor(m => m.NavigationType, new { @class = "form-control", data_bind = "value: blockModel.navigationType" })
                         @Html.HelpTextFor(m => m.NavigationType)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.NavigationArrows, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.NavigationArrows, new { @class = "form-control", data_bind = "value: navigationArrows" })
+                        @Html.EnumDropDownListFor(m => m.NavigationArrows, new { @class = "form-control", data_bind = "value: blockModel.navigationArrows" })
                         @Html.HelpTextFor(m => m.NavigationArrows)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.NavigationStyle, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.NavigationStyle, new { @class = "form-control", data_bind = "value: navigationStyle" })
+                        @Html.EnumDropDownListFor(m => m.NavigationStyle, new { @class = "form-control", data_bind = "value: blockModel.navigationStyle" })
                         @Html.HelpTextFor(m => m.NavigationStyle)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.NavigationHAlign, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.NavigationHAlign, new { @class = "form-control", data_bind = "value: navigationHAlign" })
+                        @Html.EnumDropDownListFor(m => m.NavigationHAlign, new { @class = "form-control", data_bind = "value: blockModel.navigationHAlign" })
                         @Html.HelpTextFor(m => m.NavigationHAlign)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.NavigationVAlign, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.NavigationVAlign, new { @class = "form-control", data_bind = "value: navigationVAlign" })
+                        @Html.EnumDropDownListFor(m => m.NavigationVAlign, new { @class = "form-control", data_bind = "value: blockModel.navigationVAlign" })
                         @Html.HelpTextFor(m => m.NavigationVAlign)
                     </div>
                 </div>
@@ -166,87 +166,87 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.NavigationHOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.NavigationHOffset, new { @class = "form-control", data_bind = "value: navigationHOffset" })
+                        @Html.TextBoxFor(m => m.NavigationHOffset, new { @class = "form-control", data_bind = "value: blockModel.navigationHOffset" })
                         @Html.HelpTextFor(m => m.NavigationHOffset)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.NavigationVOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.NavigationVOffset, new { @class = "form-control", data_bind = "value: navigationVOffset" })
+                        @Html.TextBoxFor(m => m.NavigationVOffset, new { @class = "form-control", data_bind = "value: blockModel.navigationVOffset" })
                         @Html.HelpTextFor(m => m.NavigationVOffset)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.SoloArrowLeftHAlign, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.SoloArrowLeftHAlign, new { @class = "form-control", data_bind = "value: soloArrowLeftHAlign" })
+                        @Html.EnumDropDownListFor(m => m.SoloArrowLeftHAlign, new { @class = "form-control", data_bind = "value: blockModel.soloArrowLeftHAlign" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.SoloArrowRightHAlign, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.SoloArrowRightHAlign, new { @class = "form-control", data_bind = "value: soloArrowRightHAlign" })
+                        @Html.EnumDropDownListFor(m => m.SoloArrowRightHAlign, new { @class = "form-control", data_bind = "value: blockModel.soloArrowRightHAlign" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.SoloArrowLeftVAlign, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.SoloArrowLeftVAlign, new { @class = "form-control", data_bind = "value: soloArrowLeftVAlign" })
+                        @Html.EnumDropDownListFor(m => m.SoloArrowLeftVAlign, new { @class = "form-control", data_bind = "value: blockModel.soloArrowLeftVAlign" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.SoloArrowRightVAlign, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.SoloArrowRightVAlign, new { @class = "form-control", data_bind = "value: soloArrowRightVAlign" })
+                        @Html.EnumDropDownListFor(m => m.SoloArrowRightVAlign, new { @class = "form-control", data_bind = "value: blockModel.soloArrowRightVAlign" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.SoloArrowLeftHOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.SoloArrowLeftHOffset, new { @class = "form-control", data_bind = "value: soloArrowLeftHOffset" })
+                        @Html.TextBoxFor(m => m.SoloArrowLeftHOffset, new { @class = "form-control", data_bind = "value: blockModel.soloArrowLeftHOffset" })
                         @Html.HelpTextFor(m => m.SoloArrowLeftHOffset)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.SoloArrowRightHOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.SoloArrowRightHOffset, new { @class = "form-control", data_bind = "value: soloArrowRightHOffset" })
+                        @Html.TextBoxFor(m => m.SoloArrowRightHOffset, new { @class = "form-control", data_bind = "value: blockModel.soloArrowRightHOffset" })
                         @Html.HelpTextFor(m => m.SoloArrowRightHOffset)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.SoloArrowLeftVOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.SoloArrowLeftVOffset, new { @class = "form-control", data_bind = "value: soloArrowLeftVOffset" })
+                        @Html.TextBoxFor(m => m.SoloArrowLeftVOffset, new { @class = "form-control", data_bind = "value: blockModel.soloArrowLeftVOffset" })
                         @Html.HelpTextFor(m => m.SoloArrowLeftVOffset)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.SoloArrowRightVOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.SoloArrowRightVOffset, new { @class = "form-control", data_bind = "value: soloArrowRightVOffset" })
+                        @Html.TextBoxFor(m => m.SoloArrowRightVOffset, new { @class = "form-control", data_bind = "value: blockModel.soloArrowRightVOffset" })
                         @Html.HelpTextFor(m => m.SoloArrowRightVOffset)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.SwipeVelocity, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.SwipeVelocity, new { @class = "form-control", data_bind = "value: swipeVelocity" })
+                        @Html.TextBoxFor(m => m.SwipeVelocity, new { @class = "form-control", data_bind = "value: blockModel.swipeVelocity" })
                         @Html.HelpTextFor(m => m.SwipeVelocity)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.SwipeMaxTouches, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.SwipeMaxTouches, new { @class = "form-control", data_bind = "value: swipeMaxTouches" })
+                        @Html.TextBoxFor(m => m.SwipeMaxTouches, new { @class = "form-control", data_bind = "value: blockModel.swipeMaxTouches" })
                         @Html.HelpTextFor(m => m.SwipeMaxTouches)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.SwipeMinTouches, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.SwipeMinTouches, new { @class = "form-control", data_bind = "value: swipeMinTouches" })
+                        @Html.TextBoxFor(m => m.SwipeMinTouches, new { @class = "form-control", data_bind = "value: blockModel.swipeMinTouches" })
                         @Html.HelpTextFor(m => m.SwipeMinTouches)
                     </div>
                 </div>
@@ -259,14 +259,14 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.StartWithSlide, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.StartWithSlide, new { @class = "form-control", data_bind = "value: startWithSlide" })
+                        @Html.TextBoxFor(m => m.StartWithSlide, new { @class = "form-control", data_bind = "value: blockModel.startWithSlide" })
                         @Html.HelpTextFor(m => m.StartWithSlide)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.StopAtSlide, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.StopAtSlide, new { @class = "form-control", data_bind = "value: stopAtSlide" })
+                        @Html.TextBoxFor(m => m.StopAtSlide, new { @class = "form-control", data_bind = "value: blockModel.stopAtSlide" })
                         @Html.HelpTextFor(m => m.StopAtSlide)
                     </div>
                 </div>
@@ -275,7 +275,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.StopAfterLoops, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.StopAfterLoops, new { @class = "form-control", data_bind = "value: stopAfterLoops" })
+                        @Html.TextBoxFor(m => m.StopAfterLoops, new { @class = "form-control", data_bind = "value: blockModel.stopAfterLoops" })
                         @Html.HelpTextFor(m => m.StopAfterLoops)
                     </div>
                 </div>
@@ -288,21 +288,21 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.HideCaptionAtLimit, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.HideCaptionAtLimit, new { @class = "form-control", data_bind = "value: hideCaptionAtLimit" })
+                        @Html.TextBoxFor(m => m.HideCaptionAtLimit, new { @class = "form-control", data_bind = "value: blockModel.hideCaptionAtLimit" })
                         @Html.HelpTextFor(m => m.HideCaptionAtLimit)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.HideAllCaptionAtLimit, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.HideAllCaptionAtLimit, new { @class = "form-control", data_bind = "value: hideAllCaptionAtLimit" })
+                        @Html.TextBoxFor(m => m.HideAllCaptionAtLimit, new { @class = "form-control", data_bind = "value: blockModel.hideAllCaptionAtLimit" })
                         @Html.HelpTextFor(m => m.HideAllCaptionAtLimit)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.HideSliderAtLimit, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.HideSliderAtLimit, new { @class = "form-control", data_bind = "value: hideSliderAtLimit" })
+                        @Html.TextBoxFor(m => m.HideSliderAtLimit, new { @class = "form-control", data_bind = "value: blockModel.hideSliderAtLimit" })
                         @Html.HelpTextFor(m => m.HideSliderAtLimit)
                     </div>
                 </div>
@@ -311,14 +311,14 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.HideNavDelayOnMobile, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.HideNavDelayOnMobile, new { @class = "form-control", data_bind = "value: hideNavDelayOnMobile" })
+                        @Html.TextBoxFor(m => m.HideNavDelayOnMobile, new { @class = "form-control", data_bind = "value: blockModel.hideNavDelayOnMobile" })
                         @Html.HelpTextFor(m => m.HideNavDelayOnMobile)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.HideThumbsUnderResolution, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.HideThumbsUnderResolution, new { @class = "form-control", data_bind = "value: hideThumbsUnderResolution" })
+                        @Html.TextBoxFor(m => m.HideThumbsUnderResolution, new { @class = "form-control", data_bind = "value: blockModel.hideThumbsUnderResolution" })
                         @Html.HelpTextFor(m => m.HideThumbsUnderResolution)
                     </div>
                 </div>
@@ -327,19 +327,19 @@
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.HideThumbsOnMobile, new { data_bind = "checked: hideThumbsOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.HideThumbsOnMobile)
+                                @Html.CheckBoxFor(m => m.HideThumbsOnMobile, new { data_bind = "checked: blockModel.hideThumbsOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.HideThumbsOnMobile)
                             </label>
                             @Html.HelpTextFor(m => m.HideThumbsOnMobile)
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.HideBulletsOnMobile, new { data_bind = "checked: hideBulletsOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.HideBulletsOnMobile)
+                                @Html.CheckBoxFor(m => m.HideBulletsOnMobile, new { data_bind = "checked: blockModel.hideBulletsOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.HideBulletsOnMobile)
                             </label>
                             @Html.HelpTextFor(m => m.HideBulletsOnMobile)
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.HideArrowsOnMobile, new { data_bind = "checked: hideArrowsOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.HideArrowsOnMobile)
+                                @Html.CheckBoxFor(m => m.HideArrowsOnMobile, new { data_bind = "checked: blockModel.hideArrowsOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.HideArrowsOnMobile)
                             </label>
                             @Html.HelpTextFor(m => m.HideArrowsOnMobile)
                         </div>
@@ -354,35 +354,35 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.Spinner, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.Spinner, new { @class = "form-control", data_bind = "value: spinner" })
+                        @Html.EnumDropDownListFor(m => m.Spinner, new { @class = "form-control", data_bind = "value: blockModel.spinner" })
                         @Html.HelpTextFor(m => m.Spinner)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.MinHeight, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.MinHeight, new { @class = "form-control", data_bind = "value: minHeight" })
+                        @Html.TextBoxFor(m => m.MinHeight, new { @class = "form-control", data_bind = "value: blockModel.minHeight" })
                         @Html.HelpTextFor(m => m.MinHeight)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.FullScreenOffsetContainer, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.FullScreenOffsetContainer, new { @class = "form-control", data_bind = "value: fullScreenOffsetContainer" })
+                        @Html.TextBoxFor(m => m.FullScreenOffsetContainer, new { @class = "form-control", data_bind = "value: blockModel.fullScreenOffsetContainer" })
                         @Html.HelpTextFor(m => m.FullScreenOffsetContainer)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.FullScreenOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.FullScreenOffset, new { @class = "form-control", data_bind = "value: fullScreenOffset" })
+                        @Html.TextBoxFor(m => m.FullScreenOffset, new { @class = "form-control", data_bind = "value: blockModel.fullScreenOffset" })
                         @Html.HelpTextFor(m => m.FullScreenOffset)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.FullScreenOffsetUnit, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.FullScreenOffsetUnit, new { @class = "form-control", data_bind = "value: fullScreenOffsetUnit" })
+                        @Html.EnumDropDownListFor(m => m.FullScreenOffsetUnit, new { @class = "form-control", data_bind = "value: blockModel.fullScreenOffsetUnit" })
                     </div>
                 </div>
             </div>
@@ -390,14 +390,14 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.Shadow, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.Shadow, new { @class = "form-control", data_bind = "value: shadow" })
+                        @Html.EnumDropDownListFor(m => m.Shadow, new { @class = "form-control", data_bind = "value: blockModel.shadow" })
                         @Html.HelpTextFor(m => m.Shadow)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.DottedOverlay, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.DottedOverlay, new { @class = "form-control", data_bind = "value: dottedOverlay" })
+                        @Html.EnumDropDownListFor(m => m.DottedOverlay, new { @class = "form-control", data_bind = "value: blockModel.dottedOverlay" })
                         @Html.HelpTextFor(m => m.DottedOverlay)
                     </div>
                 </div>
@@ -406,37 +406,37 @@
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.HideTimerBar, new { data_bind = "checked: hideTimerBar" }) @T(LocalizableStrings.RevolutionSliderBlock.HideTimerBar)
+                                @Html.CheckBoxFor(m => m.HideTimerBar, new { data_bind = "checked: blockModel.hideTimerBar" }) @T(LocalizableStrings.RevolutionSliderBlock.HideTimerBar)
                             </label>
                             @Html.HelpTextFor(m => m.HideTimerBar)
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.FullWidth, new { data_bind = "checked: fullWidth" }) @T(LocalizableStrings.RevolutionSliderBlock.FullWidth)
+                                @Html.CheckBoxFor(m => m.FullWidth, new { data_bind = "checked: blockModel.fullWidth" }) @T(LocalizableStrings.RevolutionSliderBlock.FullWidth)
                             </label>
                             @Html.HelpTextFor(m => m.FullWidth)
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.AutoHeight, new { data_bind = "checked: autoHeight" }) @T(LocalizableStrings.RevolutionSliderBlock.AutoHeight)
+                                @Html.CheckBoxFor(m => m.AutoHeight, new { data_bind = "checked: blockModel.autoHeight" }) @T(LocalizableStrings.RevolutionSliderBlock.AutoHeight)
                             </label>
                             @Html.HelpTextFor(m => m.AutoHeight)
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.FullScreenAlignForce, new { data_bind = "checked: fullScreenAlignForce" }) @T(LocalizableStrings.RevolutionSliderBlock.FullScreenAlignForce)
+                                @Html.CheckBoxFor(m => m.FullScreenAlignForce, new { data_bind = "checked: blockModel.fullScreenAlignForce" }) @T(LocalizableStrings.RevolutionSliderBlock.FullScreenAlignForce)
                             </label>
                             @Html.HelpTextFor(m => m.FullScreenAlignForce)
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.ForceFullWidth, new { data_bind = "checked: forceFullWidth" }) @T(LocalizableStrings.RevolutionSliderBlock.ForceFullWidth)
+                                @Html.CheckBoxFor(m => m.ForceFullWidth, new { data_bind = "checked: blockModel.forceFullWidth" }) @T(LocalizableStrings.RevolutionSliderBlock.ForceFullWidth)
                             </label>
                             @Html.HelpTextFor(m => m.ForceFullWidth)
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.FullScreen, new { data_bind = "checked: fullScreen" }) @T(LocalizableStrings.RevolutionSliderBlock.FullScreen)
+                                @Html.CheckBoxFor(m => m.FullScreen, new { data_bind = "checked: blockModel.fullScreen" }) @T(LocalizableStrings.RevolutionSliderBlock.FullScreen)
                             </label>
                             @Html.HelpTextFor(m => m.FullScreen)
                         </div>
@@ -450,14 +450,14 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.Parallax, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.EnumDropDownListFor(m => m.Parallax, new { @class = "form-control", data_bind = "value: parallax" })
+                        @Html.EnumDropDownListFor(m => m.Parallax, new { @class = "form-control", data_bind = "value: blockModel.parallax" })
                         @Html.HelpTextFor(m => m.Parallax)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.ParallaxLevels, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.ParallaxLevels, new { @class = "form-control", data_bind = "value: parallaxLevels" })
+                        @Html.TextBoxFor(m => m.ParallaxLevels, new { @class = "form-control", data_bind = "value: blockModel.parallaxLevels" })
                         @Html.HelpTextFor(m => m.ParallaxLevels)
                     </div>
                 </div>
@@ -468,13 +468,13 @@
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.ParallaxBgFreeze, new { data_bind = "checked: parallaxBgFreeze" }) @T(LocalizableStrings.RevolutionSliderBlock.ParallaxBgFreeze)
+                                @Html.CheckBoxFor(m => m.ParallaxBgFreeze, new { data_bind = "checked: blockModel.parallaxBgFreeze" }) @T(LocalizableStrings.RevolutionSliderBlock.ParallaxBgFreeze)
                             </label>
                             @Html.HelpTextFor(m => m.ParallaxBgFreeze)
                         </div>
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.ParallaxDisableOnMobile, new { data_bind = "checked: parallaxDisableOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.ParallaxDisableOnMobile)
+                                @Html.CheckBoxFor(m => m.ParallaxDisableOnMobile, new { data_bind = "checked: blockModel.parallaxDisableOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.ParallaxDisableOnMobile)
                             </label>
                             @Html.HelpTextFor(m => m.ParallaxDisableOnMobile)
                         </div>
@@ -491,7 +491,7 @@
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.PanZoomDisableOnMobile, new { data_bind = "checked: panZoomDisableOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.PanZoomDisableOnMobile)
+                                @Html.CheckBoxFor(m => m.PanZoomDisableOnMobile, new { data_bind = "checked: blockModel.panZoomDisableOnMobile" }) @T(LocalizableStrings.RevolutionSliderBlock.PanZoomDisableOnMobile)
                             </label>
                             @Html.HelpTextFor(m => m.PanZoomDisableOnMobile)
                         </div>
@@ -508,7 +508,7 @@
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(m => m.SimplifyAll, new { data_bind = "checked: simplifyAll" }) @T(LocalizableStrings.RevolutionSliderBlock.SimplifyAll)
+                                @Html.CheckBoxFor(m => m.SimplifyAll, new { data_bind = "checked: blockModel.simplifyAll" }) @T(LocalizableStrings.RevolutionSliderBlock.SimplifyAll)
                             </label>
                             @Html.HelpTextFor(m => m.SimplifyAll)
                         </div>
@@ -523,270 +523,270 @@
     var contentBlockModel = (function () {
         var f = {};
         f.updateModel = function () {
-            viewModel.sliderId = ko.observable(0);
-            viewModel.controlId = ko.observable("revolution-slider");
-            viewModel.delay = ko.observable(9000);
-            viewModel.startHeight = ko.observable(500);
-            viewModel.startWidth = ko.observable(960);
-            viewModel.shuffle = ko.observable(false);
-            viewModel.keyboardNavigation = ko.observable(true);
-            viewModel.onHoverStop = ko.observable(true);
-            viewModel.thumbWidth = ko.observable(100);
-            viewModel.thumbHeight = ko.observable(50);
-            viewModel.thumbAmount = ko.observable(3);
-            viewModel.hideThumbs = ko.observable(0);
-            viewModel.navigationType = ko.observable(1); // Bullet
-            viewModel.navigationArrows = ko.observable(1); // Solo
-            viewModel.navigationStyle = ko.observable(4); // Round
-            viewModel.navigationHAlign = ko.observable(1); // Center
-            viewModel.navigationVAlign = ko.observable(2); // Bottom
-            viewModel.navigationHOffset = ko.observable(30);
-            viewModel.navigationVOffset = ko.observable(30);
-            viewModel.soloArrowLeftHAlign = ko.observable(0); // Left
-            viewModel.soloArrowRightHAlign = ko.observable(2); // Right
-            viewModel.soloArrowLeftVAlign = ko.observable(1); // Center
-            viewModel.soloArrowRightVAlign = ko.observable(1); // Center
-            viewModel.soloArrowLeftHOffset = ko.observable(20);
-            viewModel.soloArrowRightHOffset = ko.observable(20);
-            viewModel.soloArrowLeftVOffset = ko.observable(0);
-            viewModel.soloArrowRightVOffset = ko.observable(0);
-            viewModel.touchEnabled = ko.observable(true);
-            viewModel.swipeVelocity = ko.observable(0.7);
-            viewModel.swipeMaxTouches = ko.observable(1);
-            viewModel.swipeMinTouches = ko.observable(1);
-            viewModel.dragBlockVertical = ko.observable(false);
-            viewModel.startWithSlide = ko.observable(0);
-            viewModel.stopAtSlide = ko.observable(-1);
-            viewModel.stopAfterLoops = ko.observable(-1);
-            viewModel.hideCaptionAtLimit = ko.observable(0);
-            viewModel.hideAllCaptionAtLimit = ko.observable(0);
-            viewModel.hideSliderAtLimit = ko.observable(0);
-            viewModel.hideNavDelayOnMobile = ko.observable(1500);
-            viewModel.hideThumbsOnMobile = ko.observable(false);
-            viewModel.hideBulletsOnMobile = ko.observable(false);
-            viewModel.hideArrowsOnMobile = ko.observable(false);
-            viewModel.hideThumbsUnderResolution = ko.observable(0);
-            viewModel.spinner = ko.observable(3); // Spinner4
-            viewModel.hideTimerBar = ko.observable(false);
-            viewModel.fullWidth = ko.observable(false);
-            viewModel.autoHeight = ko.observable(false);
-            viewModel.minHeight = ko.observable(false);
-            viewModel.fullScreenAlignForce = ko.observable(false);
-            viewModel.forceFullWidth = ko.observable(false);
-            viewModel.fullScreen = ko.observable(false);
-            viewModel.fullScreenOffsetContainer = ko.observable(null);
-            viewModel.fullScreenOffset = ko.observable(0);
-            viewModel.fullScreenOffsetUnit = ko.observable(0); // Pixels
-            viewModel.shadow = ko.observable(0);
-            viewModel.dottedOverlay = ko.observable(0); // None
-            viewModel.parallax = ko.observable(0); // Mouse
-            viewModel.parallaxBgFreeze = ko.observable(true);
-            viewModel.parallaxLevels = ko.observable("10,7,4,3,2,5,4,3,2,1");
-            viewModel.parallaxDisableOnMobile = ko.observable(false);
-            viewModel.panZoomDisableOnMobile = ko.observable(false);
-            viewModel.simplifyAll = ko.observable(false);
+            viewModel.blockModel.sliderId = ko.observable(0);
+            viewModel.blockModel.controlId = ko.observable("revolution-slider");
+            viewModel.blockModel.delay = ko.observable(9000);
+            viewModel.blockModel.startHeight = ko.observable(500);
+            viewModel.blockModel.startWidth = ko.observable(960);
+            viewModel.blockModel.shuffle = ko.observable(false);
+            viewModel.blockModel.keyboardNavigation = ko.observable(true);
+            viewModel.blockModel.onHoverStop = ko.observable(true);
+            viewModel.blockModel.thumbWidth = ko.observable(100);
+            viewModel.blockModel.thumbHeight = ko.observable(50);
+            viewModel.blockModel.thumbAmount = ko.observable(3);
+            viewModel.blockModel.hideThumbs = ko.observable(0);
+            viewModel.blockModel.navigationType = ko.observable(1); // Bullet
+            viewModel.blockModel.navigationArrows = ko.observable(1); // Solo
+            viewModel.blockModel.navigationStyle = ko.observable(4); // Round
+            viewModel.blockModel.navigationHAlign = ko.observable(1); // Center
+            viewModel.blockModel.navigationVAlign = ko.observable(2); // Bottom
+            viewModel.blockModel.navigationHOffset = ko.observable(30);
+            viewModel.blockModel.navigationVOffset = ko.observable(30);
+            viewModel.blockModel.soloArrowLeftHAlign = ko.observable(0); // Left
+            viewModel.blockModel.soloArrowRightHAlign = ko.observable(2); // Right
+            viewModel.blockModel.soloArrowLeftVAlign = ko.observable(1); // Center
+            viewModel.blockModel.soloArrowRightVAlign = ko.observable(1); // Center
+            viewModel.blockModel.soloArrowLeftHOffset = ko.observable(20);
+            viewModel.blockModel.soloArrowRightHOffset = ko.observable(20);
+            viewModel.blockModel.soloArrowLeftVOffset = ko.observable(0);
+            viewModel.blockModel.soloArrowRightVOffset = ko.observable(0);
+            viewModel.blockModel.touchEnabled = ko.observable(true);
+            viewModel.blockModel.swipeVelocity = ko.observable(0.7);
+            viewModel.blockModel.swipeMaxTouches = ko.observable(1);
+            viewModel.blockModel.swipeMinTouches = ko.observable(1);
+            viewModel.blockModel.dragBlockVertical = ko.observable(false);
+            viewModel.blockModel.startWithSlide = ko.observable(0);
+            viewModel.blockModel.stopAtSlide = ko.observable(-1);
+            viewModel.blockModel.stopAfterLoops = ko.observable(-1);
+            viewModel.blockModel.hideCaptionAtLimit = ko.observable(0);
+            viewModel.blockModel.hideAllCaptionAtLimit = ko.observable(0);
+            viewModel.blockModel.hideSliderAtLimit = ko.observable(0);
+            viewModel.blockModel.hideNavDelayOnMobile = ko.observable(1500);
+            viewModel.blockModel.hideThumbsOnMobile = ko.observable(false);
+            viewModel.blockModel.hideBulletsOnMobile = ko.observable(false);
+            viewModel.blockModel.hideArrowsOnMobile = ko.observable(false);
+            viewModel.blockModel.hideThumbsUnderResolution = ko.observable(0);
+            viewModel.blockModel.spinner = ko.observable(3); // Spinner4
+            viewModel.blockModel.hideTimerBar = ko.observable(false);
+            viewModel.blockModel.fullWidth = ko.observable(false);
+            viewModel.blockModel.autoHeight = ko.observable(false);
+            viewModel.blockModel.minHeight = ko.observable(false);
+            viewModel.blockModel.fullScreenAlignForce = ko.observable(false);
+            viewModel.blockModel.forceFullWidth = ko.observable(false);
+            viewModel.blockModel.fullScreen = ko.observable(false);
+            viewModel.blockModel.fullScreenOffsetContainer = ko.observable(null);
+            viewModel.blockModel.fullScreenOffset = ko.observable(0);
+            viewModel.blockModel.fullScreenOffsetUnit = ko.observable(0); // Pixels
+            viewModel.blockModel.shadow = ko.observable(0);
+            viewModel.blockModel.dottedOverlay = ko.observable(0); // None
+            viewModel.blockModel.parallax = ko.observable(0); // Mouse
+            viewModel.blockModel.parallaxBgFreeze = ko.observable(true);
+            viewModel.blockModel.parallaxLevels = ko.observable("10,7,4,3,2,5,4,3,2,1");
+            viewModel.blockModel.parallaxDisableOnMobile = ko.observable(false);
+            viewModel.blockModel.panZoomDisableOnMobile = ko.observable(false);
+            viewModel.blockModel.simplifyAll = ko.observable(false);
 
-            var data = ko.mapping.fromJSON(viewModel.blockValues());
+            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
 
             if ((isFunction(data) && data()) || data) {
                 if (data.SliderId == undefined) {
                     // If this is not set, it means the contentBlock is new and we have nothing in blockValues
                     return;
                 }
-                viewModel.sliderId(data.SliderId());
-                viewModel.controlId(data.ControlId());
-                viewModel.delay(data.Delay());
-                viewModel.startHeight(data.StartHeight());
-                viewModel.startWidth(data.StartWidth());
-                viewModel.shuffle(data.Shuffle());
-                viewModel.keyboardNavigation(data.KeyboardNavigation());
-                viewModel.onHoverStop(data.OnHoverStop());
-                viewModel.thumbWidth(data.ThumbWidth());
-                viewModel.thumbHeight(data.ThumbHeight());
-                viewModel.thumbAmount(data.ThumbAmount());
-                viewModel.hideThumbs(data.HideThumbs());
-                viewModel.navigationType(data.NavigationType());
-                viewModel.navigationArrows(data.NavigationArrows());
-                viewModel.navigationStyle(data.NavigationStyle());
-                viewModel.navigationHAlign(data.NavigationHAlign());
-                viewModel.navigationVAlign(data.NavigationVAlign());
-                viewModel.navigationHOffset(data.NavigationHOffset());
-                viewModel.navigationVOffset(data.NavigationVOffset());
-                viewModel.soloArrowLeftHAlign(data.SoloArrowLeftHAlign());
-                viewModel.soloArrowRightHAlign(data.SoloArrowRightHAlign());
-                viewModel.soloArrowLeftVAlign(data.SoloArrowLeftVAlign());
-                viewModel.soloArrowRightVAlign(data.SoloArrowRightVAlign());
-                viewModel.soloArrowLeftHOffset(data.SoloArrowLeftHOffset());
-                viewModel.soloArrowRightHOffset(data.SoloArrowRightHOffset());
-                viewModel.soloArrowLeftVOffset(data.SoloArrowLeftVOffset());
-                viewModel.soloArrowRightVOffset(data.SoloArrowRightVOffset());
-                viewModel.touchEnabled(data.TouchEnabled());
-                viewModel.swipeVelocity(data.SwipeVelocity());
-                viewModel.swipeMaxTouches(data.SwipeMaxTouches());
-                viewModel.swipeMinTouches(data.SwipeMinTouches());
-                viewModel.dragBlockVertical(data.DragBlockVertical());
-                viewModel.startWithSlide(data.StartWithSlide());
-                viewModel.stopAtSlide(data.StopAtSlide());
-                viewModel.stopAfterLoops(data.StopAfterLoops());
-                viewModel.hideCaptionAtLimit(data.HideCaptionAtLimit());
-                viewModel.hideAllCaptionAtLimit(data.HideAllCaptionAtLimit());
-                viewModel.hideSliderAtLimit(data.HideSliderAtLimit());
-                viewModel.hideNavDelayOnMobile(data.HideNavDelayOnMobile());
-                viewModel.hideThumbsOnMobile(data.HideThumbsOnMobile());
-                viewModel.hideBulletsOnMobile(data.HideBulletsOnMobile());
-                viewModel.hideArrowsOnMobile(data.HideArrowsOnMobile());
-                viewModel.hideThumbsUnderResolution(data.HideThumbsUnderResolution());
-                viewModel.spinner(data.Spinner());
-                viewModel.hideTimerBar(data.HideTimerBar());
-                viewModel.fullWidth(data.FullWidth());
-                viewModel.autoHeight(data.AutoHeight());
-                viewModel.minHeight(data.MinHeight());
-                viewModel.fullScreenAlignForce(data.FullScreenAlignForce());
-                viewModel.forceFullWidth(data.ForceFullWidth());
-                viewModel.fullScreen(data.FullScreen());
-                viewModel.fullScreenOffsetContainer(data.FullScreenOffsetContainer());
-                viewModel.fullScreenOffset(data.FullScreenOffset());
-                viewModel.fullScreenOffsetUnit(data.FullScreenOffsetUnit());
-                viewModel.shadow(data.Shadow());
-                viewModel.dottedOverlay(data.DottedOverlay());
-                viewModel.parallax(data.Parallax());
-                viewModel.parallaxBgFreeze(data.ParallaxBgFreeze());
-                viewModel.parallaxLevels(data.ParallaxLevels());
-                viewModel.parallaxDisableOnMobile(data.ParallaxDisableOnMobile());
-                viewModel.panZoomDisableOnMobile(data.PanZoomDisableOnMobile());
-                viewModel.simplifyAll(data.SimplifyAll());
+                viewModel.blockModel.sliderId(data.SliderId());
+                viewModel.blockModel.controlId(data.ControlId());
+                viewModel.blockModel.delay(data.Delay());
+                viewModel.blockModel.startHeight(data.StartHeight());
+                viewModel.blockModel.startWidth(data.StartWidth());
+                viewModel.blockModel.shuffle(data.Shuffle());
+                viewModel.blockModel.keyboardNavigation(data.KeyboardNavigation());
+                viewModel.blockModel.onHoverStop(data.OnHoverStop());
+                viewModel.blockModel.thumbWidth(data.ThumbWidth());
+                viewModel.blockModel.thumbHeight(data.ThumbHeight());
+                viewModel.blockModel.thumbAmount(data.ThumbAmount());
+                viewModel.blockModel.hideThumbs(data.HideThumbs());
+                viewModel.blockModel.navigationType(data.NavigationType());
+                viewModel.blockModel.navigationArrows(data.NavigationArrows());
+                viewModel.blockModel.navigationStyle(data.NavigationStyle());
+                viewModel.blockModel.navigationHAlign(data.NavigationHAlign());
+                viewModel.blockModel.navigationVAlign(data.NavigationVAlign());
+                viewModel.blockModel.navigationHOffset(data.NavigationHOffset());
+                viewModel.blockModel.navigationVOffset(data.NavigationVOffset());
+                viewModel.blockModel.soloArrowLeftHAlign(data.SoloArrowLeftHAlign());
+                viewModel.blockModel.soloArrowRightHAlign(data.SoloArrowRightHAlign());
+                viewModel.blockModel.soloArrowLeftVAlign(data.SoloArrowLeftVAlign());
+                viewModel.blockModel.soloArrowRightVAlign(data.SoloArrowRightVAlign());
+                viewModel.blockModel.soloArrowLeftHOffset(data.SoloArrowLeftHOffset());
+                viewModel.blockModel.soloArrowRightHOffset(data.SoloArrowRightHOffset());
+                viewModel.blockModel.soloArrowLeftVOffset(data.SoloArrowLeftVOffset());
+                viewModel.blockModel.soloArrowRightVOffset(data.SoloArrowRightVOffset());
+                viewModel.blockModel.touchEnabled(data.TouchEnabled());
+                viewModel.blockModel.swipeVelocity(data.SwipeVelocity());
+                viewModel.blockModel.swipeMaxTouches(data.SwipeMaxTouches());
+                viewModel.blockModel.swipeMinTouches(data.SwipeMinTouches());
+                viewModel.blockModel.dragBlockVertical(data.DragBlockVertical());
+                viewModel.blockModel.startWithSlide(data.StartWithSlide());
+                viewModel.blockModel.stopAtSlide(data.StopAtSlide());
+                viewModel.blockModel.stopAfterLoops(data.StopAfterLoops());
+                viewModel.blockModel.hideCaptionAtLimit(data.HideCaptionAtLimit());
+                viewModel.blockModel.hideAllCaptionAtLimit(data.HideAllCaptionAtLimit());
+                viewModel.blockModel.hideSliderAtLimit(data.HideSliderAtLimit());
+                viewModel.blockModel.hideNavDelayOnMobile(data.HideNavDelayOnMobile());
+                viewModel.blockModel.hideThumbsOnMobile(data.HideThumbsOnMobile());
+                viewModel.blockModel.hideBulletsOnMobile(data.HideBulletsOnMobile());
+                viewModel.blockModel.hideArrowsOnMobile(data.HideArrowsOnMobile());
+                viewModel.blockModel.hideThumbsUnderResolution(data.HideThumbsUnderResolution());
+                viewModel.blockModel.spinner(data.Spinner());
+                viewModel.blockModel.hideTimerBar(data.HideTimerBar());
+                viewModel.blockModel.fullWidth(data.FullWidth());
+                viewModel.blockModel.autoHeight(data.AutoHeight());
+                viewModel.blockModel.minHeight(data.MinHeight());
+                viewModel.blockModel.fullScreenAlignForce(data.FullScreenAlignForce());
+                viewModel.blockModel.forceFullWidth(data.ForceFullWidth());
+                viewModel.blockModel.fullScreen(data.FullScreen());
+                viewModel.blockModel.fullScreenOffsetContainer(data.FullScreenOffsetContainer());
+                viewModel.blockModel.fullScreenOffset(data.FullScreenOffset());
+                viewModel.blockModel.fullScreenOffsetUnit(data.FullScreenOffsetUnit());
+                viewModel.blockModel.shadow(data.Shadow());
+                viewModel.blockModel.dottedOverlay(data.DottedOverlay());
+                viewModel.blockModel.parallax(data.Parallax());
+                viewModel.blockModel.parallaxBgFreeze(data.ParallaxBgFreeze());
+                viewModel.blockModel.parallaxLevels(data.ParallaxLevels());
+                viewModel.blockModel.parallaxDisableOnMobile(data.ParallaxDisableOnMobile());
+                viewModel.blockModel.panZoomDisableOnMobile(data.PanZoomDisableOnMobile());
+                viewModel.blockModel.simplifyAll(data.SimplifyAll());
             }
         };
         f.cleanUp = function () {
-            delete viewModel.sliderId;
-            delete viewModel.controlId;
-            delete viewModel.delay;
-            delete viewModel.startHeight;
-            delete viewModel.startWidth;
-            delete viewModel.shuffle;
-            delete viewModel.keyboardNavigation;
-            delete viewModel.onHoverStop;
-            delete viewModel.thumbWidth;
-            delete viewModel.thumbHeight;
-            delete viewModel.thumbAmount;
-            delete viewModel.hideThumbs;
-            delete viewModel.navigationType;
-            delete viewModel.navigationArrows;
-            delete viewModel.navigationStyle;
-            delete viewModel.navigationHAlign;
-            delete viewModel.navigationVAlign;
-            delete viewModel.navigationHOffset;
-            delete viewModel.navigationVOffset;
-            delete viewModel.soloArrowLeftHAlign;
-            delete viewModel.soloArrowRightHAlign;
-            delete viewModel.soloArrowLeftVAlign;
-            delete viewModel.soloArrowRightVAlign;
-            delete viewModel.soloArrowLeftHOffset;
-            delete viewModel.soloArrowRightHOffset;
-            delete viewModel.soloArrowLeftVOffset;
-            delete viewModel.soloArrowRightVOffset;
-            delete viewModel.touchEnabled;
-            delete viewModel.swipeVelocity;
-            delete viewModel.swipeMaxTouches;
-            delete viewModel.swipeMinTouches;
-            delete viewModel.dragBlockVertical;
-            delete viewModel.startWithSlide;
-            delete viewModel.stopAtSlide;
-            delete viewModel.stopAfterLoops;
-            delete viewModel.hideCaptionAtLimit;
-            delete viewModel.hideAllCaptionAtLimit;
-            delete viewModel.hideSliderAtLimit;
-            delete viewModel.hideNavDelayOnMobile;
-            delete viewModel.hideThumbsOnMobile;
-            delete viewModel.hideBulletsOnMobile;
-            delete viewModel.hideArrowsOnMobile;
-            delete viewModel.hideThumbsUnderResolution;
-            delete viewModel.spinner;
-            delete viewModel.hideTimerBar;
-            delete viewModel.fullWidth;
-            delete viewModel.autoHeight;
-            delete viewModel.minHeight;
-            delete viewModel.fullScreenAlignForce;
-            delete viewModel.forceFullWidth;
-            delete viewModel.fullScreen;
-            delete viewModel.fullScreenOffsetContainer;
-            delete viewModel.fullScreenOffset;
-            delete viewModel.fullScreenOffsetUnit;
-            delete viewModel.shadow;
-            delete viewModel.dottedOverlay;
-            delete viewModel.parallax;
-            delete viewModel.parallaxBgFreeze;
-            delete viewModel.parallaxLevels;
-            delete viewModel.parallaxDisableOnMobile;
-            delete viewModel.panZoomDisableOnMobile;
-            delete viewModel.simplifyAll;
+            delete viewModel.blockModel.sliderId;
+            delete viewModel.blockModel.controlId;
+            delete viewModel.blockModel.delay;
+            delete viewModel.blockModel.startHeight;
+            delete viewModel.blockModel.startWidth;
+            delete viewModel.blockModel.shuffle;
+            delete viewModel.blockModel.keyboardNavigation;
+            delete viewModel.blockModel.onHoverStop;
+            delete viewModel.blockModel.thumbWidth;
+            delete viewModel.blockModel.thumbHeight;
+            delete viewModel.blockModel.thumbAmount;
+            delete viewModel.blockModel.hideThumbs;
+            delete viewModel.blockModel.navigationType;
+            delete viewModel.blockModel.navigationArrows;
+            delete viewModel.blockModel.navigationStyle;
+            delete viewModel.blockModel.navigationHAlign;
+            delete viewModel.blockModel.navigationVAlign;
+            delete viewModel.blockModel.navigationHOffset;
+            delete viewModel.blockModel.navigationVOffset;
+            delete viewModel.blockModel.soloArrowLeftHAlign;
+            delete viewModel.blockModel.soloArrowRightHAlign;
+            delete viewModel.blockModel.soloArrowLeftVAlign;
+            delete viewModel.blockModel.soloArrowRightVAlign;
+            delete viewModel.blockModel.soloArrowLeftHOffset;
+            delete viewModel.blockModel.soloArrowRightHOffset;
+            delete viewModel.blockModel.soloArrowLeftVOffset;
+            delete viewModel.blockModel.soloArrowRightVOffset;
+            delete viewModel.blockModel.touchEnabled;
+            delete viewModel.blockModel.swipeVelocity;
+            delete viewModel.blockModel.swipeMaxTouches;
+            delete viewModel.blockModel.swipeMinTouches;
+            delete viewModel.blockModel.dragBlockVertical;
+            delete viewModel.blockModel.startWithSlide;
+            delete viewModel.blockModel.stopAtSlide;
+            delete viewModel.blockModel.stopAfterLoops;
+            delete viewModel.blockModel.hideCaptionAtLimit;
+            delete viewModel.blockModel.hideAllCaptionAtLimit;
+            delete viewModel.blockModel.hideSliderAtLimit;
+            delete viewModel.blockModel.hideNavDelayOnMobile;
+            delete viewModel.blockModel.hideThumbsOnMobile;
+            delete viewModel.blockModel.hideBulletsOnMobile;
+            delete viewModel.blockModel.hideArrowsOnMobile;
+            delete viewModel.blockModel.hideThumbsUnderResolution;
+            delete viewModel.blockModel.spinner;
+            delete viewModel.blockModel.hideTimerBar;
+            delete viewModel.blockModel.fullWidth;
+            delete viewModel.blockModel.autoHeight;
+            delete viewModel.blockModel.minHeight;
+            delete viewModel.blockModel.fullScreenAlignForce;
+            delete viewModel.blockModel.forceFullWidth;
+            delete viewModel.blockModel.fullScreen;
+            delete viewModel.blockModel.fullScreenOffsetContainer;
+            delete viewModel.blockModel.fullScreenOffset;
+            delete viewModel.blockModel.fullScreenOffsetUnit;
+            delete viewModel.blockModel.shadow;
+            delete viewModel.blockModel.dottedOverlay;
+            delete viewModel.blockModel.parallax;
+            delete viewModel.blockModel.parallaxBgFreeze;
+            delete viewModel.blockModel.parallaxLevels;
+            delete viewModel.blockModel.parallaxDisableOnMobile;
+            delete viewModel.blockModel.panZoomDisableOnMobile;
+            delete viewModel.blockModel.simplifyAll;
         };
         f.onBeforeSave = function () {
             var data = {
-                SliderId: viewModel.sliderId(),
-                ControlId: viewModel.controlId(),
-                Delay: viewModel.delay(),
-                StartHeight: viewModel.startHeight(),
-                StartWidth: viewModel.startWidth(),
-                Shuffle: viewModel.shuffle(),
-                KeyboardNavigation: viewModel.keyboardNavigation(),
-                OnHoverStop: viewModel.onHoverStop(),
-                ThumbWidth: viewModel.thumbWidth(),
-                ThumbHeight: viewModel.thumbHeight(),
-                ThumbAmount: viewModel.thumbAmount(),
-                HideThumbs: viewModel.hideThumbs(),
-                NavigationType: viewModel.navigationType(),
-                NavigationArrows: viewModel.navigationArrows(),
-                NavigationStyle: viewModel.navigationStyle(),
-                NavigationHAlign: viewModel.navigationHAlign(),
-                NavigationVAlign: viewModel.navigationVAlign(),
-                NavigationHOffset: viewModel.navigationHOffset(),
-                NavigationVOffset: viewModel.navigationVOffset(),
-                SoloArrowLeftHAlign: viewModel.soloArrowLeftHAlign(),
-                SoloArrowRightHAlign: viewModel.soloArrowRightHAlign(),
-                SoloArrowLeftVAlign: viewModel.soloArrowLeftVAlign(),
-                SoloArrowRightVAlign: viewModel.soloArrowRightVAlign(),
-                SoloArrowLeftHOffset: viewModel.soloArrowLeftHOffset(),
-                SoloArrowRightHOffset: viewModel.soloArrowRightHOffset(),
-                SoloArrowLeftVOffset: viewModel.soloArrowLeftVOffset(),
-                SoloArrowRightVOffset: viewModel.soloArrowRightVOffset(),
-                TouchEnabled: viewModel.touchEnabled(),
-                SwipeVelocity: viewModel.swipeVelocity(),
-                SwipeMaxTouches: viewModel.swipeMaxTouches(),
-                SwipeMinTouches: viewModel.swipeMinTouches(),
-                DragBlockVertical: viewModel.dragBlockVertical(),
-                StartWithSlide: viewModel.startWithSlide(),
-                StopAtSlide: viewModel.stopAtSlide(),
-                StopAfterLoops: viewModel.stopAfterLoops(),
-                HideCaptionAtLimit: viewModel.hideCaptionAtLimit(),
-                HideAllCaptionAtLimit: viewModel.hideAllCaptionAtLimit(),
-                HideSliderAtLimit: viewModel.hideSliderAtLimit(),
-                HideNavDelayOnMobile: viewModel.hideNavDelayOnMobile(),
-                HideThumbsOnMobile: viewModel.hideThumbsOnMobile(),
-                HideBulletsOnMobile: viewModel.hideBulletsOnMobile(),
-                HideArrowsOnMobile: viewModel.hideArrowsOnMobile(),
-                HideThumbsUnderResolution: viewModel.hideThumbsUnderResolution(),
-                Spinner: viewModel.spinner(),
-                HideTimerBar: viewModel.hideTimerBar(),
-                FullWidth: viewModel.fullWidth(),
-                AutoHeight: viewModel.autoHeight(),
-                MinHeight: viewModel.minHeight(),
-                FullScreenAlignForce: viewModel.fullScreenAlignForce(),
-                ForceFullWidth: viewModel.forceFullWidth(),
-                FullScreen: viewModel.fullScreen(),
-                FullScreenOffsetContainer: viewModel.fullScreenOffsetContainer(),
-                FullScreenOffset: viewModel.fullScreenOffset(),
-                FullScreenOffsetUnit: viewModel.fullScreenOffsetUnit(),
-                Shadow: viewModel.shadow(),
-                DottedOverlay: viewModel.dottedOverlay(),
-                Parallax: viewModel.parallax(),
-                ParallaxBgFreeze: viewModel.parallaxBgFreeze(),
-                ParallaxLevels: viewModel.parallaxLevels(),
-                ParallaxDisableOnMobile: viewModel.parallaxDisableOnMobile(),
-                PanZoomDisableOnMobile: viewModel.panZoomDisableOnMobile(),
-                SimplifyAll: viewModel.simplifyAll()
+                SliderId: viewModel.blockModel.sliderId(),
+                ControlId: viewModel.blockModel.controlId(),
+                Delay: viewModel.blockModel.delay(),
+                StartHeight: viewModel.blockModel.startHeight(),
+                StartWidth: viewModel.blockModel.startWidth(),
+                Shuffle: viewModel.blockModel.shuffle(),
+                KeyboardNavigation: viewModel.blockModel.keyboardNavigation(),
+                OnHoverStop: viewModel.blockModel.onHoverStop(),
+                ThumbWidth: viewModel.blockModel.thumbWidth(),
+                ThumbHeight: viewModel.blockModel.thumbHeight(),
+                ThumbAmount: viewModel.blockModel.thumbAmount(),
+                HideThumbs: viewModel.blockModel.hideThumbs(),
+                NavigationType: viewModel.blockModel.navigationType(),
+                NavigationArrows: viewModel.blockModel.navigationArrows(),
+                NavigationStyle: viewModel.blockModel.navigationStyle(),
+                NavigationHAlign: viewModel.blockModel.navigationHAlign(),
+                NavigationVAlign: viewModel.blockModel.navigationVAlign(),
+                NavigationHOffset: viewModel.blockModel.navigationHOffset(),
+                NavigationVOffset: viewModel.blockModel.navigationVOffset(),
+                SoloArrowLeftHAlign: viewModel.blockModel.soloArrowLeftHAlign(),
+                SoloArrowRightHAlign: viewModel.blockModel.soloArrowRightHAlign(),
+                SoloArrowLeftVAlign: viewModel.blockModel.soloArrowLeftVAlign(),
+                SoloArrowRightVAlign: viewModel.blockModel.soloArrowRightVAlign(),
+                SoloArrowLeftHOffset: viewModel.blockModel.soloArrowLeftHOffset(),
+                SoloArrowRightHOffset: viewModel.blockModel.soloArrowRightHOffset(),
+                SoloArrowLeftVOffset: viewModel.blockModel.soloArrowLeftVOffset(),
+                SoloArrowRightVOffset: viewModel.blockModel.soloArrowRightVOffset(),
+                TouchEnabled: viewModel.blockModel.touchEnabled(),
+                SwipeVelocity: viewModel.blockModel.swipeVelocity(),
+                SwipeMaxTouches: viewModel.blockModel.swipeMaxTouches(),
+                SwipeMinTouches: viewModel.blockModel.swipeMinTouches(),
+                DragBlockVertical: viewModel.blockModel.dragBlockVertical(),
+                StartWithSlide: viewModel.blockModel.startWithSlide(),
+                StopAtSlide: viewModel.blockModel.stopAtSlide(),
+                StopAfterLoops: viewModel.blockModel.stopAfterLoops(),
+                HideCaptionAtLimit: viewModel.blockModel.hideCaptionAtLimit(),
+                HideAllCaptionAtLimit: viewModel.blockModel.hideAllCaptionAtLimit(),
+                HideSliderAtLimit: viewModel.blockModel.hideSliderAtLimit(),
+                HideNavDelayOnMobile: viewModel.blockModel.hideNavDelayOnMobile(),
+                HideThumbsOnMobile: viewModel.blockModel.hideThumbsOnMobile(),
+                HideBulletsOnMobile: viewModel.blockModel.hideBulletsOnMobile(),
+                HideArrowsOnMobile: viewModel.blockModel.hideArrowsOnMobile(),
+                HideThumbsUnderResolution: viewModel.blockModel.hideThumbsUnderResolution(),
+                Spinner: viewModel.blockModel.spinner(),
+                HideTimerBar: viewModel.blockModel.hideTimerBar(),
+                FullWidth: viewModel.blockModel.fullWidth(),
+                AutoHeight: viewModel.blockModel.autoHeight(),
+                MinHeight: viewModel.blockModel.minHeight(),
+                FullScreenAlignForce: viewModel.blockModel.fullScreenAlignForce(),
+                ForceFullWidth: viewModel.blockModel.forceFullWidth(),
+                FullScreen: viewModel.blockModel.fullScreen(),
+                FullScreenOffsetContainer: viewModel.blockModel.fullScreenOffsetContainer(),
+                FullScreenOffset: viewModel.blockModel.fullScreenOffset(),
+                FullScreenOffsetUnit: viewModel.blockModel.fullScreenOffsetUnit(),
+                Shadow: viewModel.blockModel.shadow(),
+                DottedOverlay: viewModel.blockModel.dottedOverlay(),
+                Parallax: viewModel.blockModel.parallax(),
+                ParallaxBgFreeze: viewModel.blockModel.parallaxBgFreeze(),
+                ParallaxLevels: viewModel.blockModel.parallaxLevels(),
+                ParallaxDisableOnMobile: viewModel.blockModel.parallaxDisableOnMobile(),
+                PanZoomDisableOnMobile: viewModel.blockModel.panZoomDisableOnMobile(),
+                SimplifyAll: viewModel.blockModel.simplifyAll()
             };
-            viewModel.blockValues(ko.mapping.toJSON(data));
+            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

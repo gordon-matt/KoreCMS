@@ -7,13 +7,13 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Latitude, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                @Html.TextBoxFor(m => m.Latitude, new { @class = "form-control", data_bind = "value: latitude" })
+                @Html.TextBoxFor(m => m.Latitude, new { @class = "form-control", data_bind = "value: blockModel.latitude" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Longitude, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                @Html.TextBoxFor(m => m.Longitude, new { @class = "form-control", data_bind = "value: longitude" })
+                @Html.TextBoxFor(m => m.Longitude, new { @class = "form-control", data_bind = "value: blockModel.longitude" })
             </div>
         </div>
     </div>
@@ -21,13 +21,13 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Zoom, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                @Html.TextBoxFor(m => m.Zoom, new { @class = "form-control", data_bind = "value: zoom" })
+                @Html.TextBoxFor(m => m.Zoom, new { @class = "form-control", data_bind = "value: blockModel.zoom" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Height, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                @Html.TextBoxFor(m => m.Height, new { @class = "form-control", data_bind = "value: height" })
+                @Html.TextBoxFor(m => m.Height, new { @class = "form-control", data_bind = "value: blockModel.height" })
             </div>
         </div>
     </div>
@@ -37,12 +37,12 @@
     var contentBlockModel = (function () {
         var f = {};
         f.updateModel = function () {
-            viewModel.latitude = ko.observable(0);
-            viewModel.longitude = ko.observable(0);
-            viewModel.zoom = ko.observable(0);
-            viewModel.height = ko.observable(0);
+            viewModel.blockModel.latitude = ko.observable(0);
+            viewModel.blockModel.longitude = ko.observable(0);
+            viewModel.blockModel.zoom = ko.observable(0);
+            viewModel.blockModel.height = ko.observable(0);
 
-            var data = ko.mapping.fromJSON(viewModel.blockValues());
+            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
 
             if ((isFunction(data) && data()) || data) {
                 if (data.Latitude == undefined) {
@@ -50,34 +50,34 @@
                     return;
                 }
                 if (data.Latitude) {
-                    viewModel.latitude(data.Latitude());
+                    viewModel.blockModel.latitude(data.Latitude());
                 }
                 if (data.Longitude) {
-                    viewModel.longitude(data.Longitude());
+                    viewModel.blockModel.longitude(data.Longitude());
                 }
                 if (data.Zoom) {
-                    viewModel.zoom(data.Zoom());
+                    viewModel.blockModel.zoom(data.Zoom());
                 }
                 if (data.Height) {
-                    viewModel.height(data.Height());
+                    viewModel.blockModel.height(data.Height());
                 }
             }
         };
         f.cleanUp = function () {
-            delete viewModel.latitude;
-            delete viewModel.longitude;
-            delete viewModel.zoom;
-            delete viewModel.height;
+            delete viewModel.blockModel.latitude;
+            delete viewModel.blockModel.longitude;
+            delete viewModel.blockModel.zoom;
+            delete viewModel.blockModel.height;
         };
         f.onBeforeSave = function () {
             var data = {
-                Latitude: viewModel.latitude(),
-                Longitude: viewModel.longitude(),
-                Zoom: viewModel.zoom(),
-                Height: viewModel.height()
+                Latitude: viewModel.blockModel.latitude(),
+                Longitude: viewModel.blockModel.longitude(),
+                Zoom: viewModel.blockModel.zoom(),
+                Height: viewModel.blockModel.height()
             };
 
-            viewModel.blockValues(ko.mapping.toJSON(data));
+            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

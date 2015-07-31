@@ -9,7 +9,7 @@
             @Html.LabelFor(m => m.MediaFolder, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                 <div class="input-group">
-                    @Html.TextBoxFor(m => m.MediaFolder, new { @class = "form-control", data_bind = "value: mediaFolder" })
+                    @Html.TextBoxFor(m => m.MediaFolder, new { @class = "form-control", data_bind = "value: blockModel.mediaFolder" })
                     <span class="input-group-addon">
                         <a data-toggle="modal" href="javascript:void(0);" data-target="#myModal">
                             <i class="kore-icon kore-icon-search"></i>
@@ -21,13 +21,13 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Interval, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                @Html.TextBoxFor(m => m.Interval, new { @class = "form-control", data_bind = "value: interval" })
+                @Html.TextBoxFor(m => m.Interval, new { @class = "form-control", data_bind = "value: blockModel.interval" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.StartIndex, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                @Html.TextBoxFor(m => m.StartIndex, new { @class = "form-control", data_bind = "value: startIndex" })
+                @Html.TextBoxFor(m => m.StartIndex, new { @class = "form-control", data_bind = "value: blockModel.startIndex" })
             </div>
         </div>
     </div>
@@ -37,17 +37,17 @@
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                 <div class="checkbox">
                     <label>
-                        @Html.CheckBox("Keyboard", new { data_bind = "checked: keyboard" }) @T(LocalizableStrings.ContentBlocks.CarouselBlock.Keyboard)
+                        @Html.CheckBox("Keyboard", new { data_bind = "checked: blockModel.keyboard" }) @T(LocalizableStrings.ContentBlocks.CarouselBlock.Keyboard)
                     </label>
                 </div>
                 <div class="checkbox">
                     <label>
-                        @Html.CheckBox("PauseOnHover", new { data_bind = "checked: pauseOnHover" }) @T(LocalizableStrings.ContentBlocks.CarouselBlock.PauseOnHover)
+                        @Html.CheckBox("PauseOnHover", new { data_bind = "checked: blockModel.pauseOnHover" }) @T(LocalizableStrings.ContentBlocks.CarouselBlock.PauseOnHover)
                     </label>
                 </div>
                 <div class="checkbox">
                     <label>
-                        @Html.CheckBox("Wrap", new { data_bind = "checked: wrap" }) @T(LocalizableStrings.ContentBlocks.CarouselBlock.Wrap)
+                        @Html.CheckBox("Wrap", new { data_bind = "checked: blockModel.wrap" }) @T(LocalizableStrings.ContentBlocks.CarouselBlock.Wrap)
                     </label>
                 </div>
             </div>
@@ -55,13 +55,13 @@
         <div class="form-group">
             @Html.LabelFor(m => m.OnSlideEvent, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                @Html.TextBoxFor(m => m.OnSlideEvent, new { @class = "form-control", data_bind = "value: onSlideEvent" })
+                @Html.TextBoxFor(m => m.OnSlideEvent, new { @class = "form-control", data_bind = "value: blockModel.onSlideEvent" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.OnSlidEvent, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                @Html.TextBoxFor(m => m.OnSlidEvent, new { @class = "form-control", data_bind = "value: onSlidEvent" })
+                @Html.TextBoxFor(m => m.OnSlidEvent, new { @class = "form-control", data_bind = "value: blockModel.onSlidEvent" })
             </div>
         </div>
     </div>
@@ -101,7 +101,7 @@
                 var url = $('#MediaFolder').val();
                 var idx = url.indexOf("Uploads");
                 url = url.substring(idx);
-                viewModel.mediaFolder(url);
+                viewModel.blockModel.mediaFolder(url);
             }
             modalDismissed = false;
         })
@@ -110,55 +110,55 @@
     var contentBlockModel = (function () {
         var f = {};
         f.updateModel = function () {
-            viewModel.mediaFolder = ko.observable("");
-            viewModel.interval = ko.observable(0);
-            viewModel.startIndex = ko.observable(0);
-            viewModel.keyboard = ko.observable(true);
-            viewModel.pauseOnHover = ko.observable(true);
-            viewModel.wrap = ko.observable(true);
-            viewModel.onSlideEvent = ko.observable("");
-            viewModel.onSlidEvent = ko.observable("");
+            viewModel.blockModel.mediaFolder = ko.observable("");
+            viewModel.blockModel.interval = ko.observable(0);
+            viewModel.blockModel.startIndex = ko.observable(0);
+            viewModel.blockModel.keyboard = ko.observable(true);
+            viewModel.blockModel.pauseOnHover = ko.observable(true);
+            viewModel.blockModel.wrap = ko.observable(true);
+            viewModel.blockModel.onSlideEvent = ko.observable("");
+            viewModel.blockModel.onSlidEvent = ko.observable("");
 
-            var data = ko.mapping.fromJSON(viewModel.blockValues());
+            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
 
             if ((isFunction(data) && data()) || data) {
                 if (data.MediaFolder == undefined) {
                     // If this is not set, it means the contentBlock is new and we have nothing in blockValues
                     return;
                 }
-                viewModel.mediaFolder(data.MediaFolder());
-                viewModel.interval(data.Interval());
-                viewModel.startIndex(data.StartIndex());
-                viewModel.keyboard(data.Keyboard());
-                viewModel.pauseOnHover(data.PauseOnHover());
-                viewModel.wrap(data.Wrap());
-                viewModel.onSlideEvent(data.OnSlideEvent());
-                viewModel.onSlidEvent(data.OnSlidEvent());
+                viewModel.blockModel.mediaFolder(data.MediaFolder());
+                viewModel.blockModel.interval(data.Interval());
+                viewModel.blockModel.startIndex(data.StartIndex());
+                viewModel.blockModel.keyboard(data.Keyboard());
+                viewModel.blockModel.pauseOnHover(data.PauseOnHover());
+                viewModel.blockModel.wrap(data.Wrap());
+                viewModel.blockModel.onSlideEvent(data.OnSlideEvent());
+                viewModel.blockModel.onSlidEvent(data.OnSlidEvent());
             }
         };
         f.cleanUp = function () {
-            delete viewModel.mediaFolder;
-            delete viewModel.interval;
-            delete viewModel.startIndex;
-            delete viewModel.keyboard;
-            delete viewModel.pauseOnHover;
-            delete viewModel.wrap;
-            delete viewModel.onSlideEvent;
-            delete viewModel.onSlidEvent;
+            delete viewModel.blockModel.mediaFolder;
+            delete viewModel.blockModel.interval;
+            delete viewModel.blockModel.startIndex;
+            delete viewModel.blockModel.keyboard;
+            delete viewModel.blockModel.pauseOnHover;
+            delete viewModel.blockModel.wrap;
+            delete viewModel.blockModel.onSlideEvent;
+            delete viewModel.blockModel.onSlidEvent;
         };
         f.onBeforeSave = function () {
             var data = {
-                MediaFolder: viewModel.mediaFolder(),
-                Interval: viewModel.interval(),
-                StartIndex: viewModel.startIndex(),
-                Keyboard: viewModel.keyboard(),
-                PauseOnHover: viewModel.pauseOnHover(),
-                Wrap: viewModel.wrap(),
-                OnSlideEvent: viewModel.onSlideEvent(),
-                OnSlidEvent: viewModel.onSlidEvent()
+                MediaFolder: viewModel.blockModel.mediaFolder(),
+                Interval: viewModel.blockModel.interval(),
+                StartIndex: viewModel.blockModel.startIndex(),
+                Keyboard: viewModel.blockModel.keyboard(),
+                PauseOnHover: viewModel.blockModel.pauseOnHover(),
+                Wrap: viewModel.blockModel.wrap(),
+                OnSlideEvent: viewModel.blockModel.onSlideEvent(),
+                OnSlidEvent: viewModel.blockModel.onSlidEvent()
             };
 
-            viewModel.blockValues(ko.mapping.toJSON(data));
+            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

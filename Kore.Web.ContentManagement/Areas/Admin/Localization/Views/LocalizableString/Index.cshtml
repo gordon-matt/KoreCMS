@@ -3,12 +3,13 @@
 
 @{
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
+    string cultureCode = ViewBag.CultureCode;
 }
 
 <link rel="stylesheet" type="text/css" href="@Style.GetBundleUrl("kendo-ui")" />
 
 @Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
-@Html.Hidden("CultureCode", ViewBag.CultureCode)
+@Html.Hidden("CultureCode", cultureCode)
 
 <div id="grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

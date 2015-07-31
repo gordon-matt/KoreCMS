@@ -159,7 +159,7 @@ define(function (require) {
             self.displayCondition(null);
             self.customTemplatePath(null);
             self.blockValues(null);
-            self.pageId(pageId);
+            self.pageId(viewModel.pageId);
             self.cultureCode(null);
             self.refId(null);
 
@@ -262,7 +262,7 @@ define(function (require) {
                     }
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(translations.GetRecordError, "error");
+                    $.notify(viewModel.translations.GetRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
 
@@ -270,12 +270,12 @@ define(function (require) {
                 switchSection($("#edit-section"));
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(translations.GetRecordError, "error");
+                $.notify(viewModel.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.remove = function (id) {
-            if (confirm(translations.DeleteRecordConfirm)) {
+            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: "/odata/kore/cms/ContentBlockApi(guid'" + id + "')",
                     type: "DELETE",
@@ -285,10 +285,10 @@ define(function (require) {
                     $('#Grid').data('kendoGrid').dataSource.read();
                     $('#Grid').data('kendoGrid').refresh();
 
-                    $.notify(translations.DeleteRecordSuccess, "success");
+                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(translations.DeleteRecordError, "error");
+                    $.notify(viewModel.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -348,10 +348,10 @@ define(function (require) {
 
                     switchSection($("#grid-section"));
 
-                    $.notify(translations.InsertRecordSuccess, "success");
+                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(translations.InsertRecordError, "error");
+                    $.notify(viewModel.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -370,10 +370,10 @@ define(function (require) {
 
                     switchSection($("#grid-section"));
 
-                    $.notify(translations.UpdateRecordSuccess, "success");
+                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(translations.UpdateRecordError, "error");
+                    $.notify(viewModel.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -417,15 +417,12 @@ define(function (require) {
                 $('#Grid').data('kendoGrid').dataSource.read();
                 $('#Grid').data('kendoGrid').refresh();
 
-                $.notify(translations.UpdateRecordSuccess, "success");
+                $.notify(viewModel.translations.UpdateRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(translations.UpdateRecordError, "error");
+                $.notify(viewModel.translations.UpdateRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
-        };
-        self.showZones = function () {
-            switchSection($("#zones-grid-section"));
         };
     };
 

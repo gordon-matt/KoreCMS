@@ -4,7 +4,7 @@
     'plugins': '../../../../Scripts/durandal/plugins',
     'transitions': '../../../../Scripts/durandal/transitions',
 
-    //'bootstrap': '../../../../Scripts/bootstrap',
+    'bootstrap': '../../../../Scripts/bootstrap',
     'breeze': '../../../../Scripts/breeze.debug',
     'chosen': '../../../../Scripts/chosen.jquery',
     'datajs': '../../../../Scripts/datajs-1.1.3',
@@ -22,7 +22,7 @@
 };
 
 var shim = {
-    //'bootstrap': ['jquery'],
+    'bootstrap': ['jquery'],
     'breeze': ['jquery', 'datajs', 'Q'],
     'datajs': ['jquery'],
     'jqueryval': ['jquery'],

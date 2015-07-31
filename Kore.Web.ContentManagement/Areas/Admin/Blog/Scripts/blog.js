@@ -696,12 +696,12 @@ define(function (require) {
             self.tagModel.init();
 
             $('#myModal').on('hidden.bs.modal', function () {
-                if (!modalDismissed) {
+                if (!self.modalDismissed) {
                     var url = $('#TeaserImageUrl').val();
                     url = "/Media/Uploads/" + url;
                     viewModel.postModel.teaserImageUrl(url);
                 }
-                modalDismissed = false;
+                self.modalDismissed = false;
             });
         };
 

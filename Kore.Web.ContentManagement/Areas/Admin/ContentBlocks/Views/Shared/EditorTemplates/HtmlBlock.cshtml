@@ -5,7 +5,7 @@
         <div class="form-group">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 @Html.LabelFor(m => m.BodyContent, new { @class = "control-label" })
-                @Html.TextAreaFor(m => m.BodyContent, new { @class = "form-control", data_bind = "wysiwyg: bodyContent, wysiwygConfig: tinyMCEConfig" })
+                @Html.TextAreaFor(m => m.BodyContent, new { @class = "form-control", data_bind = "wysiwyg: blockModel.bodyContent, wysiwygConfig: blockModel.tinyMCEConfig" })
             </div>
         </div>
     </div>

@@ -18,6 +18,7 @@ namespace KoreCMS.Infrastructure
                     ModuleId = "viewmodels/admin/dashboard",
                     //Title = "Kore Admin",
                     Route = "",
+                    JsPath = "viewmodels/admin/dashboard"
                     //Nav = true
                 });
 

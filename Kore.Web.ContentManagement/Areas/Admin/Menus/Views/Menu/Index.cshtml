@@ -3,22 +3,14 @@
 @using Kore.Web.Mvc.KoreUI
 
 @{
-    Script.IncludeBundle("kendo-ui");
-    Script.IncludeBundle("knockout");
-    Script.IncludeBundle("knockout-mapping");
-    Script.IncludeBundle("notify");
-
-    Script.IncludeBundle("kore/common");
-    Script.IncludeBundle("kore/jqueryval");
-    Script.IncludeBundle("kore/section-switching");
-    Script.IncludeBundle("kore-cms/menus");
-
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
 
+@Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
+
 <div id="grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <a data-bind="click: create" class="btn btn-primary">
+        <a data-bind="click: menuModel.create" class="btn btn-primary">
             <i class="kore-icon kore-icon-add"></i>
             @T(KoreWebLocalizableStrings.General.Create)
         </a>
@@ -49,7 +41,7 @@
                                     <span class="input-group-addon">
                                         <i class="kore-icon kore-icon-file"></i>
                                     </span>
-                                    @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
+                                    @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: menuModel.name" })
                                 </div>
                             </div>
                         </div>
@@ -60,14 +52,14 @@
                                     <span class="input-group-addon">
                                         <i class="kore-icon kore-icon-filter"></i>
                                     </span>
-                                    @Html.TextBox("UrlFilter", null, new { @class = "form-control", data_bind = "value: urlFilter" })
+                                    @Html.TextBox("UrlFilter", null, new { @class = "form-control", data_bind = "value: menuModel.urlFilter" })
                                 </div>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group pull-right">
-                                <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                                <button type="button" class="btn btn-primary" data-bind="click: save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                                <button type="button" class="btn btn-default" data-bind="click: menuModel.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: menuModel.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
                             </div>
                         </div>
                     </fieldset>
@@ -79,11 +71,11 @@
 
 <div id="items-grid-section" class="row" style="display:none">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <a onclick="viewModel.menuItem.create(viewModel.id(), null)" class="btn btn-primary">
+        <a onclick="viewModel.menuItemModel.create(viewModel.menuModel.id(), null)" class="btn btn-primary">
             <i class="kore-icon kore-icon-add"></i>
             @T(KoreWebLocalizableStrings.General.Create)
         </a>
-        <a onclick="viewModel.menuItem.goBack()" class="btn btn-default">
+        <a data-bind="click: menuItemModel.goBack" class="btn btn-default">
             <i class="kore-icon kore-icon-arrow-left"></i>
             @T(KoreWebLocalizableStrings.General.Back)
         </a>
@@ -114,7 +106,7 @@
                                     <span class="input-group-addon">
                                         <i class="kore-icon kore-icon-file"></i>
                                     </span>
-                                    @Html.TextBox("Item_Text", null, new { @class = "form-control", data_bind = "value: menuItem.text" })
+                                    @Html.TextBox("Item_Text", null, new { @class = "form-control", data_bind = "value: menuItemModel.text" })
                                 </div>
                             </div>
                         </div>
@@ -125,7 +117,7 @@
                                     <span class="input-group-addon">
                                         <i class="kore-icon kore-icon-globe"></i>
                                     </span>
-                                    @Html.TextBox("Item_Url", null, new { @class = "form-control", data_bind = "value: menuItem.url" })
+                                    @Html.TextBox("Item_Url", null, new { @class = "form-control", data_bind = "value: menuItemModel.url" })
                                 </div>
                             </div>
                         </div>
@@ -136,7 +128,7 @@
                                     <span class="input-group-addon">
                                         <i class="kore-icon kore-icon-file"></i>
                                     </span>
-                                    @Html.TextBox("Item_Description", null, new { @class = "form-control", data_bind = "value: menuItem.description" })
+                                    @Html.TextBox("Item_Description", null, new { @class = "form-control", data_bind = "value: menuItemModel.description" })
                                 </div>
                             </div>
                         </div>
@@ -147,7 +139,7 @@
                                     <span class="input-group-addon">
                                         <i class="kore-icon kore-icon-font"></i>
                                     </span>
-                                    @Html.TextBox("Item_CssClass", null, new { @class = "form-control", data_bind = "value: menuItem.cssClass" })
+                                    @Html.TextBox("Item_CssClass", null, new { @class = "form-control", data_bind = "value: menuItemModel.cssClass" })
                                 </div>
                             </div>
                         </div>
@@ -158,21 +150,21 @@
                                     <span class="input-group-addon">
                                         <i class="kore-icon kore-icon-sort-numeric-asc"></i>
                                     </span>
-                                    @Html.TextBox("Item_Position", null, new { @class = "form-control", data_bind = "value: menuItem.position" })
+                                    @Html.TextBox("Item_Position", null, new { @class = "form-control", data_bind = "value: menuItemModel.position" })
                                 </div>
                             </div>
                         </div>
                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                             <div class="checkbox">
                                 <label>
-                                    @Html.CheckBox("Item_Enabled", new { data_bind = "checked: menuItem.enabled" }) @T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Enabled)
+                                    @Html.CheckBox("Item_Enabled", new { data_bind = "checked: menuItemModel.enabled" }) @T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Enabled)
                                 </label>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group pull-right">
-                                <button type="button" class="btn btn-default" data-bind="click: menuItem.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                                <button type="button" class="btn btn-primary" data-bind="click: menuItem.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                                <button type="button" class="btn btn-default" data-bind="click: menuItemModel.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: menuItemModel.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
                             </div>
                         </div>
                     </fieldset>
@@ -194,37 +186,3 @@
         </div>
     </div>
 </script>
-
-@section scripts {
-    <script type="text/javascript">
-        var gridPageSize = @SiteSettings.DefaultGridPageSize;
-        var translations = {
-            Create: '@T(KoreWebLocalizableStrings.General.Create).Text',
-            Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
-            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
-            DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',
-            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text',
-            Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
-            GetRecordError: '@T(KoreWebLocalizableStrings.General.GetRecordError).Text',
-            InsertRecordError: '@T(KoreWebLocalizableStrings.General.InsertRecordError).Text',
-            InsertRecordSuccess: '@T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text',
-            NewItem: '@T(KoreCmsLocalizableStrings.Menus.NewItem).Text',
-            Toggle: '@T(KoreWebLocalizableStrings.General.Toggle).Text',
-            UpdateRecordError: '@T(KoreWebLocalizableStrings.General.UpdateRecordError).Text',
-            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text',
-
-            Columns: {
-                Menu: {
-                    Name: '@T(KoreCmsLocalizableStrings.Menus.MenuModel.Name).Text',
-                    UrlFilter: '@T(KoreCmsLocalizableStrings.Menus.MenuModel.UrlFilter).Text'
-                },
-                MenuItem: {
-                    Text: '@T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Text).Text',
-                    Url: '@T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Url).Text',
-                    Position: '@T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Position).Text',
-                    Enabled: '@T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Enabled).Text'
-                }
-            }
-        }
-    </script>
-}

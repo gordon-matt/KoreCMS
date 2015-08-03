@@ -38,6 +38,9 @@ namespace Kore.Web.ContentManagement.Infrastructure
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/localizable-strings")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Localization.Scripts.localizableStrings.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/media")
+                .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Media.Scripts.media.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/menus")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Menus.Scripts.menus.js"));
 

@@ -28,14 +28,14 @@ namespace Kore.Web.ContentManagement.Infrastructure
                 routes.Add(new DurandalRoute
                 {
                     ModuleId = "viewmodels/admin/blocks/content-blocks",
-                    Route = "blocks/content-blocks",
+                    Route = "blocks/content-blocks(/:pageId)",
                     JsPath = scriptRegister.GetBundleUrl("kore-cms/content-blocks")
                 });
 
                 routes.Add(new DurandalRoute
                 {
                     ModuleId = "viewmodels/admin/blocks/entity-type-content-blocks",
-                    Route = "blocks/entity-type-content-blocks",
+                    Route = "blocks/entity-type-content-blocks/:entityType/:entityId",
                     JsPath = scriptRegister.GetBundleUrl("kore-cms/entity-type-content-blocks")
                 });
 
@@ -49,7 +49,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
                 routes.Add(new DurandalRoute
                 {
                     ModuleId = "viewmodels/admin/localization/localizable-strings",
-                    Route = "localization/localizable-strings",
+                    Route = "localization/localizable-strings/:cultureCode",
                     JsPath = scriptRegister.GetBundleUrl("kore-cms/localizable-strings")
                 });
 

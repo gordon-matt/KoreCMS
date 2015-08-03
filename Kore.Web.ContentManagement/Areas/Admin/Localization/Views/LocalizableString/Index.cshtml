@@ -6,8 +6,6 @@
     string cultureCode = ViewBag.CultureCode;
 }
 
-<link rel="stylesheet" type="text/css" href="@Style.GetBundleUrl("kendo-ui")" />
-
 @Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
 @Html.Hidden("CultureCode", cultureCode)
 

@@ -89,7 +89,7 @@
         <footer>
             <p class="pull-left">&copy; @DateTime.Now.Year - @siteName</p>
             <div class="pull-right">
-                @Html.ActionLink(T(LocalizableStrings.Dashboard.Administration), "Index", "Home", new { area = KoreWebConstants.Areas.Admin }, null)
+                <a href="/admin">@T(LocalizableStrings.Dashboard.Administration)</a>
             </div>
         </footer>
     </div>

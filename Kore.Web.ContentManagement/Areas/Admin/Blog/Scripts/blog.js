@@ -4,25 +4,25 @@ define(function (require) {
     'use strict'
 
     var $ = require('jquery');
-    var jqueryval = require('jqueryval');
     var ko = require('knockout');
-    var kendo = require('kendo');
-    //var ko_kendo = require('kendo-knockout');
-    var notify = require('notify');
     var datajs = require('datajs');
     var odata = require('OData');
     var Q = require('Q');
     var breeze = require('breeze');
-    var chosen = require('chosen');
-    var tinymce = require('tinymce');
-    var tinymce_jquery = require('tinymce-jquery');
-    var tinymce_knockout = require('tinymce-knockout');
 
-    var kCommon = require('kore-common');
-    var kSections = require('kore-section-switching');
-    var kJVal = require('kore-jqueryval');
-    var kChosenKo = require('kore-chosen-knockout');
-    var kTiny = require('kore-tinymce');
+    require('jqueryval');
+    require('kendo');
+    require('notify');
+    require('chosen');
+    require('tinymce');
+    require('tinymce-jquery');
+    require('tinymce-knockout');
+
+    require('kore-common');
+    require('kore-section-switching');
+    require('kore-jqueryval');
+    require('kore-chosen-knockout');
+    require('kore-tinymce');
 
     var postApiUrl = "/odata/kore/cms/BlogPostApi";
     var categoryApiUrl = "/odata/kore/cms/BlogCategoryApi";

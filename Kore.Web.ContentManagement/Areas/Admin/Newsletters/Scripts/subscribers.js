@@ -5,9 +5,9 @@ define(function (require) {
 
     var $ = require('jquery');
     var ko = require('knockout');
-    var kendo = require('kendo');
-    //var ko_kendo = require('kendo-knockout');
-    var notify = require('notify');
+
+    require('kendo');
+    require('notify');
 
     var ViewModel = function () {
         var self = this;

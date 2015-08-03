@@ -1,12 +1,13 @@
 ﻿var viewModel;
 
-//define(function (require) {
-define(['jquery', 'jqueryval', 'kendo'], function ($, jqueryval, kendo) {
+define(function (require) {
+//define(['jquery', 'jqueryval', 'kendo'], function ($, jqueryval, kendo) {
     'use strict'
 
-    //var $ = require('jquery');
-    //var jqueryval = require('jqueryval');
-    //var kendo = require('kendo');
+    var $ = require('jquery');
+    var kendo = require('kendo');
+
+    require('jqueryval');
 
     var odataBaseUrl = "/odata/kore/cms/LocalizableStringApi/";
 

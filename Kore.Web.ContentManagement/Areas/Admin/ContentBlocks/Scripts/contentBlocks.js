@@ -4,22 +4,21 @@ define(function (require) {
     'use strict'
 
     var $ = require('jquery');
-    var jqueryval = require('jqueryval');
     var ko = require('knockout');
     var koMap = require('knockout-mapping');
-    var kendo = require('kendo');
-    //var ko_kendo = require('kendo-knockout');
-    var notify = require('notify');
 
-    var tinymce = require('tinymce');
-    var tinymce_jquery = require('tinymce-jquery');
-    var tinymce_knockout = require('tinymce-knockout');
+    require('jqueryval');
+    require('kendo');
+    require('notify');
+    require('tinymce');
+    require('tinymce-jquery');
+    require('tinymce-knockout');
 
-    var kCommon = require('kore-common');
-    var kSections = require('kore-section-switching');
-    var kJVal = require('kore-jqueryval');
-    var kChosenKo = require('kore-chosen-knockout');
-    var kTiny = require('kore-tinymce');
+    require('kore-common');
+    require('kore-section-switching');
+    require('kore-jqueryval');
+    require('kore-chosen-knockout');
+    require('kore-tinymce');
 
     ko.mapping = koMap;
 

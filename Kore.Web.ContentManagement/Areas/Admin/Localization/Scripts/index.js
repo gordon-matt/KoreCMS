@@ -4,10 +4,11 @@ define(function (require) {
     'use strict'
 
     var $ = require('jquery');
-    var jqueryval = require('jqueryval');
     var ko = require('knockout');
-    var kendo = require('kendo');
-    var notify = require('notify');
+
+    require('jqueryval');
+    require('kendo');
+    require('notify');
 
     require('kore-common');
     require('kore-section-switching');

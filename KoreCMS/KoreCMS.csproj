@@ -1485,6 +1485,7 @@
     <Content Include="Scripts\tinymce\plugins\insertdatetime\plugin.min.js" />
     <Content Include="Scripts\tinymce\plugins\kore_contentzone\img\kore_contentzone.png" />
     <Content Include="Scripts\tinymce\plugins\kore_contentzone\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\kore_contentzone\plugin.min.js" />
     <Content Include="Scripts\tinymce\plugins\layer\plugin.js" />
     <Content Include="Scripts\tinymce\plugins\layer\plugin.min.js" />
     <Content Include="Scripts\tinymce\plugins\legacyoutput\plugin.js" />

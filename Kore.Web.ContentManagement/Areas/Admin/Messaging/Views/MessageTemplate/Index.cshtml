@@ -2,20 +2,10 @@
 @using Kore.Web.Mvc.KoreUI
 
 @{
-    Script.IncludeBundle("kendo-ui");
-    Script.IncludeBundle("knockout");
-    Script.IncludeBundle("knockout-mapping");
-    Script.IncludeBundle("tinymce");
-    Script.IncludeBundle("notify");
-
-    Script.IncludeBundle("kore/common");
-    Script.IncludeBundle("kore/section-switching");
-    Script.IncludeBundle("kore/jqueryval");
-    Script.IncludeBundle("kore/tinymce");
-    Script.IncludeBundle("kore-cms/message-templates");
-
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
+
+@Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
 
 <div id="grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -98,30 +88,3 @@
         }
     </article>
 </div>
-
-@section scripts {
-    <script type="text/javascript">
-        var gridPageSize = @SiteSettings.DefaultGridPageSize;
-        var translations = {
-            Create: '@T(KoreWebLocalizableStrings.General.Create).Text',
-            Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
-            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
-            DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',
-            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text',
-            Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
-            GetRecordError: '@T(KoreWebLocalizableStrings.General.GetRecordError).Text',
-            GetTokensError: '@T(KoreCmsLocalizableStrings.Messaging.GetTokensError).Text',
-            InsertRecordError: '@T(KoreWebLocalizableStrings.General.InsertRecordError).Text',
-            InsertRecordSuccess: '@T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text',
-            Toggle: '@T(KoreWebLocalizableStrings.General.Toggle).Text',
-            UpdateRecordError: '@T(KoreWebLocalizableStrings.General.UpdateRecordError).Text',
-            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text',
-
-            Columns: {
-                Name: '@T(KoreCmsLocalizableStrings.Messaging.MessageTemplateModel.Name).Text',
-                Subject: '@T(KoreCmsLocalizableStrings.Messaging.MessageTemplateModel.Subject).Text',
-                Enabled: '@T(KoreCmsLocalizableStrings.Messaging.MessageTemplateModel.Enabled).Text',
-            }
-        }
-</script>
-}

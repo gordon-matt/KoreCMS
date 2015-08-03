@@ -598,7 +598,10 @@ define(function (require) {
         self.blockModel = false;
         self.zoneModel = false;
 
-        self.activate = function () {
+        self.activate = function (entityType, entityId) {
+            self.entityType = entityType;
+            self.entityId = entityId;
+
             self.blockModel = new BlockModel();
             self.zoneModel = new ZoneModel();
         };
@@ -620,8 +623,6 @@ define(function (require) {
             });
 
             self.gridPageSize = $("#GridPageSize").val();
-            self.entityType = $('#EntityType').val();
-            self.entityId = $('#EntityId').val();
 
             self.blockModel.init();
             self.zoneModel.init();

@@ -45,7 +45,7 @@ $.ajax({
             paths[item] = json.Paths[item];
         }
         else {
-            paths[item] = "viewmodels/dummy";
+            paths[item] = "viewmodels/dummy";//TODO: this causes issues when 2 or more pages using it.
         }
     }
     for (item in json.Shim) {
@@ -56,6 +56,7 @@ $.ajax({
 });
 
 requirejs.config({
+    waitSeconds: 0, // 0 disables the timeout completely, default is 7 seconds
     paths: paths,
     shim: shim
 });
@@ -88,7 +89,6 @@ define(function (require) {
         viewEngine.viewExtension = '/';
 
         viewLocator.convertModuleIdToViewId = function (moduleId) {
-            //console.log('!  Trying to find view for: ' + moduleId);
             return moduleId.replace('viewmodels', '');
         };
 

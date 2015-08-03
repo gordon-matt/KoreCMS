@@ -3,15 +3,10 @@
 @using Kore.Web.Mvc.KoreUI
 
 @{
-    var nullablePageId = (Guid?)ViewBag.PageId;
-    string pageId = nullablePageId.HasValue ? nullablePageId.Value.ToString() : null;
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
 
-<link rel="stylesheet" type="text/css" href="@Style.GetBundleUrl("kendo-ui")" />
-
 @Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
-@Html.Hidden("PageId", pageId)
 
 <div id="grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

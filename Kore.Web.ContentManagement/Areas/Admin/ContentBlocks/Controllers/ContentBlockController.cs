@@ -25,7 +25,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 
         [Compress]
         [Route("{pageId?}")]
-        public ActionResult Index(Guid? pageId)
+        public ActionResult Index()
         {
             if (!CheckPermission(CmsPermissions.ContentBlocksRead))
             {
@@ -37,12 +37,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
             ViewBag.Title = T(KoreCmsLocalizableStrings.ContentBlocks.Title);
             ViewBag.SubTitle = T(KoreCmsLocalizableStrings.ContentBlocks.ManageContentBlocks);
 
-            if (pageId.HasValue)
-            {
-                WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Pages.ManagePages), Url.Action("Index", "Page", new { area = CmsConstants.Areas.Pages }));
-            }
+            //if (pageId.HasValue)
+            //{
+            //    WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Pages.ManagePages), Url.Action("Index", "Page", new { area = CmsConstants.Areas.Pages }));
+            //}
 
-            ViewBag.PageId = pageId;
+            //ViewBag.PageId = pageId;
 
             return PartialView("Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.ContentBlock.Index");
         }

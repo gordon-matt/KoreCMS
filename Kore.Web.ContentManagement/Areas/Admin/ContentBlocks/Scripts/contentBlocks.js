@@ -626,7 +626,15 @@ define(function (require) {
         self.blockModel = false;
         self.zoneModel = false;
 
-        self.activate = function () {
+        self.activate = function (pageId) {
+            self.pageId = pageId;
+            if (!self.pageId) {
+                // we don't want undefined or an empty string, since this value will be posted over OData,
+                //  which expects Edm.Guid or a null
+                self.pageId = null;
+            }
+            console.log('Blocks for Page ID: ' + pageId);
+
             self.blockModel = new BlockModel();
             self.zoneModel = new ZoneModel();
         };
@@ -648,13 +656,6 @@ define(function (require) {
             });
 
             self.gridPageSize = $("#GridPageSize").val();
-
-            self.pageId = $('#PageId').val();
-            if (!self.pageId) {
-                // we don't want undefined or an empty string, since this value will be posted over OData,
-                //  which expects Edm.Guid or a null
-                self.pageId = null;
-            }
 
             self.blockModel.init();
             self.zoneModel.init();

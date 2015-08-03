@@ -24,7 +24,8 @@ namespace KoreCMS.Areas.Admin
             builder.Permission(StandardPermissions.DashboardAccess);
 
             builder.IconCssClass("kore-icon kore-icon-dashboard")
-                .Action("Index", "Home", new { area = KoreWebConstants.Areas.Admin });
+                .Url("#");
+                //.Action("Index", "Home", new { area = KoreWebConstants.Areas.Admin });
         }
     }
 }

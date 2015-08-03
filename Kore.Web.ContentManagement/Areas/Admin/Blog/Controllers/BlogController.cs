@@ -11,7 +11,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
     {
         [Compress]
         [Route("")]
-        public ActionResult Index(string slug)
+        public ActionResult Index()
         {
             if (!CheckPermission(CmsPermissions.BlogRead))
             {

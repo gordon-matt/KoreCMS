@@ -24,7 +24,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 
         [Compress]
         [Route("{entityType}/{entityId}")]
-        public ActionResult Index(string entityType, string entityId)
+        public ActionResult Index()
         {
             if (!CheckPermission(CmsPermissions.ContentBlocksRead))
             {
@@ -35,8 +35,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 
             ViewBag.Title = T(KoreCmsLocalizableStrings.ContentBlocks.Title);
             ViewBag.SubTitle = T(KoreCmsLocalizableStrings.ContentBlocks.ManageContentBlocks);
-            ViewBag.EntityType = entityType;
-            ViewBag.EntityId = entityId;
+            //ViewBag.EntityType = entityType;
+            //ViewBag.EntityId = entityId;
 
             return PartialView("Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.EntityTypeContentBlock.Index");
         }

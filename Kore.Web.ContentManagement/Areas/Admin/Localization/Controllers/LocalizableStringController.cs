@@ -32,24 +32,24 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
         }
 
         [Compress]
-        [Route("{languageId}")]
-        public ActionResult Index(Guid languageId)
+        [Route("")]
+        public ActionResult Index()
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
                 return new HttpUnauthorizedResult();
             }
 
-            var language = languageService.Value.FindOne(languageId);
+            //var language = languageService.Value.FindOne(languageId);
 
             WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Localization.Languages), Url.Action("Index", "Language"));
-            WorkContext.Breadcrumbs.Add(language.Name);
+            //WorkContext.Breadcrumbs.Add(language.Name);
             WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Localization.LocalizableStrings));
 
             ViewBag.Title = T(KoreCmsLocalizableStrings.Localization.Title);
             ViewBag.SubTitle = T(KoreCmsLocalizableStrings.Localization.LocalizableStrings);
 
-            ViewBag.CultureCode = language.CultureCode;
+            //ViewBag.CultureCode = language.CultureCode;
 
             return PartialView("Kore.Web.ContentManagement.Areas.Admin.Localization.Views.LocalizableString.Index");
         }

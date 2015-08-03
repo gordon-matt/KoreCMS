@@ -1,11 +1,12 @@
 ﻿var viewModel;
 
-define(function (require) {
+//define(function (require) {
+define(['jquery', 'jqueryval', 'kendo'], function ($, jqueryval, kendo) {
     'use strict'
 
-    var $ = require('jquery');
-    var jqueryval = require('jqueryval');
-    var kendo = require('kendo');
+    //var $ = require('jquery');
+    //var jqueryval = require('jqueryval');
+    //var kendo = require('kendo');
 
     var odataBaseUrl = "/odata/kore/cms/LocalizableStringApi/";
 
@@ -16,6 +17,13 @@ define(function (require) {
         self.translations = false;
         self.cultureCode = null;
 
+        self.activate = function (cultureCode) {
+            self.cultureCode = cultureCode;
+
+            if (!self.cultureCode) {
+                self.cultureCode = null;
+            }
+        };
         self.attached = function () {
             // Load translations first, else will have errors
             $.ajax({
@@ -32,11 +40,6 @@ define(function (require) {
             });
 
             self.gridPageSize = $("#GridPageSize").val();
-            self.cultureCode = $("#CultureCode").val();
-
-            if (!self.cultureCode) {
-                self.cultureCode = null;
-            }
 
             $("#Grid").kendoGrid({
                 data: null,
@@ -110,19 +113,19 @@ define(function (require) {
                         parameterMap: function (options, operation) {
                             if (operation === "read") {
                                 return kendo.stringify({
-                                    cultureCode: cultureCode
+                                    cultureCode: self.cultureCode
                                 });
                             }
                             else if (operation === "update") {
                                 return kendo.stringify({
-                                    cultureCode: cultureCode,
+                                    cultureCode: self.cultureCode,
                                     key: options.Key,
                                     entity: options
                                 });
                             }
                             else if (operation === "destroy") {
                                 return kendo.stringify({
-                                    cultureCode: cultureCode,
+                                    cultureCode: self.cultureCode,
                                     key: options.Key
                                 });
                             }
@@ -208,7 +211,7 @@ define(function (require) {
         self.exportFile = function () {
             var downloadForm = $("<form>")
                 .attr("method", "GET")
-                .attr("action", "/admin/localization/localizable-strings/export/" + cultureCode);
+                .attr("action", "/admin/localization/localizable-strings/export/" + self.cultureCode);
             $("body").append(downloadForm);
             downloadForm.submit();
             downloadForm.remove();

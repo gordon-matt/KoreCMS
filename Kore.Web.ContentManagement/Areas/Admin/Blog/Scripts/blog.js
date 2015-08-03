@@ -132,7 +132,7 @@ define(function (require) {
                     title: " ",
                     template:
                         '<div class="btn-group"><a onclick="viewModel.postModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.postModel.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
+                        '<a onclick="viewModel.postModel.remove(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -351,7 +351,7 @@ define(function (require) {
                     title: " ",
                     template:
                         '<div class="btn-group"><a onclick="viewModel.categoryModel.edit(#=Id#)" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.categoryModel.delete(#=Id#)" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
+                        '<a onclick="viewModel.categoryModel.remove(#=Id#)" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -389,7 +389,7 @@ define(function (require) {
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
-        self.delete = function (id) {
+        self.remove = function (id) {
             if (confirm(viewModel.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: categoryApiUrl + "(" + id + ")",
@@ -533,7 +533,7 @@ define(function (require) {
                     title: " ",
                     template:
                         '<div class="btn-group"><a onclick="viewModel.tagModel.edit(#=Id#)" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.tagModel.delete(#=Id#)" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
+                        '<a onclick="viewModel.tagModel.remove(#=Id#)" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -571,7 +571,7 @@ define(function (require) {
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
-        self.delete = function (id) {
+        self.remove = function (id) {
             if (confirm(viewModel.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: tagApiUrl + "(" + id + ")",

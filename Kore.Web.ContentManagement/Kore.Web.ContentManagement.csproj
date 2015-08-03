@@ -410,6 +410,7 @@
     <EmbeddedResource Include="Scripts\kore-cms-localization.js" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Areas\Admin\Media\Scripts\media.js" />
     <Content Include="Areas\Admin\Media\Services\mimeTypes.txt" />
     <EmbeddedResource Include="Content\jqcloud.min.css" />
     <EmbeddedResource Include="Scripts\jqcloud.min.js" />

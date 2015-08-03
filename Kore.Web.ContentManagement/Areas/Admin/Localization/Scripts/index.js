@@ -139,7 +139,7 @@ define(function (require) {
                     template:
                         '<div class="btn-group"><a onclick="viewModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + self.translations.Edit + '</a>' +
                         '<a onclick="viewModel.remove(\'#=Id#\')" class="btn btn-danger btn-xs">' + self.translations.Delete + '</a>' +
-                        '<a href="/admin/\\#localization/localizable-strings/#=CultureCode#" class="btn btn-primary btn-xs">' + self.translations.Localize + '</a>' +
+                        '<a href="\\#localization/localizable-strings/#=CultureCode#" class="btn btn-primary btn-xs">' + self.translations.Localize + '</a>' +
                         '</div>',
                     //TODO: '<a onclick="viewModel.setDefault(\'#=Id#\', #=IsEnabled#)" class="btn btn-default btn-xs">Set Default</a></div>',
                     attributes: { "class": "text-center" },

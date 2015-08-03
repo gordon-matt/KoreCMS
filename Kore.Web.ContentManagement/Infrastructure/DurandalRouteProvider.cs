@@ -56,7 +56,8 @@ namespace Kore.Web.ContentManagement.Infrastructure
                 routes.Add(new DurandalRoute
                 {
                     ModuleId = "viewmodels/admin/media",
-                    Route = "media"
+                    Route = "media",
+                    JsPath = scriptRegister.GetBundleUrl("kore-cms/media")
                 });
 
                 routes.Add(new DurandalRoute

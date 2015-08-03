@@ -312,6 +312,7 @@
     <Content Include="Areas\Admin\Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Areas\Admin\Scripts\App\cssLoader.js" />
     <Content Include="Areas\Admin\Scripts\App\main.js" />
+    <Content Include="Areas\Admin\Scripts\App\viewmodels\admin\dashboard.js" />
     <Content Include="Areas\Admin\Scripts\App\viewmodels\dummy.js" />
     <Content Include="Areas\Admin\Scripts\App\viewmodels\admin\shell.js" />
     <Content Include="Content\bootstrap-chosen.css" />

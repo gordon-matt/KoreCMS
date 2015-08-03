@@ -4,25 +4,25 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="form-group">
             @Html.Label("MetaTitle", T(KoreCmsLocalizableStrings.Pages.PageTypes.StandardPage.MetaTitle), new { @class = "control-label" })
-            @Html.TextBox("MetaTitle", null, new { @class = "form-control", data_bind = "value: pageVersion.metaTitle" })
+            @Html.TextBox("MetaTitle", null, new { @class = "form-control", data_bind = "value: pageVersionModel.metaTitle" })
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="form-group">
             @Html.Label("MetaKeywords", T(KoreCmsLocalizableStrings.Pages.PageTypes.StandardPage.MetaKeywords), new { @class = "control-label" })
-            @Html.TextBox("MetaKeywords", null, new { @class = "form-control", data_bind = "value: pageVersion.metaKeywords" })
+            @Html.TextBox("MetaKeywords", null, new { @class = "form-control", data_bind = "value: pageVersionModel.metaKeywords" })
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="form-group">
             @Html.Label("MetaDescription", T(KoreCmsLocalizableStrings.Pages.PageTypes.StandardPage.MetaDescription), new { @class = "control-label" })
-            @Html.TextBox("MetaDescription", null, new { @class = "form-control", data_bind = "value: pageVersion.metaDescription" })
+            @Html.TextBox("MetaDescription", null, new { @class = "form-control", data_bind = "value: pageVersionModel.metaDescription" })
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="form-group">
             @Html.Label("BodyContent", T(KoreCmsLocalizableStrings.Pages.PageTypes.StandardPage.BodyContent), new { @class = "control-label" })
-            @Html.TextArea("BodyContent", null, new { @class = "form-control", data_bind = "wysiwyg: pageVersion.bodyContent, wysiwygConfig: pageVersion.tinyMCE_bodyContent" })
+            @Html.TextArea("BodyContent", null, new { @class = "form-control", data_bind = "wysiwyg: pageVersionModel.bodyContent, wysiwygConfig: pageVersionModel.tinyMCE_bodyContent" })
         </div>
     </div>
 </div>
@@ -31,45 +31,45 @@
     var pageModel = (function () {
         var f = {};
         f.updateModel = function () {
-            viewModel.pageVersion.metaTitle = ko.observable("");
-            viewModel.pageVersion.metaKeywords = ko.observable("");
-            viewModel.pageVersion.metaDescription = ko.observable("");
-            viewModel.pageVersion.bodyContent = ko.observable("");
+            viewModel.pageVersionModel.metaTitle = ko.observable("");
+            viewModel.pageVersionModel.metaKeywords = ko.observable("");
+            viewModel.pageVersionModel.metaDescription = ko.observable("");
+            viewModel.pageVersionModel.bodyContent = ko.observable("");
 
-            var data = ko.mapping.fromJSON(viewModel.pageVersion.fields());
+            var data = ko.mapping.fromJSON(viewModel.pageVersionModel.fields());
 
             if (data) {
                 if (data.MetaTitle) {
-                    viewModel.pageVersion.metaTitle(data.MetaTitle());
+                    viewModel.pageVersionModel.metaTitle(data.MetaTitle());
                 }
                 if (data.MetaKeywords) {
-                    viewModel.pageVersion.metaKeywords(data.MetaKeywords());
+                    viewModel.pageVersionModel.metaKeywords(data.MetaKeywords());
                 }
                 if (data.MetaDescription) {
-                    viewModel.pageVersion.metaDescription(data.MetaDescription());
+                    viewModel.pageVersionModel.metaDescription(data.MetaDescription());
                 }
                 if (data.BodyContent) {
-                    viewModel.pageVersion.bodyContent(data.BodyContent());
+                    viewModel.pageVersionModel.bodyContent(data.BodyContent());
                 }
             }
 
-            viewModel.pageVersion.tinyMCE_bodyContent = koreAdvancedTinyMCEConfig;
+            viewModel.pageVersionModel.tinyMCE_bodyContent = koreAdvancedTinyMCEConfig;
         };
         f.cleanUp = function () {
-            delete viewModel.pageVersion.metaTitle;
-            delete viewModel.pageVersion.metaKeywords;
-            delete viewModel.pageVersion.metaDescription;
-            delete viewModel.pageVersion.bodyContent;
-            delete viewModel.pageVersion.tinyMCE_bodyContent;
+            delete viewModel.pageVersionModel.metaTitle;
+            delete viewModel.pageVersionModel.metaKeywords;
+            delete viewModel.pageVersionModel.metaDescription;
+            delete viewModel.pageVersionModel.bodyContent;
+            delete viewModel.pageVersionModel.tinyMCE_bodyContent;
         };
         f.onBeforeSave = function () {
             var data = {
-                MetaTitle: viewModel.pageVersion.metaTitle(),
-                MetaKeywords: viewModel.pageVersion.metaKeywords(),
-                MetaDescription: viewModel.pageVersion.metaDescription(),
-                BodyContent: viewModel.pageVersion.bodyContent()
+                MetaTitle: viewModel.pageVersionModel.metaTitle(),
+                MetaKeywords: viewModel.pageVersionModel.metaKeywords(),
+                MetaDescription: viewModel.pageVersionModel.metaDescription(),
+                BodyContent: viewModel.pageVersionModel.bodyContent()
             };
-            viewModel.pageVersion.fields(ko.mapping.toJSON(data));
+            viewModel.pageVersionModel.fields(ko.mapping.toJSON(data));
         };
         return f;
     })();

@@ -1,36 +1,13 @@
 ﻿@using Kore.Web.ContentManagement
 
 @{
-    Script.IncludeBundle("kendo-ui");
-    Script.IncludeBundle("notify");
-
-    Script.IncludeBundle("kore-cms/queued-emails");
-
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
+
+@Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
 
 <div id="grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
         <div id="Grid"></div>
     </div>
 </div>
-
-@section scripts {
-    <script type="text/javascript">
-        var gridPageSize = @SiteSettings.DefaultGridPageSize;
-        var translations = {
-            Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
-            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
-            DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',
-            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text',
-
-            Columns: {
-                CreatedOnUtc: '@T(KoreCmsLocalizableStrings.Messaging.QueuedEmailModel.CreatedOnUtc).Text',
-                SentOnUtc: '@T(KoreCmsLocalizableStrings.Messaging.QueuedEmailModel.SentOnUtc).Text',
-                SentTries: '@T(KoreCmsLocalizableStrings.Messaging.QueuedEmailModel.SentTries).Text',
-                Subject: '@T(KoreCmsLocalizableStrings.Messaging.QueuedEmailModel.Subject).Text',
-                ToAddress: '@T(KoreCmsLocalizableStrings.Messaging.QueuedEmailModel.ToAddress).Text'
-            }
-        }
-</script>
-}

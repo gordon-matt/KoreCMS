@@ -1,40 +1,13 @@
 ﻿@using Kore.Web
 
 @{
-    Layout = KoreWebConstants.DefaultAdminLayoutPath;
-    
-    Style.IncludeBundle("kendo-ui");
-
-    Script.IncludeBundle("kendo-ui");
-    Script.IncludeBundle("notify");
-
-    Script.IncludeBundle("kore/common");
-    Script.IncludeBundle("kore-web/plugins");
-
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
 
+@Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
+
 <div id="grid-section" class="row">
-    <div class="col-md-12 @rtlClass">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
         <div id="Grid"></div>
     </div>
 </div>
-
-@section scripts {
-    <script type="text/javascript">
-        var gridPageSize = @SiteSettings.DefaultGridPageSize;
-        var translations = {
-            Install: '@T(KoreWebLocalizableStrings.General.Install).Text',
-            InstallPluginSuccess: '@T(KoreWebLocalizableStrings.Plugins.InstallPluginSuccess).Text',
-            InstallPluginError: '@T(KoreWebLocalizableStrings.Plugins.InstallPluginError).Text',
-            Uninstall: '@T(KoreWebLocalizableStrings.General.Uninstall).Text',
-            UninstallPluginSuccess: '@T(KoreWebLocalizableStrings.Plugins.UninstallPluginSuccess).Text',
-            UninstallPluginError: '@T(KoreWebLocalizableStrings.Plugins.UninstallPluginError).Text',
-
-            Columns: {
-                Group: '@T(KoreWebLocalizableStrings.Plugins.Model.Group).Text',
-                PluginInfo: '@T(KoreWebLocalizableStrings.Plugins.Model.PluginInfo).Text',
-            }
-        };
-    </script>
-}

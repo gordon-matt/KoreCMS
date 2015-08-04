@@ -1,45 +1,11 @@
-﻿@using Kore.Tasks.Domain
-@using Kore.Web
-@using Kore.Web.Areas.Admin.ScheduledTasks
-
-@{
-    Layout = KoreWebConstants.DefaultAdminLayoutPath;
-    
-    Style.IncludeBundle("kendo-ui");
-
-    Script.IncludeBundle("kendo-ui");
-    Script.IncludeBundle("notify");
-
-    Script.IncludeBundle("kore-web/scheduled-tasks");
-
+﻿@{
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
 
+@Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
+
 <div id="grid-section" class="row">
-    <div class="col-md-12 @rtlClass">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
         <div id="Grid"></div>
     </div>
 </div>
-
-@section scripts {
-    <script type="text/javascript">
-        'use strict'
-        
-        var gridPageSize = @SiteSettings.DefaultGridPageSize;
-
-        var translations = {
-            ExecutedTaskSuccess: '@T(KoreWebLocalizableStrings.ScheduledTasks.ExecutedTaskSuccess).Text',
-            ExecutedTaskError: '@T(KoreWebLocalizableStrings.ScheduledTasks.ExecutedTaskError).Text',
-
-            Columns: {
-                Enabled: '@T(KoreWebLocalizableStrings.ScheduledTasks.Model.Enabled).Text',
-                LastEndUtc: '@T(KoreWebLocalizableStrings.ScheduledTasks.Model.LastEndUtc).Text',
-                LastStartUtc: '@T(KoreWebLocalizableStrings.ScheduledTasks.Model.LastStartUtc).Text',
-                LastSuccessUtc: '@T(KoreWebLocalizableStrings.ScheduledTasks.Model.LastSuccessUtc).Text',
-                Name: '@T(KoreWebLocalizableStrings.ScheduledTasks.Model.Name).Text',
-                Seconds: '@T(KoreWebLocalizableStrings.ScheduledTasks.Model.Seconds).Text',
-                StopOnError: '@T(KoreWebLocalizableStrings.ScheduledTasks.Model.StopOnError).Text',
-            }
-        };
-    </script>
-}

@@ -23,7 +23,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
         }
 
         [Compress]
-        [Route("{entityType}/{entityId}")]
+        [Route("")]
         public ActionResult Index()
         {
             if (!CheckPermission(CmsPermissions.ContentBlocksRead))

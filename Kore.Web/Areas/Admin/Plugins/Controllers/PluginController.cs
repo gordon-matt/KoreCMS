@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
-using Castle.Core.Logging;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
 using Kore.Web.Plugins;
 using Kore.Web.Security.Membership.Permissions;
+using Newtonsoft.Json.Linq;
 
 namespace Kore.Web.Areas.Admin.Plugins.Controllers
 {
@@ -39,15 +39,46 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
             return PartialView("Kore.Web.Areas.Admin.Plugins.Views.Plugin.Index");
         }
 
+        [Route("get-translations")]
+        public JsonResult GetTranslations()
+        {
+            string json = string.Format(
+@"{{
+    Install: '{0}',
+    InstallPluginSuccess: '{1}',
+    InstallPluginError: '{2}',
+    Uninstall: '{3}',
+    UninstallPluginSuccess: '{4}',
+    UninstallPluginError: '{5}',
+
+    Columns: {{
+        Group: '{6}',
+        PluginInfo: '{7}',
+    }}
+}}",
+   T(KoreWebLocalizableStrings.General.Install),
+   T(KoreWebLocalizableStrings.Plugins.InstallPluginSuccess),
+   T(KoreWebLocalizableStrings.Plugins.InstallPluginError),
+   T(KoreWebLocalizableStrings.General.Uninstall),
+   T(KoreWebLocalizableStrings.Plugins.UninstallPluginSuccess),
+   T(KoreWebLocalizableStrings.Plugins.UninstallPluginError),
+   T(KoreWebLocalizableStrings.Plugins.Model.Group),
+   T(KoreWebLocalizableStrings.Plugins.Model.PluginInfo));
+
+            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+        }
+
         [Compress]
+        [HttpPost]
         [Route("install/{systemName}")]
-        public ActionResult Install(string systemName)
+        public JsonResult Install(string systemName)
         {
             systemName = systemName.Replace('-', '.');
 
             if (!CheckPermission(PluginsPermissions.ManagePlugins))
             {
-                return new HttpUnauthorizedResult();
+                return Json(new { Success = false, Message = "Unauthorized" });
+                //return new HttpUnauthorizedResult();
             }
 
             try
@@ -58,13 +89,16 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
                 if (pluginDescriptor == null)
                 {
                     //No plugin found with the specified id
-                    return RedirectToAction("Index");
+                    return Json(new { Success = false, Message = "Plugin Not Found" });
+                    //return RedirectToAction("Index");
                 }
 
                 //check whether plugin is not installed
                 if (pluginDescriptor.Installed)
                 {
-                    return RedirectToAction("Index");
+
+                    return Json(new { Success = false, Message = "Plugin Not Installed" });
+                    //return RedirectToAction("Index");
                 }
 
                 //install plugin
@@ -76,23 +110,24 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
             catch (Exception x)
             {
                 Logger.Error(x.Message, x);
-
-                //TODO
-                //ErrorNotification(x);
+                return Json(new { Success = false, Message = x.GetBaseException().Message });
             }
 
-            return RedirectToAction("Index");
+            return Json(new { Success = true, Message = "Successfully installed the specified plugin." });
+            //return RedirectToAction("Index");
         }
 
         [Compress]
+        [HttpPost]
         [Route("uninstall/{systemName}")]
-        public ActionResult Uninstall(string systemName)
+        public JsonResult Uninstall(string systemName)
         {
             systemName = systemName.Replace('-', '.');
 
             if (!CheckPermission(PluginsPermissions.ManagePlugins))
             {
-                return new HttpUnauthorizedResult();
+                return Json(new { Success = false, Message = "Unauthorized" });
+                //return new HttpUnauthorizedResult();
             }
 
             try
@@ -103,13 +138,15 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
                 if (pluginDescriptor == null)
                 {
                     //No plugin found with the specified id
-                    return RedirectToAction("Index");
+                    return Json(new { Success = false, Message = "Plugin Not Found" });
+                    //return RedirectToAction("Index");
                 }
 
                 //check whether plugin is installed
                 if (!pluginDescriptor.Installed)
                 {
-                    return RedirectToAction("Index");
+                    return Json(new { Success = false, Message = "Plugin Not Installed" });
+                    //return RedirectToAction("Index");
                 }
 
                 //uninstall plugin
@@ -121,12 +158,11 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
             catch (Exception x)
             {
                 Logger.Error(x.Message, x);
-
-                //TODO
-                //ErrorNotification(x);
+                return Json(new { Success = false, Message = x.GetBaseException().Message });
             }
 
-            return RedirectToAction("Index");
+            return Json(new { Success = true, Message = "Successfully uninstalled the specified plugin." });
+            //return RedirectToAction("Index");
         }
     }
 }

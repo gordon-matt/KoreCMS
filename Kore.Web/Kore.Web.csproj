@@ -233,6 +233,7 @@
     <Compile Include="Indexing\Services\IndexingStatus.cs" />
     <Compile Include="Indexing\Services\IndexingTaskExecutor.cs" />
     <Compile Include="Indexing\Services\ISearchService.cs" />
+    <Compile Include="Infrastructure\DurandalRouteProvider.cs" />
     <Compile Include="Infrastructure\IDurandalRouteProvider.cs" />
     <Compile Include="Infrastructure\IRequireJSConfigProvider.cs" />
     <Compile Include="Infrastructure\ResourceBundleRegistrar.cs" />
@@ -557,7 +558,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Membership\Scripts\users.js" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\Admin\Indexing\Scripts\indexing.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

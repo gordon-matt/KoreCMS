@@ -2,20 +2,10 @@
 @using Kore.Web.Mvc.KoreUI
 
 @{
-    Layout = KoreWebConstants.DefaultAdminLayoutPath;
-
-    Style.IncludeBundle("kendo-ui");
-
-    Script.IncludeBundle("kendo-ui");
-    Script.IncludeBundle("knockout");
-    Script.IncludeBundle("notify");
-
-    Script.IncludeBundle("kore/common");
-    Script.IncludeBundle("kore/section-switching");
-    Script.IncludeBundle("kore-web/log");
-
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
+
+@Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
 
 <div id="grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -28,10 +18,8 @@
     <div class="clearfix"></div>
     <br />
 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="@rtlClass">
-            <div id="Grid"></div>
-        </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
+        <div id="Grid"></div>
     </div>
 </div>
 
@@ -95,26 +83,3 @@
         <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
     </div>
 </div>
-
-@section scripts {
-    <script type="text/javascript">
-        var gridPageSize = @SiteSettings.DefaultGridPageSize;
-        var translations = {
-            ClearConfirm: '@T(KoreWebLocalizableStrings.Log.ClearConfirm).Text',
-            ClearError: '@T(KoreWebLocalizableStrings.Log.ClearError).Text',
-            ClearSuccess: '@T(KoreWebLocalizableStrings.Log.ClearSuccess).Text',
-            Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
-            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
-            DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',
-            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text',
-            GetRecordError: '@T(KoreWebLocalizableStrings.General.GetRecordError).Text',
-            View: '@T(KoreWebLocalizableStrings.General.View).Text',
-
-            Columns: {
-                EventLevel: '@T(KoreWebLocalizableStrings.Log.Model.EventLevel).Text',
-                EventMessage: '@T(KoreWebLocalizableStrings.Log.Model.EventMessage).Text',
-                EventDateTime: '@T(KoreWebLocalizableStrings.Log.Model.EventDateTime).Text'
-            }
-        }
-    </script>
-}

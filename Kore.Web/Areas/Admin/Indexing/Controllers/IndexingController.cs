@@ -51,7 +51,7 @@ namespace Kore.Web.Areas.Admin.Indexing.Controllers
             }
 
             ViewBag.Title = T(KoreWebLocalizableStrings.Indexing.Title);
-            return View("Kore.Web.Areas.Admin.Indexing.Views.Indexing.Index", indexEntry);
+            return PartialView("Kore.Web.Areas.Admin.Indexing.Views.Indexing.Index", indexEntry);
         }
 
         [HttpPost]
@@ -65,7 +65,7 @@ namespace Kore.Web.Areas.Admin.Indexing.Controllers
 
             indexingService.RebuildIndex(KoreWebConstants.Indexing.DefaultIndexName);
 
-            return RedirectToAction("Index");
+            return new EmptyResult();
         }
     }
 }

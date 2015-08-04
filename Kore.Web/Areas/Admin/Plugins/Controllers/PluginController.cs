@@ -36,7 +36,7 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
             ViewBag.Title = T(KoreWebLocalizableStrings.Plugins.Title);
             ViewBag.SubTitle = T(KoreWebLocalizableStrings.Plugins.ManagePlugins);
 
-            return View("Kore.Web.Areas.Admin.Plugins.Views.Plugin.Index");
+            return PartialView("Kore.Web.Areas.Admin.Plugins.Views.Plugin.Index");
         }
 
         [Compress]

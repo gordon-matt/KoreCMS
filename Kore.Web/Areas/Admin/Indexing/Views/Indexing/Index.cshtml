@@ -55,10 +55,10 @@
                 break;
         }
     }
-    <form method="post" action="@Url.Action("Rebuild")">
+    <form role="form">
         <div class="form-group">
             <label>@T(KoreWebLocalizableStrings.Indexing.RebuildForFreshStart)</label><br />
-            <button class="btn btn-primary" type="submit">
+            <button class="btn btn-primary" data-bind="click: rebuild">
                 <i class="kore-icon kore-icon-refresh"></i>&nbsp;@T(KoreWebLocalizableStrings.Indexing.Rebuild)
             </button>
         </div>

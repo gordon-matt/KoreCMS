@@ -1,43 +1,13 @@
 ﻿@using Kore.Web
 
 @{
-    Layout = KoreWebConstants.DefaultAdminLayoutPath;
-
-    Style.IncludeBundle("kendo-ui");
-
-    Script.IncludeBundle("kendo-ui");
-    Script.IncludeBundle("notify");
-
-    Script.IncludeBundle("kore-web/themes");
-
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
 
+@Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
+
 <div id="grid-section" class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="@rtlClass">
-            <div id="Grid"></div>
-        </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
+        <div id="Grid"></div>
     </div>
 </div>
-
-@section scripts {
-    <script type="text/javascript">
-        var gridPageSize = @SiteSettings.DefaultGridPageSize;
-        var translations = {
-            Set: '@T(KoreWebLocalizableStrings.General.Set).Text',
-            SetDesktopThemeError: '@T(KoreWebLocalizableStrings.Themes.SetDesktopThemeError).Text',
-            SetDesktopThemeSuccess: '@T(KoreWebLocalizableStrings.Themes.SetDesktopThemeSuccess).Text',
-            SetMobileThemeError: '@T(KoreWebLocalizableStrings.Themes.SetMobileThemeError).Text',
-            SetMobileThemeSuccess: '@T(KoreWebLocalizableStrings.Themes.SetMobileThemeSuccess).Text',
-
-            Columns: {
-                IsDefaultDesktopTheme: '@T(KoreWebLocalizableStrings.Themes.Model.IsDefaultDesktopTheme).Text',
-                IsDefaultMobileTheme: '@T(KoreWebLocalizableStrings.Themes.Model.IsDefaultMobileTheme).Text',
-                MobileTheme: '@T(KoreWebLocalizableStrings.Themes.Model.MobileTheme).Text',
-                PreviewImageUrl: '@T(KoreWebLocalizableStrings.Themes.Model.PreviewImageUrl).Text',
-                SupportRtl: '@T(KoreWebLocalizableStrings.Themes.Model.SupportRtl).Text'
-            }
-        };
-    </script>
-}

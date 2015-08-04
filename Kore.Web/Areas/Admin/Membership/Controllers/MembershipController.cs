@@ -45,7 +45,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers
             ViewBag.SelectList = membershipService.GetAllRoles().ToSelectList(v => v.Id.ToString(), t => t.Name, T(KoreWebLocalizableStrings.Membership.AllRolesSelectListOption));
 
             ViewBag.InitialView = "User";
-            return View("Kore.Web.Areas.Admin.Membership.Views.Membership.Index");
+            return PartialView("Kore.Web.Areas.Admin.Membership.Views.Membership.Index");
         }
 
         [Compress]
@@ -64,7 +64,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers
             ViewBag.SubTitle = T(KoreWebLocalizableStrings.Membership.Roles);
 
             ViewBag.InitialView = "Role";
-            return View("Kore.Web.Areas.Admin.Membership.Views.Membership.Index");
+            return PartialView("Kore.Web.Areas.Admin.Membership.Views.Membership.Index");
         }
     }
 }

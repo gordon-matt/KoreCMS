@@ -5,24 +5,13 @@
 @using LocalizableStrings = Kore.Web.Common.LocalizableStrings;
 
 @{
-    Layout = KoreWebConstants.DefaultAdminLayoutPath;
-    
-    Style.IncludeBundle("kendo-ui");
-
-    Script.IncludeBundle("kendo-ui");
-    Script.IncludeBundle("knockout");
-    Script.IncludeBundle("knockout-mapping");
-    Script.IncludeBundle("notify");
-    
-    Script.IncludeBundle("kore/jqueryval");
-    Script.IncludeBundle("kore/section-switching");
-    Script.IncludeBundle("kore-common/regions");
-
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
     var assembly = System.Reflection.Assembly.GetAssembly(typeof(Kore.Web.Common.Constants));
     
     var regionSettings = (IEnumerable<IRegionSettings>)ViewBag.RegionSettings;
 }
+
+@Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
 
 <div id="main-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -268,33 +257,3 @@
         }
     </article>
 </div>
-
-@section scripts {
-    <script type="text/javascript">
-        var gridPageSize = @SiteSettings.DefaultGridPageSize;
-        var translations = {
-            Create: '@T(KoreWebLocalizableStrings.General.Create).Text',
-            Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
-            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
-            DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',
-            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text',
-            Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
-            GetRecordError: '@T(KoreWebLocalizableStrings.General.GetRecordError).Text',
-            InsertRecordError: '@T(KoreWebLocalizableStrings.General.InsertRecordError).Text',
-            InsertRecordSuccess: '@T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text',
-            Settings: '@T(KoreWebLocalizableStrings.General.Settings).Text',
-            UpdateRecordError: '@T(KoreWebLocalizableStrings.General.UpdateRecordError).Text',
-            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text',
-            Cities: '@T(LocalizableStrings.Regions.Cities).Text',
-            States: '@T(LocalizableStrings.Regions.States).Text',
-
-            Columns:{
-                Name: '@T(LocalizableStrings.Regions.Model.Name).Text',
-            }
-        }
-
-        $(document).ready(function() {
-            currentSection = $("#main-section");
-        });
-    </script>
-}

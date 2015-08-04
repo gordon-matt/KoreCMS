@@ -6,6 +6,7 @@ using Kore.Web.Common.Areas.Admin.Regions.Domain;
 using Kore.Web.Common.Areas.Admin.Regions.Services;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
+using Newtonsoft.Json.Linq;
 
 namespace Kore.Web.Common.Areas.Admin.Regions.Controllers
 {
@@ -39,7 +40,49 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers
             ViewBag.RegionSettings = regionSettings.Value;
 
             //var model = regionService.Value.GetContinents(true).Select(x => (RegionModel)x);
-            return View("Kore.Web.Common.Areas.Admin.Regions.Views.Region.Index");
+            return PartialView("Kore.Web.Common.Areas.Admin.Regions.Views.Region.Index");
+        }
+
+        [Route("get-translations")]
+        public JsonResult GetTranslations()
+        {
+            string json = string.Format(
+@"{{
+    Create: '{0}',
+    Delete: '{1}',
+    DeleteRecordConfirm: '{2}',
+    DeleteRecordError: '{3}',
+    DeleteRecordSuccess: '{4}',
+    Edit: '{5}',
+    GetRecordError: '{6}',
+    InsertRecordError: '{7}',
+    InsertRecordSuccess: '{8}',
+    Settings: '{9}',
+    UpdateRecordError: '{10}',
+    UpdateRecordSuccess: '{11}',
+    Cities: '{12}',
+    States: '{13}',
+    Columns: {{
+        Name: '{14}'
+    }}
+}}",
+   T(KoreWebLocalizableStrings.General.Create),
+   T(KoreWebLocalizableStrings.General.Delete),
+   T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord),
+   T(KoreWebLocalizableStrings.General.DeleteRecordError),
+   T(KoreWebLocalizableStrings.General.DeleteRecordSuccess),
+   T(KoreWebLocalizableStrings.General.Edit),
+   T(KoreWebLocalizableStrings.General.GetRecordError),
+   T(KoreWebLocalizableStrings.General.InsertRecordError),
+   T(KoreWebLocalizableStrings.General.InsertRecordSuccess),
+   T(KoreWebLocalizableStrings.General.Settings),
+   T(KoreWebLocalizableStrings.General.UpdateRecordError),
+   T(KoreWebLocalizableStrings.General.UpdateRecordSuccess),
+   T(LocalizableStrings.Regions.Cities),
+   T(LocalizableStrings.Regions.States),
+   T(LocalizableStrings.Regions.Model.Name));
+
+            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
         }
 
         [Compress]

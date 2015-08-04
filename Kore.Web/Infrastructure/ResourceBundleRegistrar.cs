@@ -15,9 +15,7 @@ namespace Kore.Web.Infrastructure
                 .Include("~/Scripts/Kore.Web.Areas.Admin.Log.Scripts.index.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/kore-web/membership")
-                .Include("~/Scripts/Kore.Web.Areas.Admin.Membership.Scripts.membership.js")
-                .Include("~/Scripts/Kore.Web.Areas.Admin.Membership.Scripts.roles.js")
-                .Include("~/Scripts/Kore.Web.Areas.Admin.Membership.Scripts.users.js"));
+                .Include("~/Scripts/Kore.Web.Areas.Admin.Membership.Scripts.membership.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/kore-web/plugins")
                 .Include("~/Scripts/Kore.Web.Areas.Admin.Plugins.Scripts.index.js"));

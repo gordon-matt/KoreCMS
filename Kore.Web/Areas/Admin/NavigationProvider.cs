@@ -25,20 +25,10 @@ namespace Kore.Web.Areas.Admin
 
         private void BuildMembershipMenu(NavigationItemBuilder builder)
         {
-            builder.IconCssClass("kore-icon kore-icon-membership");
-            builder.Permission(StandardPermissions.FullAccess);
-
-            builder.Add(T(KoreWebLocalizableStrings.Membership.Users), "1", item => item
-                .Url("#membership/users")
-                //.Action("Users", "Membership", new { area = KoreWebConstants.Areas.Membership })
-                .IconCssClass("kore-icon kore-icon-users")
-                .Permission(StandardPermissions.FullAccess));
-
-            builder.Add(T(KoreWebLocalizableStrings.Membership.Roles), "2", item => item
-                .Url("#membership/roles")
-                //.Action("Roles", "Membership", new { area = KoreWebConstants.Areas.Membership })
-                .IconCssClass("kore-icon kore-icon-roles")
-                .Permission(StandardPermissions.FullAccess));
+            builder
+                .Url("#membership")
+                .IconCssClass("kore-icon kore-icon-membership")
+                .Permission(StandardPermissions.FullAccess);
         }
 
         private void BuildConfigurationMenu(NavigationItemBuilder builder)

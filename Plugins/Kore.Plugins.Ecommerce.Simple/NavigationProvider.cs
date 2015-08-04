@@ -16,7 +16,8 @@ namespace Kore.Plugins.Ecommerce.Simple
         {
             builder.Add(T(Kore.Web.KoreWebLocalizableStrings.Plugins.Title),
                 menu => menu.Add(T(LocalizableStrings.Store), "5", item => item
-                    .Action("Index", "AdminHome", new { area = Constants.RouteArea })
+                    .Url("#plugins/ecommerce/simple")
+                    //.Action("Index", "AdminHome", new { area = Constants.RouteArea })
                     .IconCssClass("kore-icon kore-icon-shopping-cart")
                     .Permission(SimpleCommercePermissions.ViewMenu)));
         }

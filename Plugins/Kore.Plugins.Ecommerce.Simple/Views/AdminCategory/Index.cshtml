@@ -4,24 +4,10 @@
 @using Kore.Web.Mvc.KoreUI
 
 @{
-    Layout = KoreWebConstants.DefaultAdminLayoutPath;
-
-    Style.IncludeBundle("kendo-ui");
-
-    Script.IncludeBundle("kendo-ui");
-    Script.IncludeBundle("knockout");
-    Script.IncludeBundle("knockout-mapping");
-    Script.IncludeBundle("notify");
-    Script.IncludeBundle("tinymce");
-
-    Script.IncludeBundle("kore/common");
-    Script.IncludeBundle("kore/section-switching");
-    Script.IncludeBundle("kore/jqueryval");
-    Script.IncludeBundle("kore/tinymce");
-    Script.IncludePluginScript("category-admin.js");
-
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
+
+@Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
 
 <style type="text/css">
     .modal-dialog {
@@ -32,18 +18,18 @@
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="pull-left">
-            <a data-bind="click: create" class="btn btn-primary">
+            <a data-bind="click: category.create" class="btn btn-primary">
                 <i class="kore-icon kore-icon-add"></i>
                 @T(KoreWebLocalizableStrings.General.Create)
             </a>
         </div>
         <div class="pull-right">
-            <div id="toolbar" data-bind="visible: showToolbar">
+            <div id="toolbar" data-bind="visible: category.showToolbar">
                 <div class="btn-group pull-right">
-                    <a onclick="viewModel.delete()" class="btn btn-danger">@T(KoreWebLocalizableStrings.General.Delete).Text</a>
-                    @*<a data-bind="click: translate" class="btn btn-primary">@T(KoreCmsLocalizableStrings.Pages.Translations).Text</a>
-                    <a data-bind="click: toggleEnabled" class="btn btn-default">@T(KoreWebLocalizableStrings.General.Toggle).Text</a>*@
-                    <a data-bind="click: showProducts" class="btn btn-default">
+                    <a onclick="viewModel.category.delete()" class="btn btn-danger">@T(KoreWebLocalizableStrings.General.Delete).Text</a>
+                    @*<a data-bind="click: category.translate" class="btn btn-primary">@T(KoreCmsLocalizableStrings.Pages.Translations).Text</a>
+                    <a data-bind="click: category.toggleEnabled" class="btn btn-default">@T(KoreWebLocalizableStrings.General.Toggle).Text</a>*@
+                    <a data-bind="click: category.showProducts" class="btn btn-default">
                         <i class="kore-icon kore-icon-tags"></i>
                         @T(LocalizableStrings.Products)
                     </a>
@@ -93,13 +79,13 @@
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <div class="form-group">
                                                 @Html.Label("Name", T(LocalizableStrings.CategoryModel.Name), new { @class = "control-label" })
-                                                @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
+                                                @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: category.name" })
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <div class="form-group">
                                                 @Html.Label("Slug", T(LocalizableStrings.CategoryModel.Slug), new { @class = "control-label" })
-                                                @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: slug" })
+                                                @Html.TextBox("Slug", null, new { @class = "form-control", data_bind = "value: category.slug" })
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -109,17 +95,17 @@
                                                     <span class="input-group-addon">
                                                         <i class="kore-icon kore-icon-sort-numeric-asc"></i>
                                                     </span>
-                                                    @Html.TextBox("Order", null, new { @class = "form-control", data_bind = "value: order" })
+                                                    @Html.TextBox("Order", null, new { @class = "form-control", data_bind = "value: category.order" })
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
                                             <div class="form-group">
-                                                <div data-bind="if: imageUrl">
-                                                    <img data-bind="attr: { src: imageUrl }" class="img-responsive img-thumbnail" />
+                                                <div data-bind="if: category.imageUrl">
+                                                    <img data-bind="attr: { src: category.imageUrl }" class="img-responsive img-thumbnail" />
                                                 </div>
-                                                <div data-bind="ifnot: imageUrl">
+                                                <div data-bind="ifnot: category.imageUrl">
                                                     <img src="http://placehold.it/320x240&text=Image+Missing" class="img-responsive img-thumbnail" />
                                                 </div>
                                             </div>
@@ -128,7 +114,7 @@
                                             <div class="form-group">
                                                 @Html.Label("ImageUrl", T(LocalizableStrings.CategoryModel.ImageUrl), new { @class = "control-label" })
                                                 <div class="input-group">
-                                                    @Html.TextBox("ImageUrl", null, new { @class = "form-control", data_bind = "value: imageUrl" })
+                                                    @Html.TextBox("ImageUrl", null, new { @class = "form-control", data_bind = "value: category.imageUrl" })
                                                     <span class="input-group-addon">
                                                         <a data-toggle="modal" href="javascript:void(0);" data-target="#categoryImageModal">
                                                             <i class="kore-icon kore-icon-search"></i>
@@ -140,25 +126,25 @@
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <div class="form-group">
                                                 @Html.Label("Description", T(LocalizableStrings.CategoryModel.Description), new { @class = "control-label" })
-                                                @Html.TextArea("Description", null, new { @class = "form-control", data_bind = "value: description" })
+                                                @Html.TextArea("Description", null, new { @class = "form-control", data_bind = "value: category.description" })
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <div class="form-group">
                                                 @Html.Label("MetaKeywords", T(LocalizableStrings.CategoryModel.MetaKeywords), new { @class = "control-label" })
-                                                @Html.TextBox("MetaKeywords", null, new { @class = "form-control", data_bind = "value: metaKeywords" })
+                                                @Html.TextBox("MetaKeywords", null, new { @class = "form-control", data_bind = "value: category.metaKeywords" })
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <div class="form-group">
                                                 @Html.Label("MetaDescription", T(LocalizableStrings.CategoryModel.MetaDescription), new { @class = "control-label" })
-                                                @Html.TextBox("MetaDescription", null, new { @class = "form-control", data_bind = "value: metaDescription" })
+                                                @Html.TextBox("MetaDescription", null, new { @class = "form-control", data_bind = "value: category.metaDescription" })
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <div class="form-group pull-right">
-                                                <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                                                <button type="button" class="btn btn-primary" data-bind="click: save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                                                <button type="button" class="btn btn-default" data-bind="click: category.cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
+                                                <button type="button" class="btn btn-primary" data-bind="click: category.save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -187,7 +173,7 @@
                 <div id="product-form-section" class="row" style="display:none">
                     <div data-bind="visible: product.showToolbar">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <a data-bind="attr: { href: '/admin/blocks/entity-type-content-blocks/Ecommerce-Simple-Product/' + product.id() }" class="btn btn-info" title="@T(KoreCmsLocalizableStrings.ContentBlocks.Title).Text">
+                            <a data-bind="attr: { href: '#blocks/entity-type-content-blocks/Ecommerce-Simple-Product/' + product.id() }" class="btn btn-info" title="@T(KoreCmsLocalizableStrings.ContentBlocks.Title).Text">
                                 <i class="kore-icon kore-icon-content-blocks"></i> @T(KoreCmsLocalizableStrings.ContentBlocks.Title)
                             </a>
                         </div>
@@ -322,7 +308,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" onclick="dismissModal('categoryImageModal');" aria-hidden="true">&times;</button>
+                <button type="button" class="close" onclick="viewModel.dismissModal('categoryImageModal');" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Select Image</h4>
             </div>
             <div class="modal-body">
@@ -336,7 +322,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" onclick="dismissModal('productImageModal');" aria-hidden="true">&times;</button>
+                <button type="button" class="close" onclick="viewModel.dismissModal('productImageModal');" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Select Image</h4>
             </div>
             <div class="modal-body">
@@ -346,39 +332,6 @@
     </div>
 </div>
 
-@section scripts {
-    <script type="text/javascript">
-        var modalDismissed = false;
-        
-        function dismissModal(modalId) {
-            modalDismissed = true;
-            $('#' + modalId).modal('hide');
-        };
-
-        var gridPageSize = @SiteSettings.DefaultGridPageSize;
-        var translations = {
-            CircularRelationshipError: '@T(LocalizableStrings.CircularRelationshipError).Text',
-            Create: '@T(KoreWebLocalizableStrings.General.Create).Text',
-            Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
-            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
-            DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',
-            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text',
-            Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
-            GetRecordError: '@T(KoreWebLocalizableStrings.General.GetRecordError).Text',
-            InsertRecordError: '@T(KoreWebLocalizableStrings.General.InsertRecordError).Text',
-            InsertRecordSuccess: '@T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text',
-            UpdateRecordError: '@T(KoreWebLocalizableStrings.General.UpdateRecordError).Text',
-            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text',
-
-            Columns: {
-                Product: {
-                    Name: '@T(LocalizableStrings.ProductModel.Name).Text',
-                    Price: '@T(LocalizableStrings.ProductModel.Price).Text'
-                }
-            }
-        }
-    </script>
-    <script id="treeview-template" type="text/kendo-ui-template">
-        <a href="javascript:void(0)" onclick="viewModel.edit('#=item.Id#')">#= item.Name #</a>
-    </script>
-}
+<script id="treeview-template" type="text/kendo-ui-template">
+    <a href="javascript:void(0)" onclick="viewModel.category.edit('#=item.Id#')">#= item.Name #</a>
+</script>

@@ -23,7 +23,7 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers
 
             ViewBag.Title = T(LocalizableStrings.RoyalVideoPlayer);
 
-            return View();
+            return PartialView();
         }
     }
 }

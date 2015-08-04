@@ -23,7 +23,7 @@ namespace Kore.Plugins.Widgets.FullCalendar.Controllers
 
             ViewBag.Title = T(LocalizableStrings.FullCalendar);
 
-            return View();
+            return PartialView();
         }
     }
 }

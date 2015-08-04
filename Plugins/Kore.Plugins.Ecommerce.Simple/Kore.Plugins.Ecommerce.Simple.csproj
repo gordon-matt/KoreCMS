@@ -157,6 +157,7 @@
     <Compile Include="Extensions\StyleRegisterExtensions.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="Infrastructure\AutoMenuProvider.cs" />
+    <Compile Include="Infrastructure\DurandalRouteProvider.cs" />
     <Compile Include="Infrastructure\LanguagePackInvariant.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="Infrastructure\LocationFormatProvider.cs" />
@@ -289,10 +290,13 @@
     <Content Include="Scripts\cart.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\category-admin.js">
+    <Content Include="Scripts\admin-categories.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\order-admin.js">
+    <Content Include="Scripts\admin-home.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\admin-orders.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\store.js">

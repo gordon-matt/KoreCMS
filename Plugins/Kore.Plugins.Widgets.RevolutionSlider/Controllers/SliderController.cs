@@ -23,7 +23,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Controllers
 
             ViewBag.Title = T(LocalizableStrings.RevolutionSlider);
 
-            return View();
+            return PartialView();
         }
     }
 }

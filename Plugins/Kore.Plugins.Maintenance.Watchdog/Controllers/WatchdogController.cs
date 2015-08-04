@@ -30,7 +30,8 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers
 
             ViewBag.AllowAddRemove = settings.AllowAddRemove;
             ViewBag.OnlyShowWatched = settings.OnlyShowWatched;
-            return View();
+
+            return PartialView();
         }
     }
 }

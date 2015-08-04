@@ -27,6 +27,8 @@ namespace Kore.Plugins.Ecommerce.Simple.Infrastructure
                 return;
             }
 
+            builder.RegisterType<DurandalRouteProvider>().As<IDurandalRouteProvider>().SingleInstance();
+
             builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();
 
             builder.RegisterType<SimpleCommercePermissions>().As<IPermissionProvider>().SingleInstance();

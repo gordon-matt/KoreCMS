@@ -20,7 +20,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
 
             ViewBag.Title = T(LocalizableStrings.Store);
 
-            return View();
+            return PartialView();
         }
     }
 }

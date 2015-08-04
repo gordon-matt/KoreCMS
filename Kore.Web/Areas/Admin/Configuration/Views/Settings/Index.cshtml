@@ -2,28 +2,14 @@
 @using Kore.Web.Mvc.KoreUI
 
 @{
-    Layout = KoreWebConstants.DefaultAdminLayoutPath;
-    
-    Style.IncludeBundle("kendo-ui");
-
-    Script.IncludeBundle("kendo-ui");
-    Script.IncludeBundle("knockout");
-    Script.IncludeBundle("knockout-mapping");
-    Script.IncludeBundle("notify");
-
-    Script.IncludeBundle("kore/common");
-    Script.IncludeBundle("kore/jqueryval");
-    Script.IncludeBundle("kore/section-switching");
-    Script.IncludeBundle("kore-web/settings");
-
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
 
+@Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
+
 <div id="grid-section" class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="@rtlClass">
-            <div id="Grid"></div>
-        </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 @rtlClass">
+        <div id="Grid"></div>
     </div>
 </div>
 
@@ -46,21 +32,3 @@
         }
     </article>
 </div>
-
-@section scripts {
-    <script type="text/javascript">
-        'use strict'
-
-        var gridPageSize = @SiteSettings.DefaultGridPageSize;
-        var translations = {
-            Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
-            GetRecordError: '@T(KoreWebLocalizableStrings.General.GetRecordError).Text',
-            UpdateRecordError: '@T(KoreWebLocalizableStrings.General.UpdateRecordError).Text',
-            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text',
-
-            Columns: {
-                Name: '@T(KoreWebLocalizableStrings.Settings.Model.Name).Text'
-            }
-        }
-    </script>
-}

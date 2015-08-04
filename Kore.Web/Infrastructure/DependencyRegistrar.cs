@@ -186,6 +186,8 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<ThemeUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
 
             builder.RegisterType<LogService>().As<ILogService>().InstancePerDependency();
+
+            builder.RegisterType<DurandalRouteProvider>().As<IDurandalRouteProvider>().SingleInstance();
         }
 
         private static RequestContext RequestContextFactory(IComponentContext context)

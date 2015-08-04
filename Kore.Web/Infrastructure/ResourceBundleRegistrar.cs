@@ -8,6 +8,9 @@ namespace Kore.Web.Infrastructure
 
         public void Register(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/js/kore-web/indexing")
+                .Include("~/Scripts/Kore.Web.Areas.Admin.Indexing.Scripts.indexing.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/kore-web/log")
                 .Include("~/Scripts/Kore.Web.Areas.Admin.Log.Scripts.index.js"));
 

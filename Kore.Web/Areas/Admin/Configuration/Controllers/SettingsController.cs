@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Kore.Web.Configuration;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
+using Newtonsoft.Json.Linq;
 
 namespace Kore.Web.Areas.Admin.Configuration.Controllers
 {
@@ -42,7 +43,29 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers
             ViewBag.Title = T(KoreWebLocalizableStrings.General.Configuration);
             ViewBag.SubTitle = T(KoreWebLocalizableStrings.General.Settings);
 
-            return View("Kore.Web.Areas.Admin.Configuration.Views.Settings.Index");
+            return PartialView("Kore.Web.Areas.Admin.Configuration.Views.Settings.Index");
+        }
+
+        [Route("get-translations")]
+        public JsonResult GetTranslations()
+        {
+            string json = string.Format(
+@"{{
+    Edit: '{0}',
+    GetRecordError: '{1}',
+    UpdateRecordError: '{2}',
+    UpdateRecordSuccess: '{3}',
+    Columns: {{
+        Name: '{4}',
+    }}
+}}",
+   T(KoreWebLocalizableStrings.General.Edit),
+   T(KoreWebLocalizableStrings.General.GetRecordError),
+   T(KoreWebLocalizableStrings.General.UpdateRecordError),
+   T(KoreWebLocalizableStrings.General.UpdateRecordSuccess),
+   T(KoreWebLocalizableStrings.Settings.Model.Name));
+
+            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
         }
 
         [Compress]

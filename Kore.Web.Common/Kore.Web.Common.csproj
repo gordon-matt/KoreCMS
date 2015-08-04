@@ -154,6 +154,8 @@
     <Compile Include="Html\Metro\TileRow.cs" />
     <Compile Include="Html\Metro\Tiles.cs" />
     <Compile Include="Html\Metro\TilesBuilder.cs" />
+    <Compile Include="Infrastructure\DurandalRouteProvider.cs" />
+    <Compile Include="Infrastructure\RequireJSConfigProvider.cs" />
     <Compile Include="Infrastructure\ResourceBundleRegistrar.cs" />
     <Compile Include="Permissions.cs" />
     <Compile Include="NavigationProvider.cs" />

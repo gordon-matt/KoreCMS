@@ -7,23 +7,10 @@
 @using WebEnumExtensions = Kore.Web.EnumExtensions
 
 @{
-    Layout = KoreWebConstants.DefaultAdminLayoutPath;
-
-    Style.IncludeBundle("kendo-ui");
-
-    Script.IncludeBundle("kendo-ui");
-    Script.IncludeBundle("breeze");
-    Script.IncludeBundle("knockout");
-    Script.IncludeBundle("notify");
-
-    //Script.IncludeBundle("third-party/bootpag");
-    Script.IncludeBundle("kore/common");
-    Script.IncludeBundle("kore/section-switching");
-    Script.IncludeBundle("kore/jqueryval");
-    Script.IncludePluginScript("index.js");
-
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
+
+@Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
 
 <style type="text/css">
     .modal-dialog {
@@ -768,97 +755,3 @@
         </div>
     </div>
 </div>
-
-@section scripts {
-    <script type="text/javascript">
-        var modalDismissed = false;
-        
-        function dismissModal(modalId) {
-            modalDismissed = true;
-            $('#' + modalId).modal('hide');
-        };
-
-        $(document).ready(function () {
-            $('#imageUrlModal').on('hidden.bs.modal', function () {
-                if (!modalDismissed) {
-                    var url = $('#ImageUrl').val();
-                    url = "/Media/Uploads/" + url;
-                    viewModel.slide.imageUrl(url);
-                }
-                modalDismissed = false;
-            });
-            $('#videoPosterModal').on('hidden.bs.modal', function () {
-                if (!modalDismissed) {
-                    var url = $('#VideoPoster').val();
-                    url = "/Media/Uploads/" + url;
-                    viewModel.layer.videoPoster(url);
-                }
-                modalDismissed = false;
-            });
-            $('#videoMp4Modal').on('hidden.bs.modal', function () {
-                if (!modalDismissed) {
-                    var url = $('#VideoMp4').val();
-                    url = "/Media/Uploads/" + url;
-                    viewModel.layer.videoMp4(url);
-                }
-                modalDismissed = false;
-            });
-            $('#videoWebMModal').on('hidden.bs.modal', function () {
-                if (!modalDismissed) {
-                    var url = $('#VideoWebM').val();
-                    url = "/Media/Uploads/" + url;
-                    viewModel.layer.videoWebM(url);
-                }
-                modalDismissed = false;
-            });
-            $('#videoOgvModal').on('hidden.bs.modal', function () {
-                if (!modalDismissed) {
-                    var url = $('#VideoOgv').val();
-                    url = "/Media/Uploads/" + url;
-                    viewModel.layer.videoOgv(url);
-                }
-                modalDismissed = false;
-            });
-        });
-
-        var gridPageSize = @SiteSettings.DefaultGridPageSize;
-        var translations = {
-            Create: '@T(KoreWebLocalizableStrings.General.Create).Text',
-            Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
-            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
-            DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',
-            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text',
-            Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
-            GetRecordError: '@T(KoreWebLocalizableStrings.General.GetRecordError).Text',
-            InsertRecordError: '@T(KoreWebLocalizableStrings.General.InsertRecordError).Text',
-            InsertRecordSuccess: '@T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text',
-            Layers: '@T(LocalizableStrings.Layers).Text',
-            Sliders: '@T(LocalizableStrings.Sliders).Text',
-            Slides: '@T(LocalizableStrings.Slides).Text',
-            UpdateRecordError: '@T(KoreWebLocalizableStrings.General.UpdateRecordError).Text',
-            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text',
-
-            Columns:{
-                Layer: {
-                    Start: '@T(LocalizableStrings.Models.Layer.Start).Text',
-                    Speed: '@T(LocalizableStrings.Models.Layer.Speed).Text',
-                    CaptionText: '@T(LocalizableStrings.Models.Layer.CaptionText).Text',
-                    X: '@T(LocalizableStrings.Models.Layer.X).Text',
-                    Y: '@T(LocalizableStrings.Models.Layer.Y).Text'
-                },
-                Slider: {
-                    Name: '@T(LocalizableStrings.Models.Slider.Name).Text'
-                },
-                Slide: {
-                    Order: '@T(LocalizableStrings.Models.Slide.Order).Text',
-                    Title: '@T(LocalizableStrings.Models.Slide.Title).Text',
-                    Link: '@T(LocalizableStrings.Models.Slide.Link).Text',
-                }
-            }
-        }
-
-        $(document).ready(function() {
-            currentSection = $("#sliders-grid-section");
-        });
-    </script>
-}

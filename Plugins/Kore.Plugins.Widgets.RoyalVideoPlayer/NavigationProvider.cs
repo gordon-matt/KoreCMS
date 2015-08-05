@@ -16,7 +16,8 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer
         {
             builder.Add(T(Kore.Web.KoreWebLocalizableStrings.Plugins.Title),
                 menu => menu.Add(T(LocalizableStrings.RoyalVideoPlayer), "5", item => item
-                    .Action("Index", "Playlist", new { area = Constants.RouteArea })
+                    .Url("#plugins/royalvideoplayer")
+                    //.Action("Index", "Playlist", new { area = Constants.RouteArea })
                     .IconCssClass("kore-icon kore-icon-video")
                     .Permission(Permissions.Read)));
         }

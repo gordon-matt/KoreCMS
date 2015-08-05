@@ -3,22 +3,10 @@
 @using Kore.Web.Mvc.KoreUI
 
 @{
-    Layout = KoreWebConstants.DefaultAdminLayoutPath;
-
-    Style.IncludeBundle("kendo-ui");
-
-    Script.IncludeBundle("kendo-ui");
-    Script.IncludeBundle("breeze");
-    Script.IncludeBundle("knockout");
-    Script.IncludeBundle("notify");
-
-    Script.IncludeBundle("third-party/bootpag");
-    Script.IncludeBundle("kore/section-switching");
-    Script.IncludeBundle("kore/jqueryval");
-    Script.IncludePluginScript("index.js");
-
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
+
+@Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
 
 <style type="text/css">
     .thumbnail {
@@ -306,85 +294,3 @@
         </div>
     </div>
 </div>
-
-@section scripts {
-    <script type="text/javascript">
-        var modalDismissed = false;
-        
-        function dismissModal(modalId) {
-            modalDismissed = true;
-            $('#' + modalId).modal('hide');
-        };
-
-        $(document).ready(function () {
-            $('#thumbnailUrlModal').on('hidden.bs.modal', function () {
-                if (!modalDismissed) {
-                    var url = $('#ThumbnailUrl').val();
-                    url = "/Media/Uploads/" + url;
-                    viewModel.video.thumbnailUrl(url);
-                }
-                modalDismissed = false;
-            });
-            $('#videoUrlModal').on('hidden.bs.modal', function () {
-                if (!modalDismissed) {
-                    var url = $('#VideoUrl').val();
-                    url = "/Media/Uploads/" + url;
-                    viewModel.video.videoUrl(url);
-                }
-                modalDismissed = false;
-            });
-            $('#mobileVideoUrlModal').on('hidden.bs.modal', function () {
-                if (!modalDismissed) {
-                    var url = $('#MobileVideoUrl').val();
-                    url = "/Media/Uploads/" + url;
-                    viewModel.video.mobileVideoUrl(url);
-                }
-                modalDismissed = false;
-            });
-            $('#posterUrlModal').on('hidden.bs.modal', function () {
-                if (!modalDismissed) {
-                    var url = $('#PosterUrl').val();
-                    url = "/Media/Uploads/" + url;
-                    viewModel.video.posterUrl(url);
-                }
-                modalDismissed = false;
-            });
-            $('#mobilePosterUrlModal').on('hidden.bs.modal', function () {
-                if (!modalDismissed) {
-                    var url = $('#MobilePosterUrl').val();
-                    url = "/Media/Uploads/" + url;
-                    viewModel.video.mobilePosterUrl(url);
-                }
-                modalDismissed = false;
-            });
-        });
-
-        var gridPageSize = @SiteSettings.DefaultGridPageSize;
-        var translations = {
-            Create: '@T(KoreWebLocalizableStrings.General.Create).Text',
-            Delete: '@T(KoreWebLocalizableStrings.General.Delete).Text',
-            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
-            DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',
-            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text',
-            Edit: '@T(KoreWebLocalizableStrings.General.Edit).Text',
-            GetRecordError: '@T(KoreWebLocalizableStrings.General.GetRecordError).Text',
-            InsertRecordError: '@T(KoreWebLocalizableStrings.General.InsertRecordError).Text',
-            InsertRecordSuccess: '@T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text',
-            Playlists: '@T(LocalizableStrings.Playlists).Text',
-            SavePlaylistsError: '@T(LocalizableStrings.SavePlaylistsError).Text',
-            SavePlaylistsSuccess: '@T(LocalizableStrings.SavePlaylistsSuccess).Text',
-            UpdateRecordError: '@T(KoreWebLocalizableStrings.General.UpdateRecordError).Text',
-            UpdateRecordSuccess: '@T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text',
-
-            Columns:{
-                Playlist: {
-                    Name: '@T(LocalizableStrings.Models.Playlist.Name).Text'
-                },
-                Video: {
-                    ThumbnailUrl: '@T(LocalizableStrings.Models.Video.ThumbnailUrl).Text',
-                    Title: '@T(LocalizableStrings.Models.Video.Title).Text'
-                }
-            }
-        }
-    </script>
-}

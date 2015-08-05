@@ -23,6 +23,8 @@ namespace Kore.Plugins.Widgets.FullCalendar.Infrastructure
                 return;
             }
 
+            builder.RegisterType<DurandalRouteProvider>().As<IDurandalRouteProvider>().SingleInstance();
+
             builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();
 
             builder.RegisterType<FullCalendarPermissions>().As<IPermissionProvider>().SingleInstance();

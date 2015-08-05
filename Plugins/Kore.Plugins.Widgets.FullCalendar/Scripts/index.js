@@ -288,7 +288,7 @@ define(function (require) {
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a onclick="viewModel.calendarModel.showEvents(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Events + '</a>' +
+                        '<a onclick="viewModel.showEvents(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Events + '</a>' +
                         '<a onclick="viewModel.calendarModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
                         '<a onclick="viewModel.calendarModel.remove(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
                         '</div>',

@@ -131,10 +131,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\Api\ServiceInfoResultApiController.cs" />
     <Compile Include="Controllers\Api\WatchdogInstanceApiController.cs" />
     <Compile Include="Controllers\WatchdogController.cs" />
     <Compile Include="Data\Domain\WatchdogInstance.cs" />
     <Compile Include="Extensions\ScriptRegisterExtensions.cs" />
+    <Compile Include="Infrastructure\DurandalRouteProvider.cs" />
     <Compile Include="Infrastructure\LanguagePackInvariant.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="Infrastructure\LocationFormatProvider.cs" />

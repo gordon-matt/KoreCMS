@@ -587,6 +587,7 @@
 /// <reference path="tinymce/plugins/compat3x/utils/form_utils.js" />
 /// <reference path="tinymce/plugins/compat3x/utils/mctabs.js" />
 /// <reference path="tinymce/plugins/compat3x/utils/validate.js" />
+/// <reference path="../areas/admin/scripts/app/viewmodels/admin/dashboard.js" />
 /// <reference path="../areas/admin/scripts/app/viewmodels/admin/shell.js" />
  
  / / /   < r e f e r e n c e   p a t h = " b r e e z e . d e b u g . j s "   / >  

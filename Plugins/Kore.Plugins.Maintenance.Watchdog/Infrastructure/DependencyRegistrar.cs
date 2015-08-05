@@ -22,6 +22,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Infrastructure
                 return;
             }
 
+            builder.RegisterType<DurandalRouteProvider>().As<IDurandalRouteProvider>().SingleInstance();
             builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();
             builder.RegisterType<NavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<LocationFormatProvider>().As<ILocationFormatProvider>().SingleInstance();

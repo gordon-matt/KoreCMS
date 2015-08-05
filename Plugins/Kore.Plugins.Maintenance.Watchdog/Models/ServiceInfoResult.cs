@@ -3,7 +3,7 @@
 namespace Kore.Plugins.Maintenance.Watchdog.Models
 {
     [DataContract]
-    public struct ServiceInfoResult
+    public class ServiceInfoResult
     {
         [DataMember]
         public int WatchdogInstanceId { get; set; }

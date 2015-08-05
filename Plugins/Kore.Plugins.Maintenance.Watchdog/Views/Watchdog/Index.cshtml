@@ -3,20 +3,14 @@
 @using LocalizableStrings = Kore.Plugins.Maintenance.Watchdog.LocalizableStrings
 
 @{
-    Style.IncludeBundle("kendo-ui");
-    Style.IncludeBundle("kore-icons");
-
-    Script.IncludeBundle("kendo-ui");
-    Script.IncludeBundle("knockout");
-    Script.IncludeBundle("knockout-mapping");
-    Script.IncludeBundle("notify");
-
-    Script.IncludeBundle("kore/jqueryval");
-    Script.IncludeBundle("kore/section-switching");
-    Script.IncludePluginScript("index.js");
-
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
+    bool allowAddRemove = ViewBag.AllowAddRemove;
+    bool onlyShowWatched = ViewBag.OnlyShowWatched;
 }
+
+@Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
+@Html.Hidden("AllowAddRemove", allowAddRemove.ToString().ToLowerInvariant())
+@Html.Hidden("OnlyShowWatched", onlyShowWatched.ToString().ToLowerInvariant())
 
 <div id="grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -91,38 +85,3 @@
         </div>
     </div>
 </script>
-
-@section scripts {
-    <script type="text/javascript">
-        var gridPageSize = @SiteSettings.DefaultGridPageSize;
-        var translations = {
-            AddServiceError: '@T(LocalizableStrings.AddServiceError).Text',
-            AddServiceSuccess: '@T(LocalizableStrings.AddServiceSuccess).Text',
-            ConfirmStopService: '@T(LocalizableStrings.ConfirmStopService).Text',
-            ConfirmRemoveService: '@T(LocalizableStrings.ConfirmRemoveService).Text',
-            DeleteRecordConfirm: '@T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text',
-            DeleteRecordError: '@T(KoreWebLocalizableStrings.General.DeleteRecordError).Text',
-            DeleteRecordSuccess: '@T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text',
-            InsertRecordError: '@T(KoreWebLocalizableStrings.General.InsertRecordError).Text',
-            InsertRecordSuccess: '@T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text',
-            RemoveServiceError: '@T(LocalizableStrings.RemoveServiceError).Text',
-            RemoveServiceSuccess: '@T(LocalizableStrings.RemoveServiceSuccess).Text',
-            RestartServiceError: '@T(LocalizableStrings.RestartServiceError).Text',
-            RestartServiceSuccess: '@T(LocalizableStrings.RestartServiceSuccess).Text',
-            StartServiceError: '@T(LocalizableStrings.StartServiceError).Text',
-            StartServiceSuccess: '@T(LocalizableStrings.StartServiceSuccess).Text',
-            StopServiceError: '@T(LocalizableStrings.StopServiceError).Text',
-            StopServiceSuccess: '@T(LocalizableStrings.StopServiceSuccess).Text',
-
-            Columns: {
-                DisplayName: '@T(LocalizableStrings.Model.DisplayName).Text',
-                Password: '@T(LocalizableStrings.Model.Password).Text',
-                ServiceName: '@T(LocalizableStrings.Model.ServiceName).Text',
-                Status: '@T(LocalizableStrings.Model.Status).Text',
-                Url: '@T(LocalizableStrings.Model.Url).Text',
-            }
-        }
-        var allowAddRemove = '@ViewBag.AllowAddRemove';
-        var onlyShowWatched = '@ViewBag.OnlyShowWatched';
-</script>
-}

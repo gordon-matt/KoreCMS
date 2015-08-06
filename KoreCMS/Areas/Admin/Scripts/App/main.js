@@ -56,7 +56,7 @@ $.ajax({
 });
 
 requirejs.config({
-    //waitSeconds: 0, // 0 disables the timeout completely, default is 7 seconds
+    waitSeconds: 0, // 0 disables the timeout completely, default is 7 seconds
     paths: paths,
     shim: shim
 });

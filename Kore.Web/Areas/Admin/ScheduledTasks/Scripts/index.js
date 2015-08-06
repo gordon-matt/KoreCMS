@@ -4,6 +4,8 @@ define(['jquery', 'knockout', 'kendo', 'notify'],
 function ($, ko, kendo, notify) {
     'use strict'
 
+    viewModel = null;
+
     var odataBaseUrl = "/odata/kore/web/ScheduledTaskApi";
 
     var ViewModel = function () {

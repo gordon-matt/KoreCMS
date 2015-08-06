@@ -4,6 +4,8 @@ define(function (require) {
 //define(['jquery', 'jqueryval', 'kendo'], function ($, jqueryval, kendo) {
     'use strict'
 
+    viewModel = null;
+
     var $ = require('jquery');
     var kendo = require('kendo');
 

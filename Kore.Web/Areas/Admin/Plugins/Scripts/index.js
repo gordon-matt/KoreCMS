@@ -4,6 +4,8 @@ define(['jquery', 'knockout', 'kendo', 'kore-common', 'notify'],
 function ($, ko, kendo, kore_common, notify) {
     'use strict'
 
+    viewModel = null;
+
     //var $ = require('jquery');
     //var ko = require('knockout');
 

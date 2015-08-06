@@ -3,6 +3,8 @@
 define(function (require) {
     'use strict'
 
+    viewModel = null;
+
     var $ = require('jquery');
     var ko = require('knockout');
     var moment = require('momentjs');

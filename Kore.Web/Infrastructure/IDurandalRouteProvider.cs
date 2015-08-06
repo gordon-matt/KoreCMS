@@ -13,7 +13,7 @@ namespace Kore.Web.Infrastructure
     {
         public string ModuleId { get; set; }
 
-        //public string Title { get; set; }
+        public string Title { get; set; }
 
         public string Route { get; set; }
 

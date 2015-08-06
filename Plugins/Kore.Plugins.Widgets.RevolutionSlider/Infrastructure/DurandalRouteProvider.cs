@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Kore.Localization;
 using Kore.Web.Infrastructure;
 
 namespace Kore.Plugins.Widgets.RevolutionSlider.Infrastructure
@@ -15,13 +12,15 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Infrastructure
         {
             get
             {
+                var localizer = LocalizationUtilities.Resolve();
                 var routes = new List<DurandalRoute>();
 
                 routes.Add(new DurandalRoute
                 {
                     ModuleId = "viewmodels/plugins/widgets/revolutionslider",
                     Route = "plugins/widgets/revolutionslider",
-                    JsPath = "/Plugins/Widgets.RevolutionSlider/Scripts/index"
+                    JsPath = "/Plugins/Widgets.RevolutionSlider/Scripts/index",
+                    Title = localizer(LocalizableStrings.RevolutionSlider)
                 });
 
                 return routes;

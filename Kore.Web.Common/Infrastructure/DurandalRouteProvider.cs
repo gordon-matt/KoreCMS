@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Kore.Infrastructure;
+using Kore.Localization;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Resources;
 
@@ -13,6 +14,7 @@ namespace Kore.Web.Common.Infrastructure
         {
             get
             {
+                var localizer = LocalizationUtilities.Resolve();
                 var routes = new List<DurandalRoute>();
 
                 var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
@@ -22,7 +24,8 @@ namespace Kore.Web.Common.Infrastructure
                 {
                     ModuleId = "viewmodels/admin/regions",
                     Route = "regions",
-                    JsPath = scriptRegister.GetBundleUrl("kore-common/regions")
+                    JsPath = scriptRegister.GetBundleUrl("kore-common/regions"),
+                    Title = localizer(LocalizableStrings.Regions.Title)
                 });
 
                 return routes;

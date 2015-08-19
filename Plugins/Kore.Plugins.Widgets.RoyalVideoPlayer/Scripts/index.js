@@ -262,7 +262,7 @@ define(function (require) {
             self.playlists([]);
 
             $.ajax({
-                url: playlistApiUrl + "/GetPlaylistsForVideo",
+                url: playlistApiUrl + "/Default.GetPlaylistsForVideo",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ videoId: id }),
@@ -293,7 +293,7 @@ define(function (require) {
             };
 
             $.ajax({
-                url: videoApiUrl + "/AssignVideoToPlaylists",
+                url: videoApiUrl + "/Default.AssignVideoToPlaylists",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(data),
@@ -401,7 +401,7 @@ define(function (require) {
                     type: "odata",
                     transport: {
                         read: {
-                            url: videoApiUrl + "/GetVideosByPlaylistId",
+                            url: videoApiUrl + "/Default.GetVideosByPlaylistId",
                             dataType: "json",
                             contentType: "application/json",
                             type: "POST"

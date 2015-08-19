@@ -184,21 +184,21 @@ define(function (require) {
         };
         self.stopService = function (instanceId, name) {
             if (confirm(self.translations.ConfirmStopService)) {
-                self.executeAction(baseUrl + "/StopService", instanceId, name, self.translations.StopServiceError, self.translations.StopServiceSuccess, false);
+                self.executeAction(baseUrl + "/Default.StopService", instanceId, name, self.translations.StopServiceError, self.translations.StopServiceSuccess, false);
             }
         };
         self.startService = function (instanceId, name) {
-            self.executeAction(baseUrl + "/StartService", instanceId, name, self.translations.StartServiceError, self.translations.StartServiceSuccess, false);
+            self.executeAction(baseUrl + "/Default.StartService", instanceId, name, self.translations.StartServiceError, self.translations.StartServiceSuccess, false);
         };
         self.restartService = function (instanceId, name) {
-            self.executeAction(baseUrl + "/RestartService", instanceId, name, self.translations.RestartServiceError, self.translations.RestartServiceSuccess, false);
+            self.executeAction(baseUrl + "/Default.RestartService", instanceId, name, self.translations.RestartServiceError, self.translations.RestartServiceSuccess, false);
         };
         self.addService = function (instanceId, name) {
-            self.executeAction(baseUrl + "/AddService", instanceId, name, self.translations.AddServiceError, self.translations.AddServiceSuccess, true);
+            self.executeAction(baseUrl + "/Default.AddService", instanceId, name, self.translations.AddServiceError, self.translations.AddServiceSuccess, true);
         };
         self.removeService = function (instanceId, name) {
             if (confirm(self.translations.ConfirmRemoveService)) {
-                self.executeAction(baseUrl + "/RemoveService", instanceId, name, self.translations.RemoveServiceError, self.translations.RemoveServiceSuccess, true);
+                self.executeAction(baseUrl + "/Default.RemoveService", instanceId, name, self.translations.RemoveServiceError, self.translations.RemoveServiceSuccess, true);
             }
         };
         self.executeAction = function (url, instanceId, name, successMsg, errorMsg, returnsVoid) {
@@ -252,7 +252,7 @@ define(function (require) {
                     //},
                     transport: {
                         read: {
-                            url: baseUrl + "/GetServices",
+                            url: baseUrl + "/Default.GetServices",
 
                             // The below works fine, but the problem is Microsoft's current OData implementation doesn't seem to return 'odata.count'
                             //  if the endpoint is an ODataAction. So for now we have no choice but to filter on the client side. Will keep an eye
@@ -306,11 +306,32 @@ define(function (require) {
                             contentType: "application/json; charset=utf-8",
                             dataType: "json"
                         },
+                        //parameterMap: function (options, operation) {
+                        //    if (operation === "read") {
+                        //        return kendo.stringify({
+                        //            watchdogInstanceId: e.data.Id
+                        //        });
+                        //    }
+                        //},
                         parameterMap: function (options, operation) {
                             if (operation === "read") {
-                                return kendo.stringify({
-                                    watchdogInstanceId: e.data.Id
-                                });
+                                var paramMap = kendo.data.transports.odata.parameterMap(options, operation);
+
+                                paramMap.watchdogInstanceId = e.data.Id;
+
+                                if (paramMap.$inlinecount) {
+                                    if (paramMap.$inlinecount == "allpages") {
+                                        paramMap.$count = true;
+                                    }
+                                    delete paramMap.$inlinecount;
+                                }
+                                if (paramMap.$filter) {
+                                    paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                                }
+                                return paramMap;
+                            }
+                            else {
+                                return kendo.data.transports.odata.parameterMap(options, operation);
                             }
                         }
                     },

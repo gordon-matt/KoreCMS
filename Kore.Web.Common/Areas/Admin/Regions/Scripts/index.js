@@ -291,7 +291,7 @@ define(function (require) {
                         '# if(HasStates) {# <a onclick="viewModel.country.showStates(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.States + '</a> #} ' +
                         'else {# <a onclick="viewModel.country.showCities(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Cities + '</a> #} # ' +
                         '<a onclick="viewModel.country.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.country.remove(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
+                        '<a onclick="viewModel.country.removeItem(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
                         '<a onclick="viewModel.showSettings(#=Id#)" class="btn btn-info btn-xs">' + viewModel.translations.Settings + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
@@ -336,7 +336,7 @@ define(function (require) {
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
-        self.remove = function (id) {
+        self.removeItem = function (id) {
             if (confirm(viewModel.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: "/odata/kore/common/RegionApi(" + id + ")",
@@ -537,7 +537,7 @@ define(function (require) {
                         '<div class="btn-group">' +
                         '<a onclick="viewModel.state.showCities(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Cities + '</a>' +
                         '<a onclick="viewModel.state.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.state.remove(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
+                        '<a onclick="viewModel.state.removeItem(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
                         '<a onclick="viewModel.showSettings(#=Id#)" class="btn btn-info btn-xs">' + viewModel.translations.Settings + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
@@ -580,7 +580,7 @@ define(function (require) {
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
-        self.remove = function (id) {
+        self.removeItem = function (id) {
             if (confirm(viewModel.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: "/odata/kore/common/RegionApi(" + id + ")",
@@ -763,7 +763,7 @@ define(function (require) {
                     template:
                         '<div class="btn-group">' +
                         '<a onclick="viewModel.city.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.city.remove(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
+                        '<a onclick="viewModel.city.removeItem(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
                         '<a onclick="viewModel.showSettings(#=Id#)" class="btn btn-info btn-xs">' + viewModel.translations.Settings + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
@@ -810,7 +810,7 @@ define(function (require) {
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
-        self.remove = function (id) {
+        self.removeItem = function (id) {
             if (confirm(viewModel.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: "/odata/kore/common/RegionApi(" + id + ")",

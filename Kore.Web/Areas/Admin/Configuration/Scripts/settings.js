@@ -57,6 +57,19 @@ define(function (require) {
                         read: {
                             url: "/odata/kore/web/SettingsApi",
                             dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -64,7 +77,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             fields: {
@@ -102,7 +115,7 @@ define(function (require) {
         };
         self.edit = function (id) {
             $.ajax({
-                url: "/odata/kore/web/SettingsApi(guid'" + id + "')",
+                url: "/odata/kore/web/SettingsApi(" + id + ")",
                 type: "GET",
                 dataType: "json",
                 async: false
@@ -189,7 +202,7 @@ define(function (require) {
             };
 
             $.ajax({
-                url: "/odata/kore/web/SettingsApi(guid'" + self.id() + "')",
+                url: "/odata/kore/web/SettingsApi(" + self.id() + ")",
                 type: "PUT",
                 crossDomain: true,
                 contentType: "application/json; charset=utf-8",

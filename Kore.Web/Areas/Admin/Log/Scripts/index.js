@@ -59,6 +59,19 @@ define(function (require) {
                         read: {
                             url: "/odata/kore/web/LogApi",
                             dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -66,7 +79,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             fields: {
@@ -120,7 +133,7 @@ define(function (require) {
         self.remove = function (id) {
             if (confirm(self.translations.DeleteRecordConfirm)) {
                 $.ajax({
-                    url: "/odata/kore/web/LogApi(guid'" + id + "')",
+                    url: "/odata/kore/web/LogApi(" + id + ")",
                     type: "DELETE",
                     async: false
                 })
@@ -138,7 +151,7 @@ define(function (require) {
         };
         self.view = function (id) {
             $.ajax({
-                url: "/odata/kore/web/LogApi(guid'" + id + "')",
+                url: "/odata/kore/web/LogApi(" + id + ")",
                 type: "GET",
                 dataType: "json",
                 async: false
@@ -169,7 +182,7 @@ define(function (require) {
         self.clear = function () {
             if (confirm(self.translations.ClearConfirm)) {
                 $.ajax({
-                    url: "/odata/kore/web/LogApi/Clear",
+                    url: "/odata/kore/web/LogApi/Default.Clear",
                     type: "POST"
                 })
                 .done(function (json) {

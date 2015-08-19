@@ -9,7 +9,7 @@ namespace KoreCMS
     {
         public static void Register(HttpConfiguration config)
         {
-            config.EnableCors(new EnableCorsAttribute("*", "*", "*") { SupportsCredentials = true });
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*", "DataServiceVersion, MaxDataServiceVersion") { SupportsCredentials = true });
             //config.Services.Replace(typeof(IAssembliesResolver), new KoreAssembliesResolver());
 
             // Web API configuration and services
@@ -39,7 +39,7 @@ namespace KoreCMS
             //OData
             //ODataModelBuilder builder = new ODataConventionModelBuilder();
             //builder.EntitySet<Language>("Languages");
-            //config.Routes.MapODataRoute("odata", "odata", builder.GetEdmModel());
+            //config.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
 
             //var containerBuilder = new ContainerBuilder();
             //var container = containerBuilder.Build();

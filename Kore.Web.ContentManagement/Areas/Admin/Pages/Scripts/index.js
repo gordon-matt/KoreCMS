@@ -48,6 +48,19 @@ define(function (require) {
                         read: {
                             url: "/odata/kore/cms/PageTypeApi",
                             dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -55,7 +68,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             fields: {
@@ -94,7 +107,7 @@ define(function (require) {
         };
         self.edit = function (id) {
             $.ajax({
-                url: "/odata/kore/cms/PageTypeApi(guid'" + id + "')",
+                url: "/odata/kore/cms/PageTypeApi(" + id + ")",
                 type: "GET",
                 dataType: "json",
                 async: false
@@ -158,7 +171,7 @@ define(function (require) {
             }
             else {
                 $.ajax({
-                    url: "/odata/kore/cms/PageTypeApi(guid'" + self.id() + "')",
+                    url: "/odata/kore/cms/PageTypeApi(" + self.id() + ")",
                     type: "PUT",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(record),
@@ -210,6 +223,19 @@ define(function (require) {
                         read: {
                             url: "/odata/kore/cms/PageVersionApi?$filter=CultureCode eq null",
                             dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -217,7 +243,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             fields: {
@@ -273,7 +299,7 @@ define(function (require) {
         self.restore = function (id) {
             if (confirm(viewModel.translations.PageHistoryRestoreConfirm)) {
                 $.ajax({
-                    url: "/odata/kore/cms/PageVersionApi(guid'" + id + "')/RestoreVersion",
+                    url: "/odata/kore/cms/PageVersionApi(" + id + ")/Default.RestoreVersion",
                     type: "POST"
                 })
                 .done(function (json) {
@@ -333,8 +359,21 @@ define(function (require) {
                 type: "odata",
                 transport: {
                     read: {
-                        url: "/odata/kore/cms/PageTreeApi?$expand=SubPages/SubPages",
+                        url: "/odata/kore/cms/PageTreeApi?$expand=SubPages($levels=max)",
                         dataType: "json"
+                    },
+                    parameterMap: function (options, operation) {
+                        var paramMap = kendo.data.transports.odata.parameterMap(options);
+                        if (paramMap.$inlinecount) {
+                            if (paramMap.$inlinecount == "allpages") {
+                                paramMap.$count = true;
+                            }
+                            delete paramMap.$inlinecount;
+                        }
+                        if (paramMap.$filter) {
+                            paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                        }
+                        return paramMap;
                     }
                 },
                 schema: {
@@ -385,7 +424,7 @@ define(function (require) {
                     }
                     else {
                         $.ajax({
-                            url: "/odata/kore/cms/PageApi(guid'" + destinationId + "')",
+                            url: "/odata/kore/cms/PageApi(" + destinationId + ")",
                             type: "GET",
                             dataType: "json",
                             async: false
@@ -423,7 +462,7 @@ define(function (require) {
                     };
 
                     $.ajax({
-                        url: "/odata/kore/cms/PageApi(guid'" + sourceId + "')",
+                        url: "/odata/kore/cms/PageApi(" + sourceId + ")",
                         type: "PATCH",
                         contentType: "application/json; charset=utf-8",
                         data: JSON.stringify(patch),
@@ -494,7 +533,7 @@ define(function (require) {
         };
         self.edit = function (id) {
             $.ajax({
-                url: "/odata/kore/cms/PageApi(guid'" + id + "')",
+                url: "/odata/kore/cms/PageApi(" + id + ")",
                 type: "GET",
                 dataType: "json",
                 async: false
@@ -518,7 +557,7 @@ define(function (require) {
                 }
 
                 $.ajax({
-                    url: "/odata/kore/cms/PageVersionApi/GetCurrentVersion",
+                    url: "/odata/kore/cms/PageVersionApi/Default.GetCurrentVersion",
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({
@@ -624,7 +663,7 @@ define(function (require) {
         self.remove = function () {
             if (confirm(viewModel.translations.DeleteRecordConfirm)) {
                 $.ajax({
-                    url: "/odata/kore/cms/PageApi(guid'" + self.id() + "')",
+                    url: "/odata/kore/cms/PageApi(" + self.id() + ")",
                     type: "DELETE",
                     async: false
                 })
@@ -683,7 +722,7 @@ define(function (require) {
             }
             else {
                 $.ajax({
-                    url: "/odata/kore/cms/PageApi(guid'" + self.id() + "')",
+                    url: "/odata/kore/cms/PageApi(" + self.id() + ")",
                     type: "PUT",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(record),
@@ -742,7 +781,7 @@ define(function (require) {
 
             // UPDATE only (no option for insert here)
             $.ajax({
-                url: "/odata/kore/cms/PageVersionApi(guid'" + viewModel.pageVersionModel.id() + "')",
+                url: "/odata/kore/cms/PageVersionApi(" + viewModel.pageVersionModel.id() + ")",
                 type: "PUT",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -788,7 +827,7 @@ define(function (require) {
             };
 
             $.ajax({
-                url: "/odata/kore/cms/PageApi(guid'" + self.id() + "')",
+                url: "/odata/kore/cms/PageApi(" + self.id() + ")",
                 type: "PATCH",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(patch),
@@ -808,10 +847,10 @@ define(function (require) {
             viewModel.displayMode('PageHistoryGrid');
 
             if (viewModel.currentCulture == null || viewModel.currentCulture == "") {
-                self.pageVersionGrid.dataSource.transport.options.read.url = "/odata/kore/cms/PageVersionApi?$filter=CultureCode eq null and PageId eq guid'" + self.id() + "'";
+                self.pageVersionGrid.dataSource.transport.options.read.url = "/odata/kore/cms/PageVersionApi?$filter=CultureCode eq null and PageId eq " + self.id();
             }
             else {
-                self.pageVersionGrid.dataSource.transport.options.read.url = "/odata/kore/cms/PageVersionApi?$filter=CultureCode eq '" + viewModel.currentCulture + "' and PageId eq guid'" + self.id() + "'";
+                self.pageVersionGrid.dataSource.transport.options.read.url = "/odata/kore/cms/PageVersionApi?$filter=CultureCode eq '" + viewModel.currentCulture + "' and PageId eq " + self.id();
             }
             self.pageVersionGrid.dataSource.page(1);
 

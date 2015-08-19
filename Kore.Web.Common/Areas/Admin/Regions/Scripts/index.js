@@ -36,6 +36,19 @@ define(function (require) {
                         read: {
                             url: "/odata/kore/common/RegionSettingsApi",
                             dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -43,7 +56,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             fields: {
@@ -83,7 +96,7 @@ define(function (require) {
             self.settingsId(id);
 
             $.ajax({
-                url: "/odata/kore/common/RegionSettingsApi/GetSettings",
+                url: "/odata/kore/common/RegionSettingsApi/Default.GetSettings",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({
@@ -171,7 +184,7 @@ define(function (require) {
             };
 
             $.ajax({
-                url: "/odata/kore/common/RegionSettingsApi/SaveSettings",
+                url: "/odata/kore/common/RegionSettingsApi/Default.SaveSettings",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -222,8 +235,21 @@ define(function (require) {
                     type: "odata",
                     transport: {
                         read: {
-                            url: "/odata/kore/common/RegionApi?$filter=RegionType eq 'Country'",
+                            url: "/odata/kore/common/RegionApi?$filter=RegionType eq Kore.Web.Common.Areas.Admin.Regions.Domain.RegionType'Country'",
                             dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -231,7 +257,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             fields: {
@@ -265,7 +291,7 @@ define(function (require) {
                         '# if(HasStates) {# <a onclick="viewModel.country.showStates(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.States + '</a> #} ' +
                         'else {# <a onclick="viewModel.country.showCities(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Cities + '</a> #} # ' +
                         '<a onclick="viewModel.country.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.country.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
+                        '<a onclick="viewModel.country.remove(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
                         '<a onclick="viewModel.showSettings(#=Id#)" class="btn btn-info btn-xs">' + viewModel.translations.Settings + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
@@ -310,7 +336,7 @@ define(function (require) {
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
-        self.delete = function (id) {
+        self.remove = function (id) {
             if (confirm(viewModel.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: "/odata/kore/common/RegionApi(" + id + ")",
@@ -409,7 +435,7 @@ define(function (require) {
             viewModel.selectedStateId(0);
 
             var grid = $('#StateGrid').data('kendoGrid');
-            grid.dataSource.transport.options.read.url = "/odata/kore/common/RegionApi?$filter=RegionType eq 'State' and ParentId eq " + countryId;
+            grid.dataSource.transport.options.read.url = "/odata/kore/common/RegionApi?$filter=RegionType eq Kore.Web.Common.Areas.Admin.Regions.Domain.RegionType'State' and ParentId eq " + countryId;
             grid.dataSource.page(1);
             //grid.dataSource.read();
             //grid.refresh();
@@ -422,7 +448,7 @@ define(function (require) {
             viewModel.selectedStateId(0);
 
             var grid = $('#CityGrid').data('kendoGrid');
-            grid.dataSource.transport.options.read.url = "/odata/kore/common/RegionApi?$filter=RegionType eq 'City' and ParentId eq " + countryId;
+            grid.dataSource.transport.options.read.url = "/odata/kore/common/RegionApi?$filter=RegionType eq Kore.Web.Common.Areas.Admin.Regions.Domain.RegionType'City' and ParentId eq " + countryId;
             grid.dataSource.page(1);
             //grid.dataSource.read();
             //grid.refresh();
@@ -456,8 +482,21 @@ define(function (require) {
                     type: "odata",
                     transport: {
                         read: {
-                            url: "/odata/kore/common/RegionApi?$filter=RegionType eq 'State'",
+                            url: "/odata/kore/common/RegionApi?$filter=RegionType eq Kore.Web.Common.Areas.Admin.Regions.Domain.RegionType'State'",
                             dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -465,7 +504,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             fields: {
@@ -498,7 +537,7 @@ define(function (require) {
                         '<div class="btn-group">' +
                         '<a onclick="viewModel.state.showCities(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Cities + '</a>' +
                         '<a onclick="viewModel.state.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.state.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
+                        '<a onclick="viewModel.state.remove(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
                         '<a onclick="viewModel.showSettings(#=Id#)" class="btn btn-info btn-xs">' + viewModel.translations.Settings + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
@@ -541,7 +580,7 @@ define(function (require) {
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
-        self.delete = function (id) {
+        self.remove = function (id) {
             if (confirm(viewModel.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: "/odata/kore/common/RegionApi(" + id + ")",
@@ -638,7 +677,7 @@ define(function (require) {
             viewModel.selectedStateId(stateId);
 
             var grid = $('#CityGrid').data('kendoGrid');
-            grid.dataSource.transport.options.read.url = "/odata/kore/common/RegionApi?$filter=RegionType eq 'City' and ParentId eq " + stateId;
+            grid.dataSource.transport.options.read.url = "/odata/kore/common/RegionApi?$filter=RegionType eq Kore.Web.Common.Areas.Admin.Regions.Domain.RegionType'City' and ParentId eq " + stateId;
             grid.dataSource.page(1);
             //grid.dataSource.read();
             //grid.refresh();
@@ -670,8 +709,21 @@ define(function (require) {
                     type: "odata",
                     transport: {
                         read: {
-                            url: "/odata/kore/common/RegionApi?$filter=RegionType eq 'City'",
+                            url: "/odata/kore/common/RegionApi?$filter=RegionType eq Kore.Web.Common.Areas.Admin.Regions.Domain.RegionType'City'",
                             dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -679,7 +731,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             fields: {
@@ -711,7 +763,7 @@ define(function (require) {
                     template:
                         '<div class="btn-group">' +
                         '<a onclick="viewModel.city.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.city.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
+                        '<a onclick="viewModel.city.remove(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
                         '<a onclick="viewModel.showSettings(#=Id#)" class="btn btn-info btn-xs">' + viewModel.translations.Settings + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
@@ -758,7 +810,7 @@ define(function (require) {
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
-        self.delete = function (id) {
+        self.remove = function (id) {
             if (confirm(viewModel.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: "/odata/kore/common/RegionApi(" + id + ")",
@@ -908,7 +960,7 @@ define(function (require) {
             self.selectedContinentId(continentId);
 
             var grid = $('#CountryGrid').data('kendoGrid');
-            grid.dataSource.transport.options.read.url = "/odata/kore/common/RegionApi?$filter=RegionType eq 'Country' and ParentId eq " + continentId;
+            grid.dataSource.transport.options.read.url = "/odata/kore/common/RegionApi?$filter=RegionType eq Kore.Web.Common.Areas.Admin.Regions.Domain.RegionType'Country' and ParentId eq " + continentId;
             grid.dataSource.page(1);
             //grid.dataSource.read();
             //grid.refresh();

@@ -53,14 +53,19 @@ define(function (require) {
                             dataType: "json"
                         },
                         parameterMap: function (options, operation) {
-                            // call the default OData parameterMap
                             var paramMap = kendo.data.transports.odata.parameterMap(options, operation);
-
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
                             if (paramMap.$filter) {
-                                // encode everything which looks like a GUID
-                                // Fix from here: http://www.telerik.com/forums/guids-in-filters
-                                var guid = /('[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')/ig;
-                                paramMap.$filter = paramMap.$filter.replace(guid, "guid$1");
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+
+                                // Fix for GUIDs
+                                var guid = /'([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'/ig;
+                                paramMap.$filter = paramMap.$filter.replace(guid, "$1");
                             }
                             return paramMap;
                         }
@@ -70,7 +75,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             id: "Id",
@@ -157,7 +162,7 @@ define(function (require) {
         };
         self.edit = function (id) {
             $.ajax({
-                url: "/odata/kore/cms/MenuItemApi(guid'" + id + "')",
+                url: "/odata/kore/cms/MenuItemApi(" + id + ")",
                 type: "GET",
                 dataType: "json",
                 async: false
@@ -186,7 +191,7 @@ define(function (require) {
         self.remove = function (id, parentId) {
             if (confirm(viewModel.translations.DeleteRecordConfirm)) {
                 $.ajax({
-                    url: "/odata/kore/cms/MenuItemApi(guid'" + id + "')",
+                    url: "/odata/kore/cms/MenuItemApi(" + id + ")",
                     type: "DELETE",
                     dataType: "json",
                     async: false
@@ -245,7 +250,7 @@ define(function (require) {
             else {
                 // UPDATE
                 $.ajax({
-                    url: "/odata/kore/cms/MenuItemApi(guid'" + self.id() + "')",
+                    url: "/odata/kore/cms/MenuItemApi(" + self.id() + ")",
                     type: "PUT",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(record),
@@ -275,7 +280,7 @@ define(function (require) {
             };
 
             $.ajax({
-                url: "/odata/kore/cms/MenuItemApi(guid'" + id + "')",
+                url: "/odata/kore/cms/MenuItemApi(" + id + ")",
                 type: "PATCH",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(patch),
@@ -327,14 +332,19 @@ define(function (require) {
                             dataType: "json"
                         },
                         parameterMap: function (options, operation) {
-                            // call the default OData parameterMap
                             var paramMap = kendo.data.transports.odata.parameterMap(options, operation);
-
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
                             if (paramMap.$filter) {
-                                // encode everything which looks like a GUID
-                                // Fix from here: http://www.telerik.com/forums/guids-in-filters
-                                var guid = /('[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')/ig;
-                                paramMap.$filter = paramMap.$filter.replace(guid, "guid$1");
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+
+                                // Fix for GUIDs
+                                var guid = /'([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'/ig;
+                                paramMap.$filter = paramMap.$filter.replace(guid, "$1");
                             }
                             return paramMap;
                         }
@@ -344,7 +354,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             id: "Id",
@@ -430,6 +440,19 @@ define(function (require) {
                         read: {
                             url: "/odata/kore/cms/MenuApi",
                             dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options, operation);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -437,7 +460,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             id: "Id",
@@ -494,7 +517,7 @@ define(function (require) {
         };
         self.edit = function (id) {
             $.ajax({
-                url: "/odata/kore/cms/MenuApi(guid'" + id + "')",
+                url: "/odata/kore/cms/MenuApi(" + id + ")",
                 type: "GET",
                 dataType: "json",
                 async: false
@@ -516,7 +539,7 @@ define(function (require) {
         self.remove = function (id) {
             if (confirm(viewModel.translations.DeleteRecordConfirm)) {
                 $.ajax({
-                    url: "/odata/kore/cms/MenuApi(guid'" + id + "')",
+                    url: "/odata/kore/cms/MenuApi(" + id + ")",
                     type: "DELETE",
                     async: false
                 })
@@ -570,7 +593,7 @@ define(function (require) {
             else {
                 // UPDATE
                 $.ajax({
-                    url: "/odata/kore/cms/MenuApi(guid'" + self.id() + "')",
+                    url: "/odata/kore/cms/MenuApi(" + self.id() + ")",
                     type: "PUT",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(record),

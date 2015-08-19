@@ -55,13 +55,13 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
                     type: "odata",
                     transport: {
                         read: {
-                            url: odataBaseUrl + "GetConfig",
+                            url: odataBaseUrl + "Default.GetConfig",
                             dataType: "json",
                             contentType: "application/json",
                             type: "POST"
                         },
                         update: {
-                            url: odataBaseUrl + "SetConfig",
+                            url: odataBaseUrl + "Default.SetConfig",
                             dataType: "json",
                             contentType: "application/json",
                             type: "POST"
@@ -192,7 +192,7 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
         self.generateFile = function () {
             if (confirm(self.translations.ConfirmGenerateFile)) {
                 $.ajax({
-                    url: odataBaseUrl + "Generate",
+                    url: odataBaseUrl + "Default.Generate",
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",

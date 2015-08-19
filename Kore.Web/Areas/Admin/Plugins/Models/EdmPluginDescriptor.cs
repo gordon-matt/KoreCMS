@@ -1,9 +1,12 @@
-﻿using Kore.Web.Plugins;
+﻿using System;
+using Kore.Web.Plugins;
 
 namespace Kore.Web.Areas.Admin.Plugins.Models
 {
     public class EdmPluginDescriptor
     {
+        public Guid Id { get; set; }
+
         public string Group { get; set; }
 
         public string FriendlyName { get; set; }
@@ -22,6 +25,7 @@ namespace Kore.Web.Areas.Admin.Plugins.Models
         {
             return new EdmPluginDescriptor
             {
+                Id = Guid.NewGuid(), //To Keep OData v4 happy
                 Group = other.Group,
                 FriendlyName = other.FriendlyName,
                 Version = other.Version,

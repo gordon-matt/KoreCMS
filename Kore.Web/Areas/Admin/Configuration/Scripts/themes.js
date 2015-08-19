@@ -43,6 +43,19 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
                         read: {
                             url: "/odata/kore/web/ThemeApi",
                             dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -50,7 +63,7 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             fields: {
@@ -125,7 +138,7 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
         };
         self.setDesktopTheme = function (name) {
             $.ajax({
-                url: "/odata/kore/web/ThemeApi/SetDesktopTheme",
+                url: "/odata/kore/web/ThemeApi/Default.SetDesktopTheme",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ themeName: name }),
@@ -143,7 +156,7 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
         };
         self.setMobileTheme = function (name) {
             $.ajax({
-                url: "/odata/kore/web/ThemeApi/SetMobileTheme",
+                url: "/odata/kore/web/ThemeApi/Default.SetMobileTheme",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ themeName: name }),

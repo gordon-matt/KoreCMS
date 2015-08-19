@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Web.Hosting;
 using System.Web.Http;
-using System.Web.Http.OData;
+using System.Web.OData;
 using System.Web.Http.Results;
 using System.Xml.Serialization;
 using Kore.Collections;

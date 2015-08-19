@@ -1,9 +1,12 @@
-﻿using Kore.Web.Mvc.Themes;
+﻿using System;
+using Kore.Web.Mvc.Themes;
 
 namespace Kore.Web.Areas.Admin.Configuration.Models
 {
     public class EdmThemeConfiguration
     {
+        public Guid Id { get; set; }
+
         public string Title { get; set; }
 
         public bool SupportRtl { get; set; }
@@ -22,6 +25,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Models
         {
             return new EdmThemeConfiguration
             {
+                Id = Guid.NewGuid(), //To Keep OData v4 happy
                 Title = other.ThemeName,
                 SupportRtl = other.SupportRtl,
                 MobileTheme = other.MobileTheme,

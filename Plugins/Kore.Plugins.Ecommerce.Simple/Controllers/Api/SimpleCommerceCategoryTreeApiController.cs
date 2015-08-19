@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web.Http.OData;
+using System.Web.OData;
+using System.Web.OData.Query;
 using Kore.Collections;
 using Kore.Data;
 using Kore.Infrastructure;
@@ -18,7 +19,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers.Api
             this.categoryRepository = categoryRepository;
         }
 
-        [EnableQuery]
+        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All, MaxExpansionDepth = 10)]
         public IEnumerable<CategoryTreeItem> Get()
         {
             if (!CheckPermission(SimpleCommercePermissions.ReadCategories))

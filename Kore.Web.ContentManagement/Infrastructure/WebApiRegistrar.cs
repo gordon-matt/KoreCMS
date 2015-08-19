@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Web.Http;
-using System.Web.Http.OData.Builder;
+using System.Web.OData.Builder;
 using Kore.Localization.Domain;
 using Kore.Localization.Models;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
@@ -13,6 +13,8 @@ using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Models;
 using Kore.Web.Infrastructure;
+using System.Web.OData.Extensions;
+using System.Web.OData;
 
 namespace Kore.Web.ContentManagement.Infrastructure
 {
@@ -65,55 +67,58 @@ namespace Kore.Web.ContentManagement.Infrastructure
             RegisterPageVersionODataActions(builder);
             RegisterXmlSitemapODataActions(builder);
 
-            config.Routes.MapODataRoute("OData_Kore_CMS", "odata/kore/cms", builder.GetEdmModel());
+            config.MapODataServiceRoute("OData_Kore_CMS", "odata/kore/cms", builder.GetEdmModel());
         }
 
         #endregion IWebApiRegistrar Members
 
         private static void RegisterContentBlockODataActions(ODataModelBuilder builder)
         {
-            var getByPageIdAction = builder.Entity<ContentBlock>().Collection.Action("GetByPageId");
+            var getByPageIdAction = builder.EntityType<ContentBlock>().Collection.Action("GetByPageId");
             getByPageIdAction.Parameter<Guid>("pageId");
             getByPageIdAction.ReturnsCollectionFromEntitySet<ContentBlock>("ContentBlocks");
         }
 
         private static void RegisterLanguageODataActions(ODataModelBuilder builder)
         {
-            var resetLocalizableStringsAction = builder.Entity<Language>().Collection.Action("ResetLocalizableStrings");
+            var resetLocalizableStringsAction = builder.EntityType<Language>().Collection.Action("ResetLocalizableStrings");
             resetLocalizableStringsAction.Returns<IHttpActionResult>();
         }
 
         private static void RegisterLocalizableStringODataActions(ODataModelBuilder builder)
         {
-            var getComparitiveTableAction = builder.Entity<LocalizableString>().Collection.Action("GetComparitiveTable");
-            getComparitiveTableAction.Parameter<string>("cultureCode");
-            getComparitiveTableAction.ReturnsCollection<ComparitiveLocalizableString>();
+            var getComparitiveTableFunction = builder.EntityType<LocalizableString>().Collection.Function("GetComparitiveTable");
+            getComparitiveTableFunction.Parameter<string>("cultureCode");
+            //getComparitiveTableFunction.Returns<PageResult<ComparitiveLocalizableString>>();
+            getComparitiveTableFunction.ReturnsCollection<ComparitiveLocalizableString>();
 
-            var putComparitiveAction = builder.Entity<LocalizableString>().Collection.Action("PutComparitive");
+            //var getComparitiveTableAction = builder.EntityType<LocalizableString>().Collection.Action("GetComparitiveTable");
+            //getComparitiveTableAction.Parameter<string>("cultureCode");
+            //getComparitiveTableAction.ReturnsCollection<ComparitiveLocalizableString>();
+
+            var putComparitiveAction = builder.EntityType<LocalizableString>().Collection.Action("PutComparitive");
             putComparitiveAction.Parameter<string>("cultureCode");
             putComparitiveAction.Parameter<string>("key");
             putComparitiveAction.Parameter<ComparitiveLocalizableString>("entity");
-            putComparitiveAction.Returns<IHttpActionResult>();
 
-            var deleteComparitiveAction = builder.Entity<LocalizableString>().Collection.Action("DeleteComparitive");
+            var deleteComparitiveAction = builder.EntityType<LocalizableString>().Collection.Action("DeleteComparitive");
             deleteComparitiveAction.Parameter<string>("cultureCode");
             deleteComparitiveAction.Parameter<string>("key");
-            deleteComparitiveAction.Returns<IHttpActionResult>();
         }
 
         private static void RegisterMessageTemplateODataActions(ODataModelBuilder builder)
         {
-            var getTokensAction = builder.Entity<MessageTemplate>().Collection.Action("GetTokens");
+            var getTokensAction = builder.EntityType<MessageTemplate>().Collection.Action("GetTokens");
             getTokensAction.Parameter<string>("templateName");
             getTokensAction.ReturnsCollection<string>();
         }
 
         private static void RegisterPageVersionODataActions(ODataModelBuilder builder)
         {
-            var restoreVersionAction = builder.Entity<PageVersion>().Action("RestoreVersion");
+            var restoreVersionAction = builder.EntityType<PageVersion>().Action("RestoreVersion");
             restoreVersionAction.Returns<IHttpActionResult>();
 
-            var translateAction = builder.Entity<PageVersion>().Collection.Action("GetCurrentVersion");
+            var translateAction = builder.EntityType<PageVersion>().Collection.Action("GetCurrentVersion");
             translateAction.Parameter<Guid>("pageId");
             translateAction.Parameter<string>("cultureCode");
             translateAction.Returns<EdmPageVersion>();
@@ -121,16 +126,16 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
         private static void RegisterXmlSitemapODataActions(ODataModelBuilder builder)
         {
-            var getConfigAction = builder.Entity<SitemapConfig>().Collection.Action("GetConfig");
+            var getConfigAction = builder.EntityType<SitemapConfig>().Collection.Action("GetConfig");
             getConfigAction.ReturnsCollection<SitemapConfigModel>();
 
-            var setConfigAction = builder.Entity<SitemapConfig>().Collection.Action("SetConfig");
+            var setConfigAction = builder.EntityType<SitemapConfig>().Collection.Action("SetConfig");
             setConfigAction.Parameter<int>("id");
             setConfigAction.Parameter<byte>("changeFrequency");
             setConfigAction.Parameter<float>("priority");
             setConfigAction.Returns<IHttpActionResult>();
 
-            var generateAction = builder.Entity<SitemapConfig>().Collection.Action("Generate");
+            var generateAction = builder.EntityType<SitemapConfig>().Collection.Action("Generate");
             generateAction.Returns<IHttpActionResult>();
         }
     }

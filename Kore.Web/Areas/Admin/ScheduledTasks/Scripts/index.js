@@ -48,6 +48,24 @@ function ($, ko, kendo, notify) {
                             type: "PUT",
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
+                        },
+                        parameterMap: function (options, operation) {
+                            if (operation === "read") {
+                                var paramMap = kendo.data.transports.odata.parameterMap(options, operation);
+                                if (paramMap.$inlinecount) {
+                                    if (paramMap.$inlinecount == "allpages") {
+                                        paramMap.$count = true;
+                                    }
+                                    delete paramMap.$inlinecount;
+                                }
+                                if (paramMap.$filter) {
+                                    paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                                }
+                                return paramMap;
+                            }
+                            else {
+                                return kendo.data.transports.odata.parameterMap(options, operation);
+                            }
                         }
                     },
                     schema: {
@@ -56,7 +74,7 @@ function ($, ko, kendo, notify) {
                         },
                         total: function (data) {
                             return data.value.length; // Special case
-                            //return data["odata.count"];
+                            //return data["@odata.count"];
                         },
                         model: {
                             id: "Id",
@@ -168,7 +186,7 @@ function ($, ko, kendo, notify) {
         };
         self.runNow = function (id) {
             $.ajax({
-                url: "/odata/kore/web/ScheduledTaskApi/RunNow",
+                url: "/odata/kore/web/ScheduledTaskApi/Default.RunNow",
                 type: "POST",
                 data: JSON.stringify({
                     taskId: id

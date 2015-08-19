@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http;
-using System.Web.Http.OData;
-using System.Web.Http.OData.Query;
+using System.Web.OData;
+using System.Web.OData.Query;
 using Kore.Infrastructure;
 using Kore.Web.Areas.Admin.Configuration.Models;
 using Kore.Web.Configuration;

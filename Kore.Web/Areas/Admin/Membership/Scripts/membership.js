@@ -41,6 +41,19 @@ define(function (require) {
                         read: {
                             url: "/odata/kore/web/RoleApi",
                             dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -48,7 +61,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             fields: {
@@ -205,7 +218,7 @@ define(function (require) {
             self.permissions([]);
 
             $.ajax({
-                url: "/odata/kore/web/PermissionApi/GetPermissionsForRole",
+                url: "/odata/kore/web/PermissionApi/Default.GetPermissionsForRole",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ roleId: id }),
@@ -236,7 +249,7 @@ define(function (require) {
             };
 
             $.ajax({
-                url: "/odata/kore/web/RoleApi/AssignPermissionsToRole",
+                url: "/odata/kore/web/RoleApi/Default.AssignPermissionsToRole",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(data),
@@ -285,7 +298,7 @@ define(function (require) {
             };
 
             $.ajax({
-                url: "/odata/kore/web/UserApi/ChangePassword",
+                url: "/odata/kore/web/UserApi/Default.ChangePassword",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(record),
@@ -331,6 +344,19 @@ define(function (require) {
                         read: {
                             url: "/odata/kore/web/UserApi",
                             dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -338,7 +364,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             fields: {
@@ -518,7 +544,7 @@ define(function (require) {
             self.filterRoleId(emptyGuid);
 
             $.ajax({
-                url: "/odata/kore/web/RoleApi/GetRolesForUser",
+                url: "/odata/kore/web/RoleApi/Default.GetRolesForUser",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ userId: id }),
@@ -549,7 +575,7 @@ define(function (require) {
             };
 
             $.ajax({
-                url: "/odata/kore/web/UserApi/AssignUserToRoles",
+                url: "/odata/kore/web/UserApi/Default.AssignUserToRoles",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(data),
@@ -578,7 +604,17 @@ define(function (require) {
                 grid.dataSource.transport.options.read.type = "GET";
                 delete grid.dataSource.transport.options.read.contentType;
                 grid.dataSource.transport.parameterMap = function (options, operation) {
-                    return kendo.data.transports.odata.parameterMap(options, operation);
+                    var paramMap = kendo.data.transports.odata.parameterMap(options);
+                    if (paramMap.$inlinecount) {
+                        if (paramMap.$inlinecount == "allpages") {
+                            paramMap.$count = true;
+                        }
+                        delete paramMap.$inlinecount;
+                    }
+                    if (paramMap.$filter) {
+                        paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                    }
+                    return paramMap;
                 };
             }
             else {
@@ -623,7 +659,7 @@ define(function (require) {
                         });
                     }
 
-                    return "/odata/kore/web/UserApi/GetUsersInRole?" + queryString;
+                    return "/odata/kore/web/UserApi/Default.GetUsersInRole?" + queryString;
                 };
                 grid.dataSource.transport.options.read.type = "POST";
                 grid.dataSource.transport.options.read.contentType = "application/json";

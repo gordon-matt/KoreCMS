@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http;
-using System.Web.Http.OData;
+using System.Web.OData;
 using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;

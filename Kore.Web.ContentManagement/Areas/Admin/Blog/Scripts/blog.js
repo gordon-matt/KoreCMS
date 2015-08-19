@@ -7,10 +7,6 @@ define(function (require) {
 
     var $ = require('jquery');
     var ko = require('knockout');
-    var datajs = require('datajs');
-    var odata = require('OData');
-    var Q = require('Q');
-    var breeze = require('breeze');
 
     require('jqueryval');
     require('kendo');
@@ -63,22 +59,24 @@ define(function (require) {
                 }
             });
 
-            var manager = new breeze.EntityManager('/odata/kore/cms');
-
-            var query = new breeze.EntityQuery()
-                .from("BlogTagApi")
-                .orderBy("Name asc");
-
-            manager.executeQuery(query).then(function (data) {
+            $.ajax({
+                url: '/odata/kore/cms/BlogTagApi?$orderby=Name',
+                type: "GET",
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
                 self.availableTags([]);
                 self.chosenTags([]);
 
-                $(data.httpResponse.data.results).each(function () {
+                $(json.value).each(function () {
                     var current = this;
                     self.availableTags.push({ Id: current.Id, Name: current.Name });
                 });
-            }).fail(function (e) {
-                alert(e);
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(textStatus, "error");
+                console.log(textStatus + ': ' + errorThrown);
             });
 
             $("#PostGrid").kendoGrid({
@@ -89,6 +87,19 @@ define(function (require) {
                         read: {
                             url: postApiUrl,
                             dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -96,7 +107,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             fields: {
@@ -161,7 +172,7 @@ define(function (require) {
         };
         self.edit = function (id) {
             $.ajax({
-                url: postApiUrl + "(guid'" + id + "')?$expand=Tags",
+                url: postApiUrl + "(" + id + ")?$expand=Tags",
                 type: "GET",
                 dataType: "json",
                 async: false
@@ -196,7 +207,7 @@ define(function (require) {
         self.remove = function (id) {
             if (confirm(viewModel.translations.DeleteRecordConfirm)) {
                 $.ajax({
-                    url: postApiUrl + "(guid'" + id + "')",
+                    url: postApiUrl + "(" + id + ")",
                     type: "DELETE",
                     async: false
                 })
@@ -264,7 +275,7 @@ define(function (require) {
             }
             else {
                 $.ajax({
-                    url: postApiUrl + "(guid'" + self.id() + "')",
+                    url: postApiUrl + "(" + self.id() + ")",
                     type: "PUT",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(record),
@@ -315,6 +326,19 @@ define(function (require) {
                         read: {
                             url: categoryApiUrl,
                             dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -322,7 +346,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             fields: {
@@ -497,6 +521,19 @@ define(function (require) {
                         read: {
                             url: tagApiUrl,
                             dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -504,7 +541,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             fields: {
@@ -692,7 +729,6 @@ define(function (require) {
 
             self.gridPageSize = $("#GridPageSize").val();
 
-            breeze.config.initializeAdapterInstances({ dataService: "OData" });
             self.postModel.init();
             self.categoryModel.init();
             self.tagModel.init();

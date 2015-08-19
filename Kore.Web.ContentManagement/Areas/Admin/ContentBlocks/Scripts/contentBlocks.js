@@ -67,6 +67,19 @@ define(function (require) {
                     read: {
                         url: "/odata/kore/cms/ContentBlockApi",
                         dataType: "json"
+                    },
+                    parameterMap: function (options, operation) {
+                        var paramMap = kendo.data.transports.odata.parameterMap(options);
+                        if (paramMap.$inlinecount) {
+                            if (paramMap.$inlinecount == "allpages") {
+                                paramMap.$count = true;
+                            }
+                            delete paramMap.$inlinecount;
+                        }
+                        if (paramMap.$filter) {
+                            paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                        }
+                        return paramMap;
                     }
                 },
                 schema: {
@@ -74,7 +87,7 @@ define(function (require) {
                         return data.value;
                     },
                     total: function (data) {
-                        return data["odata.count"];
+                        return data["@odata.count"];
                     },
                     model: {
                         fields: {
@@ -94,7 +107,7 @@ define(function (require) {
 
             // Override grid data source if necessary (to filter by Page ID)
             if (viewModel.pageId && viewModel.pageId != '') {
-                ds.transport.read.url = "/odata/kore/cms/ContentBlockApi/GetByPageId";
+                ds.transport.read.url = "/odata/kore/cms/ContentBlockApi/Default.GetByPageId";
                 ds.transport.read.type = "POST";
                 ds.transport.read.contentType = "application/json";
                 ds.transport.parameterMap = function (options, operation) {
@@ -188,7 +201,7 @@ define(function (require) {
         };
         self.edit = function (id) {
             $.ajax({
-                url: "/odata/kore/cms/ContentBlockApi(guid'" + id + "')",
+                url: "/odata/kore/cms/ContentBlockApi(" + id + ")",
                 type: "GET",
                 //contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -278,7 +291,7 @@ define(function (require) {
         self.remove = function (id) {
             if (confirm(viewModel.translations.DeleteRecordConfirm)) {
                 $.ajax({
-                    url: "/odata/kore/cms/ContentBlockApi(guid'" + id + "')",
+                    url: "/odata/kore/cms/ContentBlockApi(" + id + ")",
                     type: "DELETE",
                     async: false
                 })
@@ -358,7 +371,7 @@ define(function (require) {
             }
             else {
                 $.ajax({
-                    url: "/odata/kore/cms/ContentBlockApi(guid'" + self.id() + "')",
+                    url: "/odata/kore/cms/ContentBlockApi(" + self.id() + ")",
                     type: "PUT",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(record),
@@ -407,7 +420,7 @@ define(function (require) {
             };
 
             $.ajax({
-                url: "/odata/kore/cms/ContentBlockApi(guid'" + id + "')",
+                url: "/odata/kore/cms/ContentBlockApi(" + id + ")",
                 type: "PATCH",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(patch),
@@ -449,6 +462,19 @@ define(function (require) {
                         read: {
                             url: "/odata/kore/cms/ZoneApi",
                             dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -456,7 +482,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             fields: {
@@ -502,7 +528,7 @@ define(function (require) {
         };
         self.edit = function (id) {
             $.ajax({
-                url: "/odata/kore/cms/ZoneApi(guid'" + id + "')",
+                url: "/odata/kore/cms/ZoneApi(" + id + ")",
                 type: "GET",
                 dataType: "json",
                 async: false
@@ -521,7 +547,7 @@ define(function (require) {
         self.remove = function (id) {
             if (confirm(viewModel.translations.DeleteRecordConfirm)) {
                 $.ajax({
-                    url: "/odata/kore/cms/ZoneApi(guid'" + id + "')",
+                    url: "/odata/kore/cms/ZoneApi(" + id + ")",
                     type: "DELETE",
                     dataType: "json",
                     async: false
@@ -587,7 +613,7 @@ define(function (require) {
             else {
                 // UPDATE
                 $.ajax({
-                    url: "/odata/kore/cms/ZoneApi(guid'" + self.id() + "')",
+                    url: "/odata/kore/cms/ZoneApi(" + self.id() + ")",
                     type: "PUT",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(record),

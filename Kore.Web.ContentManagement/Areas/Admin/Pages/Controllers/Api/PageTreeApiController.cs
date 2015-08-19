@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Http.OData;
+using System.Web.OData;
+using System.Web.OData.Query;
 using Kore.Collections;
 using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
@@ -19,7 +20,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             this.service = service;
         }
 
-        [EnableQuery]
+        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All, MaxExpansionDepth = 10)]
         public IEnumerable<PageTreeItem> Get()
         {
             if (!CheckPermission(CmsPermissions.PagesRead))

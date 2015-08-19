@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using System.Web.Http.OData;
+using System.Web.OData;
 using System.Web.Http.Results;
 using Kore.Caching;
 using Kore.Data;

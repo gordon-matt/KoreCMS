@@ -92,6 +92,19 @@ define(function (require) {
                                 return productApiUrl + "?$filter=CategoryId eq " + viewModel.category.id()
                             },
                             dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -99,7 +112,7 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data["odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             fields: {
@@ -135,8 +148,8 @@ define(function (require) {
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a onclick="viewModel.product.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.product.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
+                        '<div class="btn-group"><a onclick="viewModel.product.edit(#=Id#)" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
+                        '<a onclick="viewModel.product.remove(#=Id#)" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -198,7 +211,7 @@ define(function (require) {
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
-        self.delete = function (id) {
+        self.remove = function (id) {
             if (confirm(viewModel.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: productApiUrl + "(" + id + ")",
@@ -325,8 +338,21 @@ define(function (require) {
                 type: "odata",
                 transport: {
                     read: {
-                        url: categoryTreeApiUrl + "?$expand=SubCategories/SubCategories",
+                        url: categoryTreeApiUrl + "?$expand=SubCategories($levels=max)",
                         dataType: "json"
+                    },
+                    parameterMap: function (options, operation) {
+                        var paramMap = kendo.data.transports.odata.parameterMap(options);
+                        if (paramMap.$inlinecount) {
+                            if (paramMap.$inlinecount == "allpages") {
+                                paramMap.$count = true;
+                            }
+                            delete paramMap.$inlinecount;
+                        }
+                        if (paramMap.$filter) {
+                            paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                        }
+                        return paramMap;
                     }
                 },
                 schema: {
@@ -478,10 +504,10 @@ define(function (require) {
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
-        self.delete = function (id) {
+        self.remove = function () {
             if (confirm(viewModel.translations.DeleteRecordConfirm)) {
                 $.ajax({
-                    url: categoryApiUrl + "(" + id + ")",
+                    url: categoryApiUrl + "(" + self.id() + ")",
                     type: "DELETE",
                     async: false
                 })

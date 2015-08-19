@@ -1,7 +1,8 @@
 ﻿using System.Web.Http;
-using System.Web.Http.OData.Builder;
+using System.Web.OData.Builder;
 using Kore.Plugins.Widgets.FullCalendar.Data.Domain;
 using Kore.Web.Infrastructure;
+using System.Web.OData.Extensions;
 
 namespace Kore.Plugins.Widgets.FullCalendar.Infrastructure
 {
@@ -15,7 +16,7 @@ namespace Kore.Plugins.Widgets.FullCalendar.Infrastructure
             builder.EntitySet<Calendar>("CalendarApi");
             builder.EntitySet<CalendarEvent>("CalendarEventApi");
 
-            config.Routes.MapODataRoute("OData_Kore_Plugin_FullCalendar", "odata/kore/plugins/full-calendar", builder.GetEdmModel());
+            config.MapODataServiceRoute("OData_Kore_Plugin_FullCalendar", "odata/kore/plugins/full-calendar", builder.GetEdmModel());
         }
 
         #endregion IWebApiRegistrar Members

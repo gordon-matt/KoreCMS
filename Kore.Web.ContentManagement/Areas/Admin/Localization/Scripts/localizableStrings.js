@@ -1,15 +1,15 @@
 ﻿var viewModel;
 
-define(function (require) {
-//define(['jquery', 'jqueryval', 'kendo'], function ($, jqueryval, kendo) {
+//define(function (require) {
+define(['jquery', 'jqueryval', 'kendo'], function ($, jqueryval, kendo) {
     'use strict'
 
     viewModel = null;
 
-    var $ = require('jquery');
-    var kendo = require('kendo');
+    //var $ = require('jquery');
+    //var kendo = require('kendo');
 
-    require('jqueryval');
+    //require('jqueryval');
 
     var odataBaseUrl = "/odata/kore/cms/LocalizableStringApi/";
 
@@ -50,76 +50,37 @@ define(function (require) {
                     type: "odata",
                     transport: {
                         read: {
-                            url: odataBaseUrl + "GetComparitiveTable",
-
-                            // Refer to note in LocalizableStringsController (may need to implement below code in future version of OData for Web API)
-                            //  if we want to support filtering & sorting on the server side (which doesn't work for this kind of OData Action)
-                            //url: function (data) {
-                            //    var grid = $('#Grid').data('kendoGrid');
-
-                            //    var params = {
-                            //        page: grid.dataSource.page(),
-                            //        sort: grid.dataSource.sort(),
-                            //        filter: grid.dataSource.filter()
-                            //    };
-
-                            //    var queryString = "page=" + (params.page || "~");
-
-                            //    if (params.sort) {
-                            //        queryString += "&$orderby=";
-                            //        var isFirst = true;
-                            //        $.each(params.sort, function () {
-                            //            alert(JSON.stringify(this));
-                            //            if (!isFirst) {
-                            //                queryString += ",";
-                            //            }
-                            //            else {
-                            //                isFirst = false;
-                            //            }
-                            //            queryString += this.field + " " + this.dir;
-                            //        });
-                            //    }
-
-                            //    if (params.filter) {
-                            //        queryString += "&$filter=";
-                            //        var isFirst = true;
-                            //        $.each(params.filter, function () {
-                            //            if (!isFirst) {
-                            //                queryString += " and ";
-                            //            }
-                            //            else {
-                            //                isFirst = false;
-                            //            }
-                            //            queryString += this.field + " " + this.operator + " '" + this.value + "'";
-                            //        });
-                            //    }
-
-                            //    // odataBaseUrl was: "/odata/kore/cms/ComparitiveLocalizableStrings/" when I was testing this...
-                            //    return odataBaseUrl + "GetComparitiveTable?" + queryString;
-                            //},
-                            dataType: "json",
-                            contentType: "application/json",
-                            type: "POST"
+                            url: odataBaseUrl + "Default.GetComparitiveTable(cultureCode='" + self.cultureCode + "')",
+                            dataType: "json"
                         },
                         update: {
-                            url: odataBaseUrl + "PutComparitive",
+                            url: odataBaseUrl + "Default.PutComparitive",
                             dataType: "json",
                             contentType: "application/json",
                             type: "POST"
                         },
                         destroy: {
-                            url: odataBaseUrl + "DeleteComparitive",
+                            url: odataBaseUrl + "Default.DeleteComparitive",
                             dataType: "json",
                             contentType: "application/json",
                             type: "POST"
                         },
                         parameterMap: function (options, operation) {
-                            if (operation === "read") {
-                                return kendo.stringify({
-                                    cultureCode: self.cultureCode
-                                });
-                            }
-                            else if (operation === "update") {
+                            //if (operation === "read") {
+                            //    var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            //    if (paramMap.$inlinecount) {
+                            //        if (paramMap.$inlinecount == "allpages") {
+                            //            paramMap.$count = true;
+                            //        }
+                            //        delete paramMap.$inlinecount;
+                            //    }
+                            //    if (paramMap.$filter) {
+                            //        paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                            //    }
+                            //    return paramMap;
+                            //}
+                            //else if (operation === "update") {
+                            if (operation === "update") {
                                 return kendo.stringify({
                                     cultureCode: self.cultureCode,
                                     key: options.Key,
@@ -139,8 +100,8 @@ define(function (require) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data.value.length; // Special case (refer to note in LocalizableStringApiController)
-                            //return data["odata.count"];
+                            return data.value.length;
+                            //return data["@odata.count"];
                         },
                         model: {
                             id: "Key",
@@ -153,13 +114,13 @@ define(function (require) {
                     },
                     batch: false,
                     pageSize: self.gridPageSize,
+                    //serverPaging: true,
+                    //serverFiltering: true,
+                    //serverSorting: true,
                     serverPaging: false,
                     serverFiltering: false,
                     serverSorting: false,
-                    //serverPaging: true,  // Special case (refer to note in LocalizableStringsController)
-                    //serverFiltering: true,
-                    //serverSorting: true,
-                    sort: { field: "Name", dir: "asc" }
+                    sort: { field: "Key", dir: "asc" }
                 },
                 dataBound: function (e) {
                     $(".k-grid-edit").html("Edit");

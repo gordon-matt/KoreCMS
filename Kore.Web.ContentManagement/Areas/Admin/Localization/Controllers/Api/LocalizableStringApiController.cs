@@ -4,16 +4,26 @@ using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using System.Web.Http.OData;
 using System.Web.Http.Results;
+using System.Web.OData;
+using System.Web.OData.Query;
+using System.Web.OData.Routing;
 using Kore.Caching;
-using Kore.Collections;
-using Kore.Data;
 using Kore.Localization.Domain;
 using Kore.Localization.Models;
 using Kore.Localization.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
+
+using Microsoft.OData.Core;
+using Microsoft.OData.Core.UriParser;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Web.Http.Routing;
+using System.Web.OData.Extensions;
+using System.Web.OData.Routing;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
 {
@@ -40,31 +50,69 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
             entity.Id = Guid.NewGuid();
         }
 
-        [EnableQuery]
-        [HttpPost]
-        public virtual IEnumerable<ComparitiveLocalizableString> GetComparitiveTable(ODataActionParameters parameters)
+        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        [HttpGet]
+        public virtual IHttpActionResult GetComparitiveTable([FromODataUri] string cultureCode)
         {
             if (!CheckPermission(ReadPermission))
             {
-                return Enumerable.Empty<ComparitiveLocalizableString>();
+                return Unauthorized();
             }
+            else
+            {
+                var query = Service.Repository.Table
+                        .Where(x => x.CultureCode == null || x.CultureCode == cultureCode)
+                        .GroupBy(x => x.TextKey)
+                        .Select(grp => new ComparitiveLocalizableString
+                        {
+                            Key = grp.Key,
+                            InvariantValue = grp.FirstOrDefault(x => x.CultureCode == null).TextValue,
+                            LocalizedValue = grp.FirstOrDefault(x => x.CultureCode == cultureCode) == null
+                                ? string.Empty
+                                : grp.FirstOrDefault(x => x.CultureCode == cultureCode).TextValue
+                        });
 
-            string cultureCode = (string)parameters["cultureCode"];
-
-            var query = Service.Repository.Table
-                    .Where(x => x.CultureCode == null || x.CultureCode == cultureCode)
-                    .GroupBy(x => x.TextKey)
-                    .Select(grp => new ComparitiveLocalizableString
-                    {
-                        Key = grp.Key,
-                        InvariantValue = grp.FirstOrDefault(x => x.CultureCode == null).TextValue,
-                        LocalizedValue = grp.FirstOrDefault(x => x.CultureCode == cultureCode) == null ? "" : grp.FirstOrDefault(x => x.CultureCode == cultureCode).TextValue
-                    });
-
-            // Since OData v3 doesn't seem to allow filter queries on action methods yet,
-            //  we'll just have to make do with sending all the data to client and filtering & sorting there for this special case
-            return query.ToHashSet();
+                return Ok(query);
+            }
         }
+
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        //[HttpGet]
+        //public virtual PageResult<ComparitiveLocalizableString> GetComparitiveTable(
+        //    [FromODataUri] string cultureCode, ODataQueryOptions<ComparitiveLocalizableString> queryOptions)
+        //{
+        //    if (!CheckPermission(ReadPermission))
+        //    {
+        //        var query = Enumerable.Empty<ComparitiveLocalizableString>().AsQueryable();
+        //        IQueryable results = queryOptions.ApplyTo(query);
+
+        //        return new PageResult<ComparitiveLocalizableString>(
+        //            results as IEnumerable<ComparitiveLocalizableString>,
+        //            Request.ODataProperties().NextLink,
+        //            Request.ODataProperties().TotalCount);
+        //    }
+        //    else
+        //    {
+        //        var query = Service.Repository.Table
+        //                .Where(x => x.CultureCode == null || x.CultureCode == cultureCode)
+        //                .GroupBy(x => x.TextKey)
+        //                .Select(grp => new ComparitiveLocalizableString
+        //                {
+        //                    Key = grp.Key,
+        //                    InvariantValue = grp.FirstOrDefault(x => x.CultureCode == null).TextValue,
+        //                    LocalizedValue = grp.FirstOrDefault(x => x.CultureCode == cultureCode) == null
+        //                        ? string.Empty
+        //                        : grp.FirstOrDefault(x => x.CultureCode == cultureCode).TextValue
+        //                });
+
+        //        IQueryable results = queryOptions.ApplyTo(query);
+
+        //        return new PageResult<ComparitiveLocalizableString>(
+        //            results as IEnumerable<ComparitiveLocalizableString>,
+        //            Request.ODataProperties().NextLink,
+        //            Request.ODataProperties().TotalCount);
+        //    }
+        //}
 
         [HttpPost]
         public virtual IHttpActionResult PutComparitive(ODataActionParameters parameters)

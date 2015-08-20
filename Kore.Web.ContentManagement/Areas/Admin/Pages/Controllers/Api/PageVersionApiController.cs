@@ -260,11 +260,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         }
 
         [HttpPost]
-        public EdmPageVersion GetCurrentVersion(ODataActionParameters parameters)
+        public IHttpActionResult GetCurrentVersion(ODataActionParameters parameters)
         {
             if (!CheckPermission(CmsPermissions.PagesWrite))
             {
-                return new EdmPageVersion();
+                return Unauthorized();
             }
 
             Guid pageId = (Guid)parameters["pageId"];
@@ -278,10 +278,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
             if (currentVersion == null)
             {
-                return new EdmPageVersion();
+                return NotFound();
             }
 
-            return new EdmPageVersion
+            return Ok(new EdmPageVersion
             {
                 Id = currentVersion.Id,
                 PageId = currentVersion.PageId,
@@ -290,7 +290,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 Title = currentVersion.Title,
                 Slug = currentVersion.Slug,
                 Fields = currentVersion.Fields
-            };
+            });
         }
 
         protected override Permission ReadPermission

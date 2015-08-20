@@ -281,7 +281,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 return NotFound();
             }
 
-            return Ok(new EdmPageVersion
+            var pageVersion = new EdmPageVersion
             {
                 Id = currentVersion.Id,
                 PageId = currentVersion.PageId,
@@ -290,7 +290,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 Title = currentVersion.Title,
                 Slug = currentVersion.Slug,
                 Fields = currentVersion.Fields
-            });
+            };
+
+            return Ok(pageVersion);
         }
 
         protected override Permission ReadPermission

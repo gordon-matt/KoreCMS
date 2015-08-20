@@ -113,7 +113,9 @@ define(['jquery', 'jqueryval', 'kendo'], function ($, jqueryval, kendo) {
                         }
                     },
                     batch: false,
-                    pageSize: self.gridPageSize,
+                    // Don't change this to self.gridPageSize. There's a bug with client-side paging. If we set self.gridPageSize here, then paging gets messed up.
+                    //  For more info, see: http://stackoverflow.com/questions/31810484/kendo-grid-misbehaving-in-certain-situations-with-durandal-requirejs?noredirect=1#comment52004513_31810484
+                    pageSize: 15,
                     //serverPaging: true,
                     //serverFiltering: true,
                     //serverSorting: true,

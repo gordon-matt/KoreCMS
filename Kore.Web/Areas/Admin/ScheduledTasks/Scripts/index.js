@@ -92,12 +92,9 @@ function ($, ko, kendo, notify) {
                     },
                     batch: false,
                     pageSize: self.gridPageSize,
-                    serverPaging: false,
-                    serverFiltering: false,
-                    serverSorting: false,
-                    //serverPaging: true,  // Special case
-                    //serverFiltering: true,
-                    //serverSorting: true,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true,
                     sort: { field: "Name", dir: "asc" }
                 },
                 dataBound: function (e) {

@@ -121,7 +121,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             var translateAction = builder.EntityType<PageVersion>().Collection.Action("GetCurrentVersion");
             translateAction.Parameter<Guid>("pageId");
             translateAction.Parameter<string>("cultureCode");
-            translateAction.Returns<EdmPageVersion>();
+            translateAction.Returns<IHttpActionResult>();
         }
 
         private static void RegisterXmlSitemapODataActions(ODataModelBuilder builder)

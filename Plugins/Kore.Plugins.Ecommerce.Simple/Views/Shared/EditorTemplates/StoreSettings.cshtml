@@ -63,7 +63,7 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel(data) {
+    function updateModel(viewModel, data) {
         viewModel.pageTitle = ko.observable("Store");
         viewModel.currency = ko.observable("USD $");
         viewModel.shippingFlatRate = ko.observable(0);
@@ -109,7 +109,7 @@
         }
     };
 
-    function cleanUp() {
+    function cleanUp(viewModel) {
         delete viewModel.pageTitle;
         delete viewModel.currency;
         delete viewModel.shippingFlatRate;
@@ -122,7 +122,7 @@
         delete viewModel.catalogMode;
     }
 
-    function onBeforeSave() {
+    function onBeforeSave(viewModel) {
         var data = {
             PageTitle: viewModel.pageTitle(),
             Currency: viewModel.currency(),

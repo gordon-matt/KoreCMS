@@ -1,9 +1,5 @@
-﻿var viewModel;
-
-define(function (require) {
+﻿define(function (require) {
     'use strict'
-
-    viewModel = null;
 
     var $ = require('jquery');
     var ko = require('knockout');
@@ -120,6 +116,13 @@ define(function (require) {
                     serverSorting: true,
                     sort: { field: "Name", dir: "asc" }
                 },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
+                },
                 filterable: true,
                 sortable: {
                     allowUnsort: false
@@ -153,11 +156,11 @@ define(function (require) {
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a onclick="viewModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + self.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.remove(\'#=Id#\')" class="btn btn-danger btn-xs">' + self.translations.Delete + '</a>' +
+                        '<div class="btn-group"><a data-bind="click: edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.translations.Edit + '</a>' +
+                        '<a data-bind="click: remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.translations.Delete + '</a>' +
                         '<a href="\\#localization/localizable-strings/#=CultureCode#" class="btn btn-primary btn-xs">' + self.translations.Localize + '</a>' +
                         '</div>',
-                    //TODO: '<a onclick="viewModel.setDefault(\'#=Id#\', #=IsEnabled#)" class="btn btn-default btn-xs">Set Default</a></div>',
+                    //TODO: '<a data-bind="click: setDefault.bind($data,\'#=Id#\', #=IsEnabled#)" class="btn btn-default btn-xs">Set Default</a></div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
                     width: 170
@@ -314,6 +317,6 @@ define(function (require) {
         };
     };
 
-    viewModel = new ViewModel();
+    var viewModel = new ViewModel();
     return viewModel;
 });

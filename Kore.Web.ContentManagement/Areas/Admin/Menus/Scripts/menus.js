@@ -1,9 +1,5 @@
-﻿var viewModel;
-
-define(function (require) {
+﻿define(function (require) {
     'use strict'
-
-    viewModel = null;
 
     var $ = require('jquery');
     var ko = require('knockout');
@@ -16,9 +12,10 @@ define(function (require) {
     require('kore-section-switching');
     require('kore-jqueryval');
 
-    var MenuItemModel = function () {
+    var MenuItemModel = function (parent) {
         var self = this;
 
+        self.parent = parent;
         self.id = ko.observable(emptyGuid);
         self.menuId = ko.observable(emptyGuid);
         self.text = ko.observable(null);
@@ -95,9 +92,16 @@ define(function (require) {
                     filter: {
                         logic: "and",
                         filters: [
-                          { field: "MenuId", operator: "eq", value: viewModel.menuModel.id() },
+                          { field: "MenuId", operator: "eq", value: self.parent.menuModel.id() },
                           { field: "ParentId", operator: "eq", value: null }
                         ]
+                    }
+                },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
                     }
                 },
                 filterable: true,
@@ -110,20 +114,20 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "Text",
-                    title: viewModel.translations.Columns.MenuItem.Text,
+                    title: self.parent.translations.Columns.MenuItem.Text,
                     filterable: true
                 }, {
                     field: "Url",
-                    title: viewModel.translations.Columns.MenuItem.Url,
+                    title: self.parent.translations.Columns.MenuItem.Url,
                     filterable: true
                 }, {
                     field: "Position",
-                    title: viewModel.translations.Columns.MenuItem.Position,
+                    title: self.parent.translations.Columns.MenuItem.Position,
                     filterable: true,
                     width: 70
                 }, {
                     field: "Enabled",
-                    title: viewModel.translations.Columns.MenuItem.Enabled,
+                    title: self.parent.translations.Columns.MenuItem.Enabled,
                     template: '<i class="fa #=Enabled ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
                     attributes: { "class": "text-center" },
                     filterable: true,
@@ -132,16 +136,16 @@ define(function (require) {
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a onclick="viewModel.menuItemModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.menuItemModel.remove(\'#=Id#\', null)" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
-                        '<a onclick="viewModel.menuItemModel.create(\'#=MenuId#\', \'#=Id#\')" class="btn btn-primary btn-xs">' + viewModel.translations.NewItem + '</a>' +
-                        '<a onclick="viewModel.menuItemModel.toggleEnabled(\'#=Id#\',\'#=ParentId#\', #=Enabled#)" class="btn btn-default btn-xs">' + viewModel.translations.Toggle + '</a></div>',
+                        '<div class="btn-group"><a data-bind="click: menuItemModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: menuItemModel.remove.bind($data,\'#=Id#\', null)" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
+                        '<a data-bind="click: menuItemModel.create.bind($data,\'#=MenuId#\', \'#=Id#\')" class="btn btn-primary btn-xs">' + self.parent.translations.NewItem + '</a>' +
+                        '<a data-bind="click: menuItemModel.toggleEnabled.bind($data,\'#=Id#\',\'#=ParentId#\', #=Enabled#)" class="btn btn-default btn-xs">' + self.parent.translations.Toggle + '</a></div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
                     width: 220
                 }],
                 detailTemplate: kendo.template($("#items-template").html()),
-                detailInit: viewModel.menuItemModel.detailInit
+                detailInit: self.parent.menuItemModel.detailInit
             });
         };
         self.create = function (menuId, parentId) {
@@ -184,12 +188,12 @@ define(function (require) {
                 switchSection($("#items-edit-section"));
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.remove = function (id, parentId) {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: "/odata/kore/cms/MenuItemApi(" + id + ")",
                     type: "DELETE",
@@ -198,10 +202,10 @@ define(function (require) {
                 })
                 .done(function (json) {
                     self.refreshGrid(parentId);
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -240,10 +244,10 @@ define(function (require) {
                 .done(function (json) {
                     self.refreshGrid(parentId);
                     switchSection($("#items-grid-section"));
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -260,10 +264,10 @@ define(function (require) {
                 .done(function (json) {
                     self.refreshGrid(parentId);
                     switchSection($("#items-grid-section"));
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -289,10 +293,10 @@ define(function (require) {
             })
             .done(function (json) {
                 self.refreshGrid(parentId);
-                $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                $.notify(self.parent.translations.UpdateRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.UpdateRecordError, "error");
+                $.notify(self.parent.translations.UpdateRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
@@ -373,6 +377,13 @@ define(function (require) {
                     sort: { field: "Text", dir: "asc" },
                     filter: { field: "ParentId", operator: "eq", value: e.data.Id }
                 },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
+                },
                 pageable: false,
                 //pageable: {
                 //    refresh: true
@@ -380,20 +391,20 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "Text",
-                    title: viewModel.translations.Columns.MenuItem.Text,
+                    title: self.parent.translations.Columns.MenuItem.Text,
                     filterable: true
                 }, {
                     field: "Url",
-                    title: viewModel.translations.Columns.MenuItem.Url,
+                    title: self.parent.translations.Columns.MenuItem.Url,
                     filterable: true
                 }, {
                     field: "Position",
-                    title: viewModel.translations.Columns.MenuItem.Position,
+                    title: self.parent.translations.Columns.MenuItem.Position,
                     filterable: true,
                     width: 70
                 }, {
                     field: "Enabled",
-                    title: viewModel.translations.Columns.MenuItem.Enabled,
+                    title: self.parent.translations.Columns.MenuItem.Enabled,
                     template: '<i class="fa #=Enabled ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
                     attributes: { "class": "text-center" },
                     filterable: true,
@@ -402,23 +413,24 @@ define(function (require) {
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a onclick="viewModel.menuItemModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.menuItemModel.remove(\'#=Id#\',\'#=ParentId#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
-                        '<a onclick="viewModel.menuItemModel.create(\'#=MenuId#\', \'#=Id#\')" class="btn btn-primary btn-xs">' + viewModel.translations.NewItem + '</a>' +
-                        '<a onclick="viewModel.menuItemModel.toggleEnabled(\'#=Id#\',\'#=ParentId#\', #=Enabled#)" class="btn btn-default btn-xs">' + viewModel.translations.Toggle + '</a></div>',
+                        '<div class="btn-group"><a data-bind="click: menuItemModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: menuItemModel.remove.bind($data,\'#=Id#\',\'#=ParentId#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
+                        '<a data-bind="click: menuItemModel.create.bind($data,\'#=MenuId#\', \'#=Id#\')" class="btn btn-primary btn-xs">' + self.parent.translations.NewItem + '</a>' +
+                        '<a data-bind="click: menuItemModel.toggleEnabled.bind($data,\'#=Id#\',\'#=ParentId#\', #=Enabled#)" class="btn btn-default btn-xs">' + self.parent.translations.Toggle + '</a></div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
                     width: 220
                 }],
                 detailTemplate: kendo.template($("#items-template").html()),
-                detailInit: viewModel.menuItemModel.detailInit
+                detailInit: self.parent.menuItemModel.detailInit
             });
         }
     };
 
-    var MenuModel = function () {
+    var MenuModel = function (parent) {
         var self = this;
 
+        self.parent = parent;
         self.id = ko.observable(emptyGuid);
         self.name = ko.observable(null);
         self.urlFilter = ko.observable(null);
@@ -476,6 +488,13 @@ define(function (require) {
                     serverSorting: true,
                     sort: { field: "Name", dir: "asc" }
                 },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
+                },
                 filterable: true,
                 sortable: {
                     allowUnsort: false
@@ -486,19 +505,19 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "Name",
-                    title: viewModel.translations.Columns.Menu.Name,
+                    title: self.parent.translations.Columns.Menu.Name,
                     filterable: true
                 }, {
                     field: "UrlFilter",
-                    title: viewModel.translations.Columns.Menu.UrlFilter,
+                    title: self.parent.translations.Columns.Menu.UrlFilter,
                     filterable: true
                 }, {
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a onclick="viewModel.menuModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.menuModel.remove(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
-                        '<a onclick="viewModel.menuModel.items(\'#=Id#\')" class="btn btn-primary btn-xs">Items</a>' +
+                        '<div class="btn-group"><a data-bind="click: menuModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: menuModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
+                        '<a data-bind="click: menuModel.items.bind($data,\'#=Id#\')" class="btn btn-primary btn-xs">Items</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -513,7 +532,7 @@ define(function (require) {
 
             self.validator.resetForm();
             switchSection($("#form-section"));
-            $("#form-section-legend").html(viewModel.translations.Create);
+            $("#form-section-legend").html(self.parent.translations.Create);
         };
         self.edit = function (id) {
             $.ajax({
@@ -529,15 +548,15 @@ define(function (require) {
 
                 self.validator.resetForm();
                 switchSection($("#form-section"));
-                $("#form-section-legend").html(viewModel.translations.Edit);
+                $("#form-section-legend").html(self.parent.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.remove = function (id) {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: "/odata/kore/cms/MenuApi(" + id + ")",
                     type: "DELETE",
@@ -547,10 +566,10 @@ define(function (require) {
                     $('#Grid').data('kendoGrid').dataSource.read();
                     $('#Grid').data('kendoGrid').refresh();
 
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -583,10 +602,10 @@ define(function (require) {
 
                     switchSection($("#grid-section"));
 
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -606,10 +625,10 @@ define(function (require) {
 
                     switchSection($("#grid-section"));
 
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -643,8 +662,8 @@ define(function (require) {
         self.menuItemModel = false;
 
         self.activate = function () {
-            self.menuModel = new MenuModel();
-            self.menuItemModel = new MenuItemModel();
+            self.menuModel = new MenuModel(self);
+            self.menuItemModel = new MenuItemModel(self);
         };
         self.attached = function () {
             currentSection = $("#grid-section");
@@ -670,6 +689,6 @@ define(function (require) {
         };
     };
 
-    viewModel = new ViewModel();
+    var viewModel = new ViewModel();
     return viewModel;
 });

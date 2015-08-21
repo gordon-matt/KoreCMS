@@ -1,10 +1,6 @@
-﻿var viewModel;
-
-define(['jquery', 'knockout', 'kendo', 'notify'],
+﻿define(['jquery', 'knockout', 'kendo', 'notify'],
 function ($, ko, kendo, notify) {
     'use strict'
-
-    viewModel = null;
 
     var odataBaseUrl = "/odata/kore/web/ScheduledTaskApi";
 
@@ -98,6 +94,11 @@ function ($, ko, kendo, notify) {
                     sort: { field: "Name", dir: "asc" }
                 },
                 dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
                     $(".k-grid-edit").html("Edit");
                     $(".k-grid-edit").addClass("btn btn-default btn-sm");
                 },
@@ -170,7 +171,7 @@ function ($, ko, kendo, notify) {
                     title: " ",
                     width: 80,
                     filterable: false,
-                    template: '<a onclick="viewModel.runNow(#=Id#)" class="btn btn-primary btn-sm">Run Now</a>'
+                    template: '<a data-bind="click: runNow.bind($data,#=Id#)" class="btn btn-primary btn-sm">Run Now</a>'
                 }, {
                     command: ["edit"],
                     title: "&nbsp;",
@@ -202,6 +203,6 @@ function ($, ko, kendo, notify) {
         };
     }
 
-    viewModel = new ViewModel();
+    var viewModel = new ViewModel();
     return viewModel;
 });

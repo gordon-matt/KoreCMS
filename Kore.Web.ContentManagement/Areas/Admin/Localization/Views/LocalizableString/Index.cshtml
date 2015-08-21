@@ -11,7 +11,7 @@
 
 <div id="grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <a onclick="viewModel.exportFile();" class="btn btn-success">
+        <a data-bind="click: exportFile" class="btn btn-success">
             <i class="kore-icon kore-icon-export"></i>
             @T(KoreWebLocalizableStrings.General.Export)
         </a>

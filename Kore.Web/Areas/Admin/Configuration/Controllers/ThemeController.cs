@@ -34,17 +34,17 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers
             string json = string.Format(
 @"{{
     Set: '{0}',
-    SetDesktopThemeError: '{0}',
-    SetDesktopThemeSuccess: '{0}',
-    SetMobileThemeError: '{0}',
-    SetMobileThemeSuccess: '{0}',
+    SetDesktopThemeError: '{1}',
+    SetDesktopThemeSuccess: '{2}',
+    SetMobileThemeError: '{3}',
+    SetMobileThemeSuccess: '{4}',
 
     Columns: {{
-        IsDefaultDesktopTheme: '{0}',
-        IsDefaultMobileTheme: '{0}',
-        MobileTheme: '{0}',
-        PreviewImageUrl: '{0}',
-        SupportRtl: '{0}'
+        IsDefaultDesktopTheme: '{5}',
+        IsDefaultMobileTheme: '{6}',
+        MobileTheme: '{7}',
+        PreviewImageUrl: '{8}',
+        SupportRtl: '{9}'
     }}
 }}",
    T(KoreWebLocalizableStrings.General.Set),

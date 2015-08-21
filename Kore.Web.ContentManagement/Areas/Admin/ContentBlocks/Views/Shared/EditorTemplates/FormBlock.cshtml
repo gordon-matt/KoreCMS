@@ -52,59 +52,59 @@
 
     var contentBlockModel = (function () {
         var f = {};
-        f.updateModel = function () {
-            viewModel.blockModel.htmlTemplate = ko.observable("");
-            viewModel.blockModel.thankYouMessage = ko.observable("");
-            viewModel.blockModel.redirectUrl = ko.observable("");
-            viewModel.blockModel.emailAddress = ko.observable("");
-            viewModel.blockModel.useAjax = ko.observable(false);
+        f.updateModel = function (blockModel) {
+            blockModel.htmlTemplate = ko.observable("");
+            blockModel.thankYouMessage = ko.observable("");
+            blockModel.redirectUrl = ko.observable("");
+            blockModel.emailAddress = ko.observable("");
+            blockModel.useAjax = ko.observable(false);
 
-            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
+            var data = ko.mapping.fromJSON(blockModel.blockValues());
 
             if (data) {
                 if (data.HtmlTemplate) {
-                    viewModel.blockModel.htmlTemplate(data.HtmlTemplate());
+                    blockModel.htmlTemplate(data.HtmlTemplate());
                 }
                 if (data.ThankYouMessage) {
-                    viewModel.blockModel.thankYouMessage(data.ThankYouMessage());
+                    blockModel.thankYouMessage(data.ThankYouMessage());
                 }
                 if (data.RedirectUrl) {
-                    viewModel.blockModel.redirectUrl(data.RedirectUrl());
+                    blockModel.redirectUrl(data.RedirectUrl());
                 }
                 if (data.EmailAddress) {
-                    viewModel.blockModel.emailAddress(data.EmailAddress());
+                    blockModel.emailAddress(data.EmailAddress());
                 }
                 if (data.UseAjax && typeof data.UseAjax() === 'boolean') {
-                    viewModel.blockModel.useAjax(data.UseAjax());
+                    blockModel.useAjax(data.UseAjax());
                 }
             }
 
-            viewModel.blockModel.tinyMCEConfig = koreDefaultTinyMCEConfig;
+            blockModel.tinyMCEConfig = koreDefaultTinyMCEConfig;
         };
-        f.cleanUp = function () {
-            delete viewModel.blockModel.htmlTemplate;
-            delete viewModel.blockModel.thankYouMessage;
-            delete viewModel.blockModel.redirectUrl;
-            delete viewModel.blockModel.emailAddress;
-            delete viewModel.blockModel.useAjax;
-            delete viewModel.blockModel.tinyMCEConfig;
+        f.cleanUp= function (blockModel) {
+            delete blockModel.htmlTemplate;
+            delete blockModel.thankYouMessage;
+            delete blockModel.redirectUrl;
+            delete blockModel.emailAddress;
+            delete blockModel.useAjax;
+            delete blockModel.tinyMCEConfig;
         };
-        f.onBeforeSave = function () {
+        f.onBeforeSave = function (blockModel) {
 
-            var thankYouMessage = viewModel.blockModel.thankYouMessage();
-            if (viewModel.blockModel.useAjax()) {
+            var thankYouMessage = blockModel.thankYouMessage();
+            if (blockModel.useAjax()) {
                 thankYouMessage = stripHTML(thankYouMessage);
             }
 
             var data = {
-                HtmlTemplate: viewModel.blockModel.htmlTemplate(),
+                HtmlTemplate: blockModel.htmlTemplate(),
                 ThankYouMessage: thankYouMessage,
-                RedirectUrl: viewModel.blockModel.redirectUrl(),
-                EmailAddress: viewModel.blockModel.emailAddress(),
-                UseAjax: viewModel.blockModel.useAjax()
+                RedirectUrl: blockModel.redirectUrl(),
+                EmailAddress: blockModel.emailAddress(),
+                UseAjax: blockModel.useAjax()
             };
 
-            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
+            blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

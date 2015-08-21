@@ -1,9 +1,5 @@
-﻿var viewModel;
-
-define(function (require) {
+﻿define(function (require) {
     'use strict'
-
-    viewModel = null;
 
     var $ = require('jquery');
     var ko = require('knockout');
@@ -20,9 +16,10 @@ define(function (require) {
     var slideApiUrl = "/odata/kore/revolution-slider/RevolutionSlideApi";
     var layerApiUrl = "/odata/kore/revolution-slider/RevolutionLayerApi";
 
-    var SliderModel = function () {
+    var SliderModel = function (parent) {
         var self = this;
 
+        self.parent = parent;
         self.id = ko.observable(0);
         self.name = ko.observable(null);
 
@@ -71,11 +68,18 @@ define(function (require) {
                             }
                         }
                     },
-                    pageSize: viewModel.gridPageSize,
+                    pageSize: self.parent.gridPageSize,
                     serverPaging: true,
                     serverFiltering: true,
                     serverSorting: true,
                     sort: { field: "Name", dir: "asc" }
+                },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
                 },
                 filterable: true,
                 sortable: {
@@ -87,16 +91,16 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "Name",
-                    title: viewModel.translations.Columns.Slider.Name,
+                    title: self.parent.translations.Columns.Slider.Name,
                     filterable: true
                 }, {
                     field: "Id",
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a onclick="viewModel.slider.edit(#=Id#)" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.slider.remove(#=Id#)" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
-                        '<a onclick="viewModel.showSlides(#=Id#)" class="btn btn-info btn-xs">' + viewModel.translations.Slides + '</a>' +
+                        '<a data-bind="click: slider.edit.bind($data,#=Id#)" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: slider.remove.bind($data,#=Id#)" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
+                        '<a data-bind="click: showSlides.bind($data,#=Id#)" class="btn btn-info btn-xs">' + self.parent.translations.Slides + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -110,7 +114,7 @@ define(function (require) {
 
             self.validator.resetForm();
             switchSection($("#sliders-form-section"));
-            $("#sliders-form-section-legend").html(viewModel.translations.Create);
+            $("#sliders-form-section-legend").html(self.parent.translations.Create);
         };
         self.edit = function (id) {
             $.ajax({
@@ -125,15 +129,15 @@ define(function (require) {
 
                 self.validator.resetForm();
                 switchSection($("#sliders-form-section"));
-                $("#sliders-form-section-legend").html(viewModel.translations.Edit);
+                $("#sliders-form-section-legend").html(self.parent.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.remove = function (id) {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: sliderApiUrl + "(" + id + ")",
                     type: "DELETE",
@@ -143,10 +147,10 @@ define(function (require) {
                 .done(function (json) {
                     $('#SliderGrid').data('kendoGrid').dataSource.read();
                     $('#SliderGrid').data('kendoGrid').refresh();
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -178,10 +182,10 @@ define(function (require) {
 
                     switchSection($("#sliders-grid-section"));
 
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -200,10 +204,10 @@ define(function (require) {
 
                     switchSection($("#sliders-grid-section"));
 
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -213,9 +217,10 @@ define(function (require) {
         };
     };
 
-    var SlideModel = function () {
+    var SlideModel = function (parent) {
         var self = this;
 
+        self.parent = parent;
         self.id = ko.observable(0);
         self.sliderId = ko.observable(0);
         self.order = ko.observable(0);
@@ -291,11 +296,18 @@ define(function (require) {
                             }
                         }
                     },
-                    pageSize: viewModel.gridPageSize,
+                    pageSize: self.parent.gridPageSize,
                     serverPaging: true,
                     serverFiltering: true,
                     serverSorting: true,
                     sort: { field: "Order", dir: "asc" }
+                },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
                 },
                 filterable: true,
                 sortable: {
@@ -307,25 +319,25 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "Order",
-                    title: viewModel.translations.Columns.Slide.Order,
+                    title: self.parent.translations.Columns.Slide.Order,
                     filterable: true,
                     width: 50
                 }, {
                     field: "Title",
-                    title: viewModel.translations.Columns.Slide.Title,
+                    title: self.parent.translations.Columns.Slide.Title,
                     filterable: true
                 }, {
                     field: "Link",
-                    title: viewModel.translations.Columns.Slide.Link,
+                    title: self.parent.translations.Columns.Slide.Link,
                     filterable: true
                 }, {
                     field: "Id",
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a onclick="viewModel.slide.edit(#=Id#)" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.slide.remove(#=Id#)" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
-                        '<a onclick="viewModel.showLayers(#=Id#)" class="btn btn-info btn-xs">' + viewModel.translations.Layers + '</a>' +
+                        '<a data-bind="click: slide.edit.bind($data,#=Id#)" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: slide.remove.bind($data,#=Id#)" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
+                        '<a data-bind="click: showLayers.bind($data,#=Id#)" class="btn btn-info btn-xs">' + self.parent.translations.Layers + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -335,7 +347,7 @@ define(function (require) {
         };
         self.create = function () {
             self.id(0);
-            self.sliderId(viewModel.selectedSliderId());
+            self.sliderId(self.parent.selectedSliderId());
             self.order(0);
             self.transition(null);
             self.randomTransition(false);
@@ -362,7 +374,7 @@ define(function (require) {
             self.isEditMode(false);
             self.validator.resetForm();
             switchSection($("#slides-form-section"));
-            $("#slides-form-section-legend").html(viewModel.translations.Create);
+            $("#slides-form-section-legend").html(self.parent.translations.Create);
         };
         self.edit = function (id) {
             $.ajax({
@@ -401,15 +413,15 @@ define(function (require) {
 
                 self.validator.resetForm();
                 switchSection($("#slides-form-section"));
-                $("#slides-form-section-legend").html(viewModel.translations.Edit);
+                $("#slides-form-section-legend").html(self.parent.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.remove = function (id) {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: slideApiUrl + "(" + id + ")",
                     type: "DELETE",
@@ -419,10 +431,10 @@ define(function (require) {
                     $('#SlideGrid').data('kendoGrid').dataSource.read();
                     $('#SlideGrid').data('kendoGrid').refresh();
 
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -474,10 +486,10 @@ define(function (require) {
                     $('#SlideGrid').data('kendoGrid').refresh();
 
                     switchSection($("#slides-grid-section"));
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -497,10 +509,10 @@ define(function (require) {
 
                     switchSection($("#slides-grid-section"));
 
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -513,9 +525,10 @@ define(function (require) {
         };
     };
 
-    var LayerModel = function () {
+    var LayerModel = function (parent) {
         var self = this;
 
+        self.parent = parent;
         self.id = ko.observable(0);
         self.slideId = ko.observable(0);
         self.captionText = ko.observable(null);
@@ -628,11 +641,18 @@ define(function (require) {
                             }
                         }
                     },
-                    pageSize: viewModel.gridPageSize,
+                    pageSize: self.parent.gridPageSize,
                     serverPaging: true,
                     serverFiltering: true,
                     serverSorting: true,
                     sort: { field: "Start", dir: "asc" }
+                },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
                 },
                 filterable: true,
                 sortable: {
@@ -644,31 +664,31 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "Start",
-                    title: viewModel.translations.Columns.Layer.Start,
+                    title: self.parent.translations.Columns.Layer.Start,
                     filterable: true
                 }, {
                     field: "Speed",
-                    title: viewModel.translations.Columns.Layer.Speed,
+                    title: self.parent.translations.Columns.Layer.Speed,
                     filterable: true
                 }, {
                     field: "CaptionText",
-                    title: viewModel.translations.Columns.Layer.CaptionText,
+                    title: self.parent.translations.Columns.Layer.CaptionText,
                     filterable: true
                 }, {
                     field: "X",
-                    title: viewModel.translations.Columns.Layer.X,
+                    title: self.parent.translations.Columns.Layer.X,
                     filterable: true
                 }, {
                     field: "Y",
-                    title: viewModel.translations.Columns.Layer.Y,
+                    title: self.parent.translations.Columns.Layer.Y,
                     filterable: true
                 }, {
                     field: "Id",
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a onclick="viewModel.layer.edit(#=Id#)" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.layer.remove(#=Id#)" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
+                        '<a data-bind="click: layer.edit.bind($data,#=Id#)" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: layer.remove.bind($data,#=Id#)" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -678,7 +698,7 @@ define(function (require) {
         };
         self.create = function () {
             self.id(0);
-            self.slideId(viewModel.selectedSlideId());
+            self.slideId(self.parent.selectedSlideId());
             self.captionText(null);
             self.styleClass(null);
             self.incomingAnimation(null);
@@ -723,7 +743,7 @@ define(function (require) {
 
             self.validator.resetForm();
             switchSection($("#layers-form-section"));
-            $("#layers-form-section-legend").html(viewModel.translations.Create);
+            $("#layers-form-section-legend").html(self.parent.translations.Create);
         };
         self.edit = function (id) {
             $.ajax({
@@ -779,15 +799,15 @@ define(function (require) {
 
                 self.validator.resetForm();
                 switchSection($("#layers-form-section"));
-                $("#layers-form-section-legend").html(viewModel.translations.Edit);
+                $("#layers-form-section-legend").html(self.parent.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.remove = function (id) {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: layerApiUrl + "(" + id + ")",
                     type: "DELETE",
@@ -797,10 +817,10 @@ define(function (require) {
                 .done(function (json) {
                     $('#LayerGrid').data('kendoGrid').dataSource.read();
                     $('#LayerGrid').data('kendoGrid').refresh();
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -899,10 +919,10 @@ define(function (require) {
 
                     switchSection($("#layers-grid-section"));
 
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -921,10 +941,10 @@ define(function (require) {
 
                     switchSection($("#layers-grid-section"));
 
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -953,9 +973,9 @@ define(function (require) {
         self.modalDismissed = false;
 
         self.activate = function () {
-            self.slider = new SliderModel();
-            self.slide = new SlideModel();
-            self.layer = new LayerModel();
+            self.slider = new SliderModel(self);
+            self.slide = new SlideModel(self);
+            self.layer = new LayerModel(self);
         };
         self.attached = function () {
             currentSection = $("#sliders-grid-section");
@@ -1043,6 +1063,6 @@ define(function (require) {
         };
     };
 
-    viewModel = new ViewModel();
+    var viewModel = new ViewModel();
     return viewModel;
 });

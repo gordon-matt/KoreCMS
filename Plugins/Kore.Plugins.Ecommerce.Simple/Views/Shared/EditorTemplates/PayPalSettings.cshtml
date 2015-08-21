@@ -39,7 +39,7 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel(data) {
+    function updateModel(viewModel, data) {
         viewModel.productionUrl = ko.observable("https://www.paypal.com/us/cgi-bin/webscr");
         viewModel.sandboxUrl = ko.observable("https://www.sandbox.paypal.com/cgi-bin/webscr");
         viewModel.useSandboxMode = ko.observable(true);
@@ -69,7 +69,7 @@
         }
     };
 
-    function cleanUp() {
+    function cleanUp(viewModel) {
         delete viewModel.productionUrl;
         delete viewModel.sandboxUrl;
         delete viewModel.useSandboxMode;
@@ -78,7 +78,7 @@
         delete viewModel.pdtToken;
     }
 
-    function onBeforeSave() {
+    function onBeforeSave(viewModel) {
         var data = {
             ProductionUrl: viewModel.productionUrl(),
             SandboxUrl: viewModel.sandboxUrl(),

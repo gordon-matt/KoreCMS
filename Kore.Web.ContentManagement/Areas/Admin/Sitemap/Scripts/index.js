@@ -1,10 +1,6 @@
-﻿var viewModel;
-
-//define(function (require) {
+﻿//define(function (require) {
 define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify) {
     'use strict'
-
-    viewModel = null;
 
     //var $ = require('jquery');
     //var ko = require('knockout');
@@ -115,6 +111,12 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
                     sort: { field: "Location", dir: "asc" }
                 },
                 dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
+
                     $(".k-grid-edit").html("Edit");
                     $(".k-grid-edit").addClass("btn btn-default btn-sm");
                 },
@@ -211,6 +213,6 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
         }
     };
 
-    viewModel = new ViewModel();
+    var viewModel = new ViewModel();
     return viewModel;
 });

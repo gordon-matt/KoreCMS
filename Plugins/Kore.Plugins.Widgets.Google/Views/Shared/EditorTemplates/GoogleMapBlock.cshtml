@@ -36,13 +36,13 @@
 <script type="text/javascript">
     var contentBlockModel = (function () {
         var f = {};
-        f.updateModel = function () {
-            viewModel.blockModel.latitude = ko.observable(0);
-            viewModel.blockModel.longitude = ko.observable(0);
-            viewModel.blockModel.zoom = ko.observable(0);
-            viewModel.blockModel.height = ko.observable(0);
+        f.updateModel = function (blockModel) {
+            blockModel.latitude = ko.observable(0);
+            blockModel.longitude = ko.observable(0);
+            blockModel.zoom = ko.observable(0);
+            blockModel.height = ko.observable(0);
 
-            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
+            var data = ko.mapping.fromJSON(blockModel.blockValues());
 
             if ((isFunction(data) && data()) || data) {
                 if (data.Latitude == undefined) {
@@ -50,34 +50,34 @@
                     return;
                 }
                 if (data.Latitude) {
-                    viewModel.blockModel.latitude(data.Latitude());
+                    blockModel.latitude(data.Latitude());
                 }
                 if (data.Longitude) {
-                    viewModel.blockModel.longitude(data.Longitude());
+                    blockModel.longitude(data.Longitude());
                 }
                 if (data.Zoom) {
-                    viewModel.blockModel.zoom(data.Zoom());
+                    blockModel.zoom(data.Zoom());
                 }
                 if (data.Height) {
-                    viewModel.blockModel.height(data.Height());
+                    blockModel.height(data.Height());
                 }
             }
         };
-        f.cleanUp = function () {
-            delete viewModel.blockModel.latitude;
-            delete viewModel.blockModel.longitude;
-            delete viewModel.blockModel.zoom;
-            delete viewModel.blockModel.height;
+        f.cleanUp= function (blockModel) {
+            delete blockModel.latitude;
+            delete blockModel.longitude;
+            delete blockModel.zoom;
+            delete blockModel.height;
         };
-        f.onBeforeSave = function () {
+        f.onBeforeSave = function (blockModel) {
             var data = {
-                Latitude: viewModel.blockModel.latitude(),
-                Longitude: viewModel.blockModel.longitude(),
-                Zoom: viewModel.blockModel.zoom(),
-                Height: viewModel.blockModel.height()
+                Latitude: blockModel.latitude(),
+                Longitude: blockModel.longitude(),
+                Zoom: blockModel.zoom(),
+                Height: blockModel.height()
             };
 
-            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
+            blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

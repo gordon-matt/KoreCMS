@@ -522,271 +522,271 @@
 <script type="text/javascript">
     var contentBlockModel = (function () {
         var f = {};
-        f.updateModel = function () {
-            viewModel.blockModel.sliderId = ko.observable(0);
-            viewModel.blockModel.controlId = ko.observable("revolution-slider");
-            viewModel.blockModel.delay = ko.observable(9000);
-            viewModel.blockModel.startHeight = ko.observable(500);
-            viewModel.blockModel.startWidth = ko.observable(960);
-            viewModel.blockModel.shuffle = ko.observable(false);
-            viewModel.blockModel.keyboardNavigation = ko.observable(true);
-            viewModel.blockModel.onHoverStop = ko.observable(true);
-            viewModel.blockModel.thumbWidth = ko.observable(100);
-            viewModel.blockModel.thumbHeight = ko.observable(50);
-            viewModel.blockModel.thumbAmount = ko.observable(3);
-            viewModel.blockModel.hideThumbs = ko.observable(0);
-            viewModel.blockModel.navigationType = ko.observable(1); // Bullet
-            viewModel.blockModel.navigationArrows = ko.observable(1); // Solo
-            viewModel.blockModel.navigationStyle = ko.observable(4); // Round
-            viewModel.blockModel.navigationHAlign = ko.observable(1); // Center
-            viewModel.blockModel.navigationVAlign = ko.observable(2); // Bottom
-            viewModel.blockModel.navigationHOffset = ko.observable(30);
-            viewModel.blockModel.navigationVOffset = ko.observable(30);
-            viewModel.blockModel.soloArrowLeftHAlign = ko.observable(0); // Left
-            viewModel.blockModel.soloArrowRightHAlign = ko.observable(2); // Right
-            viewModel.blockModel.soloArrowLeftVAlign = ko.observable(1); // Center
-            viewModel.blockModel.soloArrowRightVAlign = ko.observable(1); // Center
-            viewModel.blockModel.soloArrowLeftHOffset = ko.observable(20);
-            viewModel.blockModel.soloArrowRightHOffset = ko.observable(20);
-            viewModel.blockModel.soloArrowLeftVOffset = ko.observable(0);
-            viewModel.blockModel.soloArrowRightVOffset = ko.observable(0);
-            viewModel.blockModel.touchEnabled = ko.observable(true);
-            viewModel.blockModel.swipeVelocity = ko.observable(0.7);
-            viewModel.blockModel.swipeMaxTouches = ko.observable(1);
-            viewModel.blockModel.swipeMinTouches = ko.observable(1);
-            viewModel.blockModel.dragBlockVertical = ko.observable(false);
-            viewModel.blockModel.startWithSlide = ko.observable(0);
-            viewModel.blockModel.stopAtSlide = ko.observable(-1);
-            viewModel.blockModel.stopAfterLoops = ko.observable(-1);
-            viewModel.blockModel.hideCaptionAtLimit = ko.observable(0);
-            viewModel.blockModel.hideAllCaptionAtLimit = ko.observable(0);
-            viewModel.blockModel.hideSliderAtLimit = ko.observable(0);
-            viewModel.blockModel.hideNavDelayOnMobile = ko.observable(1500);
-            viewModel.blockModel.hideThumbsOnMobile = ko.observable(false);
-            viewModel.blockModel.hideBulletsOnMobile = ko.observable(false);
-            viewModel.blockModel.hideArrowsOnMobile = ko.observable(false);
-            viewModel.blockModel.hideThumbsUnderResolution = ko.observable(0);
-            viewModel.blockModel.spinner = ko.observable(3); // Spinner4
-            viewModel.blockModel.hideTimerBar = ko.observable(false);
-            viewModel.blockModel.fullWidth = ko.observable(false);
-            viewModel.blockModel.autoHeight = ko.observable(false);
-            viewModel.blockModel.minHeight = ko.observable(false);
-            viewModel.blockModel.fullScreenAlignForce = ko.observable(false);
-            viewModel.blockModel.forceFullWidth = ko.observable(false);
-            viewModel.blockModel.fullScreen = ko.observable(false);
-            viewModel.blockModel.fullScreenOffsetContainer = ko.observable(null);
-            viewModel.blockModel.fullScreenOffset = ko.observable(0);
-            viewModel.blockModel.fullScreenOffsetUnit = ko.observable(0); // Pixels
-            viewModel.blockModel.shadow = ko.observable(0);
-            viewModel.blockModel.dottedOverlay = ko.observable(0); // None
-            viewModel.blockModel.parallax = ko.observable(0); // Mouse
-            viewModel.blockModel.parallaxBgFreeze = ko.observable(true);
-            viewModel.blockModel.parallaxLevels = ko.observable("10,7,4,3,2,5,4,3,2,1");
-            viewModel.blockModel.parallaxDisableOnMobile = ko.observable(false);
-            viewModel.blockModel.panZoomDisableOnMobile = ko.observable(false);
-            viewModel.blockModel.simplifyAll = ko.observable(false);
+        f.updateModel = function (blockModel) {
+            blockModel.sliderId = ko.observable(0);
+            blockModel.controlId = ko.observable("revolution-slider");
+            blockModel.delay = ko.observable(9000);
+            blockModel.startHeight = ko.observable(500);
+            blockModel.startWidth = ko.observable(960);
+            blockModel.shuffle = ko.observable(false);
+            blockModel.keyboardNavigation = ko.observable(true);
+            blockModel.onHoverStop = ko.observable(true);
+            blockModel.thumbWidth = ko.observable(100);
+            blockModel.thumbHeight = ko.observable(50);
+            blockModel.thumbAmount = ko.observable(3);
+            blockModel.hideThumbs = ko.observable(0);
+            blockModel.navigationType = ko.observable(1); // Bullet
+            blockModel.navigationArrows = ko.observable(1); // Solo
+            blockModel.navigationStyle = ko.observable(4); // Round
+            blockModel.navigationHAlign = ko.observable(1); // Center
+            blockModel.navigationVAlign = ko.observable(2); // Bottom
+            blockModel.navigationHOffset = ko.observable(30);
+            blockModel.navigationVOffset = ko.observable(30);
+            blockModel.soloArrowLeftHAlign = ko.observable(0); // Left
+            blockModel.soloArrowRightHAlign = ko.observable(2); // Right
+            blockModel.soloArrowLeftVAlign = ko.observable(1); // Center
+            blockModel.soloArrowRightVAlign = ko.observable(1); // Center
+            blockModel.soloArrowLeftHOffset = ko.observable(20);
+            blockModel.soloArrowRightHOffset = ko.observable(20);
+            blockModel.soloArrowLeftVOffset = ko.observable(0);
+            blockModel.soloArrowRightVOffset = ko.observable(0);
+            blockModel.touchEnabled = ko.observable(true);
+            blockModel.swipeVelocity = ko.observable(0.7);
+            blockModel.swipeMaxTouches = ko.observable(1);
+            blockModel.swipeMinTouches = ko.observable(1);
+            blockModel.dragBlockVertical = ko.observable(false);
+            blockModel.startWithSlide = ko.observable(0);
+            blockModel.stopAtSlide = ko.observable(-1);
+            blockModel.stopAfterLoops = ko.observable(-1);
+            blockModel.hideCaptionAtLimit = ko.observable(0);
+            blockModel.hideAllCaptionAtLimit = ko.observable(0);
+            blockModel.hideSliderAtLimit = ko.observable(0);
+            blockModel.hideNavDelayOnMobile = ko.observable(1500);
+            blockModel.hideThumbsOnMobile = ko.observable(false);
+            blockModel.hideBulletsOnMobile = ko.observable(false);
+            blockModel.hideArrowsOnMobile = ko.observable(false);
+            blockModel.hideThumbsUnderResolution = ko.observable(0);
+            blockModel.spinner = ko.observable(3); // Spinner4
+            blockModel.hideTimerBar = ko.observable(false);
+            blockModel.fullWidth = ko.observable(false);
+            blockModel.autoHeight = ko.observable(false);
+            blockModel.minHeight = ko.observable(false);
+            blockModel.fullScreenAlignForce = ko.observable(false);
+            blockModel.forceFullWidth = ko.observable(false);
+            blockModel.fullScreen = ko.observable(false);
+            blockModel.fullScreenOffsetContainer = ko.observable(null);
+            blockModel.fullScreenOffset = ko.observable(0);
+            blockModel.fullScreenOffsetUnit = ko.observable(0); // Pixels
+            blockModel.shadow = ko.observable(0);
+            blockModel.dottedOverlay = ko.observable(0); // None
+            blockModel.parallax = ko.observable(0); // Mouse
+            blockModel.parallaxBgFreeze = ko.observable(true);
+            blockModel.parallaxLevels = ko.observable("10,7,4,3,2,5,4,3,2,1");
+            blockModel.parallaxDisableOnMobile = ko.observable(false);
+            blockModel.panZoomDisableOnMobile = ko.observable(false);
+            blockModel.simplifyAll = ko.observable(false);
 
-            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
+            var data = ko.mapping.fromJSON(blockModel.blockValues());
 
             if ((isFunction(data) && data()) || data) {
                 if (data.SliderId == undefined) {
                     // If this is not set, it means the contentBlock is new and we have nothing in blockValues
                     return;
                 }
-                viewModel.blockModel.sliderId(data.SliderId());
-                viewModel.blockModel.controlId(data.ControlId());
-                viewModel.blockModel.delay(data.Delay());
-                viewModel.blockModel.startHeight(data.StartHeight());
-                viewModel.blockModel.startWidth(data.StartWidth());
-                viewModel.blockModel.shuffle(data.Shuffle());
-                viewModel.blockModel.keyboardNavigation(data.KeyboardNavigation());
-                viewModel.blockModel.onHoverStop(data.OnHoverStop());
-                viewModel.blockModel.thumbWidth(data.ThumbWidth());
-                viewModel.blockModel.thumbHeight(data.ThumbHeight());
-                viewModel.blockModel.thumbAmount(data.ThumbAmount());
-                viewModel.blockModel.hideThumbs(data.HideThumbs());
-                viewModel.blockModel.navigationType(data.NavigationType());
-                viewModel.blockModel.navigationArrows(data.NavigationArrows());
-                viewModel.blockModel.navigationStyle(data.NavigationStyle());
-                viewModel.blockModel.navigationHAlign(data.NavigationHAlign());
-                viewModel.blockModel.navigationVAlign(data.NavigationVAlign());
-                viewModel.blockModel.navigationHOffset(data.NavigationHOffset());
-                viewModel.blockModel.navigationVOffset(data.NavigationVOffset());
-                viewModel.blockModel.soloArrowLeftHAlign(data.SoloArrowLeftHAlign());
-                viewModel.blockModel.soloArrowRightHAlign(data.SoloArrowRightHAlign());
-                viewModel.blockModel.soloArrowLeftVAlign(data.SoloArrowLeftVAlign());
-                viewModel.blockModel.soloArrowRightVAlign(data.SoloArrowRightVAlign());
-                viewModel.blockModel.soloArrowLeftHOffset(data.SoloArrowLeftHOffset());
-                viewModel.blockModel.soloArrowRightHOffset(data.SoloArrowRightHOffset());
-                viewModel.blockModel.soloArrowLeftVOffset(data.SoloArrowLeftVOffset());
-                viewModel.blockModel.soloArrowRightVOffset(data.SoloArrowRightVOffset());
-                viewModel.blockModel.touchEnabled(data.TouchEnabled());
-                viewModel.blockModel.swipeVelocity(data.SwipeVelocity());
-                viewModel.blockModel.swipeMaxTouches(data.SwipeMaxTouches());
-                viewModel.blockModel.swipeMinTouches(data.SwipeMinTouches());
-                viewModel.blockModel.dragBlockVertical(data.DragBlockVertical());
-                viewModel.blockModel.startWithSlide(data.StartWithSlide());
-                viewModel.blockModel.stopAtSlide(data.StopAtSlide());
-                viewModel.blockModel.stopAfterLoops(data.StopAfterLoops());
-                viewModel.blockModel.hideCaptionAtLimit(data.HideCaptionAtLimit());
-                viewModel.blockModel.hideAllCaptionAtLimit(data.HideAllCaptionAtLimit());
-                viewModel.blockModel.hideSliderAtLimit(data.HideSliderAtLimit());
-                viewModel.blockModel.hideNavDelayOnMobile(data.HideNavDelayOnMobile());
-                viewModel.blockModel.hideThumbsOnMobile(data.HideThumbsOnMobile());
-                viewModel.blockModel.hideBulletsOnMobile(data.HideBulletsOnMobile());
-                viewModel.blockModel.hideArrowsOnMobile(data.HideArrowsOnMobile());
-                viewModel.blockModel.hideThumbsUnderResolution(data.HideThumbsUnderResolution());
-                viewModel.blockModel.spinner(data.Spinner());
-                viewModel.blockModel.hideTimerBar(data.HideTimerBar());
-                viewModel.blockModel.fullWidth(data.FullWidth());
-                viewModel.blockModel.autoHeight(data.AutoHeight());
-                viewModel.blockModel.minHeight(data.MinHeight());
-                viewModel.blockModel.fullScreenAlignForce(data.FullScreenAlignForce());
-                viewModel.blockModel.forceFullWidth(data.ForceFullWidth());
-                viewModel.blockModel.fullScreen(data.FullScreen());
-                viewModel.blockModel.fullScreenOffsetContainer(data.FullScreenOffsetContainer());
-                viewModel.blockModel.fullScreenOffset(data.FullScreenOffset());
-                viewModel.blockModel.fullScreenOffsetUnit(data.FullScreenOffsetUnit());
-                viewModel.blockModel.shadow(data.Shadow());
-                viewModel.blockModel.dottedOverlay(data.DottedOverlay());
-                viewModel.blockModel.parallax(data.Parallax());
-                viewModel.blockModel.parallaxBgFreeze(data.ParallaxBgFreeze());
-                viewModel.blockModel.parallaxLevels(data.ParallaxLevels());
-                viewModel.blockModel.parallaxDisableOnMobile(data.ParallaxDisableOnMobile());
-                viewModel.blockModel.panZoomDisableOnMobile(data.PanZoomDisableOnMobile());
-                viewModel.blockModel.simplifyAll(data.SimplifyAll());
+                blockModel.sliderId(data.SliderId());
+                blockModel.controlId(data.ControlId());
+                blockModel.delay(data.Delay());
+                blockModel.startHeight(data.StartHeight());
+                blockModel.startWidth(data.StartWidth());
+                blockModel.shuffle(data.Shuffle());
+                blockModel.keyboardNavigation(data.KeyboardNavigation());
+                blockModel.onHoverStop(data.OnHoverStop());
+                blockModel.thumbWidth(data.ThumbWidth());
+                blockModel.thumbHeight(data.ThumbHeight());
+                blockModel.thumbAmount(data.ThumbAmount());
+                blockModel.hideThumbs(data.HideThumbs());
+                blockModel.navigationType(data.NavigationType());
+                blockModel.navigationArrows(data.NavigationArrows());
+                blockModel.navigationStyle(data.NavigationStyle());
+                blockModel.navigationHAlign(data.NavigationHAlign());
+                blockModel.navigationVAlign(data.NavigationVAlign());
+                blockModel.navigationHOffset(data.NavigationHOffset());
+                blockModel.navigationVOffset(data.NavigationVOffset());
+                blockModel.soloArrowLeftHAlign(data.SoloArrowLeftHAlign());
+                blockModel.soloArrowRightHAlign(data.SoloArrowRightHAlign());
+                blockModel.soloArrowLeftVAlign(data.SoloArrowLeftVAlign());
+                blockModel.soloArrowRightVAlign(data.SoloArrowRightVAlign());
+                blockModel.soloArrowLeftHOffset(data.SoloArrowLeftHOffset());
+                blockModel.soloArrowRightHOffset(data.SoloArrowRightHOffset());
+                blockModel.soloArrowLeftVOffset(data.SoloArrowLeftVOffset());
+                blockModel.soloArrowRightVOffset(data.SoloArrowRightVOffset());
+                blockModel.touchEnabled(data.TouchEnabled());
+                blockModel.swipeVelocity(data.SwipeVelocity());
+                blockModel.swipeMaxTouches(data.SwipeMaxTouches());
+                blockModel.swipeMinTouches(data.SwipeMinTouches());
+                blockModel.dragBlockVertical(data.DragBlockVertical());
+                blockModel.startWithSlide(data.StartWithSlide());
+                blockModel.stopAtSlide(data.StopAtSlide());
+                blockModel.stopAfterLoops(data.StopAfterLoops());
+                blockModel.hideCaptionAtLimit(data.HideCaptionAtLimit());
+                blockModel.hideAllCaptionAtLimit(data.HideAllCaptionAtLimit());
+                blockModel.hideSliderAtLimit(data.HideSliderAtLimit());
+                blockModel.hideNavDelayOnMobile(data.HideNavDelayOnMobile());
+                blockModel.hideThumbsOnMobile(data.HideThumbsOnMobile());
+                blockModel.hideBulletsOnMobile(data.HideBulletsOnMobile());
+                blockModel.hideArrowsOnMobile(data.HideArrowsOnMobile());
+                blockModel.hideThumbsUnderResolution(data.HideThumbsUnderResolution());
+                blockModel.spinner(data.Spinner());
+                blockModel.hideTimerBar(data.HideTimerBar());
+                blockModel.fullWidth(data.FullWidth());
+                blockModel.autoHeight(data.AutoHeight());
+                blockModel.minHeight(data.MinHeight());
+                blockModel.fullScreenAlignForce(data.FullScreenAlignForce());
+                blockModel.forceFullWidth(data.ForceFullWidth());
+                blockModel.fullScreen(data.FullScreen());
+                blockModel.fullScreenOffsetContainer(data.FullScreenOffsetContainer());
+                blockModel.fullScreenOffset(data.FullScreenOffset());
+                blockModel.fullScreenOffsetUnit(data.FullScreenOffsetUnit());
+                blockModel.shadow(data.Shadow());
+                blockModel.dottedOverlay(data.DottedOverlay());
+                blockModel.parallax(data.Parallax());
+                blockModel.parallaxBgFreeze(data.ParallaxBgFreeze());
+                blockModel.parallaxLevels(data.ParallaxLevels());
+                blockModel.parallaxDisableOnMobile(data.ParallaxDisableOnMobile());
+                blockModel.panZoomDisableOnMobile(data.PanZoomDisableOnMobile());
+                blockModel.simplifyAll(data.SimplifyAll());
             }
         };
-        f.cleanUp = function () {
-            delete viewModel.blockModel.sliderId;
-            delete viewModel.blockModel.controlId;
-            delete viewModel.blockModel.delay;
-            delete viewModel.blockModel.startHeight;
-            delete viewModel.blockModel.startWidth;
-            delete viewModel.blockModel.shuffle;
-            delete viewModel.blockModel.keyboardNavigation;
-            delete viewModel.blockModel.onHoverStop;
-            delete viewModel.blockModel.thumbWidth;
-            delete viewModel.blockModel.thumbHeight;
-            delete viewModel.blockModel.thumbAmount;
-            delete viewModel.blockModel.hideThumbs;
-            delete viewModel.blockModel.navigationType;
-            delete viewModel.blockModel.navigationArrows;
-            delete viewModel.blockModel.navigationStyle;
-            delete viewModel.blockModel.navigationHAlign;
-            delete viewModel.blockModel.navigationVAlign;
-            delete viewModel.blockModel.navigationHOffset;
-            delete viewModel.blockModel.navigationVOffset;
-            delete viewModel.blockModel.soloArrowLeftHAlign;
-            delete viewModel.blockModel.soloArrowRightHAlign;
-            delete viewModel.blockModel.soloArrowLeftVAlign;
-            delete viewModel.blockModel.soloArrowRightVAlign;
-            delete viewModel.blockModel.soloArrowLeftHOffset;
-            delete viewModel.blockModel.soloArrowRightHOffset;
-            delete viewModel.blockModel.soloArrowLeftVOffset;
-            delete viewModel.blockModel.soloArrowRightVOffset;
-            delete viewModel.blockModel.touchEnabled;
-            delete viewModel.blockModel.swipeVelocity;
-            delete viewModel.blockModel.swipeMaxTouches;
-            delete viewModel.blockModel.swipeMinTouches;
-            delete viewModel.blockModel.dragBlockVertical;
-            delete viewModel.blockModel.startWithSlide;
-            delete viewModel.blockModel.stopAtSlide;
-            delete viewModel.blockModel.stopAfterLoops;
-            delete viewModel.blockModel.hideCaptionAtLimit;
-            delete viewModel.blockModel.hideAllCaptionAtLimit;
-            delete viewModel.blockModel.hideSliderAtLimit;
-            delete viewModel.blockModel.hideNavDelayOnMobile;
-            delete viewModel.blockModel.hideThumbsOnMobile;
-            delete viewModel.blockModel.hideBulletsOnMobile;
-            delete viewModel.blockModel.hideArrowsOnMobile;
-            delete viewModel.blockModel.hideThumbsUnderResolution;
-            delete viewModel.blockModel.spinner;
-            delete viewModel.blockModel.hideTimerBar;
-            delete viewModel.blockModel.fullWidth;
-            delete viewModel.blockModel.autoHeight;
-            delete viewModel.blockModel.minHeight;
-            delete viewModel.blockModel.fullScreenAlignForce;
-            delete viewModel.blockModel.forceFullWidth;
-            delete viewModel.blockModel.fullScreen;
-            delete viewModel.blockModel.fullScreenOffsetContainer;
-            delete viewModel.blockModel.fullScreenOffset;
-            delete viewModel.blockModel.fullScreenOffsetUnit;
-            delete viewModel.blockModel.shadow;
-            delete viewModel.blockModel.dottedOverlay;
-            delete viewModel.blockModel.parallax;
-            delete viewModel.blockModel.parallaxBgFreeze;
-            delete viewModel.blockModel.parallaxLevels;
-            delete viewModel.blockModel.parallaxDisableOnMobile;
-            delete viewModel.blockModel.panZoomDisableOnMobile;
-            delete viewModel.blockModel.simplifyAll;
+        f.cleanUp= function (blockModel) {
+            delete blockModel.sliderId;
+            delete blockModel.controlId;
+            delete blockModel.delay;
+            delete blockModel.startHeight;
+            delete blockModel.startWidth;
+            delete blockModel.shuffle;
+            delete blockModel.keyboardNavigation;
+            delete blockModel.onHoverStop;
+            delete blockModel.thumbWidth;
+            delete blockModel.thumbHeight;
+            delete blockModel.thumbAmount;
+            delete blockModel.hideThumbs;
+            delete blockModel.navigationType;
+            delete blockModel.navigationArrows;
+            delete blockModel.navigationStyle;
+            delete blockModel.navigationHAlign;
+            delete blockModel.navigationVAlign;
+            delete blockModel.navigationHOffset;
+            delete blockModel.navigationVOffset;
+            delete blockModel.soloArrowLeftHAlign;
+            delete blockModel.soloArrowRightHAlign;
+            delete blockModel.soloArrowLeftVAlign;
+            delete blockModel.soloArrowRightVAlign;
+            delete blockModel.soloArrowLeftHOffset;
+            delete blockModel.soloArrowRightHOffset;
+            delete blockModel.soloArrowLeftVOffset;
+            delete blockModel.soloArrowRightVOffset;
+            delete blockModel.touchEnabled;
+            delete blockModel.swipeVelocity;
+            delete blockModel.swipeMaxTouches;
+            delete blockModel.swipeMinTouches;
+            delete blockModel.dragBlockVertical;
+            delete blockModel.startWithSlide;
+            delete blockModel.stopAtSlide;
+            delete blockModel.stopAfterLoops;
+            delete blockModel.hideCaptionAtLimit;
+            delete blockModel.hideAllCaptionAtLimit;
+            delete blockModel.hideSliderAtLimit;
+            delete blockModel.hideNavDelayOnMobile;
+            delete blockModel.hideThumbsOnMobile;
+            delete blockModel.hideBulletsOnMobile;
+            delete blockModel.hideArrowsOnMobile;
+            delete blockModel.hideThumbsUnderResolution;
+            delete blockModel.spinner;
+            delete blockModel.hideTimerBar;
+            delete blockModel.fullWidth;
+            delete blockModel.autoHeight;
+            delete blockModel.minHeight;
+            delete blockModel.fullScreenAlignForce;
+            delete blockModel.forceFullWidth;
+            delete blockModel.fullScreen;
+            delete blockModel.fullScreenOffsetContainer;
+            delete blockModel.fullScreenOffset;
+            delete blockModel.fullScreenOffsetUnit;
+            delete blockModel.shadow;
+            delete blockModel.dottedOverlay;
+            delete blockModel.parallax;
+            delete blockModel.parallaxBgFreeze;
+            delete blockModel.parallaxLevels;
+            delete blockModel.parallaxDisableOnMobile;
+            delete blockModel.panZoomDisableOnMobile;
+            delete blockModel.simplifyAll;
         };
-        f.onBeforeSave = function () {
+        f.onBeforeSave = function (blockModel) {
             var data = {
-                SliderId: viewModel.blockModel.sliderId(),
-                ControlId: viewModel.blockModel.controlId(),
-                Delay: viewModel.blockModel.delay(),
-                StartHeight: viewModel.blockModel.startHeight(),
-                StartWidth: viewModel.blockModel.startWidth(),
-                Shuffle: viewModel.blockModel.shuffle(),
-                KeyboardNavigation: viewModel.blockModel.keyboardNavigation(),
-                OnHoverStop: viewModel.blockModel.onHoverStop(),
-                ThumbWidth: viewModel.blockModel.thumbWidth(),
-                ThumbHeight: viewModel.blockModel.thumbHeight(),
-                ThumbAmount: viewModel.blockModel.thumbAmount(),
-                HideThumbs: viewModel.blockModel.hideThumbs(),
-                NavigationType: viewModel.blockModel.navigationType(),
-                NavigationArrows: viewModel.blockModel.navigationArrows(),
-                NavigationStyle: viewModel.blockModel.navigationStyle(),
-                NavigationHAlign: viewModel.blockModel.navigationHAlign(),
-                NavigationVAlign: viewModel.blockModel.navigationVAlign(),
-                NavigationHOffset: viewModel.blockModel.navigationHOffset(),
-                NavigationVOffset: viewModel.blockModel.navigationVOffset(),
-                SoloArrowLeftHAlign: viewModel.blockModel.soloArrowLeftHAlign(),
-                SoloArrowRightHAlign: viewModel.blockModel.soloArrowRightHAlign(),
-                SoloArrowLeftVAlign: viewModel.blockModel.soloArrowLeftVAlign(),
-                SoloArrowRightVAlign: viewModel.blockModel.soloArrowRightVAlign(),
-                SoloArrowLeftHOffset: viewModel.blockModel.soloArrowLeftHOffset(),
-                SoloArrowRightHOffset: viewModel.blockModel.soloArrowRightHOffset(),
-                SoloArrowLeftVOffset: viewModel.blockModel.soloArrowLeftVOffset(),
-                SoloArrowRightVOffset: viewModel.blockModel.soloArrowRightVOffset(),
-                TouchEnabled: viewModel.blockModel.touchEnabled(),
-                SwipeVelocity: viewModel.blockModel.swipeVelocity(),
-                SwipeMaxTouches: viewModel.blockModel.swipeMaxTouches(),
-                SwipeMinTouches: viewModel.blockModel.swipeMinTouches(),
-                DragBlockVertical: viewModel.blockModel.dragBlockVertical(),
-                StartWithSlide: viewModel.blockModel.startWithSlide(),
-                StopAtSlide: viewModel.blockModel.stopAtSlide(),
-                StopAfterLoops: viewModel.blockModel.stopAfterLoops(),
-                HideCaptionAtLimit: viewModel.blockModel.hideCaptionAtLimit(),
-                HideAllCaptionAtLimit: viewModel.blockModel.hideAllCaptionAtLimit(),
-                HideSliderAtLimit: viewModel.blockModel.hideSliderAtLimit(),
-                HideNavDelayOnMobile: viewModel.blockModel.hideNavDelayOnMobile(),
-                HideThumbsOnMobile: viewModel.blockModel.hideThumbsOnMobile(),
-                HideBulletsOnMobile: viewModel.blockModel.hideBulletsOnMobile(),
-                HideArrowsOnMobile: viewModel.blockModel.hideArrowsOnMobile(),
-                HideThumbsUnderResolution: viewModel.blockModel.hideThumbsUnderResolution(),
-                Spinner: viewModel.blockModel.spinner(),
-                HideTimerBar: viewModel.blockModel.hideTimerBar(),
-                FullWidth: viewModel.blockModel.fullWidth(),
-                AutoHeight: viewModel.blockModel.autoHeight(),
-                MinHeight: viewModel.blockModel.minHeight(),
-                FullScreenAlignForce: viewModel.blockModel.fullScreenAlignForce(),
-                ForceFullWidth: viewModel.blockModel.forceFullWidth(),
-                FullScreen: viewModel.blockModel.fullScreen(),
-                FullScreenOffsetContainer: viewModel.blockModel.fullScreenOffsetContainer(),
-                FullScreenOffset: viewModel.blockModel.fullScreenOffset(),
-                FullScreenOffsetUnit: viewModel.blockModel.fullScreenOffsetUnit(),
-                Shadow: viewModel.blockModel.shadow(),
-                DottedOverlay: viewModel.blockModel.dottedOverlay(),
-                Parallax: viewModel.blockModel.parallax(),
-                ParallaxBgFreeze: viewModel.blockModel.parallaxBgFreeze(),
-                ParallaxLevels: viewModel.blockModel.parallaxLevels(),
-                ParallaxDisableOnMobile: viewModel.blockModel.parallaxDisableOnMobile(),
-                PanZoomDisableOnMobile: viewModel.blockModel.panZoomDisableOnMobile(),
-                SimplifyAll: viewModel.blockModel.simplifyAll()
+                SliderId: blockModel.sliderId(),
+                ControlId: blockModel.controlId(),
+                Delay: blockModel.delay(),
+                StartHeight: blockModel.startHeight(),
+                StartWidth: blockModel.startWidth(),
+                Shuffle: blockModel.shuffle(),
+                KeyboardNavigation: blockModel.keyboardNavigation(),
+                OnHoverStop: blockModel.onHoverStop(),
+                ThumbWidth: blockModel.thumbWidth(),
+                ThumbHeight: blockModel.thumbHeight(),
+                ThumbAmount: blockModel.thumbAmount(),
+                HideThumbs: blockModel.hideThumbs(),
+                NavigationType: blockModel.navigationType(),
+                NavigationArrows: blockModel.navigationArrows(),
+                NavigationStyle: blockModel.navigationStyle(),
+                NavigationHAlign: blockModel.navigationHAlign(),
+                NavigationVAlign: blockModel.navigationVAlign(),
+                NavigationHOffset: blockModel.navigationHOffset(),
+                NavigationVOffset: blockModel.navigationVOffset(),
+                SoloArrowLeftHAlign: blockModel.soloArrowLeftHAlign(),
+                SoloArrowRightHAlign: blockModel.soloArrowRightHAlign(),
+                SoloArrowLeftVAlign: blockModel.soloArrowLeftVAlign(),
+                SoloArrowRightVAlign: blockModel.soloArrowRightVAlign(),
+                SoloArrowLeftHOffset: blockModel.soloArrowLeftHOffset(),
+                SoloArrowRightHOffset: blockModel.soloArrowRightHOffset(),
+                SoloArrowLeftVOffset: blockModel.soloArrowLeftVOffset(),
+                SoloArrowRightVOffset: blockModel.soloArrowRightVOffset(),
+                TouchEnabled: blockModel.touchEnabled(),
+                SwipeVelocity: blockModel.swipeVelocity(),
+                SwipeMaxTouches: blockModel.swipeMaxTouches(),
+                SwipeMinTouches: blockModel.swipeMinTouches(),
+                DragBlockVertical: blockModel.dragBlockVertical(),
+                StartWithSlide: blockModel.startWithSlide(),
+                StopAtSlide: blockModel.stopAtSlide(),
+                StopAfterLoops: blockModel.stopAfterLoops(),
+                HideCaptionAtLimit: blockModel.hideCaptionAtLimit(),
+                HideAllCaptionAtLimit: blockModel.hideAllCaptionAtLimit(),
+                HideSliderAtLimit: blockModel.hideSliderAtLimit(),
+                HideNavDelayOnMobile: blockModel.hideNavDelayOnMobile(),
+                HideThumbsOnMobile: blockModel.hideThumbsOnMobile(),
+                HideBulletsOnMobile: blockModel.hideBulletsOnMobile(),
+                HideArrowsOnMobile: blockModel.hideArrowsOnMobile(),
+                HideThumbsUnderResolution: blockModel.hideThumbsUnderResolution(),
+                Spinner: blockModel.spinner(),
+                HideTimerBar: blockModel.hideTimerBar(),
+                FullWidth: blockModel.fullWidth(),
+                AutoHeight: blockModel.autoHeight(),
+                MinHeight: blockModel.minHeight(),
+                FullScreenAlignForce: blockModel.fullScreenAlignForce(),
+                ForceFullWidth: blockModel.forceFullWidth(),
+                FullScreen: blockModel.fullScreen(),
+                FullScreenOffsetContainer: blockModel.fullScreenOffsetContainer(),
+                FullScreenOffset: blockModel.fullScreenOffset(),
+                FullScreenOffsetUnit: blockModel.fullScreenOffsetUnit(),
+                Shadow: blockModel.shadow(),
+                DottedOverlay: blockModel.dottedOverlay(),
+                Parallax: blockModel.parallax(),
+                ParallaxBgFreeze: blockModel.parallaxBgFreeze(),
+                ParallaxLevels: blockModel.parallaxLevels(),
+                ParallaxDisableOnMobile: blockModel.parallaxDisableOnMobile(),
+                PanZoomDisableOnMobile: blockModel.panZoomDisableOnMobile(),
+                SimplifyAll: blockModel.simplifyAll()
             };
-            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
+            blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

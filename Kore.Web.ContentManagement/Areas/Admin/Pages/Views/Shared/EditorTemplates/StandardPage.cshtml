@@ -30,46 +30,46 @@
 <script type="text/javascript">
     var pageModel = (function () {
         var f = {};
-        f.updateModel = function () {
-            viewModel.pageVersionModel.metaTitle = ko.observable("");
-            viewModel.pageVersionModel.metaKeywords = ko.observable("");
-            viewModel.pageVersionModel.metaDescription = ko.observable("");
-            viewModel.pageVersionModel.bodyContent = ko.observable("");
+        f.updateModel = function (pageVersionModel) {
+            pageVersionModel.metaTitle = ko.observable("");
+            pageVersionModel.metaKeywords = ko.observable("");
+            pageVersionModel.metaDescription = ko.observable("");
+            pageVersionModel.bodyContent = ko.observable("");
 
-            var data = ko.mapping.fromJSON(viewModel.pageVersionModel.fields());
+            var data = ko.mapping.fromJSON(pageVersionModel.fields());
 
             if (data) {
                 if (data.MetaTitle) {
-                    viewModel.pageVersionModel.metaTitle(data.MetaTitle());
+                    pageVersionModel.metaTitle(data.MetaTitle());
                 }
                 if (data.MetaKeywords) {
-                    viewModel.pageVersionModel.metaKeywords(data.MetaKeywords());
+                    pageVersionModel.metaKeywords(data.MetaKeywords());
                 }
                 if (data.MetaDescription) {
-                    viewModel.pageVersionModel.metaDescription(data.MetaDescription());
+                    pageVersionModel.metaDescription(data.MetaDescription());
                 }
                 if (data.BodyContent) {
-                    viewModel.pageVersionModel.bodyContent(data.BodyContent());
+                    pageVersionModel.bodyContent(data.BodyContent());
                 }
             }
 
-            viewModel.pageVersionModel.tinyMCE_bodyContent = koreAdvancedTinyMCEConfig;
+            pageVersionModel.tinyMCE_bodyContent = koreAdvancedTinyMCEConfig;
         };
-        f.cleanUp = function () {
-            delete viewModel.pageVersionModel.metaTitle;
-            delete viewModel.pageVersionModel.metaKeywords;
-            delete viewModel.pageVersionModel.metaDescription;
-            delete viewModel.pageVersionModel.bodyContent;
-            delete viewModel.pageVersionModel.tinyMCE_bodyContent;
+        f.cleanUp = function (pageVersionModel) {
+            delete pageVersionModel.metaTitle;
+            delete pageVersionModel.metaKeywords;
+            delete pageVersionModel.metaDescription;
+            delete pageVersionModel.bodyContent;
+            delete pageVersionModel.tinyMCE_bodyContent;
         };
-        f.onBeforeSave = function () {
+        f.onBeforeSave = function (pageVersionModel) {
             var data = {
-                MetaTitle: viewModel.pageVersionModel.metaTitle(),
-                MetaKeywords: viewModel.pageVersionModel.metaKeywords(),
-                MetaDescription: viewModel.pageVersionModel.metaDescription(),
-                BodyContent: viewModel.pageVersionModel.bodyContent()
+                MetaTitle: pageVersionModel.metaTitle(),
+                MetaKeywords: pageVersionModel.metaKeywords(),
+                MetaDescription: pageVersionModel.metaDescription(),
+                BodyContent: pageVersionModel.bodyContent()
             };
-            viewModel.pageVersionModel.fields(ko.mapping.toJSON(data));
+            pageVersionModel.fields(ko.mapping.toJSON(data));
         };
         return f;
     })();

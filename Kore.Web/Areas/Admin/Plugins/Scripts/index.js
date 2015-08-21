@@ -1,10 +1,6 @@
-﻿var viewModel;
-
-define(['jquery', 'knockout', 'kendo', 'kore-common', 'notify'],
+﻿define(['jquery', 'knockout', 'kendo', 'kore-common', 'notify'],
 function ($, ko, kendo, kore_common, notify) {
     'use strict'
-
-    viewModel = null;
 
     //var $ = require('jquery');
     //var ko = require('knockout');
@@ -80,6 +76,13 @@ function ($, ko, kendo, kore_common, notify) {
                     serverSorting: true,
                     sort: { field: "Group", dir: "asc" }
                 },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
+                },
                 filterable: true,
                 sortable: {
                     allowUnsort: false
@@ -106,8 +109,8 @@ function ($, ko, kendo, kore_common, notify) {
                     field: "Installed",
                     title: " ",
                     template:
-                        '# if(Installed) {# <a onclick="viewModel.uninstall(\'#=SystemName#\')" class="btn btn-default btn-sm">#=viewModel.translations.Uninstall#</a> #} ' +
-                        'else {# <a onclick="viewModel.install(\'#=SystemName#\')" class="btn btn-success btn-sm">#=viewModel.translations.Install#</a> #} #',
+                        '# if(Installed) {# <a data-bind="click: uninstall.bind($data,\'#=SystemName#\')" class="btn btn-default btn-sm">' + self.translations.Uninstall + '</a> #} ' +
+                        'else {# <a data-bind="click: install.bind($data,\'#=SystemName#\')" class="btn btn-success btn-sm">' + self.translations.Install + '</a> #} #',
                     attributes: { "class": "text-center" },
                     filterable: false,
                     width: 130
@@ -164,6 +167,6 @@ function ($, ko, kendo, kore_common, notify) {
         }
     }
 
-    viewModel = new ViewModel();
+    var viewModel = new ViewModel();
     return viewModel;
 });

@@ -1,9 +1,5 @@
-﻿var viewModel;
-
-define(function (require) {
+﻿define(function (require) {
     'use strict'
-
-    viewModel = null;
 
     var $ = require('jquery');
     var ko = require('knockout');
@@ -18,9 +14,10 @@ define(function (require) {
     var playlistApiUrl = "/odata/fwd/royal-video-player/PlaylistApi";
     var videoApiUrl = "/odata/fwd/royal-video-player/VideoApi";
 
-    var VideoModel = function () {
+    var VideoModel = function (parent) {
         var self = this;
 
+        self.parent = parent;
         self.id = ko.observable(0);
         self.title = ko.observable(null);
         self.thumbnailUrl = ko.observable(null);
@@ -90,11 +87,18 @@ define(function (require) {
                             }
                         }
                     },
-                    pageSize: viewModel.gridPageSize,
+                    pageSize: self.parent.gridPageSize,
                     serverPaging: true,
                     serverFiltering: true,
                     serverSorting: true,
                     sort: { field: "Title", dir: "asc" }
+                },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
                 },
                 filterable: true,
                 sortable: {
@@ -106,22 +110,22 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "ThumbnailUrl",
-                    title: viewModel.translations.Columns.Video.ThumbnailUrl,
+                    title: self.parent.translations.Columns.Video.ThumbnailUrl,
                     template: '<img src="#=ThumbnailUrl#" alt="#=Title#" class="thumbnail" style="max-width:200px;" />',
                     filterable: false,
                     width: 200
                 }, {
                     field: "Title",
-                    title: viewModel.translations.Columns.Video.Title,
+                    title: self.parent.translations.Columns.Video.Title,
                     filterable: true
                 }, {
                     field: "Id",
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a onclick="viewModel.video.edit(#=Id#)" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.video.remove(#=Id#)" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
-                        '<a onclick="viewModel.video.editPlaylists(#=Id#)" class="btn btn-default btn-xs">' + viewModel.translations.Playlists + '</a>' +
+                        '<a data-bind="click: video.edit.bind($data,#=Id#)" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: video.remove.bind($data,#=Id#)" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
+                        '<a data-bind="click: video.editPlaylists.bind($data,#=Id#)" class="btn btn-default btn-xs">' + self.parent.translations.Playlists + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -142,7 +146,7 @@ define(function (require) {
 
             self.validator.resetForm();
             switchSection($("#videos-form-section"));
-            $("#videos-form-section-legend").html(viewModel.translations.Create);
+            $("#videos-form-section-legend").html(self.parent.translations.Create);
         };
         self.edit = function (id) {
             $.ajax({
@@ -164,15 +168,15 @@ define(function (require) {
 
                 self.validator.resetForm();
                 switchSection($("#videos-form-section"));
-                $("#videos-form-section-legend").html(viewModel.translations.Edit);
+                $("#videos-form-section-legend").html(self.parent.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.remove = function (id) {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: videoApiUrl + "(" + id + ")",
                     type: "DELETE",
@@ -182,10 +186,10 @@ define(function (require) {
                 .done(function (json) {
                     $('#VideoGrid').data('kendoGrid').dataSource.read();
                     $('#VideoGrid').data('kendoGrid').refresh();
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -224,10 +228,10 @@ define(function (require) {
 
                     switchSection($("#videos-grid-section"));
 
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -246,10 +250,10 @@ define(function (require) {
 
                     switchSection($("#videos-grid-section"));
 
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -277,7 +281,7 @@ define(function (require) {
                 }
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
 
@@ -301,18 +305,19 @@ define(function (require) {
             })
             .done(function (json) {
                 switchSection($("#videos-grid-section"));
-                $.notify(viewModel.translations.SavePlaylistsSuccess, "success");
+                $.notify(self.parent.translations.SavePlaylistsSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.SavePlaylistsError, "error");
+                $.notify(self.parent.translations.SavePlaylistsError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
     };
 
-    var PlaylistModel = function () {
+    var PlaylistModel = function (parent) {
         var self = this;
 
+        self.parent = parent;
         self.id = ko.observable(0);
         self.name = ko.observable(null);
 
@@ -363,11 +368,18 @@ define(function (require) {
                             }
                         }
                     },
-                    pageSize: viewModel.gridPageSize,
+                    pageSize: self.parent.gridPageSize,
                     serverPaging: true,
                     serverFiltering: true,
                     serverSorting: true,
                     sort: { field: "Name", dir: "asc" }
+                },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
                 },
                 filterable: true,
                 sortable: {
@@ -379,15 +391,15 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "Name",
-                    title: viewModel.translations.Columns.Playlist.Name,
+                    title: self.parent.translations.Columns.Playlist.Name,
                     filterable: true
                 }, {
                     field: "Id",
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a onclick="viewModel.playlist.edit(#=Id#)" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.playlist.remove(#=Id#)" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
+                        '<a data-bind="click: playlist.edit.bind($data,#=Id#)" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: playlist.remove.bind($data,#=Id#)" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -409,7 +421,7 @@ define(function (require) {
                         parameterMap: function (options, operation) {
                             if (operation === "read") {
                                 return kendo.stringify({
-                                    playlistId: viewModel.playlist.id()
+                                    playlistId: self.parent.playlist.id()
                                 });
                             }
                         }
@@ -437,10 +449,10 @@ define(function (require) {
                         }
                     },
                     batch: false,
-                    // Don't change this to viewModel.gridPageSize. There's a bug with client-side paging. If we set viewModel.gridPageSize here, then paging gets messed up.
+                    // Don't change this to self.parent.gridPageSize. There's a bug with client-side paging. If we set self.parent.gridPageSize here, then paging gets messed up.
                     //  For more info, see: http://stackoverflow.com/questions/31810484/kendo-grid-misbehaving-in-certain-situations-with-durandal-requirejs?noredirect=1#comment52004513_31810484
                     pageSize: 15,
-                    //pageSize: viewModel.gridPageSize,
+                    //pageSize: self.parent.gridPageSize,
                     serverPaging: false,
                     serverFiltering: false,
                     serverSorting: false,
@@ -448,6 +460,13 @@ define(function (require) {
                     //serverFiltering: true,
                     //serverSorting: true,
                     sort: { field: "Title", dir: "asc" }
+                },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
                 },
                 filterable: true,
                 sortable: {
@@ -459,13 +478,13 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "ThumbnailUrl",
-                    title: viewModel.translations.Columns.Video.ThumbnailUrl,
+                    title: self.parent.translations.Columns.Video.ThumbnailUrl,
                     template: '<img src="#=ThumbnailUrl#" alt="#=Title#" class="thumbnail" style="max-width:200px;" />',
                     filterable: false,
                     width: 200
                 }, {
                     field: "Title",
-                    title: viewModel.translations.Columns.Video.Title,
+                    title: self.parent.translations.Columns.Video.Title,
                     filterable: true
                 }]
             });
@@ -477,7 +496,7 @@ define(function (require) {
             self.isEditMode(false);
             self.validator.resetForm();
             switchSection($("#playlists-form-section"));
-            $("#playlists-form-section-legend").html(viewModel.translations.Create);
+            $("#playlists-form-section-legend").html(self.parent.translations.Create);
         };
         self.edit = function (id) {
             $.ajax({
@@ -496,7 +515,7 @@ define(function (require) {
                 grid.dataSource.transport.parameterMap = function (options, operation) {
                     if (operation === "read") {
                         return kendo.stringify({
-                            playlistId: viewModel.playlist.id()
+                            playlistId: self.parent.playlist.id()
                         });
                     }
                 };
@@ -505,15 +524,15 @@ define(function (require) {
 
                 self.validator.resetForm();
                 switchSection($("#playlists-form-section"));
-                $("#playlists-form-section-legend").html(viewModel.translations.Edit);
+                $("#playlists-form-section-legend").html(self.parent.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.remove = function (id) {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: playlistApiUrl + "(" + id + ")",
                     type: "DELETE",
@@ -523,10 +542,10 @@ define(function (require) {
                     $('#PlaylistGrid').data('kendoGrid').dataSource.read();
                     $('#PlaylistGrid').data('kendoGrid').refresh();
 
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -557,10 +576,10 @@ define(function (require) {
                     $('#PlaylistGrid').data('kendoGrid').refresh();
 
                     switchSection($("#playlists-grid-section"));
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -580,10 +599,10 @@ define(function (require) {
 
                     switchSection($("#playlists-grid-section"));
 
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -605,8 +624,8 @@ define(function (require) {
         self.modalDismissed = false;
 
         self.activate = function () {
-            self.playlist = new PlaylistModel();
-            self.video = new VideoModel();
+            self.playlist = new PlaylistModel(self);
+            self.video = new VideoModel(self);
         };
         self.attached = function () {
             currentSection = $("#playlists-grid-section");
@@ -683,6 +702,6 @@ define(function (require) {
         };
     };
 
-    viewModel = new ViewModel();
+    var viewModel = new ViewModel();
     return viewModel;
 });

@@ -377,7 +377,7 @@
                 var url = $('#MediaFolder').val();
                 var idx = url.indexOf("Uploads");
                 url = url.substring(idx);
-                viewModel.blockModel.mediaFolder(url);
+                blockModel.mediaFolder(url);
             }
             modalDismissed = false;
         })
@@ -385,215 +385,215 @@
 
     var contentBlockModel = (function () {
         var f = {};
-        f.updateModel = function () {
-            viewModel.blockModel.mediaFolder = ko.observable("");
-            viewModel.blockModel.controlId = ko.observable("owl-carousel");
-            viewModel.blockModel.slideSpeed = ko.observable(200);
-            viewModel.blockModel.paginationSpeed = ko.observable(800);
-            viewModel.blockModel.rewindSpeed = ko.observable(1000);
-            viewModel.blockModel.autoPlay = ko.observable(false);
-            viewModel.blockModel.autoPlaySpeed = ko.observable(5000);
-            viewModel.blockModel.stopOnHover = ko.observable(false);
-            viewModel.blockModel.navigation = ko.observable(false);
-            viewModel.blockModel.navigationText = ko.observable('["prev","next"]');
-            viewModel.blockModel.rewindNav = ko.observable(true);
-            viewModel.blockModel.scrollPerPage = ko.observable(false);
-            viewModel.blockModel.pagination = ko.observable(true);
-            viewModel.blockModel.paginationNumbers = ko.observable(false);
-            viewModel.blockModel.responsive = ko.observable(true);
-            viewModel.blockModel.responsiveRefreshRate = ko.observable(200);
-            viewModel.blockModel.responsiveBaseWidth = ko.observable('window');
-            viewModel.blockModel.baseClass = ko.observable('owl-carousel');
-            viewModel.blockModel.theme = ko.observable('owl-theme');
-            viewModel.blockModel.lazyLoad = ko.observable(false);
-            viewModel.blockModel.autoHeight = ko.observable(false);
-            viewModel.blockModel.mouseDrag = ko.observable(true);
-            viewModel.blockModel.touchDrag = ko.observable(true);
-            viewModel.blockModel.items = ko.observable(5);
-            viewModel.blockModel.itemsDesktop = ko.observable('[1199,4]');
-            viewModel.blockModel.itemsDesktopSmall = ko.observable('[979,3]');
-            viewModel.blockModel.itemsTablet = ko.observable('[768,2]');
-            viewModel.blockModel.itemsTabletSmall = ko.observable(null);
-            viewModel.blockModel.itemsMobile = ko.observable('[479,1]');
-            viewModel.blockModel.itemsCustom = ko.observable(null);
-            viewModel.blockModel.singleItem = ko.observable(false);
-            viewModel.blockModel.itemsScaleUp = ko.observable(false);
-            viewModel.blockModel.jsonPath = ko.observable(null);
-            viewModel.blockModel.jsonSuccess = ko.observable(null);
-            viewModel.blockModel.lazyFollow = ko.observable(true);
-            viewModel.blockModel.lazyEffect = ko.observable('fade');
-            viewModel.blockModel.dragBeforeAnimFinish = ko.observable(true);
-            viewModel.blockModel.addClassActive = ko.observable(false);
-            viewModel.blockModel.transitionStyle = ko.observable(null);
-            viewModel.blockModel.beforeUpdate = ko.observable(null);
-            viewModel.blockModel.afterUpdate = ko.observable(null);
-            viewModel.blockModel.beforeInit = ko.observable(null);
-            viewModel.blockModel.afterInit = ko.observable(null);
-            viewModel.blockModel.beforeMove = ko.observable(null);
-            viewModel.blockModel.afterMove = ko.observable(null);
-            viewModel.blockModel.afterAction = ko.observable(null);
-            viewModel.blockModel.startDragging = ko.observable(null);
-            viewModel.blockModel.afterLazyLoad = ko.observable(null);
+        f.updateModel = function (blockModel) {
+            blockModel.mediaFolder = ko.observable("");
+            blockModel.controlId = ko.observable("owl-carousel");
+            blockModel.slideSpeed = ko.observable(200);
+            blockModel.paginationSpeed = ko.observable(800);
+            blockModel.rewindSpeed = ko.observable(1000);
+            blockModel.autoPlay = ko.observable(false);
+            blockModel.autoPlaySpeed = ko.observable(5000);
+            blockModel.stopOnHover = ko.observable(false);
+            blockModel.navigation = ko.observable(false);
+            blockModel.navigationText = ko.observable('["prev","next"]');
+            blockModel.rewindNav = ko.observable(true);
+            blockModel.scrollPerPage = ko.observable(false);
+            blockModel.pagination = ko.observable(true);
+            blockModel.paginationNumbers = ko.observable(false);
+            blockModel.responsive = ko.observable(true);
+            blockModel.responsiveRefreshRate = ko.observable(200);
+            blockModel.responsiveBaseWidth = ko.observable('window');
+            blockModel.baseClass = ko.observable('owl-carousel');
+            blockModel.theme = ko.observable('owl-theme');
+            blockModel.lazyLoad = ko.observable(false);
+            blockModel.autoHeight = ko.observable(false);
+            blockModel.mouseDrag = ko.observable(true);
+            blockModel.touchDrag = ko.observable(true);
+            blockModel.items = ko.observable(5);
+            blockModel.itemsDesktop = ko.observable('[1199,4]');
+            blockModel.itemsDesktopSmall = ko.observable('[979,3]');
+            blockModel.itemsTablet = ko.observable('[768,2]');
+            blockModel.itemsTabletSmall = ko.observable(null);
+            blockModel.itemsMobile = ko.observable('[479,1]');
+            blockModel.itemsCustom = ko.observable(null);
+            blockModel.singleItem = ko.observable(false);
+            blockModel.itemsScaleUp = ko.observable(false);
+            blockModel.jsonPath = ko.observable(null);
+            blockModel.jsonSuccess = ko.observable(null);
+            blockModel.lazyFollow = ko.observable(true);
+            blockModel.lazyEffect = ko.observable('fade');
+            blockModel.dragBeforeAnimFinish = ko.observable(true);
+            blockModel.addClassActive = ko.observable(false);
+            blockModel.transitionStyle = ko.observable(null);
+            blockModel.beforeUpdate = ko.observable(null);
+            blockModel.afterUpdate = ko.observable(null);
+            blockModel.beforeInit = ko.observable(null);
+            blockModel.afterInit = ko.observable(null);
+            blockModel.beforeMove = ko.observable(null);
+            blockModel.afterMove = ko.observable(null);
+            blockModel.afterAction = ko.observable(null);
+            blockModel.startDragging = ko.observable(null);
+            blockModel.afterLazyLoad = ko.observable(null);
 
-            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
+            var data = ko.mapping.fromJSON(blockModel.blockValues());
 
             if ((isFunction(data) && data()) || data) {
                 if (data.MediaFolder == undefined) {
                     // If this is not set, it means the contentBlock is new and we have nothing in blockValues
                     return;
                 }
-                viewModel.blockModel.mediaFolder(data.MediaFolder());
-                viewModel.blockModel.controlId(data.ControlId());
-                viewModel.blockModel.slideSpeed(data.SlideSpeed());
-                viewModel.blockModel.paginationSpeed(data.PaginationSpeed());
-                viewModel.blockModel.rewindSpeed(data.RewindSpeed());
-                viewModel.blockModel.autoPlay(data.AutoPlay());
-                viewModel.blockModel.autoPlaySpeed(data.AutoPlaySpeed());
-                viewModel.blockModel.stopOnHover(data.StopOnHover());
-                viewModel.blockModel.navigation(data.Navigation());
-                viewModel.blockModel.navigationText(data.NavigationText());
-                viewModel.blockModel.rewindNav(data.RewindNav());
-                viewModel.blockModel.scrollPerPage(data.ScrollPerPage());
-                viewModel.blockModel.pagination(data.Pagination());
-                viewModel.blockModel.paginationNumbers(data.PaginationNumbers());
-                viewModel.blockModel.responsive(data.Responsive());
-                viewModel.blockModel.responsiveRefreshRate(data.ResponsiveRefreshRate());
-                viewModel.blockModel.responsiveBaseWidth(data.ResponsiveBaseWidth());
-                viewModel.blockModel.baseClass(data.BaseClass());
-                viewModel.blockModel.theme(data.Theme());
-                viewModel.blockModel.lazyLoad(data.LazyLoad());
-                viewModel.blockModel.autoHeight(data.AutoHeight());
-                viewModel.blockModel.mouseDrag(data.MouseDrag());
-                viewModel.blockModel.touchDrag(data.TouchDrag());
-                viewModel.blockModel.items(data.Items());
-                viewModel.blockModel.itemsDesktop(data.ItemsDesktop());
-                viewModel.blockModel.itemsDesktopSmall(data.ItemsDesktopSmall());
-                viewModel.blockModel.itemsTablet(data.ItemsTablet());
-                viewModel.blockModel.itemsTabletSmall(data.ItemsTabletSmall());
-                viewModel.blockModel.itemsMobile(data.ItemsMobile());
-                viewModel.blockModel.itemsCustom(data.ItemsCustom());
-                viewModel.blockModel.singleItem(data.SingleItem());
-                viewModel.blockModel.itemsScaleUp(data.ItemsScaleUp());
-                viewModel.blockModel.jsonPath(data.JsonPath());
-                viewModel.blockModel.jsonSuccess(data.JsonSuccess());
-                viewModel.blockModel.lazyFollow(data.LazyFollow());
-                viewModel.blockModel.lazyEffect(data.LazyEffect());
-                viewModel.blockModel.dragBeforeAnimFinish(data.DragBeforeAnimFinish());
-                viewModel.blockModel.addClassActive(data.AddClassActive());
-                viewModel.blockModel.transitionStyle(data.TransitionStyle());
-                viewModel.blockModel.beforeUpdate(data.BeforeUpdate());
-                viewModel.blockModel.afterUpdate(data.AfterUpdate());
-                viewModel.blockModel.beforeInit(data.BeforeInit());
-                viewModel.blockModel.afterInit(data.AfterInit());
-                viewModel.blockModel.beforeMove(data.BeforeMove());
-                viewModel.blockModel.afterMove(data.AfterMove());
-                viewModel.blockModel.afterAction(data.AfterAction());
-                viewModel.blockModel.startDragging(data.StartDragging());
-                viewModel.blockModel.afterLazyLoad(data.AfterLazyLoad());
+                blockModel.mediaFolder(data.MediaFolder());
+                blockModel.controlId(data.ControlId());
+                blockModel.slideSpeed(data.SlideSpeed());
+                blockModel.paginationSpeed(data.PaginationSpeed());
+                blockModel.rewindSpeed(data.RewindSpeed());
+                blockModel.autoPlay(data.AutoPlay());
+                blockModel.autoPlaySpeed(data.AutoPlaySpeed());
+                blockModel.stopOnHover(data.StopOnHover());
+                blockModel.navigation(data.Navigation());
+                blockModel.navigationText(data.NavigationText());
+                blockModel.rewindNav(data.RewindNav());
+                blockModel.scrollPerPage(data.ScrollPerPage());
+                blockModel.pagination(data.Pagination());
+                blockModel.paginationNumbers(data.PaginationNumbers());
+                blockModel.responsive(data.Responsive());
+                blockModel.responsiveRefreshRate(data.ResponsiveRefreshRate());
+                blockModel.responsiveBaseWidth(data.ResponsiveBaseWidth());
+                blockModel.baseClass(data.BaseClass());
+                blockModel.theme(data.Theme());
+                blockModel.lazyLoad(data.LazyLoad());
+                blockModel.autoHeight(data.AutoHeight());
+                blockModel.mouseDrag(data.MouseDrag());
+                blockModel.touchDrag(data.TouchDrag());
+                blockModel.items(data.Items());
+                blockModel.itemsDesktop(data.ItemsDesktop());
+                blockModel.itemsDesktopSmall(data.ItemsDesktopSmall());
+                blockModel.itemsTablet(data.ItemsTablet());
+                blockModel.itemsTabletSmall(data.ItemsTabletSmall());
+                blockModel.itemsMobile(data.ItemsMobile());
+                blockModel.itemsCustom(data.ItemsCustom());
+                blockModel.singleItem(data.SingleItem());
+                blockModel.itemsScaleUp(data.ItemsScaleUp());
+                blockModel.jsonPath(data.JsonPath());
+                blockModel.jsonSuccess(data.JsonSuccess());
+                blockModel.lazyFollow(data.LazyFollow());
+                blockModel.lazyEffect(data.LazyEffect());
+                blockModel.dragBeforeAnimFinish(data.DragBeforeAnimFinish());
+                blockModel.addClassActive(data.AddClassActive());
+                blockModel.transitionStyle(data.TransitionStyle());
+                blockModel.beforeUpdate(data.BeforeUpdate());
+                blockModel.afterUpdate(data.AfterUpdate());
+                blockModel.beforeInit(data.BeforeInit());
+                blockModel.afterInit(data.AfterInit());
+                blockModel.beforeMove(data.BeforeMove());
+                blockModel.afterMove(data.AfterMove());
+                blockModel.afterAction(data.AfterAction());
+                blockModel.startDragging(data.StartDragging());
+                blockModel.afterLazyLoad(data.AfterLazyLoad());
             }
         };
-        f.cleanUp = function () {
-            delete viewModel.blockModel.mediaFolder;
-            delete viewModel.blockModel.controlId;
-            delete viewModel.blockModel.slideSpeed;
-            delete viewModel.blockModel.paginationSpeed;
-            delete viewModel.blockModel.rewindSpeed;
-            delete viewModel.blockModel.autoPlay;
-            delete viewModel.blockModel.autoPlaySpeed;
-            delete viewModel.blockModel.stopOnHover;
-            delete viewModel.blockModel.navigation;
-            delete viewModel.blockModel.navigationText;
-            delete viewModel.blockModel.rewindNav;
-            delete viewModel.blockModel.scrollPerPage;
-            delete viewModel.blockModel.pagination;
-            delete viewModel.blockModel.paginationNumbers;
-            delete viewModel.blockModel.responsive;
-            delete viewModel.blockModel.responsiveRefreshRate;
-            delete viewModel.blockModel.responsiveBaseWidth;
-            delete viewModel.blockModel.baseClass;
-            delete viewModel.blockModel.theme;
-            delete viewModel.blockModel.lazyLoad;
-            delete viewModel.blockModel.autoHeight;
-            delete viewModel.blockModel.mouseDrag;
-            delete viewModel.blockModel.touchDrag;
-            delete viewModel.blockModel.items;
-            delete viewModel.blockModel.itemsDesktop;
-            delete viewModel.blockModel.itemsDesktopSmall;
-            delete viewModel.blockModel.itemsTablet;
-            delete viewModel.blockModel.itemsTabletSmall;
-            delete viewModel.blockModel.itemsMobile;
-            delete viewModel.blockModel.itemsCustom;
-            delete viewModel.blockModel.singleItem;
-            delete viewModel.blockModel.itemsScaleUp;
-            delete viewModel.blockModel.jsonPath;
-            delete viewModel.blockModel.jsonSuccess;
-            delete viewModel.blockModel.lazyFollow;
-            delete viewModel.blockModel.lazyEffect;
-            delete viewModel.blockModel.dragBeforeAnimFinish;
-            delete viewModel.blockModel.addClassActive;
-            delete viewModel.blockModel.transitionStyle;
-            delete viewModel.blockModel.beforeUpdate;
-            delete viewModel.blockModel.afterUpdate;
-            delete viewModel.blockModel.beforeInit;
-            delete viewModel.blockModel.afterInit;
-            delete viewModel.blockModel.beforeMove;
-            delete viewModel.blockModel.afterMove;
-            delete viewModel.blockModel.afterAction;
-            delete viewModel.blockModel.startDragging;
-            delete viewModel.blockModel.afterLazyLoad;
+        f.cleanUp= function (blockModel) {
+            delete blockModel.mediaFolder;
+            delete blockModel.controlId;
+            delete blockModel.slideSpeed;
+            delete blockModel.paginationSpeed;
+            delete blockModel.rewindSpeed;
+            delete blockModel.autoPlay;
+            delete blockModel.autoPlaySpeed;
+            delete blockModel.stopOnHover;
+            delete blockModel.navigation;
+            delete blockModel.navigationText;
+            delete blockModel.rewindNav;
+            delete blockModel.scrollPerPage;
+            delete blockModel.pagination;
+            delete blockModel.paginationNumbers;
+            delete blockModel.responsive;
+            delete blockModel.responsiveRefreshRate;
+            delete blockModel.responsiveBaseWidth;
+            delete blockModel.baseClass;
+            delete blockModel.theme;
+            delete blockModel.lazyLoad;
+            delete blockModel.autoHeight;
+            delete blockModel.mouseDrag;
+            delete blockModel.touchDrag;
+            delete blockModel.items;
+            delete blockModel.itemsDesktop;
+            delete blockModel.itemsDesktopSmall;
+            delete blockModel.itemsTablet;
+            delete blockModel.itemsTabletSmall;
+            delete blockModel.itemsMobile;
+            delete blockModel.itemsCustom;
+            delete blockModel.singleItem;
+            delete blockModel.itemsScaleUp;
+            delete blockModel.jsonPath;
+            delete blockModel.jsonSuccess;
+            delete blockModel.lazyFollow;
+            delete blockModel.lazyEffect;
+            delete blockModel.dragBeforeAnimFinish;
+            delete blockModel.addClassActive;
+            delete blockModel.transitionStyle;
+            delete blockModel.beforeUpdate;
+            delete blockModel.afterUpdate;
+            delete blockModel.beforeInit;
+            delete blockModel.afterInit;
+            delete blockModel.beforeMove;
+            delete blockModel.afterMove;
+            delete blockModel.afterAction;
+            delete blockModel.startDragging;
+            delete blockModel.afterLazyLoad;
         };
-        f.onBeforeSave = function () {
+        f.onBeforeSave = function (blockModel) {
             var data = {
-                MediaFolder: viewModel.blockModel.mediaFolder(),
-                ControlId: viewModel.blockModel.controlId(),
-                SlideSpeed: viewModel.blockModel.slideSpeed(),
-                PaginationSpeed: viewModel.blockModel.paginationSpeed(),
-                RewindSpeed: viewModel.blockModel.rewindSpeed(),
-                AutoPlay: viewModel.blockModel.autoPlay(),
-                AutoPlaySpeed: viewModel.blockModel.autoPlaySpeed(),
-                StopOnHover: viewModel.blockModel.stopOnHover(),
-                Navigation: viewModel.blockModel.navigation(),
-                NavigationText: viewModel.blockModel.navigationText(),
-                RewindNav: viewModel.blockModel.rewindNav(),
-                ScrollPerPage: viewModel.blockModel.scrollPerPage(),
-                Pagination: viewModel.blockModel.pagination(),
-                PaginationNumbers: viewModel.blockModel.paginationNumbers(),
-                Responsive: viewModel.blockModel.responsive(),
-                ResponsiveRefreshRate: viewModel.blockModel.responsiveRefreshRate(),
-                ResponsiveBaseWidth: viewModel.blockModel.responsiveBaseWidth(),
-                BaseClass: viewModel.blockModel.baseClass(),
-                Theme: viewModel.blockModel.theme(),
-                LazyLoad: viewModel.blockModel.lazyLoad(),
-                AutoHeight: viewModel.blockModel.autoHeight(),
-                MouseDrag: viewModel.blockModel.mouseDrag(),
-                TouchDrag: viewModel.blockModel.touchDrag(),
-                Items: viewModel.blockModel.items(),
-                ItemsDesktop: viewModel.blockModel.itemsDesktop(),
-                ItemsDesktopSmall: viewModel.blockModel.itemsDesktopSmall(),
-                ItemsTablet: viewModel.blockModel.itemsTablet(),
-                ItemsTabletSmall: viewModel.blockModel.itemsTabletSmall(),
-                ItemsMobile: viewModel.blockModel.itemsMobile(),
-                ItemsCustom: viewModel.blockModel.itemsCustom(),
-                SingleItem: viewModel.blockModel.singleItem(),
-                ItemsScaleUp: viewModel.blockModel.itemsScaleUp(),
-                JsonPath: viewModel.blockModel.jsonPath(),
-                JsonSuccess: viewModel.blockModel.jsonSuccess(),
-                LazyFollow: viewModel.blockModel.lazyFollow(),
-                LazyEffect: viewModel.blockModel.lazyEffect(),
-                DragBeforeAnimFinish: viewModel.blockModel.dragBeforeAnimFinish(),
-                AddClassActive: viewModel.blockModel.addClassActive(),
-                TransitionStyle: viewModel.blockModel.transitionStyle(),
-                BeforeUpdate: viewModel.blockModel.beforeUpdate(),
-                AfterUpdate: viewModel.blockModel.afterUpdate(),
-                BeforeInit: viewModel.blockModel.beforeInit(),
-                AfterInit: viewModel.blockModel.afterInit(),
-                BeforeMove: viewModel.blockModel.beforeMove(),
-                AfterMove: viewModel.blockModel.afterMove(),
-                AfterAction: viewModel.blockModel.afterAction(),
-                StartDragging: viewModel.blockModel.startDragging(),
-                AfterLazyLoad: viewModel.blockModel.afterLazyLoad(),
+                MediaFolder: blockModel.mediaFolder(),
+                ControlId: blockModel.controlId(),
+                SlideSpeed: blockModel.slideSpeed(),
+                PaginationSpeed: blockModel.paginationSpeed(),
+                RewindSpeed: blockModel.rewindSpeed(),
+                AutoPlay: blockModel.autoPlay(),
+                AutoPlaySpeed: blockModel.autoPlaySpeed(),
+                StopOnHover: blockModel.stopOnHover(),
+                Navigation: blockModel.navigation(),
+                NavigationText: blockModel.navigationText(),
+                RewindNav: blockModel.rewindNav(),
+                ScrollPerPage: blockModel.scrollPerPage(),
+                Pagination: blockModel.pagination(),
+                PaginationNumbers: blockModel.paginationNumbers(),
+                Responsive: blockModel.responsive(),
+                ResponsiveRefreshRate: blockModel.responsiveRefreshRate(),
+                ResponsiveBaseWidth: blockModel.responsiveBaseWidth(),
+                BaseClass: blockModel.baseClass(),
+                Theme: blockModel.theme(),
+                LazyLoad: blockModel.lazyLoad(),
+                AutoHeight: blockModel.autoHeight(),
+                MouseDrag: blockModel.mouseDrag(),
+                TouchDrag: blockModel.touchDrag(),
+                Items: blockModel.items(),
+                ItemsDesktop: blockModel.itemsDesktop(),
+                ItemsDesktopSmall: blockModel.itemsDesktopSmall(),
+                ItemsTablet: blockModel.itemsTablet(),
+                ItemsTabletSmall: blockModel.itemsTabletSmall(),
+                ItemsMobile: blockModel.itemsMobile(),
+                ItemsCustom: blockModel.itemsCustom(),
+                SingleItem: blockModel.singleItem(),
+                ItemsScaleUp: blockModel.itemsScaleUp(),
+                JsonPath: blockModel.jsonPath(),
+                JsonSuccess: blockModel.jsonSuccess(),
+                LazyFollow: blockModel.lazyFollow(),
+                LazyEffect: blockModel.lazyEffect(),
+                DragBeforeAnimFinish: blockModel.dragBeforeAnimFinish(),
+                AddClassActive: blockModel.addClassActive(),
+                TransitionStyle: blockModel.transitionStyle(),
+                BeforeUpdate: blockModel.beforeUpdate(),
+                AfterUpdate: blockModel.afterUpdate(),
+                BeforeInit: blockModel.beforeInit(),
+                AfterInit: blockModel.afterInit(),
+                BeforeMove: blockModel.beforeMove(),
+                AfterMove: blockModel.afterMove(),
+                AfterAction: blockModel.afterAction(),
+                StartDragging: blockModel.startDragging(),
+                AfterLazyLoad: blockModel.afterLazyLoad(),
             };
-            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
+            blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

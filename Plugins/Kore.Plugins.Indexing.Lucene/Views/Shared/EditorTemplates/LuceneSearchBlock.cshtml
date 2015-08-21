@@ -18,10 +18,10 @@
 <script type="text/javascript">
     var contentBlockModel = (function () {
         var f = {};
-        f.updateModel = function () {
-            viewModel.blockModel.style = ko.observable("");
+        f.updateModel = function (blockModel) {
+            blockModel.style = ko.observable("");
 
-            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
+            var data = ko.mapping.fromJSON(blockModel.blockValues());
 
             if ((isFunction(data) && data()) || data) {
                 if (data.Style == undefined) {
@@ -29,19 +29,19 @@
                     return;
                 }
                 if (data.Style) {
-                    viewModel.blockModel.style(data.Style());
+                    blockModel.style(data.Style());
                 }
             }
         };
-        f.cleanUp = function () {
-            delete viewModel.blockModel.style;
+        f.cleanUp= function (blockModel) {
+            delete blockModel.style;
         };
-        f.onBeforeSave = function () {
+        f.onBeforeSave = function (blockModel) {
             var data = {
-                Style: viewModel.blockModel.style()
+                Style: blockModel.style()
             };
 
-            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
+            blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

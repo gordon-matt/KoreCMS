@@ -1,9 +1,5 @@
-﻿var viewModel;
-
-define(function (require) {
+﻿define(function (require) {
     'use strict'
-
-    viewModel = null;
 
     var $ = require('jquery');
     var ko = require('knockout');
@@ -91,6 +87,13 @@ define(function (require) {
                     serverSorting: true,
                     sort: { field: "Name", dir: "asc" }
                 },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
+                },
                 filterable: true,
                 sortable: {
                     allowUnsort: false
@@ -106,7 +109,7 @@ define(function (require) {
                 }, {
                     field: "Id",
                     title: " ",
-                    template: '<div class="btn-group"><a onclick="viewModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + self.translations.Edit + '</a></div>',
+                    template: '<div class="btn-group"><a data-bind="click: edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.translations.Edit + '</a></div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
                     width: 120
@@ -136,7 +139,7 @@ define(function (require) {
 
                     // Clean up from previously injected html/scripts
                     if (typeof cleanUp == 'function') {
-                        cleanUp();
+                        cleanUp(self);
                     }
 
                     // Remove Old Scripts
@@ -171,8 +174,8 @@ define(function (require) {
                     // Ensure the function exists before calling it...
                     if (typeof updateModel == 'function') {
                         var data = ko.toJS(ko.mapping.fromJSON(self.value()));
-                        updateModel(data);
-                        ko.applyBindings(viewModel, elementToBind);
+                        updateModel(self, data);
+                        ko.applyBindings(self, elementToBind);
                     }
 
                     //self.validator.resetForm();
@@ -191,7 +194,7 @@ define(function (require) {
         self.save = function () {
             // ensure the function exists before calling it...
             if (typeof onBeforeSave == 'function') {
-                onBeforeSave();
+                onBeforeSave(self);
             }
 
             var record = {
@@ -228,6 +231,6 @@ define(function (require) {
         };
     };
 
-    viewModel = new ViewModel();
+    var viewModel = new ViewModel();
     return viewModel;
 });

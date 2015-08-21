@@ -79,122 +79,122 @@
 <script type="text/javascript">
     var contentBlockModel = (function () {
         var f = {};
-        f.updateModel = function () {
-            //viewModel.blockModel.width = ko.observable(100);
-            //viewModel.blockModel.widthUnit = ko.observable(1);
-            //viewModel.blockModel.height = ko.observable(250);
-            //viewModel.blockModel.heightUnit = ko.observable(0);
-            //viewModel.blockModel.centerX = ko.observable(0.5);
-            //viewModel.blockModel.centerY = ko.observable(0.5);
-            viewModel.blockModel.autoResize = ko.observable(false);
-            viewModel.blockModel.steps = ko.observable(10);
-            viewModel.blockModel.classPattern = ko.observable('w{n}');
-            viewModel.blockModel.afterCloudRender = ko.observable(null);
-            viewModel.blockModel.delay = ko.observable(null);
-            viewModel.blockModel.shape = ko.observable(0);
-            viewModel.blockModel.removeOverflowing = ko.observable(true);
-            viewModel.blockModel.encodeURI = ko.observable(true);
-            viewModel.blockModel.colors = ko.observable(null);
-            viewModel.blockModel.fontSizeFrom = ko.observable(null);
-            viewModel.blockModel.fontSizeTo = ko.observable(null);
+        f.updateModel = function (blockModel) {
+            //blockModel.width = ko.observable(100);
+            //blockModel.widthUnit = ko.observable(1);
+            //blockModel.height = ko.observable(250);
+            //blockModel.heightUnit = ko.observable(0);
+            //blockModel.centerX = ko.observable(0.5);
+            //blockModel.centerY = ko.observable(0.5);
+            blockModel.autoResize = ko.observable(false);
+            blockModel.steps = ko.observable(10);
+            blockModel.classPattern = ko.observable('w{n}');
+            blockModel.afterCloudRender = ko.observable(null);
+            blockModel.delay = ko.observable(null);
+            blockModel.shape = ko.observable(0);
+            blockModel.removeOverflowing = ko.observable(true);
+            blockModel.encodeURI = ko.observable(true);
+            blockModel.colors = ko.observable(null);
+            blockModel.fontSizeFrom = ko.observable(null);
+            blockModel.fontSizeTo = ko.observable(null);
 
-            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
+            var data = ko.mapping.fromJSON(blockModel.blockValues());
 
             if (data) {
                 //if (data.Width) {
-                //    viewModel.blockModel.width(data.Width());
+                //    blockModel.width(data.Width());
                 //}
                 //if (data.WidthUnit) {
-                //    viewModel.blockModel.widthUnit(data.WidthUnit());
+                //    blockModel.widthUnit(data.WidthUnit());
                 //}
                 //if (data.Height) {
-                //    viewModel.blockModel.height(data.Height());
+                //    blockModel.height(data.Height());
                 //}
                 //if (data.HeightUnit) {
-                //    viewModel.blockModel.heightUnit(data.HeightUnit());
+                //    blockModel.heightUnit(data.HeightUnit());
                 //}
                 //if (data.CenterX) {
-                //    viewModel.blockModel.centerX(data.CenterX());
+                //    blockModel.centerX(data.CenterX());
                 //}
                 //if (data.CenterY) {
-                //    viewModel.blockModel.centerY(data.CenterY());
+                //    blockModel.centerY(data.CenterY());
                 //}
                 if (data.AutoResize && typeof data.AutoResize() === 'boolean') {
-                    viewModel.blockModel.autoResize(data.AutoResize());
+                    blockModel.autoResize(data.AutoResize());
                 }
                 if (data.Steps) {
-                    viewModel.blockModel.steps(data.Steps());
+                    blockModel.steps(data.Steps());
                 }
                 if (data.ClassPattern) {
-                    viewModel.blockModel.classPattern(data.ClassPattern());
+                    blockModel.classPattern(data.ClassPattern());
                 }
                 if (data.AfterCloudRender) {
-                    viewModel.blockModel.afterCloudRender(data.AfterCloudRender());
+                    blockModel.afterCloudRender(data.AfterCloudRender());
                 }
                 if (data.Delay) {
-                    viewModel.blockModel.delay(data.Delay());
+                    blockModel.delay(data.Delay());
                 }
                 if (data.Shape) {
-                    viewModel.blockModel.shape(data.Shape());
+                    blockModel.shape(data.Shape());
                 }
                 if (data.RemoveOverflowing && typeof data.RemoveOverflowing() === 'boolean') {
-                    viewModel.blockModel.removeOverflowing(data.RemoveOverflowing());
+                    blockModel.removeOverflowing(data.RemoveOverflowing());
                 }
                 if (data.EncodeURI && typeof data.EncodeURI() === 'boolean') {
-                    viewModel.blockModel.encodeURI(data.EncodeURI());
+                    blockModel.encodeURI(data.EncodeURI());
                 }
                 if (data.Colors) {
-                    viewModel.blockModel.colors(data.Colors());
+                    blockModel.colors(data.Colors());
                 }
                 if (data.FontSizeFrom) {
-                    viewModel.blockModel.fontSizeFrom(data.FontSizeFrom());
+                    blockModel.fontSizeFrom(data.FontSizeFrom());
                 }
                 if (data.FontSizeTo) {
-                    viewModel.blockModel.fontSizeTo(data.FontSizeTo());
+                    blockModel.fontSizeTo(data.FontSizeTo());
                 }
             }
         };
-        f.cleanUp = function () {
-            //delete viewModel.blockModel.width;
-            //delete viewModel.blockModel.widthUnit;
-            //delete viewModel.blockModel.height;
-            //delete viewModel.blockModel.heightUnit;
-            //delete viewModel.blockModel.centerX;
-            //delete viewModel.blockModel.centerY;
-            delete viewModel.blockModel.autoResize;
-            delete viewModel.blockModel.steps;
-            delete viewModel.blockModel.classPattern;
-            delete viewModel.blockModel.afterCloudRender;
-            delete viewModel.blockModel.delay;
-            delete viewModel.blockModel.shape;
-            delete viewModel.blockModel.removeOverflowing;
-            delete viewModel.blockModel.encodeURI;
-            delete viewModel.blockModel.colors;
-            delete viewModel.blockModel.fontSizeFrom;
-            delete viewModel.blockModel.fontSizeTo;
+        f.cleanUp= function (blockModel) {
+            //delete blockModel.width;
+            //delete blockModel.widthUnit;
+            //delete blockModel.height;
+            //delete blockModel.heightUnit;
+            //delete blockModel.centerX;
+            //delete blockModel.centerY;
+            delete blockModel.autoResize;
+            delete blockModel.steps;
+            delete blockModel.classPattern;
+            delete blockModel.afterCloudRender;
+            delete blockModel.delay;
+            delete blockModel.shape;
+            delete blockModel.removeOverflowing;
+            delete blockModel.encodeURI;
+            delete blockModel.colors;
+            delete blockModel.fontSizeFrom;
+            delete blockModel.fontSizeTo;
         };
-        f.onBeforeSave = function () {
+        f.onBeforeSave = function (blockModel) {
             var data = {
-                //Width: viewModel.blockModel.width(),
-                //WidthUnit: viewModel.blockModel.widthUnit(),
-                //Height: viewModel.blockModel.height(),
-                //HeightUnit: viewModel.blockModel.heightUnit(),
-                //CenterX: viewModel.blockModel.centerX(),
-                //CenterY: viewModel.blockModel.centerY(),
-                AutoResize: viewModel.blockModel.autoResize(),
-                Steps: viewModel.blockModel.steps(),
-                ClassPattern: viewModel.blockModel.classPattern(),
-                AfterCloudRender: viewModel.blockModel.afterCloudRender(),
-                Delay: viewModel.blockModel.delay(),
-                Shape: viewModel.blockModel.shape(),
-                RemoveOverflowing: viewModel.blockModel.removeOverflowing(),
-                EncodeURI: viewModel.blockModel.encodeURI(),
-                Colors: viewModel.blockModel.colors(),
-                FontSizeFrom: viewModel.blockModel.fontSizeFrom(),
-                FontSizeTo: viewModel.blockModel.fontSizeTo()
+                //Width: blockModel.width(),
+                //WidthUnit: blockModel.widthUnit(),
+                //Height: blockModel.height(),
+                //HeightUnit: blockModel.heightUnit(),
+                //CenterX: blockModel.centerX(),
+                //CenterY: blockModel.centerY(),
+                AutoResize: blockModel.autoResize(),
+                Steps: blockModel.steps(),
+                ClassPattern: blockModel.classPattern(),
+                AfterCloudRender: blockModel.afterCloudRender(),
+                Delay: blockModel.delay(),
+                Shape: blockModel.shape(),
+                RemoveOverflowing: blockModel.removeOverflowing(),
+                EncodeURI: blockModel.encodeURI(),
+                Colors: blockModel.colors(),
+                FontSizeFrom: blockModel.fontSizeFrom(),
+                FontSizeTo: blockModel.fontSizeTo()
             };
 
-            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
+            blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

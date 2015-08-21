@@ -350,7 +350,7 @@
                 var url = $('#ImagesDirectory').val();
                 var idx = url.indexOf("/Media");
                 url = url.substring(idx);
-                viewModel.blockModel.imagesDirectory(url);
+                blockModel.imagesDirectory(url);
             }
             modalDismissed = false;
         })
@@ -359,7 +359,7 @@
                 var url = $('#FullSizeImagesDirectory').val();
                 var idx = url.indexOf("/Media");
                 url = url.substring(idx);
-                viewModel.blockModel.fullSizeImagesDirectory(url);
+                blockModel.fullSizeImagesDirectory(url);
             }
             modalDismissed = false;
         })
@@ -367,180 +367,180 @@
 
     var contentBlockModel = (function () {
         var f = {};
-        f.updateModel = function () {
-            viewModel.blockModel.mode = ko.observable(0);
-            viewModel.blockModel.imagesPattern = ko.observable("image-%COL-%ROW.jpg");
-            viewModel.blockModel.imagesDirectory = ko.observable("");
-            viewModel.blockModel.fullSizeImagesDirectory = ko.observable("");
-            viewModel.blockModel.autoRotate = ko.observable(false);
-            viewModel.blockModel.autoRotateDirection = ko.observable(1);
-            viewModel.blockModel.autoRotateSpeed = ko.observable(50);
-            viewModel.blockModel.autoRotateStopOnMove = ko.observable(true);
-            viewModel.blockModel.loadFullSizeImagesOnZoom = ko.observable(true);
-            viewModel.blockModel.loadFullSizeImagesOnFullscreen = ko.observable(true);
-            viewModel.blockModel.width = ko.observable(620);
-            viewModel.blockModel.height = ko.observable(350);
-            viewModel.blockModel.rows = ko.observable(1);
-            viewModel.blockModel.columns = ko.observable(36);
-            viewModel.blockModel.xAxisSensitivity = ko.observable(10);
-            viewModel.blockModel.yAxisSensitivity = ko.observable(40);
-            viewModel.blockModel.inertiaConstant = ko.observable(10);
-            viewModel.blockModel.buttonWidth = ko.observable(40);
-            viewModel.blockModel.buttonHeight = ko.observable(40);
-            viewModel.blockModel.buttonMargin = ko.observable(5);
-            viewModel.blockModel.turnSpeed = ko.observable(40);
-            viewModel.blockModel.showButtons = ko.observable(true);
-            viewModel.blockModel.showTool = ko.observable(true);
-            viewModel.blockModel.showPlay = ko.observable(true);
-            viewModel.blockModel.showPause = ko.observable(true);
-            viewModel.blockModel.showZoom = ko.observable(true);
-            viewModel.blockModel.showTurn = ko.observable(true);
-            viewModel.blockModel.showFullscreen = ko.observable(true);
-            viewModel.blockModel.displayLoader = ko.observable(true);
-            viewModel.blockModel.loaderHolderClassName = ko.observable("");
-            viewModel.blockModel.loadingTitle = ko.observable("");
-            viewModel.blockModel.loadingSubtitle = ko.observable("");
-            viewModel.blockModel.loadingMessage = ko.observable("");
-            viewModel.blockModel.loaderModalBackground = ko.observable("#FFF");
-            viewModel.blockModel.loaderModalOpacity = ko.observable(0.5);
-            viewModel.blockModel.loaderCircleWidth = ko.observable(70);
-            viewModel.blockModel.loaderCircleLineWidth = ko.observable(10);
-            viewModel.blockModel.loaderCircleLineColor = ko.observable("#555");
-            viewModel.blockModel.loaderCircleBackgroundColor = ko.observable("#FFF");
+        f.updateModel = function (blockModel) {
+            blockModel.mode = ko.observable(0);
+            blockModel.imagesPattern = ko.observable("image-%COL-%ROW.jpg");
+            blockModel.imagesDirectory = ko.observable("");
+            blockModel.fullSizeImagesDirectory = ko.observable("");
+            blockModel.autoRotate = ko.observable(false);
+            blockModel.autoRotateDirection = ko.observable(1);
+            blockModel.autoRotateSpeed = ko.observable(50);
+            blockModel.autoRotateStopOnMove = ko.observable(true);
+            blockModel.loadFullSizeImagesOnZoom = ko.observable(true);
+            blockModel.loadFullSizeImagesOnFullscreen = ko.observable(true);
+            blockModel.width = ko.observable(620);
+            blockModel.height = ko.observable(350);
+            blockModel.rows = ko.observable(1);
+            blockModel.columns = ko.observable(36);
+            blockModel.xAxisSensitivity = ko.observable(10);
+            blockModel.yAxisSensitivity = ko.observable(40);
+            blockModel.inertiaConstant = ko.observable(10);
+            blockModel.buttonWidth = ko.observable(40);
+            blockModel.buttonHeight = ko.observable(40);
+            blockModel.buttonMargin = ko.observable(5);
+            blockModel.turnSpeed = ko.observable(40);
+            blockModel.showButtons = ko.observable(true);
+            blockModel.showTool = ko.observable(true);
+            blockModel.showPlay = ko.observable(true);
+            blockModel.showPause = ko.observable(true);
+            blockModel.showZoom = ko.observable(true);
+            blockModel.showTurn = ko.observable(true);
+            blockModel.showFullscreen = ko.observable(true);
+            blockModel.displayLoader = ko.observable(true);
+            blockModel.loaderHolderClassName = ko.observable("");
+            blockModel.loadingTitle = ko.observable("");
+            blockModel.loadingSubtitle = ko.observable("");
+            blockModel.loadingMessage = ko.observable("");
+            blockModel.loaderModalBackground = ko.observable("#FFF");
+            blockModel.loaderModalOpacity = ko.observable(0.5);
+            blockModel.loaderCircleWidth = ko.observable(70);
+            blockModel.loaderCircleLineWidth = ko.observable(10);
+            blockModel.loaderCircleLineColor = ko.observable("#555");
+            blockModel.loaderCircleBackgroundColor = ko.observable("#FFF");
 
-            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
+            var data = ko.mapping.fromJSON(blockModel.blockValues());
 
             if ((isFunction(data) && data()) || data) {
                 if (data.Mode == undefined) {
                     // If this is not set, it means the contentBlock is new and we have nothing in blockValues
                     return;
                 }
-                viewModel.blockModel.mode(data.Mode());
-                viewModel.blockModel.imagesPattern(data.ImagesPattern());
-                viewModel.blockModel.imagesDirectory(data.ImagesDirectory());
-                viewModel.blockModel.fullSizeImagesDirectory(data.FullSizeImagesDirectory());
-                viewModel.blockModel.autoRotate(data.AutoRotate());
-                viewModel.blockModel.autoRotateDirection(data.AutoRotateDirection());
-                viewModel.blockModel.autoRotateSpeed(data.AutoRotateSpeed());
-                viewModel.blockModel.autoRotateStopOnMove(data.AutoRotateStopOnMove());
-                viewModel.blockModel.loadFullSizeImagesOnZoom(data.LoadFullSizeImagesOnZoom());
-                viewModel.blockModel.loadFullSizeImagesOnFullscreen(data.LoadFullSizeImagesOnFullscreen());
-                viewModel.blockModel.width(data.Width());
-                viewModel.blockModel.height(data.Height());
-                viewModel.blockModel.rows(data.Rows());
-                viewModel.blockModel.columns(data.Columns());
-                viewModel.blockModel.xAxisSensitivity(data.XAxisSensitivity());
-                viewModel.blockModel.yAxisSensitivity(data.YAxisSensitivity());
-                viewModel.blockModel.inertiaConstant(data.InertiaConstant());
-                viewModel.blockModel.buttonWidth(data.ButtonWidth());
-                viewModel.blockModel.buttonHeight(data.ButtonHeight());
-                viewModel.blockModel.buttonMargin(data.ButtonMargin());
-                viewModel.blockModel.turnSpeed(data.TurnSpeed());
-                viewModel.blockModel.showButtons(data.ShowButtons());
-                viewModel.blockModel.showTool(data.ShowTool());
-                viewModel.blockModel.showPlay(data.ShowPlay());
-                viewModel.blockModel.showPause(data.ShowPause());
-                viewModel.blockModel.showZoom(data.ShowZoom());
-                viewModel.blockModel.showTurn(data.ShowTurn());
-                viewModel.blockModel.showFullscreen(data.ShowFullscreen());
-                viewModel.blockModel.displayLoader(data.DisplayLoader());
-                viewModel.blockModel.loaderHolderClassName(data.LoaderHolderClassName());
-                viewModel.blockModel.loadingTitle(data.LoadingTitle());
-                viewModel.blockModel.loadingSubtitle(data.LoadingSubtitle());
-                viewModel.blockModel.loadingMessage(data.LoadingMessage());
-                viewModel.blockModel.loaderModalBackground(data.LoaderModalBackground());
-                viewModel.blockModel.loaderModalOpacity(data.LoaderModalOpacity());
-                viewModel.blockModel.loaderCircleWidth(data.LoaderCircleWidth());
-                viewModel.blockModel.loaderCircleLineWidth(data.LoaderCircleLineWidth());
-                viewModel.blockModel.loaderCircleLineColor(data.LoaderCircleLineColor());
-                viewModel.blockModel.loaderCircleBackgroundColor(data.LoaderCircleBackgroundColor());
+                blockModel.mode(data.Mode());
+                blockModel.imagesPattern(data.ImagesPattern());
+                blockModel.imagesDirectory(data.ImagesDirectory());
+                blockModel.fullSizeImagesDirectory(data.FullSizeImagesDirectory());
+                blockModel.autoRotate(data.AutoRotate());
+                blockModel.autoRotateDirection(data.AutoRotateDirection());
+                blockModel.autoRotateSpeed(data.AutoRotateSpeed());
+                blockModel.autoRotateStopOnMove(data.AutoRotateStopOnMove());
+                blockModel.loadFullSizeImagesOnZoom(data.LoadFullSizeImagesOnZoom());
+                blockModel.loadFullSizeImagesOnFullscreen(data.LoadFullSizeImagesOnFullscreen());
+                blockModel.width(data.Width());
+                blockModel.height(data.Height());
+                blockModel.rows(data.Rows());
+                blockModel.columns(data.Columns());
+                blockModel.xAxisSensitivity(data.XAxisSensitivity());
+                blockModel.yAxisSensitivity(data.YAxisSensitivity());
+                blockModel.inertiaConstant(data.InertiaConstant());
+                blockModel.buttonWidth(data.ButtonWidth());
+                blockModel.buttonHeight(data.ButtonHeight());
+                blockModel.buttonMargin(data.ButtonMargin());
+                blockModel.turnSpeed(data.TurnSpeed());
+                blockModel.showButtons(data.ShowButtons());
+                blockModel.showTool(data.ShowTool());
+                blockModel.showPlay(data.ShowPlay());
+                blockModel.showPause(data.ShowPause());
+                blockModel.showZoom(data.ShowZoom());
+                blockModel.showTurn(data.ShowTurn());
+                blockModel.showFullscreen(data.ShowFullscreen());
+                blockModel.displayLoader(data.DisplayLoader());
+                blockModel.loaderHolderClassName(data.LoaderHolderClassName());
+                blockModel.loadingTitle(data.LoadingTitle());
+                blockModel.loadingSubtitle(data.LoadingSubtitle());
+                blockModel.loadingMessage(data.LoadingMessage());
+                blockModel.loaderModalBackground(data.LoaderModalBackground());
+                blockModel.loaderModalOpacity(data.LoaderModalOpacity());
+                blockModel.loaderCircleWidth(data.LoaderCircleWidth());
+                blockModel.loaderCircleLineWidth(data.LoaderCircleLineWidth());
+                blockModel.loaderCircleLineColor(data.LoaderCircleLineColor());
+                blockModel.loaderCircleBackgroundColor(data.LoaderCircleBackgroundColor());
             }
         };
-        f.cleanUp = function () {
-            delete viewModel.blockModel.mode;
-            delete viewModel.blockModel.imagesPattern;
-            delete viewModel.blockModel.imagesDirectory;
-            delete viewModel.blockModel.fullSizeImagesDirectory;
-            delete viewModel.blockModel.autoRotate;
-            delete viewModel.blockModel.autoRotateDirection;
-            delete viewModel.blockModel.autoRotateSpeed;
-            delete viewModel.blockModel.autoRotateStopOnMove;
-            delete viewModel.blockModel.loadFullSizeImagesOnZoom;
-            delete viewModel.blockModel.loadFullSizeImagesOnFullscreen;
-            delete viewModel.blockModel.width;
-            delete viewModel.blockModel.height;
-            delete viewModel.blockModel.rows;
-            delete viewModel.blockModel.columns;
-            delete viewModel.blockModel.xAxisSensitivity;
-            delete viewModel.blockModel.yAxisSensitivity;
-            delete viewModel.blockModel.inertiaConstant;
-            delete viewModel.blockModel.buttonWidth;
-            delete viewModel.blockModel.buttonHeight;
-            delete viewModel.blockModel.buttonMargin;
-            delete viewModel.blockModel.turnSpeed;
-            delete viewModel.blockModel.showButtons;
-            delete viewModel.blockModel.showTool;
-            delete viewModel.blockModel.showPlay;
-            delete viewModel.blockModel.showPause;
-            delete viewModel.blockModel.showZoom;
-            delete viewModel.blockModel.showTurn;
-            delete viewModel.blockModel.showFullscreen;
-            delete viewModel.blockModel.displayLoader;
-            delete viewModel.blockModel.loaderHolderClassName;
-            delete viewModel.blockModel.loadingTitle;
-            delete viewModel.blockModel.loadingSubtitle;
-            delete viewModel.blockModel.loadingMessage;
-            delete viewModel.blockModel.loaderModalBackground;
-            delete viewModel.blockModel.loaderModalOpacity;
-            delete viewModel.blockModel.loaderCircleWidth;
-            delete viewModel.blockModel.loaderCircleLineWidth;
-            delete viewModel.blockModel.loaderCircleLineColor;
-            delete viewModel.blockModel.loaderCircleBackgroundColor;
+        f.cleanUp= function (blockModel) {
+            delete blockModel.mode;
+            delete blockModel.imagesPattern;
+            delete blockModel.imagesDirectory;
+            delete blockModel.fullSizeImagesDirectory;
+            delete blockModel.autoRotate;
+            delete blockModel.autoRotateDirection;
+            delete blockModel.autoRotateSpeed;
+            delete blockModel.autoRotateStopOnMove;
+            delete blockModel.loadFullSizeImagesOnZoom;
+            delete blockModel.loadFullSizeImagesOnFullscreen;
+            delete blockModel.width;
+            delete blockModel.height;
+            delete blockModel.rows;
+            delete blockModel.columns;
+            delete blockModel.xAxisSensitivity;
+            delete blockModel.yAxisSensitivity;
+            delete blockModel.inertiaConstant;
+            delete blockModel.buttonWidth;
+            delete blockModel.buttonHeight;
+            delete blockModel.buttonMargin;
+            delete blockModel.turnSpeed;
+            delete blockModel.showButtons;
+            delete blockModel.showTool;
+            delete blockModel.showPlay;
+            delete blockModel.showPause;
+            delete blockModel.showZoom;
+            delete blockModel.showTurn;
+            delete blockModel.showFullscreen;
+            delete blockModel.displayLoader;
+            delete blockModel.loaderHolderClassName;
+            delete blockModel.loadingTitle;
+            delete blockModel.loadingSubtitle;
+            delete blockModel.loadingMessage;
+            delete blockModel.loaderModalBackground;
+            delete blockModel.loaderModalOpacity;
+            delete blockModel.loaderCircleWidth;
+            delete blockModel.loaderCircleLineWidth;
+            delete blockModel.loaderCircleLineColor;
+            delete blockModel.loaderCircleBackgroundColor;
         };
-        f.onBeforeSave = function () {
+        f.onBeforeSave = function (blockModel) {
             var data = {
-                Mode: viewModel.blockModel.mode(),
-                ImagesPattern: viewModel.blockModel.imagesPattern(),
-                ImagesDirectory: viewModel.blockModel.imagesDirectory(),
-                FullSizeImagesDirectory: viewModel.blockModel.fullSizeImagesDirectory(),
-                AutoRotate: viewModel.blockModel.autoRotate(),
-                AutoRotateDirection: viewModel.blockModel.autoRotateDirection(),
-                AutoRotateSpeed: viewModel.blockModel.autoRotateSpeed(),
-                AutoRotateStopOnMove: viewModel.blockModel.autoRotateStopOnMove(),
-                LoadFullSizeImagesOnZoom: viewModel.blockModel.loadFullSizeImagesOnZoom(),
-                LoadFullSizeImagesOnFullscreen: viewModel.blockModel.loadFullSizeImagesOnFullscreen(),
-                Width: viewModel.blockModel.width(),
-                Height: viewModel.blockModel.height(),
-                Rows: viewModel.blockModel.rows(),
-                Columns: viewModel.blockModel.columns(),
-                XAxisSensitivity: viewModel.blockModel.xAxisSensitivity(),
-                YAxisSensitivity: viewModel.blockModel.yAxisSensitivity(),
-                InertiaConstant: viewModel.blockModel.inertiaConstant(),
-                ButtonWidth: viewModel.blockModel.buttonWidth(),
-                ButtonHeight: viewModel.blockModel.buttonHeight(),
-                ButtonMargin: viewModel.blockModel.buttonMargin(),
-                TurnSpeed: viewModel.blockModel.turnSpeed(),
-                ShowButtons: viewModel.blockModel.showButtons(),
-                ShowTool: viewModel.blockModel.showTool(),
-                ShowPlay: viewModel.blockModel.showPlay(),
-                ShowPause: viewModel.blockModel.showPause(),
-                ShowZoom: viewModel.blockModel.showZoom(),
-                ShowTurn: viewModel.blockModel.showTurn(),
-                ShowFullscreen: viewModel.blockModel.showFullscreen(),
-                DisplayLoader: viewModel.blockModel.displayLoader(),
-                LoaderHolderClassName: viewModel.blockModel.loaderHolderClassName(),
-                LoadingTitle: viewModel.blockModel.loadingTitle(),
-                LoadingSubtitle: viewModel.blockModel.loadingSubtitle(),
-                LoadingMessage: viewModel.blockModel.loadingMessage(),
-                LoaderModalBackground: viewModel.blockModel.loaderModalBackground(),
-                LoaderModalOpacity: viewModel.blockModel.loaderModalOpacity(),
-                LoaderCircleWidth: viewModel.blockModel.loaderCircleWidth(),
-                LoaderCircleLineWidth: viewModel.blockModel.loaderCircleLineWidth(),
-                LoaderCircleLineColor: viewModel.blockModel.loaderCircleLineColor(),
-                LoaderCircleBackgroundColor: viewModel.blockModel.loaderCircleBackgroundColor()
+                Mode: blockModel.mode(),
+                ImagesPattern: blockModel.imagesPattern(),
+                ImagesDirectory: blockModel.imagesDirectory(),
+                FullSizeImagesDirectory: blockModel.fullSizeImagesDirectory(),
+                AutoRotate: blockModel.autoRotate(),
+                AutoRotateDirection: blockModel.autoRotateDirection(),
+                AutoRotateSpeed: blockModel.autoRotateSpeed(),
+                AutoRotateStopOnMove: blockModel.autoRotateStopOnMove(),
+                LoadFullSizeImagesOnZoom: blockModel.loadFullSizeImagesOnZoom(),
+                LoadFullSizeImagesOnFullscreen: blockModel.loadFullSizeImagesOnFullscreen(),
+                Width: blockModel.width(),
+                Height: blockModel.height(),
+                Rows: blockModel.rows(),
+                Columns: blockModel.columns(),
+                XAxisSensitivity: blockModel.xAxisSensitivity(),
+                YAxisSensitivity: blockModel.yAxisSensitivity(),
+                InertiaConstant: blockModel.inertiaConstant(),
+                ButtonWidth: blockModel.buttonWidth(),
+                ButtonHeight: blockModel.buttonHeight(),
+                ButtonMargin: blockModel.buttonMargin(),
+                TurnSpeed: blockModel.turnSpeed(),
+                ShowButtons: blockModel.showButtons(),
+                ShowTool: blockModel.showTool(),
+                ShowPlay: blockModel.showPlay(),
+                ShowPause: blockModel.showPause(),
+                ShowZoom: blockModel.showZoom(),
+                ShowTurn: blockModel.showTurn(),
+                ShowFullscreen: blockModel.showFullscreen(),
+                DisplayLoader: blockModel.displayLoader(),
+                LoaderHolderClassName: blockModel.loaderHolderClassName(),
+                LoadingTitle: blockModel.loadingTitle(),
+                LoadingSubtitle: blockModel.loadingSubtitle(),
+                LoadingMessage: blockModel.loadingMessage(),
+                LoaderModalBackground: blockModel.loaderModalBackground(),
+                LoaderModalOpacity: blockModel.loaderModalOpacity(),
+                LoaderCircleWidth: blockModel.loaderCircleWidth(),
+                LoaderCircleLineWidth: blockModel.loaderCircleLineWidth(),
+                LoaderCircleLineColor: blockModel.loaderCircleLineColor(),
+                LoaderCircleBackgroundColor: blockModel.loaderCircleBackgroundColor()
             };
 
-            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
+            blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

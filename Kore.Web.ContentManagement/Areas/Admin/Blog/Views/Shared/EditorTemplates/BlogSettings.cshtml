@@ -50,7 +50,7 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel(data) {
+    function updateModel(viewModel, data) {
         viewModel.pageTitle = ko.observable("Blog");
         viewModel.dateFormat = ko.observable("YYYY-MM-DD HH:mm:ss");
         viewModel.itemsPerPage = ko.observable(5);
@@ -95,7 +95,7 @@
         }
     };
 
-    function cleanUp() {
+    function cleanUp(viewModel) {
         delete viewModel.pageTitle;
         delete viewModel.dateFormat;
         delete viewModel.itemsPerPage;
@@ -107,7 +107,7 @@
         delete viewModel.layoutPathOverride;
     }
 
-    function onBeforeSave() {
+    function onBeforeSave(viewModel) {
         var data = {
             PageTitle: viewModel.pageTitle(),
             DateFormat: viewModel.dateFormat(),

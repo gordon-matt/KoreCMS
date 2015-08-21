@@ -1,9 +1,5 @@
-﻿var viewModel;
-
-define(function (require) {
+﻿define(function (require) {
     'use strict'
-
-    viewModel = null;
 
     var $ = require('jquery');
     var ko = require('knockout');
@@ -24,9 +20,10 @@ define(function (require) {
 
     ko.mapping = koMap;
 
-    var BlockModel = function () {
+    var BlockModel = function (parent) {
         var self = this;
 
+        self.parent = parent;
         self.id = ko.observable(emptyGuid);
         self.title = ko.observable(null);
         self.order = ko.observable(0);
@@ -98,7 +95,7 @@ define(function (require) {
                         }
                     }
                 },
-                pageSize: viewModel.gridPageSize,
+                pageSize: self.parent.gridPageSize,
                 serverPaging: true,
                 serverFiltering: true,
                 serverSorting: true,
@@ -106,14 +103,14 @@ define(function (require) {
             };
 
             // Override grid data source if necessary (to filter by Page ID)
-            if (viewModel.pageId && viewModel.pageId != '') {
+            if (self.parent.pageId && self.parent.pageId != '') {
                 ds.transport.read.url = "/odata/kore/cms/ContentBlockApi/Default.GetByPageId";
                 ds.transport.read.type = "POST";
                 ds.transport.read.contentType = "application/json";
                 ds.transport.parameterMap = function (options, operation) {
                     if (operation === "read") {
                         return kendo.stringify({
-                            pageId: viewModel.pageId
+                            pageId: self.parent.pageId
                         });
                     }
                 };
@@ -122,6 +119,13 @@ define(function (require) {
             $("#Grid").kendoGrid({
                 data: null,
                 dataSource: ds,
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
+                },
                 filterable: true,
                 sortable: {
                     allowUnsort: false
@@ -132,19 +136,19 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "Title",
-                    title: viewModel.translations.Columns.Title,
+                    title: self.parent.translations.Columns.Title,
                     filterable: true
                 }, {
                     field: "BlockName",
-                    title: viewModel.translations.Columns.BlockType,
+                    title: self.parent.translations.Columns.BlockType,
                     filterable: true
                 }, {
                     field: "Order",
-                    title: viewModel.translations.Columns.Order,
+                    title: self.parent.translations.Columns.Order,
                     filterable: false
                 }, {
                     field: "IsEnabled",
-                    title: viewModel.translations.Columns.IsEnabled,
+                    title: self.parent.translations.Columns.IsEnabled,
                     template: '<i class="fa #=IsEnabled ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
                     attributes: { "class": "text-center" },
                     filterable: true,
@@ -153,9 +157,9 @@ define(function (require) {
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a onclick="viewModel.blockModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.blockModel.remove(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
-                        '<a onclick="viewModel.blockModel.toggleEnabled(\'#=Id#\', #=IsEnabled#)" class="btn btn-default btn-xs">' + viewModel.translations.Toggle + '</a></div>',
+                        '<div class="btn-group"><a data-bind="click: blockModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: blockModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
+                        '<a data-bind="click: blockModel.toggleEnabled.bind($data,\'#=Id#\', #=IsEnabled#)" class="btn btn-default btn-xs">' + self.parent.translations.Toggle + '</a></div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
                     width: 250
@@ -173,13 +177,13 @@ define(function (require) {
             self.displayCondition(null);
             self.customTemplatePath(null);
             self.blockValues(null);
-            self.pageId(viewModel.pageId);
+            self.pageId(self.parent.pageId);
             self.cultureCode(null);
             self.refId(null);
 
             // Clean up from previously injected html/scripts
             if (self.contentBlockModelStub != null && typeof self.contentBlockModelStub.cleanUp === 'function') {
-                self.contentBlockModelStub.cleanUp();
+                self.contentBlockModelStub.cleanUp(self);
             }
             self.contentBlockModelStub = null;
 
@@ -232,7 +236,7 @@ define(function (require) {
 
                     // Clean up from previously injected html/scripts
                     if (self.contentBlockModelStub != null && typeof self.contentBlockModelStub.cleanUp === 'function') {
-                        self.contentBlockModelStub.cleanUp();
+                        self.contentBlockModelStub.cleanUp(self);
                     }
                     self.contentBlockModelStub = null;
 
@@ -270,13 +274,13 @@ define(function (require) {
                     if (typeof contentBlockModel != null) {
                         self.contentBlockModelStub = contentBlockModel;
                         if (typeof self.contentBlockModelStub.updateModel === 'function') {
-                            self.contentBlockModelStub.updateModel();
+                            self.contentBlockModelStub.updateModel(self);
                         }
-                        ko.applyBindings(viewModel, elementToBind);
+                        ko.applyBindings(self.parent, elementToBind);
                     }
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.GetRecordError, "error");
+                    $.notify(self.parent.translations.GetRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
 
@@ -284,12 +288,12 @@ define(function (require) {
                 switchSection($("#edit-section"));
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.remove = function (id) {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: "/odata/kore/cms/ContentBlockApi(" + id + ")",
                     type: "DELETE",
@@ -299,10 +303,10 @@ define(function (require) {
                     $('#Grid').data('kendoGrid').dataSource.read();
                     $('#Grid').data('kendoGrid').refresh();
 
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -328,7 +332,7 @@ define(function (require) {
 
             // ensure the function exists before calling it...
             if (self.contentBlockModelStub != null && typeof self.contentBlockModelStub.onBeforeSave === 'function') {
-                self.contentBlockModelStub.onBeforeSave();
+                self.contentBlockModelStub.onBeforeSave(self);
             }
 
             var record = {
@@ -362,10 +366,10 @@ define(function (require) {
 
                     switchSection($("#grid-section"));
 
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -384,10 +388,10 @@ define(function (require) {
 
                     switchSection($("#grid-section"));
 
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -395,7 +399,7 @@ define(function (require) {
         self.cancel = function () {
             // Clean up from previously injected html/scripts
             if (self.contentBlockModelStub != null && typeof self.contentBlockModelStub.cleanUp === 'function') {
-                self.contentBlockModelStub.cleanUp();
+                self.contentBlockModelStub.cleanUp(self);
             }
             self.contentBlockModelStub = null;
 
@@ -431,17 +435,19 @@ define(function (require) {
                 $('#Grid').data('kendoGrid').dataSource.read();
                 $('#Grid').data('kendoGrid').refresh();
 
-                $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                $.notify(self.parent.translations.UpdateRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.UpdateRecordError, "error");
+                $.notify(self.parent.translations.UpdateRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
     };
 
-    var ZoneModel = function () {
+    var ZoneModel = function (parent) {
         var self = this;
+
+        self.parent = parent;
         self.id = ko.observable(emptyGuid);
         self.name = ko.observable(null);
 
@@ -490,11 +496,18 @@ define(function (require) {
                             }
                         }
                     },
-                    pageSize: viewModel.gridPageSize,
+                    pageSize: self.parent.gridPageSize,
                     serverPaging: true,
                     serverFiltering: true,
                     serverSorting: true,
                     sort: { field: "Name", dir: "asc" }
+                },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
                 },
                 filterable: true,
                 sortable: {
@@ -506,14 +519,14 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "Name",
-                    title: viewModel.translations.Columns.Name,
+                    title: self.parent.translations.Columns.Name,
                     filterable: true
                 }, {
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a onclick="viewModel.zoneModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.zoneModel.remove(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a></div>',
+                        '<div class="btn-group"><a data-bind="click: zoneModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: zoneModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a></div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
                     width: 120
@@ -540,12 +553,12 @@ define(function (require) {
                 switchSection($("#zones-edit-section"));
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.remove = function (id) {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: "/odata/kore/cms/ZoneApi(" + id + ")",
                     type: "DELETE",
@@ -559,10 +572,10 @@ define(function (require) {
                     $('#ZoneId option[value="' + id + '"]').remove();
                     $('#Create_ZoneId option[value="' + id + '"]').remove();
 
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -603,10 +616,10 @@ define(function (require) {
                         text: record.Name
                     }));
 
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -630,10 +643,10 @@ define(function (require) {
                     $('#ZoneId option[value="' + record.Id + '"]').text(record.Name);
                     $('#Create_ZoneId option[value="' + record.Id + '"]').text(record.Name);
 
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -662,8 +675,8 @@ define(function (require) {
             }
             console.log('Blocks for Page ID: ' + pageId);
 
-            self.blockModel = new BlockModel();
-            self.zoneModel = new ZoneModel();
+            self.blockModel = new BlockModel(self);
+            self.zoneModel = new ZoneModel(self);
         };
         self.attached = function () {
             currentSection = $("#grid-section");
@@ -695,6 +708,6 @@ define(function (require) {
         };
     };
 
-    viewModel = new ViewModel();
+    var viewModel = new ViewModel();
     return viewModel;
 });

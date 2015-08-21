@@ -42,9 +42,9 @@ namespace Kore.Plugins.Maintenance.Watchdog.Infrastructure
             removeServiceAction.Parameter<string>("name");
             removeServiceAction.Returns<IHttpActionResult>();
 
-            var getServicesAction = builder.EntityType<WatchdogInstance>().Collection.Action("GetServices");
-            getServicesAction.Parameter<int>("watchdogInstanceId");
-            getServicesAction.ReturnsCollection<ServiceInfoResult>();
+            var getServicesFunction = builder.EntityType<WatchdogInstance>().Collection.Function("GetServices");
+            getServicesFunction.Parameter<int>("watchdogInstanceId");
+            getServicesFunction.ReturnsCollection<ServiceInfoResult>();
 
             config.MapODataServiceRoute("OData_Kore_Plugin_Watchdog", "odata/kore/watchdog", builder.GetEdmModel());
         }

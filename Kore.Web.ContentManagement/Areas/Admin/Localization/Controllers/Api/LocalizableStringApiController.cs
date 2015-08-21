@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
@@ -7,23 +6,12 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using System.Web.OData;
 using System.Web.OData.Query;
-using System.Web.OData.Routing;
 using Kore.Caching;
 using Kore.Localization.Domain;
 using Kore.Localization.Models;
 using Kore.Localization.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
-
-using Microsoft.OData.Core;
-using Microsoft.OData.Core.UriParser;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Web.Http.Routing;
-using System.Web.OData.Extensions;
-using System.Web.OData.Routing;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
 {

@@ -89,12 +89,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
         {
             var getComparitiveTableFunction = builder.EntityType<LocalizableString>().Collection.Function("GetComparitiveTable");
             getComparitiveTableFunction.Parameter<string>("cultureCode");
-            //getComparitiveTableFunction.Returns<PageResult<ComparitiveLocalizableString>>();
             getComparitiveTableFunction.ReturnsCollection<ComparitiveLocalizableString>();
-
-            //var getComparitiveTableAction = builder.EntityType<LocalizableString>().Collection.Action("GetComparitiveTable");
-            //getComparitiveTableAction.Parameter<string>("cultureCode");
-            //getComparitiveTableAction.ReturnsCollection<ComparitiveLocalizableString>();
 
             var putComparitiveAction = builder.EntityType<LocalizableString>().Collection.Action("PutComparitive");
             putComparitiveAction.Parameter<string>("cultureCode");

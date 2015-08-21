@@ -10,6 +10,7 @@ namespace Kore.Web.Areas.Admin.ScheduledTasks.Controllers
     public class ScheduledTaskController : KoreController
     {
         [Compress]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("")]
         public ActionResult Index()
         {
@@ -26,6 +27,7 @@ namespace Kore.Web.Areas.Admin.ScheduledTasks.Controllers
             return PartialView("Kore.Web.Areas.Admin.ScheduledTasks.Views.ScheduledTask.Index");
         }
 
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {

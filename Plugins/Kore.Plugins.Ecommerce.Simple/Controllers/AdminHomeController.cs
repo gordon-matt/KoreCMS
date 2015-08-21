@@ -8,6 +8,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
     public class AdminHomeController : KoreController
     {
         [Compress]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("")]
         public ActionResult Index()
         {

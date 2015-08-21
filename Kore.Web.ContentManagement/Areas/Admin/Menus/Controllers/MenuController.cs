@@ -10,6 +10,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Controllers
     public class MenuController : KoreController
     {
         [Compress]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("")]
         public ActionResult Index()
         {
@@ -26,6 +27,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Controllers
             return PartialView("Kore.Web.ContentManagement.Areas.Admin.Menus.Views.Menu.Index");
         }
 
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {

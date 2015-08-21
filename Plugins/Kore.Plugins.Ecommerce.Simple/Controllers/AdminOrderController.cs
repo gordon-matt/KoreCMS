@@ -12,6 +12,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
     public class AdminOrderController : KoreController
     {
         [Compress]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("")]
         public ActionResult Index()
         {
@@ -29,6 +30,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             return PartialView();
         }
 
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {

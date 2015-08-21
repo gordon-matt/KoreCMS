@@ -12,6 +12,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers
     public class MessageTemplateController : KoreController
     {
         [Compress]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("")]
         public ActionResult Index()
         {
@@ -29,6 +30,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers
             return PartialView("Kore.Web.ContentManagement.Areas.Admin.Messaging.Views.MessageTemplate.Index");
         }
 
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {

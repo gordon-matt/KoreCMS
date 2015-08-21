@@ -29,6 +29,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers
         }
 
         [Compress]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("")]
         public virtual ActionResult Index()
         {
@@ -46,6 +47,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers
             return PartialView("Kore.Web.Areas.Admin.Membership.Views.Membership.Index");
         }
 
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {

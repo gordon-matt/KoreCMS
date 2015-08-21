@@ -32,6 +32,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
         }
 
         [Compress]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("")]
         public ActionResult Index()
         {
@@ -54,6 +55,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
             return PartialView("Kore.Web.ContentManagement.Areas.Admin.Localization.Views.LocalizableString.Index");
         }
 
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {

@@ -11,6 +11,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers
     public class ThemeController : KoreController
     {
         [Compress]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("")]
         public ActionResult Index()
         {
@@ -29,6 +30,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers
         }
 
         [Route("get-translations")]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         public JsonResult GetTranslations()
         {
             string json = string.Format(

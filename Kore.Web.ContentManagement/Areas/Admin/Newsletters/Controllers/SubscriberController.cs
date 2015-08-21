@@ -37,6 +37,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
         }
 
         [Compress]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("")]
         public ActionResult Index()
         {
@@ -54,6 +55,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
             return PartialView("Kore.Web.ContentManagement.Areas.Admin.Newsletters.Views.Subscriber.Index");
         }
 
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {

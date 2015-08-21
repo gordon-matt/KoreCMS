@@ -11,6 +11,7 @@ namespace Kore.Web.Areas.Admin.Log.Controllers
     public class LogController : KoreController
     {
         [Compress]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("")]
         public ActionResult Index()
         {
@@ -25,6 +26,7 @@ namespace Kore.Web.Areas.Admin.Log.Controllers
             return PartialView("Kore.Web.Areas.Admin.Log.Views.Log.Index");
         }
 
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {

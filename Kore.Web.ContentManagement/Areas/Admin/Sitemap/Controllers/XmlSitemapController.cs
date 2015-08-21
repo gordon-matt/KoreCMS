@@ -11,6 +11,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers
     public class XmlSitemapController : KoreController
     {
         [Compress]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("")]
         public ActionResult Index()
         {
@@ -27,6 +28,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers
             return PartialView("Kore.Web.ContentManagement.Areas.Admin.Sitemap.Views.XmlSitemap.Index");
         }
 
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {

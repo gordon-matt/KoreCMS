@@ -23,6 +23,7 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
         }
 
         [Compress]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("")]
         public ActionResult Index()
         {
@@ -39,6 +40,7 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
             return PartialView("Kore.Web.Areas.Admin.Plugins.Views.Plugin.Index");
         }
 
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {

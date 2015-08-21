@@ -26,6 +26,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers
         }
 
         [Compress]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("")]
         public ActionResult Index()
         {
@@ -43,6 +44,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers
             return PartialView("Kore.Web.Common.Areas.Admin.Regions.Views.Region.Index");
         }
 
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {

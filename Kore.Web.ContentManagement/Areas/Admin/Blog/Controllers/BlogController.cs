@@ -10,6 +10,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
     public class BlogController : KoreController
     {
         [Compress]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("")]
         public ActionResult Index()
         {
@@ -26,6 +27,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
             return PartialView("Kore.Web.ContentManagement.Areas.Admin.Blog.Views.Blog.Index");
         }
 
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {

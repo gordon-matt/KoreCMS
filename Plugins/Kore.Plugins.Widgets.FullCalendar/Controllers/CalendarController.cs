@@ -11,6 +11,7 @@ namespace Kore.Plugins.Widgets.FullCalendar.Controllers
     public class CalendarController : KoreController
     {
         [Compress]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("")]
         public ActionResult Index()
         {
@@ -27,6 +28,7 @@ namespace Kore.Plugins.Widgets.FullCalendar.Controllers
             return PartialView();
         }
 
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {

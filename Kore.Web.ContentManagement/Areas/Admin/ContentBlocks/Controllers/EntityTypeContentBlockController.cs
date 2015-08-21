@@ -23,6 +23,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
         }
 
         [Compress]
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("")]
         public ActionResult Index()
         {
@@ -41,6 +42,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
             return PartialView("Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.EntityTypeContentBlock.Index");
         }
 
+        [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {

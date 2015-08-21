@@ -1,9 +1,5 @@
-﻿var viewModel;
-
-define(function (require) {
+﻿define(function (require) {
     'use strict'
-
-    viewModel = null;
 
     var $ = require('jquery');
     var ko = require('knockout');
@@ -16,9 +12,10 @@ define(function (require) {
     require('kore-section-switching');
     require('kore-jqueryval');
 
-    var RoleModel = function () {
+    var RoleModel = function (parent) {
         var self = this;
 
+        self.parent = parent;
         self.id = ko.observable(emptyGuid);
         self.name = ko.observable(null);
 
@@ -75,6 +72,13 @@ define(function (require) {
                     serverSorting: true,
                     sort: { field: "Name", dir: "asc" }
                 },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
+                },
                 filterable: true,
                 sortable: {
                     allowUnsort: false
@@ -85,15 +89,16 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "Name",
-                    title: viewModel.translations.Columns.Role.Name,
+                    title: self.parent.translations.Columns.Role.Name,
                     filterable: true
                 }, {
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a onclick="viewModel.roleModel.editPermissions(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Permissions + '</a>' +
-                        '<a onclick="viewModel.roleModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.roleModel.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
+                        '<div class="btn-group">' +
+                        '<a data-bind="click: roleModel.editPermissions.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Permissions + '</a>' +
+                        '<a data-bind="click: roleModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: roleModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -109,7 +114,7 @@ define(function (require) {
 
             self.validator.resetForm();
             switchSection($("#roles-form-section"));
-            $("#roles-form-section-legend").html(viewModel.translations.Create);
+            $("#roles-form-section-legend").html(self.parent.translations.Create);
         };
         self.edit = function (id) {
             $.ajax({
@@ -126,15 +131,15 @@ define(function (require) {
 
                 self.validator.resetForm();
                 switchSection($("#roles-form-section"));
-                $("#roles-form-section-legend").html(viewModel.translations.Edit);
+                $("#roles-form-section-legend").html(self.parent.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
-        self.delete = function (id) {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+        self.remove = function (id) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: "/odata/kore/web/RoleApi('" + id + "')",
                     type: "DELETE",
@@ -144,10 +149,10 @@ define(function (require) {
                     $('#RolesGrid').data('kendoGrid').dataSource.read();
                     $('#RolesGrid').data('kendoGrid').refresh();
 
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -179,10 +184,10 @@ define(function (require) {
 
                     switchSection($("#roles-grid-section"));
 
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -202,10 +207,10 @@ define(function (require) {
 
                     switchSection($("#roles-grid-section"));
 
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -233,7 +238,7 @@ define(function (require) {
                 }
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
 
@@ -257,18 +262,19 @@ define(function (require) {
             })
             .done(function (json) {
                 switchSection($("#roles-grid-section"));
-                $.notify(viewModel.translations.SavePermissionsSuccess, "success");
+                $.notify(self.parent.translations.SavePermissionsSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.SavePermissionsError, "error");
+                $.notify(self.parent.translations.SavePermissionsError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
     };
 
-    var ChangePasswordModel = function () {
+    var ChangePasswordModel = function (parent) {
         var self = this;
 
+        self.parent = parent;
         self.id = ko.observable(emptyGuid);
         self.userName = ko.observable(null);
         self.password = ko.observable(null);
@@ -306,18 +312,19 @@ define(function (require) {
             })
             .done(function (json) {
                 switchSection($("#users-grid-section"));
-                $.notify(viewModel.translations.ChangePasswordSuccess, "success");
+                $.notify(self.parent.translations.ChangePasswordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.ChangePasswordError, "error");
+                $.notify(self.parent.translations.ChangePasswordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
     };
 
-    var UserModel = function () {
+    var UserModel = function (parent) {
         var self = this;
 
+        self.parent = parent;
         self.id = ko.observable(emptyGuid);
         self.userName = ko.observable(null);
         self.email = ko.observable(null);
@@ -380,6 +387,13 @@ define(function (require) {
                     serverSorting: true,
                     sort: { field: "UserName", dir: "asc" }
                 },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
+                },
                 filterable: true,
                 sortable: {
                     allowUnsort: false
@@ -390,15 +404,15 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "UserName",
-                    title: viewModel.translations.Columns.User.UserName,
+                    title: self.parent.translations.Columns.User.UserName,
                     filterable: true
                 }, {
                     field: "Email",
-                    title: viewModel.translations.Columns.User.Email,
+                    title: self.parent.translations.Columns.User.Email,
                     filterable: true
                 }, {
                     field: "IsLockedOut",
-                    title: viewModel.translations.Columns.User.IsActive,
+                    title: self.parent.translations.Columns.User.IsActive,
                     template: '<i class="fa #=!IsLockedOut ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
                     attributes: { "class": "text-center" },
                     filterable: true,
@@ -407,10 +421,10 @@ define(function (require) {
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a onclick="viewModel.userModel.editRoles(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Roles + '</a>' +
-                        '<a onclick="viewModel.userModel.changePassword(\'#=Id#\',\'#=UserName#\')" class="btn btn-default btn-xs">' + viewModel.translations.Password + '</a>' +
-                        '<a onclick="viewModel.userModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.userModel.delete(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
+                        '<div class="btn-group"><a data-bind="click: userModel.editRoles.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Roles + '</a>' +
+                        '<a data-bind="click: userModel.changePassword.bind($data,\'#=Id#\',\'#=UserName#\')" class="btn btn-default btn-xs">' + self.parent.translations.Password + '</a>' +
+                        '<a data-bind="click: userModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: userModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -450,12 +464,12 @@ define(function (require) {
                 switchSection($("#users-edit-form-section"));
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
-        self.delete = function (id) {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+        self.remove = function (id) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: "/odata/kore/web/UserApi('" + id + "')",
                     type: "DELETE",
@@ -465,10 +479,10 @@ define(function (require) {
                     $('#UsersGrid').data('kendoGrid').dataSource.read();
                     $('#UsersGrid').data('kendoGrid').refresh();
 
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -504,10 +518,10 @@ define(function (require) {
 
                     switchSection($("#users-grid-section"));
 
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -527,10 +541,10 @@ define(function (require) {
 
                     switchSection($("#users-grid-section"));
 
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -559,7 +573,7 @@ define(function (require) {
                 }
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
 
@@ -583,17 +597,17 @@ define(function (require) {
             })
             .done(function (json) {
                 switchSection($("#users-grid-section"));
-                $.notify(viewModel.translations.SaveRolesSuccess, "success");
+                $.notify(self.parent.translations.SaveRolesSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.SaveRolesError, "error");
+                $.notify(self.parent.translations.SaveRolesError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.changePassword = function (id, userName) {
-            viewModel.changePasswordModel.id(id);
-            viewModel.changePasswordModel.userName(userName);
-            viewModel.changePasswordModel.validator.resetForm();
+            self.parent.changePasswordModel.id(id);
+            self.parent.changePasswordModel.userName(userName);
+            self.parent.changePasswordModel.validator.resetForm();
             switchSection($("#change-password-form-section"));
         };
         self.filterRole = function () {
@@ -687,9 +701,9 @@ define(function (require) {
         self.changePasswordModel = false;
 
         self.activate = function () {
-            self.userModel = new UserModel();
-            self.roleModel = new RoleModel();
-            self.changePasswordModel = new ChangePasswordModel();
+            self.userModel = new UserModel(self);
+            self.roleModel = new RoleModel(self);
+            self.changePasswordModel = new ChangePasswordModel(self);
         };
         self.attached = function () {
             currentSection = $("#users-grid-section");
@@ -722,6 +736,6 @@ define(function (require) {
         };
     };
 
-    viewModel = new ViewModel();
+    var viewModel = new ViewModel();
     return viewModel;
 });

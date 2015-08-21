@@ -15,24 +15,24 @@
 <script type="text/javascript">
     var contentBlockModel = (function () {
         var f = {};
-        f.updateModel = function () {
-            viewModel.blockModel.numberOfEntries = ko.observable(5);
+        f.updateModel = function (blockModel) {
+            blockModel.numberOfEntries = ko.observable(5);
 
-            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
+            var data = ko.mapping.fromJSON(blockModel.blockValues());
 
             if (data && data.NumberOfEntries) {
-                viewModel.blockModel.numberOfEntries(data.NumberOfEntries());
+                blockModel.numberOfEntries(data.NumberOfEntries());
             }
         };
-        f.cleanUp = function () {
-            delete viewModel.blockModel.numberOfEntries;
+        f.cleanUp= function (blockModel) {
+            delete blockModel.numberOfEntries;
         };
-        f.onBeforeSave = function () {
+        f.onBeforeSave = function (blockModel) {
             var data = {
-                NumberOfEntries: viewModel.blockModel.numberOfEntries()
+                NumberOfEntries: blockModel.numberOfEntries()
             };
 
-            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
+            blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

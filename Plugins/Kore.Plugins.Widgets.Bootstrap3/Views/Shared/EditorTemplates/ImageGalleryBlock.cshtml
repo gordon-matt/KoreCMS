@@ -80,7 +80,7 @@
                 var url = $('#MediaFolder').val();
                 var idx = url.indexOf("Uploads");
                 url = url.substring(idx);
-                viewModel.blockModel.mediaFolder(url);
+                blockModel.mediaFolder(url);
             }
             modalDismissed = false;
         })
@@ -88,14 +88,14 @@
 
     var contentBlockModel = (function () {
         var f = {};
-        f.updateModel = function () {
-            viewModel.blockModel.mediaFolder = ko.observable("");
-            viewModel.blockModel.imagesPerRowXS = ko.observable(2);
-            viewModel.blockModel.imagesPerRowS = ko.observable(3);
-            viewModel.blockModel.imagesPerRowM = ko.observable(3);
-            viewModel.blockModel.imagesPerRowL = ko.observable(4);
+        f.updateModel = function (blockModel) {
+            blockModel.mediaFolder = ko.observable("");
+            blockModel.imagesPerRowXS = ko.observable(2);
+            blockModel.imagesPerRowS = ko.observable(3);
+            blockModel.imagesPerRowM = ko.observable(3);
+            blockModel.imagesPerRowL = ko.observable(4);
 
-            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
+            var data = ko.mapping.fromJSON(blockModel.blockValues());
 
             if ((isFunction(data) && data()) || data) {
                 if (data.MediaFolder == undefined) {
@@ -103,39 +103,39 @@
                     return;
                 }
                 if (isFunction(data.MediaFolder)) {
-                    viewModel.blockModel.mediaFolder(data.MediaFolder());
+                    blockModel.mediaFolder(data.MediaFolder());
                 }
                 if (isFunction(data.ImagesPerRowXS)) {
-                    viewModel.blockModel.imagesPerRowXS(data.ImagesPerRowXS());
+                    blockModel.imagesPerRowXS(data.ImagesPerRowXS());
                 }
                 if (isFunction(data.ImagesPerRowS)) {
-                    viewModel.blockModel.imagesPerRowS(data.ImagesPerRowS());
+                    blockModel.imagesPerRowS(data.ImagesPerRowS());
                 }
                 if (isFunction(data.ImagesPerRowM)) {
-                    viewModel.blockModel.imagesPerRowM(data.ImagesPerRowM());
+                    blockModel.imagesPerRowM(data.ImagesPerRowM());
                 }
                 if (isFunction(data.ImagesPerRowL)) {
-                    viewModel.blockModel.imagesPerRowL(data.ImagesPerRowL());
+                    blockModel.imagesPerRowL(data.ImagesPerRowL());
                 }
             }
         };
-        f.cleanUp = function () {
-            delete viewModel.blockModel.mediaFolder;
-            delete viewModel.blockModel.imagesPerRowXS;
-            delete viewModel.blockModel.imagesPerRowS;
-            delete viewModel.blockModel.imagesPerRowM;
-            delete viewModel.blockModel.imagesPerRowL;
+        f.cleanUp= function (blockModel) {
+            delete blockModel.mediaFolder;
+            delete blockModel.imagesPerRowXS;
+            delete blockModel.imagesPerRowS;
+            delete blockModel.imagesPerRowM;
+            delete blockModel.imagesPerRowL;
         };
-        f.onBeforeSave = function () {
+        f.onBeforeSave = function (blockModel) {
             var data = {
-                MediaFolder: viewModel.blockModel.mediaFolder(),
-                ImagesPerRowXS: viewModel.blockModel.imagesPerRowXS(),
-                ImagesPerRowS: viewModel.blockModel.imagesPerRowS(),
-                ImagesPerRowM: viewModel.blockModel.imagesPerRowM(),
-                ImagesPerRowL: viewModel.blockModel.imagesPerRowL()
+                MediaFolder: blockModel.mediaFolder(),
+                ImagesPerRowXS: blockModel.imagesPerRowXS(),
+                ImagesPerRowS: blockModel.imagesPerRowS(),
+                ImagesPerRowM: blockModel.imagesPerRowM(),
+                ImagesPerRowL: blockModel.imagesPerRowL()
             };
 
-            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
+            blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

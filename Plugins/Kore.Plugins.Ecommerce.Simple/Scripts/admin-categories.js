@@ -1,9 +1,5 @@
-﻿var viewModel;
-
-define(function (require) {
+﻿define(function (require) {
     'use strict'
-
-    viewModel = null;
 
     var $ = require('jquery');
     var ko = require('knockout');
@@ -27,20 +23,21 @@ define(function (require) {
     var categoryTreeApiUrl = "/odata/kore/plugins/simple-commerce/SimpleCommerceCategoryTreeApi";
     var productApiUrl = "/odata/kore/plugins/simple-commerce/SimpleCommerceProductApi";
 
-    var ProductImageModel = function () {
+    //var ProductImageModel = function () {
+    //    var self = this;
+
+    //    self.id = ko.observable(0);
+    //    self.productId = ko.observable(0);
+    //    self.url = ko.observable(null);
+    //    self.thumbnailUrl = ko.observable(null);
+    //    self.caption = ko.observable(null);
+    //    self.order = ko.observable(0);
+    //};
+
+    var ProductModel = function (parent) {
         var self = this;
 
-        self.id = ko.observable(0);
-        self.productId = ko.observable(0);
-        self.url = ko.observable(null);
-        self.thumbnailUrl = ko.observable(null);
-        self.caption = ko.observable(null);
-        self.order = ko.observable(0);
-    };
-
-    var ProductModel = function () {
-        var self = this;
-
+        self.parent = parent;
         self.id = ko.observable(0);
         self.name = ko.observable(null);
         self.slug = ko.observable(null);
@@ -89,7 +86,7 @@ define(function (require) {
                     transport: {
                         read: {
                             url: function () {
-                                return productApiUrl + "?$filter=CategoryId eq " + viewModel.category.id()
+                                return productApiUrl + "?$filter=CategoryId eq " + self.parent.category.id()
                             },
                             dataType: "json"
                         },
@@ -121,11 +118,18 @@ define(function (require) {
                             }
                         }
                     },
-                    pageSize: viewModel.gridPageSize,
+                    pageSize: self.parent.gridPageSize,
                     serverPaging: true,
                     serverFiltering: true,
                     serverSorting: true,
                     sort: { field: "Name", dir: "asc" }
+                },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
                 },
                 filterable: true,
                 sortable: {
@@ -137,19 +141,19 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "Name",
-                    title: viewModel.translations.Columns.Product.Name,
+                    title: self.parent.translations.Columns.Product.Name,
                     filterable: true
                 }, {
                     field: "Price",
-                    title: viewModel.translations.Columns.Product.Price,
+                    title: self.parent.translations.Columns.Product.Price,
                     filterable: true,
                     width: 200
                 }, {
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a onclick="viewModel.product.edit(#=Id#)" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.product.remove(#=Id#)" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
+                        '<div class="btn-group"><a data-bind="click: product.edit.bind($data,#=Id#)" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: product.remove.bind($data,#=Id#)" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -176,7 +180,7 @@ define(function (require) {
             self.validator.resetForm();
             switchSection($("#product-form-section"));
             self.showToolbar(false);
-            $("#product-form-section-legend").html(viewModel.translations.Create);
+            $("#product-form-section-legend").html(self.parent.translations.Create);
         };
         self.edit = function (id) {
             $.ajax({
@@ -204,15 +208,15 @@ define(function (require) {
                 self.validator.resetForm();
                 switchSection($("#product-form-section"));
                 self.showToolbar(true);
-                $("#product-form-section-legend").html(viewModel.translations.Edit);
+                $("#product-form-section-legend").html(self.parent.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.remove = function (id) {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: productApiUrl + "(" + id + ")",
                     type: "DELETE",
@@ -222,10 +226,10 @@ define(function (require) {
                     $('#ProductGrid').data('kendoGrid').dataSource.read();
                     $('#ProductGrid').data('kendoGrid').refresh();
 
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -268,10 +272,10 @@ define(function (require) {
 
                     switchSection($("#product-grid-section"));
 
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -291,10 +295,10 @@ define(function (require) {
 
                     switchSection($("#product-grid-section"));
 
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -304,9 +308,10 @@ define(function (require) {
         };
     };
 
-    var CategoryModel = function () {
+    var CategoryModel = function (parent) {
         var self = this;
 
+        self.parent = parent;
         self.id = ko.observable(0);
         self.parentId = ko.observable(null);
         self.name = ko.observable(null);
@@ -395,10 +400,10 @@ define(function (require) {
                     var parentId = null;
                     var destinationCategory = null;
 
-                    if (viewModel.category.id() == destinationId) {
+                    if (self.parent.category.id() == destinationId) {
                         destinationCategory = {
-                            Id: viewModel.category.id(),
-                            ParentId: viewModel.category.parentId()
+                            Id: self.parent.category.id(),
+                            ParentId: self.parent.category.parentId()
                         };
                     }
                     else {
@@ -415,14 +420,14 @@ define(function (require) {
                             };
                         })
                         .fail(function (jqXHR, textStatus, errorThrown) {
-                            $.notify(viewModel.translations.GetRecordError, "error");
+                            $.notify(self.parent.translations.GetRecordError, "error");
                             console.log(textStatus + ': ' + errorThrown);
                             return;
                         });
                     }
 
                     if (destinationCategory.ParentId == sourceId) {
-                        $.notify(viewModel.translations.CircularRelationshipError, "error");
+                        $.notify(self.parent.translations.CircularRelationshipError, "error");
                         $("#treeview").data("kendoTreeView").dataSource.read();
                         return;
                     }
@@ -452,7 +457,7 @@ define(function (require) {
                         $("#treeview").data("kendoTreeView").dataSource.read();
                     })
                     .fail(function (jqXHR, textStatus, errorThrown) {
-                        $.notify(viewModel.translations.UpdateRecordError, "error");
+                        $.notify(self.parent.translations.UpdateRecordError, "error");
                         console.log(textStatus + ': ' + errorThrown);
                     });
                 }
@@ -473,7 +478,7 @@ define(function (require) {
 
             self.validator.resetForm();
             switchSection($("#form-section"));
-            $("#form-section-legend").html(viewModel.translations.Create);
+            $("#form-section-legend").html(self.parent.translations.Create);
         };
         self.edit = function (id) {
             $.ajax({
@@ -497,15 +502,15 @@ define(function (require) {
 
                 self.validator.resetForm();
                 switchSection($("#form-section"));
-                $("#form-section-legend").html(viewModel.translations.Edit);
+                $("#form-section-legend").html(self.parent.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.remove = function () {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: categoryApiUrl + "(" + self.id() + ")",
                     type: "DELETE",
@@ -513,10 +518,10 @@ define(function (require) {
                 })
                 .done(function (json) {
                     self.refresh();
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -551,10 +556,10 @@ define(function (require) {
                 })
                 .done(function (json) {
                     self.refresh();
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -570,10 +575,10 @@ define(function (require) {
                 })
                 .done(function (json) {
                     self.refresh();
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -588,7 +593,7 @@ define(function (require) {
             $("#treeview").data("kendoTreeView").dataSource.read();
         };
         self.showProducts = function () {
-            viewModel.product.categoryId(self.id());
+            self.parent.product.categoryId(self.id());
             self.showToolbar(false);
             $('#ProductGrid').data('kendoGrid').dataSource.read();
             $('#ProductGrid').data('kendoGrid').refresh();
@@ -608,8 +613,8 @@ define(function (require) {
         self.modalDismissed = false;
 
         self.activate = function () {
-            self.category = new CategoryModel();
-            self.product = new ProductModel();
+            self.category = new CategoryModel(self);
+            self.product = new ProductModel(self);
         };
         self.attached = function () {
             currentSection = $("#main-section");
@@ -637,7 +642,7 @@ define(function (require) {
                 if (!self.modalDismissed) {
                     var url = $('#ImageUrl').val();
                     url = "/Media/Uploads/" + url;
-                    viewModel.category.imageUrl(url);
+                    self.parent.category.imageUrl(url);
                 }
                 self.modalDismissed = false;
             });
@@ -646,7 +651,7 @@ define(function (require) {
                 if (!self.modalDismissed) {
                     var url = $('#MainImageUrl').val();
                     url = "/Media/Uploads/" + url;
-                    viewModel.product.mainImageUrl(url);
+                    self.parent.product.mainImageUrl(url);
                 }
                 self.modalDismissed = false;
             });
@@ -658,6 +663,6 @@ define(function (require) {
         };
     };
 
-    viewModel = new ViewModel();
+    var viewModel = new ViewModel();
     return viewModel;
 });

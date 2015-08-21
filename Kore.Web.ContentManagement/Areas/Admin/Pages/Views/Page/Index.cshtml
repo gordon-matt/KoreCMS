@@ -28,7 +28,7 @@
     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">
         <div data-bind="visible: displayMode() == 'EditPage'" style="display:none">
             <div class="btn-group pull-right">
-                <a onclick="viewModel.pageModel.remove()" class="btn btn-danger btn-lg" title="@T(KoreWebLocalizableStrings.General.Delete).Text">
+                <a data-bind="click: pageModel.remove" class="btn btn-danger btn-lg" title="@T(KoreWebLocalizableStrings.General.Delete).Text">
                     <i class="kore-icon kore-icon-trash"></i>
                 </a>
                 <a data-bind="click: pageModel.showPageHistory" class="btn btn-warning btn-lg" title="@T(KoreCmsLocalizableStrings.Pages.PageHistory).Text">
@@ -292,5 +292,5 @@
 </div>
 
 <script id="treeview-template" type="text/kendo-ui-template">
-    <a href="javascript:void(0)" onclick="viewModel.pageModel.edit('#=item.Id#')">#= item.Title #</a>
+    <a href="javascript:void(0)" data-bind="click: pageModel.edit.bind($data,'#=item.Id#')">#= item.Title #</a>
 </script>

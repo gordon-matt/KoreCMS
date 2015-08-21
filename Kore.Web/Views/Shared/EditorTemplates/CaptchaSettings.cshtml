@@ -21,7 +21,7 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel(data) {
+    function updateModel(viewModel, data) {
         viewModel.publicKey = ko.observable("");
         viewModel.privateKey = ko.observable("");
         viewModel.theme = ko.observable();
@@ -39,13 +39,13 @@
         }
     };
 
-    function cleanUp() {
+    function cleanUp(viewModel) {
         delete viewModel.publicKey;
         delete viewModel.privateKey;
         delete viewModel.theme;
     }
 
-    function onBeforeSave() {
+    function onBeforeSave(viewModel) {
         var data = {
             PublicKey: viewModel.publicKey(),
             PrivateKey: viewModel.privateKey(),

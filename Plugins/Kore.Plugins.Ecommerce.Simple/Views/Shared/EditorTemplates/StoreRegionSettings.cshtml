@@ -14,25 +14,25 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel(data) {
-        viewModel.settings.isEnabled = ko.observable(false);
+    function updateModel(settings, data) {
+        settings.isEnabled = ko.observable(false);
 
         if (data) {
             if (data.IsEnabled) {
-                viewModel.settings.isEnabled(true);
+                settings.isEnabled(true);
             }
         }
     };
 
-    function cleanUp() {
-        delete viewModel.settings.isEnabled;
+    function cleanUp(settings) {
+        delete settings.isEnabled;
     }
 
-    function onBeforeSave() {
+    function onBeforeSave(settings) {
         var data = {
-            IsEnabled: viewModel.settings.isEnabled()
+            IsEnabled: settings.isEnabled()
         };
 
-        viewModel.settings.fields(ko.mapping.toJSON(data));
+        settings.fields(ko.mapping.toJSON(data));
     };
 </script>

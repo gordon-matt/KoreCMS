@@ -45,50 +45,50 @@
 <script type="text/javascript">
     var contentBlockModel = (function () {
         var f = {};
-        f.updateModel = function () {
-            viewModel.blockModel.adClient = ko.observable("");
-            viewModel.blockModel.adSlot = ko.observable("");
-            viewModel.blockModel.width = ko.observable(0);
-            viewModel.blockModel.height = ko.observable(0);
-            viewModel.blockModel.enableLazyLoadAd = ko.observable(false);
+        f.updateModel = function (blockModel) {
+            blockModel.adClient = ko.observable("");
+            blockModel.adSlot = ko.observable("");
+            blockModel.width = ko.observable(0);
+            blockModel.height = ko.observable(0);
+            blockModel.enableLazyLoadAd = ko.observable(false);
 
-            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
+            var data = ko.mapping.fromJSON(blockModel.blockValues());
 
             if (data) {
                 if (data.AdClient) {
-                    viewModel.blockModel.adClient(data.AdClient());
+                    blockModel.adClient(data.AdClient());
                 }
                 if (data.AdSlot) {
-                    viewModel.blockModel.adSlot(data.AdSlot());
+                    blockModel.adSlot(data.AdSlot());
                 }
                 if (data.Width) {
-                    viewModel.blockModel.width(data.Width());
+                    blockModel.width(data.Width());
                 }
                 if (data.Height) {
-                    viewModel.blockModel.height(data.Height());
+                    blockModel.height(data.Height());
                 }
                 if (data.EnableLazyLoadAd) {
-                    viewModel.blockModel.enableLazyLoadAd(data.EnableLazyLoadAd());
+                    blockModel.enableLazyLoadAd(data.EnableLazyLoadAd());
                 }
             }
         };
-        f.cleanUp = function () {
-            delete viewModel.blockModel.adClient;
-            delete viewModel.blockModel.adSlot;
-            delete viewModel.blockModel.width;
-            delete viewModel.blockModel.height;
-            delete viewModel.blockModel.enableLazyLoadAd;
+        f.cleanUp= function (blockModel) {
+            delete blockModel.adClient;
+            delete blockModel.adSlot;
+            delete blockModel.width;
+            delete blockModel.height;
+            delete blockModel.enableLazyLoadAd;
         };
-        f.onBeforeSave = function () {
+        f.onBeforeSave = function (blockModel) {
             var data = {
-                AdClient: viewModel.blockModel.adClient(),
-                AdSlot: viewModel.blockModel.adSlot(),
-                Width: viewModel.blockModel.width(),
-                Height: viewModel.blockModel.height(),
-                EnableLazyLoadAd: viewModel.blockModel.enableLazyLoadAd()
+                AdClient: blockModel.adClient(),
+                AdSlot: blockModel.adSlot(),
+                Width: blockModel.width(),
+                Height: blockModel.height(),
+                EnableLazyLoadAd: blockModel.enableLazyLoadAd()
             };
 
-            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
+            blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

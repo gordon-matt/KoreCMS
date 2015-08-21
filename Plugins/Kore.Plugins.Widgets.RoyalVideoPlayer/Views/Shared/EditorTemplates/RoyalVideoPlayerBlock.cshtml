@@ -31,41 +31,41 @@
 <script type="text/javascript">
     var contentBlockModel = (function () {
         var f = {};
-        f.updateModel = function () {
-            viewModel.blockModel.playlistId = ko.observable(0);
-            viewModel.blockModel.skin = ko.observable(0);
-            viewModel.blockModel.playlistPosition = ko.observable(0);
+        f.updateModel = function (blockModel) {
+            blockModel.playlistId = ko.observable(0);
+            blockModel.skin = ko.observable(0);
+            blockModel.playlistPosition = ko.observable(0);
 
-            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
+            var data = ko.mapping.fromJSON(blockModel.blockValues());
 
             if ((isFunction(data) && data()) || data) {
                 if (data.PlaylistId == undefined) {
                     // If this is not set, it means the contentBlock is new and we have nothing in blockValues
                     return;
                 }
-                viewModel.blockModel.playlistId(data.PlaylistId());
+                blockModel.playlistId(data.PlaylistId());
 
                 if (data.Skin()) {
-                    viewModel.blockModel.skin(data.Skin());
+                    blockModel.skin(data.Skin());
                 }
                 if (data.PlaylistPosition) {
-                    viewModel.blockModel.playlistPosition(data.PlaylistPosition());
+                    blockModel.playlistPosition(data.PlaylistPosition());
                 }
             }
         };
-        f.cleanUp = function () {
-            delete viewModel.blockModel.playlistId;
-            delete viewModel.blockModel.skin;
-            delete viewModel.blockModel.playlistPosition;
+        f.cleanUp= function (blockModel) {
+            delete blockModel.playlistId;
+            delete blockModel.skin;
+            delete blockModel.playlistPosition;
         };
-        f.onBeforeSave = function () {
+        f.onBeforeSave = function (blockModel) {
             var data = {
-                PlaylistId: viewModel.blockModel.playlistId(),
-                Skin: viewModel.blockModel.skin(),
-                PlaylistPosition: viewModel.blockModel.playlistPosition(),
+                PlaylistId: blockModel.playlistId(),
+                Skin: blockModel.skin(),
+                PlaylistPosition: blockModel.playlistPosition(),
             };
 
-            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
+            blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

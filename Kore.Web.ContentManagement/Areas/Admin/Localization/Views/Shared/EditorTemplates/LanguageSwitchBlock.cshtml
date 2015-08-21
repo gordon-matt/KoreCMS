@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group" data-bind="visible: includeInvariant() == true">
+        <div class="form-group" data-bind="visible: blockModel.includeInvariant() == true">
             @Html.LabelFor(m => m.InvariantText, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                 @Html.TextBoxFor(m => m.InvariantText, new { @class = "form-control", data_bind = "value: blockModel.invariantText" })
@@ -34,38 +34,38 @@
 <script type="text/javascript">
     var contentBlockModel = (function () {
         var f = {};
-        f.updateModel = function () {
-            viewModel.blockModel.style = ko.observable("");
-            viewModel.blockModel.includeInvariant = ko.observable(false);
-            viewModel.blockModel.invariantText = ko.observable("[ Invariant ]");
+        f.updateModel = function (blockModel) {
+            blockModel.style = ko.observable("");
+            blockModel.includeInvariant = ko.observable(false);
+            blockModel.invariantText = ko.observable("[ Invariant ]");
 
-            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
+            var data = ko.mapping.fromJSON(blockModel.blockValues());
 
             if (data) {
                 if (data.Style) {
-                    viewModel.blockModel.style(data.Style());
+                    blockModel.style(data.Style());
                 }
                 if (data.IncludeInvariant) {
-                    viewModel.blockModel.includeInvariant(data.IncludeInvariant());
+                    blockModel.includeInvariant(data.IncludeInvariant());
                 }
                 if (data.InvariantText) {
-                    viewModel.blockModel.invariantText(data.InvariantText());
+                    blockModel.invariantText(data.InvariantText());
                 }
             }
         };
-        f.cleanUp = function () {
-            delete viewModel.blockModel.style;
-            delete viewModel.blockModel.includeInvariant;
-            delete viewModel.blockModel.invariantText;
+        f.cleanUp = function (blockModel) {
+            delete blockModel.style;
+            delete blockModel.includeInvariant;
+            delete blockModel.invariantText;
         };
-        f.onBeforeSave = function () {
+        f.onBeforeSave = function (blockModel) {
             var data = {
-                Style: viewModel.blockModel.style(),
-                IncludeInvariant: viewModel.blockModel.includeInvariant(),
-                InvariantText: viewModel.blockModel.invariantText()
+                Style: blockModel.style(),
+                IncludeInvariant: blockModel.includeInvariant(),
+                InvariantText: blockModel.invariantText()
             };
 
-            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
+            blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

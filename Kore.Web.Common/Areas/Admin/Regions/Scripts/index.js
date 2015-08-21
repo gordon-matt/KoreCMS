@@ -1,9 +1,5 @@
-﻿var viewModel;
-
-define(function (require) {
+﻿define(function (require) {
     'use strict'
-
-    viewModel = null;
 
     var $ = require('jquery');
     var ko = require('knockout');
@@ -21,8 +17,10 @@ define(function (require) {
 
     ko.mapping = koMap;
 
-    var SettingsModel = function () {
+    var SettingsModel = function (parent) {
         var self = this;
+
+        self.parent = parent;
         self.regionId = ko.observable(0);
         self.settingsId = ko.observable('');
         self.fields = ko.observable('');
@@ -64,11 +62,18 @@ define(function (require) {
                             }
                         }
                     },
-                    pageSize: viewModel.gridPageSize,
+                    pageSize: self.parent.gridPageSize,
                     serverPaging: true,
                     serverFiltering: true,
                     serverSorting: true,
                     sort: { field: "Name", dir: "asc" }
+                },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
                 },
                 filterable: true,
                 sortable: {
@@ -80,12 +85,12 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "Name",
-                    title: viewModel.translations.Columns.Name,
+                    title: self.parent.translations.Columns.Name,
                     filterable: true
                 }, {
                     field: "Id",
                     title: " ",
-                    template: '<div class="btn-group"><a onclick="viewModel.settings.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a></div>',
+                    template: '<div class="btn-group"><a data-bind="click: settings.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a></div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
                     width: 120
@@ -119,17 +124,18 @@ define(function (require) {
 
                     // Clean up from previously injected html/scripts
                     if (typeof cleanUp == 'function') {
-                        cleanUp();
+                        cleanUp(self);
                     }
 
                     // Remove Old Scripts
-                    var oldScripts = $('script[data-settings-script="true"]');
+                    $('script[data-settings-script="true"]').remove();
+                    //var oldScripts = $('script[data-settings-script="true"]');
 
-                    if (oldScripts.length > 0) {
-                        $.each(oldScripts, function () {
-                            $(this).remove();
-                        });
-                    }
+                    //if (oldScripts.length > 0) {
+                    //    $.each(oldScripts, function () {
+                    //        $(this).remove();
+                    //    });
+                    //}
 
                     var elementToBind = $("#settings-form-section")[0];
                     ko.cleanNode(elementToBind);
@@ -154,27 +160,27 @@ define(function (require) {
                     // Ensure the function exists before calling it...
                     if (typeof updateModel == 'function') {
                         var data = ko.toJS(ko.mapping.fromJSON(self.fields()));
-                        updateModel(data);
-                        ko.applyBindings(viewModel, elementToBind);
+                        updateModel(self, data);
+                        ko.applyBindings(self.parent, elementToBind);
                     }
 
                     //self.validator.resetForm();
                     switchSection($("#settings-form-section"));
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.GetRecordError, "error");
+                    $.notify(self.parent.translations.GetRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.save = function () {
             // ensure the function exists before calling it...
             if (typeof onBeforeSave == 'function') {
-                onBeforeSave();
+                onBeforeSave(self);
             }
 
             var record = {
@@ -194,10 +200,10 @@ define(function (require) {
             .done(function (json) {
                 switchSection($("#settings-grid-section"));
 
-                $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                $.notify(self.parent.translations.UpdateRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.UpdateRecordError + ": " + jqXHR.responseText || textStatus, "error");
+                $.notify(self.parent.translations.UpdateRecordError + ": " + jqXHR.responseText || textStatus, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
@@ -209,9 +215,10 @@ define(function (require) {
         };
     };
 
-    var CountryModel = function () {
+    var CountryModel = function (parent) {
         var self = this;
 
+        self.parent = parent;
         self.id = ko.observable(0);
         self.name = ko.observable(null);
         self.countryCode = ko.observable(null);
@@ -265,11 +272,18 @@ define(function (require) {
                             }
                         }
                     },
-                    pageSize: viewModel.gridPageSize,
+                    pageSize: self.parent.gridPageSize,
                     serverPaging: true,
                     serverFiltering: true,
                     serverSorting: true,
                     sort: { field: "Name", dir: "asc" }
+                },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
                 },
                 filterable: true,
                 sortable: {
@@ -281,18 +295,18 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "Name",
-                    title: viewModel.translations.Columns.Name,
+                    title: self.parent.translations.Columns.Name,
                     filterable: true
                 }, {
                     field: "Id",
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '# if(HasStates) {# <a onclick="viewModel.country.showStates(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.States + '</a> #} ' +
-                        'else {# <a onclick="viewModel.country.showCities(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Cities + '</a> #} # ' +
-                        '<a onclick="viewModel.country.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.country.removeItem(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
-                        '<a onclick="viewModel.showSettings(#=Id#)" class="btn btn-info btn-xs">' + viewModel.translations.Settings + '</a>' +
+                        '# if(HasStates) {# <a data-bind="click: country.showStates.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.States + '</a> #} ' +
+                        'else {# <a data-bind="click: country.showCities.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Cities + '</a> #} # ' +
+                        '<a data-bind="click: country.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: country.removeItem.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
+                        '<a data-bind="click: showSettings.bind($data,#=Id#)" class="btn btn-info btn-xs">' + self.parent.translations.Settings + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -305,12 +319,12 @@ define(function (require) {
             self.name(null);
             self.countryCode(null);
             self.hasStates(false);
-            self.parentId(viewModel.selectedContinentId());
+            self.parentId(self.parent.selectedContinentId());
             self.order(null);
 
             self.validator.resetForm();
             switchSection($("#country-form-section"));
-            $("#country-form-section-legend").html(viewModel.translations.Create);
+            $("#country-form-section-legend").html(self.parent.translations.Create);
         };
         self.edit = function (id) {
             $.ajax({
@@ -329,15 +343,15 @@ define(function (require) {
 
                 self.validator.resetForm();
                 switchSection($("#country-form-section"));
-                $("#country-form-section-legend").html(viewModel.translations.Edit);
+                $("#country-form-section-legend").html(self.parent.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.removeItem = function (id) {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: "/odata/kore/common/RegionApi(" + id + ")",
                     type: "DELETE",
@@ -347,10 +361,10 @@ define(function (require) {
                     $('#CountryGrid').data('kendoGrid').dataSource.read();
                     $('#CountryGrid').data('kendoGrid').refresh();
 
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -392,10 +406,10 @@ define(function (require) {
 
                     switchSection($("#country-grid-section"));
 
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -414,10 +428,10 @@ define(function (require) {
 
                     switchSection($("#country-grid-section"));
 
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -426,13 +440,13 @@ define(function (require) {
             switchSection($("#country-grid-section"));
         };
         self.goBack = function () {
-            viewModel.selectedCountryId(0);
+            self.parent.selectedCountryId(0);
             switchSection($("#main-section"));
         };
         self.showStates = function (countryId) {
             //TODO: Filter states grid
-            viewModel.selectedCountryId(countryId);
-            viewModel.selectedStateId(0);
+            self.parent.selectedCountryId(countryId);
+            self.parent.selectedStateId(0);
 
             var grid = $('#StateGrid').data('kendoGrid');
             grid.dataSource.transport.options.read.url = "/odata/kore/common/RegionApi?$filter=RegionType eq Kore.Web.Common.Areas.Admin.Regions.Domain.RegionType'State' and ParentId eq " + countryId;
@@ -444,8 +458,8 @@ define(function (require) {
         };
         self.showCities = function (countryId) {
             //TODO: Filter states grid
-            viewModel.selectedCountryId(countryId);
-            viewModel.selectedStateId(0);
+            self.parent.selectedCountryId(countryId);
+            self.parent.selectedStateId(0);
 
             var grid = $('#CityGrid').data('kendoGrid');
             grid.dataSource.transport.options.read.url = "/odata/kore/common/RegionApi?$filter=RegionType eq Kore.Web.Common.Areas.Admin.Regions.Domain.RegionType'City' and ParentId eq " + countryId;
@@ -457,9 +471,10 @@ define(function (require) {
         };
     };
 
-    var StateModel = function () {
+    var StateModel = function (parent) {
         var self = this;
 
+        self.parent = parent;
         self.id = ko.observable(0);
         self.name = ko.observable(null);
         self.stateCode = ko.observable(null);
@@ -512,11 +527,18 @@ define(function (require) {
                             }
                         }
                     },
-                    pageSize: viewModel.gridPageSize,
+                    pageSize: self.parent.gridPageSize,
                     serverPaging: true,
                     serverFiltering: true,
                     serverSorting: true,
                     sort: { field: "Name", dir: "asc" }
+                },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
                 },
                 filterable: true,
                 sortable: {
@@ -528,17 +550,17 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "Name",
-                    title: viewModel.translations.Columns.Name,
+                    title: self.parent.translations.Columns.Name,
                     filterable: true
                 }, {
                     field: "Id",
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a onclick="viewModel.state.showCities(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Cities + '</a>' +
-                        '<a onclick="viewModel.state.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.state.removeItem(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
-                        '<a onclick="viewModel.showSettings(#=Id#)" class="btn btn-info btn-xs">' + viewModel.translations.Settings + '</a>' +
+                        '<a data-bind="click: state.showCities.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Cities + '</a>' +
+                        '<a data-bind="click: state.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: state.removeItem.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
+                        '<a data-bind="click: showSettings.bind($data,#=Id#)" class="btn btn-info btn-xs">' + self.parent.translations.Settings + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -550,12 +572,12 @@ define(function (require) {
             self.id(0);
             self.name(null);
             self.stateCode(null);
-            self.parentId(viewModel.selectedCountryId());
+            self.parentId(self.parent.selectedCountryId());
             self.order(null);
 
             self.validator.resetForm();
             switchSection($("#state-form-section"));
-            $("#state-form-section-legend").html(viewModel.translations.Create);
+            $("#state-form-section-legend").html(self.parent.translations.Create);
         };
         self.edit = function (id) {
             $.ajax({
@@ -573,15 +595,15 @@ define(function (require) {
 
                 self.validator.resetForm();
                 switchSection($("#state-form-section"));
-                $("#state-form-section-legend").html(viewModel.translations.Edit);
+                $("#state-form-section-legend").html(self.parent.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.removeItem = function (id) {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: "/odata/kore/common/RegionApi(" + id + ")",
                     type: "DELETE",
@@ -591,10 +613,10 @@ define(function (require) {
                     $('#StateGrid').data('kendoGrid').dataSource.read();
                     $('#StateGrid').data('kendoGrid').refresh();
 
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -635,10 +657,10 @@ define(function (require) {
 
                     switchSection($("#state-grid-section"));
 
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -657,10 +679,10 @@ define(function (require) {
 
                     switchSection($("#state-grid-section"));
 
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -669,12 +691,12 @@ define(function (require) {
             switchSection($("#state-grid-section"));
         };
         self.goBack = function () {
-            viewModel.selectedStateId(0);
+            self.parent.selectedStateId(0);
             switchSection($("#country-grid-section"));
         };
         self.showCities = function (stateId) {
             //TODO: Filter states grid
-            viewModel.selectedStateId(stateId);
+            self.parent.selectedStateId(stateId);
 
             var grid = $('#CityGrid').data('kendoGrid');
             grid.dataSource.transport.options.read.url = "/odata/kore/common/RegionApi?$filter=RegionType eq Kore.Web.Common.Areas.Admin.Regions.Domain.RegionType'City' and ParentId eq " + stateId;
@@ -686,9 +708,10 @@ define(function (require) {
         };
     };
 
-    var CityModel = function () {
+    var CityModel = function (parent) {
         var self = this;
 
+        self.parent = parent;
         self.id = ko.observable(0);
         self.name = ko.observable(null);
         self.parentId = ko.observable(null);
@@ -739,11 +762,18 @@ define(function (require) {
                             }
                         }
                     },
-                    pageSize: viewModel.gridPageSize,
+                    pageSize: self.parent.gridPageSize,
                     serverPaging: true,
                     serverFiltering: true,
                     serverSorting: true,
                     sort: { field: "Name", dir: "asc" }
+                },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
                 },
                 filterable: true,
                 sortable: {
@@ -755,16 +785,16 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "Name",
-                    title: viewModel.translations.Columns.Name,
+                    title: self.parent.translations.Columns.Name,
                     filterable: true
                 }, {
                     field: "Id",
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a onclick="viewModel.city.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.city.removeItem(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
-                        '<a onclick="viewModel.showSettings(#=Id#)" class="btn btn-info btn-xs">' + viewModel.translations.Settings + '</a>' +
+                        '<a data-bind="click: city.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: city.removeItem.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
+                        '<a data-bind="click: showSettings.bind($data,#=Id#)" class="btn btn-info btn-xs">' + self.parent.translations.Settings + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -777,16 +807,16 @@ define(function (require) {
             self.name(null);
             self.order(null);
 
-            if (viewModel.selectedStateId()) {
-                self.parentId(viewModel.selectedStateId());
+            if (self.parent.selectedStateId()) {
+                self.parentId(self.parent.selectedStateId());
             }
             else {
-                self.parentId(viewModel.selectedCountryId());
+                self.parentId(self.parent.selectedCountryId());
             }
 
             self.validator.resetForm();
             switchSection($("#city-form-section"));
-            $("#city-form-section-legend").html(viewModel.translations.Create);
+            $("#city-form-section-legend").html(self.parent.translations.Create);
         };
         self.edit = function (id) {
             $.ajax({
@@ -803,15 +833,15 @@ define(function (require) {
 
                 self.validator.resetForm();
                 switchSection($("#city-form-section"));
-                $("#city-form-section-legend").html(viewModel.translations.Edit);
+                $("#city-form-section-legend").html(self.parent.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.removeItem = function (id) {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: "/odata/kore/common/RegionApi(" + id + ")",
                     type: "DELETE",
@@ -821,10 +851,10 @@ define(function (require) {
                     $('#CityGrid').data('kendoGrid').dataSource.read();
                     $('#CityGrid').data('kendoGrid').refresh();
 
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -864,10 +894,10 @@ define(function (require) {
 
                     switchSection($("#city-grid-section"));
 
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -886,10 +916,10 @@ define(function (require) {
 
                     switchSection($("#city-grid-section"));
 
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -898,7 +928,7 @@ define(function (require) {
             switchSection($("#city-grid-section"));
         };
         self.goBack = function () {
-            if (viewModel.selectedStateId()) {
+            if (self.parent.selectedStateId()) {
                 switchSection($("#state-grid-section"));
             }
             else {
@@ -923,10 +953,10 @@ define(function (require) {
         self.settings = false;
 
         self.activate = function () {
-            self.country = new CountryModel();
-            self.state = new StateModel();
-            self.city = new CityModel();
-            self.settings = new SettingsModel();
+            self.country = new CountryModel(self);
+            self.state = new StateModel(self);
+            self.city = new CityModel(self);
+            self.settings = new SettingsModel(self);
         };
         self.attached = function () {
             currentSection = $("#main-section");
@@ -973,6 +1003,6 @@ define(function (require) {
         };
     };
 
-    viewModel = new ViewModel();
+    var viewModel = new ViewModel();
     return viewModel;
 });

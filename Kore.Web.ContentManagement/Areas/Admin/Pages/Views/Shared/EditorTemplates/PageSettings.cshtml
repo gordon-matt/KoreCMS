@@ -11,7 +11,7 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel(data) {
+    function updateModel(viewModel, data) {
         viewModel.numberOfPageVersionsToKeep = ko.observable("");
 
         if (data && data.NumberOfPageVersionsToKeep) {
@@ -19,11 +19,11 @@
         }
     };
 
-    function cleanUp() {
+    function cleanUp(viewModel) {
         delete viewModel.numberOfPageVersionsToKeep;
     }
 
-    function onBeforeSave() {
+    function onBeforeSave(viewModel) {
         var data = {
             NumberOfPageVersionsToKeep: viewModel.numberOfPageVersionsToKeep()
         };

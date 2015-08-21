@@ -1,10 +1,6 @@
-﻿var viewModel;
-
-//define(function (require) {
+﻿//define(function (require) {
 define(['jquery', 'jqueryval', 'kendo'], function ($, jqueryval, kendo) {
     'use strict'
-
-    viewModel = null;
 
     //var $ = require('jquery');
     //var kendo = require('kendo');
@@ -125,6 +121,12 @@ define(['jquery', 'jqueryval', 'kendo'], function ($, jqueryval, kendo) {
                     sort: { field: "Key", dir: "asc" }
                 },
                 dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
+
                     $(".k-grid-edit").html("Edit");
                     $(".k-grid-delete").html("Delete");
                     $(".k-grid-edit").addClass("btn btn-default btn-sm");
@@ -184,6 +186,6 @@ define(['jquery', 'jqueryval', 'kendo'], function ($, jqueryval, kendo) {
         };
     };
 
-    viewModel = new ViewModel();
+    var viewModel = new ViewModel();
     return viewModel;
 });

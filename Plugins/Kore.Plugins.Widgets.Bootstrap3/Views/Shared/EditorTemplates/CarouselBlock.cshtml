@@ -101,7 +101,7 @@
                 var url = $('#MediaFolder').val();
                 var idx = url.indexOf("Uploads");
                 url = url.substring(idx);
-                viewModel.blockModel.mediaFolder(url);
+                blockModel.mediaFolder(url);
             }
             modalDismissed = false;
         })
@@ -109,56 +109,56 @@
 
     var contentBlockModel = (function () {
         var f = {};
-        f.updateModel = function () {
-            viewModel.blockModel.mediaFolder = ko.observable("");
-            viewModel.blockModel.interval = ko.observable(0);
-            viewModel.blockModel.startIndex = ko.observable(0);
-            viewModel.blockModel.keyboard = ko.observable(true);
-            viewModel.blockModel.pauseOnHover = ko.observable(true);
-            viewModel.blockModel.wrap = ko.observable(true);
-            viewModel.blockModel.onSlideEvent = ko.observable("");
-            viewModel.blockModel.onSlidEvent = ko.observable("");
+        f.updateModel = function (blockModel) {
+            blockModel.mediaFolder = ko.observable("");
+            blockModel.interval = ko.observable(0);
+            blockModel.startIndex = ko.observable(0);
+            blockModel.keyboard = ko.observable(true);
+            blockModel.pauseOnHover = ko.observable(true);
+            blockModel.wrap = ko.observable(true);
+            blockModel.onSlideEvent = ko.observable("");
+            blockModel.onSlidEvent = ko.observable("");
 
-            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
+            var data = ko.mapping.fromJSON(blockModel.blockValues());
 
             if ((isFunction(data) && data()) || data) {
                 if (data.MediaFolder == undefined) {
                     // If this is not set, it means the contentBlock is new and we have nothing in blockValues
                     return;
                 }
-                viewModel.blockModel.mediaFolder(data.MediaFolder());
-                viewModel.blockModel.interval(data.Interval());
-                viewModel.blockModel.startIndex(data.StartIndex());
-                viewModel.blockModel.keyboard(data.Keyboard());
-                viewModel.blockModel.pauseOnHover(data.PauseOnHover());
-                viewModel.blockModel.wrap(data.Wrap());
-                viewModel.blockModel.onSlideEvent(data.OnSlideEvent());
-                viewModel.blockModel.onSlidEvent(data.OnSlidEvent());
+                blockModel.mediaFolder(data.MediaFolder());
+                blockModel.interval(data.Interval());
+                blockModel.startIndex(data.StartIndex());
+                blockModel.keyboard(data.Keyboard());
+                blockModel.pauseOnHover(data.PauseOnHover());
+                blockModel.wrap(data.Wrap());
+                blockModel.onSlideEvent(data.OnSlideEvent());
+                blockModel.onSlidEvent(data.OnSlidEvent());
             }
         };
-        f.cleanUp = function () {
-            delete viewModel.blockModel.mediaFolder;
-            delete viewModel.blockModel.interval;
-            delete viewModel.blockModel.startIndex;
-            delete viewModel.blockModel.keyboard;
-            delete viewModel.blockModel.pauseOnHover;
-            delete viewModel.blockModel.wrap;
-            delete viewModel.blockModel.onSlideEvent;
-            delete viewModel.blockModel.onSlidEvent;
+        f.cleanUp= function (blockModel) {
+            delete blockModel.mediaFolder;
+            delete blockModel.interval;
+            delete blockModel.startIndex;
+            delete blockModel.keyboard;
+            delete blockModel.pauseOnHover;
+            delete blockModel.wrap;
+            delete blockModel.onSlideEvent;
+            delete blockModel.onSlidEvent;
         };
-        f.onBeforeSave = function () {
+        f.onBeforeSave = function (blockModel) {
             var data = {
-                MediaFolder: viewModel.blockModel.mediaFolder(),
-                Interval: viewModel.blockModel.interval(),
-                StartIndex: viewModel.blockModel.startIndex(),
-                Keyboard: viewModel.blockModel.keyboard(),
-                PauseOnHover: viewModel.blockModel.pauseOnHover(),
-                Wrap: viewModel.blockModel.wrap(),
-                OnSlideEvent: viewModel.blockModel.onSlideEvent(),
-                OnSlidEvent: viewModel.blockModel.onSlidEvent()
+                MediaFolder: blockModel.mediaFolder(),
+                Interval: blockModel.interval(),
+                StartIndex: blockModel.startIndex(),
+                Keyboard: blockModel.keyboard(),
+                PauseOnHover: blockModel.pauseOnHover(),
+                Wrap: blockModel.wrap(),
+                OnSlideEvent: blockModel.onSlideEvent(),
+                OnSlidEvent: blockModel.onSlidEvent()
             };
 
-            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
+            blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

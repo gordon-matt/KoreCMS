@@ -1,10 +1,6 @@
-﻿var viewModel;
-
-//define(function (require) {
+﻿//define(function (require) {
 define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify) {
     'use strict'
-
-    viewModel = null;
 
     //var $ = require('jquery');
     //var ko = require('knockout');
@@ -83,6 +79,13 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
                     serverSorting: true,
                     sort: { field: "Title", dir: "asc" }
                 },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
+                },
                 filterable: true,
                 sortable: {
                     allowUnsort: false
@@ -120,7 +123,7 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
                     title: self.translations.Columns.IsDefaultDesktopTheme,
                     template:
                         '# if(IsDefaultDesktopTheme) {# <i class="kore-icon kore-icon-ok-circle kore-icon-2x text-success"></i> #} ' +
-                        'else {# <a href="javascript:void(0);" onclick="viewModel.setDesktopTheme(\'#=Title#\')" class="btn btn-default btn-sm">#=viewModel.translations.Set#</a> #} #',
+                        'else {# <a href="javascript:void(0);" data-bind="click: setDesktopTheme.bind($data,\'#=Title#\')" class="btn btn-default btn-sm">' + self.translations.Set + '</a> #} #',
                     attributes: { "class": "text-center" },
                     filterable: false,
                     width: 130
@@ -129,7 +132,7 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
                     title: self.translations.Columns.IsDefaultMobileTheme,
                     template:
                         '# if(IsDefaultMobileTheme) {# <i class="kore-icon kore-icon-ok-circle kore-icon-2x text-success"></i> #} ' +
-                        'else {# <a href="javascript:void(0);" onclick="viewModel.setMobileTheme(\'#=Title#\')" class="btn btn-default btn-sm">#=viewModel.translations.Set#</a> #} #',
+                        'else {# <a href="javascript:void(0);" data-bind="click: setMobileTheme.bind($data,\'#=Title#\')" class="btn btn-default btn-sm">' + self.translations.Set + '</a> #} #',
                     attributes: { "class": "text-center" },
                     filterable: false,
                     width: 130
@@ -174,6 +177,6 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
         };
     };
 
-    viewModel = new ViewModel();
+    var viewModel = new ViewModel();
     return viewModel;
 });

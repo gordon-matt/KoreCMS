@@ -85,62 +85,62 @@
         if (!modalDismissed) {
             var url = $('#Source').val();
             url = "/Media/Uploads/" + url;
-            viewModel.blockModel.source(url);
+            blockModel.source(url);
         }
         modalDismissed = false;
     });
     var contentBlockModel = (function () {
         var f = {};
-        f.updateModel = function () {
-            viewModel.blockModel.controlId = ko.observable(null);
-            viewModel.blockModel.type = ko.observable(0);
-            viewModel.blockModel.source = ko.observable(null);
-            viewModel.blockModel.showControls = ko.observable(true);
-            viewModel.blockModel.autoPlay = ko.observable(false);
-            viewModel.blockModel.loop = ko.observable(false);
+        f.updateModel = function (blockModel) {
+            blockModel.controlId = ko.observable(null);
+            blockModel.type = ko.observable(0);
+            blockModel.source = ko.observable(null);
+            blockModel.showControls = ko.observable(true);
+            blockModel.autoPlay = ko.observable(false);
+            blockModel.loop = ko.observable(false);
 
-            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
+            var data = ko.mapping.fromJSON(blockModel.blockValues());
 
             if (data) {
                 if (data.ControlId) {
-                    viewModel.blockModel.controlId(data.ControlId());
+                    blockModel.controlId(data.ControlId());
                 }
                 if (data.Type) {
-                    viewModel.blockModel.type(data.Type());
+                    blockModel.type(data.Type());
                 }
                 if (data.Source) {
-                    viewModel.blockModel.source(data.Source());
+                    blockModel.source(data.Source());
                 }
                 if (data.ShowControls && typeof data.ShowControls() === 'boolean') {
-                    viewModel.blockModel.showControls(data.ShowControls());
+                    blockModel.showControls(data.ShowControls());
                 }
                 if (data.AutoPlay && typeof data.AutoPlay() === 'boolean') {
-                    viewModel.blockModel.autoPlay(data.AutoPlay());
+                    blockModel.autoPlay(data.AutoPlay());
                 }
                 if (data.Loop && typeof data.Loop() === 'boolean') {
-                    viewModel.blockModel.loop(data.Loop());
+                    blockModel.loop(data.Loop());
                 }
             }
         };
-        f.cleanUp = function () {
-            delete viewModel.blockModel.controlId;
-            delete viewModel.blockModel.type;
-            delete viewModel.blockModel.source;
-            delete viewModel.blockModel.showControls;
-            delete viewModel.blockModel.autoPlay;
-            delete viewModel.blockModel.loop;
+        f.cleanUp= function (blockModel) {
+            delete blockModel.controlId;
+            delete blockModel.type;
+            delete blockModel.source;
+            delete blockModel.showControls;
+            delete blockModel.autoPlay;
+            delete blockModel.loop;
         };
-        f.onBeforeSave = function () {
+        f.onBeforeSave = function (blockModel) {
             var data = {
-                ControlId: viewModel.blockModel.controlId(),
-                Type: viewModel.blockModel.type(),
-                Source: viewModel.blockModel.source(),
-                ShowControls: viewModel.blockModel.showControls(),
-                AutoPlay: viewModel.blockModel.autoPlay(),
-                Loop: viewModel.blockModel.loop()
+                ControlId: blockModel.controlId(),
+                Type: blockModel.type(),
+                Source: blockModel.source(),
+                ShowControls: blockModel.showControls(),
+                AutoPlay: blockModel.autoPlay(),
+                Loop: blockModel.loop()
             };
 
-            viewModel.blockValues(ko.mapping.toJSON(data));
+            blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

@@ -1,9 +1,5 @@
-﻿var viewModel;
-
-define(function (require) {
+﻿define(function (require) {
     'use strict'
-
-    viewModel = null;
 
     var $ = require('jquery');
     var ko = require('knockout');
@@ -19,9 +15,10 @@ define(function (require) {
     var calendarApiUrl = "/odata/kore/plugins/full-calendar/CalendarApi";
     var eventApiUrl = "/odata/kore/plugins/full-calendar/CalendarEventApi";
 
-    var EventModel = function () {
+    var EventModel = function (parent) {
         var self = this;
 
+        self.parent = parent;
         self.id = ko.observable(0);
         self.calendarId = ko.observable(0);
         self.name = ko.observable(null);
@@ -83,6 +80,13 @@ define(function (require) {
                     serverSorting: true,
                     sort: { field: "Name", dir: "asc" }
                 },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
+                },
                 filterable: true,
                 sortable: {
                     allowUnsort: false
@@ -93,16 +97,16 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "Name",
-                    title: viewModel.translations.Columns.Event.Name,
+                    title: self.parent.translations.Columns.Event.Name,
                     filterable: true
                 }, {
                     field: "StartDateTime",
-                    title: viewModel.translations.Columns.Event.StartDateTime,
+                    title: self.parent.translations.Columns.Event.StartDateTime,
                     format: "{0:G}",
                     filterable: true
                 }, {
                     field: "EndDateTime",
-                    title: viewModel.translations.Columns.Event.EndDateTime,
+                    title: self.parent.translations.Columns.Event.EndDateTime,
                     format: "{0:G}",
                     filterable: true
                 }, {
@@ -110,8 +114,8 @@ define(function (require) {
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a onclick="viewModel.eventModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.eventModel.remove(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
+                        '<a data-bind="click: eventModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: eventModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -121,14 +125,14 @@ define(function (require) {
         };
         self.create = function () {
             self.id(0);
-            self.calendarId(viewModel.selectedCalendarId());
+            self.calendarId(self.parent.selectedCalendarId());
             self.name(null);
             self.startDateTime('');
             self.endDateTime('');
 
             self.validator.resetForm();
             switchSection($("#events-form-section"));
-            $("#events-form-section-legend").html(viewModel.translations.Create);
+            $("#events-form-section-legend").html(self.parent.translations.Create);
         };
         self.edit = function (id) {
             $.ajax({
@@ -146,15 +150,15 @@ define(function (require) {
 
                 self.validator.resetForm();
                 switchSection($("#events-form-section"));
-                $("#events-form-section-legend").html(viewModel.translations.Edit);
+                $("#events-form-section-legend").html(self.parent.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.remove = function (id) {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: eventApiUrl + "(" + id + ")",
                     type: "DELETE",
@@ -164,10 +168,10 @@ define(function (require) {
                 .done(function (json) {
                     $('#EventGrid').data('kendoGrid').dataSource.read();
                     $('#EventGrid').data('kendoGrid').refresh();
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -205,10 +209,10 @@ define(function (require) {
 
                     switchSection($("#events-grid-section"));
 
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -227,10 +231,10 @@ define(function (require) {
 
                     switchSection($("#events-grid-section"));
 
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -243,9 +247,10 @@ define(function (require) {
         };
     };
 
-    var CalendarModel = function () {
+    var CalendarModel = function (parent) {
         var self = this;
 
+        self.parent = parent;
         self.id = ko.observable(0);
         self.name = ko.observable(null);
 
@@ -299,6 +304,13 @@ define(function (require) {
                     serverSorting: true,
                     sort: { field: "Name", dir: "asc" }
                 },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
+                },
                 filterable: true,
                 sortable: {
                     allowUnsort: false
@@ -309,16 +321,16 @@ define(function (require) {
                 scrollable: false,
                 columns: [{
                     field: "Name",
-                    title: viewModel.translations.Columns.Calendar.Name,
+                    title: self.parent.translations.Columns.Calendar.Name,
                     filterable: true
                 }, {
                     field: "Id",
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a onclick="viewModel.showEvents(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Events + '</a>' +
-                        '<a onclick="viewModel.calendarModel.edit(\'#=Id#\')" class="btn btn-default btn-xs">' + viewModel.translations.Edit + '</a>' +
-                        '<a onclick="viewModel.calendarModel.remove(\'#=Id#\')" class="btn btn-danger btn-xs">' + viewModel.translations.Delete + '</a>' +
+                        '<a data-bind="click: showEvents.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Events + '</a>' +
+                        '<a data-bind="click: calendarModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: calendarModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -332,7 +344,7 @@ define(function (require) {
 
             self.validator.resetForm();
             switchSection($("#form-section"));
-            $("#form-section-legend").html(viewModel.translations.Create);
+            $("#form-section-legend").html(self.parent.translations.Create);
         };
         self.edit = function (id) {
             $.ajax({
@@ -347,15 +359,15 @@ define(function (require) {
 
                 self.validator.resetForm();
                 switchSection($("#form-section"));
-                $("#form-section-legend").html(viewModel.translations.Edit);
+                $("#form-section-legend").html(self.parent.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(viewModel.translations.GetRecordError, "error");
+                $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
         self.remove = function (id) {
-            if (confirm(viewModel.translations.DeleteRecordConfirm)) {
+            if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: calendarApiUrl + "(" + id + ")",
                     type: "DELETE",
@@ -365,10 +377,10 @@ define(function (require) {
                     $('#Grid').data('kendoGrid').dataSource.read();
                     $('#Grid').data('kendoGrid').refresh();
 
-                    $.notify(viewModel.translations.DeleteRecordSuccess, "success");
+                    $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.DeleteRecordError, "error");
+                    $.notify(self.parent.translations.DeleteRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -400,10 +412,10 @@ define(function (require) {
 
                     switchSection($("#grid-section"));
 
-                    $.notify(viewModel.translations.InsertRecordSuccess, "success");
+                    $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.InsertRecordError, "error");
+                    $.notify(self.parent.translations.InsertRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -423,10 +435,10 @@ define(function (require) {
 
                     switchSection($("#grid-section"));
 
-                    $.notify(viewModel.translations.UpdateRecordSuccess, "success");
+                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(viewModel.translations.UpdateRecordError, "error");
+                    $.notify(self.parent.translations.UpdateRecordError, "error");
                     console.log(textStatus + ': ' + errorThrown);
                 });
             }
@@ -448,8 +460,8 @@ define(function (require) {
         self.selectedCalendarId = ko.observable(0);
 
         self.activate = function () {
-            self.calendarModel = new CalendarModel();
-            self.eventModel = new EventModel();
+            self.calendarModel = new CalendarModel(self);
+            self.eventModel = new EventModel(self);
         };
         self.attached = function () {
             currentSection = $("#grid-section");
@@ -487,6 +499,6 @@ define(function (require) {
         };
     };
 
-    viewModel = new ViewModel();
+    var viewModel = new ViewModel();
     return viewModel;
 });

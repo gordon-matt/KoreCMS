@@ -1,9 +1,5 @@
-﻿var viewModel;
-
-define(function (require) {
+﻿define(function (require) {
     'use strict'
-
-    viewModel = null;
 
     var $ = require('jquery');
     var ko = require('knockout');
@@ -100,6 +96,13 @@ define(function (require) {
                     serverFiltering: true,
                     serverSorting: true,
                     sort: { field: "Url", dir: "asc" }
+                },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
                 },
                 filterable: true,
                 sortable: {
@@ -362,6 +365,13 @@ define(function (require) {
                     serverSorting: false,
                     sort: { field: "DisplayName", dir: "asc" },
                 },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
+                },
                 pageable: {
                     refresh: true
                 },
@@ -392,16 +402,16 @@ define(function (require) {
                     template:
                         '<div class="btn-group">' +
                         '# if(Status == "Stopped") {#' +
-                        '<a onclick="viewModel.startService(\'#=WatchdogInstanceId#\', \'#=ServiceName#\')" class="btn btn-success btn-sm"><i class="kore-icon kore-icon-start"></i></a>' +
+                        '<a data-bind="click: startService.bind($data,\'#=WatchdogInstanceId#\', \'#=ServiceName#\')" class="btn btn-success btn-sm"><i class="kore-icon kore-icon-start"></i></a>' +
                         '#} else if (Status == "Running") {#' +
-                        '<a onclick="viewModel.stopService(\'#=WatchdogInstanceId#\', \'#=ServiceName#\')" class="btn btn-danger btn-sm"><i class="kore-icon kore-icon-stop"></i></a>' +
-                        '<a onclick="viewModel.restartService(\'#=WatchdogInstanceId#\', \'#=ServiceName#\')" class="btn btn-success btn-sm"><i class="kore-icon kore-icon-restart"></i></a>' +
+                        '<a data-bind="click: stopService.bind($data,\'#=WatchdogInstanceId#\', \'#=ServiceName#\')" class="btn btn-danger btn-sm"><i class="kore-icon kore-icon-stop"></i></a>' +
+                        '<a data-bind="click: restartService.bind($data,\'#=WatchdogInstanceId#\', \'#=ServiceName#\')" class="btn btn-success btn-sm"><i class="kore-icon kore-icon-restart"></i></a>' +
                         "#} #</div>&nbsp;" +
                         '# if (viewModel.allowAddRemove) {#' +
                         '# if (!IsWatched) {#' +
-                        '<div class="btn-group"><a onclick="viewModel.addService(\'#=WatchdogInstanceId#\', \'#=ServiceName#\')" class="btn btn-default btn-sm"><i class="kore-icon kore-icon-add"></i></a>' +
+                        '<div class="btn-group"><a data-bind="click: addService.bind($data,\'#=WatchdogInstanceId#\', \'#=ServiceName#\')" class="btn btn-default btn-sm"><i class="kore-icon kore-icon-add"></i></a>' +
                         '#} else {#' +
-                        '<a onclick="viewModel.removeService(\'#=WatchdogInstanceId#\', \'#=ServiceName#\')" class="btn btn-warning btn-sm"><i class="kore-icon kore-icon-remove"></i></a>' +
+                        '<a data-bind="click: removeService.bind($data,\'#=WatchdogInstanceId#\', \'#=ServiceName#\')" class="btn btn-warning btn-sm"><i class="kore-icon kore-icon-remove"></i></a>' +
                         '#} #' +
                         '#} #' +
                         '</div>',
@@ -411,13 +421,13 @@ define(function (require) {
                 }]
             });
 
-            if (viewModel.onlyShowWatched) {
+            if (self.onlyShowWatched) {
                 var grid = detailRow.find(".services-grid").data("kendoGrid");
                 grid.hideColumn("IsWatched");
             }
         };
     };
 
-    viewModel = new ViewModel();
+    var viewModel = new ViewModel();
     return viewModel;
 });

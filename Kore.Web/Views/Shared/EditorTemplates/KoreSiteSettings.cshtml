@@ -89,7 +89,7 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel(data) {
+    function updateModel(viewModel, data) {
         viewModel.siteName = ko.observable("");
         viewModel.defaultFrontendLayoutPath = ko.observable("");
         viewModel.adminLayoutPath = ko.observable("");
@@ -139,7 +139,7 @@
         }
     };
 
-    function cleanUp() {
+    function cleanUp(viewModel) {
         delete viewModel.siteName;
         delete viewModel.defaultFrontendLayoutPath;
         delete viewModel.adminLayoutPath;
@@ -153,7 +153,7 @@
         delete viewModel.homePageTitle;
     }
 
-    function onBeforeSave() {
+    function onBeforeSave(viewModel) {
         var data = {
             SiteName: viewModel.siteName(),
             DefaultFrontendLayoutPath: viewModel.defaultFrontendLayoutPath(),

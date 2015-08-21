@@ -17,7 +17,7 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel(data) {
+    function updateModel(viewModel, data) {
         viewModel.generatedPasswordLength = ko.observable(7);
         viewModel.generatedPasswordNumberOfNonAlphanumericChars = ko.observable(3);
 
@@ -31,12 +31,12 @@
         }
     };
 
-    function cleanUp() {
+    function cleanUp(viewModel) {
         delete viewModel.generatedPasswordLength;
         delete viewModel.generatedPasswordNumberOfNonAlphanumericChars;
     }
 
-    function onBeforeSave() {
+    function onBeforeSave(viewModel) {
         var data = {
             GeneratedPasswordLength: viewModel.generatedPasswordLength(),
             GeneratedPasswordNumberOfNonAlphanumericChars: viewModel.generatedPasswordNumberOfNonAlphanumericChars()

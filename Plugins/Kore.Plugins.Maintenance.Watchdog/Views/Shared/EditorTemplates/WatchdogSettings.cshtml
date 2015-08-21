@@ -21,7 +21,7 @@
 </div>
 
 <script type="text/javascript">
-    function updateModel(data) {
+    function updateModel(viewModel, data) {
         viewModel.onlyShowWatched = ko.observable(false);
         viewModel.allowAddRemove = ko.observable(true);
 
@@ -35,12 +35,12 @@
         }
     };
 
-    function cleanUp() {
+    function cleanUp(viewModel) {
         delete viewModel.onlyShowWatched;
         delete viewModel.allowAddRemove;
     }
 
-    function onBeforeSave() {
+    function onBeforeSave(viewModel) {
         var data = {
             OnlyShowWatched: viewModel.onlyShowWatched(),
             AllowAddRemove: viewModel.allowAddRemove()

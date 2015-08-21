@@ -24,11 +24,11 @@
 <script type="text/javascript">
     var contentBlockModel = (function () {
         var f = {};
-        f.updateModel = function () {
-            viewModel.blockModel.accountNumber = ko.observable(0);
-            viewModel.blockModel.domainName = ko.observable(0);
+        f.updateModel = function (blockModel) {
+            blockModel.accountNumber = ko.observable(0);
+            blockModel.domainName = ko.observable(0);
 
-            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
+            var data = ko.mapping.fromJSON(blockModel.blockValues());
 
             if ((isFunction(data) && data()) || data) {
                 if (data.accountNumber == undefined) {
@@ -36,24 +36,24 @@
                     return;
                 }
                 if (data.AccountNumber) {
-                    viewModel.blockModel.accountNumber(data.AccountNumber());
+                    blockModel.accountNumber(data.AccountNumber());
                 }
                 if (data.DomainName) {
-                    viewModel.blockModel.domainName(data.DomainName());
+                    blockModel.domainName(data.DomainName());
                 }
             }
         };
-        f.cleanUp = function () {
-            delete viewModel.blockModel.accountNumber;
-            delete viewModel.blockModel.domainName;
+        f.cleanUp= function (blockModel) {
+            delete blockModel.accountNumber;
+            delete blockModel.domainName;
         };
-        f.onBeforeSave = function () {
+        f.onBeforeSave = function (blockModel) {
             var data = {
-                AccountNumber: viewModel.blockModel.accountNumber(),
-                DomainName: viewModel.blockModel.domainName()
+                AccountNumber: blockModel.accountNumber(),
+                DomainName: blockModel.domainName()
             };
 
-            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
+            blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

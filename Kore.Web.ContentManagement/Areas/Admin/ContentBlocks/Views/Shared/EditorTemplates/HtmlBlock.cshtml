@@ -14,27 +14,27 @@
 <script type="text/javascript">
     var contentBlockModel = (function () {
         var f = {};
-        f.updateModel = function () {
-            viewModel.blockModel.bodyContent = ko.observable("");
+        f.updateModel = function (blockModel) {
+            blockModel.bodyContent = ko.observable("");
 
-            var data = ko.mapping.fromJSON(viewModel.blockModel.blockValues());
+            var data = ko.mapping.fromJSON(blockModel.blockValues());
 
             if (data && data.BodyContent) {
-                viewModel.blockModel.bodyContent(data.BodyContent());
+                blockModel.bodyContent(data.BodyContent());
             }
 
-            viewModel.blockModel.tinyMCEConfig = koreDefaultTinyMCEConfig;
+            blockModel.tinyMCEConfig = koreDefaultTinyMCEConfig;
         };
-        f.cleanUp = function () {
-            delete viewModel.blockModel.bodyContent;
-            delete viewModel.blockModel.tinyMCEConfig;
+        f.cleanUp = function (blockModel) {
+            delete blockModel.bodyContent;
+            delete blockModel.tinyMCEConfig;
         };
-        f.onBeforeSave = function () {
+        f.onBeforeSave = function (blockModel) {
             var data = {
-                BodyContent: viewModel.blockModel.bodyContent()
+                BodyContent: blockModel.bodyContent()
             };
 
-            viewModel.blockModel.blockValues(ko.mapping.toJSON(data));
+            blockModel.blockValues(ko.mapping.toJSON(data));
         };
         return f;
     })();

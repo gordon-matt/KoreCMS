@@ -245,82 +245,16 @@
                 data: null,
                 dataSource: {
                     type: "odata",
-                    //transport: {
-                    //    read: {
-                    //        url: function (data) {
-                    //            return "/odata/kore/watchdog/ServiceInfoResultApi(" + e.data.Id + ")";
-                    //        },
-                    //        dataType: "json"
-                    //    }
-                    //},
                     transport: {
                         read: {
-                            url: baseUrl + "/Default.GetServices",
-
-                            // The below works fine, but the problem is Microsoft's current OData implementation doesn't seem to return 'odata.count'
-                            //  if the endpoint is an ODataAction. So for now we have no choice but to filter on the client side. Will keep an eye
-                            //  on changes in future versions and then uncomment the below code if it ever gets fixed.
-                            //url: function (data) {
-                            //    // In this case, we need to manually build the query string, since the Kendo Grid doesn't seem to do that when
-                            //    //  we are using POST
-                            //    var grid = $('#services-grid-' + e.data.Id).data('kendoGrid');
-
-                            //    var params = {
-                            //        page: grid.dataSource.page(),
-                            //        sort: grid.dataSource.sort(),
-                            //        filter: grid.dataSource.filter()
-                            //    };
-
-                            //    var queryString = "$inlinecount=allpages&$top=10";
-
-                            //    queryString += "&page=" + (params.page || "~");
-
-                            //    if (params.sort) {
-                            //        queryString += "&$orderby=";
-                            //        var isFirst = true;
-                            //        $.each(params.sort, function () {
-                            //            if (!isFirst) {
-                            //                queryString += ",";
-                            //            }
-                            //            else {
-                            //                isFirst = false;
-                            //            }
-                            //            queryString += this.field + " " + this.dir;
-                            //        });
-                            //    }
-
-                            //    if (params.filter) {
-                            //        queryString += "&$filter=";
-                            //        var isFirst = true;
-                            //        $.each(params.filter, function () {
-                            //            if (!isFirst) {
-                            //                queryString += " and ";
-                            //            }
-                            //            else {
-                            //                isFirst = false;
-                            //            }
-                            //            queryString += this.field + " " + this.operator + " '" + this.value + "'";
-                            //        });
-                            //    }
-
-                            //    return "/odata/kore/watchdog/WatchdogInstanceApi/GetServices?" + queryString;
-                            //},
-                            type: "POST",
-                            contentType: "application/json; charset=utf-8",
+                            url: function (data) {
+                                return baseUrl + "/Default.GetServices(watchdogInstanceId=" + e.data.Id + ")";
+                            },
                             dataType: "json"
                         },
-                        //parameterMap: function (options, operation) {
-                        //    if (operation === "read") {
-                        //        return kendo.stringify({
-                        //            watchdogInstanceId: e.data.Id
-                        //        });
-                        //    }
-                        //},
                         parameterMap: function (options, operation) {
                             if (operation === "read") {
                                 var paramMap = kendo.data.transports.odata.parameterMap(options, operation);
-
-                                paramMap.watchdogInstanceId = e.data.Id;
 
                                 if (paramMap.$inlinecount) {
                                     if (paramMap.$inlinecount == "allpages") {
@@ -399,22 +333,32 @@
                 }, {
                     field: "WatchdogInstanceId",
                     title: " ",
-                    template:
-                        '<div class="btn-group">' +
-                        '# if(Status == "Stopped") {#' +
-                        '<a data-bind="click: startService.bind($data,\'#=WatchdogInstanceId#\', \'#=ServiceName#\')" class="btn btn-success btn-sm"><i class="kore-icon kore-icon-start"></i></a>' +
-                        '#} else if (Status == "Running") {#' +
-                        '<a data-bind="click: stopService.bind($data,\'#=WatchdogInstanceId#\', \'#=ServiceName#\')" class="btn btn-danger btn-sm"><i class="kore-icon kore-icon-stop"></i></a>' +
-                        '<a data-bind="click: restartService.bind($data,\'#=WatchdogInstanceId#\', \'#=ServiceName#\')" class="btn btn-success btn-sm"><i class="kore-icon kore-icon-restart"></i></a>' +
-                        "#} #</div>&nbsp;" +
-                        '# if (viewModel.allowAddRemove) {#' +
-                        '# if (!IsWatched) {#' +
-                        '<div class="btn-group"><a data-bind="click: addService.bind($data,\'#=WatchdogInstanceId#\', \'#=ServiceName#\')" class="btn btn-default btn-sm"><i class="kore-icon kore-icon-add"></i></a>' +
-                        '#} else {#' +
-                        '<a data-bind="click: removeService.bind($data,\'#=WatchdogInstanceId#\', \'#=ServiceName#\')" class="btn btn-warning btn-sm"><i class="kore-icon kore-icon-remove"></i></a>' +
-                        '#} #' +
-                        '#} #' +
-                        '</div>',
+                    template: function(dataItem) {
+                        var instanceId = dataItem.WatchdogInstanceId;
+                        var name = dataItem.ServiceName;
+
+                        var s = '<div class="btn-group">';
+
+                        if (dataItem.Status == "Stopped") {
+                            s+= '<a data-bind="click: startService.bind($data,' + instanceId + ', \'' + name + '\')" class="btn btn-success btn-sm"><i class="kore-icon kore-icon-start"></i></a>';
+                        }
+                        else if (dataItem.Status == "Running") {
+                            s+= '<a data-bind="click: stopService.bind($data,' + instanceId + ', \'' + name + '\')" class="btn btn-danger btn-sm"><i class="kore-icon kore-icon-stop"></i></a>' +
+                            '<a data-bind="click: restartService.bind($data,' + instanceId + ', \'' + name + '\')" class="btn btn-success btn-sm"><i class="kore-icon kore-icon-restart"></i></a>';
+                        }
+                        s += '</div><div class="btn-group">';
+
+                        if (self.allowAddRemove) {
+                            if (!dataItem.IsWatched) {
+                                s += '<a data-bind="click: addService.bind($data,' + instanceId + ', \'' + name + '\')" class="btn btn-default btn-sm"><i class="kore-icon kore-icon-add"></i></a>';
+                            }
+                            else {
+                                s += '<a data-bind="click: removeService.bind($data,' + instanceId + ', \'' + name + '\')" class="btn btn-warning btn-sm"><i class="kore-icon kore-icon-remove"></i></a>';
+                            }
+                        }
+                        s += '</div>';
+                        return s;
+                    },
                     attributes: { "class": "text-center" },
                     filterable: false,
                     width: 180

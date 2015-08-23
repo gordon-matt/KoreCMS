@@ -128,7 +128,12 @@
                     }
 
                     // Remove Old Scripts
-                    $('script[data-settings-script="true"]').remove();
+                    //$('script[data-settings-script="true"]').remove();
+
+                    $('script[data-settings-script="true"]').each(function () {
+                        $(this).remove();
+                    });
+
                     //var oldScripts = $('script[data-settings-script="true"]');
 
                     //if (oldScripts.length > 0) {

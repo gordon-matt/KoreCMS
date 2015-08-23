@@ -6,10 +6,10 @@
 @using LocalizableStrings = Kore.Plugins.Ecommerce.Simple.LocalizableStrings
 
 @{
-    Style.IncludeBundle("third-party/metro");
-
     var settings = EngineContext.Current.Resolve<StoreSettings>();
 }
+
+<link type="text/css" rel="stylesheet" href="@Style.GetBundleUrl("third-party/metro")" />
 
 @using (var tiles = Html.KoreCommon().Metro().Begin(new Tiles()))
 {

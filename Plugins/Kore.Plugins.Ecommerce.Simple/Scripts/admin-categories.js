@@ -381,6 +381,11 @@
                 dataTextField: ["Name"],
                 loadOnDemand: false,
                 dataBound: function (e) {
+                    var treeview = this.element.find("ul")[0];
+                    if (treeview) {
+                        ko.cleanNode(treeview);
+                        ko.applyBindings(ko.dataFor(treeview), treeview);
+                    }
                     setTimeout(function () {
                         $("#treeview").data("kendoTreeView").expand(".k-item");
                     }, 20);

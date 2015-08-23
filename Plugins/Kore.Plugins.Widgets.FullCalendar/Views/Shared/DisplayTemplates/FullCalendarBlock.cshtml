@@ -7,7 +7,8 @@
 @{
     Style.IncludePluginStyle("fullcalendar.min.css");
     Style.IncludePluginStyle("fullcalendar.print.css", htmlAttributes: new { media = "print" });
-    Script.IncludeExternal("//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js");
+    //Script.IncludeExternal("//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js");
+    Script.IncludeBundle("third-party/momentjs");
     Script.IncludePluginScript("fullcalendar-2.3.1/fullcalendar.min.js");
 
     string lang = WorkContext.CurrentCultureCode.LeftOf('-');

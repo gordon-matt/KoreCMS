@@ -196,6 +196,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Regions\Scripts\index.js" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\Admin\Regions\Scripts\jquery.imagemapster.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\Admin\Regions\Scripts\jquery.imagemapster-mod.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

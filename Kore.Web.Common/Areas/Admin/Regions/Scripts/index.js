@@ -13,7 +13,8 @@
     require('kore-section-switching');
     require('kore-jqueryval');
 
-    require('jquery-maphilight');
+    //require('jquery-maphilight');
+    require('jquery-image-mapster');
 
     ko.mapping = koMap;
 
@@ -982,9 +983,19 @@
 
             self.gridPageSize = $("#GridPageSize").val();
 
-            $('#map').maphilight({
-                fade: false
+            //$('#map').maphilight({
+            //    fade: false
+            //});
+
+            $('#map').mapster({
+                fillColor: 'b2b2ff',
+                fillOpacity: 0.7,
+                stroke: true,
+                strokeColor: '00004c',
+                singleSelect: true
             });
+
+            $("#regions-world-map div:first-child").addClass('center-block');
 
             self.country.init();
             self.state.init();

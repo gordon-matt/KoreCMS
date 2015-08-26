@@ -18,7 +18,8 @@ namespace Kore.Web.Common.Infrastructure
 
                 var paths = new Dictionary<string, string>();
 
-                paths.Add("jquery-maphilight", scriptRegister.GetBundleUrl("third-party/jquery-maphilight"));
+                //paths.Add("jquery-maphilight", scriptRegister.GetBundleUrl("third-party/jquery-maphilight"));
+                paths.Add("jquery-image-mapster", scriptRegister.GetBundleUrl("third-party/jquery-image-mapster"));
 
                 return paths;
             }
@@ -30,7 +31,8 @@ namespace Kore.Web.Common.Infrastructure
             {
                 var shim = new Dictionary<string, string[]>();
 
-                shim.Add("jquery-maphilight", new[] { "jquery" });
+                //shim.Add("jquery-maphilight", new[] { "jquery" });
+                shim.Add("jquery-image-mapster", new[] { "jquery" });
 
                 return shim;
             }

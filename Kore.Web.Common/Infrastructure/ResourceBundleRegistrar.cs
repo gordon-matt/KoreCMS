@@ -12,8 +12,11 @@ namespace Kore.Web.Common.Infrastructure
             bundles.Add(new ScriptBundle("~/bundles/js/kore-common/regions")
                 .Include("~/Scripts/Kore.Web.Common.Areas.Admin.Regions.Scripts.index.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/third-party/jquery-maphilight")
-                .Include("~/Scripts/Kore.Web.Common.Areas.Admin.Regions.Scripts.jquery.maphilight.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/third-party/jquery-image-mapster")
+                .Include("~/Scripts/Kore.Web.Common.Areas.Admin.Regions.Scripts.jquery.imagemapster-mod.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/third-party/jquery-maphilight")
+            //    .Include("~/Scripts/Kore.Web.Common.Areas.Admin.Regions.Scripts.jquery.maphilight.min.js"));
         }
 
         #endregion IResourceBundleRegistrar Members

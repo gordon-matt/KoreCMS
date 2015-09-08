@@ -66,7 +66,19 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
             }
 
             string themeName = (string)parameters["themeName"];
+            var themeConfig = themeProvider.GetThemeConfiguration(themeName);
+
             siteSettings.DefaultDesktopTheme = themeName;
+
+            if (!string.IsNullOrEmpty(themeConfig.DefaultLayoutPath))
+            {
+                siteSettings.DefaultFrontendLayoutPath = themeConfig.DefaultLayoutPath;
+            }
+            else
+            {
+                siteSettings.DefaultFrontendLayoutPath = "~/Views/Shared/_Layout.cshtml";
+            }
+
             settingsService.Value.SaveSettings(siteSettings);
         }
 
@@ -80,7 +92,19 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
             }
 
             string themeName = (string)parameters["themeName"];
+            var themeConfig = themeProvider.GetThemeConfiguration(themeName);
+
             siteSettings.DefaultMobileTheme = themeName;
+
+            if (!string.IsNullOrEmpty(themeConfig.DefaultLayoutPath))
+            {
+                siteSettings.DefaultFrontendLayoutPath = themeConfig.DefaultLayoutPath;
+            }
+            else
+            {
+                siteSettings.DefaultFrontendLayoutPath = "~/Views/Shared/_Layout.cshtml";
+            }
+
             settingsService.Value.SaveSettings(siteSettings);
         }
 

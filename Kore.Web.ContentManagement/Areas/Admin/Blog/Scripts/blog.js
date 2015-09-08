@@ -757,7 +757,7 @@
                 if (!self.modalDismissed) {
                     var url = $('#TeaserImageUrl').val();
                     url = "/Media/Uploads/" + url;
-                    self.parent.postModel.teaserImageUrl(url);
+                    self.postModel.teaserImageUrl(url);
                 }
                 self.modalDismissed = false;
             });

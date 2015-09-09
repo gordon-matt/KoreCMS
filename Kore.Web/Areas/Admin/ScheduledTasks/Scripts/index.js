@@ -75,7 +75,7 @@ function ($, ko, kendo, notify) {
                         model: {
                             id: "Id",
                             fields: {
-                                Name: { type: "string", editable: true },
+                                Name: { type: "string", editable: false },
                                 Seconds: { type: "number", editable: true },
                                 Enabled: { type: "boolean", editable: true },
                                 StopOnError: { type: "boolean", editable: true },
@@ -171,7 +171,7 @@ function ($, ko, kendo, notify) {
                     title: " ",
                     width: 80,
                     filterable: false,
-                    template: '<a data-bind="click: runNow.bind($data,#=Id#)" class="btn btn-primary btn-sm">Run Now</a>'
+                    template: '<button type="button" data-bind="click: runNow.bind($data,#=Id#)" class="btn btn-primary btn-sm">Run Now</button>'
                 }, {
                     command: ["edit"],
                     title: "&nbsp;",

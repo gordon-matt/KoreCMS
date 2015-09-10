@@ -196,6 +196,7 @@
             public const string ExecutedTaskError = "Kore.Web/ScheduledTasks.ExecutedTaskError";
             public const string ExecutedTaskSuccess = "Kore.Web/ScheduledTasks.ExecutedTaskSuccess";
             public const string ManageScheduledTasks = "Kore.Web/ScheduledTasks.ManageScheduledTasks";
+            public const string RunNow = "Kore.Web/ScheduledTasks.RunNow";
             public const string Title = "Kore.Web/ScheduledTasks.Title";
         }
 

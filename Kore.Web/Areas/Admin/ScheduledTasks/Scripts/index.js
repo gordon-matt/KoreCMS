@@ -1,5 +1,5 @@
-﻿define(['jquery', 'knockout', 'kendo', 'notify'],
-function ($, ko, kendo, notify) {
+﻿define(['jquery', 'jqueryval', 'knockout', 'kendo', 'notify', 'kore-section-switching', 'kore-jqueryval'],
+function ($, jQVal, ko, kendo, notify, kSections, kJQVal) {
     'use strict'
 
     var odataBaseUrl = "/odata/kore/web/ScheduledTaskApi";
@@ -10,7 +10,23 @@ function ($, ko, kendo, notify) {
         self.gridPageSize = 10;
         self.translations = false;
 
+        self.id = ko.observable(0);
+        self.name = ko.observable(null);
+        self.seconds = ko.observable(0);
+        self.enabled = ko.observable(false);
+        self.stopOnError = ko.observable(false);
+
+        self.validator = false;
+
         self.attached = function () {
+            currentSection = $("#grid-section");
+
+            self.validator = $("#form-section-form").validate({
+                rules: {
+                    Seconds: { required: true }
+                }
+            });
+
             // Load translations first, else will have errors
             $.ajax({
                 url: "/admin/scheduledtasks/get-translations",
@@ -34,14 +50,6 @@ function ($, ko, kendo, notify) {
                         read: {
                             url: odataBaseUrl,
                             type: "GET",
-                            dataType: "json",
-                            contentType: "application/json; charset=utf-8",
-                        },
-                        update: {
-                            url: function (data) {
-                                return odataBaseUrl + '(' + data.Id + ')'
-                            },
-                            type: "PUT",
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                         },
@@ -69,20 +77,19 @@ function ($, ko, kendo, notify) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data.value.length; // Special case
-                            //return data["@odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             id: "Id",
                             fields: {
-                                Name: { type: "string", editable: false },
-                                Seconds: { type: "number", editable: true },
-                                Enabled: { type: "boolean", editable: true },
-                                StopOnError: { type: "boolean", editable: true },
-                                LastStartUtc: { type: "date", editable: false },
-                                LastEndUtc: { type: "date", editable: false },
-                                LastSuccessUtc: { type: "date", editable: false },
-                                Id: { type: "number", editable: false }
+                                Name: { type: "string" },
+                                Seconds: { type: "number" },
+                                Enabled: { type: "boolean" },
+                                StopOnError: { type: "boolean" },
+                                LastStartUtc: { type: "date" },
+                                LastEndUtc: { type: "date" },
+                                LastSuccessUtc: { type: "date" },
+                                Id: { type: "number" }
                             }
                         }
                     },
@@ -99,20 +106,6 @@ function ($, ko, kendo, notify) {
                         ko.cleanNode(body);
                         ko.applyBindings(ko.dataFor(body), body);
                     }
-                    $(".k-grid-edit").html("Edit");
-                    $(".k-grid-edit").addClass("btn btn-default btn-sm");
-                },
-                edit: function (e) {
-                    $(".k-grid-update").html("Update");
-                    $(".k-grid-cancel").html("Cancel");
-                    $(".k-grid-update").addClass("btn btn-success btn-sm");
-                    $(".k-grid-cancel").addClass("btn btn-default btn-sm");
-                },
-                cancel: function (e) {
-                    setTimeout(function () {
-                        $(".k-grid-edit").html("Edit");
-                        $(".k-grid-edit").addClass("btn btn-default btn-sm");
-                    }, 0);
                 },
                 filterable: true,
                 sortable: {
@@ -169,18 +162,75 @@ function ($, ko, kendo, notify) {
                 }, {
                     field: "Id",
                     title: " ",
-                    width: 80,
-                    filterable: false,
-                    template: '<button type="button" data-bind="click: runNow.bind($data,#=Id#)" class="btn btn-primary btn-sm">Run Now</button>'
-                }, {
-                    command: ["edit"],
-                    title: "&nbsp;",
+                    template:
+                        '<div class="btn-group">' +
+                        '<button type="button" data-bind="click: runNow.bind($data,#=Id#)" class="btn btn-primary btn-xs">' + self.translations.RunNow + '</button>' +
+                        '<button type="button" data-bind="click: edit.bind($data,#=Id#)" class="btn btn-default btn-xs">' + self.translations.Edit + '</button>' +
+                        '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 200
-                }],
-                editable: "inline"
+                    width: 150,
+                }]
             });
+        };
+        self.edit = function (id) {
+            $.ajax({
+                url: odataBaseUrl + "(" + id + ")",
+                type: "GET",
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                self.id(json.Id);
+                self.name(json.Name);
+                self.seconds(json.Seconds);
+                self.enabled(json.Enabled);
+                self.stopOnError(json.StopOnError);
+
+                self.validator.resetForm();
+                switchSection($("#form-section"));
+                $("#form-section-legend").html(self.translations.Edit);
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(self.translations.GetRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
+            });
+        };
+        self.save = function () {
+            if (!$("#form-section-form").valid()) {
+                return false;
+            }
+
+            var record = {
+                Id: self.id(),
+                Seconds: self.seconds(),
+                Enabled: self.enabled(),
+                StopOnError: self.stopOnError()
+            };
+
+            $.ajax({
+                url: odataBaseUrl + "(" + self.id() + ")",
+                type: "PUT",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(record),
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                $('#Grid').data('kendoGrid').dataSource.read();
+                $('#Grid').data('kendoGrid').refresh();
+
+                switchSection($("#grid-section"));
+
+                $.notify(self.translations.UpdateRecordSuccess, "success");
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(self.translations.UpdateRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
+            });
+        };
+        self.cancel = function () {
+            switchSection($("#grid-section"));
         };
         self.runNow = function (id) {
             $.ajax({

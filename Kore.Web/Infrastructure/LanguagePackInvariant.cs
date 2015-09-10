@@ -146,6 +146,7 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.ScheduledTasks.ExecutedTaskError, "There was an error when executing the task." },
                     { KoreWebLocalizableStrings.ScheduledTasks.ExecutedTaskSuccess, "Successfully executed task." },
                     { KoreWebLocalizableStrings.ScheduledTasks.ManageScheduledTasks, "Manage Scheduled Tasks" },
+                    { KoreWebLocalizableStrings.ScheduledTasks.RunNow, "Run Now" },
                     { KoreWebLocalizableStrings.ScheduledTasks.Model.Enabled, "Is Enabled" },
                     { KoreWebLocalizableStrings.ScheduledTasks.Model.LastEndUtc, "Last End (UTC)" },
                     { KoreWebLocalizableStrings.ScheduledTasks.Model.LastStartUtc, "Last Start (UTC)" },

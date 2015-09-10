@@ -29,6 +29,15 @@ namespace Kore.Web.Areas.Admin.ScheduledTasks.Controllers.Api
             // Do nothing (int is auto incremented)
         }
 
+        public override IHttpActionResult Put(int key, ScheduledTask entity)
+        {
+            var existingEntity = Service.FindOne(key);
+            existingEntity.Seconds = entity.Seconds;
+            existingEntity.Enabled = entity.Enabled;
+            existingEntity.StopOnError = entity.StopOnError;
+            return base.Put(key, existingEntity);
+        }
+
         [HttpPost]
         public IHttpActionResult RunNow(ODataActionParameters parameters)
         {

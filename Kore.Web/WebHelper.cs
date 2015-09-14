@@ -22,8 +22,7 @@ namespace Kore.Web
         /// Ctor
         /// </summary>
         /// <param name="httpContext">HTTP context</param>
-        public WebHelper(
-            HttpContextBase httpContext)
+        public WebHelper(HttpContextBase httpContext, Lazy<ILogger> logger)
         {
             this._httpContext = httpContext;
             this.logger = logger;
@@ -398,7 +397,7 @@ namespace Kore.Web
                         _trustLevel = trustLevel;
                         break; //we've set the highest permission we can
                     }
-                    catch (SecurityException x)
+                    catch (SecurityException)
                     {
                         continue;
                     }

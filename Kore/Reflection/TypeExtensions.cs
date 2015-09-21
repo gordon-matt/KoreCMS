@@ -103,6 +103,19 @@ namespace Kore.Reflection
             return interfaces.Count() != 0;
         }
 
+        public static bool IsGenericCollection(this Type type)
+        {
+            Type collectionType = typeof(ICollection<>);
+
+            if (type.IsGenericType && collectionType.IsAssignableFrom(type.GetGenericTypeDefinition()))
+            {
+                return true;
+            }
+
+            var interfaces = type.GetInterfaces();
+            return interfaces.Any(@interface => @interface.IsGenericType && collectionType.IsAssignableFrom(@interface.GetGenericTypeDefinition()));
+        }
+
         public static bool IsNullable(this Type type)
         {
             if (type == null)

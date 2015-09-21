@@ -25,6 +25,9 @@ namespace KoreCMS.Infrastructure
             builder.Register(x => settings).As<DataSettings>();
 
             // data layer
+
+            #region Entity Framework 6
+
             builder.RegisterType<KoreCMS.Data.ApplicationDbContext>()
                 .As<DbContext>()
                 .AsSelf()
@@ -36,6 +39,24 @@ namespace KoreCMS.Infrastructure
                 .As(typeof(IRepository<>))
                 .WithParameter(ResolvedParameter.ForNamed<DbContext>("KoreCMS.ApplicationDbContext"))
                 .InstancePerLifetimeScope();
+
+            #endregion Entity Framework 6
+
+            #region Mongo DB
+
+            //ConventionRegistry.Register("__kore_convention_pack__", KoreConventionPack.Instance, t => true);
+
+            //builder.RegisterGeneric(typeof(MongoRepository<>)).As(typeof(IRepository<>)).InstancePerDependency();
+
+            //builder.Register(x =>
+            //{
+            //    var databaseName = MongoUrl.Create(settings.ConnectionString).DatabaseName;
+            //    var mongoClient = new MongoClient(settings.ConnectionString);
+            //    var client = mongoClient.GetServer();
+            //    return client.GetDatabase(databaseName);
+            //}).As<MongoDatabase>().SingleInstance();
+
+            #endregion Mongo DB
 
             // SPA Routes
             builder.RegisterType<DurandalRouteProvider>().As<IDurandalRouteProvider>().SingleInstance();

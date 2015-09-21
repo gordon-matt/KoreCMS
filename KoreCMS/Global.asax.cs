@@ -21,7 +21,6 @@ namespace KoreCMS
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            DependencyConfig.Register();
 
             // Uncomment this if you want to write some PHP views as well,
             //  as described here: https://phpviewengine.codeplex.com/

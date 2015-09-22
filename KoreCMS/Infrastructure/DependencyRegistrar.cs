@@ -3,6 +3,8 @@ using Autofac;
 using Autofac.Core;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Data.SqlClient;
+using Kore.EntityFramework.Data.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Security.Membership;
@@ -21,6 +23,9 @@ namespace KoreCMS.Infrastructure
 
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
+            builder.RegisterType<SqlDbHelper>().As<IKoreDbHelper>().SingleInstance();
+            builder.RegisterType<SqlEntityFrameworkHelper>().As<IKoreEntityFrameworkHelper>().InstancePerDependency();
+
             var settings = DataSettingsManager.LoadSettings();
             builder.Register(x => settings).As<DataSettings>();
 

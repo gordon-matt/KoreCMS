@@ -12,6 +12,7 @@ using Castle.Core.Logging;
 using EntityFramework.BulkInsert.Extensions;
 using EntityFramework.Extensions;
 using Kore.Collections;
+using Kore.EntityFramework.Data.EntityFramework;
 using Kore.Exceptions;
 using Kore.Logging;
 
@@ -22,6 +23,7 @@ namespace Kore.Data.EntityFramework
     {
         private readonly DbContext context;
         private IDbSet<TEntity> set;
+        private Lazy<IKoreEntityFrameworkHelper> efHelper;
 
         private ILogger logger;
 
@@ -35,10 +37,11 @@ namespace Kore.Data.EntityFramework
             get { return set ?? (set = context.Set<TEntity>()); }
         }
 
-        public EntityFrameworkRepository(DbContext context)
+        public EntityFrameworkRepository(DbContext context, Lazy<IKoreEntityFrameworkHelper> efHelper)
         {
             this.context = context;
             this.logger = LoggingUtilities.Resolve();
+            this.efHelper = efHelper;
         }
 
         #region IRepository<TEntity> Members
@@ -65,23 +68,47 @@ namespace Kore.Data.EntityFramework
 
         public int DeleteAll()
         {
-            int rowsAffected = Table.Delete();
-            RefreshAll();
-            return rowsAffected;
+            if (efHelper.Value.SupportsEFExtended)
+            {
+                int rowsAffected = Table.Delete();
+                RefreshAll();
+                return rowsAffected;
+            }
+            else
+            {
+                var entities = Table.ToHashSet();
+                return Delete(entities);
+            }
         }
 
         public int Delete(Expression<Func<TEntity, bool>> filterExpression)
         {
-            int rowsAffected = Table.Delete(filterExpression);
-            RefreshMany(Table.Where(filterExpression).ToHashSet());
-            return rowsAffected;
+            if (efHelper.Value.SupportsEFExtended)
+            {
+                int rowsAffected = Table.Delete(filterExpression);
+                RefreshMany(Table.Where(filterExpression).ToHashSet());
+                return rowsAffected;
+            }
+            else
+            {
+                var entities = Table.Where(filterExpression).ToHashSet();
+                return Delete(entities);
+            }
         }
 
         public int Delete(IQueryable<TEntity> query)
         {
-            int rowsAffected = Table.Delete(query);
-            RefreshAll();
-            return rowsAffected;
+            if (efHelper.Value.SupportsEFExtended)
+            {
+                int rowsAffected = Table.Delete(query);
+                RefreshAll();
+                return rowsAffected;
+            }
+            else
+            {
+                var entities = query.ToHashSet();
+                return Delete(entities);
+            }
         }
 
         public int Delete(TEntity entity)
@@ -151,7 +178,7 @@ namespace Kore.Data.EntityFramework
 
         public int Insert(IEnumerable<TEntity> entities)
         {
-            if (entities.Count() > 20)
+            if (efHelper.Value.SupportsBulkInsert && entities.Count() > 20)
             {
                 Context.BulkInsert(entities);
                 return entities.Count();
@@ -276,23 +303,44 @@ namespace Kore.Data.EntityFramework
 
         public int Update(Expression<Func<TEntity, TEntity>> updateExpression)
         {
-            int rowsAffected = Table.Update(updateExpression);
-            RefreshAll();
-            return rowsAffected;
+            if (efHelper.Value.SupportsEFExtended)
+            {
+                int rowsAffected = Table.Update(updateExpression);
+                RefreshAll();
+                return rowsAffected;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public int Update(Expression<Func<TEntity, bool>> filterExpression, Expression<Func<TEntity, TEntity>> updateExpression)
         {
-            int rowsAffected = Table.Update(filterExpression, updateExpression);
-            RefreshMany(Table.Where(filterExpression).ToHashSet());
-            return rowsAffected;
+            if (efHelper.Value.SupportsEFExtended)
+            {
+                int rowsAffected = Table.Update(filterExpression, updateExpression);
+                RefreshMany(Table.Where(filterExpression).ToHashSet());
+                return rowsAffected;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public int Update(IQueryable<TEntity> query, Expression<Func<TEntity, TEntity>> updateExpression)
         {
-            int rowsAffected = Table.Update(query, updateExpression);
-            RefreshAll();
-            return rowsAffected;
+            if (efHelper.Value.SupportsEFExtended)
+            {
+                int rowsAffected = Table.Update(query, updateExpression);
+                RefreshAll();
+                return rowsAffected;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         //public Task<int> UpdateAsync(Expression<Func<TEntity, TEntity>> updateExpression)

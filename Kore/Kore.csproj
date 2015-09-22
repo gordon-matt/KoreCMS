@@ -167,12 +167,14 @@
     <Compile Include="Data\DbTypeExtensions.cs" />
     <Compile Include="Data\ForeignKeyInfo.cs" />
     <Compile Include="Data\ForeignKeyInfoCollection.cs" />
+    <Compile Include="Data\IKoreDbHelper.cs" />
     <Compile Include="Data\IEntity.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\OleDb\OleDbConnectionExtensions.cs" />
     <Compile Include="Data\Services\GenericDataService.cs" />
     <Compile Include="Data\Services\IGenericDataService.cs" />
     <Compile Include="Data\SqlClient\SqlConnectionExtensions.cs" />
+    <Compile Include="Data\SqlClient\SqlDbHelper.cs" />
     <Compile Include="Data\Sql\SqlDataSourceEnumeratorExtensions.cs" />
     <Compile Include="Drawing\ColorExtensions.cs" />
     <Compile Include="Drawing\ImageExtensions.cs" />

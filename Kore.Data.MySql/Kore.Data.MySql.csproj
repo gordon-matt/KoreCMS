@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2A636196-0B16-484A-8DD8-4BAB656DEC08}</ProjectGuid>
+    <ProjectGuid>{54E53109-656B-4303-A9D4-F585D0574B76}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Kore.EntityFramework</RootNamespace>
-    <AssemblyName>Kore.EntityFramework</AssemblyName>
+    <RootNamespace>Kore.Data.MySql</RootNamespace>
+    <AssemblyName>Kore.Data.MySql</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,36 +31,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.BulkInsert">
-      <HintPath>..\packages\EntityFramework.BulkInsert-ef6.6.0.2.8\lib\Net45\EntityFramework.BulkInsert.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.Extended, Version=6.0.0.0, Culture=neutral, PublicKeyToken=05b7e29bdd433584, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.Extended.6.1.0.120\lib\net45\EntityFramework.Extended.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.MappingAPI">
-      <HintPath>..\packages\EntityFramework.MappingAPI.6.0.0.7\lib\net45\EntityFramework.MappingAPI.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.7\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.Entity.6.9.7\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -68,36 +57,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\Domain\SettingMap.cs" />
-    <Compile Include="CreateSeedDatabaseIfNotExists.cs" />
-    <Compile Include="Data\EntityFramework\CreateTablesIfNotExist.cs" />
-    <Compile Include="Data\EntityFramework\DbContextExtensions.cs" />
-    <Compile Include="Data\EntityFramework\DependencyRegistrar.cs" />
-    <Compile Include="Data\EntityFramework\EntityFrameworkRepository.cs" />
-    <Compile Include="Data\EntityFramework\IKoreEntityFrameworkHelper.cs" />
-    <Compile Include="Data\EntityFramework\IEntityTypeConfiguration.cs" />
-    <Compile Include="Data\EntityFramework\QueryableExtensions.cs" />
-    <Compile Include="Data\IKoreDbContext.cs" />
-    <Compile Include="DropCreateSeedDatabaseIfModelChanges.cs" />
-    <Compile Include="EntityNotFoundException.cs" />
-    <Compile Include="ISupportSeed.cs" />
-    <Compile Include="Localization\Domain\LanguageMap.cs" />
-    <Compile Include="Localization\Domain\LocalizableStringMap.cs" />
-    <Compile Include="Logging\Domain\LogEntryMap.cs" />
+    <Compile Include="MySqlConnectionExtensions.cs" />
+    <Compile Include="MySqlDatabaseInitializerHelper.cs" />
+    <Compile Include="MySqlDbHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScheduledTasks\Domain\ScheduledTaskMap.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Kore.EntityFramework\Kore.EntityFramework.csproj">
+      <Project>{2a636196-0b16-484a-8dd8-4bab656dec08}</Project>
+      <Name>Kore.EntityFramework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Kore\Kore.csproj">
       <Project>{f5b45103-1be4-401d-a90d-d4cd7a0ac5d4}</Project>
       <Name>Kore</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

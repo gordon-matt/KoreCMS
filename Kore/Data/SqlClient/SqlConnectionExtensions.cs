@@ -132,7 +132,7 @@ namespace Kore.Data.SqlClient
 
         public static IEnumerable<string> GetDatabaseNames(this SqlConnection connection)
         {
-            const string CMB_SELECT_DATABASE_NAMES = "SELECT NAME FROM SYS.DATABASES ORDER BY NAME";
+            const string CMD_SELECT_DATABASE_NAMES = "SELECT NAME FROM SYS.DATABASES ORDER BY NAME";
             List<string> databaseNames = new List<string>();
 
             bool alreadyOpen = (connection.State != ConnectionState.Closed);
@@ -145,7 +145,7 @@ namespace Kore.Data.SqlClient
             using (SqlCommand command = connection.CreateCommand())
             {
                 command.CommandType = CommandType.Text;
-                command.CommandText = CMB_SELECT_DATABASE_NAMES;
+                command.CommandText = CMD_SELECT_DATABASE_NAMES;
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {

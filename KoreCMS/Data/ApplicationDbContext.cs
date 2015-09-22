@@ -5,6 +5,7 @@ using Kore.Configuration.Domain;
 using Kore.Data;
 using Kore.Data.EntityFramework;
 using Kore.EntityFramework;
+using Kore.EntityFramework.Data.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Localization.Domain;
@@ -34,8 +35,9 @@ namespace KoreCMS.Data
 
         static ApplicationDbContext()
         {
+            Database.SetInitializer<ApplicationDbContext>(new CreateTablesIfNotExist<ApplicationDbContext>());
             //Database.SetInitializer<ApplicationDbContext>(new CreateDatabaseIfNotExists<ApplicationDbContext>());
-            Database.SetInitializer<ApplicationDbContext>(null);
+            //Database.SetInitializer<ApplicationDbContext>(null);
         }
 
         public ApplicationDbContext()

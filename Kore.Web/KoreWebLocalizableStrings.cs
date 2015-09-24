@@ -122,6 +122,7 @@
             public const string ChangePasswordError = "Kore.Web/Membership.ChangePasswordError";
             public const string ChangePasswordSuccess = "Kore.Web/Membership.ChangePasswordSuccess";
             public const string EditRolePermissions = "Kore.Web/Membership.EditRolePermissions";
+            public const string InsertUserError = "Kore.Web/Membership.InsertUserError";
             public const string InvalidEmailAddress = "Kore.Web/Membership.InvalidEmailAddress";
             public const string IsLockedOut = "Kore.Web/Membership.IsLockedOut";
             public const string Password = "Kore.Web/Membership.Password";

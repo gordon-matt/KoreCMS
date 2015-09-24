@@ -114,6 +114,7 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.Membership.ChangePasswordModel.UserName, "Username" },
                     { KoreWebLocalizableStrings.Membership.ChangePasswordSuccess, "Successfully changed password." },
                     { KoreWebLocalizableStrings.Membership.EditRolePermissions, "Edit Role Permissions" },
+                    { KoreWebLocalizableStrings.Membership.InsertUserError, "There was an error when trying to create the user." },
                     { KoreWebLocalizableStrings.Membership.InvalidEmailAddress, "That is not a valid e-mail address. Please check your input and try again." },
                     { KoreWebLocalizableStrings.Membership.IsLockedOut, "Is Locked Out" },
                     { KoreWebLocalizableStrings.Membership.Password, "Password" },

@@ -29,6 +29,7 @@ namespace Kore.Web.Mvc.Themes
 
             #region AreaViewLocationFormats
 
+            //TODO: Theme Area Locations should probably be like: ~/Themes/Areas, rather than ~/Areas/Themes...
             var areaViewLocationFormats = new List<string>
             {
                 //themes

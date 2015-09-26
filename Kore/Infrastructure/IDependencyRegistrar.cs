@@ -23,6 +23,7 @@ namespace Kore.Infrastructure
             // Localization
             builder.RegisterType<LanguageService>().As<ILanguageService>().InstancePerDependency();
             builder.RegisterType<LocalizableStringService>().As<ILocalizableStringService>().InstancePerDependency();
+            builder.RegisterType<LocalizablePropertyService>().As<ILocalizablePropertyService>().InstancePerDependency();
         }
 
         public int Order

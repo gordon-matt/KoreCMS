@@ -309,7 +309,7 @@ namespace Kore.Web.ContentManagement.Controllers
             var contentBlockProviders = EngineContext.Current.ResolveAll<IContentBlockProvider>();
 
             var contentBlocks = contentBlockProviders
-                .SelectMany(x => x.GetContentBlocks(zoneName, WorkContext.CurrentCultureCode))
+                .SelectMany(x => x.GetContentBlocks(zoneName))
                 .ToList();
 
             ViewBag.RenderAsWidgets = renderAsWidgets;

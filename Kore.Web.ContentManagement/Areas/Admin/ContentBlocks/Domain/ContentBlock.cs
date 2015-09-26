@@ -24,15 +24,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
 
         public string BlockValues { get; set; }
 
+        //TODO: Get rid of this...?
         public string DisplayCondition { get; set; }
 
         public string CustomTemplatePath { get; set; }
 
         public Guid? PageId { get; set; }
 
-        public string CultureCode { get; set; }
+        //public string CultureCode { get; set; }
 
-        public Guid? RefId { get; set; }
+        //public Guid? RefId { get; set; }
 
         #region IEntity Members
 
@@ -59,7 +60,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
             Property(x => x.BlockValues).IsMaxLength();
             Property(x => x.DisplayCondition).HasMaxLength(255);
             Property(x => x.CustomTemplatePath).HasMaxLength(255);
-            Property(x => x.CultureCode).HasMaxLength(10).HasColumnType("varchar");
+            //Property(x => x.CultureCode).HasMaxLength(10).HasColumnType("varchar");
         }
 
         #region IEntityTypeConfiguration Members

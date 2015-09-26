@@ -82,6 +82,7 @@
     <Compile Include="EntityNotFoundException.cs" />
     <Compile Include="ISupportSeed.cs" />
     <Compile Include="Localization\Domain\LanguageMap.cs" />
+    <Compile Include="Localization\Domain\LocalizablePropertyMap.cs" />
     <Compile Include="Localization\Domain\LocalizableStringMap.cs" />
     <Compile Include="Logging\Domain\LogEntryMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

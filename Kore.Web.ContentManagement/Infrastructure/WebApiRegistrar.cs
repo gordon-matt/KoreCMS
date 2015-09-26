@@ -77,6 +77,16 @@ namespace Kore.Web.ContentManagement.Infrastructure
             var getByPageIdAction = builder.EntityType<ContentBlock>().Collection.Action("GetByPageId");
             getByPageIdAction.Parameter<Guid>("pageId");
             getByPageIdAction.ReturnsCollectionFromEntitySet<ContentBlock>("ContentBlocks");
+
+            var getLocalizedActionFunction = builder.EntityType<ContentBlock>().Collection.Function("GetLocalized");
+            getLocalizedActionFunction.Parameter<Guid>("id");
+            getLocalizedActionFunction.Parameter<string>("cultureCode");
+            getLocalizedActionFunction.ReturnsFromEntitySet<ContentBlock>("ContentBlockApi");
+
+            var saveLocalizedAction = builder.EntityType<ContentBlock>().Collection.Action("SaveLocalized");
+            saveLocalizedAction.Parameter<string>("cultureCode");
+            saveLocalizedAction.Parameter<ContentBlock>("entity");
+            saveLocalizedAction.Returns<IHttpActionResult>();
         }
 
         private static void RegisterLanguageODataActions(ODataModelBuilder builder)

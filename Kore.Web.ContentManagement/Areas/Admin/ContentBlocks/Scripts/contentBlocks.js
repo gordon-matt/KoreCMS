@@ -35,8 +35,8 @@
         self.customTemplatePath = ko.observable(null);
         self.blockValues = ko.observable(null);
         self.pageId = ko.observable(null);
+
         self.cultureCode = ko.observable(null);
-        self.refId = ko.observable(null);
 
         self.createFormValidator = false;
         self.editFormValidator = false;
@@ -157,9 +157,12 @@
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a data-bind="click: blockModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<div class="btn-group">' +
+                        '<a data-bind="click: blockModel.edit.bind($data,\'#=Id#\', null)" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: blockModel.localize.bind($data,\'#=Id#\')" class="btn btn-success btn-xs">' + self.parent.translations.Localize + '</a>' +
                         '<a data-bind="click: blockModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
-                        '<a data-bind="click: blockModel.toggleEnabled.bind($data,\'#=Id#\', #=IsEnabled#)" class="btn btn-default btn-xs">' + self.parent.translations.Toggle + '</a></div>',
+                        '<a data-bind="click: blockModel.toggleEnabled.bind($data,\'#=Id#\', #=IsEnabled#)" class="btn btn-default btn-xs">' + self.parent.translations.Toggle + '</a>' +
+                        '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
                     width: 250
@@ -178,8 +181,8 @@
             self.customTemplatePath(null);
             self.blockValues(null);
             self.pageId(self.parent.pageId);
+
             self.cultureCode(null);
-            self.refId(null);
 
             // Clean up from previously injected html/scripts
             if (self.contentBlockModelStub != null && typeof self.contentBlockModelStub.cleanUp === 'function') {
@@ -203,9 +206,19 @@
             self.createFormValidator.resetForm();
             switchSection($("#create-section"));
         };
-        self.edit = function (id) {
+        self.edit = function (id, cultureCode) {
+            var url = "/odata/kore/cms/ContentBlockApi(" + id + ")";
+
+            if (cultureCode) {
+                self.cultureCode(cultureCode);
+                url = "/odata/kore/cms/ContentBlockApi/Default.GetLocalized(id=" + id + ",cultureCode='" + cultureCode + "')";
+            }
+            else {
+                self.cultureCode(null);
+            }
+
             $.ajax({
-                url: "/odata/kore/cms/ContentBlockApi(" + id + ")",
+                url: url,
                 type: "GET",
                 //contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -223,8 +236,6 @@
                 self.customTemplatePath(json.CustomTemplatePath);
                 self.blockValues(json.BlockValues);
                 self.pageId(json.PageId);
-                self.cultureCode(json.CultreCode);
-                self.refId(json.RefId);
 
                 $.ajax({
                     url: "/admin/blocks/content-blocks/get-editor-ui/" + self.id(),
@@ -292,6 +303,16 @@
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
+        self.localize = function (id) {
+            $("#SelectedId").val(id);
+            $("#cultureModal").modal("show");
+        };
+        self.onCultureSelected = function () {
+            var id = $("#SelectedId").val();
+            var cultureCode = $("#CultureCode").val();
+            self.edit(id, cultureCode);
+            $("#cultureModal").modal("hide");
+        };
         self.remove = function (id) {
             if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
@@ -325,11 +346,6 @@
                 }
             }
 
-            var cultureCode = self.cultureCode();
-            if (cultureCode == '') {
-                cultureCode = null;
-            }
-
             // ensure the function exists before calling it...
             if (self.contentBlockModelStub != null && typeof self.contentBlockModelStub.onBeforeSave === 'function') {
                 self.contentBlockModelStub.onBeforeSave(self);
@@ -346,9 +362,7 @@
                 DisplayCondition: self.displayCondition(),
                 CustomTemplatePath: self.customTemplatePath(),
                 BlockValues: self.blockValues(),
-                PageId: self.pageId(),
-                CultureCode: cultureCode,
-                RefId: self.refId()
+                PageId: self.pageId()
             };
 
             if (isNew) {
@@ -374,26 +388,53 @@
                 });
             }
             else {
-                $.ajax({
-                    url: "/odata/kore/cms/ContentBlockApi(" + self.id() + ")",
-                    type: "PUT",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(record),
-                    dataType: "json",
-                    async: false
-                })
-                .done(function (json) {
-                    $('#Grid').data('kendoGrid').dataSource.read();
-                    $('#Grid').data('kendoGrid').refresh();
+                if (self.cultureCode() != null) {
+                    $.ajax({
+                        url: "/odata/kore/cms/ContentBlockApi/Default.SaveLocalized",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            cultureCode: self.cultureCode(),
+                            entity: record
+                        }),
+                        dataType: "json",
+                        async: false
+                    })
+                    .done(function (json) {
+                        $('#Grid').data('kendoGrid').dataSource.read();
+                        $('#Grid').data('kendoGrid').refresh();
 
-                    switchSection($("#grid-section"));
+                        switchSection($("#grid-section"));
 
-                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(self.parent.translations.UpdateRecordError, "error");
-                    console.log(textStatus + ': ' + errorThrown);
-                });
+                        $.notify(self.parent.translations.UpdateRecordSuccess, "success");
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        $.notify(self.parent.translations.UpdateRecordError, "error");
+                        console.log(textStatus + ': ' + errorThrown);
+                    });
+                }
+                else {
+                    $.ajax({
+                        url: "/odata/kore/cms/ContentBlockApi(" + self.id() + ")",
+                        type: "PUT",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(record),
+                        dataType: "json",
+                        async: false
+                    })
+                    .done(function (json) {
+                        $('#Grid').data('kendoGrid').dataSource.read();
+                        $('#Grid').data('kendoGrid').refresh();
+
+                        switchSection($("#grid-section"));
+
+                        $.notify(self.parent.translations.UpdateRecordSuccess, "success");
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        $.notify(self.parent.translations.UpdateRecordError, "error");
+                        console.log(textStatus + ': ' + errorThrown);
+                    });
+                }
             }
         };
         self.cancel = function () {

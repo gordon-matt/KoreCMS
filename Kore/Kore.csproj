@@ -73,7 +73,6 @@
     <Compile Include="Caching\MemoryCacheManager.cs" />
     <Compile Include="Caching\PerRequestCacheManager.cs" />
     <Compile Include="Caching\Weak.cs" />
-    <Compile Include="Clock.cs" />
     <Compile Include="Collections\CollectionExtensions.cs" />
     <Compile Include="Collections\DictionaryExtensions.cs" />
     <Compile Include="Collections\EnumerableExtensions.cs" />
@@ -217,6 +216,7 @@
     <Compile Include="Localization\DI\DependencyRegistrar.cs" />
     <Compile Include="Localization\DI\LocalizationModule.cs" />
     <Compile Include="Localization\Domain\Language.cs" />
+    <Compile Include="Localization\Domain\LocalizableProperty.cs" />
     <Compile Include="Localization\Domain\LocalizableString.cs" />
     <Compile Include="Localization\ICultureManager.cs" />
     <Compile Include="Localization\ILanguagePack.cs" />
@@ -232,6 +232,7 @@
     <Compile Include="Localization\Models\ComparitiveLocalizableString.cs" />
     <Compile Include="Localization\NullLocalizer.cs" />
     <Compile Include="Localization\Services\ILanguageService.cs" />
+    <Compile Include="Localization\Services\ILocalizablePropertyService.cs" />
     <Compile Include="Localization\Services\ILocalizableStringService.cs" />
     <Compile Include="Localization\StartupTask.cs" />
     <Compile Include="Localization\Text.cs" />

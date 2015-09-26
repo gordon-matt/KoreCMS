@@ -192,7 +192,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 
                 korePageType.InitializeInstance(pageVersion);
 
-                var contentBlocks = contentBlockService.Value.GetContentBlocks(pageVersion.Id);
+                var contentBlocks = contentBlockService.Value.GetContentBlocks(pageVersion.Id, WorkContext.CurrentCultureCode);
                 korePageType.ReplaceContentTokens(x => InsertContentBlocks(x, contentBlocks));
 
                 return View(korePageType.DisplayTemplatePath, korePageType);

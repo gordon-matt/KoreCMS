@@ -1,5 +1,6 @@
 ﻿@using Kore.Web.ContentManagement
 @using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
+@using Kore.Web.Mvc
 @using Kore.Web.Mvc.KoreUI
 
 @{
@@ -7,6 +8,12 @@
 }
 
 @Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
+
+<style type="text/css">
+    .modal-dialog {
+        width: 80% !important;
+    }
+</style>
 
 <div id="grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -219,4 +226,27 @@
             }
         }
     </article>
+</div>
+
+<div class="modal fade" id="cultureModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Select Language</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        @Html.Hidden("SelectedId")
+                        @Html.Kore().LanguagesDropDownList("CultureCode", includeInvariant: true, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@T(KoreWebLocalizableStrings.General.Close)</button>
+                <button type="button" class="btn btn-primary" data-bind="click: blockModel.onCultureSelected">@T(KoreWebLocalizableStrings.General.OK)</button>
+            </div>
+        </div>
+    </div>
 </div>

@@ -24,10 +24,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
 
         bool Localized { get; set; }
 
-        string CultureCode { get; set; }
-
-        Guid? RefId { get; set; }
-
         string DisplayTemplatePath { get; }
 
         string EditorTemplatePath { get; }

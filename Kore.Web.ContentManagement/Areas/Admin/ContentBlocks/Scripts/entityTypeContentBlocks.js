@@ -25,8 +25,8 @@
 
         self.parent = parent;
         self.id = ko.observable(emptyGuid);
-        self.entityType = ko.observable(entityType);
-        self.entityId = ko.observable(entityId);
+        self.entityType = ko.observable(self.parent.entityType);
+        self.entityId = ko.observable(self.parent.entityId);
         self.blockName = ko.observable(null);
         self.blockType = ko.observable(null);
         self.title = ko.observable(null);
@@ -35,6 +35,8 @@
         self.isEnabled = ko.observable(false);
         self.blockValues = ko.observable(null);
         self.customTemplatePath = ko.observable(null);
+
+        self.cultureCode = ko.observable(null);
 
         self.createFormValidator = false;
         self.editFormValidator = false;
@@ -62,7 +64,7 @@
                     type: "odata",
                     transport: {
                         read: {
-                            url: "/odata/kore/cms/EntityTypeContentBlockApi?$filter=EntityType eq '" + entityType + "' and EntityId eq '" + entityId + "'",
+                            url: "/odata/kore/cms/EntityTypeContentBlockApi?$filter=EntityType eq '" + self.parent.entityType + "' and EntityId eq '" + self.parent.entityId + "'",
                             dataType: "json"
                         },
                         parameterMap: function (options, operation) {
@@ -139,9 +141,12 @@
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a data-bind="click: edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
-                        '<a data-bind="click: remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
-                        '<a data-bind="click: toggleEnabled.bind($data,\'#=Id#\', #=IsEnabled#)" class="btn btn-default btn-xs">' + self.parent.translations.Toggle + '</a></div>',
+                        '<div class="btn-group">' +
+                        '<a data-bind="click: blockModel.edit.bind($data,\'#=Id#\', null)" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: blockModel.localize.bind($data,\'#=Id#\')" class="btn btn-success btn-xs">' + self.parent.translations.Localize + '</a>' +
+                        '<a data-bind="click: blockModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
+                        '<a data-bind="click: blockModel.toggleEnabled.bind($data,\'#=Id#\', #=IsEnabled#)" class="btn btn-default btn-xs">' + self.parent.translations.Toggle + '</a>' +
+                        '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
                     width: 250
@@ -150,8 +155,8 @@
         };
         self.create = function () {
             self.id(emptyGuid);
-            self.entityType(entityType);
-            self.entityId(entityId);
+            self.entityType(self.parent.entityType);
+            self.entityId(self.parent.entityId);
             self.blockName(null);
             self.blockType(null);
             self.title(null);
@@ -160,6 +165,8 @@
             self.isEnabled(false);
             self.blockValues(null);
             self.customTemplatePath(null);
+
+            self.cultureCode(null);
 
             // Clean up from previously injected html/scripts
             if (self.contentBlockModelStub != null && typeof self.contentBlockModelStub.cleanUp === 'function') {
@@ -183,9 +190,19 @@
             self.createFormValidator.resetForm();
             switchSection($("#create-section"));
         };
-        self.edit = function (id) {
+        self.edit = function (id, cultureCode) {
+            var url = "/odata/kore/cms/EntityTypeContentBlockApi(" + id + ")";
+
+            if (cultureCode) {
+                self.cultureCode(cultureCode);
+                url = "/odata/kore/cms/EntityTypeContentBlockApi/Default.GetLocalized(id=" + id + ",cultureCode='" + cultureCode + "')";
+            }
+            else {
+                self.cultureCode(null);
+            }
+
             $.ajax({
-                url: "/odata/kore/cms/EntityTypeContentBlockApi(" + id + ")",
+                url: url,
                 type: "GET",
                 //contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -270,6 +287,16 @@
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
+        self.localize = function (id) {
+            $("#SelectedId").val(id);
+            $("#cultureModal").modal("show");
+        };
+        self.onCultureSelected = function () {
+            var id = $("#SelectedId").val();
+            var cultureCode = $("#CultureCode").val();
+            self.edit(id, cultureCode);
+            $("#cultureModal").modal("hide");
+        };
         self.remove = function (id) {
             if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
@@ -345,26 +372,53 @@
                 });
             }
             else {
-                $.ajax({
-                    url: "/odata/kore/cms/EntityTypeContentBlockApi(" + self.id() + ")",
-                    type: "PUT",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(record),
-                    dataType: "json",
-                    async: false
-                })
-                .done(function (json) {
-                    $('#Grid').data('kendoGrid').dataSource.read();
-                    $('#Grid').data('kendoGrid').refresh();
+                if (self.cultureCode() != null) {
+                    $.ajax({
+                        url: "/odata/kore/cms/EntityTypeContentBlockApi/Default.SaveLocalized",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            cultureCode: self.cultureCode(),
+                            entity: record
+                        }),
+                        dataType: "json",
+                        async: false
+                    })
+                    .done(function (json) {
+                        $('#Grid').data('kendoGrid').dataSource.read();
+                        $('#Grid').data('kendoGrid').refresh();
 
-                    switchSection($("#grid-section"));
+                        switchSection($("#grid-section"));
 
-                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(self.parent.translations.UpdateRecordError, "error");
-                    console.log(textStatus + ': ' + errorThrown);
-                });
+                        $.notify(self.parent.translations.UpdateRecordSuccess, "success");
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        $.notify(self.parent.translations.UpdateRecordError, "error");
+                        console.log(textStatus + ': ' + errorThrown);
+                    });
+                }
+                else {
+                    $.ajax({
+                        url: "/odata/kore/cms/EntityTypeContentBlockApi(" + self.id() + ")",
+                        type: "PUT",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(record),
+                        dataType: "json",
+                        async: false
+                    })
+                    .done(function (json) {
+                        $('#Grid').data('kendoGrid').dataSource.read();
+                        $('#Grid').data('kendoGrid').refresh();
+
+                        switchSection($("#grid-section"));
+
+                        $.notify(self.parent.translations.UpdateRecordSuccess, "success");
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        $.notify(self.parent.translations.UpdateRecordError, "error");
+                        console.log(textStatus + ': ' + errorThrown);
+                    });
+                }
             }
         };
         self.cancel = function () {

@@ -169,57 +169,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
             }
         }
 
-        //private void Save(ContentBlock entity)
-        //{
-        //    if (entity.Id == Guid.Empty)
-        //    {
-        //        SetNewId(entity);
-        //        var blockType = Type.GetType(entity.BlockType);
-        //        var contentBlocks = EngineContext.Current.ResolveAll<IContentBlock>();
-        //        var contentBlock = contentBlocks.First(x => x.GetType() == blockType);
-        //        entity.BlockName = contentBlock.Name;
-        //        Service.Insert(entity);
-        //        return;
-        //    }
-
-        //    var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
-        //    if (!string.IsNullOrEmpty(workContext.CurrentCultureCode))
-        //    {
-        //        // Insert or Update Localized Block Values
-        //        string entityType = entity.BlockType;
-        //        string entityId = entity.Id.ToString();
-
-        //        var localizedRecord = localizablePropertyService.Value.FindOne(x =>
-        //            x.CultureCode == workContext.CurrentCultureCode &&
-        //            x.EntityType == entityType &&
-        //            x.EntityId == entityId &&
-        //            x.Property == "BlockValues");
-
-        //        if (localizedRecord == null)
-        //        {
-        //            localizedRecord = new LocalizableProperty
-        //            {
-        //                CultureCode = workContext.CurrentCultureCode,
-        //                EntityType = entityType,
-        //                EntityId = entityId,
-        //                Property = "BlockValues",
-        //                Value = entity.BlockValues
-        //            };
-        //            localizablePropertyService.Value.Insert(localizedRecord);
-        //        }
-        //        else
-        //        {
-        //            localizedRecord.Value = entity.BlockValues;
-        //            localizablePropertyService.Value.Update(localizedRecord);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        // Update Invariant Values
-        //        Service.Update(entity);
-        //    }
-        //}
-
         protected override Permission ReadPermission
         {
             get { return CmsPermissions.ContentBlocksRead; }

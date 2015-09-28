@@ -23,7 +23,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
         {
             var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
 
-            var contentBlocks = entityTypeContentBlockService.GetContentBlocks(entityType, entityId, zoneName);
+            var contentBlocks = entityTypeContentBlockService.GetContentBlocks(entityType, entityId, zoneName, workContext.CurrentCultureCode);
             return contentBlocks.ToList();
         }
     }

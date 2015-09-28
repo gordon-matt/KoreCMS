@@ -61,6 +61,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             // Action Configurations
             RegisterContentBlockODataActions(builder);
+            RegisterEntityTypeContentBlockODataActions(builder);
             RegisterLanguageODataActions(builder);
             RegisterLocalizableStringODataActions(builder);
             RegisterMessageTemplateODataActions(builder);
@@ -86,6 +87,19 @@ namespace Kore.Web.ContentManagement.Infrastructure
             var saveLocalizedAction = builder.EntityType<ContentBlock>().Collection.Action("SaveLocalized");
             saveLocalizedAction.Parameter<string>("cultureCode");
             saveLocalizedAction.Parameter<ContentBlock>("entity");
+            saveLocalizedAction.Returns<IHttpActionResult>();
+        }
+
+        private static void RegisterEntityTypeContentBlockODataActions(ODataModelBuilder builder)
+        {
+            var getLocalizedActionFunction = builder.EntityType<EntityTypeContentBlock>().Collection.Function("GetLocalized");
+            getLocalizedActionFunction.Parameter<Guid>("id");
+            getLocalizedActionFunction.Parameter<string>("cultureCode");
+            getLocalizedActionFunction.ReturnsFromEntitySet<EntityTypeContentBlock>("EntityTypeContentBlockApi");
+
+            var saveLocalizedAction = builder.EntityType<EntityTypeContentBlock>().Collection.Action("SaveLocalized");
+            saveLocalizedAction.Parameter<string>("cultureCode");
+            saveLocalizedAction.Parameter<EntityTypeContentBlock>("entity");
             saveLocalizedAction.Returns<IHttpActionResult>();
         }
 

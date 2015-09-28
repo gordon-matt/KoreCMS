@@ -647,7 +647,7 @@
                 if (!self.modalDismissed) {
                     var url = $('#ImageUrl').val();
                     url = "/Media/Uploads/" + url;
-                    self.parent.category.imageUrl(url);
+                    self.category.imageUrl(url);
                 }
                 self.modalDismissed = false;
             });
@@ -656,14 +656,14 @@
                 if (!self.modalDismissed) {
                     var url = $('#MainImageUrl').val();
                     url = "/Media/Uploads/" + url;
-                    self.parent.product.mainImageUrl(url);
+                    self.product.mainImageUrl(url);
                 }
                 self.modalDismissed = false;
             });
         };
 
         self.dismissModal = function(modalId) {
-            modalDismissed = true;
+            self.modalDismissed = true;
             $('#' + modalId).modal('hide');
         };
     };

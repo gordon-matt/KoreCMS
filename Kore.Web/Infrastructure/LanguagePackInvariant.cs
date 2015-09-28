@@ -45,6 +45,7 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.General.InsertRecordError, "There was an error when inserting the record." },
                     { KoreWebLocalizableStrings.General.InsertRecordSuccess, "Successfully inserted record." },
                     { KoreWebLocalizableStrings.General.Install, "Install" },
+                    { KoreWebLocalizableStrings.General.Localize, "Localize" },
                     { KoreWebLocalizableStrings.General.Miscellaneous, "Miscellaneous" },
                     { KoreWebLocalizableStrings.General.Next, "Next" },
                     { KoreWebLocalizableStrings.General.OK, "OK" },

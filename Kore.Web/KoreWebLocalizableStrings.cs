@@ -24,6 +24,7 @@
             public const string Home = "Kore.Web/General.Home";
             public const string Import = "Kore.Web/General.Import";
             public const string Install = "Kore.Web/General.Install";
+            public const string Localize = "Kore.Web/General.Localize";
             public const string Miscellaneous = "Kore.Web/General.Miscellaneous";
             public const string Next = "Kore.Web/General.Next";
             public const string OK = "Kore.Web/General.OK";

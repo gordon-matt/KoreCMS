@@ -4,31 +4,51 @@ using System.Linq;
 using Kore.Caching;
 using Kore.Data;
 using Kore.Data.Services;
+using Kore.Localization.Services;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
 {
     public interface IEntityTypeContentBlockService : IGenericDataService<EntityTypeContentBlock>
     {
-        IEnumerable<IContentBlock> GetContentBlocks(string entityType, string entityId, string zoneName, bool includeDisabled = false);
+        IEnumerable<IContentBlock> GetContentBlocks(string entityType, string entityId, string zoneName, string cultureCode, bool includeDisabled = false);
     }
 
     public class EntityTypeContentBlockService : GenericDataService<EntityTypeContentBlock>, IEntityTypeContentBlockService
     {
         private readonly Lazy<IRepository<Zone>> zoneRepository;
+        private readonly Lazy<ILocalizablePropertyService> localizablePropertyService;
 
         public EntityTypeContentBlockService(
             ICacheManager cacheManager,
             IRepository<EntityTypeContentBlock> repository,
-            Lazy<IRepository<Zone>> zoneRepository)
+            Lazy<IRepository<Zone>> zoneRepository,
+            Lazy<ILocalizablePropertyService> localizablePropertyService)
             : base(cacheManager, repository)
         {
             this.zoneRepository = zoneRepository;
+            this.localizablePropertyService = localizablePropertyService;
+        }
+
+        //TODO: Override other Delete() methods with similar logic to this one
+        public override int Delete(EntityTypeContentBlock entity)
+        {
+            string entityType = typeof(EntityTypeContentBlock).FullName;
+            string entityId = entity.Id.ToString();
+
+            var localizedRecords = localizablePropertyService.Value.Find(x =>
+                x.EntityType == entityType &&
+                x.EntityId == entityId);
+
+            int rowsAffected = localizablePropertyService.Value.Delete(localizedRecords);
+            rowsAffected += base.Delete(entity);
+
+            return rowsAffected;
         }
 
         #region IEntityTypeContentBlockService Members
 
-        public IEnumerable<IContentBlock> GetContentBlocks(string entityType, string entityId, string zoneName, bool includeDisabled = false)
+        public IEnumerable<IContentBlock> GetContentBlocks(string entityType, string entityId, string zoneName, string cultureCode, bool includeDisabled = false)
         {
             string key = string.Format(
                 "Repository_EntityTypeContentBlocks_GetContentBlocks_{0}_{1}_{2}_{3}",
@@ -57,7 +77,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
                 }
 
                 var records = query.ToList();
-                return GetContentBlocks(records);
+                return GetContentBlocks(records, cultureCode);
             });
         }
 
@@ -69,7 +89,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
             CacheManager.RemoveByPattern("Repository_EntityTypeContentBlocks_GetContentBlocks_.*");
         }
 
-        private IEnumerable<IContentBlock> GetContentBlocks(IEnumerable<EntityTypeContentBlock> records)
+        private IEnumerable<IContentBlock> GetContentBlocks(IEnumerable<EntityTypeContentBlock> records, string cultureCode)
         {
             string ids = string.Join("|", records.Select(x => x.Id));
 
@@ -79,6 +99,23 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
                 IContentBlock contentBlock;
                 try
                 {
+                    if (!string.IsNullOrEmpty(cultureCode))
+                    {
+                        string entityType = typeof(EntityTypeContentBlock).FullName;
+                        string entityId = record.Id.ToString();
+
+                        var localizedRecord = localizablePropertyService.Value.FindOne(x =>
+                            x.CultureCode == cultureCode &&
+                            x.EntityType == entityType &&
+                            x.EntityId == entityId &&
+                            x.Property == "BlockValues");
+
+                        if (localizedRecord != null)
+                        {
+                            record.BlockValues = localizedRecord.Value;
+                        }
+                    }
+
                     var blockType = Type.GetType(record.BlockType);
                     contentBlock = (IContentBlock)record.BlockValues.JsonDeserialize(blockType);
                 }

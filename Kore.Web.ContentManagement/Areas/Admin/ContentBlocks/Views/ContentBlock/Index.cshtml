@@ -9,12 +9,6 @@
 
 @Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
 
-<style type="text/css">
-    .modal-dialog {
-        width: 80% !important;
-    }
-</style>
-
 <div id="grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <a data-bind="click: blockModel.create" class="btn btn-primary">
@@ -236,7 +230,7 @@
                 <h4 class="modal-title">Select Language</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal">
+                <form>
                     <div class="form-group">
                         @Html.Hidden("SelectedId")
                         @Html.Kore().LanguagesDropDownList("CultureCode", includeInvariant: true, htmlAttributes: new { @class = "form-control" })

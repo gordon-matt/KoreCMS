@@ -27,10 +27,12 @@
             public const string Localize = "Kore.Web/General.Localize";
             public const string Miscellaneous = "Kore.Web/General.Miscellaneous";
             public const string Next = "Kore.Web/General.Next";
+            public const string None = "Kore.Web/General.None";
             public const string OK = "Kore.Web/General.OK";
             public const string OnOff = "Kore.Web/General.OnOff";
             public const string Preview = "Kore.Web/General.Preview";
             public const string Previous = "Kore.Web/General.Previous";
+            public const string Remove = "Kore.Web/General.Remove";
             public const string Save = "Kore.Web/General.Save";
             public const string SaveAndContinue = "Kore.Web/General.SaveAndContinue";
             public const string Search = "Kore.Web/General.Search";

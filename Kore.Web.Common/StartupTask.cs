@@ -132,7 +132,7 @@ namespace Kore.Web.Common
                     new Region { Name = "Bermuda", CountryCode = "BM", RegionType = RegionType.Country, ParentId = northAmerica.Id },
                     new Region { Name = "Bonaire, Sint Eustatius and Saba", CountryCode = "BQ", RegionType = RegionType.Country, ParentId = northAmerica.Id },
                     new Region { Name = "Canada", CountryCode = "CA", RegionType = RegionType.Country, ParentId = northAmerica.Id },
-                    new Region { Name = "Cayman Islands", CountryCode = "CY", RegionType = RegionType.Country, ParentId = northAmerica.Id },
+                    new Region { Name = "Cayman Islands", CountryCode = "KY", RegionType = RegionType.Country, ParentId = northAmerica.Id },
                     new Region { Name = "Costa Rica", CountryCode = "CR", RegionType = RegionType.Country, ParentId = northAmerica.Id },
                     new Region { Name = "Cuba", CountryCode = "CU", RegionType = RegionType.Country, ParentId = northAmerica.Id },
                     new Region { Name = "Curaçao", CountryCode = "CW", RegionType = RegionType.Country, ParentId = northAmerica.Id },
@@ -290,7 +290,7 @@ namespace Kore.Web.Common
                 regionService.Insert(new[]
                 {
                     new Region { Name = "Algeria", CountryCode = "DZ", RegionType = RegionType.Country, ParentId = africa.Id },
-                    new Region { Name = "Anla", CountryCode = "AO", RegionType = RegionType.Country, ParentId = africa.Id },
+                    new Region { Name = "Angola", CountryCode = "AO", RegionType = RegionType.Country, ParentId = africa.Id },
                     new Region { Name = "Benin", CountryCode = "BJ", RegionType = RegionType.Country, ParentId = africa.Id },
                     new Region { Name = "Botswana", CountryCode = "BW", RegionType = RegionType.Country, ParentId = africa.Id },
                     new Region { Name = "Burkina Faso", CountryCode = "BF", RegionType = RegionType.Country, ParentId = africa.Id },
@@ -400,6 +400,7 @@ namespace Kore.Web.Common
                     new Region { Name = "Russia", CountryCode = "RU", RegionType = RegionType.Country, ParentId = europe.Id },
                     new Region { Name = "San Marino", CountryCode = "SM", RegionType = RegionType.Country, ParentId = europe.Id },
                     new Region { Name = "Serbia", CountryCode = "RS", RegionType = RegionType.Country, ParentId = europe.Id },
+                    new Region { Name = "Serbia and Montenegro (former Yugoslavia)", CountryCode = "YU", RegionType = RegionType.Country, ParentId = europe.Id },
                     new Region { Name = "Slovakia", CountryCode = "SK", RegionType = RegionType.Country, ParentId = europe.Id },
                     new Region { Name = "Slovenia", CountryCode = "SI", RegionType = RegionType.Country, ParentId = europe.Id },
                     new Region { Name = "Spain", CountryCode = "ES", RegionType = RegionType.Country, ParentId = europe.Id },

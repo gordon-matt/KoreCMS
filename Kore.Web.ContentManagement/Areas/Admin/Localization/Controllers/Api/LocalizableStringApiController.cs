@@ -54,53 +54,29 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
                         .Select(grp => new ComparitiveLocalizableString
                         {
                             Key = grp.Key,
-                            InvariantValue = grp.FirstOrDefault(x => x.CultureCode == null).TextValue,
-                            LocalizedValue = grp.FirstOrDefault(x => x.CultureCode == cultureCode) == null
+                            InvariantValue = grp.Where(x => x.CultureCode == null).FirstOrDefault().TextValue,
+                            LocalizedValue = grp.Where(x => x.CultureCode == cultureCode).FirstOrDefault() == null
                                 ? string.Empty
-                                : grp.FirstOrDefault(x => x.CultureCode == cultureCode).TextValue
+                                : grp.Where(x => x.CultureCode == cultureCode).FirstOrDefault().TextValue
                         });
+
+                // Below doesn't work with MySQL.
+                // See: http://stackoverflow.com/questions/23480044/entity-framework-select-statement-with-logic
+                //var query = Service.Repository.Table
+                //        .Where(x => x.CultureCode == null || x.CultureCode == cultureCode)
+                //        .GroupBy(x => x.TextKey)
+                //        .Select(grp => new ComparitiveLocalizableString
+                //        {
+                //            Key = grp.Key,
+                //            InvariantValue = grp.FirstOrDefault(x => x.CultureCode == null).TextValue,
+                //            LocalizedValue = grp.FirstOrDefault(x => x.CultureCode == cultureCode) == null
+                //                ? string.Empty
+                //                : grp.FirstOrDefault(x => x.CultureCode == cultureCode).TextValue
+                //        });
 
                 return Ok(query);
             }
         }
-
-        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        //[HttpGet]
-        //public virtual PageResult<ComparitiveLocalizableString> GetComparitiveTable(
-        //    [FromODataUri] string cultureCode, ODataQueryOptions<ComparitiveLocalizableString> queryOptions)
-        //{
-        //    if (!CheckPermission(ReadPermission))
-        //    {
-        //        var query = Enumerable.Empty<ComparitiveLocalizableString>().AsQueryable();
-        //        IQueryable results = queryOptions.ApplyTo(query);
-
-        //        return new PageResult<ComparitiveLocalizableString>(
-        //            results as IEnumerable<ComparitiveLocalizableString>,
-        //            Request.ODataProperties().NextLink,
-        //            Request.ODataProperties().TotalCount);
-        //    }
-        //    else
-        //    {
-        //        var query = Service.Repository.Table
-        //                .Where(x => x.CultureCode == null || x.CultureCode == cultureCode)
-        //                .GroupBy(x => x.TextKey)
-        //                .Select(grp => new ComparitiveLocalizableString
-        //                {
-        //                    Key = grp.Key,
-        //                    InvariantValue = grp.FirstOrDefault(x => x.CultureCode == null).TextValue,
-        //                    LocalizedValue = grp.FirstOrDefault(x => x.CultureCode == cultureCode) == null
-        //                        ? string.Empty
-        //                        : grp.FirstOrDefault(x => x.CultureCode == cultureCode).TextValue
-        //                });
-
-        //        IQueryable results = queryOptions.ApplyTo(query);
-
-        //        return new PageResult<ComparitiveLocalizableString>(
-        //            results as IEnumerable<ComparitiveLocalizableString>,
-        //            Request.ODataProperties().NextLink,
-        //            Request.ODataProperties().TotalCount);
-        //    }
-        //}
 
         [HttpPost]
         public virtual IHttpActionResult PutComparitive(ODataActionParameters parameters)

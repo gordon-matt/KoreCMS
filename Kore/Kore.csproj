@@ -127,6 +127,7 @@
     <Compile Include="Collections\Generic\TripleList.cs" />
     <Compile Include="Collections\Generic\TupleHashSet.cs" />
     <Compile Include="Collections\Generic\TupleList.cs" />
+    <Compile Include="Collections\QueueExtensions.cs" />
     <Compile Include="ComponentModel\IModelAttribute.cs" />
     <Compile Include="ComponentModel\LocalizedHelpTextAttribute.cs" />
     <Compile Include="Configuration\Domain\Setting.cs" />

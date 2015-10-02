@@ -38,13 +38,13 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers.Api
                     Id = x.Id,
                     Name = x.Name,
                     //IsEnabled = x.IsEnabled,
-                    SubCategories = GetSubPages(pages, x.Id).ToList()
+                    SubCategories = GetSubCategories(pages, x.Id).ToList()
                 });
 
             return hierarchy.ToHashSet();
         }
 
-        private static IEnumerable<CategoryTreeItem> GetSubPages(IEnumerable<SimpleCommerceCategory> pages, int parentId)
+        private static IEnumerable<CategoryTreeItem> GetSubCategories(IEnumerable<SimpleCommerceCategory> pages, int parentId)
         {
             return pages
                 .Where(x => x.ParentId == parentId)
@@ -55,7 +55,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers.Api
                     Id = x.Id,
                     Name = x.Name,
                     //IsEnabled = x.IsEnabled,
-                    SubCategories = GetSubPages(pages, x.Id).ToList()
+                    SubCategories = GetSubCategories(pages, x.Id).ToList()
                 });
         }
 

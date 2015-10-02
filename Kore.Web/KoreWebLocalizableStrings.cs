@@ -39,6 +39,7 @@
             public const string Set = "Kore.Web/General.Set";
             public const string SetDefault = "Kore.Web/General.SetDefault";
             public const string Settings = "Kore.Web/General.Settings";
+            public const string Slug = "Kore.Web/General.Slug";
             public const string Submit = "Kore.Web/General.Submit";
             public const string Success = "Kore.Web/General.Success";
             public const string Themes = "Kore.Web/General.Themes";

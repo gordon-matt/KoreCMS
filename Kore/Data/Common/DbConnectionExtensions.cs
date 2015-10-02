@@ -255,15 +255,15 @@ namespace Kore.Data.Common
         /// </param>
         public static void InsertCollection<T>(this DbConnection connection, IEnumerable<T> entities, string tableName, IDictionary<string, string> mappings)
         {
-            using (TransactionScope transactionScope = new TransactionScope())
-            {
+            //using (var transactionScope = new TransactionScope()) //MySQL doesn't like this...
+            //{
                 const string INSERT_INTO_FORMAT = "INSERT INTO {0}({1}) VALUES({2})";
                 string fieldNames = mappings.Values.Join(",");
                 string parameterNames = fieldNames.Replace(",", ",@").Prepend("@");
 
-                PropertyInfo[] properties = typeof(T).GetProperties();
+                var properties = typeof(T).GetProperties();
 
-                using (DbCommand command = connection.CreateCommand())
+                using (var command = connection.CreateCommand())
                 {
                     string commandText = string.Format(INSERT_INTO_FORMAT, tableName, fieldNames, parameterNames);
                     command.CommandType = CommandType.Text;
@@ -271,10 +271,10 @@ namespace Kore.Data.Common
 
                     mappings.ForEach(mapping =>
                     {
-                        DbParameter parameter = command.CreateParameter();
+                        var parameter = command.CreateParameter();
                         parameter.ParameterName = string.Concat("@", mapping.Value);
-                        PropertyInfo property = properties.Single(p => p.Name == mapping.Key);
-                        parameter.DbType = DataTypeConvertor.GetDbType(property.GetType());
+                        var property = properties.Single(p => p.Name == mapping.Key);
+                        parameter.DbType = DataTypeConvertor.GetDbType(property.PropertyType);
                         command.Parameters.Add(parameter);
                     });
 
@@ -300,8 +300,8 @@ namespace Kore.Data.Common
                         connection.Close();
                     }
 
-                    transactionScope.Complete();
-                }
+                //    transactionScope.Complete();
+                //}
             }
         }
 
@@ -368,8 +368,11 @@ namespace Kore.Data.Common
             {
                 case "Boolean": return (bool)value ? "1" : "0";
 
-                case "String": return ((string)value).Replace("'", "''").AddSingleQuotes();
-                case "DateTime": return ((DateTime)value).ToISO8601DateString().AddSingleQuotes();
+                case "String": return ((string)value).Replace("'", "''");
+                case "DateTime": return ((DateTime)value).ToISO8601DateString();
+
+                //case "String": return ((string)value).Replace("'", "''").AddSingleQuotes();
+                //case "DateTime": return ((DateTime)value).ToISO8601DateString().AddSingleQuotes();
 
                 case "Byte":
                 case "Decimal":

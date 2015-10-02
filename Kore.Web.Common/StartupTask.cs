@@ -259,7 +259,7 @@ namespace Kore.Web.Common
                     new Region { Name = "Macao", CountryCode = "MO", RegionType = RegionType.Country, ParentId = asiaAndMiddleEast.Id },
                     new Region { Name = "Malaysia", CountryCode = "MY", RegionType = RegionType.Country, ParentId = asiaAndMiddleEast.Id },
                     new Region { Name = "Maldives", CountryCode = "MV", RegionType = RegionType.Country, ParentId = asiaAndMiddleEast.Id },
-                    new Region { Name = "Monlia", CountryCode = "MN", RegionType = RegionType.Country, ParentId = asiaAndMiddleEast.Id },
+                    new Region { Name = "Mongolia", CountryCode = "MN", RegionType = RegionType.Country, ParentId = asiaAndMiddleEast.Id },
                     new Region { Name = "Myanmar", CountryCode = "MM", RegionType = RegionType.Country, ParentId = asiaAndMiddleEast.Id },
                     new Region { Name = "Nepal", CountryCode = "NP", RegionType = RegionType.Country, ParentId = asiaAndMiddleEast.Id },
                     new Region { Name = "Oman", CountryCode = "OM", RegionType = RegionType.Country, ParentId = asiaAndMiddleEast.Id },

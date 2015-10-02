@@ -60,6 +60,7 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.General.Set, "Set" },
                     { KoreWebLocalizableStrings.General.SetDefault, "Set Default" },
                     { KoreWebLocalizableStrings.General.Settings, "Settings" },
+                    { KoreWebLocalizableStrings.General.Slug, "URL Slug" },
                     { KoreWebLocalizableStrings.General.Submit, "Submit" },
                     { KoreWebLocalizableStrings.General.Success, "Success" },
                     { KoreWebLocalizableStrings.General.Themes, "Themes" },

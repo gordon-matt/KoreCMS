@@ -19,6 +19,7 @@ namespace Kore.Web.Infrastructure
                 return new Dictionary<string, string>
                 {
                     { KoreWebLocalizableStrings.General.Actions, "Actions" },
+                    { KoreWebLocalizableStrings.General.Add, "Add" },
                     { KoreWebLocalizableStrings.General.Back, "Back" },
                     { KoreWebLocalizableStrings.General.Cancel, "Cancel" },
                     { KoreWebLocalizableStrings.General.Clear, "Clear" },

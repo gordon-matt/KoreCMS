@@ -5,6 +5,7 @@
         public static class General
         {
             public const string Actions = "Kore.Web/General.Actions";
+            public const string Add = "Kore.Web/General.Add";
             public const string Back = "Kore.Web/General.Back";
             public const string Cancel = "Kore.Web/General.Cancel";
             public const string Clear = "Kore.Web/General.Clear";

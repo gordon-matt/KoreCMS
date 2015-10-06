@@ -26,7 +26,6 @@
     external_plugins: { "filemanager": "/filemanager/plugin.min.js" },
     valid_elements: '+*[*]',
     extended_valid_elements: '+*[*]',
-    //extended_valid_elements: "a[name|href|target|title|onclick|class|style],p[class|id],i[class],iframe[height|width|src],img[class|style|src|border=0|id|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
     valid_children: "+body[style]"
 };
 
@@ -58,7 +57,6 @@ var koreAdvancedTinyMCEConfig = {
     external_plugins: { "filemanager": "/filemanager/plugin.min.js" },
     valid_elements: '+*[*]',
     extended_valid_elements: '+*[*]',
-    //extended_valid_elements: "a[name|href|target|title|onclick|class|style],p[class|id],i[class],iframe[height|width|src],img[class|style|src|border=0|id|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
     valid_children: "+body[style]"
 };
 

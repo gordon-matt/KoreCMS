@@ -27,6 +27,7 @@
             public const string Install = "Kore.Web/General.Install";
             public const string Localize = "Kore.Web/General.Localize";
             public const string Miscellaneous = "Kore.Web/General.Miscellaneous";
+            public const string Name = "Kore.Web/General.Name";
             public const string Next = "Kore.Web/General.Next";
             public const string None = "Kore.Web/General.None";
             public const string OK = "Kore.Web/General.OK";

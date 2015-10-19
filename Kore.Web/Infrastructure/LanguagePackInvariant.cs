@@ -48,6 +48,7 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.General.Install, "Install" },
                     { KoreWebLocalizableStrings.General.Localize, "Localize" },
                     { KoreWebLocalizableStrings.General.Miscellaneous, "Miscellaneous" },
+                    { KoreWebLocalizableStrings.General.Name, "Name" },
                     { KoreWebLocalizableStrings.General.Next, "Next" },
                     { KoreWebLocalizableStrings.General.None, "None" },
                     { KoreWebLocalizableStrings.General.OK, "OK" },

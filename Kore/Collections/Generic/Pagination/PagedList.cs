@@ -1,10 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Kore.Collections.Generic
 {
     public class PagedList<T> : List<T>, IPagedList<T>
     {
+        public PagedList(IQueryable<T> source, int pageIndex, int pageSize)
+        {
+            int itemCount = source.Count();
+            ItemCount = itemCount;
+            PageCount = (int)Math.Ceiling((double)itemCount / pageSize);
+
+            PageIndex = pageIndex;
+            PageSize = pageSize;
+
+            AddRange(source.Skip(pageIndex * pageSize).Take(pageSize).ToList());
+        }
+
         public PagedList(IEnumerable<T> source)
         {
             AddRange(source);

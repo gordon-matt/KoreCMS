@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
 using Kore.Collections;
@@ -43,6 +44,26 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 });
 
             return hierarchy.ToHashSet();
+        }
+
+        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All, MaxExpansionDepth = 10)]
+        public virtual SingleResult<PageTreeItem> Get([FromODataUri] Guid key)
+        {
+            if (!CheckPermission(CmsPermissions.PagesRead))
+            {
+                return SingleResult.Create(Enumerable.Empty<PageTreeItem>().AsQueryable());
+            }
+
+            var pages = service.Find();
+            var entity = pages.FirstOrDefault(x => x.Id == key);
+
+            return SingleResult.Create(new[] { entity }.Select(x => new PageTreeItem
+            {
+                Id = x.Id,
+                Title = x.Name,
+                IsEnabled = x.IsEnabled,
+                SubPages = GetSubPages(pages, x.Id).ToList()
+            }).AsQueryable());
         }
 
         private static IEnumerable<PageTreeItem> GetSubPages(IEnumerable<Page> pages, Guid parentId)

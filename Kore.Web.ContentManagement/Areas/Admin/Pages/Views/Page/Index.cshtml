@@ -64,6 +64,11 @@
             using (var header = panel.BeginHeader(T(KoreCmsLocalizableStrings.Pages.Title))) { }
             using (var body = panel.BeginBody())
             {
+                <select id="TopLevelPages" class="form-control">
+                    <option value="" selected="selected">[Root]</option>
+                </select>
+            
+                @*@Html.KoreCMS().TopLevelPagesDropDownList("TopLevelPages", emptyText: "[Root]", htmlAttributes: new { @class = "form-control" })*@
                 <div class="@rtlClass">
                     <div id="treeview"></div>
                 </div>

@@ -353,6 +353,8 @@
         self.validator = false;
         self.versionValidator = false;
 
+        self.selectedTopLevelPageId = null;
+
         self.init = function () {
             self.validator = $("#form-section-form").validate({
                 rules: {
@@ -368,6 +370,8 @@
                 }
             });
 
+            self.reloadTopLevelPages();
+
             var treeviewDS = new kendo.data.HierarchicalDataSource({
                 type: "odata",
                 transport: {
@@ -378,9 +382,9 @@
                     parameterMap: function (options, operation) {
                         var paramMap = kendo.data.transports.odata.parameterMap(options);
                         if (paramMap.$inlinecount) {
-                            if (paramMap.$inlinecount == "allpages") {
-                                paramMap.$count = true;
-                            }
+                            //if (paramMap.$inlinecount == "allpages") {
+                            //    paramMap.$count = true;
+                            //}
                             delete paramMap.$inlinecount;
                         }
                         if (paramMap.$filter) {
@@ -391,10 +395,18 @@
                 },
                 schema: {
                     data: function (response) {
-                        return response.value;
+                        if (response.value) {
+                            return response.value;
+                        }
+                        var dummyArray = [];
+                        dummyArray.push(response);
+                        return dummyArray;
                     },
                     total: function (response) {
-                        return response.value.length;
+                        if (response.value) {
+                            return response.value.length;
+                        }
+                        return 1;
                     },
                     model: {
                         id: "Id",
@@ -501,7 +513,7 @@
         };
         self.create = function () {
             self.id(emptyGuid);
-            self.parentId(null);
+            self.parentId(self.selectedTopLevelPageId);
             self.pageTypeId(emptyGuid);
             self.name(null);
             self.isEnabled(false);
@@ -881,7 +893,8 @@
         self.refresh = function () {
             switchSection($("#blank-section"));
             self.parent.displayMode('Blank');
-            $("#treeview").data("kendoTreeView").dataSource.read();
+            self.reloadTopLevelPages();
+            self.filter(null);
         };
         self.previewCurrent = function () {
             self.preview(self.parent.pageVersionModel.id());
@@ -894,6 +907,56 @@
                 alert('Please allow popups for this site');
             }
             return false;
+        };
+        self.filter = function (id) {
+            var treeview = $('#treeview').data('kendoTreeView');
+
+            if (!treeview) {
+                return;
+            }
+
+            if (id == null) {
+                self.selectedTopLevelPageId = null;
+                treeview.dataSource.transport.options.read.url = "/odata/kore/cms/PageTreeApi?$expand=SubPages($levels=max)",
+                treeview.dataSource.read();
+            }
+            else {
+                self.selectedTopLevelPageId = id;
+                treeview.dataSource.transport.options.read.url = "/odata/kore/cms/PageTreeApi(" + id + ")?$expand=SubPages($levels=max)",
+                treeview.dataSource.read();
+            }
+        };
+        self.reloadTopLevelPages = function () {
+            $.ajax({
+                url: "/odata/kore/cms/PageApi/Default.GetTopLevelPages()",
+                type: "GET",
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                $('#TopLevelPages').html('');
+                $('#TopLevelPages').append($('<option>', {
+                    //value: '',
+                    "data-bind": 'click: pageModel.filter(null)',
+                    text: '[Root]'
+                }));
+                $.each(json.value, function () {
+                    var item = this;
+                    $('#TopLevelPages').append($('<option>', {
+                        //value: item.Id,
+                        "data-bind": "click: pageModel.filter('" + item.Id + "')",
+                        text: item.Name
+                    }));
+                });
+
+                var elementToBind = $("#TopLevelPages")[0];
+                ko.cleanNode(elementToBind);
+                ko.applyBindings(self.parent, elementToBind);
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(self.parent.translations.GetRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
+            });
         };
     };
 

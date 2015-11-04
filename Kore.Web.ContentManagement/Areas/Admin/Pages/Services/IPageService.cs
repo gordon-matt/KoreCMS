@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Kore.Caching;
+using Kore.Collections;
 using Kore.Data;
 using Kore.Data.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
@@ -10,6 +11,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
 {
     public interface IPageService : IGenericDataService<Page>
     {
+        IEnumerable<Page> GetTopLevelPages();
     }
 
     public class PageService : GenericDataService<Page>, IPageService
@@ -98,5 +100,17 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
         //    }
         //    return 0;
         //}
+
+        #region IPageService Members
+
+        public IEnumerable<Page> GetTopLevelPages()
+        {
+            return Repository.Table
+                .Where(x => x.ParentId == null)
+                .OrderBy(x => x.Name)
+                .ToHashSet();
+        }
+
+        #endregion IPageService Members
     }
 }

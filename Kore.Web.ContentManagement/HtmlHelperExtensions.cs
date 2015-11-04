@@ -11,6 +11,7 @@ using Kore.Web.ContentManagement.Areas.Admin.Blog.Services;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 
 namespace Kore.Web.ContentManagement
 {
@@ -164,6 +165,21 @@ namespace Kore.Web.ContentManagement
             return html.DropDownListFor(expression, selectList, htmlAttributes);
         }
 
+        public MvcHtmlString TopLevelPagesDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
+        {
+            var selectList = GetTopLevelPagesSelectList(selectedValue, emptyText);
+            return html.DropDownList(name, selectList, htmlAttributes);
+        }
+
+        public MvcHtmlString TopLevelPagesDropDownListFor(Expression<Func<TModel, string>> expression, object htmlAttributes = null, string emptyText = null)
+        {
+            var func = expression.Compile();
+            var selectedValue = func(html.ViewData.Model);
+
+            var selectList = GetTopLevelPagesSelectList(selectedValue, emptyText);
+            return html.DropDownListFor(expression, selectList, htmlAttributes);
+        }
+
         public MvcHtmlString ZonesDropDownList(string name, string selectedValue = null, string emptyText = null, object htmlAttributes = null)
         {
             var selectList = GetZonesSelectList(selectedValue, emptyText);
@@ -230,6 +246,18 @@ namespace Kore.Web.ContentManagement
             return repository.Table
                 .OrderBy(x => x.Name)
                 .ToList()
+                .ToSelectList(
+                    value => value.Id,
+                    text => text.Name,
+                    selectedValue,
+                    emptyText);
+        }
+
+        private static IEnumerable<SelectListItem> GetTopLevelPagesSelectList(string selectedValue = null, string emptyText = null)
+        {
+            var pageService = EngineContext.Current.Resolve<IPageService>();
+
+            return pageService.GetTopLevelPages()
                 .ToSelectList(
                     value => value.Id,
                     text => text.Name,

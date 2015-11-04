@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kore.Collections;
+using System;
 using System.Linq;
 using System.Web.Http;
 using System.Web.OData;
@@ -78,6 +79,19 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         protected override Permission WritePermission
         {
             get { return CmsPermissions.PagesWrite; }
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetTopLevelPages()
+        {
+            if (!CheckPermission(ReadPermission))
+            {
+                return Unauthorized();
+            }
+
+            var topLevelPages = (Service as IPageService).GetTopLevelPages();
+
+            return Ok(topLevelPages);
         }
     }
 }

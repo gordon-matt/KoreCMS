@@ -65,6 +65,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             RegisterLanguageODataActions(builder);
             RegisterLocalizableStringODataActions(builder);
             RegisterMessageTemplateODataActions(builder);
+            RegisterPageODataActions(builder);
             RegisterPageVersionODataActions(builder);
             RegisterXmlSitemapODataActions(builder);
 
@@ -130,6 +131,12 @@ namespace Kore.Web.ContentManagement.Infrastructure
             var getTokensAction = builder.EntityType<MessageTemplate>().Collection.Action("GetTokens");
             getTokensAction.Parameter<string>("templateName");
             getTokensAction.ReturnsCollection<string>();
+        }
+
+        private static void RegisterPageODataActions(ODataModelBuilder builder)
+        {
+            var getTopLevelPagesFunction = builder.EntityType<Page>().Collection.Function("GetTopLevelPages");
+            getTopLevelPagesFunction.ReturnsFromEntitySet<Page>("PageApi");
         }
 
         private static void RegisterPageVersionODataActions(ODataModelBuilder builder)

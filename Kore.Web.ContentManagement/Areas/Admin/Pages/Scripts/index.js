@@ -908,14 +908,16 @@
             }
             return false;
         };
-        self.filter = function (id) {
+        self.filter = function () {
             var treeview = $('#treeview').data('kendoTreeView');
 
             if (!treeview) {
                 return;
             }
 
-            if (id == null) {
+            var id = $('#TopLevelPages').val();
+
+            if (!id) {
                 self.selectedTopLevelPageId = null;
                 treeview.dataSource.transport.options.read.url = "/odata/kore/cms/PageTreeApi?$expand=SubPages($levels=max)",
                 treeview.dataSource.read();
@@ -936,15 +938,13 @@
             .done(function (json) {
                 $('#TopLevelPages').html('');
                 $('#TopLevelPages').append($('<option>', {
-                    //value: '',
-                    "data-bind": 'click: pageModel.filter(null)',
+                    value: '',
                     text: '[Root]'
                 }));
                 $.each(json.value, function () {
                     var item = this;
                     $('#TopLevelPages').append($('<option>', {
-                        //value: item.Id,
-                        "data-bind": "click: pageModel.filter('" + item.Id + "')",
+                        value: item.Id,
                         text: item.Name
                     }));
                 });

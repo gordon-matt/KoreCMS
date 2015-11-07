@@ -8,6 +8,8 @@
     string rtlClass = IsRightToLeft ? "k-rtl" : string.Empty;
 }
 
+<link type="text/css" rel="stylesheet" href="@Style.GetBundleUrl("third-party/fg-menu")" />
+
 @Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
 @Html.Hidden("CurrentCulture", WorkContext.CurrentCultureCode)
 @Html.Hidden("DefaultFrontendLayoutPath", KoreWebConstants.DefaultFrontendLayoutPath)
@@ -43,6 +45,9 @@
                 <a data-bind="click: pageModel.previewCurrent" class="btn btn-success btn-lg" title="@T(KoreWebLocalizableStrings.General.Preview).Text">
                     <i class="kore-icon kore-icon-preview"></i>
                 </a>
+                <a data-bind="click: pageModel.move" class="btn btn-default btn-lg" title="@T(KoreWebLocalizableStrings.General.Move).Text">
+                    <i class="kore-icon kore-icon-move"></i>
+                </a>
             </div>
         </div>
         <div data-bind="visible: displayMode() == 'PageHistoryGrid'" style="display:none">
@@ -68,7 +73,6 @@
                     <option value="" selected="selected">[Root]</option>
                 </select>
 
-                @*@Html.KoreCMS().TopLevelPagesDropDownList("TopLevelPages", emptyText: "[Root]", htmlAttributes: new { @class = "form-control" })*@
                 <div class="@rtlClass">
                     <div id="treeview"></div>
                 </div>
@@ -96,6 +100,18 @@
                                 <form id="form-section-form" role="form">
                                     <fieldset>
                                         <legend id="form-section-legend"></legend>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                                @*<div id="drilldown-wrapper">
+                                                    <a id="drilldown" tabindex="0" href="#drilldown-items" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all">
+                                                        <span class="ui-icon ui-icon-triangle-1-s"></span>Parent Page
+                                                    </a>
+                                                    <div id="drilldown-items" class="hidden">
+                                                        <ul data-bind="template: { name: 'drilldown-template', foreach: pageModel.allPages }"></ul>
+                                                    </div>
+                                                </div>*@
+                                            </div>
+                                        </div>
                                         <div id="form-section-pageTypeId" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <div class="form-group">
                                                 @Html.Label("PageTypeId", T(KoreCmsLocalizableStrings.Pages.PageModel.PageTypeId), new { @class = "control-label" })
@@ -296,6 +312,38 @@
     </div>
 </div>
 
+<div class="modal fade" id="parentPageModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Select Parent Page</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        @Html.Label("ParentId", "Parent", new { @class = "control-label" })
+                        <select id="ParentId" class="form-control">
+                            <option value="" selected="selected">[Root]</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@T(KoreWebLocalizableStrings.General.Close)</button>
+                <button type="button" class="btn btn-primary" data-bind="click: pageModel.onParentSelected">@T(KoreWebLocalizableStrings.General.OK)</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script id="treeview-template" type="text/kendo-ui-template">
     <a href="javascript:void(0)" data-bind="click: pageModel.edit.bind($data,'#=item.Id#')">#= item.Title #</a>
 </script>
+
+@*<script id="drilldown-template" type="text/html">
+    <li>
+        <a data-bind="text: Title, attr: { 'data-page-id': Id }" href="javascript:void(0);"></a>
+        <ul data-bind="template: { name: 'drilldown-template', foreach: SubPages }"></ul>
+    </li>
+</script>*@

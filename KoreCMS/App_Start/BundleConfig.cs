@@ -82,7 +82,7 @@ namespace KoreCMS
                 .Include("~/Content/themes/base/spinner.css", cssRewriteUrlTransform)
                 .Include("~/Content/themes/base/tabs.css", cssRewriteUrlTransform)
                 .Include("~/Content/themes/base/tooltip.css", cssRewriteUrlTransform)
-                .Include("~/Content/jquery-ui-bootstrap.css", cssRewriteUrlTransform));
+                .Include("~/Content/themes/jquery-ui-bootstrap.css", cssRewriteUrlTransform));
 
             bundles.Add(new StyleBundle("~/bundles/content/kendo-ui")
                 .Include("~/Content/kendo/2014.1.318/kendo.common.min.css", cssRewriteUrlTransform)

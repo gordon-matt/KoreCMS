@@ -398,6 +398,7 @@
                         if (response.value) {
                             return response.value;
                         }
+
                         var dummyArray = [];
                         dummyArray.push(response);
                         return dummyArray;
@@ -501,6 +502,7 @@
                     })
                     .done(function (json) {
                         $("#treeview").data("kendoTreeView").dataSource.read();
+                        self.reloadTopLevelPages();
                     })
                     .fail(function (jqXHR, textStatus, errorThrown) {
                         $.notify(self.parent.translations.UpdateRecordError, "error");
@@ -936,25 +938,61 @@
                 async: false
             })
             .done(function (json) {
-                $('#TopLevelPages').html('');
-                $('#TopLevelPages').append($('<option>', {
+                $('#TopLevelPages,#ParentId').html('');
+                $('#TopLevelPages,#ParentId').append($('<option>', {
                     value: '',
                     text: '[Root]'
                 }));
                 $.each(json.value, function () {
                     var item = this;
-                    $('#TopLevelPages').append($('<option>', {
+                    $('#TopLevelPages,#ParentId').append($('<option>', {
                         value: item.Id,
                         text: item.Name
                     }));
                 });
 
-                var elementToBind = $("#TopLevelPages")[0];
+                var elementToBind = $("#TopLevelPages,#ParentId")[0];
                 ko.cleanNode(elementToBind);
                 ko.applyBindings(self.parent, elementToBind);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(self.parent.translations.GetRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
+            });
+        };
+        self.move = function () {
+            $("#parentPageModal").modal("show");
+        };
+        self.onParentSelected = function () {
+            var parentId = $("#ParentId").val();
+
+            if (parentId == self.id()) {
+                $("#parentPageModal").modal("hide");
+                return;
+            }
+            if (parentId == '') {
+                parentId = null;
+            }
+
+            var patch = {
+                ParentId: parentId
+            };
+
+            $.ajax({
+                url: "/odata/kore/cms/PageApi(" + self.id() + ")",
+                type: "PATCH",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(patch),
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                $("#parentPageModal").modal("hide");
+                self.refresh();
+                $.notify(self.parent.translations.UpdateRecordSuccess, "success");
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(self.parent.translations.UpdateRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };

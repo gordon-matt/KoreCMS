@@ -10,6 +10,7 @@ using Kore.Plugins.Widgets.RoyalVideoPlayer.Data.Domain;
 using Kore.Plugins.Widgets.RoyalVideoPlayer.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
+using System.Web.OData.Query;
 
 namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
 {
@@ -47,16 +48,14 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
             get { return Permissions.Write; }
         }
 
-        [EnableQuery]
-        [HttpPost]
-        public virtual IEnumerable<Video> GetVideosByPlaylistId(ODataActionParameters parameters)
+        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        [HttpGet]
+        public virtual IQueryable<Video> GetVideosByPlaylistId([FromODataUri] int playlistId)
         {
             if (!CheckPermission(ReadPermission))
             {
-                return Enumerable.Empty<Video>();
+                return Enumerable.Empty<Video>().AsQueryable();
             }
-
-            int playlistId = (int)parameters["playlistId"];
 
             var videoIds = playlistVideoService.Value.Repository.Table
                 .Where(x => x.PlaylistId == playlistId)
@@ -65,9 +64,7 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
 
             var query = Service.Repository.Table.Where(x => videoIds.Contains(x.Id));
 
-            // Since OData v3 doesn't seem to allow filter queries on action methods yet,
-            //  we'll just have to make do with sending all the data to client and filtering & sorting there for this special case
-            return query.ToHashSet();
+            return query;
         }
 
         [HttpPost]

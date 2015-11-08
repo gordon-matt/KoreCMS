@@ -1,12 +1,5 @@
-﻿//define(function (require) {
-define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify) {
+﻿define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify) {
     'use strict'
-
-    //var $ = require('jquery');
-    //var ko = require('knockout');
-
-    //require('kendo');
-    //require('notify');
 
     var odataBaseUrl = "/odata/kore/cms/XmlSitemapApi/";
 
@@ -52,9 +45,7 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
                     transport: {
                         read: {
                             url: odataBaseUrl + "Default.GetConfig",
-                            dataType: "json",
-                            contentType: "application/json",
-                            type: "POST"
+                            dataType: "json"
                         },
                         update: {
                             url: odataBaseUrl + "Default.SetConfig",
@@ -64,17 +55,27 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
                         },
                         parameterMap: function (options, operation) {
                             if (operation === "read") {
-                                return kendo.stringify({
-                                    id: options.Id
-                                });
+                                var paramMap = kendo.data.transports.odata.parameterMap(options, operation);
+                                if (paramMap.$inlinecount) {
+                                    if (paramMap.$inlinecount == "allpages") {
+                                        paramMap.$count = true;
+                                    }
+                                    delete paramMap.$inlinecount;
+                                }
+                                if (paramMap.$filter) {
+                                    paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                                }
+                                return paramMap;
                             }
                             else if (operation === "update") {
                                 return kendo.stringify({
                                     id: options.Id,
                                     changeFrequency: options.ChangeFrequency,
                                     priority: options.Priority
-                                    //entity: options
                                 });
+                            }
+                            else {
+                                return kendo.data.transports.odata.parameterMap(options, operation);
                             }
                         }
                     },
@@ -83,7 +84,7 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
                             return data.value;
                         },
                         total: function (data) {
-                            return data.value.length;
+                            return data["@odata.count"];
                         },
                         model: {
                             id: "Id",
@@ -102,12 +103,10 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
                         $('#Grid').data('kendoGrid').refresh();
                     },
                     batch: false,
-                    // Don't change this to self.gridPageSize. There's a bug with client-side paging. If we set self.gridPageSize here, then paging gets messed up.
-                    //  For more info, see: http://stackoverflow.com/questions/31810484/kendo-grid-misbehaving-in-certain-situations-with-durandal-requirejs?noredirect=1#comment52004513_31810484
-                    pageSize: 15,
-                    serverPaging: false,
-                    serverFiltering: false,
-                    serverSorting: false,
+                    pageSize: self.gridPageSize,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true,
                     sort: { field: "Location", dir: "asc" }
                 },
                 dataBound: function (e) {

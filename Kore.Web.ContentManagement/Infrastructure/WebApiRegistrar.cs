@@ -152,8 +152,8 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
         private static void RegisterXmlSitemapODataActions(ODataModelBuilder builder)
         {
-            var getConfigAction = builder.EntityType<SitemapConfig>().Collection.Action("GetConfig");
-            getConfigAction.ReturnsCollection<SitemapConfigModel>();
+            var getConfigFunction = builder.EntityType<SitemapConfig>().Collection.Function("GetConfig");
+            getConfigFunction.ReturnsCollection<SitemapConfigModel>();
 
             var setConfigAction = builder.EntityType<SitemapConfig>().Collection.Action("SetConfig");
             setConfigAction.Parameter<int>("id");

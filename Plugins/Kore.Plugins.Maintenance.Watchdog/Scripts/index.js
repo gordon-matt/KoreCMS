@@ -277,8 +277,7 @@
                             return data.value;
                         },
                         total: function (data) {
-                            return data.value.length;
-                            //return data["@odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             id: "Id",
@@ -290,13 +289,10 @@
                             }
                         }
                     },
-                    // Don't change this to self.gridPageSize. There's a bug with client-side paging. If we set self.gridPageSize here, then paging gets messed up.
-                    //  For more info, see: http://stackoverflow.com/questions/31810484/kendo-grid-misbehaving-in-certain-situations-with-durandal-requirejs?noredirect=1#comment52004513_31810484
-                    pageSize: 15,
-                    //pageSize: self.gridPageSize,
-                    serverPaging: false,
-                    serverFiltering: false,
-                    serverSorting: false,
+                    pageSize: self.gridPageSize,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true,
                     sort: { field: "DisplayName", dir: "asc" },
                 },
                 dataBound: function (e) {

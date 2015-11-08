@@ -16,6 +16,7 @@ using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Models;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
+using System.Web.OData.Query;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
 {
@@ -61,9 +62,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
 
         #endregion GenericODataController<GoogleSitemapPageConfig, int> Members
 
-        [EnableQuery]
-        [HttpPost]
-        public virtual IEnumerable<SitemapConfigModel> GetConfig(ODataActionParameters parameters)
+        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        [HttpGet]
+        public virtual IEnumerable<SitemapConfigModel> GetConfig()
         {
             if (!CheckPermission(ReadPermission))
             {

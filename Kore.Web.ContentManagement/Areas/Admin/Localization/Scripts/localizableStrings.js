@@ -1,11 +1,5 @@
-﻿//define(function (require) {
-define(['jquery', 'jqueryval', 'kendo'], function ($, jqueryval, kendo) {
+﻿define(['jquery', 'jqueryval', 'kendo'], function ($, jqueryval, kendo) {
     'use strict'
-
-    //var $ = require('jquery');
-    //var kendo = require('kendo');
-
-    //require('jqueryval');
 
     var odataBaseUrl = "/odata/kore/cms/LocalizableStringApi/";
 
@@ -62,21 +56,20 @@ define(['jquery', 'jqueryval', 'kendo'], function ($, jqueryval, kendo) {
                             type: "POST"
                         },
                         parameterMap: function (options, operation) {
-                            //if (operation === "read") {
-                            //    var paramMap = kendo.data.transports.odata.parameterMap(options);
-                            //    if (paramMap.$inlinecount) {
-                            //        if (paramMap.$inlinecount == "allpages") {
-                            //            paramMap.$count = true;
-                            //        }
-                            //        delete paramMap.$inlinecount;
-                            //    }
-                            //    if (paramMap.$filter) {
-                            //        paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
-                            //    }
-                            //    return paramMap;
-                            //}
-                            //else if (operation === "update") {
-                            if (operation === "update") {
+                            if (operation === "read") {
+                                var paramMap = kendo.data.transports.odata.parameterMap(options);
+                                if (paramMap.$inlinecount) {
+                                    if (paramMap.$inlinecount == "allpages") {
+                                        paramMap.$count = true;
+                                    }
+                                    delete paramMap.$inlinecount;
+                                }
+                                if (paramMap.$filter) {
+                                    paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                                }
+                                return paramMap;
+                            }
+                            else if (operation === "update") {
                                 return kendo.stringify({
                                     cultureCode: self.cultureCode,
                                     key: options.Key,
@@ -96,8 +89,7 @@ define(['jquery', 'jqueryval', 'kendo'], function ($, jqueryval, kendo) {
                             return data.value;
                         },
                         total: function (data) {
-                            return data.value.length;
-                            //return data["@odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             id: "Key",
@@ -109,15 +101,10 @@ define(['jquery', 'jqueryval', 'kendo'], function ($, jqueryval, kendo) {
                         }
                     },
                     batch: false,
-                    // Don't change this to self.gridPageSize. There's a bug with client-side paging. If we set self.gridPageSize here, then paging gets messed up.
-                    //  For more info, see: http://stackoverflow.com/questions/31810484/kendo-grid-misbehaving-in-certain-situations-with-durandal-requirejs?noredirect=1#comment52004513_31810484
-                    pageSize: 15,
-                    //serverPaging: true,
-                    //serverFiltering: true,
-                    //serverSorting: true,
-                    serverPaging: false,
-                    serverFiltering: false,
-                    serverSorting: false,
+                    pageSize: self.gridPageSize,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true,
                     sort: { field: "Key", dir: "asc" }
                 },
                 dataBound: function (e) {

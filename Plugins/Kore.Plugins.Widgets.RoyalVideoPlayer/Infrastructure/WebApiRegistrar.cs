@@ -36,9 +36,9 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Infrastructure
             assignVideoToPlaylistsAction.CollectionParameter<int>("playlists");
             assignVideoToPlaylistsAction.Returns<IHttpActionResult>();
 
-            var getVideosByPlaylistIdAction = builder.EntityType<Video>().Collection.Action("GetVideosByPlaylistId");
-            getVideosByPlaylistIdAction.Parameter<int>("playlistId");
-            getVideosByPlaylistIdAction.ReturnsCollectionFromEntitySet<Video>("VideoApi");
+            var getVideosByPlaylistIdFunction = builder.EntityType<Video>().Collection.Function("GetVideosByPlaylistId");
+            getVideosByPlaylistIdFunction.Parameter<int>("playlistId");
+            getVideosByPlaylistIdFunction.ReturnsCollectionFromEntitySet<Video>("VideoApi");
         }
 
         #endregion IWebApiRegistrar Members

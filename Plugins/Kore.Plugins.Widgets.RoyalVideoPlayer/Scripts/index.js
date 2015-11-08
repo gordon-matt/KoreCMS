@@ -413,17 +413,23 @@
                     type: "odata",
                     transport: {
                         read: {
-                            url: videoApiUrl + "/Default.GetVideosByPlaylistId",
+                            url: videoApiUrl + "/Default.GetVideosByPlaylistId(playlistId=" + self.parent.playlist.id() + ")",
                             dataType: "json",
-                            contentType: "application/json",
-                            type: "POST"
                         },
                         parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options, operation);
                             if (operation === "read") {
-                                return kendo.stringify({
-                                    playlistId: self.parent.playlist.id()
-                                });
+                                if (paramMap.$inlinecount) {
+                                    if (paramMap.$inlinecount == "allpages") {
+                                        paramMap.$count = true;
+                                    }
+                                    delete paramMap.$inlinecount;
+                                }
+                                if (paramMap.$filter) {
+                                    paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+                                }
                             }
+                            return paramMap;
                         }
                     },
                     schema: {
@@ -431,8 +437,7 @@
                             return data.value;
                         },
                         total: function (data) {
-                            return data.value.length; // Special case (refer to note in VideoApiController)
-                            //return data["@odata.count"];
+                            return data["@odata.count"];
                         },
                         model: {
                             id: "Id",
@@ -449,16 +454,10 @@
                         }
                     },
                     batch: false,
-                    // Don't change this to self.parent.gridPageSize. There's a bug with client-side paging. If we set self.parent.gridPageSize here, then paging gets messed up.
-                    //  For more info, see: http://stackoverflow.com/questions/31810484/kendo-grid-misbehaving-in-certain-situations-with-durandal-requirejs?noredirect=1#comment52004513_31810484
-                    pageSize: 15,
-                    //pageSize: self.parent.gridPageSize,
-                    serverPaging: false,
-                    serverFiltering: false,
-                    serverSorting: false,
-                    //serverPaging: true,  // Special case (refer to note in VideoApiController)
-                    //serverFiltering: true,
-                    //serverSorting: true,
+                    pageSize: self.parent.gridPageSize,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true,
                     sort: { field: "Title", dir: "asc" }
                 },
                 dataBound: function (e) {

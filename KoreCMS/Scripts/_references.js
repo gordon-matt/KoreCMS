@@ -47,7 +47,6 @@
 /// <reference path="durandal/viewengine.js" />
 /// <reference path="durandal/viewlocator.js" />
 /// <reference path="tinymce/auto-register.js" />
-/// <reference path="tinymce/jquery.tinymce.min.js" />
 /// <reference path="tinymce/tinymce.js" />
 /// <reference path="../filemanager/js/viewerjs/compatibility.js" />
 /// <reference path="../filemanager/js/viewerjs/odfviewerplugin.js" />
@@ -589,6 +588,8 @@
 /// <reference path="tinymce/plugins/compat3x/utils/validate.js" />
 /// <reference path="../areas/admin/scripts/app/viewmodels/admin/dashboard.js" />
 /// <reference path="../areas/admin/scripts/app/viewmodels/admin/shell.js" />
+/// <reference path="tinymce/plugins/imagetools/plugin.js" />
+/// <reference path="tinymce/jquery.tinymce.min.js" />
  
  / / /   < r e f e r e n c e   p a t h = " b r e e z e . d e b u g . j s "   / >  
  

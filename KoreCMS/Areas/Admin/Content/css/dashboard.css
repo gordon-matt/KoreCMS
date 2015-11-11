@@ -14,6 +14,10 @@ body {
     text-shadow: 0 0 1px black;
 }
 
+div.tile > i{
+    color: #fff;
+}
+
 #primary-nav > li > a {
     text-align: center;
 }
@@ -59,4 +63,12 @@ label.checkbox-list-group-label {
 
 #block-content .tab-pane {
     margin-bottom: 15px;
+}
+
+/* Fix field width. More info here:
+  http://stackoverflow.com/questions/17408815/fieldset-resizes-wrong-appears-to-have-unremovable-min-width-min-content */
+@-moz-document url-prefix() {
+    fieldset {
+        display: table-cell;
+    }
 }

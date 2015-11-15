@@ -265,6 +265,12 @@
             }
         }
 
+        public static class Tenants
+        {
+            public const string ManageTenants = "Kore.Web/Tenants.ManageTenants";
+            public const string Title = "Kore.Web/Tenants.Title";
+        }
+
         public static class Themes
         {
             public const string SetDesktopThemeError = "Kore.Web/Themes.SetDesktopThemeError";

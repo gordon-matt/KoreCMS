@@ -26,6 +26,9 @@ namespace Kore.Web.Infrastructure
             bundles.Add(new ScriptBundle("~/bundles/js/kore-web/settings")
                 .Include("~/Scripts/Kore.Web.Areas.Admin.Configuration.Scripts.settings.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/kore-web/tenants")
+                .Include("~/Scripts/Kore.Web.Areas.Admin.Tenants.Scripts.index.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/kore-web/themes")
                 .Include("~/Scripts/Kore.Web.Areas.Admin.Configuration.Scripts.themes.js"));
         }

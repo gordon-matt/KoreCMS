@@ -152,7 +152,6 @@
     <Compile Include="Areas\Admin\Configuration\Controllers\SettingsController.cs" />
     <Compile Include="Areas\Admin\Configuration\Controllers\ThemeController.cs" />
     <Compile Include="Areas\Admin\Configuration\Models\EdmThemeConfiguration.cs" />
-    <Compile Include="Areas\Admin\Configuration\Models\SettingModel.cs" />
     <Compile Include="Areas\Admin\Indexing\Controllers\IndexingController.cs" />
     <Compile Include="Areas\Admin\Indexing\Controllers\SearchController.cs" />
     <Compile Include="Areas\Admin\Indexing\IndexingAreaRegistration.cs" />
@@ -169,8 +168,9 @@
     <Compile Include="Areas\Admin\NavigationProvider.cs" />
     <Compile Include="Areas\Admin\ScheduledTasks\Controllers\Api\ScheduledTaskApiController.cs" />
     <Compile Include="Areas\Admin\ScheduledTasks\Controllers\ScheduledTaskController.cs" />
-    <Compile Include="Areas\Admin\ScheduledTasks\Models\ScheduledTaskModel.cs" />
     <Compile Include="Areas\Admin\ScheduledTasks\ScheduledTasksPermissions.cs" />
+    <Compile Include="Areas\Admin\Tenants\Controllers\Api\TenantApiController.cs" />
+    <Compile Include="Areas\Admin\Tenants\Controllers\TenantController.cs" />
     <Compile Include="Collections\EnumerableExtensions.cs" />
     <Compile Include="Configuration\CaptchaSettings.cs" />
     <Compile Include="Configuration\HttpCompressionConfigurationElement.cs" />
@@ -634,6 +634,7 @@
     <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\Roles.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\Users.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Tenants\Views\Tenant\Index.cshtml" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\SmtpSettings.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Plugins\Views\Plugin\Index.cshtml" />
@@ -665,6 +666,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Indexing\Scripts\indexing.js" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\Admin\Tenants\Scripts\index.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

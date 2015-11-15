@@ -87,6 +87,7 @@
     <Compile Include="Logging\Domain\LogEntryMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScheduledTasks\Domain\ScheduledTaskMap.cs" />
+    <Compile Include="Tenants\Domain\TenantMap.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

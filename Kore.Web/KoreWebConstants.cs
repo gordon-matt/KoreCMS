@@ -49,6 +49,7 @@ namespace Kore.Web
             public const string Membership = "Admin/Membership";
             public const string Plugins = "Admin/Plugins";
             public const string ScheduledTasks = "Admin/ScheduledTasks";
+            public const string Tenants = "Admin/Tenants";
         }
 
         public static class CacheKeys

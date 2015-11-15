@@ -2,6 +2,7 @@
 using Kore.Caching;
 using Kore.Localization.Services;
 using Kore.Tasks;
+using Kore.Tenants.Services;
 
 namespace Kore.Infrastructure
 {
@@ -19,6 +20,8 @@ namespace Kore.Infrastructure
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
             builder.RegisterType<ClearCacheTask>().As<ITask>().SingleInstance();
+
+            builder.RegisterType<TenantService>().As<ITenantService>().InstancePerDependency();
 
             // Localization
             builder.RegisterType<LanguageService>().As<ILanguageService>().InstancePerDependency();

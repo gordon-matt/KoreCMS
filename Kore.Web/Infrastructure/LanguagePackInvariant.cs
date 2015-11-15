@@ -193,6 +193,8 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.Settings.Smtp.Port, "Port" },
                     { KoreWebLocalizableStrings.Settings.Smtp.UseDefaultCredentials, "Use Default Credentials" },
                     { KoreWebLocalizableStrings.Settings.Smtp.Username, "Username" },
+                    { KoreWebLocalizableStrings.Tenants.ManageTenants, "Manage Tenants" },
+                    { KoreWebLocalizableStrings.Tenants.Title, "Tenants" },
                     { KoreWebLocalizableStrings.Themes.Model.IsDefaultDesktopTheme, "Default Desktop Theme" },
                     { KoreWebLocalizableStrings.Themes.Model.IsDefaultMobileTheme, "Default Mobile Theme" },
                     { KoreWebLocalizableStrings.Themes.Model.MobileTheme, "For Mobile?" },

@@ -523,7 +523,7 @@ namespace Kore.Web
         /// <returns>Tenant host location</returns>
         public virtual string GetTenantHost(bool useSsl)
         {
-            string result = "";
+            string result = string.Empty;
             string httpHost = ServerVariables("HTTP_HOST");
             if (!string.IsNullOrEmpty(httpHost))
             {

@@ -35,31 +35,33 @@ namespace Kore.Web.Areas.Admin
         {
             builder.IconCssClass("kore-icon kore-icon-config");
 
+            // Tenants (NOT READY YET)
+            //builder.Add(T(KoreWebLocalizableStrings.Tenants.Title), "5", item => item
+            //    .Url("#tenants")
+            //    .IconCssClass("kore-icon kore-icon-tenants")
+            //    .Permission(StandardPermissions.FullAccess));
+
             // Indexing
             builder.Add(T(KoreWebLocalizableStrings.Indexing.Title), "5", item => item
                 .Url("#indexing")
-                //.Action("Index", "Indexing", new { area = KoreWebConstants.Areas.Indexing })
                 .IconCssClass("kore-icon kore-icon-search")
                 .Permission(StandardPermissions.FullAccess));
 
             // Plugins
             builder.Add(T(KoreWebLocalizableStrings.Plugins.Title), "5", item => item
                 .Url("#plugins")
-                //.Action("Index", "Plugin", new { area = KoreWebConstants.Areas.Plugins })
                 .IconCssClass("kore-icon kore-icon-plugins")
                 .Permission(StandardPermissions.FullAccess));
 
             // Settings
             builder.Add(T(KoreWebLocalizableStrings.General.Settings), "5", item => item
                 .Url("#configuration/settings")
-                //.Action("Index", "Settings", new { area = KoreWebConstants.Areas.Configuration })
                 .IconCssClass("kore-icon kore-icon-settings")
                 .Permission(ConfigurationPermissions.ReadSettings));
 
             // Themes
             builder.Add(T(KoreWebLocalizableStrings.General.Themes), "5", item => item
                 .Url("#configuration/themes")
-                //.Action("Index", "Theme", new { area = KoreWebConstants.Areas.Configuration })
                 .IconCssClass("kore-icon kore-icon-themes")
                 .Permission(ConfigurationPermissions.ReadThemes));
         }
@@ -70,14 +72,12 @@ namespace Kore.Web.Areas.Admin
 
             builder.Add(T(KoreWebLocalizableStrings.Log.Title), "5", item => item
                 .Url("#log")
-                //.Action("Index", "Log", new { area = KoreWebConstants.Areas.Log })
                 .IconCssClass("kore-icon kore-icon-log")
                 .Permission(StandardPermissions.FullAccess));
 
             // Scheduled Tasks
             builder.Add(T(KoreWebLocalizableStrings.ScheduledTasks.Title), "5", item => item
                 .Url("#scheduledtasks")
-                //.Action("Index", "ScheduledTask", new { area = KoreWebConstants.Areas.ScheduledTasks })
                 .IconCssClass("kore-icon kore-icon-schedule-tasks")
                 .Permission(ScheduledTasksPermissions.ReadScheduledTasks));
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Kore.Data
 {
@@ -10,11 +11,39 @@ namespace Kore.Data
     {
         IQueryable<TEntity> Table { get; }
 
-        TEntity Find(params object[] keyValues);
+        #region Find
+
+        IEnumerable<TEntity> Find();
+
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> filterExpression);
+
+        Task<IEnumerable<TEntity>> FindAsync();
+
+        Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> filterExpression);
+
+        TEntity FindOne(params object[] keyValues);
+
+        TEntity FindOne(Expression<Func<TEntity, bool>> filterExpression);
+
+        Task<TEntity> FindOneAsync(params object[] keyValues);
+
+        Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> filterExpression);
+
+        #endregion
+
+        #region Count
 
         int Count();
 
         int Count(Expression<Func<TEntity, bool>> countExpression);
+
+        Task<int> CountAsync();
+
+        Task<int> CountAsync(Expression<Func<TEntity, bool>> countExpression);
+
+        #endregion Count
+
+        #region Delete
 
         int DeleteAll();
 
@@ -26,28 +55,48 @@ namespace Kore.Data
 
         int Delete(IQueryable<TEntity> query);
 
-        //Task<int> DeleteAllAsync();
+        Task<int> DeleteAllAsync();
 
-        //Task<int> DeleteAsync(Expression<Func<TEntity, bool>> filterExpression);
+        Task<int> DeleteAsync(TEntity entity);
+
+        Task<int> DeleteAsync(IEnumerable<TEntity> entities);
+
+        Task<int> DeleteAsync(Expression<Func<TEntity, bool>> filterExpression);
+
+        Task<int> DeleteAsync(IQueryable<TEntity> query);
+
+        #endregion Delete
+
+        #region Insert
 
         int Insert(TEntity entity);
 
         int Insert(IEnumerable<TEntity> entities);
 
-        IEnumerable<TEntity> Translate(string storedProcedure, IEnumerable<DbParameter> parameters);
+        Task<int> InsertAsync(TEntity entity);
+
+        Task<int> InsertAsync(IEnumerable<TEntity> entities);
+
+        #endregion Insert
+
+        #region Update
 
         int Update(TEntity entity);
 
         int Update(IEnumerable<TEntity> entities);
 
-        int Update(Expression<Func<TEntity, TEntity>> updateExpression);
+        Task<int> UpdateAsync(TEntity entity);
 
-        int Update(Expression<Func<TEntity, bool>> filterExpression, Expression<Func<TEntity, TEntity>> updateExpression);
+        Task<int> UpdateAsync(IEnumerable<TEntity> entities);
 
-        int Update(IQueryable<TEntity> query, Expression<Func<TEntity, TEntity>> updateExpression);
+        //int Update(Expression<Func<TEntity, TEntity>> updateExpression);
 
-        //Task<int> UpdateAsync(Expression<Func<TEntity, TEntity>> updateExpression);
+        //int Update(Expression<Func<TEntity, bool>> filterExpression, Expression<Func<TEntity, TEntity>> updateExpression);
 
-        //Task<int> UpdateAsync(Expression<Func<TEntity, bool>> filterExpression, Expression<Func<TEntity, TEntity>> updateExpression);
+        //int Update(IQueryable<TEntity> query, Expression<Func<TEntity, TEntity>> updateExpression);
+
+        #endregion Update
+
+        IEnumerable<TEntity> Translate(string storedProcedure, IEnumerable<DbParameter> parameters);
     }
 }

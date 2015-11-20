@@ -33,6 +33,7 @@ namespace KoreCMS.Infrastructure
 
             #region Entity Framework 6
 
+            // TODO: Consider using a new DbContext for each query
             builder.RegisterType<KoreCMS.Data.ApplicationDbContext>()
                 .As<DbContext>()
                 .AsSelf()

@@ -50,7 +50,7 @@ namespace Kore.Tasks.Services
             if (taskId == 0)
                 return null;
 
-            return taskRepository.Find(taskId);
+            return taskRepository.FindOne(taskId);
         }
 
         /// <summary>

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Castle.Core.Logging;
 using Kore.Caching;
-using Kore.Collections;
 using Kore.Logging;
 
 namespace Kore.Data.Services
@@ -74,39 +74,57 @@ namespace Kore.Data.Services
 
         #region IGenericDataService<TEntity> Members
 
+        #region Find
+
         public virtual IEnumerable<TEntity> Find()
         {
             return CacheManager.Get(CacheKey, () =>
             {
-                return repository.Table.ToHashSet();
+                return repository.Find();
             });
         }
 
         public virtual IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> filterExpression)
         {
-            return repository.Table.Where(filterExpression).ToHashSet();
+            return repository.Find(filterExpression);
+        }
 
-            // Ignore caching for now, since converting and Expression<T> to a string does not always result in something unique
-            //  Example: when there are variables. So, we need to find a way to get the variables translated to their values and use that
-            //  in a custom ToString() implementation.. maybe...
-            // Maybe this can help:
-            //  http://referencesource.microsoft.com/#System.Core/Microsoft/Scripting/Ast/ExpressionStringBuilder.cs#240c0ae863272266
-            //string key = string.Format(CacheKeyFiltered, filterExpression);
-            //return CacheManager.Get(key, () =>
-            //{
-            //    return repository.Table.Where(filterExpression).ToHashSet();
-            //});
+        public virtual async Task<IEnumerable<TEntity>> FindAsync()
+        {
+            return await CacheManager.Get(CacheKey, async () =>
+            {
+                return await repository.FindAsync();
+            });
+        }
+
+        public virtual async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> filterExpression)
+        {
+            return await repository.FindAsync(filterExpression);
         }
 
         public virtual TEntity FindOne(params object[] keyValues)
         {
-            return repository.Find(keyValues);
+            return repository.FindOne(keyValues);
         }
 
         public virtual TEntity FindOne(Expression<Func<TEntity, bool>> filterExpression)
         {
-            return repository.Table.FirstOrDefault(filterExpression);
+            return repository.FindOne(filterExpression);
         }
+
+        public virtual async Task<TEntity> FindOneAsync(params object[] keyValues)
+        {
+            return await repository.FindOneAsync(keyValues);
+        }
+
+        public virtual async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> filterExpression)
+        {
+            return await repository.FindOneAsync(filterExpression);
+        }
+
+        #endregion Find
+
+        #region Count
 
         public virtual int Count()
         {
@@ -117,6 +135,20 @@ namespace Kore.Data.Services
         {
             return repository.Count(countExpression);
         }
+
+        public virtual async Task<int> CountAsync()
+        {
+            return await Repository.CountAsync();
+        }
+
+        public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>> countExpression)
+        {
+            return await Repository.CountAsync(countExpression);
+        }
+
+        #endregion Count
+
+        #region Delete
 
         public virtual int DeleteAll()
         {
@@ -153,15 +185,34 @@ namespace Kore.Data.Services
             return rowsAffected;
         }
 
-        //public virtual Task<int> DeleteAllAsync()
-        //{
-        //    return repository.DeleteAllAsync();
-        //}
+        public virtual async Task<int> DeleteAllAsync()
+        {
+            return await Repository.DeleteAllAsync();
+        }
 
-        //public virtual Task<int> DeleteAsync(Expression<Func<TEntity, bool>> filterExpression)
-        //{
-        //    return repository.DeleteAsync(filterExpression);
-        //}
+        public virtual async Task<int> DeleteAsync(TEntity entity)
+        {
+            return await Repository.DeleteAsync(entity);
+        }
+
+        public virtual async Task<int> DeleteAsync(IEnumerable<TEntity> entities)
+        {
+            return await Repository.DeleteAsync(entities);
+        }
+
+        public virtual async Task<int> DeleteAsync(Expression<Func<TEntity, bool>> filterExpression)
+        {
+            return await Repository.DeleteAsync(filterExpression);
+        }
+
+        public virtual async Task<int> DeleteAsync(IQueryable<TEntity> query)
+        {
+            return await Repository.DeleteAsync(query);
+        }
+
+        #endregion Delete
+
+        #region Insert
 
         public virtual int Insert(TEntity entity)
         {
@@ -177,10 +228,19 @@ namespace Kore.Data.Services
             return rowsAffected;
         }
 
-        public virtual IEnumerable<TEntity> Translate(string storedProcedure, IEnumerable<DbParameter> parameters)
+        public virtual async Task<int> InsertAsync(TEntity entity)
         {
-            return repository.Translate(storedProcedure, parameters);
+            return await Repository.InsertAsync(entity);
         }
+
+        public virtual async Task<int> InsertAsync(IEnumerable<TEntity> entities)
+        {
+            return await Repository.InsertAsync(entities);
+        }
+
+        #endregion Insert
+
+        #region Update
 
         public virtual int Update(TEntity entity)
         {
@@ -196,36 +256,22 @@ namespace Kore.Data.Services
             return rowsAffected;
         }
 
-        public virtual int Update(Expression<Func<TEntity, TEntity>> updateExpression)
+        public virtual async Task<int> UpdateAsync(TEntity entity)
         {
-            int rowsAffected = repository.Update(updateExpression);
-            ClearCache();
-            return rowsAffected;
+            return await Repository.UpdateAsync(entity);
         }
 
-        public virtual int Update(Expression<Func<TEntity, bool>> filterExpression, Expression<Func<TEntity, TEntity>> updateExpression)
+        public virtual async Task<int> UpdateAsync(IEnumerable<TEntity> entities)
         {
-            int rowsAffected = repository.Update(filterExpression, updateExpression);
-            ClearCache();
-            return rowsAffected;
+            return await Repository.UpdateAsync(entities);
         }
 
-        public virtual int Update(IQueryable<TEntity> query, Expression<Func<TEntity, TEntity>> updateExpression)
+        #endregion Update
+
+        public virtual IEnumerable<TEntity> Translate(string storedProcedure, IEnumerable<DbParameter> parameters)
         {
-            int rowsAffected = repository.Update(query, updateExpression);
-            ClearCache();
-            return rowsAffected;
+            return repository.Translate(storedProcedure, parameters);
         }
-
-        //public virtual Task<int> UpdateAsync(Expression<Func<TEntity, TEntity>> updateExpression)
-        //{
-        //    return repository.UpdateAsync(updateExpression);
-        //}
-
-        //public virtual Task<int> UpdateAsync(Expression<Func<TEntity, bool>> filterExpression, Expression<Func<TEntity, TEntity>> updateExpression)
-        //{
-        //    return repository.UpdateAsync(filterExpression, updateExpression);
-        //}
 
         #endregion IGenericDataService<TEntity> Members
 

@@ -77,7 +77,10 @@
     <Compile Include="Data\EntityFramework\IKoreEntityFrameworkHelper.cs" />
     <Compile Include="Data\EntityFramework\IEntityTypeConfiguration.cs" />
     <Compile Include="Data\EntityFramework\QueryableExtensions.cs" />
+    <Compile Include="Data\IDbAsyncEnumerableExtensions.cs" />
     <Compile Include="Data\IKoreDbContext.cs" />
+    <Compile Include="Data\QueryableExtensions.cs" />
+    <Compile Include="Data\TaskExtensions.cs" />
     <Compile Include="DropCreateSeedDatabaseIfModelChanges.cs" />
     <Compile Include="EntityNotFoundException.cs" />
     <Compile Include="ISupportSeed.cs" />

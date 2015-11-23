@@ -2,6 +2,8 @@
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
+using Kore.Data.Common;
+using Kore.Infrastructure;
 
 namespace Kore.Data.SqlClient
 {
@@ -21,6 +23,11 @@ namespace Kore.Data.SqlClient
 
             var sqlConnection = connection as SqlConnection;
             return sqlConnection.GetTableNames().Contains(tableName);
+        }
+
+        public DbConnection CreateConnection(string connectionString)
+        {
+            return new SqlConnection(connectionString);
         }
     }
 }

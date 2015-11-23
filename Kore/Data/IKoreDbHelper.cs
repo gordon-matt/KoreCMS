@@ -7,5 +7,7 @@ namespace Kore.Data
         string Escape(string s);
 
         bool CheckIfTableExists(DbConnection connection, string tableName);
+
+        DbConnection CreateConnection(string connectionString);
     }
 }

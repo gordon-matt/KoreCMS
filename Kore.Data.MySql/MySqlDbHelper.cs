@@ -22,5 +22,10 @@ namespace Kore.Data.MySql
             var mySqlConnection = connection as MySqlConnection;
             return mySqlConnection.GetTableNames().Contains(tableName);
         }
+
+        public DbConnection CreateConnection(string connectionString)
+        {
+            return new MySqlConnection(connectionString);
+        }
     }
 }

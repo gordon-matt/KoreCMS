@@ -35,7 +35,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
 
         public Region Get(int id, bool includeChildren = false, bool includeParent = false)
         {
-            var query = Repository.Table;
+            var query = Query();
 
             if (includeParent)
             {
@@ -55,7 +55,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
         {
             if (includeCountries)
             {
-                return Repository.Table
+                return Query()
                     .Include(x => x.Children)
                     .Where(x => x.RegionType == RegionType.Continent)
                     .OrderBy(x => x.Order == null)
@@ -63,7 +63,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
                     .ThenBy(x => x.Name)
                     .ToList();
             }
-            return Repository.Table.Where(x => x.RegionType == RegionType.Continent)
+            return Query(x => x.RegionType == RegionType.Continent)
                 .OrderBy(x => x.Order == null)
                 .ThenBy(x => x.Order)
                 .ThenBy(x => x.Name)
@@ -74,7 +74,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
         {
             if (regionType.HasValue)
             {
-                return Repository.Table
+                return Query()
                     .Include(x => x.Parent)
                     .Include(x => x.Children)
                     .Where(x => x.Parent.Id == regionId && x.RegionType == regionType)
@@ -84,7 +84,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
                     .ToHashSet();
             }
 
-            return Repository.Table
+            return Query()
                 .Include(x => x.Parent)
                 .Include(x => x.Children)
                 .Where(x => x.Parent.Id == regionId)
@@ -96,7 +96,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
 
         public IEnumerable<Region> GetSubRegions(int regionId, int pageIndex, int pageSize, out int total, RegionType? regionType = null)
         {
-            var query = Repository.Table
+            var query = Query()
                 .Include(x => x.Parent)
                 .Include(x => x.Children);
 
@@ -124,7 +124,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
 
         public IEnumerable<Region> GetCountries()
         {
-            return Repository.Table
+            return Query()
                 .Include(x => x.Parent)
                 .Include(x => x.Children)
                 .Where(x => x.RegionType == RegionType.Country)
@@ -138,7 +138,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
         {
             if (includeCities)
             {
-                return Repository.Table
+                return Query()
                     .Include(x => x.Children)
                     .Where(x => x.ParentId == countryId && x.RegionType == RegionType.State)
                     .OrderBy(x => x.Order == null)
@@ -147,8 +147,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
                     .ToHashSet();
             }
 
-            return Repository.Table
-                .Where(x => x.ParentId == countryId && x.RegionType == RegionType.State)
+            return Query(x => x.ParentId == countryId && x.RegionType == RegionType.State)
                 .OrderBy(x => x.Order == null)
                 .ThenBy(x => x.Order)
                 .ThenBy(x => x.Name)

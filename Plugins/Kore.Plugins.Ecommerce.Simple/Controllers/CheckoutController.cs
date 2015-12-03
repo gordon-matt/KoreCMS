@@ -273,7 +273,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
             WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Checkout));
             WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Completed));
 
-            var order = orderService.Value.Repository.Table
+            var order = orderService.Value.Query()
                 .Include(x => x.BillingAddress)
                 .Include(x => x.BillingAddress.Country)
                 .Include(x => x.BillingAddress.City)

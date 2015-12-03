@@ -63,7 +63,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 //TODO:
             }
 
-            var order = orderService.Value.Repository.Table
+            var order = orderService.Value.Query()
                 .Include(x => x.BillingAddress)
                 .FirstOrDefault(x => x.Id == cart.OrderId);
 

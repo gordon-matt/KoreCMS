@@ -41,8 +41,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 ? 1
                 : Convert.ToInt32(pageIndexParam);
 
-            var model = categoryService.Value.Repository.Table
-                .Where(x => x.ParentId == categoryId)
+            var model = categoryService.Value.Query(x => x.ParentId == categoryId)
                 .OrderBy(x => x.Order)
                 .ThenBy(x => x.Name)
                 .Skip((pageIndex - 1) * storeSettings.CategoriesPerPage)
@@ -63,8 +62,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         {
             // This will only support 2 levels, but for now that's fine. We will support more later.
 
-            var model = categoryService.Value.Repository.Table
-                .Where(x => x.ParentId == null)
+            var model = categoryService.Value.Query(x => x.ParentId == null)
                 .Include(x => x.SubCategories)
                 .ToHashSet();
 
@@ -202,7 +200,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
                 ? 1
                 : Convert.ToInt32(pageIndexParam);
 
-            var query = productService.Value.Repository.Table.Where(x => x.CategoryId == category.Id);
+            var query = productService.Value.Query(x => x.CategoryId == category.Id);
 
             int total = query.Count();
 

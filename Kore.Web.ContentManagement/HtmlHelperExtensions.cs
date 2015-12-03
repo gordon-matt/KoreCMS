@@ -274,7 +274,7 @@ namespace Kore.Web.ContentManagement
         {
             var zoneService = EngineContext.Current.Resolve<IZoneService>();
 
-            return zoneService.Repository.Table
+            return zoneService.Query()
                 .OrderBy(x => x.Name)
                 .ToList()
                 .ToSelectList(

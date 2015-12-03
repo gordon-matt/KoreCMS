@@ -17,7 +17,7 @@ namespace Kore.Web.ContentManagement.Routing
             {
                 var permalink = values[parameterName].ToString();
 
-                return pageVersionService.Repository.Table.Any(x => x.Slug == permalink);
+                return pageVersionService.Query().Any(x => x.Slug == permalink);
                 //return pageService.Repository.Table.Any(x => x.Slug == permalink);
             }
             return false;

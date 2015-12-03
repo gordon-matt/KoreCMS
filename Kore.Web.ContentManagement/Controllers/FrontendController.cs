@@ -48,7 +48,7 @@ namespace Kore.Web.ContentManagement.Controllers
             var pageService = EngineContext.Current.Resolve<IPageService>();
             var pageVersionService = EngineContext.Current.Resolve<IPageVersionService>();
 
-            var currentPageVersion = pageVersionService.Repository.Table
+            var currentPageVersion = pageVersionService.Query()
                 .Include(x => x.Page)
                 .FirstOrDefault(y => y.Slug == currentUrlSlug);
 
@@ -227,7 +227,7 @@ namespace Kore.Web.ContentManagement.Controllers
             {
                 // We don't care about culture here because the only thing we're interested in getting is
                 //  the Page ID, which will of course be the same for all versions of a page.
-                var anyVersion = pageVersionService.Repository.Table.FirstOrDefault(y => y.Slug == currentUrlSlug);
+                var anyVersion = pageVersionService.FindOne(y => y.Slug == currentUrlSlug);
 
                 // If the current page is a CMS page
                 if (anyVersion != null)

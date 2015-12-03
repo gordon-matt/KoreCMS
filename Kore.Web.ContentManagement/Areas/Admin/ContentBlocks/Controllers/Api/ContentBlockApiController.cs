@@ -44,7 +44,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
                 return Enumerable.Empty<ContentBlock>().AsQueryable();
             }
 
-            return Service.Repository.Table.Where(x => x.PageId == null);
+            return Service.Query(x => x.PageId == null);
         }
 
         [EnableQuery]
@@ -58,8 +58,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
 
             var pageId = (Guid)parameters["pageId"];
 
-            return Service.Repository.Table
-                .Where(x => x.PageId == pageId)
+            return Service.Query(x => x.PageId == pageId)
                 .OrderBy(x => x.ZoneId)
                 .ThenBy(x => x.Order);
         }

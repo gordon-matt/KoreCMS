@@ -33,7 +33,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 
         public IEnumerable<IDocumentIndex> GetDocuments(Func<string, IDocumentIndex> factory)
         {
-            var pageVersions = pageVersionService.Repository.Table
+            var pageVersions = pageVersionService.Query()
                 .Include(x => x.Page)
                 .ToHashSet();
 

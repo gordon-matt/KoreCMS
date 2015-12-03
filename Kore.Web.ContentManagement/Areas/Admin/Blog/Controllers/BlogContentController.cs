@@ -59,7 +59,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                     ? 1
                     : Convert.ToInt32(pageIndexParam);
 
-                var model = postService.Value.Repository.Table
+                var model = postService.Value.Query()
                     .OrderByDescending(x => x.DateCreatedUtc)
                     .Skip((pageIndex - 1) * blogSettings.ItemsPerPage)
                     .Take(blogSettings.ItemsPerPage)
@@ -99,7 +99,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                     ? 1
                     : Convert.ToInt32(pageIndexParam);
 
-                var model = postService.Value.Repository.Table
+                var model = postService.Value.Query()
                     .Include(x => x.Tags)
                     .Where(x => x.CategoryId == category.Id)
                     .OrderByDescending(x => x.DateCreatedUtc)
@@ -135,7 +135,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                     ? 1
                     : Convert.ToInt32(pageIndexParam);
 
-                var model = postService.Value.Repository.Table
+                var model = postService.Value.Query()
                     .Include(x => x.Tags)
                     .Where(x => x.Tags.Any(y => y.TagId == tag.Id))
                     .OrderByDescending(x => x.DateCreatedUtc)
@@ -230,22 +230,20 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
             string previousEntrySlug = null;
             string nextEntrySlug = null;
 
-            bool hasPreviousEntry = postService.Value.Repository.Table.Any(x => x.DateCreatedUtc < model.DateCreatedUtc);
+            bool hasPreviousEntry = postService.Value.Query().Any(x => x.DateCreatedUtc < model.DateCreatedUtc);
             if (hasPreviousEntry)
             {
-                var previousEntryDate = postService.Value.Repository.Table
-                    .Where(x => x.DateCreatedUtc < model.DateCreatedUtc)
+                var previousEntryDate = postService.Value.Query(x => x.DateCreatedUtc < model.DateCreatedUtc)
                     .Select(x => x.DateCreatedUtc)
                     .Max();
 
                 previousEntrySlug = postService.Value.FindOne(x => x.DateCreatedUtc == previousEntryDate).Slug;
             }
 
-            bool hasNextEntry = postService.Value.Repository.Table.Any(x => x.DateCreatedUtc > model.DateCreatedUtc);
+            bool hasNextEntry = postService.Value.Query().Any(x => x.DateCreatedUtc > model.DateCreatedUtc);
             if (hasNextEntry)
             {
-                var nextEntryDate = postService.Value.Repository.Table
-                    .Where(x => x.DateCreatedUtc > model.DateCreatedUtc)
+                var nextEntryDate = postService.Value.Query(x => x.DateCreatedUtc > model.DateCreatedUtc)
                     .Select(x => x.DateCreatedUtc)
                     .Min();
 

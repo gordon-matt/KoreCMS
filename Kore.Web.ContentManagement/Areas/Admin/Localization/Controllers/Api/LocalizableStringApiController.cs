@@ -48,8 +48,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
             }
             else
             {
-                var query = Service.Repository.Table
-                        .Where(x => x.CultureCode == null || x.CultureCode == cultureCode)
+                var query = Service.Query(x => x.CultureCode == null || x.CultureCode == cultureCode)
                         .GroupBy(x => x.TextKey)
                         .Select(grp => new ComparitiveLocalizableString
                         {
@@ -100,7 +99,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
                 return BadRequest();
             }
 
-            var localizedString = Service.Repository.Table.FirstOrDefault(x => x.CultureCode == cultureCode && x.TextKey == key);
+            var localizedString = Service.FindOne(x => x.CultureCode == cultureCode && x.TextKey == key);
 
             if (localizedString == null)
             {

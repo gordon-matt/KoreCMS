@@ -66,7 +66,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
             string key = string.Format("Repository_ContentBlocks_ByPageId_{0}", pageId);
             return CacheManager.Get(key, () =>
             {
-                var records = Repository.Table.Where(x => x.PageId == pageId).ToList();
+                var records = Query(x => x.PageId == pageId).ToList();
                 return GetContentBlocks(records, cultureCode);
             });
         }
@@ -86,8 +86,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
                     }
 
                     var records = pageId.HasValue
-                        ? Repository.Table.Where(x => x.ZoneId == zone.Id && x.PageId == pageId.Value)
-                        : Repository.Table.Where(x => x.ZoneId == zone.Id && x.PageId == null);
+                        ? Query(x => x.ZoneId == zone.Id && x.PageId == pageId.Value)
+                        : Query(x => x.ZoneId == zone.Id && x.PageId == null);
 
                     return GetContentBlocks(records, cultureCode);
                 });
@@ -103,11 +103,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
                         return Enumerable.Empty<IContentBlock>();
                     }
 
-                    var records = Repository.Table.Where(x => x.IsEnabled && x.ZoneId == zone.Id && x.PageId == null).ToList();
+                    var records = Query(x => x.IsEnabled && x.ZoneId == zone.Id && x.PageId == null).ToList();
 
                     if (pageId.HasValue)
                     {
-                        records.AddRange(Repository.Table.Where(x => x.IsEnabled && x.ZoneId == zone.Id && x.PageId == pageId.Value));
+                        records.AddRange(Query(x => x.IsEnabled && x.ZoneId == zone.Id && x.PageId == pageId.Value));
                     }
 
                     return GetContentBlocks(records, cultureCode);

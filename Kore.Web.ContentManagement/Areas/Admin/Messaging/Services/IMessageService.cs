@@ -104,8 +104,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Services
 
         public IEnumerable<IMailMessage> GetQueuedEmails(int maxSendTries, int maxMessageItems)
         {
-            return Repository.Table
-                .Where(x => x.SentTries < maxSendTries && x.SentOnUtc == null)
+            return Query(x => x.SentTries < maxSendTries && x.SentOnUtc == null)
                 .OrderBy(x => x.Priority)
                 .ThenBy(x => x.CreatedOnUtc)
                 .Take(maxMessageItems)

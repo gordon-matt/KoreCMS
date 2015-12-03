@@ -74,7 +74,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
             // First ensure that current pages are in the config
             var config = Service.Find();
             var configPageIds = config.Select(x => x.PageId).ToHashSet();
-            var pageVersions = pageVersionService.GetCurrentVersions(); // temp fix: since we don't support localized routes yet
+            var pageVersions = pageVersionService.GetCurrentVersions(shownOnMenusOnly: false); // temp fix: since we don't support localized routes yet
             var pageVersionIds = pageVersions.Select(x => x.Id).ToHashSet();
 
             var newPageVersionIds = pageVersionIds.Except(configPageIds);
@@ -112,7 +112,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
                     Priority = item.Priority
                 });
             }
-            return collection;
+            return collection.OrderBy(x => x.Location);
         }
 
         [HttpPost]
@@ -170,7 +170,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
 
             var urls = new HashSet<UrlElement>();
 
-            var cultures = languageService.Value.Repository.Table.Select(x => x.CultureCode).ToList();
+            var cultures = languageService.Value.Query().Select(x => x.CultureCode).ToList();
 
             string siteUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
 

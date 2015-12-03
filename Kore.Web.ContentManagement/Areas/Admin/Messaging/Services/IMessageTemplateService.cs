@@ -19,7 +19,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Services
 
         public Domain.MessageTemplate Find(string name)
         {
-            return Repository.Table.FirstOrDefault(x => x.Name == name);
+            return FindOne(x => x.Name == name);
         }
     }
 }

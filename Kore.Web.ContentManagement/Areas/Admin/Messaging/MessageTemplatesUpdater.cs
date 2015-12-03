@@ -15,7 +15,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging
             var providers = EngineContext.Current.Resolve<IEnumerable<IMessageTemplatesProvider>>();
             var templateService = EngineContext.Current.Resolve<IMessageTemplateService>();
 
-            var templates = templateService.Repository.Table.ToList();
+            var templates = templateService.Find();
             foreach (var provider in providers)
             {
                 foreach (var template in provider.GetTemplates())

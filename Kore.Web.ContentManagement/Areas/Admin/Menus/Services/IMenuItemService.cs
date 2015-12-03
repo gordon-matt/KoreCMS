@@ -34,13 +34,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Services
             return CacheManager.Get(string.Format("Repository_MenuItem_GetByMenuIdAndEnabled_{0}_{1}", menuId, enabledOnly), () =>
             {
                 return enabledOnly
-                    ? Repository.Table
-                        .Where(x => x.MenuId == menuId && x.Enabled)
+                    ? Query(x => x.MenuId == menuId && x.Enabled)
                         .OrderBy(x => x.Position)
                         .ThenBy(x => x.Text)
                         .ToList()
-                    : Repository.Table
-                        .Where(x => x.MenuId == menuId)
+                    : Query(x => x.MenuId == menuId)
                         .OrderBy(x => x.Position)
                         .ThenBy(x => x.Text)
                         .ToList();

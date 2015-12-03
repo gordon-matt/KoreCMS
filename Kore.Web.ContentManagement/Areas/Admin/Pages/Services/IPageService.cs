@@ -105,8 +105,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
 
         public IEnumerable<Page> GetTopLevelPages()
         {
-            return Repository.Table
-                .Where(x => x.ParentId == null)
+            return Query(x => x.ParentId == null)
                 .OrderBy(x => x.Name)
                 .ToHashSet();
         }

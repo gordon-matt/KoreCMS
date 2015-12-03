@@ -66,7 +66,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
                     return Enumerable.Empty<IContentBlock>();
                 }
 
-                var query = Repository.Table.Where(x =>
+                var query = Query(x =>
                     x.EntityType == entityType &&
                     x.EntityId == entityId &&
                     x.ZoneId == zone.Id);

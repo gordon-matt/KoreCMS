@@ -142,7 +142,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
                     return Json(new { Success = false, error = "Cannot import language pack for the invariant culture. Please provide a culture code." });
                 }
 
-                bool cultureExistsInDb = languageService.Value.Repository.Table.Any(x => x.CultureCode == languagePackFile.CultureCode);
+                bool cultureExistsInDb = languageService.Value.Query().Any(x => x.CultureCode == languagePackFile.CultureCode);
 
                 if (!cultureExistsInDb)
                 {

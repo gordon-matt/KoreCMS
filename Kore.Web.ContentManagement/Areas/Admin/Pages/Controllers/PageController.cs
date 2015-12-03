@@ -142,7 +142,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         [Route("get-editor-ui/{pageVersionId}")]
         public ActionResult GetEditorUI(Guid pageVersionId)
         {
-            var pageVersion = pageVersionService.Value.Repository.Table
+            var pageVersion = pageVersionService.Value.Query()
                 .Include(x => x.Page)
                 .FirstOrDefault(x => x.Id == pageVersionId);
 
@@ -162,7 +162,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         {
             var currentCulture = WorkContext.CurrentCultureCode;
 
-            var pageVersion = pageVersionService.Value.Repository.Table
+            var pageVersion = pageVersionService.Value.Query()
                 .Include(x => x.Page)
                 .FirstOrDefault(x => x.Id == pageVersionId);
 

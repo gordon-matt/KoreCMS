@@ -43,8 +43,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             var entity = Service.FindOne(key);
 
             // First find previous version and set it to be the current
-            var previous = Service.Repository.Table
-                .Where(x =>
+            var previous = Service.Query(x =>
                     x.Id != entity.Id &&
                     x.PageId == entity.PageId &&
                     x.CultureCode == entity.CultureCode)
@@ -307,8 +306,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
         private void RemoveOldVersions(Guid pageId, string cultureCode)
         {
-            var pageIdsToKeep = Service.Repository.Table
-                .Where(x =>
+            var pageIdsToKeep = Service.Query(x =>
                     x.PageId == pageId &&
                     x.CultureCode == cultureCode)
                 .OrderByDescending(x => x.DateModifiedUtc)

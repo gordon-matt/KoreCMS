@@ -47,8 +47,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             bool enabledOnly = true,
             bool shownOnMenusOnly = true)
         {
-            var query = Repository.Table
-                .Include(x => x.Page);
+            var query = Query().Include(x => x.Page);
 
             if (enabledOnly)
             {
@@ -92,7 +91,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             }
 
             var pages = query.ToHashSet();
-            var pageVersions = Repository.Table.Include(x => x.Page).ToHashSet();
+            var pageVersions = Query().Include(x => x.Page).ToHashSet();
 
             return pages
                 .Select(x => GetCurrentVersionInternal(x.Id, pageVersions, cultureCode))

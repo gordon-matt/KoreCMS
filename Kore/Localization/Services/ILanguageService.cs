@@ -38,7 +38,7 @@ namespace Kore.Localization.Services
 
             return CacheManager.Get(string.Format(CacheKeyFiltered, cultureCode), () =>
             {
-                var language = Repository.Table.FirstOrDefault(x => x.CultureCode == cultureCode);
+                var language = FindOne(x => x.CultureCode == cultureCode);
                 if (language == null)
                 {
                     try
@@ -47,7 +47,7 @@ namespace Kore.Localization.Services
                         var cultures = CultureInfo.GetCultures(CultureTypes.AllCultures).Where(x => x.Parent.Equals(parent));
                         foreach (var cultureInfo in cultures)
                         {
-                            language = Repository.Table.FirstOrDefault(x => x.CultureCode == cultureInfo.Name);
+                            language = FindOne(x => x.CultureCode == cultureInfo.Name);
                             if (language != null)
                             {
                                 break;
@@ -68,8 +68,7 @@ namespace Kore.Localization.Services
         {
             var rtlLanguages = CacheManager.Get("Repository_Language_RightToLeft", () =>
             {
-                return Repository.Table
-                    .Where(x => x.IsRTL)
+                return Query(x => x.IsRTL)
                     .Select(k => k.CultureCode)
                     .ToList();
             });

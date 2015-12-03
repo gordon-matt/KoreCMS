@@ -34,8 +34,7 @@ namespace Kore.Localization.Services
 
             try
             {
-                var query = Repository.Table
-                    .Where(x => x.CultureCode == null || x.CultureCode == cultureCode)
+                var query = Query(x => x.CultureCode == null || x.CultureCode == cultureCode)
                     .GroupBy(x => x.TextKey)
                     .Select(grp => new ComparitiveLocalizableString
                     {
@@ -54,9 +53,7 @@ namespace Kore.Localization.Services
                 //SQLite throws error: "APPLY joins are not supported"
                 // So do it in memory instead
 
-                var query = Repository.Table
-                    .Where(x => x.CultureCode == null || x.CultureCode == cultureCode)
-                    .ToHashSet()
+                var query = Find(x => x.CultureCode == null || x.CultureCode == cultureCode)
                     .GroupBy(x => x.TextKey)
                     .Select(grp => new ComparitiveLocalizableString
                     {
@@ -76,8 +73,7 @@ namespace Kore.Localization.Services
 
         public virtual void Update(string cultureCode, IEnumerable<ComparitiveLocalizableString> table)
         {
-            var localizedStrings = Repository.Table
-                .Where(x => x.CultureCode == cultureCode)
+            var localizedStrings = Query(x => x.CultureCode == cultureCode)
                 .ToDictionary(k => k.TextKey, v => v.TextValue);
 
             var newItems = table.Where(x => !localizedStrings.Keys.Contains(x.Key));
@@ -98,11 +94,7 @@ namespace Kore.Localization.Services
             var changedItems = table.Where(x => localizedStrings.Keys.Contains(x.Key) && localizedStrings[x.Key] != x.LocalizedValue).ToList();
             var changedItemKeys = changedItems.Select(x => x.Key);
 
-            var toUpdate = Repository.Table
-                .Where(x =>
-                    x.CultureCode == cultureCode &&
-                    changedItemKeys.Contains(x.TextKey))
-                .ToList();
+            var toUpdate = Find(x => x.CultureCode == cultureCode && changedItemKeys.Contains(x.TextKey));
 
             var batchUpdates = new List<LocalizableString>();
 

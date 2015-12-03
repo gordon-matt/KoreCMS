@@ -9,7 +9,7 @@ namespace Kore.Data.Services
 {
     public interface IGenericDataService<TEntity> where TEntity : class
     {
-        IRepository<TEntity> Repository { get; }
+        //IRepository<TEntity> Repository { get; }
 
         #region Find
 
@@ -34,6 +34,14 @@ namespace Kore.Data.Services
         Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> filterExpression);
 
         #endregion
+
+        #region Query
+
+        IQueryable<TEntity> Query();
+
+        IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> filterExpression);
+
+        #endregion Find
 
         #region Count
 

@@ -54,10 +54,10 @@ namespace Kore.Data.Services
 
         public ILogger Logger { get; private set; }
 
-        public IRepository<TEntity> Repository
-        {
-            get { return repository; }
-        }
+        //public IRepository<TEntity> Repository
+        //{
+        //    get { return repository; }
+        //}
 
         #endregion Properties
 
@@ -124,6 +124,20 @@ namespace Kore.Data.Services
 
         #endregion Find
 
+        #region Query
+
+        public virtual IQueryable<TEntity> Query()
+        {
+            return repository.Table;
+        }
+
+        public virtual IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> filterExpression)
+        {
+            return repository.Table.Where(filterExpression);
+        }
+
+        #endregion Find
+
         #region Count
 
         public virtual int Count()
@@ -138,12 +152,12 @@ namespace Kore.Data.Services
 
         public virtual async Task<int> CountAsync()
         {
-            return await Repository.CountAsync();
+            return await repository.CountAsync();
         }
 
         public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>> countExpression)
         {
-            return await Repository.CountAsync(countExpression);
+            return await repository.CountAsync(countExpression);
         }
 
         #endregion Count
@@ -187,27 +201,27 @@ namespace Kore.Data.Services
 
         public virtual async Task<int> DeleteAllAsync()
         {
-            return await Repository.DeleteAllAsync();
+            return await repository.DeleteAllAsync();
         }
 
         public virtual async Task<int> DeleteAsync(TEntity entity)
         {
-            return await Repository.DeleteAsync(entity);
+            return await repository.DeleteAsync(entity);
         }
 
         public virtual async Task<int> DeleteAsync(IEnumerable<TEntity> entities)
         {
-            return await Repository.DeleteAsync(entities);
+            return await repository.DeleteAsync(entities);
         }
 
         public virtual async Task<int> DeleteAsync(Expression<Func<TEntity, bool>> filterExpression)
         {
-            return await Repository.DeleteAsync(filterExpression);
+            return await repository.DeleteAsync(filterExpression);
         }
 
         public virtual async Task<int> DeleteAsync(IQueryable<TEntity> query)
         {
-            return await Repository.DeleteAsync(query);
+            return await repository.DeleteAsync(query);
         }
 
         #endregion Delete
@@ -230,12 +244,12 @@ namespace Kore.Data.Services
 
         public virtual async Task<int> InsertAsync(TEntity entity)
         {
-            return await Repository.InsertAsync(entity);
+            return await repository.InsertAsync(entity);
         }
 
         public virtual async Task<int> InsertAsync(IEnumerable<TEntity> entities)
         {
-            return await Repository.InsertAsync(entities);
+            return await repository.InsertAsync(entities);
         }
 
         #endregion Insert
@@ -258,12 +272,12 @@ namespace Kore.Data.Services
 
         public virtual async Task<int> UpdateAsync(TEntity entity)
         {
-            return await Repository.UpdateAsync(entity);
+            return await repository.UpdateAsync(entity);
         }
 
         public virtual async Task<int> UpdateAsync(IEnumerable<TEntity> entities)
         {
-            return await Repository.UpdateAsync(entities);
+            return await repository.UpdateAsync(entities);
         }
 
         #endregion Update

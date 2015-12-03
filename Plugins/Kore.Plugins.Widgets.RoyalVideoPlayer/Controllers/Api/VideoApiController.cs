@@ -57,12 +57,11 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
                 return Enumerable.Empty<Video>().AsQueryable();
             }
 
-            var videoIds = playlistVideoService.Value.Repository.Table
-                .Where(x => x.PlaylistId == playlistId)
+            var videoIds = playlistVideoService.Value.Query(x => x.PlaylistId == playlistId)
                 .Select(x => x.VideoId)
                 .ToList();
 
-            var query = Service.Repository.Table.Where(x => videoIds.Contains(x.Id));
+            var query = Service.Query(x => videoIds.Contains(x.Id));
 
             return query;
         }
@@ -100,12 +99,10 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
 
             // Insert new entries from the list of IDs provided where those IDs are not already mapped.
 
-            var existingPlaylistIds = playlistService.Value.Repository.Table
-                .Where(x => playlists.Contains(x.Id))
+            var existingPlaylistIds = playlistService.Value.Query(x => playlists.Contains(x.Id))
                 .Select(x => x.Id);
 
-            var existingMappedIds = playlistVideoService.Value.Repository.Table
-                .Where(x => x.VideoId == videoId)
+            var existingMappedIds = playlistVideoService.Value.Query(x => x.VideoId == videoId)
                 .Select(x => x.PlaylistId)
                 .ToList();
 

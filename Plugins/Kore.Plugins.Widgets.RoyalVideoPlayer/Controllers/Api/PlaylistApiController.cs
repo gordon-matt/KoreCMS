@@ -62,8 +62,7 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
                 return NotFound();
             }
 
-            var playlistIds = playlistVideoService.Value.Repository.Table
-                .Where(x => x.VideoId == videoId)
+            var playlistIds = playlistVideoService.Value.Query(x => x.VideoId == videoId)
                 .Select(x => x.PlaylistId)
                 .ToList();
 

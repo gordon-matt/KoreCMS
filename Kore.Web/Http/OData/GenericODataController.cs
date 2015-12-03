@@ -44,7 +44,7 @@ namespace Kore.Web.Http.OData
             {
                 return Enumerable.Empty<TEntity>().AsQueryable();
             }
-            return Service.Repository.Table;
+            return Service.Query();
         }
 
         // GET: odata/<Entity>(5)

@@ -13,6 +13,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 {
     public class PageApiController : GenericODataController<Page, Guid>
     {
+        private readonly IPageService service;
         private readonly IPageVersionService pageVersionService;
         private readonly IWebWorkContext workContext;
 

@@ -33,7 +33,7 @@
                     <h2>@ViewBag.Title</h2>
                 </div>
 
-                @using (Html.BeginForm("InstallPost", "Installation", FormMethod.Post, new { @class = "form-horizontal" }))
+                @using (Html.BeginForm("PostInstall", "Installation", FormMethod.Post, new { @class = "form-horizontal" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary("", new { @class = "text-danger" })

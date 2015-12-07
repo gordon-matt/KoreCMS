@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Kore.Web;
+using Kore.Web.Installation;
 using Kore.Web.Models;
 using KoreCMS.Data;
 
@@ -19,8 +20,8 @@ namespace KoreCMS.Controllers
         }
 
         [HttpPost]
-        [Route("install-post")]
-        public ActionResult InstallPost(InstallationModel model)
+        [Route("post-install")]
+        public ActionResult PostInstall(InstallationModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -30,13 +31,5 @@ namespace KoreCMS.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
-        //private static void TryUpdateNLogConfig()
-        //{
-        //    string path = HostingEnvironment.MapPath("~/NLog.config");
-        //    var configFile = ConfigurationManager.OpenExeConfiguration(path);
-        //    var nlogSection = configFile.GetSection("nlog");
-        //    var nLogConfig = new NLog.
-        //}
     }
 }

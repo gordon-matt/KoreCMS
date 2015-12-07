@@ -235,7 +235,7 @@
     <Compile Include="Infrastructure\IDurandalRouteProvider.cs" />
     <Compile Include="Infrastructure\IRequireJSConfigProvider.cs" />
     <Compile Include="Infrastructure\ResourceBundleRegistrar.cs" />
-    <Compile Include="InstallationHelper.cs" />
+    <Compile Include="Installation\InstallationHelper.cs" />
     <Compile Include="IO\FileSystems\AppData\AppDataFolder.cs" />
     <Compile Include="IO\FileSystems\AppData\IAppDataFolder.cs" />
     <Compile Include="IO\FileSystems\AppData\IAppDataFolderRoot.cs" />

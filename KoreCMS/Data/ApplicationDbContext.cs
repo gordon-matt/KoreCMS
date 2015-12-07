@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using Kore.Configuration.Domain;
 using Kore.Data;
 using Kore.Data.EntityFramework;
@@ -14,6 +15,7 @@ using Kore.Tasks.Domain;
 using Kore.Web.ContentManagement;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Localization;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
@@ -107,6 +109,13 @@ namespace KoreCMS.Data
         public virtual void Seed()
         {
             InitializeLocalizableStrings();
+
+            var dataSettings = EngineContext.Current.Resolve<DataSettings>();
+
+            if (dataSettings.CreateSampleData)
+            {
+                InstallContentBlocks();
+            }
         }
 
         #endregion ISupportSeed Members
@@ -143,6 +152,83 @@ namespace KoreCMS.Data
             }
             LocalizableStrings.AddRange(toInsert);
             SaveChanges();
+        }
+
+        private void InstallContentBlocks()
+        {
+            var languageSwitchZone = EnsureZone("LanguageSwitch");
+            var adminLanguageSwitchZone = EnsureZone("AdminLanguageSwitch");
+
+            var templateLanguageSwitchBlock = new LanguageSwitchBlock();
+
+            #region Language Switch
+
+            var block = ContentBlocks.FirstOrDefault(x =>
+               x.ZoneId == languageSwitchZone.Id &&
+               x.Title == "Language Switch");
+
+            if (block == null)
+            {
+                ContentBlocks.Add(new ContentBlock
+                {
+                    Id = Guid.NewGuid(),
+                    ZoneId = languageSwitchZone.Id,
+                    Title = "Language Switch",
+                    BlockType = GetTypeFullName(templateLanguageSwitchBlock.GetType()),
+                    BlockName = templateLanguageSwitchBlock.Name,
+                    IsEnabled = true,
+                    BlockValues = @"{""Style"":""0"",""IncludeInvariant"":false,""InvariantText"":""[ Invariant ]""}"
+                });
+            }
+
+            #endregion Language Switch
+
+            #region Admin Language Switch
+
+            block = ContentBlocks.FirstOrDefault(x =>
+                x.ZoneId == adminLanguageSwitchZone.Id &&
+                x.Title == "Admin Language Switch");
+
+            if (block == null)
+            {
+                ContentBlocks.Add(new ContentBlock
+                {
+                    Id = Guid.NewGuid(),
+                    ZoneId = adminLanguageSwitchZone.Id,
+                    Title = "Admin Language Switch",
+                    BlockType = GetTypeFullName(templateLanguageSwitchBlock.GetType()),
+                    BlockName = templateLanguageSwitchBlock.Name,
+                    IsEnabled = true,
+                    BlockValues = @"{""Style"":""0"",""IncludeInvariant"":false,""InvariantText"":""[ Invariant ]""}"
+                });
+            }
+
+            #endregion Admin Language Switch
+
+            SaveChanges();
+        }
+
+        private Zone EnsureZone(string zoneName)
+        {
+            var zone = Zones.FirstOrDefault(x => x.Name == zoneName);
+
+            if (zone == null)
+            {
+                Zones.Add(new Zone
+                {
+                    Id = Guid.NewGuid(),
+                    Name = zoneName
+                });
+                SaveChanges();
+                zone = Zones.FirstOrDefault(x => x.Name == zoneName);
+            }
+
+            return zone;
+        }
+
+        private static string GetTypeFullName(Type type)
+        {
+            return string.Concat(type.FullName, ", ", type.Assembly.GetName().Name);
         }
     }
 }

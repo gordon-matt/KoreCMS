@@ -7,7 +7,7 @@ using Kore.Infrastructure;
 using Kore.Web.Infrastructure;
 using Kore.Web.Models;
 
-namespace Kore.Web
+namespace Kore.Web.Installation
 {
     public static class InstallationHelper
     {
@@ -21,7 +21,7 @@ namespace Kore.Web
         /// </summary>
         private static string ConnectionStringWAFormat = @"Server={0};Initial Catalog={1};Integrated Security=True;Persist Security Info=True;MultipleActiveResultSets=True";
 
-        public static void Install<TDbContext>(HttpRequestBase httpRequest, InstallationModel model) where TDbContext : DbContext, IKoreDbContext, ISupportSeed, new()
+        public static void Install<TContext>(HttpRequestBase httpRequest, InstallationModel model) where TContext : DbContext, IKoreDbContext, ISupportSeed, new()
         {
             var dataSettings = EngineContext.Current.Resolve<DataSettings>();
 
@@ -61,7 +61,7 @@ namespace Kore.Web
 
             DataSettingsManager.SaveSettings(dataSettings);
 
-            using (var context = new TDbContext())
+            using (var context = new TContext())
             {
                 context.Database.Connection.ConnectionString = connectionString;
 

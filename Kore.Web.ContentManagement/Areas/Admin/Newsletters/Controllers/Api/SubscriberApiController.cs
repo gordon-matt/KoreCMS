@@ -73,7 +73,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
         {
             if (!CheckPermission(CmsPermissions.NewsletterWrite))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             var entity = membershipService.GetUserById(key);

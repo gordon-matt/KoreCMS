@@ -53,7 +53,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             if (!ModelState.IsValid)
@@ -88,7 +88,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             if (!ModelState.IsValid)
@@ -106,7 +106,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             if (!ModelState.IsValid)
@@ -144,7 +144,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             KoreRole entity = Service.GetRoleById(key);
@@ -178,7 +178,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             string roleId = (string)parameters["roleId"];

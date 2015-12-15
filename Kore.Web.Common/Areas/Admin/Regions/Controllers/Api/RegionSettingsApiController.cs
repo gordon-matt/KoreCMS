@@ -89,7 +89,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
         {
             if (!CheckPermission(Permissions.RegionsWrite))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             string settingsId = (string)parameters["settingsId"];

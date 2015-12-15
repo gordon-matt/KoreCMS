@@ -120,7 +120,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
         {
             if (!CheckPermission(WritePermission))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             int id = (int)parameters["id"];
@@ -160,7 +160,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
         {
             if (!CheckPermission(WritePermission))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             var config = Service.Find();

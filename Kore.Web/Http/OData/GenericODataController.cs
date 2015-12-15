@@ -64,7 +64,7 @@ namespace Kore.Web.Http.OData
         {
             if (!CheckPermission(WritePermission))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             if (!ModelState.IsValid)
@@ -102,7 +102,7 @@ namespace Kore.Web.Http.OData
         {
             if (!CheckPermission(WritePermission))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             if (!ModelState.IsValid)
@@ -125,7 +125,7 @@ namespace Kore.Web.Http.OData
         {
             if (!CheckPermission(WritePermission))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             if (!ModelState.IsValid)
@@ -165,7 +165,7 @@ namespace Kore.Web.Http.OData
         {
             if (!CheckPermission(WritePermission))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             TEntity entity = Service.FindOne(key);

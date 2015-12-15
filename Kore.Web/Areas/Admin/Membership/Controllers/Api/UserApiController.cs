@@ -60,7 +60,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             if (!ModelState.IsValid)
@@ -95,7 +95,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             if (!ModelState.IsValid)
@@ -117,7 +117,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             if (!ModelState.IsValid)
@@ -155,7 +155,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             KoreUser entity = Service.GetUserById(key);
@@ -191,7 +191,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             string userId = (string)parameters["userId"];
@@ -207,7 +207,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             string userId = (string)parameters["userId"];

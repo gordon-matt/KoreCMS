@@ -514,6 +514,8 @@
             self.pageVersionGrid = $('#PageVersionGrid').data('kendoGrid');
         };
         self.create = function () {
+            self.parent.currentCulture = null;
+
             self.id(emptyGuid);
             self.parentId(self.selectedTopLevelPageId);
             self.pageTypeId(emptyGuid);
@@ -563,7 +565,14 @@
 
             self.versionValidator.resetForm();
         };
-        self.edit = function (id) {
+        self.edit = function (id, cultureCode) {
+            if (cultureCode) {
+                self.parent.currentCulture = cultureCode;
+            }
+            else {
+                self.parent.currentCulture = null;
+            }
+
             $.ajax({
                 url: "/odata/kore/cms/PageApi(" + id + ")",
                 type: "GET",
@@ -589,13 +598,8 @@
                 }
 
                 $.ajax({
-                    url: "/odata/kore/cms/PageVersionApi/Default.GetCurrentVersion",
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify({
-                        pageId: self.id(),
-                        cultureCode: self.parent.currentCulture
-                    }),
+                    url: "/odata/kore/cms/PageVersionApi/Default.GetCurrentVersion(pageId=" + self.id() + ",cultureCode='" + self.parent.currentCulture + "')",
+                    type: "GET",
                     dataType: "json",
                     async: false
                 })
@@ -621,7 +625,13 @@
         self.setupVersionEditSection = function (json) {
             self.parent.pageVersionModel.id(json.Id);
             self.parent.pageVersionModel.pageId(json.PageId);
-            self.parent.pageVersionModel.cultureCode(json.CultureCode);
+
+            // Don't do this, since API may return invariant version if localized does not exist yet...
+            //self.parent.pageVersionModel.cultureCode(json.CultureCode);
+
+            // So do this instead...
+            self.parent.pageVersionModel.cultureCode(self.parent.currentCulture);
+
             self.parent.pageVersionModel.status(json.Status);
             self.parent.pageVersionModel.title(json.Title);
             self.parent.pageVersionModel.slug(json.Slug);
@@ -802,7 +812,7 @@
             }
 
             var record = {
-                Id: self.parent.pageVersionModel.id(),
+                Id: self.parent.pageVersionModel.id(), // Should always create a new one, so don't send Id!
                 PageId: self.parent.pageVersionModel.pageId(),
                 CultureCode: cultureCode,
                 Status: status,
@@ -996,6 +1006,15 @@
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
+        self.localize = function () {
+            $("#cultureModal").modal("show");
+        };
+        self.onCultureSelected = function () {
+            var id = self.id();
+            var cultureCode = $("#CultureCode").val();
+            self.edit(id, cultureCode);
+            $("#cultureModal").modal("hide");
+        };
     };
 
     var ViewModel = function () {
@@ -1035,12 +1054,12 @@
             });
 
             self.gridPageSize = $("#GridPageSize").val();
-            self.currentCulture = $("#CurrentCulture").val();
+            //self.currentCulture = $("#CurrentCulture").val();
             self.defaultFrontendLayoutPath = $("#DefaultFrontendLayoutPath").val();
 
-            if (!self.currentCulture) {
-                self.currentCulture = null;
-            }
+            //if (!self.currentCulture) {
+            //    self.currentCulture = null;
+            //}
             if (!self.defaultFrontendLayoutPath) {
                 self.defaultFrontendLayoutPath = null;
             }

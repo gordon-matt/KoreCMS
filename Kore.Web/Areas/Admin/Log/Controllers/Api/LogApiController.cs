@@ -44,7 +44,7 @@ namespace Kore.Web.Areas.Admin.Log.Controllers.Api
         {
             if (!CheckPermission(WritePermission))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             Service.DeleteAll();

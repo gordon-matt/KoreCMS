@@ -144,10 +144,10 @@ namespace Kore.Web.ContentManagement.Infrastructure
             var restoreVersionAction = builder.EntityType<PageVersion>().Action("RestoreVersion");
             restoreVersionAction.Returns<IHttpActionResult>();
 
-            var translateAction = builder.EntityType<PageVersion>().Collection.Action("GetCurrentVersion");
-            translateAction.Parameter<Guid>("pageId");
-            translateAction.Parameter<string>("cultureCode");
-            translateAction.Returns<EdmPageVersion>();
+            var getCurrentVersionFunction = builder.EntityType<PageVersion>().Collection.Function("GetCurrentVersion");
+            getCurrentVersionFunction.Parameter<Guid>("pageId");
+            getCurrentVersionFunction.Parameter<string>("cultureCode");
+            getCurrentVersionFunction.Returns<EdmPageVersion>();
         }
 
         private static void RegisterXmlSitemapODataActions(ODataModelBuilder builder)

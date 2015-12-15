@@ -1,5 +1,4 @@
-﻿using System.Data.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -8,7 +7,9 @@ using Kore.Caching;
 using Kore.Collections;
 using Kore.Data;
 using Kore.Data.Services;
+using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Domain;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
 {
@@ -19,15 +20,21 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
 
     public class PageService : GenericDataService<Page>, IPageService
     {
-        private readonly IRepository<PageVersion> pageVersionRepository;
+        private readonly Lazy<IRepository<PageVersion>> pageVersionRepository;
+        private readonly Lazy<IRepository<ContentBlock>> contentBlockRepository;
+        private readonly Lazy<IRepository<SitemapConfig>> sitemapConfigRepository;
 
         public PageService(
             ICacheManager cacheManager,
             IRepository<Page> repository,
-            IRepository<PageVersion> pageVersionRepository)
+            Lazy<IRepository<PageVersion>> pageVersionRepository,
+            Lazy<IRepository<ContentBlock>> contentBlockRepository,
+            Lazy<IRepository<SitemapConfig>> sitemapConfigRepository)
             : base(cacheManager, repository)
         {
             this.pageVersionRepository = pageVersionRepository;
+            this.contentBlockRepository = contentBlockRepository;
+            this.sitemapConfigRepository = sitemapConfigRepository;
         }
 
         #region Delete
@@ -36,8 +43,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
         {
             var pageIds = entities.Select(x => x.Id);
 
+            // Delete Content Blocks
+            int rowsAffected = contentBlockRepository.Value.Delete(x => x.PageId != null && pageIds.Contains(x.PageId.Value));
+
+            // Delete Site Map Config
+            rowsAffected += sitemapConfigRepository.Value.Delete(x => pageIds.Contains(x.PageId));
+
             // Delete Page Versions
-            int rowsAffected = pageVersionRepository.Delete(x => pageIds.Contains(x.PageId));
+            rowsAffected += pageVersionRepository.Value.Delete(x => pageIds.Contains(x.PageId));
             rowsAffected += base.Delete(entities);
 
             // Ensure No Orphans
@@ -51,8 +64,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
         {
             var pageIds = query.Select(x => x.Id).ToArray();
 
+            // Delete Content Blocks
+            int rowsAffected = contentBlockRepository.Value.Delete(x => x.PageId != null && pageIds.Contains(x.PageId.Value));
+
+            // Delete Site Map Config
+            rowsAffected += sitemapConfigRepository.Value.Delete(x => pageIds.Contains(x.PageId));
+
             // Delete Page Versions
-            int rowsAffected = pageVersionRepository.Delete(x => pageIds.Contains(x.PageId));
+            rowsAffected += pageVersionRepository.Value.Delete(x => pageIds.Contains(x.PageId));
             rowsAffected += base.Delete(query);
 
             // Ensure No Orphans
@@ -64,8 +83,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
 
         public override int Delete(Page entity)
         {
+            // Delete Content Blocks
+            int rowsAffected = contentBlockRepository.Value.Delete(x => x.PageId == entity.Id);
+
+            // Delete Site Map Config
+            rowsAffected += sitemapConfigRepository.Value.Delete(x => x.PageId == entity.Id);
+
             // Delete Page Versions
-            int rowsAffected = pageVersionRepository.Delete(x => x.PageId == entity.Id);
+            rowsAffected += pageVersionRepository.Value.Delete(x => x.PageId == entity.Id);
             rowsAffected += base.Delete(entity);
 
             // Ensure No Orphans
@@ -79,8 +104,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             var pages = Find(filterExpression);
             var pageIds = pages.Select(x => x.Id).ToArray();
 
+            // Delete Content Blocks
+            int rowsAffected = contentBlockRepository.Value.Delete(x => x.PageId != null && pageIds.Contains(x.PageId.Value));
+
+            // Delete Site Map Config
+            rowsAffected += sitemapConfigRepository.Value.Delete(x => pageIds.Contains(x.PageId));
+
             // Delete Page Versions
-            int rowsAffected = pageVersionRepository.Delete(x => pageIds.Contains(x.PageId));
+            rowsAffected += pageVersionRepository.Value.Delete(x => pageIds.Contains(x.PageId));
             rowsAffected += base.Delete(filterExpression);
 
             // Ensure No Orphans
@@ -94,8 +125,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             var pages = Find();
             var pageIds = pages.Select(x => x.Id).ToArray();
 
+            // Delete Content Blocks
+            int rowsAffected = contentBlockRepository.Value.Delete(x => x.PageId != null && pageIds.Contains(x.PageId.Value));
+
+            // Delete Site Map Config
+            rowsAffected += sitemapConfigRepository.Value.Delete(x => pageIds.Contains(x.PageId));
+
             // Delete Page Versions
-            int rowsAffected = pageVersionRepository.Delete(x => pageIds.Contains(x.PageId));
+            rowsAffected += pageVersionRepository.Value.Delete(x => pageIds.Contains(x.PageId));
             rowsAffected += base.DeleteAll();
 
             // Ensure No Orphans
@@ -109,8 +146,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             var pages = await FindAsync();
             var pageIds = pages.Select(x => x.Id).ToArray();
 
+            // Delete Content Blocks
+            int rowsAffected = await contentBlockRepository.Value.DeleteAsync(x => x.PageId != null && pageIds.Contains(x.PageId.Value));
+
+            // Delete Site Map Config
+            rowsAffected += await sitemapConfigRepository.Value.DeleteAsync(x => pageIds.Contains(x.PageId));
+
             // Delete Page Versions
-            int rowsAffected = await pageVersionRepository.DeleteAsync(x => pageIds.Contains(x.PageId));
+            rowsAffected += await pageVersionRepository.Value.DeleteAsync(x => pageIds.Contains(x.PageId));
             rowsAffected += await base.DeleteAllAsync();
 
             // Ensure No Orphans
@@ -123,8 +166,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
         {
             var pageIds = entities.Select(x => x.Id);
 
+            // Delete Content Blocks
+            int rowsAffected = await contentBlockRepository.Value.DeleteAsync(x => x.PageId != null && pageIds.Contains(x.PageId.Value));
+
+            // Delete Site Map Config
+            rowsAffected += await sitemapConfigRepository.Value.DeleteAsync(x => pageIds.Contains(x.PageId));
+
             // Delete Page Versions
-            int rowsAffected = await pageVersionRepository.DeleteAsync(x => pageIds.Contains(x.PageId));
+            rowsAffected += await pageVersionRepository.Value.DeleteAsync(x => pageIds.Contains(x.PageId));
             rowsAffected += await base.DeleteAsync(entities);
 
             // Ensure No Orphans
@@ -138,8 +187,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
         {
             var pageIds = query.Select(x => x.Id).ToArray();
 
+            // Delete Content Blocks
+            int rowsAffected = await contentBlockRepository.Value.DeleteAsync(x => x.PageId != null && pageIds.Contains(x.PageId.Value));
+
+            // Delete Site Map Config
+            rowsAffected += await sitemapConfigRepository.Value.DeleteAsync(x => pageIds.Contains(x.PageId));
+
             // Delete Page Versions
-            int rowsAffected = await pageVersionRepository.DeleteAsync(x => pageIds.Contains(x.PageId));
+            rowsAffected += await pageVersionRepository.Value.DeleteAsync(x => pageIds.Contains(x.PageId));
             rowsAffected += await base.DeleteAsync(query);
 
             // Ensure No Orphans
@@ -151,8 +206,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
 
         public override async Task<int> DeleteAsync(Page entity)
         {
+            // Delete Content Blocks
+            int rowsAffected = await contentBlockRepository.Value.DeleteAsync(x => x.PageId == entity.Id);
+
+            // Delete Site Map Config
+            rowsAffected += await sitemapConfigRepository.Value.DeleteAsync(x => x.PageId == entity.Id);
+
             // Delete Page Versions
-            int rowsAffected = await pageVersionRepository.DeleteAsync(x => x.PageId == entity.Id);
+            rowsAffected += await pageVersionRepository.Value.DeleteAsync(x => x.PageId == entity.Id);
             rowsAffected += await base.DeleteAsync(entity);
 
             // Ensure No Orphans
@@ -166,8 +227,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             var pages = await FindAsync(filterExpression);
             var pageIds = pages.Select(x => x.Id).ToArray();
 
+            // Delete Content Blocks
+            int rowsAffected = await contentBlockRepository.Value.DeleteAsync(x => x.PageId != null && pageIds.Contains(x.PageId.Value));
+
+            // Delete Site Map Config
+            rowsAffected += await sitemapConfigRepository.Value.DeleteAsync(x => pageIds.Contains(x.PageId));
+
             // Delete Page Versions
-            int rowsAffected = await pageVersionRepository.DeleteAsync(x => pageIds.Contains(x.PageId));
+            rowsAffected += await pageVersionRepository.Value.DeleteAsync(x => pageIds.Contains(x.PageId));
             rowsAffected += await base.DeleteAsync(filterExpression);
 
             // Ensure No Orphans
@@ -176,7 +243,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             return rowsAffected;
         }
 
-        #endregion
+        #endregion Delete
 
         #region Insert
 
@@ -195,7 +262,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                 Title = x.Name,
                 Slug = x.Name.ToSlugUrl()
             });
-            rowsAffected += pageVersionRepository.Insert(pageVersions);
+            rowsAffected += pageVersionRepository.Value.Insert(pageVersions);
 
             return rowsAffected;
         }
@@ -204,7 +271,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
         {
             int rowsAffected = base.Insert(entity);
 
-            rowsAffected += pageVersionRepository.Insert(new PageVersion
+            rowsAffected += pageVersionRepository.Value.Insert(new PageVersion
             {
                 Id = Guid.NewGuid(),
                 PageId = entity.Id,
@@ -234,7 +301,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                 Title = x.Name,
                 Slug = x.Name.ToSlugUrl()
             });
-            rowsAffected += await pageVersionRepository.InsertAsync(pageVersions);
+            rowsAffected += await pageVersionRepository.Value.InsertAsync(pageVersions);
 
             return rowsAffected;
         }
@@ -243,7 +310,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
         {
             int rowsAffected = await base.InsertAsync(entity);
 
-            rowsAffected += await pageVersionRepository.InsertAsync(new PageVersion
+            rowsAffected += await pageVersionRepository.Value.InsertAsync(new PageVersion
             {
                 Id = Guid.NewGuid(),
                 PageId = entity.Id,
@@ -258,7 +325,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             return rowsAffected;
         }
 
-        #endregion
+        #endregion Insert
 
         private void EnsureNoOrphans(Page page)
         {

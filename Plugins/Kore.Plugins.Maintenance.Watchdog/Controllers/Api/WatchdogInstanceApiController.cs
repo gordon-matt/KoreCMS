@@ -198,7 +198,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
         {
             if (!CheckPermission(WritePermission))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             string serviceName = (string)parameters["name"];
@@ -224,7 +224,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
         {
             if (!CheckPermission(WritePermission))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             string serviceName = (string)parameters["name"];

@@ -71,7 +71,7 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
         {
             if (!CheckPermission(WritePermission))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             int videoId = (int)parameters["videoId"];

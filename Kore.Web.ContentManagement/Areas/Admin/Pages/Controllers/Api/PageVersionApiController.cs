@@ -66,7 +66,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         {
             if (!CheckPermission(WritePermission))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             if (!ModelState.IsValid)
@@ -136,7 +136,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         {
             if (!CheckPermission(WritePermission))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             if (!ModelState.IsValid)
@@ -151,31 +151,55 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
             try
             {
+                // Getting by ID only is not good enough in this instance, because GetCurrentVersion()
+                //  will return the invariant record if no localized record exists. That means when an entity is updated to here,
+                //  we are trying to update a localized one, but using the ID of the invariant one! So, we need to get by culture code AND ID
+                //  and then if not exists, create it.
                 var currentVersion = Service.FindOne(entity.Id);
 
-                if (currentVersion.Status == VersionStatus.Published)
+                if (currentVersion.CultureCode != entity.CultureCode)
                 {
-                    // archive current version before updating
-                    var backup = new PageVersion
+                    // We need to duplicate it to a new record!
+                    var newRecord = new PageVersion
                     {
                         Id = Guid.NewGuid(),
-                        PageId = currentVersion.PageId,
-                        CultureCode = currentVersion.CultureCode,
-                        DateCreatedUtc = currentVersion.DateCreatedUtc,
-                        DateModifiedUtc = currentVersion.DateModifiedUtc,
-                        Status = VersionStatus.Archived,
-                        Title = currentVersion.Title,
-                        Slug = currentVersion.Slug,
-                        Fields = currentVersion.Fields,
+                        PageId = entity.PageId,
+                        CultureCode = entity.CultureCode,
+                        Status = currentVersion.Status,
+                        Title = entity.Title,
+                        Slug = entity.Slug,
+                        Fields = entity.Fields,
+                        DateCreatedUtc = DateTime.UtcNow,
+                        DateModifiedUtc = DateTime.UtcNow,
                     };
-                    Service.Insert(backup);
-
-                    RemoveOldVersions(currentVersion.PageId, currentVersion.CultureCode);
+                    Service.Insert(newRecord);
                 }
+                else
+                {
+                    if (currentVersion.Status == VersionStatus.Published)
+                    {
+                        // archive current version before updating
+                        var backup = new PageVersion
+                        {
+                            Id = Guid.NewGuid(),
+                            PageId = currentVersion.PageId,
+                            CultureCode = currentVersion.CultureCode,
+                            DateCreatedUtc = currentVersion.DateCreatedUtc,
+                            DateModifiedUtc = currentVersion.DateModifiedUtc,
+                            Status = VersionStatus.Archived,
+                            Title = currentVersion.Title,
+                            Slug = currentVersion.Slug,
+                            Fields = currentVersion.Fields,
+                        };
+                        Service.Insert(backup);
 
-                entity.DateCreatedUtc = currentVersion.DateCreatedUtc;
-                entity.DateModifiedUtc = DateTime.UtcNow;
-                Service.Update(entity);
+                        RemoveOldVersions(currentVersion.PageId, currentVersion.CultureCode);
+                    }
+
+                    entity.DateCreatedUtc = currentVersion.DateCreatedUtc;
+                    entity.DateModifiedUtc = DateTime.UtcNow;
+                    Service.Update(entity);
+                }
             }
             catch (DbUpdateConcurrencyException x)
             {
@@ -206,7 +230,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         {
             if (!CheckPermission(CmsPermissions.PageHistoryRestore))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             var versionToRestore = Service.FindOne(key);
@@ -258,16 +282,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             return Ok();
         }
 
-        [HttpPost]
-        public IHttpActionResult GetCurrentVersion(ODataActionParameters parameters)
+        [HttpGet]
+        public IHttpActionResult GetCurrentVersion([FromODataUri] Guid pageId, [FromODataUri] string cultureCode)
         {
             if (!CheckPermission(CmsPermissions.PagesWrite))
             {
                 return Unauthorized();
             }
-
-            Guid pageId = (Guid)parameters["pageId"];
-            string cultureCode = (string)parameters["cultureCode"];
 
             var currentVersion = ((IPageVersionService)Service).GetCurrentVersion(
                 pageId,

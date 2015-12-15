@@ -43,7 +43,7 @@ namespace Kore.Web.Areas.Admin.ScheduledTasks.Controllers.Api
         {
             if (!CheckPermission(WritePermission))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             int taskId = (int)parameters["taskId"];

@@ -11,7 +11,6 @@
 <link type="text/css" rel="stylesheet" href="@Style.GetBundleUrl("third-party/fg-menu")" />
 
 @Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
-@Html.Hidden("CurrentCulture", WorkContext.CurrentCultureCode)
 @Html.Hidden("DefaultFrontendLayoutPath", KoreWebConstants.DefaultFrontendLayoutPath)
 
 <div class="row">
@@ -41,6 +40,9 @@
                 </a>
                 <a data-bind="click: pageModel.toggleEnabled" class="btn btn-default btn-lg" title="@T(KoreWebLocalizableStrings.General.Toggle).Text">
                     <i class="kore-icon kore-icon-toggle-on"></i>
+                </a>
+                <a data-bind="click: pageModel.localize" class="btn btn-primary btn-lg" title="@T(KoreWebLocalizableStrings.General.Localize).Text">
+                    <i class="kore-icon kore-icon-globe"></i>
                 </a>
                 <a data-bind="click: pageModel.previewCurrent" class="btn btn-success btn-lg" title="@T(KoreWebLocalizableStrings.General.Preview).Text">
                     <i class="kore-icon kore-icon-preview"></i>
@@ -337,8 +339,31 @@
     </div>
 </div>
 
+<div class="modal fade" id="cultureModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Select Language</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        @Html.Hidden("SelectedId")
+                        @Html.Kore().LanguagesDropDownList("CultureCode", includeInvariant: true, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@T(KoreWebLocalizableStrings.General.Close)</button>
+                <button type="button" class="btn btn-primary" data-bind="click: pageModel.onCultureSelected">@T(KoreWebLocalizableStrings.General.OK)</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script id="treeview-template" type="text/kendo-ui-template">
-    <a href="javascript:void(0)" data-bind="click: pageModel.edit.bind($data,'#=item.Id#')">#= item.Title #</a>
+    <a href="javascript:void(0)" data-bind="click: pageModel.edit.bind($data,'#=item.Id#',null)">#= item.Title #</a>
 </script>
 
 @*<script id="drilldown-template" type="text/html">

@@ -82,7 +82,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
         {
             if (!CheckPermission(WritePermission))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             string cultureCode = (string)parameters["cultureCode"];
@@ -128,7 +128,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
         {
             if (!CheckPermission(WritePermission))
             {
-                return new UnauthorizedResult(new AuthenticationHeaderValue[0], ActionContext.Request);
+                return Unauthorized();
             }
 
             string cultureCode = (string)parameters["cultureCode"];

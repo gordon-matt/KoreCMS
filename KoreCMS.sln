@@ -164,6 +164,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UpdateScripts", "UpdateScri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Data.MySql", "Kore.Data.MySql\Kore.Data.MySql.csproj", "{54E53109-656B-4303-A9D4-F585D0574B76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Messaging.Forums", "Plugins\Kore.Plugins.Messaging.Forums\Kore.Plugins.Messaging.Forums.csproj", "{29F2DE70-A4B6-4684-9062-FEBE64006446}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -274,6 +276,10 @@ Global
 		{54E53109-656B-4303-A9D4-F585D0574B76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54E53109-656B-4303-A9D4-F585D0574B76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54E53109-656B-4303-A9D4-F585D0574B76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29F2DE70-A4B6-4684-9062-FEBE64006446}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29F2DE70-A4B6-4684-9062-FEBE64006446}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29F2DE70-A4B6-4684-9062-FEBE64006446}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29F2DE70-A4B6-4684-9062-FEBE64006446}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -301,5 +307,6 @@ Global
 		{4AC641D7-94CD-449C-883D-E4C93363AF5D} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 		{35687B32-99C8-4BF2-A1CA-E2E130B770CD} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 		{9A627991-C98D-4E16-B915-036B4B20EB01} = {FD60340E-B54E-4D09-B63A-58B37E79A3A2}
+		{29F2DE70-A4B6-4684-9062-FEBE64006446} = {D0FF54F4-3384-4B8F-A3B5-0B02F74143C8}
 	EndGlobalSection
 EndGlobal

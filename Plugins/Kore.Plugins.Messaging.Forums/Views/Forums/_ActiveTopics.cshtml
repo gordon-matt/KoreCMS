@@ -1,4 +1,5 @@
 ﻿@using Kore.Plugins.Messaging.Forums
+@using Kore.Plugins.Messaging.Forums.Extensions
 @using Kore.Plugins.Messaging.Forums.Models
 @model ActiveDiscussionsModel
 
@@ -70,7 +71,7 @@
                                         </div>
                                     }
                                     <div class="topic-starter">
-                                        @if (topic.UserId > 0)
+                                        @if (!string.IsNullOrEmpty(topic.UserId))
                                         {
                                             <label>@T(LocalizableStrings.Author)</label>
                                             if (topic.AllowViewingProfiles)

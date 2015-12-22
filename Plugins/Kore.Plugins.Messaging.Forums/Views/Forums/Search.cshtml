@@ -1,27 +1,32 @@
 ﻿@using Kore.Plugins.Messaging.Forums
 @using Kore.Plugins.Messaging.Forums.Data.Domain
+@using Kore.Plugins.Messaging.Forums.Extensions
 @using Kore.Plugins.Messaging.Forums.Models
 @model SearchModel
 
 @{
     ViewBag.Title = T(LocalizableStrings.PageTitle.Search);
 }
-<script type="text/javascript">
-    $(document).ready(function () {
-        toggleAdvancedSearch();
-        $('#adv').click(function () {
+
+@using (Script.AtFoot())
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
             toggleAdvancedSearch();
+            $('#adv').click(function () {
+                toggleAdvancedSearch();
+            });
         });
-    });
-    function toggleAdvancedSearch() {
-        if ($('#adv').is(':checked')) {
-            $('#advanced-search').show();
+        function toggleAdvancedSearch() {
+            if ($('#adv').is(':checked')) {
+                $('#advanced-search').show();
+            }
+            else {
+                $('#advanced-search').hide();
+            }
         }
-        else {
-            $('#advanced-search').hide();
-        }
-    }
-</script>
+    </script>
+}
 
 @Html.Action("ForumBreadcrumb")
 <div class="page forum-search-page">
@@ -139,7 +144,7 @@
                                 {
                                     var topicType = "post";
                                     var topicText = string.Empty;
-                                    switch (topic.ForumTopicType)
+                                    switch (topic.TopicType)
                                     {
                                         case ForumTopicType.Normal:
                                             topicType = "post";
@@ -175,7 +180,7 @@
                                                 </div>
                                             }
                                             <div class="topic-starter">
-                                                @if (topic.UserId > 0)
+                                                @if (!string.IsNullOrEmpty(topic.UserId))
                                                 {
                                                     <label>@T(LocalizableStrings.Author)</label>
                                                     if (topic.AllowViewingProfiles)

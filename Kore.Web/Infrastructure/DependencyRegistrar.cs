@@ -18,9 +18,11 @@ using Kore.Web.Areas.Admin.Configuration;
 using Kore.Web.Areas.Admin.Log.Services;
 using Kore.Web.Areas.Admin.ScheduledTasks;
 using Kore.Web.Configuration;
+using Kore.Web.Configuration.Services;
 using Kore.Web.Environment;
 using Kore.Web.Events;
 using Kore.Web.Fakes;
+using Kore.Web.Helpers;
 using Kore.Web.Indexing;
 using Kore.Web.Indexing.Services;
 using Kore.Web.IO.FileSystems.AppData;
@@ -188,6 +190,9 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<LogService>().As<ILogService>().InstancePerDependency();
 
             builder.RegisterType<DurandalRouteProvider>().As<IDurandalRouteProvider>().SingleInstance();
+
+            builder.RegisterType<DateTimeHelper>().As<IDateTimeHelper>().InstancePerLifetimeScope();
+            builder.RegisterType<GenericAttributeService>().As<IGenericAttributeService>().InstancePerLifetimeScope();
         }
 
         private static RequestContext RequestContextFactory(IComponentContext context)

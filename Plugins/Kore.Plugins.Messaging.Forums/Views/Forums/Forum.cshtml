@@ -1,5 +1,6 @@
 ﻿@using Kore.Plugins.Messaging.Forums
 @using Kore.Plugins.Messaging.Forums.Data.Domain
+@using Kore.Plugins.Messaging.Forums.Extensions
 @using Kore.Plugins.Messaging.Forums.Models
 @model ForumPageModel
 
@@ -27,24 +28,28 @@
             @if (Model.IsUserAllowedToSubscribe)
             {
                 <a class="watch-forum" href="#" id="watch-forum">@Model.WatchForumText</a>
-                <script type="text/javascript">
-                    $(function () {
-                        $('#watch-forum').click(function () {
-                            $.ajax({
-                                cache: false,
-                                type: 'POST',
-                                url: '@Url.Action("ForumWatch", new { id = Model.Id })',
-                                dataType: 'json',
-                                success: function (data) {
-                                    $('#watch-forum').text(data.Text);
-                                },
-                                error: function (xhr, ajaxOptions, thrownError) {
-                                    alert('Failed to watch');
-                                }
+                
+                using (Script.AtFoot())
+                {
+                    <script type="text/javascript">
+                        $(function () {
+                            $('#watch-forum').click(function () {
+                                $.ajax({
+                                    cache: false,
+                                    type: 'POST',
+                                    url: '@Url.Action("ForumWatch", new { id = Model.Id })',
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        $('#watch-forum').text(data.Text);
+                                    },
+                                    error: function (xhr, ajaxOptions, thrownError) {
+                                        alert('Failed to watch');
+                                    }
+                                });
                             });
                         });
-                    });
-                </script>
+                    </script>
+                }
             }
         </div>
         @{
@@ -136,7 +141,7 @@
                                         </div>
                                     }
                                     <div class="topic-starter">
-                                        @if (topic.UserId > 0)
+                                        @if (!string.IsNullOrEmpty(topic.UserId))
                                         {
                                             <label>@T(LocalizableStrings.Author)</label>
                                             if (topic.AllowViewingProfiles)

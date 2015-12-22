@@ -51,7 +51,6 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
         public ForumsController(
             IForumService forumService,
-            Localizer localizer,
             //IPictureService pictureService,
             IRegionService regionService,
             IWebHelper webHelper,
@@ -64,7 +63,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             KoreSiteSettings siteSettings)
         {
             this.forumService = forumService;
-            this.localizer = localizer;
+            this.localizer = LocalizationUtilities.Resolve();
             //this._pictureService = pictureService;
             this.regionService = regionService;
             this.webHelper = webHelper;
@@ -1766,42 +1765,42 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             return PartialView(model);
         }
 
-        //[ChildActionOnly]
-        //[Route("breadcrumb")]
-        //public ActionResult ForumBreadcrumb(int? forumGroupId, int? forumId, int? forumTopicId)
-        //{
-        //    var model = new ForumBreadcrumbModel();
+        [ChildActionOnly]
+        [Route("breadcrumb")]
+        public ActionResult ForumBreadcrumb(int? forumGroupId, int? forumId, int? forumTopicId)
+        {
+            var model = new ForumBreadcrumbModel();
 
-        //    ForumTopic forumTopic = null;
-        //    if (forumTopicId.HasValue)
-        //    {
-        //        forumTopic = forumService.GetTopicById(forumTopicId.Value);
-        //        if (forumTopic != null)
-        //        {
-        //            model.ForumTopicId = forumTopic.Id;
-        //            model.ForumTopicSubject = forumTopic.Subject;
-        //            model.ForumTopicSeName = forumTopic.GetSeName();
-        //        }
-        //    }
+            ForumTopic forumTopic = null;
+            if (forumTopicId.HasValue)
+            {
+                forumTopic = forumService.GetTopicById(forumTopicId.Value);
+                if (forumTopic != null)
+                {
+                    model.ForumTopicId = forumTopic.Id;
+                    model.ForumTopicSubject = forumTopic.Subject;
+                    model.ForumTopicSeName = forumTopic.GetSeName();
+                }
+            }
 
-        //    Forum forum = forumService.GetForumById(forumTopic != null ? forumTopic.ForumId : (forumId.HasValue ? forumId.Value : 0));
-        //    if (forum != null)
-        //    {
-        //        model.ForumId = forum.Id;
-        //        model.ForumName = forum.Name;
-        //        model.ForumSeName = forum.GetSeName();
-        //    }
+            Forum forum = forumService.GetForumById(forumTopic != null ? forumTopic.ForumId : (forumId.HasValue ? forumId.Value : 0));
+            if (forum != null)
+            {
+                model.ForumId = forum.Id;
+                model.ForumName = forum.Name;
+                model.ForumSeName = forum.GetSeName();
+            }
 
-        //    var forumGroup = forumService.GetForumGroupById(forum != null ? forum.ForumGroupId : (forumGroupId.HasValue ? forumGroupId.Value : 0));
-        //    if (forumGroup != null)
-        //    {
-        //        model.ForumGroupId = forumGroup.Id;
-        //        model.ForumGroupName = forumGroup.Name;
-        //        model.ForumGroupSeName = forumGroup.GetSeName();
-        //    }
+            var forumGroup = forumService.GetForumGroupById(forum != null ? forum.ForumGroupId : (forumGroupId.HasValue ? forumGroupId.Value : 0));
+            if (forumGroup != null)
+            {
+                model.ForumGroupId = forumGroup.Id;
+                model.ForumGroupName = forumGroup.Name;
+                model.ForumGroupSeName = forumGroup.GetSeName();
+            }
 
-        //    return PartialView(model);
-        //}
+            return PartialView(model);
+        }
 
         [Route("subscribe/{page?}")]
         public ActionResult UserForumSubscriptions(int? page)

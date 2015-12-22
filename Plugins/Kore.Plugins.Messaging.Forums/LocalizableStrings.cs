@@ -46,6 +46,7 @@
         public const string SelectTheForumToMoveTopic = "Plugins.Messaging.Forums/SelectTheForumToMoveTopic";
         public const string Status = "Plugins.Messaging.Forums/Status";
         public const string Topics = "Plugins.Messaging.Forums/Topics";
+        public const string Topics_GotoPostPager = "Plugins.Messaging.Forums/Topics.GotoPostPager";
         public const string TopicTitle = "Plugins.Messaging.Forums/TopicTitle";
         public const string TotalPosts = "Plugins.Messaging.Forums/TotalPosts";
         public const string Views = "Plugins.Messaging.Forums/Views";
@@ -129,6 +130,15 @@
             }
         }
 
+        public static class Pager
+        {
+            public const string FirstPageTitle = "Plugins.Messaging.Forums/Pager.FirstPageTitle";
+            public const string PreviousPageTitle = "Plugins.Messaging.Forums/Pager.PreviousPageTitle";
+            public const string PageLinkTitle = "Plugins.Messaging.Forums/Pager.PageLinkTitle";
+            public const string NextPageTitle = "Plugins.Messaging.Forums/Pager.NextPageTitle";
+            public const string LastPageTitle = "Plugins.Messaging.Forums/Pager.LastPageTitle";
+        }
+
         public static class PageTitle
         {
             public const string ActiveDiscussions = "Plugins.Messaging.Forums/PageTitle.ActiveDiscussions";
@@ -145,6 +155,74 @@
         public static class PrivateMessages
         {
             public const string PM = "Plugins.Messaging.Forums/PrivateMessages.PM";
+        }
+
+        public static class Settings
+        {
+            public static class HelpText
+            {
+                public const string ForumsEnabled = "Plugins.Messaging.Forums/Settings.HelpText.ForumsEnabled";
+                public const string RelativeDateTimeFormattingEnabled = "Plugins.Messaging.Forums/Settings.HelpText.RelativeDateTimeFormattingEnabled";
+                public const string AllowUsersToEditPosts = "Plugins.Messaging.Forums/Settings.HelpText.AllowUsersToEditPosts";
+                public const string AllowUsersToManageSubscriptions = "Plugins.Messaging.Forums/Settings.HelpText.AllowUsersToManageSubscriptions";
+                public const string AllowUsersToDeletePosts = "Plugins.Messaging.Forums/Settings.HelpText.AllowUsersToDeletePosts";
+                public const string TopicSubjectMaxLength = "Plugins.Messaging.Forums/Settings.HelpText.TopicSubjectMaxLength";
+                public const string StrippedTopicMaxLength = "Plugins.Messaging.Forums/Settings.HelpText.StrippedTopicMaxLength";
+                public const string PostMaxLength = "Plugins.Messaging.Forums/Settings.HelpText.PostMaxLength";
+                public const string TopicsPageSize = "Plugins.Messaging.Forums/Settings.HelpText.TopicsPageSize";
+                public const string PostsPageSize = "Plugins.Messaging.Forums/Settings.HelpText.PostsPageSize";
+                public const string SearchResultsPageSize = "Plugins.Messaging.Forums/Settings.HelpText.SearchResultsPageSize";
+                public const string ActiveDiscussionsPageSize = "Plugins.Messaging.Forums/Settings.HelpText.ActiveDiscussionsPageSize";
+                public const string LatestUserPostsPageSize = "Plugins.Messaging.Forums/Settings.HelpText.LatestUserPostsPageSize";
+                public const string ShowUsersPostCount = "Plugins.Messaging.Forums/Settings.HelpText.ShowUsersPostCount";
+                public const string ForumEditor = "Plugins.Messaging.Forums/Settings.HelpText.ForumEditor";
+                public const string SignaturesEnabled = "Plugins.Messaging.Forums/Settings.HelpText.SignaturesEnabled";
+                public const string AllowPrivateMessages = "Plugins.Messaging.Forums/Settings.HelpText.AllowPrivateMessages";
+                public const string ShowAlertForPM = "Plugins.Messaging.Forums/Settings.HelpText.ShowAlertForPM";
+                public const string PrivateMessagesPageSize = "Plugins.Messaging.Forums/Settings.HelpText.PrivateMessagesPageSize";
+                public const string ForumSubscriptionsPageSize = "Plugins.Messaging.Forums/Settings.HelpText.ForumSubscriptionsPageSize";
+                public const string NotifyAboutPrivateMessages = "Plugins.Messaging.Forums/Settings.HelpText.NotifyAboutPrivateMessages";
+                public const string PMSubjectMaxLength = "Plugins.Messaging.Forums/Settings.HelpText.PMSubjectMaxLength";
+                public const string PMTextMaxLength = "Plugins.Messaging.Forums/Settings.HelpText.PMTextMaxLength";
+                public const string HomePageActiveDiscussionsTopicCount = "Plugins.Messaging.Forums/Settings.HelpText.HomePageActiveDiscussionsTopicCount";
+                public const string ActiveDiscussionsFeedCount = "Plugins.Messaging.Forums/Settings.HelpText.ActiveDiscussionsFeedCount";
+                public const string ActiveDiscussionsFeedEnabled = "Plugins.Messaging.Forums/Settings.HelpText.ActiveDiscussionsFeedEnabled";
+                public const string ForumFeedsEnabled = "Plugins.Messaging.Forums/Settings.HelpText.ForumFeedsEnabled";
+                public const string ForumFeedCount = "Plugins.Messaging.Forums/Settings.HelpText.ForumFeedCount";
+                public const string ForumSearchTermMinimumLength = "Plugins.Messaging.Forums/Settings.HelpText.ForumSearchTermMinimumLength";
+                public const string LayoutPathOverride = "Plugins.Messaging.Forums/Settings.HelpText.LayoutPathOverride";
+            }
+
+            public const string ForumsEnabled = "Plugins.Messaging.Forums/Settings.ForumsEnabled";
+            public const string RelativeDateTimeFormattingEnabled = "Plugins.Messaging.Forums/Settings.RelativeDateTimeFormattingEnabled";
+            public const string AllowUsersToEditPosts = "Plugins.Messaging.Forums/Settings.AllowUsersToEditPosts";
+            public const string AllowUsersToManageSubscriptions = "Plugins.Messaging.Forums/Settings.AllowUsersToManageSubscriptions";
+            public const string AllowUsersToDeletePosts = "Plugins.Messaging.Forums/Settings.AllowUsersToDeletePosts";
+            public const string TopicSubjectMaxLength = "Plugins.Messaging.Forums/Settings.TopicSubjectMaxLength";
+            public const string StrippedTopicMaxLength = "Plugins.Messaging.Forums/Settings.StrippedTopicMaxLength";
+            public const string PostMaxLength = "Plugins.Messaging.Forums/Settings.PostMaxLength";
+            public const string TopicsPageSize = "Plugins.Messaging.Forums/Settings.TopicsPageSize";
+            public const string PostsPageSize = "Plugins.Messaging.Forums/Settings.PostsPageSize";
+            public const string SearchResultsPageSize = "Plugins.Messaging.Forums/Settings.SearchResultsPageSize";
+            public const string ActiveDiscussionsPageSize = "Plugins.Messaging.Forums/Settings.ActiveDiscussionsPageSize";
+            public const string LatestUserPostsPageSize = "Plugins.Messaging.Forums/Settings.LatestUserPostsPageSize";
+            public const string ShowUsersPostCount = "Plugins.Messaging.Forums/Settings.ShowUsersPostCount";
+            public const string ForumEditor = "Plugins.Messaging.Forums/Settings.ForumEditor";
+            public const string SignaturesEnabled = "Plugins.Messaging.Forums/Settings.SignaturesEnabled";
+            public const string AllowPrivateMessages = "Plugins.Messaging.Forums/Settings.AllowPrivateMessages";
+            public const string ShowAlertForPM = "Plugins.Messaging.Forums/Settings.ShowAlertForPM";
+            public const string PrivateMessagesPageSize = "Plugins.Messaging.Forums/Settings.PrivateMessagesPageSize";
+            public const string ForumSubscriptionsPageSize = "Plugins.Messaging.Forums/Settings.ForumSubscriptionsPageSize";
+            public const string NotifyAboutPrivateMessages = "Plugins.Messaging.Forums/Settings.NotifyAboutPrivateMessages";
+            public const string PMSubjectMaxLength = "Plugins.Messaging.Forums/Settings.PMSubjectMaxLength";
+            public const string PMTextMaxLength = "Plugins.Messaging.Forums/Settings.PMTextMaxLength";
+            public const string HomePageActiveDiscussionsTopicCount = "Plugins.Messaging.Forums/Settings.HomePageActiveDiscussionsTopicCount";
+            public const string ActiveDiscussionsFeedCount = "Plugins.Messaging.Forums/Settings.ActiveDiscussionsFeedCount";
+            public const string ActiveDiscussionsFeedEnabled = "Plugins.Messaging.Forums/Settings.ActiveDiscussionsFeedEnabled";
+            public const string ForumFeedsEnabled = "Plugins.Messaging.Forums/Settings.ForumFeedsEnabled";
+            public const string ForumFeedCount = "Plugins.Messaging.Forums/Settings.ForumFeedCount";
+            public const string ForumSearchTermMinimumLength = "Plugins.Messaging.Forums/Settings.ForumSearchTermMinimumLength";
+            public const string LayoutPathOverride = "Plugins.Messaging.Forums/Settings.LayoutPathOverride";
         }
     }
 }

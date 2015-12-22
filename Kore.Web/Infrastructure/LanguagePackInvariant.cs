@@ -20,6 +20,7 @@ namespace Kore.Web.Infrastructure
                 {
                     { KoreWebLocalizableStrings.General.Actions, "Actions" },
                     { KoreWebLocalizableStrings.General.Add, "Add" },
+                    { KoreWebLocalizableStrings.General.AreYouSure, "Are you sure?" },
                     { KoreWebLocalizableStrings.General.Back, "Back" },
                     { KoreWebLocalizableStrings.General.Cancel, "Cancel" },
                     { KoreWebLocalizableStrings.General.Clear, "Clear" },

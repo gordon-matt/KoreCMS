@@ -1,0 +1,53 @@
+﻿@using Kore.Infrastructure
+@using Kore.Plugins.Messaging.Forums
+@using Kore.Plugins.Messaging.Forums.Models
+@model ForumBreadcrumbModel
+
+@{
+    //var breadcrumbDelimiter = EngineContext.Current.Resolve<CommonSettings>().BreadcrumbDelimiter; //TODO:
+    string breadcrumbDelimiter = " / ";
+}
+<div class="breadcrumb forum-breadcrumb">
+    <ul>
+        <li>
+            <a href="@Url.Action("Index", "Home", new { area = string.Empty })" title="@T(KoreWebLocalizableStrings.General.Home)">@T(KoreWebLocalizableStrings.General.Home)</a>
+        </li>
+        <li>
+            <span class="delimiter">@breadcrumbDelimiter</span>
+            @Html.RouteLink(T(LocalizableStrings.Forums).Text, "Boards", null, new { title = T(LocalizableStrings.Breadcrumb.ForumHomeTitle) })
+        </li>
+        @if (Model.ForumGroupId > 0)
+        {
+            <li>
+                <span class="delimiter">@breadcrumbDelimiter</span>
+                @Html.RouteLink(
+                    Model.ForumGroupName,
+                    "ForumGroupSlug",
+                    new { id = Model.ForumGroupId, slug = Model.ForumGroupSeName },
+                    new { title = string.Format("{0}: {1} ", T(LocalizableStrings.Breadcrumb.ForumGroupTitle), Model.ForumGroupName) })
+            </li>        
+        }
+        @if (Model.ForumId > 0)
+        {
+            <li>
+                <span class="delimiter">@breadcrumbDelimiter</span>
+                @Html.RouteLink(
+                    Model.ForumName,
+                    "ForumSlug",
+                    new { id = Model.ForumId, slug = Model.ForumSeName },
+                    new { title = string.Format("{0}: {1} ", T(LocalizableStrings.Breadcrumb.ForumTitle), Model.ForumName) })
+            </li>
+        }
+        @if (Model.ForumTopicId > 0)
+        {
+            <li>
+                <span class="delimiter">@breadcrumbDelimiter</span>
+                @Html.RouteLink(
+                    Model.ForumTopicSubject,
+                    "TopicSlug",
+                    new { id = Model.ForumTopicId, slug = Model.ForumTopicSeName },
+                    new { title = string.Format("{0}: {1} ", T(LocalizableStrings.Breadcrumb.TopicTitle), Model.ForumTopicSubject) })
+            </li>
+        }
+    </ul>
+</div>

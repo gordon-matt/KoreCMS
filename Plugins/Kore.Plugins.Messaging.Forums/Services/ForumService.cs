@@ -7,60 +7,58 @@ using Kore.Data;
 using Kore.Exceptions;
 using Kore.Plugins.Messaging.Forums.Data.Domain;
 using Kore.Security.Membership;
+using Kore.Web.Configuration.Services;
+using Kore.Web.Security.Membership;
 
 namespace Kore.Plugins.Messaging.Forums.Services
 {
     public class ForumService : IForumService
     {
-        #region Constants
+        #region Private Members
 
-        private const string FORUMGROUP_ALL_KEY = "Kore.forumgroup.all";
-
-        private const string FORUM_ALLBYFORUMGROUPID_KEY = "Kore.forum.allbyforumgroupid-{0}";
-
-        private const string FORUMGROUP_PATTERN_KEY = "Kore.forumgroup.";
-
-        private const string FORUM_PATTERN_KEY = "Kore.forum.";
-
-        #endregion Constants
-
-        #region Fields
-
-        private readonly IRepository<ForumGroup> forumGroupRepository;
-        private readonly IRepository<Forum> forumRepository;
-        private readonly IRepository<ForumTopic> forumTopicRepository;
-        private readonly IRepository<ForumPost> forumPostRepository;
-        private readonly IRepository<PrivateMessage> forumPrivateMessageRepository;
-        private readonly IRepository<ForumSubscription> forumSubscriptionRepository;
         private readonly ForumSettings forumSettings;
-        private readonly IMembershipService membershipService;
         private readonly ICacheManager cacheManager;
+        private readonly IGenericAttributeService genericAttributeService;
+        private readonly IMembershipService membershipService;
+        private readonly IRepository<Forum> forumRepository;
+        private readonly IRepository<ForumGroup> forumGroupRepository;
+        private readonly IRepository<ForumPost> forumPostRepository;
+        private readonly IRepository<ForumSubscription> forumSubscriptionRepository;
+        private readonly IRepository<ForumTopic> forumTopicRepository;
+        private readonly IRepository<PrivateMessage> forumPrivateMessageRepository;
         private readonly IWorkContext workContext;
 
-        #endregion Fields
+        private const string CacheKey_ForumGroupAll = "Kore.ForumGroup.All";
+        private const string CacheKey_ForumAllByForumGroupId = "Kore.Forum.AllByForumGroupId-{0}";
+        private const string CacheKey_Pattern_ForumGroup = "Kore.ForumGroup.";
+        private const string CacheKey_Pattern_Forum = "Kore.Forum.";
+
+        #endregion Private Members
 
         #region Ctor
 
         public ForumService(
-            ICacheManager cacheManager,
-            IRepository<ForumGroup> forumGroupRepository,
-            IRepository<Forum> forumRepository,
-            IRepository<ForumTopic> forumTopicRepository,
-            IRepository<ForumPost> forumPostRepository,
-            IRepository<PrivateMessage> forumPrivateMessageRepository,
-            IRepository<ForumSubscription> forumSubscriptionRepository,
             ForumSettings forumSettings,
+            ICacheManager cacheManager,
+            IGenericAttributeService genericAttributeService,
             IMembershipService membershipService,
+            IRepository<Forum> forumRepository,
+            IRepository<ForumGroup> forumGroupRepository,
+            IRepository<ForumPost> forumPostRepository,
+            IRepository<ForumSubscription> forumSubscriptionRepository,
+            IRepository<ForumTopic> forumTopicRepository,
+            IRepository<PrivateMessage> forumPrivateMessageRepository,
             IWorkContext workContext)
         {
             this.cacheManager = cacheManager;
             this.forumGroupRepository = forumGroupRepository;
-            this.forumRepository = forumRepository;
-            this.forumTopicRepository = forumTopicRepository;
             this.forumPostRepository = forumPostRepository;
             this.forumPrivateMessageRepository = forumPrivateMessageRepository;
-            this.forumSubscriptionRepository = forumSubscriptionRepository;
+            this.forumRepository = forumRepository;
             this.forumSettings = forumSettings;
+            this.forumSubscriptionRepository = forumSubscriptionRepository;
+            this.forumTopicRepository = forumTopicRepository;
+            this.genericAttributeService = genericAttributeService;
             this.membershipService = membershipService;
             this.workContext = workContext;
         }
@@ -85,6 +83,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             var queryNumTopics = from ft in forumTopicRepository.Table
                                  where ft.ForumId == forumId
                                  select ft.Id;
+
             int numTopics = queryNumTopics.Count();
 
             //number of posts
@@ -100,6 +99,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             int lastPostId = 0;
             string lastPostUserId = null;
             DateTime? lastPostTime = null;
+
             var queryLastValues = from ft in forumTopicRepository.Table
                                   join fp in forumPostRepository.Table on ft.Id equals fp.TopicId
                                   where ft.ForumId == forumId
@@ -148,12 +148,14 @@ namespace Kore.Plugins.Messaging.Forums.Services
             var queryNumPosts = from fp in forumPostRepository.Table
                                 where fp.TopicId == forumTopicId
                                 select fp.Id;
+
             int numPosts = queryNumPosts.Count();
 
             //last values
             int lastPostId = 0;
             string lastPostUserId = null;
             DateTime? lastPostTime = null;
+
             var queryLastValues = from fp in forumPostRepository.Table
                                   where fp.TopicId == forumTopicId
                                   orderby fp.CreatedOnUtc descending
@@ -163,6 +165,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
                                       LastPostUserId = fp.UserId,
                                       LastPostTime = fp.CreatedOnUtc
                                   };
+
             var lastValues = queryLastValues.FirstOrDefault();
             if (lastValues != null)
             {
@@ -196,9 +199,10 @@ namespace Kore.Plugins.Messaging.Forums.Services
             var query = from fp in forumPostRepository.Table
                         where fp.UserId == userId
                         select fp.Id;
+
             int numPosts = query.Count();
 
-            // _genericAttributeService.SaveAttribute(user, SystemUserAttributeNames.ForumPostCount, numPosts);
+            genericAttributeService.SaveAttribute(user, SystemUserAttributeNames.ForumPostCount, numPosts);
         }
 
         private bool IsForumModerator(KoreUser user)
@@ -220,8 +224,8 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
             forumGroupRepository.Delete(forumGroup);
 
-            cacheManager.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-            cacheManager.RemoveByPattern(FORUM_PATTERN_KEY);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
 
             //event notification
             //_eventPublisher.EntityDeleted(forumGroup);
@@ -239,7 +243,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
         public virtual IEnumerable<ForumGroup> GetAllForumGroups()
         {
-            string key = string.Format(FORUMGROUP_ALL_KEY);
+            string key = string.Format(CacheKey_ForumGroupAll);
             return cacheManager.Get(key, () =>
             {
                 var query = from fg in forumGroupRepository.Table
@@ -259,8 +263,8 @@ namespace Kore.Plugins.Messaging.Forums.Services
             forumGroupRepository.Insert(forumGroup);
 
             //cache
-            cacheManager.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-            cacheManager.RemoveByPattern(FORUM_PATTERN_KEY);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
 
             //event notification
             //_eventPublisher.EntityInserted(forumGroup);
@@ -276,8 +280,8 @@ namespace Kore.Plugins.Messaging.Forums.Services
             forumGroupRepository.Update(forumGroup);
 
             //cache
-            cacheManager.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-            cacheManager.RemoveByPattern(FORUM_PATTERN_KEY);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
 
             //event notification
             //_eventPublisher.EntityUpdated(forumGroup);
@@ -294,9 +298,11 @@ namespace Kore.Plugins.Messaging.Forums.Services
             var queryTopicIds = from ft in forumTopicRepository.Table
                                 where ft.ForumId == forum.Id
                                 select ft.Id;
+
             var queryFs1 = from fs in forumSubscriptionRepository.Table
                            where queryTopicIds.Contains(fs.TopicId)
                            select fs;
+
             foreach (var fs in queryFs1.ToList())
             {
                 forumSubscriptionRepository.Delete(fs);
@@ -308,6 +314,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             var queryFs2 = from fs in forumSubscriptionRepository.Table
                            where fs.ForumId == forum.Id
                            select fs;
+
             foreach (var fs2 in queryFs2.ToList())
             {
                 forumSubscriptionRepository.Delete(fs2);
@@ -318,8 +325,8 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //delete forum
             forumRepository.Delete(forum);
 
-            cacheManager.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-            cacheManager.RemoveByPattern(FORUM_PATTERN_KEY);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
 
             //event notification
             //_eventPublisher.EntityDeleted(forum);
@@ -335,13 +342,14 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
         public virtual IEnumerable<Forum> GetAllForumsByGroupId(int forumGroupId)
         {
-            string key = string.Format(FORUM_ALLBYFORUMGROUPID_KEY, forumGroupId);
+            string key = string.Format(CacheKey_ForumAllByForumGroupId, forumGroupId);
             return cacheManager.Get(key, () =>
             {
                 var query = from f in forumRepository.Table
                             orderby f.DisplayOrder
                             where f.ForumGroupId == forumGroupId
                             select f;
+
                 var forums = query.ToList();
                 return forums;
             });
@@ -356,8 +364,8 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
             forumRepository.Insert(forum);
 
-            cacheManager.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-            cacheManager.RemoveByPattern(FORUM_PATTERN_KEY);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
 
             //event notification
             //_eventPublisher.EntityInserted(forum);
@@ -372,8 +380,8 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
             forumRepository.Update(forum);
 
-            cacheManager.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-            cacheManager.RemoveByPattern(FORUM_PATTERN_KEY);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
 
             //event notification
             //_eventPublisher.EntityUpdated(forum);
@@ -396,6 +404,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             var queryFs = from ft in forumSubscriptionRepository.Table
                           where ft.TopicId == forumTopic.Id
                           select ft;
+
             var forumSubscriptions = queryFs.ToList();
             foreach (var fs in forumSubscriptions)
             {
@@ -408,8 +417,8 @@ namespace Kore.Plugins.Messaging.Forums.Services
             UpdateForumStats(forumId);
             UpdateUserStats(userId);
 
-            cacheManager.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-            cacheManager.RemoveByPattern(FORUM_PATTERN_KEY);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
 
             //event notification
             //_eventPublisher.EntityDeleted(forumTopic);
@@ -423,11 +432,15 @@ namespace Kore.Plugins.Messaging.Forums.Services
         public virtual ForumTopic GetTopicById(int forumTopicId, bool increaseViews)
         {
             if (forumTopicId == 0)
+            {
                 return null;
+            }
 
             var forumTopic = forumTopicRepository.FindOne(forumTopicId);
             if (forumTopic == null)
+            {
                 return null;
+            }
 
             if (increaseViews)
             {
@@ -457,6 +470,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             bool searchKeywords = !string.IsNullOrEmpty(keywords);
             bool searchTopicTitles = searchType == ForumSearchType.All || searchType == ForumSearchType.TopicTitlesOnly;
             bool searchPostText = searchType == ForumSearchType.All || searchType == ForumSearchType.PostTextOnly;
+
             var query1 = from ft in forumTopicRepository.Table
                          join fp in forumPostRepository.Table on ft.Id equals fp.TopicId
                          where
@@ -511,8 +525,8 @@ namespace Kore.Plugins.Messaging.Forums.Services
             UpdateForumStats(forumTopic.ForumId);
 
             //cache
-            cacheManager.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-            cacheManager.RemoveByPattern(FORUM_PATTERN_KEY);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
 
             //event notification
             //_eventPublisher.EntityInserted(forumTopic);
@@ -549,8 +563,8 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
             forumTopicRepository.Update(forumTopic);
 
-            cacheManager.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-            cacheManager.RemoveByPattern(FORUM_PATTERN_KEY);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
 
             //event notification
             //_eventPublisher.EntityUpdated(forumTopic);
@@ -622,8 +636,8 @@ namespace Kore.Plugins.Messaging.Forums.Services
             UpdateUserStats(userId);
 
             //clear cache
-            cacheManager.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-            cacheManager.RemoveByPattern(FORUM_PATTERN_KEY);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
 
             //event notification
             //_eventPublisher.EntityDeleted(forumPost);
@@ -632,7 +646,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
         public virtual ForumPost GetPostById(int forumPostId)
         {
             if (forumPostId == 0)
+            {
                 return null;
+            }
 
             return forumPostRepository.FindOne(forumPostId);
         }
@@ -695,8 +711,8 @@ namespace Kore.Plugins.Messaging.Forums.Services
             UpdateUserStats(userId);
 
             //clear cache
-            cacheManager.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-            cacheManager.RemoveByPattern(FORUM_PATTERN_KEY);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
 
             //event notification
             //_eventPublisher.EntityInserted(forumPost);
@@ -739,8 +755,8 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
             forumPostRepository.Update(forumPost);
 
-            cacheManager.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-            cacheManager.RemoveByPattern(FORUM_PATTERN_KEY);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
+            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
 
             //event notification
             //_eventPublisher.EntityUpdated(forumPost);
@@ -762,7 +778,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
         public virtual PrivateMessage GetPrivateMessageById(int privateMessageId)
         {
             if (privateMessageId == 0)
+            {
                 return null;
+            }
 
             return forumPrivateMessageRepository.FindOne(privateMessageId);
         }
@@ -781,15 +799,25 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //if (storeId > 0)
             //    query = query.Where(pm => storeId == pm.StoreId);
             if (!string.IsNullOrEmpty(fromUserId))
+            {
                 query = query.Where(pm => fromUserId == pm.FromUserId);
+            }
             if (!string.IsNullOrEmpty(toUserId))
+            {
                 query = query.Where(pm => toUserId == pm.ToUserId);
+            }
             if (isRead.HasValue)
+            {
                 query = query.Where(pm => isRead.Value == pm.IsRead);
+            }
             if (isDeletedByAuthor.HasValue)
+            {
                 query = query.Where(pm => isDeletedByAuthor.Value == pm.IsDeletedByAuthor);
+            }
             if (isDeletedByRecipient.HasValue)
+            {
                 query = query.Where(pm => isDeletedByRecipient.Value == pm.IsDeletedByRecipient);
+            }
             if (!string.IsNullOrEmpty(keywords))
             {
                 query = query.Where(pm => pm.Subject.Contains(keywords));
@@ -821,7 +849,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             }
 
             //UI notification
-            //_genericAttributeService.SaveAttribute(userTo, SystemUserAttributeNames.NotifiedAboutNewPrivateMessages, false, privateMessage.StoreId);
+            genericAttributeService.SaveAttribute(userTo, SystemUserAttributeNames.NotifiedAboutNewPrivateMessages, false);
 
             //Email notification
             if (forumSettings.NotifyAboutPrivateMessages)
@@ -833,7 +861,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
         public virtual void UpdatePrivateMessage(PrivateMessage privateMessage)
         {
             if (privateMessage == null)
+            {
                 throw new ArgumentNullException("privateMessage");
+            }
 
             if (privateMessage.IsDeletedByAuthor && privateMessage.IsDeletedByRecipient)
             {
@@ -865,7 +895,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
         public virtual ForumSubscription GetSubscriptionById(int forumSubscriptionId)
         {
             if (forumSubscriptionId == 0)
+            {
                 return null;
+            }
 
             return forumSubscriptionRepository.FindOne(forumSubscriptionId);
         }

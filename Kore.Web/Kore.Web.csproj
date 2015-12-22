@@ -173,6 +173,8 @@
     <Compile Include="Areas\Admin\Tenants\Controllers\TenantController.cs" />
     <Compile Include="Collections\EnumerableExtensions.cs" />
     <Compile Include="Configuration\CaptchaSettings.cs" />
+    <Compile Include="Configuration\Domain\GenericAttribute.cs" />
+    <Compile Include="Configuration\Domain\GenericAttributeExtensions.cs" />
     <Compile Include="Configuration\HttpCompressionConfigurationElement.cs" />
     <Compile Include="Configuration\ISettings.cs" />
     <Compile Include="Configuration\ISettingService.cs" />
@@ -180,11 +182,14 @@
     <Compile Include="Configuration\MobileConfigurationElement.cs" />
     <Compile Include="Configuration\ResourcesConfigurationElement.cs" />
     <Compile Include="Configuration\KoreSiteSettings.cs" />
+    <Compile Include="Configuration\Services\IGenericAttributeService.cs" />
     <Compile Include="Configuration\ThemesConfigurationElement.cs" />
     <Compile Include="Core\EnumExtensions.cs" />
     <Compile Include="Core\ExpandoObjectExtensions.cs" />
     <Compile Include="Core\ObjectExtensions.cs" />
     <Compile Include="Core\StringExtensions.cs" />
+    <Compile Include="Configuration\DateTimeSettings.cs" />
+    <Compile Include="Helpers\IDateTimeHelper.cs" />
     <Compile Include="Html\BBCodeHelper.cs" />
     <Compile Include="Html\CodeFormatter\CLikeFormat.cs" />
     <Compile Include="Html\CodeFormatter\CodeFormat.cs" />
@@ -316,8 +321,10 @@
     <Compile Include="Mvc\EmbeddedResources\EmbeddedStyleVirtualPathProvider.cs" />
     <Compile Include="Mvc\EmbeddedResources\EmbeddedViewVirtualPathProvider.cs" />
     <Compile Include="Mvc\EmbeddedResources\IEmbeddedResourceResolver.cs" />
+    <Compile Include="Mvc\Filters\AdminAntiForgeryAttribute.cs" />
     <Compile Include="Mvc\Filters\IFilterProvider.cs" />
     <Compile Include="Mvc\Filters\KoreFilterProvider.cs" />
+    <Compile Include="Mvc\Filters\FrontendAntiForgeryAttribute.cs" />
     <Compile Include="Mvc\FluentTagBuilder.cs" />
     <Compile Include="Mvc\Html5\Enums.cs" />
     <Compile Include="Mvc\Html5\Html5CanvasHelper.cs" />
@@ -613,6 +620,8 @@
     <Compile Include="Security\Membership\Permissions\RolesBasedAuthorizationService.cs" />
     <Compile Include="Security\Membership\Permissions\StandardPermissions.cs" />
     <Compile Include="Infrastructure\StartupTask.cs" />
+    <Compile Include="Security\Membership\SystemUserAttributeNames.cs" />
+    <Compile Include="Security\SecuritySettings.cs" />
     <Compile Include="SiteRegistrar.cs" />
     <Compile Include="UI\HtmlTextWriterExtensions.cs" />
     <Compile Include="UrlBuilder.cs" />
@@ -661,6 +670,8 @@
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\ThemeUserProfileProvider.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\ThemeUserProfileProvider.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\MembershipSettings.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\DateTimeSettings.cshtml" />
+    <EmbeddedResource Include="Views\Shared\EditorTemplates\SecuritySettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Configuration\Scripts\settings.js" />

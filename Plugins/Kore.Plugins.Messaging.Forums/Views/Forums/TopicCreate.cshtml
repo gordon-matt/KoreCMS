@@ -1,0 +1,9 @@
+﻿@using Kore.Plugins.Messaging.Forums
+@using Kore.Plugins.Messaging.Forums.Models
+@model EditForumTopicModel
+
+@{
+    ViewBag.Title = T(LocalizableStrings.PageTitle.TopicNew);  
+}
+
+@Html.Partial("_CreateUpdateTopic", Model)

@@ -1,0 +1,71 @@
+﻿@using Kore.Plugins.Messaging.Forums
+@using Kore.Plugins.Messaging.Forums.Data.Domain
+@using Kore.Plugins.Messaging.Forums.Models
+@model EditForumTopicModel
+
+@Html.Action("ForumBreadcrumb", new { forumId = Model.ForumId, forumTopicId = Model.Id })
+<div class="page forum-edit-page">
+    <div class="page-title">
+        @if (Model.IsEdit)
+        {
+            <h1>@T(LocalizableStrings.EditTopic)</h1>
+        }
+        else
+        {
+            <h1>@T(LocalizableStrings.NewTopic)</h1>
+        }
+    </div>
+    <div class="page-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            var validationSummary = Html.ValidationSummary(true);
+            if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
+            {
+                <div class="message-error">@validationSummary</div> 
+            }
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.ForumId)
+            <div class="fieldset">
+                <div class="form-fields">
+                    <div class="inputs">
+                        <label>@T(LocalizableStrings.ForumName)</label>
+                        <strong>@Model.ForumName</strong>
+                    </div>
+                    <div class="inputs">
+                        <label>@T(LocalizableStrings.TopicTitle)</label>
+                        @Html.TextBoxFor(x => x.Subject, new { @class = "forum-topic-title-text" })
+                        @Html.ValidationMessageFor(x => x.Subject)
+                    </div>
+                    <div class="inputs">
+                        @if (Model.ForumEditor == EditorType.BBCodeEditor)
+                        {
+                            @Html.BBCodeEditor("Text")
+                        }
+                        @Html.TextAreaFor(x => x.Text, new { @class = "forum-post-text", TextMode = "MultiLine" })
+                        @Html.ValidationMessageFor(x => x.Text)
+                    </div>
+                    @if (Model.IsUserAllowedToSetTopicPriority)
+                    {
+                        <div class="inputs">
+                            <label>@T(LocalizableStrings.Priority)</label>
+                            @Html.DropDownList("TopicTypeId", new SelectList(Model.TopicPriorities, "Value", "Text", Model.TopicTypeId))
+                        </div>
+                    }
+                    @if (Model.IsUserAllowedToSubscribe)
+                    {
+                        <div class="inputs reversed">
+                            @Html.EditorFor(x => x.Subscribed)
+                            <label>@T(LocalizableStrings.NotifyWhenSomeonePostsInThisTopic)</label>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="buttons">
+                <input type="submit" value="@T(KoreWebLocalizableStrings.General.Submit)" class="button-1 submit-topic-button" />
+                <input type="button" class="button-2 cancel-topic-button" value="@T(KoreWebLocalizableStrings.General.Cancel)" onclick="setLocation('@Url.Action("Forum", new { id = Model.ForumId, slug = Model.ForumSeName })')" />
+            </div>
+        }
+    </div>
+</div>
+

@@ -1,6 +1,7 @@
-﻿using Kore.Web.Configuration;
+﻿using Kore.Plugins.Messaging.Forums.Data.Domain;
+using Kore.Web.Configuration;
 
-namespace Kore.Plugins.Messaging.Forums.Data.Domain
+namespace Kore.Plugins.Messaging.Forums
 {
     public class ForumSettings : ISettings
     {
@@ -65,6 +66,9 @@ namespace Kore.Plugins.Messaging.Forums.Data.Domain
         public int ForumFeedCount { get; set; }
 
         public int ForumSearchTermMinimumLength { get; set; }
+
+        //[LocalizedDisplayName(LocalizableStrings.Settings.LayoutPathOverride)]
+        public string LayoutPathOverride { get; set; }
 
         #region ISettings Members
 

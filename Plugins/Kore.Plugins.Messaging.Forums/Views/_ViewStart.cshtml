@@ -2,5 +2,14 @@
 @using Kore.Plugins.Messaging.Forums
 
 @{
-    Layout = KoreWebConstants.DefaultFrontendLayoutPath;
+    var settings = EngineContext.Current.Resolve<ForumSettings>();
+
+    if (!string.IsNullOrEmpty(settings.LayoutPathOverride))
+    {
+        Layout = settings.LayoutPathOverride;
+    }
+    else
+    {
+        Layout = KoreWebConstants.DefaultFrontendLayoutPath;
+    }
 }

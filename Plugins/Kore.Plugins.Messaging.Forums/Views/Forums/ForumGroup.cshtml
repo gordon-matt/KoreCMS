@@ -1,0 +1,13 @@
+﻿@using Kore.Plugins.Messaging.Forums
+@using Kore.Plugins.Messaging.Forums.Models
+@model ForumGroupModel
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<div class="page forum-group-page">
+    @Html.Action("ForumBreadcrumb", new { forumGroupId = Model.Id })
+    @Html.Partial("_ForumHeader")
+    @Html.Partial("_ForumGroup", Model)
+</div>

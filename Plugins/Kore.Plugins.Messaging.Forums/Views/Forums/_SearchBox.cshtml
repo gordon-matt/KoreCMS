@@ -1,0 +1,14 @@
+﻿@using Kore.Plugins.Messaging.Forums
+
+<div class="search-box forum-search-box">
+    @using (Html.BeginForm("Search", "Forums", FormMethod.Get))
+    {
+        <div class="basic">
+            <input type="text" class="search-box-text" id="forums-small-searchterms" name="searchterms" placeholder="@T(LocalizableStrings.SearchForumsTooltip)" />
+            <input type="submit" value="@T(LocalizableStrings.SearchButton)" class="button-2 search-box-button" />
+        </div>
+        <div class="advanced">
+            @Html.ActionLink(T(LocalizableStrings.AdvancedSearch), "Search", new { adv = true }, new { title = T(LocalizableStrings.AdvancedSearch) })
+        </div>
+    }
+</div>

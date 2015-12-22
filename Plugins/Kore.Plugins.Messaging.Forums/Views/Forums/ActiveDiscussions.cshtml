@@ -1,0 +1,12 @@
+﻿@using Kore.Plugins.Messaging.Forums
+@using Kore.Plugins.Messaging.Forums.Models
+@model ActiveDiscussionsModel
+
+@{
+    ViewBag.Title = T(LocalizableStrings.PageTitle.ActiveDiscussions);
+}
+<div class="page active-discussions-page">
+    @Html.Action("ForumBreadcrumb")
+    @Html.Partial("_ForumHeader")
+    @Html.Partial("_ActiveTopics", Model)
+</div>

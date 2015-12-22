@@ -53,6 +53,7 @@
             public const string View = "Kore.Web/General.View";
             public const string ViewFormat = "Kore.Web/General.ViewFormat";
 
+            public const string AreYouSure = "Kore.Web/General.AreYouSure";
             public const string ConfirmDeleteRecord = "Kore.Web/General.ConfirmDeleteRecord";
             public const string DeleteRecordError = "Kore.Web/General.DeleteRecordError";
             public const string DeleteRecordErrorFormat = "Kore.Web/General.DeleteRecordErrorFormat";
@@ -217,6 +218,12 @@
                 public const string Theme = "Kore.Web/Settings.Captcha.Theme";
             }
 
+            public static class DateTime
+            {
+                public const string DefaultTimeZoneId = "Kore.Web/Settings.DateTime.DefaultTimeZoneId";
+                public const string AllowUsersToSetTimeZone = "Kore.Web/Settings.DateTime.AllowUsersToSetTimeZone";
+            }
+
             public static class Membership
             {
                 public const string GeneratedPasswordLength = "Kore.Web/Settings.Membership.GeneratedPasswordLength";
@@ -226,6 +233,12 @@
             public static class Model
             {
                 public const string Name = "Kore.Web/Settings.Model.Name";
+            }
+
+            public static class Security
+            {
+                public const string EnableXsrfProtectionForAdmin = "Kore.Web/Settings.Security.EnableXsrfProtectionForAdmin";
+                public const string EnableXsrfProtectionForFrontend = "Kore.Web/Settings.Security.EnableXsrfProtectionForFrontend";
             }
 
             public static class Site

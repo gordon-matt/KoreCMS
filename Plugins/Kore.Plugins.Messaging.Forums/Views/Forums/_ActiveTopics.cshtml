@@ -1,0 +1,116 @@
+﻿@using Kore.Plugins.Messaging.Forums
+@using Kore.Plugins.Messaging.Forums.Models
+@model ActiveDiscussionsModel
+
+<div class="forums-table-section topic-group active-discussions">
+    <div class="forums-table-section-title">
+        @if (Model.ActiveDiscussionsFeedEnabled)
+        {
+            @Html.ActionLink(T(LocalizableStrings.RSS), "ActiveDiscussionsRSS", null, new { @class = "link-rss", title = T(LocalizableStrings.ActiveDiscussionsRSSLinkTitle) })
+        }
+        <strong>@T(LocalizableStrings.ActiveDiscussions)</strong>
+    </div>
+        @{
+            var pager = Html.Pager(new PagerModel
+            {
+                PageSize = Model.TopicPageSize,
+                TotalRecords = Model.TopicTotalRecords,
+                PageIndex = Model.TopicPageIndex,
+                ShowTotalSummary = false,
+                RouteActionName = "ActiveDiscussions",
+                UseRouteLinks = true,
+                RouteValues = new ForumActiveDiscussionsRouteValues()
+            });
+        }
+    @if (!MvcHtmlString.IsNullOrEmpty(pager))
+    {
+        <div class="pager upper">
+            @pager
+        </div>
+    }
+    <div class="forums-table-section-body">
+        @if (Model.ForumTopics.Count > 0)
+        {
+            <div class="table-wrapper">
+                <table class="forum-table">
+                    <colgroup>
+                        <col />
+                        <col width="1" />
+                        <col width="1" />
+                        <col width="1" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th class="topic-details">
+                                @T(LocalizableStrings.TopicTitle)
+                            </th>
+                            <th class="replies">
+                                @T(LocalizableStrings.Replies)
+                            </th>
+                            <th class="views">
+                                @T(LocalizableStrings.Views)
+                            </th>
+                            <th class="latest-post">
+                                @T(LocalizableStrings.LatestPost)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var topic in Model.ForumTopics)
+                        {
+                            <tr>
+                                <td class="topic-details">
+                                    <div class="topic-title">
+                                        @Html.ActionLink(topic.Subject, "Topic", new { id = topic.Id, slug = topic.SeName })
+                                    </div>
+                                    @if (topic.NumPosts > Model.PostsPageSize)
+                                    {
+                                        <div class="topic-pager">
+                                            @Html.ForumTopicSmallPager(topic)
+                                        </div>
+                                    }
+                                    <div class="topic-starter">
+                                        @if (topic.UserId > 0)
+                                        {
+                                            <label>@T(LocalizableStrings.Author)</label>
+                                            if (topic.AllowViewingProfiles)
+                                            {
+                                                @* TODO: Maybe we need to use a different profile page for forums only? *@
+                                                @Html.ActionLink(topic.UserName, "ViewProfile", "Account", new { area = string.Empty, userId = topic.UserId })
+                                            }
+                                            else
+                                            {
+                                                @topic.UserName
+                                            }
+                                        }
+                                    </div>
+                                </td>
+                                <td class="replies">
+                                    @topic.NumReplies
+                                </td>
+                                <td class="views">
+                                    @topic.Views
+                                </td>
+                                <td class="latest-post">
+                                    @Html.Action("LastPost", new { forumPostId = topic.LastPostId, showTopic = false })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+    @if (!MvcHtmlString.IsNullOrEmpty(pager))
+    {
+        <div class="pager lower">
+            @pager
+        </div>
+    }
+    @if (Model.ViewAllLinkEnabled)
+    {
+        <div class="view-all">
+            @Html.ActionLink(T(LocalizableStrings.ActiveDiscussions_ViewAll), "ActiveDiscussions", null)
+        </div>
+    }
+</div>

@@ -74,6 +74,7 @@
       <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -121,23 +122,42 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\ForumsController.cs" />
     <Compile Include="Data\Domain\EditorType.cs" />
     <Compile Include="Data\Domain\Forum.cs" />
     <Compile Include="Data\Domain\ForumGroup.cs" />
     <Compile Include="Data\Domain\ForumPost.cs" />
     <Compile Include="Data\Domain\ForumSearchType.cs" />
-    <Compile Include="Data\Domain\ForumSettings.cs" />
+    <Compile Include="ForumSettings.cs" />
     <Compile Include="Data\Domain\ForumSubscription.cs" />
     <Compile Include="Data\Domain\ForumTopic.cs" />
     <Compile Include="Data\Domain\ForumTopicType.cs" />
     <Compile Include="Data\Domain\PrivateMessage.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\ScriptRegisterExtensions.cs" />
+    <Compile Include="Extensions\SeoExtensions.cs" />
     <Compile Include="Extensions\StyleRegisterExtensions.cs" />
     <Compile Include="Infrastructure\DurandalRouteProvider.cs" />
     <Compile Include="Infrastructure\LanguagePackInvariant.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="Infrastructure\LocationFormatProvider.cs" />
     <Compile Include="LocalizableStrings.cs" />
+    <Compile Include="Models\ActiveDiscussionsModel.cs" />
+    <Compile Include="Models\IndexModel.cs" />
+    <Compile Include="Models\PagerModel.cs" />
+    <Compile Include="Models\UserForumSubscriptionsModel.cs" />
+    <Compile Include="Models\EditForumPostModel.cs" />
+    <Compile Include="Models\EditForumTopicModel.cs" />
+    <Compile Include="Models\ForumBreadcrumbModel.cs" />
+    <Compile Include="Models\ForumGroupModel.cs" />
+    <Compile Include="Models\ForumPageModel.cs" />
+    <Compile Include="Models\ForumPostModel.cs" />
+    <Compile Include="Models\ForumRowModel.cs" />
+    <Compile Include="Models\ForumTopicPageModel.cs" />
+    <Compile Include="Models\ForumTopicRowModel.cs" />
+    <Compile Include="Models\LastPostModel.cs" />
+    <Compile Include="Models\SearchModel.cs" />
+    <Compile Include="Models\TopicMoveModel.cs" />
     <Compile Include="NavigationProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ForumExtensions.cs" />
@@ -149,10 +169,73 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Views\Calendar\Index.cshtml">
+    <Content Include="Views\Forums\ActiveDiscussions.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <Content Include="Views\Forums\ActiveDiscussionsSmall.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\UserForumSubscriptions.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\Forum.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\ForumBreadcrumb.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\ForumGroup.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Views\Shared\EditorTemplates\ForumSettings.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\LastPost.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\PostCreate.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\PostEdit.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\Search.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\Topic.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\TopicCreate.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\TopicEdit.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\TopicMove.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\_ActiveTopics.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\_CreateUpdatePost.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\_CreateUpdateTopic.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\_ForumGroup.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\_ForumHeader.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\_ForumPost.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Forums\_SearchBox.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Views\web.config">
@@ -164,7 +247,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +254,10 @@
       <Project>{2a636196-0b16-484a-8dd8-4bab656dec08}</Project>
       <Name>Kore.EntityFramework</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Kore.Web.Common\Kore.Web.Common.csproj">
+      <Project>{1db0850e-9fa5-41db-9c6a-7f43d37fde8f}</Project>
+      <Name>Kore.Web.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Kore.Web.ContentManagement\Kore.Web.ContentManagement.csproj">
       <Project>{90ec17f4-d7c5-454f-9e56-947978525e88}</Project>

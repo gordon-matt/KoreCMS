@@ -1,0 +1,46 @@
+﻿@using Kore.Web.Configuration
+
+@model DateTimeSettings
+
+<div id="settings-content">
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.EnableXsrfProtectionForAdmin, new { data_bind = "checked: enableXsrfProtectionForAdmin" }) @T(KoreWebLocalizableStrings.Settings.Security.EnableXsrfProtectionForAdmin)
+        </label>
+    </div>
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.EnableXsrfProtectionForFrontend, new { data_bind = "checked: enableXsrfProtectionForFrontend" }) @T(KoreWebLocalizableStrings.Settings.Security.EnableXsrfProtectionForFrontend)
+        </label>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function updateModel(viewModel, data) {
+        viewModel.enableXsrfProtectionForAdmin = ko.observable("");
+        viewModel.enableXsrfProtectionForFrontend = ko.observable(false);
+
+        if (data) {
+            if (data.PublicKey) {
+                viewModel.enableXsrfProtectionForAdmin(data.EnableXsrfProtectionForAdmin);
+            }
+            if (data.PrivateKey) {
+                viewModel.enableXsrfProtectionForFrontend(data.EnableXsrfProtectionForFrontend);
+            }
+        }
+    };
+
+    function cleanUp(viewModel) {
+        delete viewModel.enableXsrfProtectionForAdmin;
+        delete viewModel.enableXsrfProtectionForFrontend;
+    }
+
+    function onBeforeSave(viewModel) {
+        var data = {
+            EnableXsrfProtectionForAdmin: viewModel.enableXsrfProtectionForAdmin(),
+            EnableXsrfProtectionForFrontend: viewModel.enableXsrfProtectionForFrontend()
+        };
+
+        viewModel.value(ko.mapping.toJSON(data));
+    };
+</script>

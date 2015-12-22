@@ -12,7 +12,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
         {
             string text = forumPost.Text;
 
-            if (String.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(text))
                 return string.Empty;
 
             switch (EngineContext.Current.Resolve<ForumSettings>().ForumEditor)
@@ -39,7 +39,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
         public static string StripTopicSubject(this ForumTopic forumTopic)
         {
             string subject = forumTopic.Subject;
-            if (String.IsNullOrEmpty(subject))
+            if (string.IsNullOrEmpty(subject))
             {
                 return subject;
             }
@@ -63,7 +63,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
         public static string FormatForumSignatureText(this string text)
         {
-            if (String.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(text))
                 return string.Empty;
 
             text = HtmlHelper.FormatText(text, false, true, false, false, false, false);
@@ -74,7 +74,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
         {
             string text = pm.Text;
 
-            if (String.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(text))
                 return string.Empty;
 
             text = HtmlHelper.FormatText(text, false, true, false, true, false, false);

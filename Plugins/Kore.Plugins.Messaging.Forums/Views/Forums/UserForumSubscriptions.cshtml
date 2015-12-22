@@ -1,4 +1,5 @@
 ﻿@using Kore.Plugins.Messaging.Forums
+@using Kore.Plugins.Messaging.Forums.Extensions
 @using Kore.Plugins.Messaging.Forums.Models
 @model UserForumSubscriptionsModel
 
@@ -21,20 +22,25 @@
             <div class="description">
                 @T(LocalizableStrings.Account.ForumSubscriptions_Description)
             </div>
-            <script type="text/javascript">
-                $(document).ready(function () {
+            
+            using (Script.AtFoot())
+            {
+                <script type="text/javascript">
+                    $(document).ready(function () {
 
-                    $('#selectall').click(function () {
-                        $('.subscription-list .rowcheckbox').attr('checked', $(this).is(':checked')).change();
-                    });
+                        $('#selectall').click(function () {
+                            $('.subscription-list .rowcheckbox').attr('checked', $(this).is(':checked')).change();
+                        });
 
-                    $('.subscription-list .rowcheckbox').on('change', function (e) {
-                        var numChkBoxes = $('.subscription-list .rowcheckbox').length;
-                        var numChkBoxesChecked = $('.subscription-list .rowcheckbox:checked').length;
-                        $('#selectall').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
+                        $('.subscription-list .rowcheckbox').on('change', function (e) {
+                            var numChkBoxes = $('.subscription-list .rowcheckbox').length;
+                            var numChkBoxesChecked = $('.subscription-list .rowcheckbox:checked').length;
+                            $('#selectall').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
+                        });
                     });
-                });
-            </script>
+                </script>
+            }
+            
             using (Html.BeginForm("UserForumSubscriptions", "Forums", FormMethod.Post))
             {
                 <div class="subscription-list">
@@ -65,11 +71,11 @@
                                         <td class="info">
                                             @if (item.TopicSubscription)
                                             {
-                                                @Html.RouteLink(item.Title, "Topic", new { Id = item.ForumTopicId, slug = item.Slug })
+                                                @Html.ActionLink(item.Title, "Topic", new { Id = item.ForumTopicId, slug = item.Slug })
                                             }
                                             else
                                             {
-                                                @Html.RouteLink(item.Title, "Forum", new { Id = item.ForumId, slug = item.Slug })
+                                                @Html.ActionLink(item.Title, "Forum", new { Id = item.ForumId, slug = item.Slug })
                                             }
                                         </td>
                                     </tr>

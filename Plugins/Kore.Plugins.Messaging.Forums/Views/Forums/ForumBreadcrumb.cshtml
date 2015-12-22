@@ -14,15 +14,15 @@
         </li>
         <li>
             <span class="delimiter">@breadcrumbDelimiter</span>
-            @Html.RouteLink(T(LocalizableStrings.Forums).Text, "Boards", null, new { title = T(LocalizableStrings.Breadcrumb.ForumHomeTitle) })
+            @Html.ActionLink(T(LocalizableStrings.Forums).Text, "Boards", null, new { title = T(LocalizableStrings.Breadcrumb.ForumHomeTitle) })
         </li>
         @if (Model.ForumGroupId > 0)
         {
             <li>
                 <span class="delimiter">@breadcrumbDelimiter</span>
-                @Html.RouteLink(
+                @Html.ActionLink(
                     Model.ForumGroupName,
-                    "ForumGroupSlug",
+                    "ForumGroup",
                     new { id = Model.ForumGroupId, slug = Model.ForumGroupSeName },
                     new { title = string.Format("{0}: {1} ", T(LocalizableStrings.Breadcrumb.ForumGroupTitle), Model.ForumGroupName) })
             </li>        
@@ -31,9 +31,9 @@
         {
             <li>
                 <span class="delimiter">@breadcrumbDelimiter</span>
-                @Html.RouteLink(
+                @Html.ActionLink(
                     Model.ForumName,
-                    "ForumSlug",
+                    "Forum",
                     new { id = Model.ForumId, slug = Model.ForumSeName },
                     new { title = string.Format("{0}: {1} ", T(LocalizableStrings.Breadcrumb.ForumTitle), Model.ForumName) })
             </li>
@@ -42,9 +42,9 @@
         {
             <li>
                 <span class="delimiter">@breadcrumbDelimiter</span>
-                @Html.RouteLink(
+                @Html.ActionLink(
                     Model.ForumTopicSubject,
-                    "TopicSlug",
+                    "Topic",
                     new { id = Model.ForumTopicId, slug = Model.ForumTopicSeName },
                     new { title = string.Format("{0}: {1} ", T(LocalizableStrings.Breadcrumb.TopicTitle), Model.ForumTopicSubject) })
             </li>

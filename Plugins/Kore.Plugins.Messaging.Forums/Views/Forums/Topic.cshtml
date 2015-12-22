@@ -1,4 +1,5 @@
 ﻿@using Kore.Plugins.Messaging.Forums
+@using Kore.Plugins.Messaging.Forums.Extensions
 @using Kore.Plugins.Messaging.Forums.Models
 @model ForumTopicPageModel
 
@@ -25,29 +26,33 @@
             {
                 @Html.ActionLink(T(LocalizableStrings.MoveTopic), "TopicMove", new { id = Model.Id }, new { @class = "move-topic-button" })
             }
-            @Html.RouteLink(T(LocalizableStrings.Reply), "PostCreate", new { id = Model.Id }, new { @class = "reply-topic-button" })
+            @Html.ActionLink(T(LocalizableStrings.Reply), "PostCreate", new { id = Model.Id }, new { @class = "reply-topic-button" })
             @if (Model.IsUserAllowedToSubscribe)
             {
                 <a class="watch-topic-button" href="#" id="watch-topic-top">@Model.WatchTopicText</a>
-                <script type="text/javascript">
-                    $(function () {
-                        $('#watch-topic-top').click(function () {
-                            $.ajax({
-                                cache: false,
-                                type: 'POST',
-                                url: '@Url.Action("TopicWatch", new { id = Model.Id })',
-                                dataType: 'json',
-                                success: function (data) {
-                                    $('#watch-topic-top').text(data.Text);
-                                    $('#watch-topic-bottom').text(data.Text);
-                                },
-                                error: function (xhr, ajaxOptions, thrownError) {
-                                    alert('Failed to watch');
-                                }
+                
+                using (Script.AtFoot())
+                {
+                    <script type="text/javascript">
+                        $(function () {
+                            $('#watch-topic-top').click(function () {
+                                $.ajax({
+                                    cache: false,
+                                    type: 'POST',
+                                    url: '@Url.Action("TopicWatch", new { id = Model.Id })',
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        $('#watch-topic-top').text(data.Text);
+                                        $('#watch-topic-bottom').text(data.Text);
+                                    },
+                                    error: function (xhr, ajaxOptions, thrownError) {
+                                        alert('Failed to watch');
+                                    }
+                                });
                             });
                         });
-                    });
-                </script>
+                    </script>
+                }
             }
         </div>
         @{
@@ -83,29 +88,33 @@
             @if (Model.IsUserAllowedToSubscribe)
             {
                 <a class="watch-topic-button" href="#" id="watch-topic-bottom">@Model.WatchTopicText</a>
-                <script type="text/javascript">
-                $(function () {
-                    $('#watch-topic-bottom').click(function () {
-                        var postData = {};
-                        addAntiForgeryToken(postData);
+                
+                using (Script.AtFoot())
+                {
+                    <script type="text/javascript">
+                    $(function () {
+                        $('#watch-topic-bottom').click(function () {
+                            var postData = {};
+                            addAntiForgeryToken(postData);
 
-                        $.ajax({
-                            cache: false,
-                            type: 'POST',
-                            url: '@Url.Action("TopicWatch", new { id = Model.Id })',
-                            data: postData,
-                            dataType: 'json',
-                            success: function (data) {
-                                $('#watch-topic-top').text(data.Text);
-                                $('#watch-topic-bottom').text(data.Text);
-                            },
-                            error: function (xhr, ajaxOptions, thrownError) {
-                                alert('Failed to watch');
-                            }
+                            $.ajax({
+                                cache: false,
+                                type: 'POST',
+                                url: '@Url.Action("TopicWatch", new { id = Model.Id })',
+                                data: postData,
+                                dataType: 'json',
+                                success: function (data) {
+                                    $('#watch-topic-top').text(data.Text);
+                                    $('#watch-topic-bottom').text(data.Text);
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    alert('Failed to watch');
+                                }
+                            });
                         });
                     });
-                });
-                </script>
+                    </script>
+                }
             }
         </div>
         @if (!MvcHtmlString.IsNullOrEmpty(pager))

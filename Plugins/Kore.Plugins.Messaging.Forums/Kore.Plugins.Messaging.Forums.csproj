@@ -128,6 +128,7 @@
     <Compile Include="Data\Domain\ForumGroup.cs" />
     <Compile Include="Data\Domain\ForumPost.cs" />
     <Compile Include="Data\Domain\ForumSearchType.cs" />
+    <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="ForumSettings.cs" />
     <Compile Include="Data\Domain\ForumSubscription.cs" />
     <Compile Include="Data\Domain\ForumTopic.cs" />

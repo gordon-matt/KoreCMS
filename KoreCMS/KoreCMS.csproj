@@ -331,6 +331,7 @@
     <Content Include="Content\fancybox\fancybox_sprite.png" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\forums.css" />
     <Content Include="Content\ie10mobile.css" />
     <Content Include="Content\images\fresh-green-background.jpg" />
     <Content Include="Content\images\icon.png" />

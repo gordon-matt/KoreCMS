@@ -1,73 +1,137 @@
-﻿using Kore.Plugins.Messaging.Forums.Data.Domain;
+﻿using Kore.ComponentModel;
+using Kore.Plugins.Messaging.Forums.Data.Domain;
 using Kore.Web.Configuration;
 
 namespace Kore.Plugins.Messaging.Forums
 {
     public class ForumSettings : ISettings
     {
+        [LocalizedDisplayName(LocalizableStrings.Settings.ForumsEnabled)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.ForumsEnabled)]
         public bool ForumsEnabled { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.RelativeDateTimeFormattingEnabled)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.RelativeDateTimeFormattingEnabled)]
         public bool RelativeDateTimeFormattingEnabled { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.AllowUsersToEditPosts)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.AllowUsersToEditPosts)]
         public bool AllowUsersToEditPosts { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.AllowUsersToManageSubscriptions)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.AllowUsersToManageSubscriptions)]
         public bool AllowUsersToManageSubscriptions { get; set; }
 
-        public bool AllowGuestsToCreatePosts { get; set; }
+        //[LocalizedDisplayName(LocalizableStrings.Settings.AllowGuestsToCreatePosts)]
+        //[LocalizedHelpText(LocalizableStrings.Settings.HelpText.AllowGuestsToCreatePosts)]
+        //public bool AllowGuestsToCreatePosts { get; set; }
 
-        public bool AllowGuestsToCreateTopics { get; set; }
+        //[LocalizedDisplayName(LocalizableStrings.Settings.AllowGuestsToCreateTopics)]
+        //[LocalizedHelpText(LocalizableStrings.Settings.HelpText.AllowGuestsToCreateTopics)]
+        //public bool AllowGuestsToCreateTopics { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.AllowUsersToDeletePosts)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.AllowUsersToDeletePosts)]
         public bool AllowUsersToDeletePosts { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.TopicSubjectMaxLength)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.TopicSubjectMaxLength)]
         public int TopicSubjectMaxLength { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.StrippedTopicMaxLength)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.StrippedTopicMaxLength)]
         public int StrippedTopicMaxLength { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.PostMaxLength)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.PostMaxLength)]
         public int PostMaxLength { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.TopicsPageSize)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.TopicsPageSize)]
         public int TopicsPageSize { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.PostsPageSize)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.PostsPageSize)]
         public int PostsPageSize { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.SearchResultsPageSize)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.SearchResultsPageSize)]
         public int SearchResultsPageSize { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.ActiveDiscussionsPageSize)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.ActiveDiscussionsPageSize)]
         public int ActiveDiscussionsPageSize { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.LatestUserPostsPageSize)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.LatestUserPostsPageSize)]
         public int LatestUserPostsPageSize { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.ShowUsersPostCount)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.ShowUsersPostCount)]
         public bool ShowUsersPostCount { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.ForumEditor)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.ForumEditor)]
         public EditorType ForumEditor { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.SignaturesEnabled)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.SignaturesEnabled)]
         public bool SignaturesEnabled { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.AllowPrivateMessages)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.AllowPrivateMessages)]
         public bool AllowPrivateMessages { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.ShowAlertForPM)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.ShowAlertForPM)]
         public bool ShowAlertForPM { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.PrivateMessagesPageSize)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.PrivateMessagesPageSize)]
         public int PrivateMessagesPageSize { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.ForumSubscriptionsPageSize)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.ForumSubscriptionsPageSize)]
         public int ForumSubscriptionsPageSize { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.NotifyAboutPrivateMessages)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.NotifyAboutPrivateMessages)]
         public bool NotifyAboutPrivateMessages { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.PMSubjectMaxLength)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.PMSubjectMaxLength)]
         public int PMSubjectMaxLength { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.PMTextMaxLength)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.PMTextMaxLength)]
         public int PMTextMaxLength { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.HomePageActiveDiscussionsTopicCount)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.HomePageActiveDiscussionsTopicCount)]
         public int HomePageActiveDiscussionsTopicCount { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.ActiveDiscussionsFeedCount)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.ActiveDiscussionsFeedCount)]
         public int ActiveDiscussionsFeedCount { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.ActiveDiscussionsFeedEnabled)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.ActiveDiscussionsFeedEnabled)]
         public bool ActiveDiscussionsFeedEnabled { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.ForumFeedsEnabled)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.ForumFeedsEnabled)]
         public bool ForumFeedsEnabled { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.ForumFeedCount)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.ForumFeedCount)]
         public int ForumFeedCount { get; set; }
 
+        [LocalizedDisplayName(LocalizableStrings.Settings.ForumSearchTermMinimumLength)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.ForumSearchTermMinimumLength)]
         public int ForumSearchTermMinimumLength { get; set; }
 
-        //[LocalizedDisplayName(LocalizableStrings.Settings.LayoutPathOverride)]
+        [LocalizedDisplayName(LocalizableStrings.Settings.LayoutPathOverride)]
+        [LocalizedHelpText(LocalizableStrings.Settings.HelpText.LayoutPathOverride)]
         public string LayoutPathOverride { get; set; }
 
         #region ISettings Members

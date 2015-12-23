@@ -42,7 +42,7 @@ namespace Kore.Plugins.Messaging.Forums.Data.Domain
             this.ToTable(Constants.Tables.Posts);
             this.HasKey(x => x.Id);
             this.Property(x => x.TopicId).IsRequired();
-            this.Property(x => x.UserId).IsRequired();
+            this.Property(x => x.UserId).IsRequired().HasMaxLength(128);
             this.Property(x => x.Text).IsRequired().IsMaxLength();
             this.Property(x => x.IPAddress).HasMaxLength(25);
             this.Property(x => x.CreatedOnUtc).IsRequired();

@@ -14,7 +14,12 @@
             public const string Confirm = "Kore.Web/General.Confirm";
             public const string Create = "Kore.Web/General.Create";
             public const string CreateFormat = "Kore.Web/General.CreateFormat";
+            public const string DateCreated = "Kore.Web/General.DateCreated";
+            public const string DateCreatedUtc = "Kore.Web/General.DateCreatedUtc";
+            public const string DateModified = "Kore.Web/General.DateModified";
+            public const string DateModifiedUtc = "Kore.Web/General.DateModifiedUtc";
             public const string Delete = "Kore.Web/General.Delete";
+            public const string Description = "Kore.Web/General.Description";
             public const string Details = "Kore.Web/General.Details";
             public const string Download = "Kore.Web/General.Download";
             public const string Edit = "Kore.Web/General.Edit";
@@ -33,6 +38,7 @@
             public const string None = "Kore.Web/General.None";
             public const string OK = "Kore.Web/General.OK";
             public const string OnOff = "Kore.Web/General.OnOff";
+            public const string Order = "Kore.Web/General.Order";
             public const string Preview = "Kore.Web/General.Preview";
             public const string Previous = "Kore.Web/General.Previous";
             public const string Remove = "Kore.Web/General.Remove";

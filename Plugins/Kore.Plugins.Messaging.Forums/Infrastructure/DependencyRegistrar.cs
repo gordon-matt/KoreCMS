@@ -23,6 +23,7 @@ namespace Kore.Plugins.Messaging.Forums.Infrastructure
             }
 
             builder.RegisterType<DurandalRouteProvider>().As<IDurandalRouteProvider>().SingleInstance();
+            builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();
 
             builder.RegisterType<ForumSettings>().As<ISettings>().SingleInstance();
             builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();

@@ -60,7 +60,7 @@ namespace Kore.Plugins.Messaging.Forums.Data.Domain
             this.Property(x => x.NumPosts).IsRequired();
             this.Property(x => x.LastTopicId).IsRequired();
             this.Property(x => x.LastPostId).IsRequired();
-            this.Property(x => x.LastPostUserId).IsRequired();
+            this.Property(x => x.LastPostUserId).HasMaxLength(128);
             this.Property(x => x.DisplayOrder).IsRequired();
             this.Property(x => x.CreatedOnUtc).IsRequired();
             this.Property(x => x.UpdatedOnUtc).IsRequired();

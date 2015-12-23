@@ -16,7 +16,7 @@
         }
     </div>
     <div class="page-body">
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("TopicSave", "Forums"))
         {
             @Html.AntiForgeryToken()
             var validationSummary = Html.ValidationSummary(true);

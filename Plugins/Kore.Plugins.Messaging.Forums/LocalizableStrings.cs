@@ -51,6 +51,23 @@
         public const string TotalPosts = "Plugins.Messaging.Forums/TotalPosts";
         public const string Views = "Plugins.Messaging.Forums/Views";
 
+        public const string ActiveDiscussionsFeedDescription = "Plugins.Messaging.Forums/ActiveDiscussionsFeedDescription";
+        public const string ActiveDiscussionsFeedTitle = "Plugins.Messaging.Forums/ActiveDiscussionsFeedTitle";
+        public const string ForumFeedDescription = "Plugins.Messaging.Forums/ForumFeedDescription";
+        public const string ForumFeedTitle = "Plugins.Messaging.Forums/ForumFeedTitle";
+        public const string SearchTermMinimumLengthIsNCharacters = "Plugins.Messaging.Forums/SearchTermMinimumLengthIsNCharacters";
+        public const string UnwatchForum = "Plugins.Messaging.Forums/UnwatchForum";
+        public const string UnwatchTopic = "Plugins.Messaging.Forums/UnwatchTopic";
+        public const string WatchForum = "Plugins.Messaging.Forums/WatchForum";
+        public const string WatchTopic = "Plugins.Messaging.Forums/WatchTopic";
+
+        public static class TopicTypes
+        {
+            public const string Announcement = "Plugins.Messaging.Forums/TopicTypes.Announcement";
+            public const string Normal = "Plugins.Messaging.Forums/TopicTypes.Normal";
+            public const string Sticky = "Plugins.Messaging.Forums/TopicTypes.Sticky";
+        }
+
         public static class Account
         {
             public const string ForumSubscriptions = "Plugins.Messaging.Forums/Account.ForumSubscriptions";
@@ -80,52 +97,30 @@
                 public const string Previous = "Plugins.Messaging.Forums/Models.Pager.Previous";
             }
 
-            public static class Forum
+            public static class Search
             {
-                public const string ActiveDiscussionsFeedDescription = "Plugins.Messaging.Forums/Models.Forum.ActiveDiscussionsFeedDescription";
-                public const string ActiveDiscussionsFeedTitle = "Plugins.Messaging.Forums/Models.Forum.ActiveDiscussionsFeedTitle";
-                public const string ForumFeedDescription = "Plugins.Messaging.Forums/Models.Forum.ForumFeedDescription";
-                public const string ForumFeedTitle = "Plugins.Messaging.Forums/Models.Forum.ForumFeedTitle";
-                public const string Replies = "Plugins.Messaging.Forums/Models.Forum.Replies";
-                public const string SearchTermMinimumLengthIsNCharacters = "Plugins.Messaging.Forums/Models.Forum.SearchTermMinimumLengthIsNCharacters";
-                public const string UnwatchForum = "Plugins.Messaging.Forums/Models.Forum.UnwatchForum";
-                public const string UnwatchTopic = "Plugins.Messaging.Forums/Models.Forum.UnwatchTopic";
-                public const string Views = "Plugins.Messaging.Forums/Models.Forum.Views";
-                public const string WatchForum = "Plugins.Messaging.Forums/Models.Forum.WatchForum";
-                public const string WatchTopic = "Plugins.Messaging.Forums/Models.Forum.WatchTopic";
-
-                public static class TopicTypes
+                public static class LimitResultsToPrevious
                 {
-                    public const string Announcement = "Plugins.Messaging.Forums/Models.Forum.TopicTypes.Announcement";
-                    public const string Normal = "Plugins.Messaging.Forums/Models.Forum.TopicTypes.Normal";
-                    public const string Sticky = "Plugins.Messaging.Forums/Models.Forum.TopicTypes.Sticky";
+                    public const string AllResults = "Plugins.Messaging.Forums/Models.Forum.Search.LimitResultsToPrevious.AllResults";
+                    public const string OneDay = "Plugins.Messaging.Forums/Models.Forum.Search.LimitResultsToPrevious.OneDay";
+                    public const string SevenDays = "Plugins.Messaging.Forums/Models.Forum.Search.LimitResultsToPrevious.SevenDays";
+                    public const string TwoWeeks = "Plugins.Messaging.Forums/Models.Forum.Search.LimitResultsToPrevious.TwoWeeks";
+                    public const string OneMonth = "Plugins.Messaging.Forums/Models.Forum.Search.LimitResultsToPrevious.OneMonth";
+                    public const string ThreeMonths = "Plugins.Messaging.Forums/Models.Forum.Search.LimitResultsToPrevious.ThreeMonths";
+                    public const string SixMonths = "Plugins.Messaging.Forums/Models.Forum.Search.LimitResultsToPrevious.SixMonths";
+                    public const string OneYear = "Plugins.Messaging.Forums/Models.Forum.Search.LimitResultsToPrevious.OneYear";
                 }
 
-                public static class Search
+                public static class SearchInForum
                 {
-                    public static class LimitResultsToPrevious
-                    {
-                        public const string AllResults = "Plugins.Messaging.Forums/Models.Forum.Search.LimitResultsToPrevious.AllResults";
-                        public const string OneDay = "Plugins.Messaging.Forums/Models.Forum.Search.LimitResultsToPrevious.OneDay";
-                        public const string SevenDays = "Plugins.Messaging.Forums/Models.Forum.Search.LimitResultsToPrevious.SevenDays";
-                        public const string TwoWeeks = "Plugins.Messaging.Forums/Models.Forum.Search.LimitResultsToPrevious.TwoWeeks";
-                        public const string OneMonth = "Plugins.Messaging.Forums/Models.Forum.Search.LimitResultsToPrevious.OneMonth";
-                        public const string ThreeMonths = "Plugins.Messaging.Forums/Models.Forum.Search.LimitResultsToPrevious.ThreeMonths";
-                        public const string SixMonths = "Plugins.Messaging.Forums/Models.Forum.Search.LimitResultsToPrevious.SixMonths";
-                        public const string OneYear = "Plugins.Messaging.Forums/Models.Forum.Search.LimitResultsToPrevious.OneYear";
-                    }
+                    public const string All = "Plugins.Messaging.Forums/Models.Forum.Search.SearchInForum.All";
+                }
 
-                    public static class SearchInForum
-                    {
-                        public const string All = "Plugins.Messaging.Forums/Models.Forum.Search.SearchInForum.All";
-                    }
-
-                    public static class SearchWithin
-                    {
-                        public const string All = "Plugins.Messaging.Forums/Models.Forum.Search.SearchWithin.All";
-                        public const string TopicTitlesOnly = "Plugins.Messaging.Forums/Models.Forum.Search.SearchWithin.TopicTitlesOnly";
-                        public const string PostTextOnly = "Plugins.Messaging.Forums/Models.Forum.Search.SearchWithin.PostTextOnly";
-                    }
+                public static class SearchWithin
+                {
+                    public const string All = "Plugins.Messaging.Forums/Models.Forum.Search.SearchWithin.All";
+                    public const string TopicTitlesOnly = "Plugins.Messaging.Forums/Models.Forum.Search.SearchWithin.TopicTitlesOnly";
+                    public const string PostTextOnly = "Plugins.Messaging.Forums/Models.Forum.Search.SearchWithin.PostTextOnly";
                 }
             }
         }

@@ -909,13 +909,14 @@ namespace Kore.Plugins.Messaging.Forums.Services
             int pageIndex = 0,
             int pageSize = int.MaxValue)
         {
+            bool isLockedOut = membershipService.GetUserById(userId).IsLockedOut;
+
             var fsQuery = from fs in forumSubscriptionRepository.Table
-                          join c in membershipService.GetAllUsersAsQueryable() on fs.UserId equals c.Id
                           where
                               (userId == null || fs.UserId == userId) &&
                               (forumId == 0 || fs.ForumId == forumId) &&
                               (topicId == 0 || fs.TopicId == topicId) &&
-                              (!c.IsLockedOut)
+                              (!isLockedOut)
                           select fs.Id;
 
             var query = from fs in forumSubscriptionRepository.Table

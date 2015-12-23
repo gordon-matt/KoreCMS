@@ -12,7 +12,7 @@
         <h1>@T(LocalizableStrings.MoveTopic)</h1>
     </div>
     <div class="page-body">
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("TopicMovePost", "Forums"))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(x => x.Id)

@@ -35,7 +35,7 @@ namespace Kore.Plugins.Messaging.Forums.Data.Domain
         {
             this.ToTable(Constants.Tables.Subscriptions);
             this.HasKey(x => x.Id);
-            this.Property(x => x.UserId).IsRequired();
+            this.Property(x => x.UserId).IsRequired().HasMaxLength(128);
             this.Property(x => x.ForumId).IsRequired();
             this.Property(x => x.TopicId).IsRequired();
         }

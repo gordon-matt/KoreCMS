@@ -22,6 +22,7 @@ using Kore.Web.Security.Membership;
 
 namespace Kore.Plugins.Messaging.Forums.Controllers
 {
+    [Authorize]
     [RouteArea("")]
     [RoutePrefix("forums")]
     public class ForumsController : KoreController
@@ -148,19 +149,19 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
             list.Add(new SelectListItem
             {
-                Text = localizer(LocalizableStrings.Models.Forum.TopicTypes.Normal),
+                Text = localizer(LocalizableStrings.TopicTypes.Normal),
                 Value = ((int)ForumTopicType.Normal).ToString()
             });
 
             list.Add(new SelectListItem
             {
-                Text = localizer(LocalizableStrings.Models.Forum.TopicTypes.Sticky),
+                Text = localizer(LocalizableStrings.TopicTypes.Sticky),
                 Value = ((int)ForumTopicType.Sticky).ToString()
             });
 
             list.Add(new SelectListItem
             {
-                Text = localizer(LocalizableStrings.Models.Forum.TopicTypes.Announcement),
+                Text = localizer(LocalizableStrings.TopicTypes.Announcement),
                 Value = ((int)ForumTopicType.Announcement).ToString()
             });
 
@@ -219,6 +220,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             return View(model);
         }
 
+        [Route("active-discussions/{forumId}")]
         [Route("active-discussions/{forumId}/{page}")]
         public ActionResult ActiveDiscussions(int forumId = 0, int page = 1)
         {
@@ -280,6 +282,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             return PartialView(model);
         }
 
+        [Route("active-discussions/rss")]
         [Route("active-discussions/rss/{forumId}")]
         public ActionResult ActiveDiscussionsRss(int forumId = 0)
         {
@@ -296,8 +299,8 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             var topics = forumService.GetActiveTopics(forumId, 0, forumSettings.ActiveDiscussionsFeedCount);
             string url = Url.RouteUrl("ActiveDiscussionsRSS", null, "http");
 
-            var feedTitle = localizer(LocalizableStrings.Models.Forum.ActiveDiscussionsFeedTitle);
-            var feedDescription = localizer(LocalizableStrings.Models.Forum.ActiveDiscussionsFeedDescription);
+            var feedTitle = localizer(LocalizableStrings.ActiveDiscussionsFeedTitle);
+            var feedDescription = localizer(LocalizableStrings.ActiveDiscussionsFeedDescription);
 
             var feed = new SyndicationFeed(
                 string.Format(feedTitle, siteSettings.SiteName),
@@ -308,8 +311,8 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
             var items = new List<SyndicationItem>();
 
-            var viewsText = localizer(LocalizableStrings.Models.Forum.Views);
-            var repliesText = localizer(LocalizableStrings.Models.Forum.Replies);
+            var viewsText = localizer(LocalizableStrings.Views);
+            var repliesText = localizer(LocalizableStrings.Replies);
 
             foreach (var topic in topics)
             {
@@ -352,6 +355,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             return View(model);
         }
 
+        [Route("forum/{id}/{slug}")]
         [Route("forum/{id}/{slug}/page/{page}")]
         public ActionResult Forum(int id, int page = 1)
         {
@@ -390,12 +394,12 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 //subscription
                 if (forumService.IsUserAllowedToSubscribe(workContext.CurrentUser))
                 {
-                    model.WatchForumText = localizer(LocalizableStrings.Models.Forum.WatchForum);
+                    model.WatchForumText = localizer(LocalizableStrings.WatchForum);
 
                     var forumSubscription = forumService.GetAllSubscriptions(workContext.CurrentUser.Id, forum.Id, 0, 0, 1).FirstOrDefault();
                     if (forumSubscription != null)
                     {
-                        model.WatchForumText = localizer(LocalizableStrings.Models.Forum.UnwatchForum);
+                        model.WatchForumText = localizer(LocalizableStrings.UnwatchForum);
                     }
                 }
 
@@ -428,8 +432,8 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
                 string url = Url.RouteUrl("ForumRSS", new { id = forum.Id }, "http");
 
-                var feedTitle = localizer(LocalizableStrings.Models.Forum.ForumFeedTitle);
-                var feedDescription = localizer(LocalizableStrings.Models.Forum.ForumFeedDescription);
+                var feedTitle = localizer(LocalizableStrings.ForumFeedTitle);
+                var feedDescription = localizer(LocalizableStrings.ForumFeedDescription);
 
                 var feed = new SyndicationFeed(
                     string.Format(feedTitle, siteSettings.SiteName, forum.Name),
@@ -440,8 +444,8 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
                 var items = new List<SyndicationItem>();
 
-                var viewsText = localizer(LocalizableStrings.Models.Forum.Views);
-                var repliesText = localizer(LocalizableStrings.Models.Forum.Replies);
+                var viewsText = localizer(LocalizableStrings.Views);
+                var repliesText = localizer(LocalizableStrings.Replies);
 
                 foreach (var topic in topics)
                 {
@@ -474,8 +478,8 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         [Route("forum/watch/{id}")]
         public ActionResult ForumWatch(int id)
         {
-            string watchTopic = localizer(LocalizableStrings.Models.Forum.WatchForum);
-            string unwatchTopic = localizer(LocalizableStrings.Models.Forum.UnwatchForum);
+            string watchTopic = localizer(LocalizableStrings.WatchForum);
+            string unwatchTopic = localizer(LocalizableStrings.UnwatchForum);
             string returnText = watchTopic;
 
             var forum = forumService.GetForumById(id);
@@ -516,6 +520,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             return Json(new { Subscribed = subscribed, Text = returnText, Error = false });
         }
 
+        [Route("topic/{id}/{slug}")]
         [Route("topic/{id}/{slug}/page/{page}")]
         public ActionResult Topic(int id, int page = 1)
         {
@@ -558,7 +563,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
                 if (model.IsUserAllowedToSubscribe)
                 {
-                    model.WatchTopicText = localizer(LocalizableStrings.Models.Forum.WatchTopic);
+                    model.WatchTopicText = localizer(LocalizableStrings.WatchTopic);
 
                     var forumTopicSubscription = forumService
                         .GetAllSubscriptions(workContext.CurrentUser.Id, 0, forumTopic.Id, 0, 1)
@@ -566,7 +571,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
                     if (forumTopicSubscription != null)
                     {
-                        model.WatchTopicText = localizer(LocalizableStrings.Models.Forum.UnwatchTopic);
+                        model.WatchTopicText = localizer(LocalizableStrings.UnwatchTopic);
                     }
                 }
 
@@ -641,8 +646,8 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         [Route("topic/watch/{id}")]
         public ActionResult TopicWatch(int id)
         {
-            string watchTopic = localizer(LocalizableStrings.Models.Forum.WatchTopic);
-            string unwatchTopic = localizer(LocalizableStrings.Models.Forum.UnwatchTopic);
+            string watchTopic = localizer(LocalizableStrings.WatchTopic);
+            string unwatchTopic = localizer(LocalizableStrings.UnwatchTopic);
             string returnText = watchTopic;
 
             var forumTopic = forumService.GetTopicById(id);
@@ -712,7 +717,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         [HttpPost]
         [FrontendAntiForgery]
         [Route("topic/move-post")]
-        public ActionResult TopicMove(TopicMoveModel model)
+        public ActionResult TopicMovePost(TopicMoveModel model)
         {
             if (!forumSettings.ForumsEnabled)
             {
@@ -805,7 +810,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         [FrontendAntiForgery]
         [Route("topic/create-post")]
         [ValidateInput(false)]
-        public ActionResult TopicCreate(EditForumTopicModel model)
+        public ActionResult TopicCreatePost(EditForumTopicModel model)
         {
             if (!forumSettings.ForumsEnabled)
             {
@@ -989,7 +994,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         [FrontendAntiForgery]
         [Route("topic/edit-post")]
         [ValidateInput(false)]
-        public ActionResult TopicEdit(EditForumTopicModel model)
+        public ActionResult TopicEditPost(EditForumTopicModel model)
         {
             if (!forumSettings.ForumsEnabled)
             {
@@ -1127,6 +1132,22 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [FrontendAntiForgery]
+        [Route("topic/save")]
+        [ValidateInput(false)]
+        public ActionResult TopicSave(EditForumTopicModel model)
+        {
+            if (model.IsEdit)
+            {
+                return TopicEditPost(model);
+            }
+            else
+            {
+                return TopicCreatePost(model);
+            }
+        }
+
         [Route("post/delete/{id}")]
         public ActionResult PostDelete(int id)
         {
@@ -1247,7 +1268,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         [FrontendAntiForgery]
         [Route("post/create-post")]
         [ValidateInput(false)]
-        public ActionResult PostCreate(EditForumPostModel model)
+        public ActionResult PostCreatePost(EditForumPostModel model)
         {
             if (!forumSettings.ForumsEnabled)
             {
@@ -1426,7 +1447,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         [FrontendAntiForgery]
         [Route("post/edit-post")]
         [ValidateInput(false)]
-        public ActionResult PostEdit(EditForumPostModel model)
+        public ActionResult PostEditPost(EditForumPostModel model)
         {
             if (!forumSettings.ForumsEnabled)
             {
@@ -1533,6 +1554,22 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [FrontendAntiForgery]
+        [Route("post/save")]
+        [ValidateInput(false)]
+        public ActionResult PostSave(EditForumPostModel model)
+        {
+            if (model.IsEdit)
+            {
+                return PostEditPost(model);
+            }
+            else
+            {
+                return PostCreatePost(model);
+            }
+        }
+
         [Route("search")]
         public ActionResult Search(
             string searchterms,
@@ -1556,42 +1593,42 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             {
                 new SelectListItem
                 {
-                    Text = localizer(LocalizableStrings.Models.Forum.Search.LimitResultsToPrevious.AllResults),
+                    Text = localizer(LocalizableStrings.Models.Search.LimitResultsToPrevious.AllResults),
                     Value = "0"
                 },
                 new SelectListItem
                 {
-                    Text = localizer(LocalizableStrings.Models.Forum.Search.LimitResultsToPrevious.OneDay),
+                    Text = localizer(LocalizableStrings.Models.Search.LimitResultsToPrevious.OneDay),
                     Value = "1"
                 },
                 new SelectListItem
                 {
-                    Text = localizer(LocalizableStrings.Models.Forum.Search.LimitResultsToPrevious.SevenDays),
+                    Text = localizer(LocalizableStrings.Models.Search.LimitResultsToPrevious.SevenDays),
                     Value = "7"
                 },
                 new SelectListItem
                 {
-                    Text = localizer(LocalizableStrings.Models.Forum.Search.LimitResultsToPrevious.TwoWeeks),
+                    Text = localizer(LocalizableStrings.Models.Search.LimitResultsToPrevious.TwoWeeks),
                     Value = "14"
                 },
                 new SelectListItem
                 {
-                    Text = localizer(LocalizableStrings.Models.Forum.Search.LimitResultsToPrevious.OneMonth),
+                    Text = localizer(LocalizableStrings.Models.Search.LimitResultsToPrevious.OneMonth),
                     Value = "30"
                 },
                 new SelectListItem
                 {
-                    Text = localizer(LocalizableStrings.Models.Forum.Search.LimitResultsToPrevious.ThreeMonths),
+                    Text = localizer(LocalizableStrings.Models.Search.LimitResultsToPrevious.ThreeMonths),
                     Value = "92"
                 },
                 new SelectListItem
                 {
-                    Text= localizer(LocalizableStrings.Models.Forum.Search.LimitResultsToPrevious.SixMonths),
+                    Text= localizer(LocalizableStrings.Models.Search.LimitResultsToPrevious.SixMonths),
                     Value = "183"
                 },
                 new SelectListItem
                 {
-                    Text = localizer(LocalizableStrings.Models.Forum.Search.LimitResultsToPrevious.OneYear),
+                    Text = localizer(LocalizableStrings.Models.Search.LimitResultsToPrevious.OneYear),
                     Value = "365"
                 }
             };
@@ -1602,7 +1639,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             forumsSelectList.Add(
                 new SelectListItem
                 {
-                    Text = localizer(LocalizableStrings.Models.Forum.Search.SearchInForum.All),
+                    Text = localizer(LocalizableStrings.Models.Search.SearchInForum.All),
                     Value = "0",
                     Selected = true,
                 });
@@ -1632,17 +1669,17 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 new SelectListItem
                 {
                     Value = ((int)ForumSearchType.All).ToString(),
-                    Text = localizer(LocalizableStrings.Models.Forum.Search.SearchWithin.All)
+                    Text = localizer(LocalizableStrings.Models.Search.SearchWithin.All)
                 },
                 new SelectListItem
                 {
                     Value = ((int)ForumSearchType.TopicTitlesOnly).ToString(),
-                    Text = localizer(LocalizableStrings.Models.Forum.Search.SearchWithin.TopicTitlesOnly)
+                    Text = localizer(LocalizableStrings.Models.Search.SearchWithin.TopicTitlesOnly)
                 },
                 new SelectListItem
                 {
                     Value = ((int)ForumSearchType.PostTextOnly).ToString(),
-                    Text = localizer(LocalizableStrings.Models.Forum.Search.SearchWithin.PostTextOnly)
+                    Text = localizer(LocalizableStrings.Models.Search.SearchWithin.PostTextOnly)
                 }
             };
             model.WithinList = withinList;
@@ -1676,7 +1713,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                     if (searchterms.Length < searchTermMinimumLength)
                     {
                         throw new KoreException(string.Format(
-                            localizer(LocalizableStrings.Models.Forum.SearchTermMinimumLengthIsNCharacters),
+                            localizer(LocalizableStrings.SearchTermMinimumLengthIsNCharacters),
                             searchTermMinimumLength));
                     }
 

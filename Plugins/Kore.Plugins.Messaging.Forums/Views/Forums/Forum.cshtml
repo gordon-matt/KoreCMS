@@ -5,7 +5,7 @@
 @model ForumPageModel
 
 @{
-    Html.AddTitleParts(Model.Name);
+    ViewBag.Title = Model.Name;
 }
 <div class="page forum-page">
     @Html.Action("ForumBreadcrumb", new { forumId = Model.Id })
@@ -105,18 +105,18 @@
                         {
                             var topicType = "post";
                             var topicText = string.Empty;
-                            switch (topic.ForumTopicType)
+                            switch (topic.TopicType)
                             {
                                 case ForumTopicType.Normal:
                                     topicType = "post";
                                     break;
                                 case ForumTopicType.Sticky:
                                     topicType = "sticky";
-                                    topicText = string.Format("[{0}]", T(LocalizableStrings.Models.Forum.TopicTypes.Sticky));
+                                    topicText = string.Format("[{0}]", T(LocalizableStrings.TopicTypes.Sticky));
                                     break;
                                 case ForumTopicType.Announcement:
                                     topicType = "announcement";
-                                    topicText = string.Format("[{0}]", T(LocalizableStrings.Models.Forum.TopicTypes.Announcement));
+                                    topicText = string.Format("[{0}]", T(LocalizableStrings.TopicTypes.Announcement));
                                     break;
                                 default:
                                     topicType = "post";

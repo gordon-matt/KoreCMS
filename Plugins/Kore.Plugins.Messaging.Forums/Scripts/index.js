@@ -12,37 +12,36 @@
     require('kore-section-switching');
     require('kore-jqueryval');
 
-    var calendarApiUrl = "/odata/kore/plugins/full-calendar/CalendarApi";
-    var eventApiUrl = "/odata/kore/plugins/full-calendar/CalendarEventApi";
+    var forumGroupApiUrl = "/odata/kore/plugins/forums/ForumGroupApi";
+    var forumApiUrl = "/odata/kore/plugins/forums/ForumApi";
 
-    var EventModel = function (parent) {
+    var ForumModel = function (parent) {
         var self = this;
 
         self.parent = parent;
         self.id = ko.observable(0);
-        self.calendarId = ko.observable(0);
+        self.forumGroupId = ko.observable(0);
         self.name = ko.observable(null);
-        self.startDateTime = ko.observable('');
-        self.endDateTime = ko.observable('');
+        self.description = ko.observable(null);
+        self.displayOrder = ko.observable(0);
 
         self.validator = false;
 
         self.init = function () {
-            self.validator = $("#events-form-section-form").validate({
+            self.validator = $("#forum-form-section-form").validate({
                 rules: {
-                    Event_Name: { required: true, maxlength: 255 },
-                    Event_StartDateTime: { required: true, date: true },
-                    Event_EndDateTime: { required: true, date: true }
+                    Name: { required: true, maxlength: 255 },
+                    DisplayOrder: { required: true, digits: true }
                 }
             });
 
-            $("#EventGrid").kendoGrid({
+            $("#ForumGrid").kendoGrid({
                 data: null,
                 dataSource: {
                     type: "odata",
                     transport: {
                         read: {
-                            url: eventApiUrl,
+                            url: forumApiUrl,
                             dataType: "json"
                         },
                         parameterMap: function (options, operation) {
@@ -69,8 +68,8 @@
                         model: {
                             fields: {
                                 Name: { type: "string" },
-                                StartDateTime: { type: "date" },
-                                EndDateTime: { type: "date" }
+                                DisplayOrder: { type: "number" },
+                                CreatedOnUtc: { type: "date" }
                             }
                         }
                     },
@@ -97,16 +96,15 @@
                 scrollable: false,
                 columns: [{
                     field: "Name",
-                    title: self.parent.translations.Columns.Event.Name,
+                    title: self.parent.translations.Columns.Name,
                     filterable: true
                 }, {
-                    field: "StartDateTime",
-                    title: self.parent.translations.Columns.Event.StartDateTime,
-                    format: "{0:G}",
+                    field: "DisplayOrder",
+                    title: self.parent.translations.Columns.DisplayOrder,
                     filterable: true
                 }, {
-                    field: "EndDateTime",
-                    title: self.parent.translations.Columns.Event.EndDateTime,
+                    field: "CreatedOnUtc",
+                    title: self.parent.translations.Columns.CreatedOnUtc,
                     format: "{0:G}",
                     filterable: true
                 }, {
@@ -114,8 +112,8 @@
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a data-bind="click: eventModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
-                        '<a data-bind="click: eventModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
+                        '<a data-bind="click: forumModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: forumModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -125,32 +123,32 @@
         };
         self.create = function () {
             self.id(0);
-            self.calendarId(self.parent.selectedCalendarId());
+            self.forumGroupId(self.parent.selectedForumGroupId());
             self.name(null);
-            self.startDateTime('');
-            self.endDateTime('');
+            self.description(null);
+            self.displayOrder(0);
 
             self.validator.resetForm();
-            switchSection($("#events-form-section"));
-            $("#events-form-section-legend").html(self.parent.translations.Create);
+            switchSection($("#forum-form-section"));
+            $("#forum-form-section-legend").html(self.parent.translations.Create);
         };
         self.edit = function (id) {
             $.ajax({
-                url: eventApiUrl + "(" + id + ")",
+                url: forumApiUrl + "(" + id + ")",
                 type: "GET",
                 dataType: "json",
                 async: false
             })
             .done(function (json) {
                 self.id(json.Id);
-                self.calendarId(json.CalendarId);
+                self.forumGroupId(json.ForumGroupId);
                 self.name(json.Name);
-                self.startDateTime(json.StartDateTime);
-                self.endDateTime(json.EndDateTime);
+                self.description(json.Description);
+                self.displayOrder(json.DisplayOrder);
 
                 self.validator.resetForm();
-                switchSection($("#events-form-section"));
-                $("#events-form-section-legend").html(self.parent.translations.Edit);
+                switchSection($("#forum-form-section"));
+                $("#forum-form-section-legend").html(self.parent.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(self.parent.translations.GetRecordError, "error");
@@ -160,14 +158,14 @@
         self.remove = function (id) {
             if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
-                    url: eventApiUrl + "(" + id + ")",
+                    url: forumApiUrl + "(" + id + ")",
                     type: "DELETE",
                     dataType: "json",
                     async: false
                 })
                 .done(function (json) {
-                    $('#EventGrid').data('kendoGrid').dataSource.read();
-                    $('#EventGrid').data('kendoGrid').refresh();
+                    $('#ForumGrid').data('kendoGrid').dataSource.read();
+                    $('#ForumGrid').data('kendoGrid').refresh();
                     $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
@@ -179,24 +177,21 @@
         self.save = function () {
             var isNew = (self.id() == 0);
 
-            if (!$("#events-form-section-form").valid()) {
+            if (!$("#forum-form-section-form").valid()) {
                 return false;
             }
 
-            var startDateTime = moment(self.startDateTime());
-            var endDateTime = moment(self.endDateTime());
-
             var record = {
                 Id: self.id(),
-                CalendarId: self.calendarId(),
+                ForumGroupId: self.forumGroupId(),
                 Name: self.name(),
-                StartDateTime: startDateTime.format('YYYY-MM-DDTHH:mm'),
-                EndDateTime: endDateTime.format('YYYY-MM-DDTHH:mm')
+                Description: self.description(),
+                DisplayOrder: self.displayOrder()
             };
 
             if (isNew) {
                 $.ajax({
-                    url: eventApiUrl,
+                    url: forumApiUrl,
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(record),
@@ -204,10 +199,10 @@
                     async: false
                 })
                 .done(function (json) {
-                    $('#EventGrid').data('kendoGrid').dataSource.read();
-                    $('#EventGrid').data('kendoGrid').refresh();
+                    $('#ForumGrid').data('kendoGrid').dataSource.read();
+                    $('#ForumGrid').data('kendoGrid').refresh();
 
-                    switchSection($("#events-grid-section"));
+                    switchSection($("#forum-grid-section"));
 
                     $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
@@ -218,7 +213,7 @@
             }
             else {
                 $.ajax({
-                    url: eventApiUrl + "(" + self.id() + ")",
+                    url: forumApiUrl + "(" + self.id() + ")",
                     type: "PUT",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(record),
@@ -226,10 +221,10 @@
                     async: false
                 })
                 .done(function (json) {
-                    $('#EventGrid').data('kendoGrid').dataSource.read();
-                    $('#EventGrid').data('kendoGrid').refresh();
+                    $('#ForumGrid').data('kendoGrid').dataSource.read();
+                    $('#ForumGrid').data('kendoGrid').refresh();
 
-                    switchSection($("#events-grid-section"));
+                    switchSection($("#forum-grid-section"));
 
                     $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
@@ -240,35 +235,37 @@
             }
         };
         self.goBack = function () {
-            switchSection($("#grid-section"));
+            switchSection($("#forum-group-grid-section"));
         };
         self.cancel = function () {
-            switchSection($("#events-grid-section"));
+            switchSection($("#forum-grid-section"));
         };
     };
 
-    var CalendarModel = function (parent) {
+    var ForumGroupModel = function (parent) {
         var self = this;
 
         self.parent = parent;
         self.id = ko.observable(0);
         self.name = ko.observable(null);
+        self.displayOrder = ko.observable(0);
 
         self.validator = false;
 
         self.init = function () {
-            self.validator = $("#form-section-form").validate({
+            self.validator = $("#forum-group-form-section-form").validate({
                 rules: {
-                    Name: { required: true, maxlength: 255 }
+                    Name: { required: true, maxlength: 255 },
+                    DisplayOrder: { required: true, digits: true }
                 }
             });
-            $("#Grid").kendoGrid({
+            $("#ForumGroupGrid").kendoGrid({
                 data: null,
                 dataSource: {
                     type: "odata",
                     transport: {
                         read: {
-                            url: calendarApiUrl,
+                            url: forumGroupApiUrl,
                             dataType: "json"
                         },
                         parameterMap: function (options, operation) {
@@ -294,7 +291,9 @@
                         },
                         model: {
                             fields: {
-                                Name: { type: "string" }
+                                Name: { type: "string" },
+                                DisplayOrder: { type: "number" },
+                                CreatedOnUtc: { type: "date" }
                             }
                         }
                     },
@@ -321,16 +320,25 @@
                 scrollable: false,
                 columns: [{
                     field: "Name",
-                    title: self.parent.translations.Columns.Calendar.Name,
+                    title: self.parent.translations.Columns.Name,
+                    filterable: true
+                }, {
+                    field: "DisplayOrder",
+                    title: self.parent.translations.Columns.DisplayOrder,
+                    filterable: true
+                }, {
+                    field: "CreatedOnUtc",
+                    title: self.parent.translations.Columns.CreatedOnUtc,
+                    format: "{0:G}",
                     filterable: true
                 }, {
                     field: "Id",
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a data-bind="click: showEvents.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Events + '</a>' +
-                        '<a data-bind="click: calendarModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
-                        '<a data-bind="click: calendarModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
+                        '<a data-bind="click: showForums.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Forums + '</a>' +
+                        '<a data-bind="click: forumGroupModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: forumGroupModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -341,14 +349,15 @@
         self.create = function () {
             self.id(0);
             self.name(null);
+            self.displayOrder(0);
 
             self.validator.resetForm();
-            switchSection($("#form-section"));
-            $("#form-section-legend").html(self.parent.translations.Create);
+            switchSection($("#forum-group-form-section"));
+            $("#forum-group-form-section-legend").html(self.parent.translations.Create);
         };
         self.edit = function (id) {
             $.ajax({
-                url: calendarApiUrl + "(" + id + ")",
+                url: forumGroupApiUrl + "(" + id + ")",
                 type: "GET",
                 dataType: "json",
                 async: false
@@ -356,10 +365,11 @@
             .done(function (json) {
                 self.id(json.Id);
                 self.name(json.Name);
+                self.displayOrder(json.DisplayOrder);
 
                 self.validator.resetForm();
-                switchSection($("#form-section"));
-                $("#form-section-legend").html(self.parent.translations.Edit);
+                switchSection($("#forum-group-form-section"));
+                $("#forum-group-form-section-legend").html(self.parent.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 $.notify(self.parent.translations.GetRecordError, "error");
@@ -369,13 +379,13 @@
         self.remove = function (id) {
             if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
-                    url: calendarApiUrl + "(" + id + ")",
+                    url: forumGroupApiUrl + "(" + id + ")",
                     type: "DELETE",
                     async: false
                 })
                 .done(function (json) {
-                    $('#Grid').data('kendoGrid').dataSource.read();
-                    $('#Grid').data('kendoGrid').refresh();
+                    $('#ForumGroupGrid').data('kendoGrid').dataSource.read();
+                    $('#ForumGroupGrid').data('kendoGrid').refresh();
 
                     $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
@@ -387,19 +397,20 @@
         };
         self.save = function () {
 
-            if (!$("#form-section-form").valid()) {
+            if (!$("#forum-group-form-section-form").valid()) {
                 return false;
             }
 
             var record = {
                 Id: self.id(),
-                Name: self.name()
+                Name: self.name(),
+                DisplayOrder: self.displayOrder()
             };
 
             if (self.id() == 0) {
                 // INSERT
                 $.ajax({
-                    url: calendarApiUrl,
+                    url: forumGroupApiUrl,
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(record),
@@ -407,10 +418,10 @@
                     async: false
                 })
                 .done(function (json) {
-                    $('#Grid').data('kendoGrid').dataSource.read();
-                    $('#Grid').data('kendoGrid').refresh();
+                    $('#ForumGroupGrid').data('kendoGrid').dataSource.read();
+                    $('#ForumGroupGrid').data('kendoGrid').refresh();
 
-                    switchSection($("#grid-section"));
+                    switchSection($("#forum-group-grid-section"));
 
                     $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
@@ -422,7 +433,7 @@
             else {
                 // UPDATE
                 $.ajax({
-                    url: calendarApiUrl + "(" + self.id() + ")",
+                    url: forumGroupApiUrl + "(" + self.id() + ")",
                     type: "PUT",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(record),
@@ -430,10 +441,10 @@
                     async: false
                 })
                 .done(function (json) {
-                    $('#Grid').data('kendoGrid').dataSource.read();
-                    $('#Grid').data('kendoGrid').refresh();
+                    $('#ForumGroupGrid').data('kendoGrid').dataSource.read();
+                    $('#ForumGroupGrid').data('kendoGrid').refresh();
 
-                    switchSection($("#grid-section"));
+                    switchSection($("#forum-group-grid-section"));
 
                     $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
@@ -444,7 +455,7 @@
             }
         };
         self.cancel = function () {
-            switchSection($("#grid-section"));
+            switchSection($("#forum-group-grid-section"));
         };
     };
 
@@ -454,21 +465,21 @@
         self.gridPageSize = 10;
         self.translations = false;
 
-        self.calendarModel = false;
-        self.eventModel = false;
+        self.forumGroupModel = false;
+        self.forumModel = false;
 
-        self.selectedCalendarId = ko.observable(0);
+        self.selectedForumGroupId = ko.observable(0);
 
         self.activate = function () {
-            self.calendarModel = new CalendarModel(self);
-            self.eventModel = new EventModel(self);
+            self.forumGroupModel = new ForumGroupModel(self);
+            self.forumModel = new ForumModel(self);
         };
         self.attached = function () {
-            currentSection = $("#grid-section");
+            currentSection = $("#forum-group-grid-section");
 
             // Load translations first, else will have errors
             $.ajax({
-                url: "/plugins/widgets/fullcalendar/get-translations",
+                url: "/plugins/messaging/forums/get-translations",
                 type: "GET",
                 dataType: "json",
                 async: false
@@ -482,20 +493,17 @@
 
             self.gridPageSize = $("#GridPageSize").val();
 
-            self.calendarModel.init();
-            self.eventModel.init();
-
-            $("#Event_StartDateTime").kendoDateTimePicker();
-            $("#Event_EndDateTime").kendoDateTimePicker();
+            self.forumGroupModel.init();
+            self.forumModel.init();
         };
-        self.showEvents = function (calendarId) {
-            self.selectedCalendarId(calendarId);
+        self.showForums = function (forumGroupId) {
+            self.selectedForumGroupId(forumGroupId);
 
-            var grid = $('#EventGrid').data('kendoGrid');
-            grid.dataSource.transport.options.read.url = eventApiUrl + "?$filter=CalendarId eq " + calendarId;
+            var grid = $('#ForumGrid').data('kendoGrid');
+            grid.dataSource.transport.options.read.url = forumApiUrl + "?$filter=ForumGroupId eq " + forumGroupId;
             grid.dataSource.page(1);
 
-            switchSection($("#events-grid-section"));
+            switchSection($("#forum-grid-section"));
         };
     };
 

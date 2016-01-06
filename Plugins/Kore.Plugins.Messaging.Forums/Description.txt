@@ -3,6 +3,6 @@ FriendlyName: Forums
 SystemName: Kore.Plugins.Messaging.Forums
 Version: 1.0.0
 SupportedVersions: 1.00
-Author: Widecommerce
+Author: nopCommerce Team, Widecommerce
 DisplayOrder: 1
 FileName: Kore.Plugins.Messaging.Forums.dll

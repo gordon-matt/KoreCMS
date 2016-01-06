@@ -89,11 +89,11 @@
                 <div class="quote-post">
                     @if (Model.CurrentTopicPage > 1)
                     {
-                        @Html.ActionLink(string.Concat("#", Model.Id), "Topic", "http", string.Empty, Model.Id.ToString(), new { id = Model.ForumTopicId, slug = Model.ForumTopicSeName, page = Model.CurrentTopicPage }, new { @class = "post-link-button", title = T(LocalizableStrings.PostLinkTitle) })
+                        @Html.ActionLink(string.Concat("#", Model.Id), "Topic", "Forums", "http", string.Empty, Model.Id.ToString(), new { id = Model.ForumTopicId, slug = Model.ForumTopicSeName, page = Model.CurrentTopicPage }, new { @class = "post-link-button", title = T(LocalizableStrings.PostLinkTitle) })
                     }
                     else
                     {
-                        @Html.ActionLink(string.Concat("#", Model.Id), "Topic", "http", string.Empty, Model.Id.ToString(), new { id = Model.ForumTopicId, slug = Model.ForumTopicSeName }, new { @class = "post-link-button", title = T(LocalizableStrings.PostLinkTitle) })
+                        @Html.ActionLink(string.Concat("#", Model.Id), "Topic", "Forums", "http", string.Empty, Model.Id.ToString(), new { id = Model.ForumTopicId, slug = Model.ForumTopicSeName }, new { @class = "post-link-button", title = T(LocalizableStrings.PostLinkTitle) })
                     }
                     @Html.ActionLink(T(LocalizableStrings.QuotePost), "PostCreateQuote", new { id = Model.ForumTopicId, quote = Model.Id }, new { @class = "quote-post-button" })
                 </div>

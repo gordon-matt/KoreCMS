@@ -209,7 +209,7 @@
         self.parent = parent;
         self.id = ko.observable(emptyGuid);
         self.pageId = ko.observable(emptyGuid);
-        self.cultureCode = ko.observable(self.parent.currentCulture);
+        self.cultureCode = ko.observable(null);
         self.status = ko.observable('Draft');
         self.title = ko.observable(null);
         self.slug = ko.observable(null);
@@ -1054,12 +1054,8 @@
             });
 
             self.gridPageSize = $("#GridPageSize").val();
-            //self.currentCulture = $("#CurrentCulture").val();
             self.defaultFrontendLayoutPath = $("#DefaultFrontendLayoutPath").val();
 
-            //if (!self.currentCulture) {
-            //    self.currentCulture = null;
-            //}
             if (!self.defaultFrontendLayoutPath) {
                 self.defaultFrontendLayoutPath = null;
             }

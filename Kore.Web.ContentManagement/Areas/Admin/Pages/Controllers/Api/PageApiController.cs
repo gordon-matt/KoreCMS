@@ -37,27 +37,27 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
             string currentCulture = workContext.CurrentCultureCode;
 
-            if (!string.IsNullOrEmpty(currentCulture))
-            {
-                var localized = pageVersionService.FindOne(x => x.PageId == key && x.CultureCode == currentCulture);
-                if (localized == null)
-                {
-                    var invariantVersion = pageVersionService.FindOne(x => x.PageId == key && x.CultureCode == null);
+            //if (!string.IsNullOrEmpty(currentCulture))
+            //{
+            //    var localized = pageVersionService.FindOne(x => x.PageId == key && x.CultureCode == currentCulture);
+            //    if (localized == null)
+            //    {
+            //        var invariantVersion = pageVersionService.FindOne(x => x.PageId == key && x.CultureCode == null);
 
-                    pageVersionService.Insert(new PageVersion
-                    {
-                        Id = Guid.NewGuid(),
-                        PageId = key,
-                        CultureCode = currentCulture,
-                        DateCreatedUtc = DateTime.UtcNow,
-                        DateModifiedUtc = DateTime.UtcNow,
-                        Status = invariantVersion.Status,
-                        Title = invariantVersion.Title,
-                        Slug = invariantVersion.Slug,
-                        Fields = invariantVersion.Fields
-                    });
-                }
-            }
+            //        pageVersionService.Insert(new PageVersion
+            //        {
+            //            Id = Guid.NewGuid(),
+            //            PageId = key,
+            //            CultureCode = currentCulture,
+            //            DateCreatedUtc = DateTime.UtcNow,
+            //            DateModifiedUtc = DateTime.UtcNow,
+            //            Status = invariantVersion.Status,
+            //            Title = invariantVersion.Title,
+            //            Slug = invariantVersion.Slug,
+            //            Fields = invariantVersion.Fields
+            //        });
+            //    }
+            //}
 
             return SingleResult.Create(new[] { entity }.AsQueryable());
         }

@@ -1,13 +1,26 @@
 ﻿using System.Text;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Plugins.Messaging.Forums.Models;
+using Kore.Web;
+using Kore.Web.Mvc.Resources;
 
 namespace Kore.Plugins.Messaging.Forums.Extensions
 {
     public static class HtmlHelperExtensions
     {
+        //public static MvcHtmlString BBCodeEditor<TModel>(this HtmlHelper<TModel> html, string name)
+        //{
+        //    var sb = new StringBuilder(128);
+        //    sb.Append("<script type=\"text/javascript\">");
+        //    sb.AppendFormat("edToolbar('{0}','/Plugins/Messaging.Forums/Scripts/BBEditor/');", name);
+        //    sb.Append("</script>");
+
+        //    return MvcHtmlString.Create(sb.ToString());
+        //}
+
         public static MvcHtmlString Pager<TModel>(this HtmlHelper<TModel> html, PagerModel model)
         {
             if (model.TotalRecords == 0)

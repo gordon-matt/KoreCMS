@@ -1,7 +1,7 @@
 ﻿@using Kore.Infrastructure
 @{
     Style.IncludeBundle("kore-icons");
-    Style.Include("forums.css");
+    //Style.Include("forums.css");
     
     Script.IncludeBundle("jquery", 0);
     Script.IncludeBootstrap();
@@ -29,6 +29,21 @@
     @Html.Partial("Head")
     @RenderSection("styles", required: false)
     @RenderStyles()
+
+    <style type="text/css">
+        .forums-table-section .image div {
+	        width: 38px;
+	        height: 32px;
+	        margin: auto;
+	        background: url('/Plugins/Messaging.Forums/Content/images/topic-type1.png') center no-repeat;
+        }
+        .forums-table-section .image div.sticky {
+	        background: url('/Plugins/Messaging.Forums/Content/images/topic-type2.png') center no-repeat;
+        }
+        .forums-table-section .image div.announcement {
+	        background: url('/Plugins/Messaging.Forums/Content/images/topic-type3.png') center no-repeat;
+        }
+    </style>
 
     @if (IsRightToLeft)
     {

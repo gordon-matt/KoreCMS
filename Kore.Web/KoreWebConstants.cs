@@ -78,5 +78,14 @@ namespace Kore.Web
             public const string CurrentMobileTheme = "CurrentMobileTheme";
             public const string CurrentUser = "CurrentUser";
         }
+
+        /// <summary>
+        /// Resets static variables to NULL
+        /// </summary>
+        public static void ResetCache()
+        {
+            defaultAdminLayoutPath = null;
+            defaultFrontendLayoutPath = null;
+        }
     }
 }

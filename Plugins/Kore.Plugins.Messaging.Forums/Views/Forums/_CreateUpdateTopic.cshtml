@@ -1,5 +1,6 @@
 ﻿@using Kore.Plugins.Messaging.Forums
 @using Kore.Plugins.Messaging.Forums.Data.Domain
+@using Kore.Plugins.Messaging.Forums.Extensions
 @using Kore.Plugins.Messaging.Forums.Models
 @model EditForumTopicModel
 
@@ -40,7 +41,10 @@
                     <div class="inputs">
                         @if (Model.ForumEditor == EditorType.BBCodeEditor)
                         {
-                            @Html.BBCodeEditor("Text")
+                            <script type="text/javascript" src="/Plugins/Messaging.Forums/Scripts/BBEditor/ed.js"></script>
+                            <script type="text/javascript">
+                                edToolbar('Text', '/Plugins/Messaging.Forums/Scripts/');
+                            </script>
                         }
                         @Html.TextAreaFor(x => x.Text, new { @class = "forum-post-text", TextMode = "MultiLine" })
                         @Html.ValidationMessageFor(x => x.Text)
@@ -49,7 +53,7 @@
                     {
                         <div class="inputs">
                             <label>@T(LocalizableStrings.Priority)</label>
-                            @Html.DropDownList("TopicTypeId", new SelectList(Model.TopicPriorities, "Value", "Text", Model.TopicTypeId))
+                            @Html.DropDownList("TopicTypeId", new SelectList(Model.TopicPriorities, "Value", "Text", Model.TopicType))
                         </div>
                     }
                     @if (Model.IsUserAllowedToSubscribe)

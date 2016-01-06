@@ -80,6 +80,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
             }
 
             settingsService.Value.SaveSettings(siteSettings);
+            KoreWebConstants.ResetCache();
         }
 
         [HttpPost]
@@ -106,6 +107,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
             }
 
             settingsService.Value.SaveSettings(siteSettings);
+            KoreWebConstants.ResetCache();
         }
 
         protected static bool CheckPermission(Permission permission)

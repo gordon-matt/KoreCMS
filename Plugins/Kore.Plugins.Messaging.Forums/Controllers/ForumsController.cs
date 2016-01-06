@@ -220,7 +220,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             return View(model);
         }
 
-        [Route("active-discussions/{forumId}")]
+        [Route("active-discussions")]
         [Route("active-discussions/{forumId}/{page}")]
         public ActionResult ActiveDiscussions(int forumId = 0, int page = 1)
         {
@@ -763,7 +763,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
                 if (forum != null)
                 {
-                    return RedirectToRoute("ForumSlug", new { id = forum.Id, slug = forum.GetSeName() });
+                    return RedirectToAction("Forum", new { id = forum.Id, slug = forum.GetSeName() });
                 }
             }
 
@@ -909,7 +909,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                         }
                     }
 
-                    return RedirectToRoute("TopicSlug", new { id = forumTopic.Id, slug = forumTopic.GetSeName() });
+                    return RedirectToAction("Topic", new { id = forumTopic.Id, slug = forumTopic.GetSeName() });
                 }
                 catch (Exception ex)
                 {
@@ -928,7 +928,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             model.IsUserAllowedToSubscribe = forumService.IsUserAllowedToSubscribe(workContext.CurrentUser);
             model.ForumEditor = forumSettings.ForumEditor;
 
-            return View(model);
+            return View("TopicCreate", model);
         }
 
         [Route("topic/edit/{id}")]
@@ -1110,7 +1110,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                     }
 
                     // redirect to the topic page with the topic slug
-                    return RedirectToRoute("TopicSlug", new { id = forumTopic.Id, slug = forumTopic.GetSeName() });
+                    return RedirectToAction("Topic", new { id = forumTopic.Id, slug = forumTopic.GetSeName() });
                 }
                 catch (Exception ex)
                 {
@@ -1129,7 +1129,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             model.IsUserAllowedToSetTopicPriority = forumService.IsUserAllowedToSetTopicPriority(workContext.CurrentUser);
             model.IsUserAllowedToSubscribe = forumService.IsUserAllowedToSubscribe(workContext.CurrentUser);
 
-            return View(model);
+            return View("TopicEdit", model);
         }
 
         [HttpPost]
@@ -1175,9 +1175,9 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 forumTopic = forumService.GetTopicById(forumPost.TopicId);
                 if (forumTopic == null)
                 {
-                    return RedirectToRoute("ForumSlug", new { id = forumId, slug = forumSlug });
+                    return RedirectToAction("Forum", new { id = forumId, slug = forumSlug });
                 }
-                return RedirectToRoute("TopicSlug", new { id = forumTopic.Id, slug = forumTopic.GetSeName() });
+                return RedirectToAction("Topic", new { id = forumTopic.Id, slug = forumTopic.GetSeName() });
             }
 
             return RedirectToAction("Index");
@@ -1382,7 +1382,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             model.IsUserAllowedToSubscribe = forumService.IsUserAllowedToSubscribe(workContext.CurrentUser);
             model.ForumEditor = forumSettings.ForumEditor;
 
-            return View(model);
+            return View("PostCreate", model);
         }
 
         [Route("post/edit/{id}")]
@@ -1551,7 +1551,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             model.IsUserAllowedToSubscribe = forumService.IsUserAllowedToSubscribe(workContext.CurrentUser);
             model.ForumEditor = forumSettings.ForumEditor;
 
-            return View(model);
+            return View("PostEdit", model);
         }
 
         [HttpPost]
@@ -1844,7 +1844,8 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.AllowUsersToManageSubscriptions)
             {
-                return RedirectToRoute("UserInfo");
+                return RedirectToAction("Index");
+                //return RedirectToRoute("UserInfo"); // TODO: Is this meant o be the user's profile page? 
             }
 
             int pageIndex = 0;
@@ -1938,7 +1939,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 }
             }
 
-            return RedirectToRoute("UserForumSubscriptions");
+            return RedirectToAction("UserForumSubscriptions");
         }
 
         #endregion Methods

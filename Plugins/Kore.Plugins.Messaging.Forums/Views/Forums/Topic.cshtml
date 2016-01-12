@@ -17,20 +17,20 @@
         <div class="actions">
             @if (Model.IsUserAllowedToEditTopic)
             {
-                @Html.ActionLink(T(LocalizableStrings.EditTopic), "TopicEdit", new { id = Model.Id }, new { @class = "btn btn-default" })
+                @Html.ActionLink(T(LocalizableStrings.EditTopic), "TopicEdit", new { id = Model.Id }, new { @class = "btn btn-default edit-topic-button" })
             }
             @if (Model.IsUserAllowedToDeleteTopic)
             {                
-                @Html.ActionLink(T(LocalizableStrings.DeleteTopic), "TopicDelete", new { id = Model.Id }, new { onClick = string.Format("return confirm('{0}');", T("Common.AreYouSure").Text), @class = "btn btn-danger" })
+                @Html.ActionLink(T(LocalizableStrings.DeleteTopic), "TopicDelete", new { id = Model.Id }, new { onClick = string.Format("return confirm('{0}');", T("Common.AreYouSure").Text), @class = "btn btn-danger delete-topic-button" })
             }
             @if (Model.IsUserAllowedToMoveTopic)
             {
-                @Html.ActionLink(T(LocalizableStrings.MoveTopic), "TopicMove", new { id = Model.Id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink(T(LocalizableStrings.MoveTopic), "TopicMove", new { id = Model.Id }, new { @class = "btn btn-warning move-topic-button" })
             }
-            @Html.ActionLink(T(LocalizableStrings.Reply), "PostCreate", new { id = Model.Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink(T(LocalizableStrings.Reply), "PostCreate", new { id = Model.Id }, new { @class = "btn btn-primary reply-topic-button" })
             @if (Model.IsUserAllowedToSubscribe)
             {
-                <a class="btn btn-success" href="#" id="watch-topic-top">@Model.WatchTopicText</a>
+                <a class="btn btn-success watch-topic-button" href="#" id="watch-topic-top">@Model.WatchTopicText</a>
 
                 using (Script.AtFoot())
                 {
@@ -76,12 +76,19 @@
         }
     </div>
 
-    <div class="topic-posts">
+    <table class="table table-bordered">
         @foreach (var post in Model.ForumPostModels)
         {
             Html.RenderPartial("_ForumPost", post);
         }
-    </div>
+    </table>
+
+    @*<div class="topic-posts">
+        @foreach (var post in Model.ForumPostModels)
+        {
+            Html.RenderPartial("_ForumPost", post);
+        }
+    </div>*@
 
     <div class="topic-actions lower">
         <div class="actions">

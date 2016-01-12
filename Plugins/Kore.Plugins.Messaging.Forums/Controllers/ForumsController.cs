@@ -297,7 +297,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             }
 
             var topics = forumService.GetActiveTopics(forumId, 0, forumSettings.ActiveDiscussionsFeedCount);
-            string url = Url.RouteUrl("ActiveDiscussionsRSS", null, "http");
+            string url = Url.Action("ActiveDiscussionsRSS", "Forums", null, "http");
 
             var feedTitle = localizer(LocalizableStrings.ActiveDiscussionsFeedTitle);
             var feedDescription = localizer(LocalizableStrings.ActiveDiscussionsFeedDescription);
@@ -316,7 +316,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
             foreach (var topic in topics)
             {
-                string topicUrl = Url.RouteUrl("TopicSlug", new { id = topic.Id, slug = topic.GetSeName() }, "http");
+                string topicUrl = Url.Action("Topic", "Forums", new { id = topic.Id, slug = topic.GetSeName() }, "http");
 
                 string content = string.Format(
                     "{2}: {0}, {3}: {1}",
@@ -430,7 +430,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 //Order by newest topic posts & limit the number of topics to return
                 var topics = forumService.GetAllTopics(forum.Id, null, string.Empty, ForumSearchType.All, 0, 0, topicLimit);
 
-                string url = Url.RouteUrl("ForumRSS", new { id = forum.Id }, "http");
+                string url = Url.Action("ForumRSS", "Forums", new { id = forum.Id }, "http");
 
                 var feedTitle = localizer(LocalizableStrings.ForumFeedTitle);
                 var feedDescription = localizer(LocalizableStrings.ForumFeedDescription);
@@ -449,7 +449,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
                 foreach (var topic in topics)
                 {
-                    string topicUrl = Url.RouteUrl("TopicSlug", new { id = topic.Id, slug = topic.GetSeName() }, "http");
+                    string topicUrl = Url.Action("Topic", "Forums", new { id = topic.Id, slug = topic.GetSeName() }, "http");
 
                     string content = string.Format(
                         "{2}: {0}, {3}: {1}",
@@ -539,7 +539,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 //if not posts loaded, redirect to the first page
                 if (posts.Count == 0 && page > 1)
                 {
-                    return RedirectToAction("TopicSlug", new { id = forumTopic.Id, slug = forumTopic.GetSeName() });
+                    return RedirectToAction("Topic", new { id = forumTopic.Id, slug = forumTopic.GetSeName() });
                 }
 
                 //update view count
@@ -1351,11 +1351,11 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
                     if (pageIndex > 1)
                     {
-                        url = Url.RouteUrl("TopicSlugPaged", new { id = forumPost.TopicId, slug = forumPost.ForumTopic.GetSeName(), page = pageIndex });
+                        url = Url.Action("Topic", new { id = forumPost.TopicId, slug = forumPost.ForumTopic.GetSeName(), page = pageIndex });
                     }
                     else
                     {
-                        url = Url.RouteUrl("TopicSlug", new { id = forumPost.TopicId, slug = forumPost.ForumTopic.GetSeName() });
+                        url = Url.Action("Topic", new { id = forumPost.TopicId, slug = forumPost.ForumTopic.GetSeName() });
                     }
                     return Redirect(string.Format("{0}#{1}", url, forumPost.Id));
                 }
@@ -1527,11 +1527,11 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                     var url = string.Empty;
                     if (pageIndex > 1)
                     {
-                        url = Url.RouteUrl("TopicSlugPaged", new { id = forumPost.TopicId, slug = forumPost.ForumTopic.GetSeName(), page = pageIndex });
+                        url = Url.Action("Topic", new { id = forumPost.TopicId, slug = forumPost.ForumTopic.GetSeName(), page = pageIndex });
                     }
                     else
                     {
-                        url = Url.RouteUrl("TopicSlug", new { id = forumPost.TopicId, slug = forumPost.ForumTopic.GetSeName() });
+                        url = Url.Action("Topic", new { id = forumPost.TopicId, slug = forumPost.ForumTopic.GetSeName() });
                     }
                     return Redirect(string.Format("{0}#{1}", url, forumPost.Id));
                 }

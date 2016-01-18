@@ -13,6 +13,29 @@
         background: url('/Plugins/Messaging.Forums/Content/images/topic-type3.png') center no-repeat;
     }
 
+.table-wrapper {
+    margin-top: 15px;
+}
+
+tr.topic-post-header-row {
+    background-color: #f6f6f6;
+}
+
+    tr.topic-post-header-row th.post-user {
+        width: 30%;
+    }
+
+    tr.topic-post-header-row th.post-time {
+        width: 45%;
+    }
+
+    tr.topic-post-header-row th.post-id {
+        width: 5%;
+    }
+
+    tr.topic-post-header-row th.post-actions {
+        width: 20%;
+    }
 
 /*.topic-post {
     background-color: rgb(242, 242, 242);

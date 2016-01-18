@@ -76,12 +76,14 @@
         }
     </div>
 
-    <table class="table table-bordered">
-        @foreach (var post in Model.ForumPostModels)
-        {
-            Html.RenderPartial("_ForumPost", post);
-        }
-    </table>
+    <div class="table-wrapper">
+        <table class="table table-bordered">
+            @foreach (var post in Model.ForumPostModels)
+            {
+                Html.RenderPartial("_ForumPost", post);
+            }
+        </table>
+    </div>
 
     @*<div class="topic-posts">
         @foreach (var post in Model.ForumPostModels)

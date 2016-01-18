@@ -83,7 +83,7 @@
             @if (Model.ForumTopics.Count > 0)
             {
                 <div class="table-wrapper">
-                    <table class="table">
+                    <table class="table table-bordered">
                         <colgroup>
                             <col width="1" />
                             <col />
@@ -129,50 +129,50 @@
                                         topicType = "post";
                                         break;
                                 }
-                            <tr>
-                                <td class="image">
-                                    <div class="@topicType"></div>
-                                </td>
-                                <td class="topic-details">
-                                    <div class="topic-title">
-                                        @Html.ActionLink(topic.Subject, "Topic", new { id = topic.Id, slug = topic.SeName })
-                                        @if (!string.IsNullOrEmpty(topicText))
+                                <tr>
+                                    <td class="image">
+                                        <div class="@topicType"></div>
+                                    </td>
+                                    <td class="topic-details">
+                                        <div class="topic-title">
+                                            @Html.ActionLink(topic.Subject, "Topic", new { id = topic.Id, slug = topic.SeName })
+                                            @if (!string.IsNullOrEmpty(topicText))
                                             {
-                                            <span class="topic-type">@topicText</span>
+                                                <span class="topic-type">@topicText</span>
                                             }
-                                    </div>
-                                    @if (topic.NumPosts > Model.PostsPageSize)
-                                        {
-                                        <div class="topic-pager">
-                                            @Html.ForumTopicSmallPager(topic)
                                         </div>
+                                        @if (topic.NumPosts > Model.PostsPageSize)
+                                        {
+                                            <div class="topic-pager">
+                                                @Html.ForumTopicSmallPager(topic)
+                                            </div>
                                         }
-                                    <div class="topic-starter">
-                                        @if (!string.IsNullOrEmpty(topic.UserId))
+                                        <div class="topic-starter">
+                                            @if (!string.IsNullOrEmpty(topic.UserId))
                                             {
-                                            <label>@T(LocalizableStrings.Author)</label>
+                                                <label>@T(LocalizableStrings.Author)</label>
                                                 if (topic.AllowViewingProfiles)
                                                 {
-                                            @* TODO: Maybe we need to use a different profile page for forums only? *@
-                                            @Html.ActionLink(topic.UserName, "ViewProfile", "Account", new { area = string.Empty, userId = topic.UserId })
+                                                    @* TODO: Maybe we need to use a different profile page for forums only? *@
+                                                    @Html.ActionLink(topic.UserName, "ViewProfile", "Account", new { area = string.Empty, userId = topic.UserId })
                                                 }
                                                 else
                                                 {
-                                            @topic.UserName
+                                                    @topic.UserName
                                                 }
                                             }
-                                    </div>
-                                </td>
-                                <td class="replies">
-                                    @topic.NumReplies
-                                </td>
-                                <td class="views">
-                                    @topic.Views
-                                </td>
-                                <td class="latest-post">
-                                    @Html.Action("LastPost", new { forumPostId = topic.LastPostId, showTopic = false })
-                                </td>
-                            </tr>
+                                        </div>
+                                    </td>
+                                    <td class="replies">
+                                        @topic.NumReplies
+                                    </td>
+                                    <td class="views">
+                                        @topic.Views
+                                    </td>
+                                    <td class="latest-post">
+                                        @Html.Action("LastPost", new { forumPostId = topic.LastPostId, showTopic = false })
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>

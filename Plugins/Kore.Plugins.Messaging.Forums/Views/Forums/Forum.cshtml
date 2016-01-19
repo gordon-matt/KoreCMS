@@ -8,7 +8,7 @@
     ViewBag.Title = Model.Name;
 }
 <div class="page forum-page">
-    @*@Html.Action("ForumBreadcrumb", new { forumId = Model.Id })*@
+    @Html.Action("ForumBreadcrumb", new { forumId = Model.Id })
     @Html.Partial("_ForumHeader")
 
     <hr class="clearfix" />
@@ -18,7 +18,10 @@
             <div class="forum-name">
                 @if (Model.ForumFeedsEnabled)
                 {
-                    <a href="@Url.Action("ForumRss", new { id = Model.Id })" class="link-rss" title="@T(LocalizableStrings.ForumRSSLinkTitle)">@T(LocalizableStrings.RSS)</a>
+                    <a href="@Url.Action("ForumRss", new { id = Model.Id })" class="btn btn-link btn-xs link-rss" title="@T(LocalizableStrings.ForumRSSLinkTitle)">
+                        <i class="kore-icon forum-rss"></i>
+                        @T(LocalizableStrings.RSS)
+                    </a>
                 }
                 <h1>@Model.Name</h1>
             </div>
@@ -30,10 +33,17 @@
 
     <div class="row forum-actions">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 actions">
-            @Html.ActionLink(T(LocalizableStrings.NewTopic), "TopicCreate", new { id = Model.Id }, new { @class = "btn btn-primary" })
+            <a href="@Url.Action("TopicCreate", new { id = Model.Id })" class="btn btn-primary">
+                <i class="kore-icon forum-create"></i>
+                @T(LocalizableStrings.NewTopic)
+            </a>
+
             @if (Model.IsUserAllowedToSubscribe)
             {
-                <a class="btn btn-success" href="#" id="watch-forum">@Model.WatchForumText</a>
+                <a class="btn btn-success" href="#" id="watch-forum">
+                    <i class="kore-icon forum-watch"></i>
+                    @Model.WatchForumText
+                </a>
 
                 using (Script.AtFoot())
                 {

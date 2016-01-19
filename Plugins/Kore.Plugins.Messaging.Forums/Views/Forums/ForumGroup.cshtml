@@ -7,7 +7,7 @@
 }
 
 <div class="page forum-group-page">
-    @*@Html.Action("ForumBreadcrumb", new { forumGroupId = Model.Id })*@
+    @Html.Action("ForumBreadcrumb", new { forumGroupId = Model.Id })
     @Html.Partial("_ForumHeader")
     <hr class="clearfix" />
     @Html.Partial("_ForumGroup", Model)

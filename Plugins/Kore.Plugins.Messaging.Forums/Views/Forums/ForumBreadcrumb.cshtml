@@ -5,16 +5,16 @@
 
 @{
     //var breadcrumbDelimiter = EngineContext.Current.Resolve<CommonSettings>().BreadcrumbDelimiter; //TODO:
-    string breadcrumbDelimiter = " / ";
+    string breadcrumbDelimiter = string.Empty;
 }
-<div class="breadcrumb forum-breadcrumb">
-    <ul>
+<div class="forum-breadcrumb">
+    <ul class="breadcrumb">
         <li>
             <a href="@Url.Action("Index", "Home", new { area = string.Empty })" title="@T(KoreWebLocalizableStrings.General.Home)">@T(KoreWebLocalizableStrings.General.Home)</a>
         </li>
         <li>
             <span class="delimiter">@breadcrumbDelimiter</span>
-            @Html.ActionLink(T(LocalizableStrings.Forums).Text, "Boards", null, new { title = T(LocalizableStrings.Breadcrumb.ForumHomeTitle) })
+            @Html.ActionLink(T(LocalizableStrings.Forums).Text, "Index", null, new { title = T(LocalizableStrings.Breadcrumb.ForumHomeTitle) })
         </li>
         @if (Model.ForumGroupId > 0)
         {
@@ -25,7 +25,7 @@
                     "ForumGroup",
                     new { id = Model.ForumGroupId, slug = Model.ForumGroupSeName },
                     new { title = string.Format("{0}: {1} ", T(LocalizableStrings.Breadcrumb.ForumGroupTitle), Model.ForumGroupName) })
-            </li>        
+            </li>
         }
         @if (Model.ForumId > 0)
         {

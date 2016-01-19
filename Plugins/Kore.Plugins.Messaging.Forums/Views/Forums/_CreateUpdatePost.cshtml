@@ -4,7 +4,7 @@
 @using Kore.Plugins.Messaging.Forums.Models
 @model EditForumPostModel
 
-@*@Html.Action("ForumBreadcrumb", new { forumTopicId = Model.ForumTopicId })*@
+@Html.Action("ForumBreadcrumb", new { forumTopicId = Model.ForumTopicId })
 <div class="page forum-edit-page">
     <div class="page-title">
         @if (Model.IsEdit)

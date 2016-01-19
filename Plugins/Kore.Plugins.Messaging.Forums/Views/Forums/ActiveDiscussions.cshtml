@@ -6,7 +6,7 @@
     ViewBag.Title = T(LocalizableStrings.PageTitle.ActiveDiscussions);
 }
 <div class="page active-discussions-page">
-    @*@Html.Action("ForumBreadcrumb")*@
+    @Html.Action("ForumBreadcrumb")
     @Html.Partial("_ForumHeader")
     <hr class="clearfix" />
     @Html.Partial("_ActiveTopics", Model)

@@ -91,7 +91,6 @@
     <Compile Include="ContentBlocks\Bootstrap3ImageGalleryBlock.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Views\Shared\DisplayTemplates\CarouselBlock.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

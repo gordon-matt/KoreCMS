@@ -109,7 +109,6 @@
     <Compile Include="ContentBlocks\GoogleMapBlock.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Views\Shared\DisplayTemplates\GoogleAdSenseBlock.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

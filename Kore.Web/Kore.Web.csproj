@@ -642,7 +642,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <EmbeddedResource Include="Areas\Admin\Configuration\Views\Settings\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\ScheduledTasks\Views\ScheduledTask\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Indexing\Views\Indexing\Index.cshtml" />
@@ -658,6 +657,13 @@
     <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\Roles.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\Users.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Tenants\Views\Tenant\Index.cshtml" />
+    <None Include="Areas\Admin\Configuration\Views\web.config" />
+    <None Include="Areas\Admin\Indexing\Views\web.config" />
+    <None Include="Areas\Admin\Log\Views\web.config" />
+    <None Include="Areas\Admin\Membership\Views\web.config" />
+    <None Include="Areas\Admin\Plugins\Views\web.config" />
+    <None Include="Areas\Admin\ScheduledTasks\Views\web.config" />
+    <None Include="Areas\Admin\Tenants\Views\web.config" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\SmtpSettings.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Plugins\Views\Plugin\Index.cshtml" />
@@ -672,6 +678,7 @@
     <EmbeddedResource Include="Views\Shared\EditorTemplates\MembershipSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\DateTimeSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\SecuritySettings.cshtml" />
+    <None Include="Views\web.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Configuration\Scripts\settings.js" />

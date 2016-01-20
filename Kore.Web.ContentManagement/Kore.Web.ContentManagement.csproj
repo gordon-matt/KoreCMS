@@ -330,9 +330,6 @@
     <EmbeddedResource Include="Areas\Admin\Menus\Views\Menu\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Page\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\ContentBlock\Index.cshtml" />
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <EmbeddedResource Include="Areas\Admin\Messaging\Views\MessageTemplate\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Messaging\Views\QueuedEmail\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\DisplayTemplates\StandardPage.cshtml" />
@@ -362,6 +359,15 @@
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\DisplayTemplates\CategoriesBlock.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\EditorTemplates\CategoriesBlock.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\EditorTemplates\FilteredPostsBlock.cshtml" />
+    <None Include="Areas\Admin\Blog\Views\web.config" />
+    <None Include="Areas\Admin\ContentBlocks\Views\web.config" />
+    <None Include="Areas\Admin\Localization\Views\web.config" />
+    <None Include="Areas\Admin\Media\Views\web.config" />
+    <None Include="Areas\Admin\Menus\Views\web.config" />
+    <None Include="Areas\Admin\Messaging\Views\web.config" />
+    <None Include="Areas\Admin\Newsletters\Views\web.config" />
+    <None Include="Areas\Admin\Pages\Views\web.config" />
+    <None Include="Areas\Admin\Sitemap\Views\web.config" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Shared\EditorTemplates\PageSettings.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\RichTextFull.cshtml" />

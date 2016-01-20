@@ -167,10 +167,8 @@
     <Compile Include="StartupTask.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <EmbeddedResource Include="Areas\Admin\Regions\Views\Region\Index.cshtml" />
+    <None Include="Areas\Admin\Regions\Views\web.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

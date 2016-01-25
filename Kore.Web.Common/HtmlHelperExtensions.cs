@@ -138,8 +138,9 @@ namespace Kore.Web.Common
         private static IEnumerable<SelectListItem> GetContinents(int? selectedValue = null, string emptyText = null)
         {
             var service = EngineContext.Current.Resolve<IRegionService>();
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
 
-            var records = service.GetContinents()
+            var records = service.GetContinents(workContext.CurrentCultureCode)
                 .OrderBy(x => x.Order == null)
                 .ThenBy(x => x.Order)
                 .ThenBy(x => x.Name);
@@ -154,8 +155,9 @@ namespace Kore.Web.Common
         private static IEnumerable<SelectListItem> GetCountries(int? selectedValue = null, string emptyText = null)
         {
             var service = EngineContext.Current.Resolve<IRegionService>();
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
 
-            var records = service.GetCountries()
+            var records = service.GetCountries(workContext.CurrentCultureCode)
                 .OrderBy(x => x.Order == null)
                 .ThenBy(x => x.Order)
                 .ThenBy(x => x.Name);

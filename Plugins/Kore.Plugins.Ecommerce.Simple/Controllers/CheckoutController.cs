@@ -292,7 +292,7 @@ namespace Kore.Plugins.Ecommerce.Simple.Controllers
         public JsonResult GetCities(int countryId)
         {
             var cities = regionService.Value
-                .GetSubRegions(countryId, RegionType.City)
+                .GetSubRegions(countryId, RegionType.City, WorkContext.CurrentCultureCode)
                 .ToDictionary(k => k.Id, v => v);
 
             string settingsId = StoreRegionSettings.SettingsName.ToSlugUrl();

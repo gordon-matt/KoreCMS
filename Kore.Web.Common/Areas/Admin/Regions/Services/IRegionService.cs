@@ -1,39 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using Kore.Caching;
 using Kore.Collections;
 using Kore.Data;
 using Kore.Data.Services;
+using Kore.Localization.Services;
 using Kore.Web.Common.Areas.Admin.Regions.Domain;
 
 namespace Kore.Web.Common.Areas.Admin.Regions.Services
 {
     public interface IRegionService : IGenericDataService<Region>
     {
-        Region Get(int id, bool includeChildren = false, bool includeParent = false);
+        Region FindOne(int id, string cultureCode = null, bool includeChildren = false, bool includeParent = false);
 
-        IEnumerable<Region> GetContinents(bool includeCountries = false);
+        IEnumerable<Region> GetContinents(string cultureCode = null, bool includeCountries = false);
 
-        IEnumerable<Region> GetSubRegions(int regionId, RegionType? regionType = null);
+        IEnumerable<Region> GetSubRegions(int regionId, RegionType? regionType = null, string cultureCode = null);
 
-        IEnumerable<Region> GetSubRegions(int regionId, int pageIndex, int pageSize, out int total, RegionType? regionType = null);
+        IEnumerable<Region> GetSubRegions(int regionId, int pageIndex, int pageSize, out int total, RegionType? regionType = null, string cultureCode = null);
 
-        IEnumerable<Region> GetCountries();
+        IEnumerable<Region> GetCountries(string cultureCode = null);
 
-        IEnumerable<Region> GetStates(int countryId, bool includeCities = false);
+        IEnumerable<Region> GetStates(int countryId, string cultureCode = null, bool includeCities = false);
     }
 
     public class RegionService : GenericDataService<Region>, IRegionService
     {
-        public RegionService(ICacheManager cacheManager, IRepository<Region> repository)
+        private readonly Lazy<ILocalizablePropertyService> localizablePropertyService;
+
+        public RegionService(
+            ICacheManager cacheManager,
+            IRepository<Region> repository,
+            Lazy<ILocalizablePropertyService> localizablePropertyService)
             : base(cacheManager, repository)
         {
+            this.localizablePropertyService = localizablePropertyService;
         }
 
         #region IRegionService Members
 
-        public Region Get(int id, bool includeChildren = false, bool includeParent = false)
+        public Region FindOne(int id, string cultureCode = null, bool includeChildren = false, bool includeParent = false)
         {
             var query = Query();
 
@@ -46,16 +55,35 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
                 query = query.Include(x => x.Children);
             }
 
-            query = query.Where(x => x.Id == id);
+            var region = query.First(x => x.Id == id);
 
-            return query.First();
+            if (!string.IsNullOrEmpty(cultureCode))
+            {
+                string entityType = typeof(Region).FullName;
+                string entityId = region.Id.ToString();
+
+                var localizedRecord = localizablePropertyService.Value.FindOne(x =>
+                    x.CultureCode == cultureCode &&
+                    x.EntityType == entityType &&
+                    x.Property == "Name" &&
+                    x.EntityId == entityId);
+
+                if (localizedRecord != null)
+                {
+                    region.Name = localizedRecord.Value;
+                }
+            }
+
+            return region;
         }
 
-        public IEnumerable<Region> GetContinents(bool includeCountries = false)
+        public IEnumerable<Region> GetContinents(string cultureCode = null, bool includeCountries = false)
         {
+            ICollection<Region> continents = null;
+
             if (includeCountries)
             {
-                return Query()
+                continents = Query()
                     .Include(x => x.Children)
                     .Where(x => x.RegionType == RegionType.Continent)
                     .OrderBy(x => x.Order == null)
@@ -63,18 +91,30 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
                     .ThenBy(x => x.Name)
                     .ToList();
             }
-            return Query(x => x.RegionType == RegionType.Continent)
-                .OrderBy(x => x.Order == null)
-                .ThenBy(x => x.Order)
-                .ThenBy(x => x.Name)
-                .ToList();
+            else
+            {
+                continents = Query(x => x.RegionType == RegionType.Continent)
+                    .OrderBy(x => x.Order == null)
+                    .ThenBy(x => x.Order)
+                    .ThenBy(x => x.Name)
+                    .ToList();
+            }
+
+            if (!string.IsNullOrEmpty(cultureCode))
+            {
+                Localize(continents, cultureCode);
+            }
+
+            return continents;
         }
 
-        public IEnumerable<Region> GetSubRegions(int regionId, RegionType? regionType = null)
+        public IEnumerable<Region> GetSubRegions(int regionId, RegionType? regionType = null, string cultureCode = null)
         {
+            ICollection<Region> subRegions = null;
+
             if (regionType.HasValue)
             {
-                return Query()
+                subRegions = Query()
                     .Include(x => x.Parent)
                     .Include(x => x.Children)
                     .Where(x => x.Parent.Id == regionId && x.RegionType == regionType)
@@ -83,18 +123,27 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
                     .ThenBy(x => x.Name)
                     .ToHashSet();
             }
+            else
+            {
+                subRegions = Query()
+                   .Include(x => x.Parent)
+                   .Include(x => x.Children)
+                   .Where(x => x.Parent.Id == regionId)
+                   .OrderBy(x => x.Order == null)
+                   .ThenBy(x => x.Order)
+                   .ThenBy(x => x.Name)
+                   .ToHashSet();
+            }
 
-            return Query()
-                .Include(x => x.Parent)
-                .Include(x => x.Children)
-                .Where(x => x.Parent.Id == regionId)
-                .OrderBy(x => x.Order == null)
-                .ThenBy(x => x.Order)
-                .ThenBy(x => x.Name)
-                .ToHashSet();
+            if (!string.IsNullOrEmpty(cultureCode))
+            {
+                Localize(subRegions, cultureCode);
+            }
+
+            return subRegions;
         }
 
-        public IEnumerable<Region> GetSubRegions(int regionId, int pageIndex, int pageSize, out int total, RegionType? regionType = null)
+        public IEnumerable<Region> GetSubRegions(int regionId, int pageIndex, int pageSize, out int total, RegionType? regionType = null, string cultureCode = null)
         {
             var query = Query()
                 .Include(x => x.Parent)
@@ -116,15 +165,22 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
 
             total = query.Count();
 
-            return query
+            var subRegions = query
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize)
                 .ToHashSet();
+
+            if (!string.IsNullOrEmpty(cultureCode))
+            {
+                Localize(subRegions, cultureCode);
+            }
+
+            return subRegions;
         }
 
-        public IEnumerable<Region> GetCountries()
+        public IEnumerable<Region> GetCountries(string cultureCode = null)
         {
-            return Query()
+            var countries = Query()
                 .Include(x => x.Parent)
                 .Include(x => x.Children)
                 .Where(x => x.RegionType == RegionType.Country)
@@ -132,13 +188,22 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
                 .ThenBy(x => x.Order)
                 .ThenBy(x => x.Name)
                 .ToHashSet();
+
+            if (!string.IsNullOrEmpty(cultureCode))
+            {
+                Localize(countries, cultureCode);
+            }
+
+            return countries;
         }
 
-        public IEnumerable<Region> GetStates(int countryId, bool includeCities = false)
+        public IEnumerable<Region> GetStates(int countryId, string cultureCode = null, bool includeCities = false)
         {
+            ICollection<Region> states = null;
+
             if (includeCities)
             {
-                return Query()
+                states = Query()
                     .Include(x => x.Children)
                     .Where(x => x.ParentId == countryId && x.RegionType == RegionType.State)
                     .OrderBy(x => x.Order == null)
@@ -146,14 +211,45 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
                     .ThenBy(x => x.Name)
                     .ToHashSet();
             }
+            else
+            {
+                states = Query(x => x.ParentId == countryId && x.RegionType == RegionType.State)
+                    .OrderBy(x => x.Order == null)
+                    .ThenBy(x => x.Order)
+                    .ThenBy(x => x.Name)
+                    .ToHashSet();
+            }
 
-            return Query(x => x.ParentId == countryId && x.RegionType == RegionType.State)
-                .OrderBy(x => x.Order == null)
-                .ThenBy(x => x.Order)
-                .ThenBy(x => x.Name)
-                .ToHashSet();
+            if (!string.IsNullOrEmpty(cultureCode))
+            {
+                Localize(states, cultureCode);
+            }
+
+            return states;
         }
 
         #endregion IRegionService Members
+
+        private void Localize(ICollection<Region> regions, string cultureCode)
+        {
+            var regionIds = regions.Select(x => x.Id.ToString());
+
+            string entityType = typeof(Region).FullName;
+
+            var localizedRecords = localizablePropertyService.Value.Query(x =>
+                x.CultureCode == cultureCode &&
+                x.EntityType == entityType &&
+                x.Property == "Name" &&
+                regionIds.Contains(x.EntityId));
+
+            foreach (var region in regions)
+            {
+                var localizedRecord = localizedRecords.FirstOrDefault(l => l.EntityId == region.Id.ToString());
+                if (localizedRecord != null)
+                {
+                    region.Name = localizedRecord.Value;
+                }
+            }
+        }
     }
 }

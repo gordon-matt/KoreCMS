@@ -140,7 +140,6 @@
     <Compile Include="Areas\Admin\Regions\Domain\RegionSettings.cs" />
     <Compile Include="Areas\Admin\Regions\Domain\RegionType.cs" />
     <Compile Include="Areas\Admin\Regions\IRegionSettings.cs" />
-    <Compile Include="Areas\Admin\Regions\Models\RegionModel.cs" />
     <Compile Include="Areas\Admin\Regions\RegionsAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Regions\Services\IRegionService.cs" />
     <Compile Include="Areas\Admin\Regions\Services\IRegionSettingsService.cs" />

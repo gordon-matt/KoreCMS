@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -1134,39 +1135,48 @@ namespace Kore
             return false;
         }
 
-        public static string JsEncode(this string value)
+        /// <summary>
+        /// Encodes a string for JavaScript.
+        /// </summary>
+        /// <param name="value">A string to encode.</param>
+        /// <param name="addDoubleQuotes">A value that indicates whether double quotation marks will be included around the encoded string.</param>
+        /// <returns></returns>
+        public static string JsEncode(this string value, bool addDoubleQuotes = true)
         {
-            if (value == null)
-            {
-                return string.Empty;
-            }
+            // TODO: Test
+            return HttpUtility.JavaScriptStringEncode(value, addDoubleQuotes);
 
-            var sb = new StringBuilder();
-            sb.Append("\"");
-            foreach (char c in value)
-            {
-                switch (c)
-                {
-                    case '\"': sb.Append("\\\""); break;
-                    case '\\': sb.Append("\\\\"); break;
-                    case '\b': sb.Append("\\b"); break;
-                    case '\f': sb.Append("\\f"); break;
-                    case '\n': sb.Append("\\n"); break;
-                    case '\r': sb.Append("\\r"); break;
-                    case '\t': sb.Append("\\t"); break;
-                    default:
-                        var i = (int)c;
-                        if (i < 32 || i > 127)
-                        {
-                            sb.AppendFormat("\\u{0:X04}", i);
-                        }
-                        else { sb.Append(c); }
-                        break;
-                }
-            }
-            sb.Append("\"");
+            //if (value == null)
+            //{
+            //    return string.Empty;
+            //}
 
-            return sb.ToString();
+            //var sb = new StringBuilder();
+            //sb.Append("\"");
+            //foreach (char c in value)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\"': sb.Append("\\\""); break;
+            //        case '\\': sb.Append("\\\\"); break;
+            //        case '\b': sb.Append("\\b"); break;
+            //        case '\f': sb.Append("\\f"); break;
+            //        case '\n': sb.Append("\\n"); break;
+            //        case '\r': sb.Append("\\r"); break;
+            //        case '\t': sb.Append("\\t"); break;
+            //        default:
+            //            var i = (int)c;
+            //            if (i < 32 || i > 127)
+            //            {
+            //                sb.AppendFormat("\\u{0:X04}", i);
+            //            }
+            //            else { sb.Append(c); }
+            //            break;
+            //    }
+            //}
+            //sb.Append("\"");
+
+            //return sb.ToString();
         }
 
         #endregion Web Based

@@ -82,8 +82,9 @@ namespace Kore.Plugins.Ecommerce.Simple
         {
             var regionService = EngineContext.Current.Resolve<IRegionService>();
             var regionSettingsService = EngineContext.Current.Resolve<IRegionSettingsService>();
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
 
-            var countries = regionService.GetCountries().ToDictionary(k => k.Id, v => v);
+            var countries = regionService.GetCountries(workContext.CurrentCultureCode).ToDictionary(k => k.Id, v => v);
 
             string settingsId = StoreRegionSettings.SettingsName.ToSlugUrl();
 

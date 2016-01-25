@@ -17,9 +17,23 @@ namespace Kore.Web.Common.Infrastructure
             builder.EntitySet<Region>("RegionApi");
             builder.EntitySet<RegionSettings>("RegionSettingsApi");
 
+            RegisterRegionODataActions(builder);
             RegisterRegionSettingsODataActions(builder);
 
             config.MapODataServiceRoute("OData_Kore_Common", "odata/kore/common", builder.GetEdmModel());
+        }
+
+        private static void RegisterRegionODataActions(ODataModelBuilder builder)
+        {
+            var getLocalizedActionFunction = builder.EntityType<Region>().Collection.Function("GetLocalized");
+            getLocalizedActionFunction.Parameter<int>("id");
+            getLocalizedActionFunction.Parameter<string>("cultureCode");
+            getLocalizedActionFunction.ReturnsFromEntitySet<Region>("RegionApi");
+
+            var saveLocalizedAction = builder.EntityType<Region>().Collection.Action("SaveLocalized");
+            saveLocalizedAction.Parameter<string>("cultureCode");
+            saveLocalizedAction.Parameter<Region>("entity");
+            saveLocalizedAction.Returns<IHttpActionResult>();
         }
 
         private static void RegisterRegionSettingsODataActions(ODataModelBuilder builder)

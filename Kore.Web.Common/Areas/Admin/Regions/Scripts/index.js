@@ -232,6 +232,8 @@
         self.parentId = ko.observable(null);
         self.order = ko.observable(null);
 
+        self.cultureCode = ko.observable(null);
+
         self.validator = false;
 
         self.init = function () {
@@ -310,13 +312,14 @@
                         '<div class="btn-group">' +
                         '# if(HasStates) {# <a data-bind="click: country.showStates.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.States + '</a> #} ' +
                         'else {# <a data-bind="click: country.showCities.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Cities + '</a> #} # ' +
-                        '<a data-bind="click: country.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: country.edit.bind($data,\'#=Id#\', null)" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: country.localize.bind($data,\'#=Id#\')" class="btn btn-success btn-xs">' + self.parent.translations.Localize + '</a>' +
                         '<a data-bind="click: country.removeItem.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
                         '<a data-bind="click: showSettings.bind($data,#=Id#)" class="btn btn-info btn-xs">' + self.parent.translations.Settings + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 230
+                    width: 250
                 }]
             });
         };
@@ -332,9 +335,19 @@
             switchSection($("#country-form-section"));
             $("#country-form-section-legend").html(self.parent.translations.Create);
         };
-        self.edit = function (id) {
+        self.edit = function (id, cultureCode) {
+            var url = "/odata/kore/common/RegionApi(" + id + ")";
+
+            if (cultureCode) {
+                self.cultureCode(cultureCode);
+                url = "/odata/kore/common/RegionApi/Default.GetLocalized(id=" + id + ",cultureCode='" + cultureCode + "')";
+            }
+            else {
+                self.cultureCode(null);
+            }
+
             $.ajax({
-                url: "/odata/kore/common/RegionApi(" + id + ")",
+                url: url,
                 type: "GET",
                 dataType: "json",
                 async: false
@@ -355,6 +368,11 @@
                 $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
+        };
+        self.localize = function (id) {
+            $("#RegionType").val('Country');
+            $("#SelectedId").val(id);
+            $("#cultureModal").modal("show");
         };
         self.removeItem = function (id) {
             if (confirm(self.parent.translations.DeleteRecordConfirm)) {
@@ -420,26 +438,53 @@
                 });
             }
             else {
-                $.ajax({
-                    url: "/odata/kore/common/RegionApi(" + self.id() + ")",
-                    type: "PUT",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(record),
-                    dataType: "json",
-                    async: false
-                })
-                .done(function (json) {
-                    $('#CountryGrid').data('kendoGrid').dataSource.read();
-                    $('#CountryGrid').data('kendoGrid').refresh();
+                if (self.cultureCode() != null) {
+                    $.ajax({
+                        url: "/odata/kore/common/RegionApi/Default.SaveLocalized",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            cultureCode: self.cultureCode(),
+                            entity: record
+                        }),
+                        dataType: "json",
+                        async: false
+                    })
+                    .done(function (json) {
+                        $('#CountryGrid').data('kendoGrid').dataSource.read();
+                        $('#CountryGrid').data('kendoGrid').refresh();
 
-                    switchSection($("#country-grid-section"));
+                        switchSection($("#country-grid-section"));
 
-                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(self.parent.translations.UpdateRecordError, "error");
-                    console.log(textStatus + ': ' + errorThrown);
-                });
+                        $.notify(self.parent.translations.UpdateRecordSuccess, "success");
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        $.notify(self.parent.translations.UpdateRecordError, "error");
+                        console.log(textStatus + ': ' + errorThrown);
+                    });
+                }
+                else {
+                    $.ajax({
+                        url: "/odata/kore/common/RegionApi(" + self.id() + ")",
+                        type: "PUT",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(record),
+                        dataType: "json",
+                        async: false
+                    })
+                    .done(function (json) {
+                        $('#CountryGrid').data('kendoGrid').dataSource.read();
+                        $('#CountryGrid').data('kendoGrid').refresh();
+
+                        switchSection($("#country-grid-section"));
+
+                        $.notify(self.parent.translations.UpdateRecordSuccess, "success");
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        $.notify(self.parent.translations.UpdateRecordError, "error");
+                        console.log(textStatus + ': ' + errorThrown);
+                    });
+                }
             }
         };
         self.cancel = function () {
@@ -486,6 +531,8 @@
         self.stateCode = ko.observable(null);
         self.parentId = ko.observable(null);
         self.order = ko.observable(null);
+
+        self.cultureCode = ko.observable(null);
 
         self.validator = false;
 
@@ -564,13 +611,14 @@
                     template:
                         '<div class="btn-group">' +
                         '<a data-bind="click: state.showCities.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Cities + '</a>' +
-                        '<a data-bind="click: state.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: state.edit.bind($data,\'#=Id#\', null)" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: state.localize.bind($data,\'#=Id#\')" class="btn btn-success btn-xs">' + self.parent.translations.Localize + '</a>' +
                         '<a data-bind="click: state.removeItem.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
                         '<a data-bind="click: showSettings.bind($data,#=Id#)" class="btn btn-info btn-xs">' + self.parent.translations.Settings + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 230
+                    width: 250
                 }]
             });
         };
@@ -585,9 +633,19 @@
             switchSection($("#state-form-section"));
             $("#state-form-section-legend").html(self.parent.translations.Create);
         };
-        self.edit = function (id) {
+        self.edit = function (id, cultureCode) {
+            var url = "/odata/kore/common/RegionApi(" + id + ")";
+
+            if (cultureCode) {
+                self.cultureCode(cultureCode);
+                url = "/odata/kore/common/RegionApi/Default.GetLocalized(id=" + id + ",cultureCode='" + cultureCode + "')";
+            }
+            else {
+                self.cultureCode(null);
+            }
+
             $.ajax({
-                url: "/odata/kore/common/RegionApi(" + id + ")",
+                url: url,
                 type: "GET",
                 dataType: "json",
                 async: false
@@ -607,6 +665,11 @@
                 $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
+        };
+        self.localize = function (id) {
+            $("#RegionType").val('State');
+            $("#SelectedId").val(id);
+            $("#cultureModal").modal("show");
         };
         self.removeItem = function (id) {
             if (confirm(self.parent.translations.DeleteRecordConfirm)) {
@@ -671,26 +734,53 @@
                 });
             }
             else {
-                $.ajax({
-                    url: "/odata/kore/common/RegionApi(" + self.id() + ")",
-                    type: "PUT",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(record),
-                    dataType: "json",
-                    async: false
-                })
-                .done(function (json) {
-                    $('#StateGrid').data('kendoGrid').dataSource.read();
-                    $('#StateGrid').data('kendoGrid').refresh();
+                if (self.cultureCode() != null) {
+                    $.ajax({
+                        url: "/odata/kore/common/RegionApi/Default.SaveLocalized",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            cultureCode: self.cultureCode(),
+                            entity: record
+                        }),
+                        dataType: "json",
+                        async: false
+                    })
+                    .done(function (json) {
+                        $('#StateGrid').data('kendoGrid').dataSource.read();
+                        $('#StateGrid').data('kendoGrid').refresh();
 
-                    switchSection($("#state-grid-section"));
+                        switchSection($("#state-grid-section"));
 
-                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(self.parent.translations.UpdateRecordError, "error");
-                    console.log(textStatus + ': ' + errorThrown);
-                });
+                        $.notify(self.parent.translations.UpdateRecordSuccess, "success");
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        $.notify(self.parent.translations.UpdateRecordError, "error");
+                        console.log(textStatus + ': ' + errorThrown);
+                    });
+                }
+                else {
+                    $.ajax({
+                        url: "/odata/kore/common/RegionApi(" + self.id() + ")",
+                        type: "PUT",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(record),
+                        dataType: "json",
+                        async: false
+                    })
+                    .done(function (json) {
+                        $('#StateGrid').data('kendoGrid').dataSource.read();
+                        $('#StateGrid').data('kendoGrid').refresh();
+
+                        switchSection($("#state-grid-section"));
+
+                        $.notify(self.parent.translations.UpdateRecordSuccess, "success");
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        $.notify(self.parent.translations.UpdateRecordError, "error");
+                        console.log(textStatus + ': ' + errorThrown);
+                    });
+                }
             }
         };
         self.cancel = function () {
@@ -722,6 +812,8 @@
         self.name = ko.observable(null);
         self.parentId = ko.observable(null);
         self.order = ko.observable(null);
+
+        self.cultureCode = ko.observable(null);
 
         self.validator = false;
 
@@ -798,13 +890,14 @@
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a data-bind="click: city.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: city.edit.bind($data,\'#=Id#\', null)" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
+                        '<a data-bind="click: city.localize.bind($data,\'#=Id#\')" class="btn btn-success btn-xs">' + self.parent.translations.Localize + '</a>' +
                         '<a data-bind="click: city.removeItem.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
                         '<a data-bind="click: showSettings.bind($data,#=Id#)" class="btn btn-info btn-xs">' + self.parent.translations.Settings + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 180
+                    width: 220
                 }]
             });
         };
@@ -824,9 +917,19 @@
             switchSection($("#city-form-section"));
             $("#city-form-section-legend").html(self.parent.translations.Create);
         };
-        self.edit = function (id) {
+        self.edit = function (id, cultureCode) {
+            var url = "/odata/kore/common/RegionApi(" + id + ")";
+
+            if (cultureCode) {
+                self.cultureCode(cultureCode);
+                url = "/odata/kore/common/RegionApi/Default.GetLocalized(id=" + id + ",cultureCode='" + cultureCode + "')";
+            }
+            else {
+                self.cultureCode(null);
+            }
+
             $.ajax({
-                url: "/odata/kore/common/RegionApi(" + id + ")",
+                url: url,
                 type: "GET",
                 dataType: "json",
                 async: false
@@ -845,6 +948,11 @@
                 $.notify(self.parent.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
+        };
+        self.localize = function (id) {
+            $("#RegionType").val('City');
+            $("#SelectedId").val(id);
+            $("#cultureModal").modal("show");
         };
         self.removeItem = function (id) {
             if (confirm(self.parent.translations.DeleteRecordConfirm)) {
@@ -908,26 +1016,53 @@
                 });
             }
             else {
-                $.ajax({
-                    url: "/odata/kore/common/RegionApi(" + self.id() + ")",
-                    type: "PUT",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(record),
-                    dataType: "json",
-                    async: false
-                })
-                .done(function (json) {
-                    $('#CityGrid').data('kendoGrid').dataSource.read();
-                    $('#CityGrid').data('kendoGrid').refresh();
+                if (self.cultureCode() != null) {
+                    $.ajax({
+                        url: "/odata/kore/common/RegionApi/Default.SaveLocalized",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            cultureCode: self.cultureCode(),
+                            entity: record
+                        }),
+                        dataType: "json",
+                        async: false
+                    })
+                    .done(function (json) {
+                        $('#CityGrid').data('kendoGrid').dataSource.read();
+                        $('#CityGrid').data('kendoGrid').refresh();
 
-                    switchSection($("#city-grid-section"));
+                        switchSection($("#city-grid-section"));
 
-                    $.notify(self.parent.translations.UpdateRecordSuccess, "success");
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    $.notify(self.parent.translations.UpdateRecordError, "error");
-                    console.log(textStatus + ': ' + errorThrown);
-                });
+                        $.notify(self.parent.translations.UpdateRecordSuccess, "success");
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        $.notify(self.parent.translations.UpdateRecordError, "error");
+                        console.log(textStatus + ': ' + errorThrown);
+                    });
+                }
+                else {
+                    $.ajax({
+                        url: "/odata/kore/common/RegionApi(" + self.id() + ")",
+                        type: "PUT",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(record),
+                        dataType: "json",
+                        async: false
+                    })
+                    .done(function (json) {
+                        $('#CityGrid').data('kendoGrid').dataSource.read();
+                        $('#CityGrid').data('kendoGrid').refresh();
+
+                        switchSection($("#city-grid-section"));
+
+                        $.notify(self.parent.translations.UpdateRecordSuccess, "success");
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        $.notify(self.parent.translations.UpdateRecordError, "error");
+                        console.log(textStatus + ': ' + errorThrown);
+                    });
+                }
             }
         };
         self.cancel = function () {
@@ -1016,6 +1151,21 @@
         self.showSettings = function (regionId) {
             self.settings.regionId(regionId);
             switchSection($("#settings-grid-section"));
+        };
+
+        self.onCultureSelected = function () {
+            var regionType = $("#RegionType").val();
+            var id = $("#SelectedId").val();
+            var cultureCode = $("#CultureCode").val();
+
+            switch (regionType) {
+                case 'Country': self.country.edit(id, cultureCode); break;
+                case 'State': self.state.edit(id, cultureCode); break;
+                case 'City': self.city.edit(id, cultureCode); break;
+                default: break;
+            }
+
+            $("#cultureModal").modal("hide");
         };
     };
 

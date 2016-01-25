@@ -59,13 +59,14 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers
     GetRecordError: '{6}',
     InsertRecordError: '{7}',
     InsertRecordSuccess: '{8}',
-    Settings: '{9}',
-    UpdateRecordError: '{10}',
-    UpdateRecordSuccess: '{11}',
-    Cities: '{12}',
-    States: '{13}',
+    Localize: '{9}',
+    Settings: '{10}',
+    UpdateRecordError: '{11}',
+    UpdateRecordSuccess: '{12}',
+    Cities: '{13}',
+    States: '{14}',
     Columns: {{
-        Name: '{14}'
+        Name: '{15}'
     }}
 }}",
    T(KoreWebLocalizableStrings.General.Create),
@@ -77,6 +78,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers
    T(KoreWebLocalizableStrings.General.GetRecordError),
    T(KoreWebLocalizableStrings.General.InsertRecordError),
    T(KoreWebLocalizableStrings.General.InsertRecordSuccess),
+   T(KoreWebLocalizableStrings.General.Localize),
    T(KoreWebLocalizableStrings.General.Settings),
    T(KoreWebLocalizableStrings.General.UpdateRecordError),
    T(KoreWebLocalizableStrings.General.UpdateRecordSuccess),
@@ -118,7 +120,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers
         public JsonResult GetCities(int countryId)
         {
             var cities = regionService.Value
-                .GetSubRegions(countryId, RegionType.City)
+                .GetSubRegions(countryId, RegionType.City, WorkContext.CurrentCultureCode)
                 .ToDictionary(k => k.Id, v => v);
 
             var data = cities

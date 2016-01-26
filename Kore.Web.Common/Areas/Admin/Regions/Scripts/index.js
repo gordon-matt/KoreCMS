@@ -331,6 +331,8 @@
             self.parentId(self.parent.selectedContinentId());
             self.order(null);
 
+            self.cultureCode(null);
+
             self.validator.resetForm();
             switchSection($("#country-form-section"));
             $("#country-form-section-legend").html(self.parent.translations.Create);
@@ -629,6 +631,8 @@
             self.parentId(self.parent.selectedCountryId());
             self.order(null);
 
+            self.cultureCode(null);
+
             self.validator.resetForm();
             switchSection($("#state-form-section"));
             $("#state-form-section-legend").html(self.parent.translations.Create);
@@ -912,6 +916,8 @@
             else {
                 self.parentId(self.parent.selectedCountryId());
             }
+
+            self.cultureCode(null);
 
             self.validator.resetForm();
             switchSection($("#city-form-section"));

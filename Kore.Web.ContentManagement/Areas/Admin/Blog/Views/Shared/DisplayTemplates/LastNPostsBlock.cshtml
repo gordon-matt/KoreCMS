@@ -6,7 +6,7 @@
 
 @{
     var blogService = EngineContext.Current.Resolve<IBlogPostService>();
-    var entries = blogService.Repository.Table
+    var entries = blogService.Query()
         .OrderByDescending(x => x.DateCreatedUtc)
         .Take(Model.NumberOfEntries)
         .ToList();

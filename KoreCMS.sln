@@ -166,7 +166,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Data.MySql", "Kore.Dat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Messaging.Forums", "Plugins\Kore.Plugins.Messaging.Forums\Kore.Plugins.Messaging.Forums.csproj", "{29F2DE70-A4B6-4684-9062-FEBE64006446}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Caching.Redis", "Kore.Plugins.Caching.Redis\Kore.Plugins.Caching.Redis.csproj", "{D3354D0B-88EA-40FB-A289-A962044B275E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Caching.Redis", "Plugins\Kore.Plugins.Caching.Redis\Kore.Plugins.Caching.Redis.csproj", "{D3354D0B-88EA-40FB-A289-A962044B275E}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution

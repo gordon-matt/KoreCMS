@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Optimization;
+using Kore.Caching;
 
 namespace KoreCMS.Controllers
 {
@@ -14,6 +15,24 @@ namespace KoreCMS.Controllers
             {
                 return RedirectToAction("Index", "Installation");
             }
+
+            ////TEST
+            //var cacheManager = Kore.Infrastructure.EngineContext.Current.Resolve<Kore.Caching.ICacheManager>();
+            //string testString = cacheManager.Get("TestString", () =>
+            //{
+            //    return "Test String 123";
+            //});
+            //var testObj = cacheManager.Get("TestObject", () =>
+            //{
+            //    return new KoreCMS.Models.LoginViewModel
+            //    {
+            //        Email = "test@123.com",
+            //        Password = "Blah123",
+            //        RememberMe = true
+            //    };
+            //});
+            ////END TEST
+
             return View();
         }
 

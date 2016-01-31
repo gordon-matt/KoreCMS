@@ -43,14 +43,33 @@ namespace Kore.Plugins.Caching.Redis
         public T Get<T>(string key)
         {
             string cacheKey = string.Concat(CacheKeyPrefix, ":Cache:", key);
+
+            if (typeof(T) == typeof(string))
+            {
+                var result = Database.StringGet(cacheKey);
+                if (result.HasValue)
+                {
+                    return (T)Convert.ChangeType(result, typeof(T));
+                }
+                return default(T);
+            }
+
             return Database.HashGetAll(cacheKey).ConvertFromRedis<T>();
         }
 
         public void Set(string key, object data, int cacheTimeInMinutes)
         {
             string cacheKey = string.Concat(CacheKeyPrefix, ":Cache:", key);
-            Database.HashSet(cacheKey, data.ToHashEntries());
-            Database.KeyExpire(cacheKey, TimeSpan.FromMinutes(cacheTimeInMinutes));
+
+            if (data is string)
+            {
+                Database.StringSet(cacheKey, (data as string), TimeSpan.FromMinutes(cacheTimeInMinutes));
+            }
+            else
+            {
+                Database.HashSet(cacheKey, data.ToHashEntries());
+                Database.KeyExpire(cacheKey, TimeSpan.FromMinutes(cacheTimeInMinutes));
+            }
         }
 
         public bool IsSet(string key)

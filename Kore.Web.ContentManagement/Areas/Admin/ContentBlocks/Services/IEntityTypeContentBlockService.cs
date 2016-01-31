@@ -51,19 +51,20 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
         public IEnumerable<IContentBlock> GetContentBlocks(string entityType, string entityId, string zoneName, string cultureCode, bool includeDisabled = false)
         {
             string key = string.Format(
-                "Repository_EntityTypeContentBlocks_GetContentBlocks_{0}_{1}_{2}_{3}",
+                "Repository_EntityTypeContentBlocks_GetContentBlocks_{0}_{1}_{2}_{3}_{4}",
                 entityType,
+                cultureCode,
                 entityId,
                 zoneName,
                 includeDisabled);
 
-            return CacheManager.Get(key, () =>
+            var records = CacheManager.Get(key, () =>
             {
                 var zone = zoneRepository.Value.Table.FirstOrDefault(x => x.Name == zoneName);
 
                 if (zone == null)
                 {
-                    return Enumerable.Empty<IContentBlock>();
+                    return Enumerable.Empty<EntityTypeContentBlock>();
                 }
 
                 var query = Query(x =>
@@ -76,9 +77,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
                     query = query.Where(x => x.IsEnabled);
                 }
 
-                var records = query.ToList();
-                return GetContentBlocks(records, cultureCode);
+                return query.ToList();
             });
+
+            return GetContentBlocks(records, cultureCode);
         }
 
         #endregion IEntityTypeContentBlockService Members
@@ -91,7 +93,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
 
         private IEnumerable<IContentBlock> GetContentBlocks(IEnumerable<EntityTypeContentBlock> records, string cultureCode)
         {
-            string ids = string.Join("|", records.Select(x => x.Id));
+            string entityType = typeof(EntityTypeContentBlock).FullName;
+            var ids = records.Select(x => x.Id.ToString());
+
+            var localizedRecords = localizablePropertyService.Value.Find(x =>
+                x.CultureCode == cultureCode &&
+                x.EntityType == entityType &&
+                ids.Contains(x.EntityId) &&
+                x.Property == "BlockValues");
 
             var result = new List<IContentBlock>();
             foreach (var record in records)
@@ -101,15 +110,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
                 {
                     if (!string.IsNullOrEmpty(cultureCode))
                     {
-                        string entityType = typeof(EntityTypeContentBlock).FullName;
                         string entityId = record.Id.ToString();
 
-                        var localizedRecord = localizablePropertyService.Value.FindOne(x =>
-                            x.CultureCode == cultureCode &&
-                            x.EntityType == entityType &&
-                            x.EntityId == entityId &&
-                            x.Property == "BlockValues");
-
+                        var localizedRecord = localizedRecords.FirstOrDefault(x => x.EntityId == entityId);
                         if (localizedRecord != null)
                         {
                             record.BlockValues = localizedRecord.Value;

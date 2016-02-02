@@ -148,82 +148,89 @@ namespace Kore.Reflection
         public static void SetPropertyValue<T>(this T item, PropertyInfo property, object value)
         {
             Type propertyType = property.PropertyType;
-
-            if (propertyType == typeof(Boolean))
+            string valueAsString = value.ToString();
+            
+            if (propertyType == typeof(String))
             {
-                property.SetValue(item, Boolean.Parse(value.ToString()), null);
-            }
-            else if (propertyType == typeof(Byte))
-            {
-                property.SetValue(item, Byte.Parse(value.ToString()), null);
-            }
-            else if (propertyType == typeof(Char))
-            {
-                property.SetValue(item, Char.Parse(value.ToString()), null);
-            }
-            else if (propertyType == typeof(Int16))
-            {
-                property.SetValue(item, Int16.Parse(value.ToString()), null);
+                property.SetValue(item, valueAsString, null);
             }
             else if (propertyType == typeof(Int32))
             {
-                property.SetValue(item, Int32.Parse(value.ToString()), null);
-            }
-            else if (propertyType == typeof(Int64))
-            {
-                property.SetValue(item, Int64.Parse(value.ToString()), null);
-            }
-            else if (propertyType == typeof(Decimal))
-            {
-                property.SetValue(item, Decimal.Parse(value.ToString()), null);
-            }
-            else if (propertyType == typeof(Double))
-            {
-                property.SetValue(item, Double.Parse(value.ToString()), null);
-            }
-            else if (propertyType == typeof(DateTime))
-            {
-                property.SetValue(item, DateTime.Parse(value.ToString()), null);
+                property.SetValue(item, Convert.ToInt32(valueAsString), null);
             }
             else if (propertyType == typeof(Guid))
             {
-                property.SetValue(item, new Guid(value.ToString()), null);
+                property.SetValue(item, new Guid(valueAsString), null);
+            }
+            else if (propertyType.IsEnum)
+            {
+                var enumValue = Enum.Parse(propertyType, valueAsString);
+                property.SetValue(item, enumValue, null);
+            }
+            else if (propertyType == typeof(Boolean))
+            {
+                property.SetValue(item, Convert.ToBoolean(valueAsString), null);
+            }
+            else if (propertyType == typeof(DateTime))
+            {
+                property.SetValue(item, Convert.ToDateTime(valueAsString), null);
             }
             else if (propertyType == typeof(Single))
             {
-                property.SetValue(item, Single.Parse(value.ToString()), null);
+                property.SetValue(item, Convert.ToSingle(valueAsString), null);
             }
-            else if (propertyType == typeof(String))
+            else if (propertyType == typeof(Decimal))
             {
-                property.SetValue(item, value.ToString(), null);
+                property.SetValue(item, Convert.ToDecimal(valueAsString), null);
             }
-            else if (propertyType == typeof(SByte))
+            else if (propertyType == typeof(Byte))
             {
-                property.SetValue(item, SByte.Parse(value.ToString()), null);
+                property.SetValue(item, Convert.ToByte(valueAsString), null);
             }
-            else if (propertyType == typeof(TimeSpan))
+            else if (propertyType == typeof(Int16))
             {
-                property.SetValue(item, TimeSpan.Parse(value.ToString()), null);
+                property.SetValue(item, Convert.ToInt16(valueAsString), null);
             }
-            else if (propertyType == typeof(UInt16))
+            else if (propertyType == typeof(Int64))
             {
-                property.SetValue(item, UInt16.Parse(value.ToString()), null);
+                property.SetValue(item, Convert.ToInt64(valueAsString), null);
+            }
+            else if (propertyType == typeof(Double))
+            {
+                property.SetValue(item, Convert.ToDouble(valueAsString), null);
             }
             else if (propertyType == typeof(UInt32))
             {
-                property.SetValue(item, UInt32.Parse(value.ToString()), null);
+                property.SetValue(item, Convert.ToUInt32(valueAsString), null);
+            }
+            else if (propertyType == typeof(UInt16))
+            {
+                property.SetValue(item, Convert.ToUInt16(valueAsString), null);
             }
             else if (propertyType == typeof(UInt64))
             {
-                property.SetValue(item, UInt64.Parse(value.ToString()), null);
+                property.SetValue(item, Convert.ToUInt64(valueAsString), null);
+            }
+            else if (propertyType == typeof(SByte))
+            {
+                property.SetValue(item, Convert.ToSByte(valueAsString), null);
+            }
+            else if (propertyType == typeof(Char))
+            {
+                property.SetValue(item, Convert.ToChar(valueAsString), null);
+            }
+            else if (propertyType == typeof(TimeSpan))
+            {
+                property.SetValue(item, TimeSpan.Parse(valueAsString), null);
             }
             else if (propertyType == typeof(Uri))
             {
-                property.SetValue(item, new Uri(value.ToString()), null);
+                property.SetValue(item, new Uri(valueAsString), null);
             }
             else
             {
-                property.SetValue(item, value, null);
+                property.SetValue(item, Convert.ChangeType(value, property.PropertyType));
+                //property.SetValue(item, value, null);
             }
         }
 

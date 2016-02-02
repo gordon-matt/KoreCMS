@@ -17,10 +17,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
         public string RedirectUrl { get; set; }
 
         [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.FormBlock.EmailAddress)]
+        [LocalizedHelpText(KoreCmsLocalizableStrings.ContentBlocks.FormBlock.HelpText.EmailAddress)]
         public string EmailAddress { get; set; }
 
         [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.FormBlock.UseAjax)]
         public bool UseAjax { get; set; }
+
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.FormBlock.FormUrl)]
+        [LocalizedHelpText(KoreCmsLocalizableStrings.ContentBlocks.FormBlock.HelpText.FormUrl)]
+        public string FormUrl { get; set; }
 
         #region ContentBlockBase Overrides
 

@@ -90,7 +90,14 @@
 
             public static class FormBlock
             {
+                public static class HelpText
+                {
+                    public const string EmailAddress = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.HelpText.EmailAddress";
+                    public const string FormUrl = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.HelpText.FormUrl";
+                }
+
                 public const string EmailAddress = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.EmailAddress";
+                public const string FormUrl = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.FormUrl";
                 public const string HtmlTemplate = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.HtmlTemplate";
                 public const string PleaseEnterCaptcha = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.PleaseEnterCaptcha";
                 public const string PleaseEnterCorrectCaptcha = "Kore.Web.ContentManagement/ContentBlocks.FormBlock.PleaseEnterCorrectCaptcha";

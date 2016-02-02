@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using Kore.Reflection;
 using StackExchange.Redis;
 
 namespace Kore.Plugins.Caching.Redis
@@ -30,7 +31,7 @@ namespace Kore.Plugins.Caching.Redis
                     continue;
                 }
 
-                property.SetValue(obj, Convert.ChangeType(entry.Value.ToString(), property.PropertyType));
+                obj.SetPropertyValue(property, entry.Value);
             }
             return (T)obj;
         }
@@ -48,8 +49,8 @@ namespace Kore.Plugins.Caching.Redis
             }
 
             database.ScriptEvaluate(@"
-                local keys = redis.call('keys', ARGV[1]) 
-                for i=1,#keys,5000 do 
+                local keys = redis.call('keys', ARGV[1])
+                for i=1,#keys,5000 do
                 redis.call('del', unpack(keys, i, math.min(i+4999, #keys)))
                 end", values: new RedisValue[] { prefix });
         }

@@ -166,6 +166,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <Content Include="Content\img\watchdog_32.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

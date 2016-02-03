@@ -149,6 +149,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Views\Shared\DisplayTemplates\LuceneSearchBlock.cshtml" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\LuceneSearchBlock.cshtml" />

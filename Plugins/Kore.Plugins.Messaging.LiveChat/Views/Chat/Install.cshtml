@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Kore.Plugins.Messaging.LiveChat
+
+@{
     Layout = null;
 }
 
@@ -32,7 +34,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="navbar-brand" href="/plugins/messaging/livechat/agent">LiveChat Starter Kit</a>
+            <a class="navbar-brand" href="@Url.Action("Agent", "Chat", new { area = Constants.RouteArea })">LiveChat Starter Kit</a>
             <div class="nav-collapse collapse">
                 <ul class="navbar-nav"></ul>
             </div>

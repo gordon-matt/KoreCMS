@@ -8,9 +8,12 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Kore.Infrastructure;
+using Kore.Net.Mail;
+using Kore.Plugins.Messaging.LiveChat.Models;
 using Microsoft.AspNet.SignalR;
 
-namespace Kore.Plugins.Messaging.LiveChat.LCSK
+namespace Kore.Plugins.Messaging.LiveChat.Hubs
 {
     public class ChatHub : Hub
     {
@@ -343,14 +346,14 @@ namespace Kore.Plugins.Messaging.LiveChat.LCSK
 
         public void SendEmail(string from, string message)
         {
-            var msg = new MailMessage();
-            msg.To.Add(new MailAddress(from));
-            msg.Subject = "LCSK - Offline Contact";
-            msg.Body = "You received an offline contact from your LCSK chat widget.\r\n\r\n" + message;
+            var emailSender = EngineContext.Current.Resolve<IEmailSender>();
 
-            using (var client = new SmtpClient())
+            using (var mailMessage = new MailMessage())
             {
-                client.Send(msg);
+                mailMessage.To.Add(new MailAddress(from));
+                mailMessage.Subject = "LCSK - Offline Contact";
+                mailMessage.Body = "You received an offline contact from your LCSK chat widget.\r\n\r\n" + message;
+                emailSender.Send(mailMessage);
             }
         }
 

@@ -1,4 +1,4 @@
-namespace Kore.Plugins.Messaging.LiveChat.LCSK
+namespace Kore.Plugins.Messaging.LiveChat.Models
 {
     public class Agent
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Web.Mvc;
 
 namespace Kore.Web.Common.Html
 {
@@ -7,17 +8,30 @@ namespace Kore.Web.Common.Html
     {
         private readonly TextWriter textWriter;
 
-        internal Tile(TextWriter writer, string href, MetroColor color, MetroTileSize size)
+        internal Tile(TextWriter writer, string href, MetroColor color, MetroTileSize size, object aHtmlAttributes = null, object divHtmlAttributes = null)
         {
             this.textWriter = writer;
 
-            this.textWriter.Write("<a href=\"");
-            this.textWriter.Write(href);
-            this.textWriter.Write("\" ><div class=\"tile ");
-            this.textWriter.Write(GetColorCssClass(color));
-            this.textWriter.Write(" ");
-            this.textWriter.Write(GetSizeCssClass(size));
-            this.textWriter.Write("\" >");
+            var aBuilder = new TagBuilder("a");
+            aBuilder.MergeAttribute("href", href);
+            aBuilder.MergeAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(aHtmlAttributes));
+
+            var divBuilder = new TagBuilder("div");
+            divBuilder.MergeAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(divHtmlAttributes));
+            divBuilder.AddCssClass("tile");
+            divBuilder.AddCssClass(GetColorCssClass(color));
+            divBuilder.AddCssClass(GetSizeCssClass(size));
+
+            this.textWriter.Write(aBuilder.ToString(TagRenderMode.StartTag));
+            this.textWriter.Write(divBuilder.ToString(TagRenderMode.StartTag));
+
+            //this.textWriter.Write("<a href=\"");
+            //this.textWriter.Write(href);
+            //this.textWriter.Write("\" ><div class=\"tile ");
+            //this.textWriter.Write(GetColorCssClass(color));
+            //this.textWriter.Write(" ");
+            //this.textWriter.Write(GetSizeCssClass(size));
+            //this.textWriter.Write("\" >");
         }
 
         private string GetColorCssClass(MetroColor color)
@@ -40,11 +54,6 @@ namespace Kore.Web.Common.Html
             }
         }
 
-        public void Dispose()
-        {
-            this.textWriter.Write("</div></a>");
-        }
-
         private string GetSizeCssClass(MetroTileSize size)
         {
             switch (size)
@@ -55,6 +64,11 @@ namespace Kore.Web.Common.Html
                 case MetroTileSize.Single:
                 default: return "one";
             }
+        }
+
+        public void Dispose()
+        {
+            this.textWriter.Write("</div></a>");
         }
     }
 }

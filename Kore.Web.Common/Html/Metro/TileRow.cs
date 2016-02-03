@@ -26,9 +26,9 @@ namespace Kore.Web.Common.Html
             this.textWriter.Write(divBuilder.ToString(TagRenderMode.StartTag));
         }
 
-        public Tile BeginTile(string href, MetroColor color = MetroColor.Blue, MetroTileSize size = MetroTileSize.Single)
+        public Tile BeginTile(string href, MetroColor color = MetroColor.Blue, MetroTileSize size = MetroTileSize.Single, object aHtmlAttributes = null, object divHtmlAttributes = null)
         {
-            return new Tile(this.textWriter, href, color, size);
+            return new Tile(this.textWriter, href, color, size, aHtmlAttributes, divHtmlAttributes);
         }
 
         public void Tile(string href, string text, MetroColor color = MetroColor.Blue, MetroTileSize size = MetroTileSize.Single, object aHtmlAttributes = null, object divHtmlAttributes = null)

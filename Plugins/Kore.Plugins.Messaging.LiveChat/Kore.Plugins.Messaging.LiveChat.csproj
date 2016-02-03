@@ -94,7 +94,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -145,13 +147,16 @@
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="ContentBlocks\LiveChatBlock.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Extensions\ScriptRegisterExtensions.cs" />
     <Compile Include="Extensions\StyleRegisterExtensions.cs" />
     <Compile Include="Infrastructure\DurandalRouteProvider.cs" />
@@ -159,25 +164,29 @@
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="Infrastructure\LocationFormatProvider.cs" />
     <Compile Include="Infrastructure\OwinStartupConfiguration.cs" />
-    <Compile Include="LCSK\Agent.cs" />
-    <Compile Include="LCSK\ChatHub.cs" />
+    <Compile Include="LiveChatPermissions.cs" />
+    <Compile Include="Models\Agent.cs" />
+    <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="LocalizableStrings.cs" />
     <Compile Include="NavigationProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LiveChatPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="LCSK\assets\fonts\glyphicons-halflings-regular.eot">
+    <None Include="Content\fonts\glyphicons-halflings-regular.eot">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="LCSK\assets\fonts\glyphicons-halflings-regular.ttf">
+    <None Include="Content\fonts\glyphicons-halflings-regular.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="LCSK\assets\fonts\glyphicons-halflings-regular.woff">
+    <None Include="Content\fonts\glyphicons-halflings-regular.woff">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="Scripts\jquery-2.1.1.min.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Chat\Index.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Views\Shared\DisplayTemplates\LiveChatBlock.cshtml">
@@ -191,9 +200,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
     <Folder Include="Services\" />
     <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
@@ -228,46 +234,43 @@
     <Content Include="Description.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="LCSK\Agent.html">
+    <None Include="Views\Chat\Agent.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Scripts\agent.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="LCSK\agent.js">
+    <Content Include="Content\css\bootstrap-theme.min.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="LCSK\assets\css\bootstrap-theme.min.css">
+    <Content Include="Content\css\bootstrap.min.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="LCSK\assets\css\bootstrap.min.css">
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="LCSK\assets\fonts\glyphicons-halflings-regular.svg">
+    <Content Include="Scripts\bootstrap.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="LCSK\assets\js\bootstrap.min.js">
+    <Content Include="Scripts\index.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="LCSK\assets\js\jquery-2.1.1.min.js">
+    <Content Include="Scripts\jquery.timeago.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="LCSK\assets\js\jquery.signalR-2.1.1.min.js">
+    <Content Include="Content\sounds\newchat.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="LCSK\assets\js\jquery.timeago.js">
+    <Content Include="Content\sounds\newmsg.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="LCSK\assets\sounds\newchat.mp3">
+    <Content Include="Scripts\chat.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="LCSK\assets\sounds\newmsg.mp3">
+    <None Include="Views\Chat\Install.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LCSK\chat.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LCSK\Install.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LCSK\install.js">
+    </None>
+    <Content Include="Scripts\install.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\jquery-2.1.1.intellisense.js">

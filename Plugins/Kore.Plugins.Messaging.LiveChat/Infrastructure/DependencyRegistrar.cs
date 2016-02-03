@@ -1,8 +1,11 @@
 ﻿using Autofac;
 using Kore.Infrastructure;
+using Kore.Localization;
 using Kore.Plugins.Messaging.LiveChat.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
+using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
+using Kore.Web.Navigation;
 using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Messaging.LiveChat.Infrastructure
@@ -20,13 +23,10 @@ namespace Kore.Plugins.Messaging.LiveChat.Infrastructure
 
             builder.RegisterType<OwinStartupConfiguration>().As<IOwinStartupConfiguration>().InstancePerDependency();
             builder.RegisterType<LiveChatBlock>().As<IContentBlock>().InstancePerDependency();
-
-            //builder.RegisterType<DurandalRouteProvider>().As<IDurandalRouteProvider>().SingleInstance();
-
-            //builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();
-
+            builder.RegisterType<DurandalRouteProvider>().As<IDurandalRouteProvider>().SingleInstance();
+            builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();
             builder.RegisterType<LocationFormatProvider>().As<ILocationFormatProvider>().SingleInstance();
-            //builder.RegisterType<NavigationProvider>().As<INavigationProvider>().SingleInstance();
+            builder.RegisterType<NavigationProvider>().As<INavigationProvider>().SingleInstance();
         }
 
         public int Order

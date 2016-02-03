@@ -1,0 +1,24 @@
+﻿@using Kore.Web.Common
+@using Kore.Web.Common.Html
+@using Kore.Plugins.Messaging.LiveChat
+@using Constants = Kore.Plugins.Messaging.LiveChat.Constants
+@using LocalizableStrings = Kore.Plugins.Messaging.LiveChat.LocalizableStrings
+
+<link type="text/css" rel="stylesheet" href="@Style.GetBundleUrl("third-party/metro")" />
+
+@using (var tiles = Html.KoreCommon().Metro().Begin(new Tiles()))
+{
+    using (var row = tiles.BeginTileRow())
+    {
+        using (var tile = row.BeginTile(Url.Action("Agent", "Chat", new { area = Constants.RouteArea }), MetroColor.Lime, aHtmlAttributes: new { target = "_blank" }))
+        {
+            <i class="kore-icon kore-icon-chat kore-icon-5x"></i>
+            <h4>@T(LocalizableStrings.Agent)</h4>
+        }
+        using (var tile = row.BeginTile(Url.Action("Setup", "Chat", new { area = Constants.RouteArea }), aHtmlAttributes: new { target = "_blank" }))
+        {
+            <i class="kore-icon kore-icon-config kore-icon-5x"></i>
+            <h4>@T(LocalizableStrings.Setup)</h4>
+        }
+    }
+}

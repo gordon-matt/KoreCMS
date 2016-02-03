@@ -1,4 +1,5 @@
-﻿using Kore.Infrastructure;
+﻿using System.Collections.Generic;
+using Kore.Infrastructure;
 using Kore.Web.Infrastructure;
 using Microsoft.Owin;
 using Owin;
@@ -20,9 +21,10 @@ namespace KoreCMS
 
             var owinStartupConfigurations = EngineContext.Current.ResolveAll<IOwinStartupConfiguration>();
 
+            var existingConfigurations = new List<string>();
             foreach (var owinStartupConfiguration in owinStartupConfigurations)
             {
-                owinStartupConfiguration.Configuration(app);
+                owinStartupConfiguration.Configuration(app, existingConfigurations);
             }
         }
     }

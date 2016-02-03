@@ -150,6 +150,7 @@
     <Compile Include="FullCalendarPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Views\Calendar\Index.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

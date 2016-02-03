@@ -178,6 +178,7 @@
     <Compile Include="Services\IForumService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <Content Include="Content\images\topic-type1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

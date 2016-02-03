@@ -359,6 +359,7 @@
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\DisplayTemplates\CategoriesBlock.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\EditorTemplates\CategoriesBlock.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\EditorTemplates\FilteredPostsBlock.cshtml" />
+    <None Include="app.config" />
     <None Include="Areas\Admin\Blog\Views\web.config" />
     <None Include="Areas\Admin\ContentBlocks\Views\web.config" />
     <None Include="Areas\Admin\Localization\Views\web.config" />

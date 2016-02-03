@@ -1,4 +1,5 @@
-﻿using Kore.Web.Infrastructure;
+﻿using Kore.Infrastructure;
+using Kore.Web.Infrastructure;
 using Microsoft.Owin;
 using Owin;
 
@@ -14,7 +15,15 @@ namespace KoreCMS
             {
                 return;
             }
+
             ConfigureAuth(app);
+
+            var owinStartupConfigurations = EngineContext.Current.ResolveAll<IOwinStartupConfiguration>();
+
+            foreach (var owinStartupConfiguration in owinStartupConfigurations)
+            {
+                owinStartupConfiguration.Configuration(app);
+            }
         }
     }
 }

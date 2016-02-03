@@ -167,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Regions\Views\Region\Index.cshtml" />
+    <None Include="app.config" />
     <None Include="Areas\Admin\Regions\Views\web.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

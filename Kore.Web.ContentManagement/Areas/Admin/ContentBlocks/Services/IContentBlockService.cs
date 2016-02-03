@@ -159,6 +159,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
                     }
 
                     var blockType = Type.GetType(record.BlockType);
+
+                    if (record.BlockValues == null)
+                    {
+                        // Prevent error when trying to deserialize NULL value
+                        record.BlockValues = "{}";
+                    }
+
                     contentBlock = (IContentBlock)record.BlockValues.JsonDeserialize(blockType);
                 }
                 catch (Exception x)

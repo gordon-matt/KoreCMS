@@ -119,6 +119,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Content\FlexSlider\fonts\flexslider-icon.eot">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -8,12 +8,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>LiveChat Starter Kit</title>
+    <title>LiveChat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Dominic St-Pierre">
-
-    <!-- Le styles -->
-
     <link href="/Plugins/Messaging.LiveChat/Content/css/bootstrap.min.css" rel="stylesheet">
     <link href="/Plugins/Messaging.LiveChat/Content/css/bootstrap-theme.min.css" rel="stylesheet">
     <style type="text/css">
@@ -21,25 +17,18 @@
             padding-top: 60px;
             padding-bottom: 40px;
         }
-
-        .sidebar-nav {
-            padding: 9px 0;
-        }
-
         .chat-session {
             padding: 3px 3px 3px 3px;
             height: 65px;
             border-bottom: 1px solid #000;
             cursor: pointer;
         }
-
             .chat-session.active {
                 background-color: lightgray;
                 cursor: default;
             }
-
         .chat-msgs {
-            height: 650px;
+            max-height: 500px;
             padding: 3px 3px 3px 3px;
             border: 3px dashed lightgray;
             margin-bottom: 10px;
@@ -57,7 +46,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="@Url.Action("Agent", "Chat", new { area = Constants.RouteArea })">LCSK - Agent Panel</a>
+                <a class="navbar-brand" href="@Url.Action("Agent", "Chat", new { area = Constants.RouteArea })">Live Chat - Agent Panel</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -75,14 +64,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3">
-                <div class="well sidebar-nav">
-                    <h3>Chat Sessions</h3>
-                    <div id="chat-sessions">
-                    </div>
-                </div>
-                <!--/.well -->
+                <h3>Chat Sessions</h3>
+                <ul id="chat-sessions" class="list-group">
+                </ul>
             </div>
-            <!--/span-->
             <div id="chat-content" class="col-md-9">
                 <div id="login">
                     <h2>Log In to Start Accepting Chat Requests</h2>

@@ -162,7 +162,7 @@ $(function () {
     };
 
     myHub.client.newChat = function (id) {
-        var snd = new Audio('assets/sounds/newchat.mp3');
+        var snd = new Audio('/Plugins/Messaging.LiveChat/Content/sounds/newchat.mp3');
         snd.play();
 
         var d = new Date();
@@ -174,11 +174,11 @@ $(function () {
         chatMessages[id] = session;
 
         $('#chat-sessions').prepend(
-            '<div id="chat' + id + '" class="row chat-session" data-id="' + id + '">' +
+            '<li id="chat' + id + '" class="list-group-item chat-session" data-id="' + id + '">' +
             '<div class="col-md-6"><abbr class="timeago" title="' + d.toISOString() + '">' + d.toISOString() + '</abbr></div>' +
             '<div class="col-md-6" style="text-align: right;"><a class="close-chat btn btn-mini" href="#"><span class="glyphicon glyphicon-remove"></span></a>' +
             '<p>New message(s) <span class="badge badge-warning">0</span></p></div>' +
-            '</div>');
+            '</li>');
 
         $('#all-chatbox').append(
             '<div id="chatmsgs' + id + '" class="chat-msgs"></div>'
@@ -242,7 +242,7 @@ $(function () {
 
             scrollDiv($('#chatmsgs' + id));
         } else {
-            var snd = new Audio('assets/sounds/newmsg.mp3');
+            var snd = new Audio('/Plugins/Messaging.LiveChat/Content/sounds/newmsg.mp3');
             snd.play();
 
             chatMessages[id].push('<strong>' + from + '</strong> ' + value);

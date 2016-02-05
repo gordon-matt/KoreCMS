@@ -24,7 +24,6 @@ namespace Kore.Web.Common.Infrastructure
             builder.RegisterType<RegionService>().As<IRegionService>().InstancePerDependency();
             builder.RegisterType<RegionSettingsService>().As<IRegionSettingsService>().InstancePerDependency();
             builder.RegisterType<Permissions>().As<IPermissionProvider>().SingleInstance();
-            //builder.RegisterType<BlogSettings>().As<ISettings>().SingleInstance();
             builder.RegisterType<ResourceBundleRegistrar>().As<IResourceBundleRegistrar>().SingleInstance();
             builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();
         }

@@ -1,8 +1,0 @@
-﻿Group: Ecommerce
-FriendlyName: Simple Commerce
-SystemName: Kore.Plugins.Ecommerce.Simple
-Version: 1.00
-SupportedVersions: 1.00
-Author: Widecommerce
-DisplayOrder: 1
-FileName: Kore.Plugins.Ecommerce.Simple.dll

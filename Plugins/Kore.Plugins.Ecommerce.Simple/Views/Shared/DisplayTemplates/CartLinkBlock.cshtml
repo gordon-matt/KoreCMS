@@ -1,7 +1,0 @@
-﻿@using Kore.Plugins.Ecommerce.Simple
-@model Kore.Plugins.Ecommerce.Simple.ContentBlocks.CartLinkBlock
-
-<a href="@Url.Action("Index", "Cart", new { area = string.Empty })" class="@Model.CssClass">
-    <i class="@Model.IconCssClass"></i>
-    @T(LocalizableStrings.ShoppingCart)
-</a>

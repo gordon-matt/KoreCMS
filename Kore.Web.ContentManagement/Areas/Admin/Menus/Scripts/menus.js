@@ -326,7 +326,7 @@
                 }
             });
 
-            detailRow.find(".items-grid").kendoGrid({
+            detailRow.find(".detail-grid").kendoGrid({
                 data: null,
                 dataSource: {
                     type: "odata",

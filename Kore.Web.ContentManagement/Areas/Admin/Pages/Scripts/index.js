@@ -129,7 +129,6 @@
 
                 self.validator.resetForm();
                 switchSection($("#page-type-form-section"));
-                self.parent.displayMode('PageTypeEdit');
                 $("#page-type-form-section-legend").html(self.parent.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -164,7 +163,6 @@
                     $('#PageTypesGrid').data('kendoGrid').refresh();
 
                     switchSection($("#page-type-grid-section"));
-                    self.parent.displayMode('PageTypeGrid');
 
                     $.notify(self.parent.translations.InsertRecordSuccess, "success");
                 })
@@ -187,7 +185,6 @@
                     $('#PageTypesGrid').data('kendoGrid').refresh();
 
                     switchSection($("#page-type-grid-section"));
-                    self.parent.displayMode('PageTypeGrid');
 
                     $.notify(self.parent.translations.UpdateRecordSuccess, "success");
                 })
@@ -199,7 +196,9 @@
         };
         self.cancel = function () {
             switchSection($("#page-type-grid-section"));
-            self.parent.displayMode('PageTypeGrid');
+        };
+        self.goBack = function () {
+            switchSection($("#page-grid-section"));
         };
     };
 
@@ -317,8 +316,7 @@
                 .done(function (json) {
                     $('#PageVersionGrid').data('kendoGrid').dataSource.read();
                     $('#PageVersionGrid').data('kendoGrid').refresh();
-                    switchSection($("#blank-section"));
-                    self.parent.displayMode('Blank');
+                    switchSection($("#page-grid-section"));
                     $.notify(self.parent.translations.PageHistoryRestoreSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
@@ -329,7 +327,6 @@
         };
         self.goBack = function () {
             switchSection($("#form-section"));
-            self.parent.displayMode('EditPage');
         };
     };
 
@@ -350,10 +347,10 @@
 
         self.pageVersionGrid = null;
 
+        self.inEditMode = ko.observable(false);
+
         self.validator = false;
         self.versionValidator = false;
-
-        self.selectedTopLevelPageId = null;
 
         self.init = function () {
             self.validator = $("#form-section-form").validate({
@@ -370,154 +367,144 @@
                 }
             });
 
-            self.reloadTopLevelPages();
+            $("#PageGrid").kendoGrid({
+                data: null,
+                dataSource: {
+                    type: "odata",
+                    transport: {
+                        read: {
+                            url: "/odata/kore/cms/PageApi",
+                            dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options, operation);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
 
-            var treeviewDS = new kendo.data.HierarchicalDataSource({
-                type: "odata",
-                transport: {
-                    read: {
-                        url: "/odata/kore/cms/PageTreeApi?$expand=SubPages($levels=max)",
-                        dataType: "json"
+                                // Fix for GUIDs
+                                var guid = /'([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'/ig;
+                                paramMap.$filter = paramMap.$filter.replace(guid, "$1");
+                            }
+                            return paramMap;
+                        }
                     },
-                    parameterMap: function (options, operation) {
-                        var paramMap = kendo.data.transports.odata.parameterMap(options);
-                        if (paramMap.$inlinecount) {
-                            //if (paramMap.$inlinecount == "allpages") {
-                            //    paramMap.$count = true;
-                            //}
-                            delete paramMap.$inlinecount;
+                    schema: {
+                        data: function (data) {
+                            return data.value;
+                        },
+                        total: function (data) {
+                            return data["@odata.count"];
+                        },
+                        model: {
+                            id: "Id",
+                            fields: {
+                                Name: { type: "string" },
+                                IsEnabled: { type: "boolean" },
+                                ShowOnMenus: { type: "boolean" }
+                            }
                         }
-                        if (paramMap.$filter) {
-                            paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
-                        }
-                        return paramMap;
+                    },
+                    pageSize: self.parent.gridPageSize,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true,
+                    sort: [
+                        { field: "Order", dir: "asc" },
+                        { field: "Name", dir: "asc" }
+                    ],
+                    filter: {
+                        logic: "and",
+                        filters: [
+                          { field: "ParentId", operator: "eq", value: null }
+                        ]
                     }
                 },
-                schema: {
-                    data: function (response) {
-                        if (response.value) {
-                            return response.value;
-                        }
-
-                        var dummyArray = [];
-                        dummyArray.push(response);
-                        return dummyArray;
-                    },
-                    total: function (response) {
-                        if (response.value) {
-                            return response.value.length;
-                        }
-                        return 1;
-                    },
-                    model: {
-                        id: "Id",
-                        children: "SubPages"
-                    }
-                }
-            });
-
-            $("#treeview").kendoTreeView({
-                template: kendo.template($("#treeview-template").html()),
-                dragAndDrop: true,
-                dataSource: treeviewDS,
-                dataTextField: ["Title"],
-                loadOnDemand: false,
                 dataBound: function (e) {
-                    var treeview = this.element.find("ul")[0];
-                    if (treeview) {
-                        ko.cleanNode(treeview);
-                        ko.applyBindings(ko.dataFor(treeview), treeview);
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
                     }
-                    setTimeout(function () {
-                        $("#treeview").data("kendoTreeView").expand(".k-item");
-                    }, 20);
                 },
-                drop: function (e) {
-                    var sourceDataItem = this.dataItem(e.sourceNode);
-                    var sourceId = sourceDataItem.id;
-                    var destinationDataItem = this.dataItem(e.destinationNode);
-                    var destinationId = destinationDataItem.id;
-                    var dropPosition = e.dropPosition;
+                filterable: true,
+                sortable: {
+                    allowUnsort: false
+                },
+                pageable: {
+                    refresh: true
+                },
+                scrollable: false,
+                columns: [{
+                    field: "Name",
+                    title: self.parent.translations.Columns.Page.Name,
+                    filterable: true
+                }, {
+                    field: "IsEnabled",
+                    title: self.parent.translations.Columns.Page.IsEnabled,
+                    template: '<i class="fa #=IsEnabled ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
+                    attributes: { "class": "text-center" },
+                    filterable: true,
+                    width: 70
+                }, {
+                    field: "ShowOnMenus",
+                    title: self.parent.translations.Columns.Page.ShowOnMenus,
+                    template: '<i class="fa #=ShowOnMenus ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
+                    attributes: { "class": "text-center" },
+                    filterable: true,
+                    width: 70
+                }, {
+                    field: "Id",
+                    title: " ",
+                    template:
+                        '<div class="btn-group">' +
+                            '<a data-bind="click: pageModel.edit.bind($data,\'#=Id#\',null)" class="btn btn-default btn-xs" title="' + self.parent.translations.Edit + '">' +
+                            '<i class="kore-icon kore-icon-edit"></i></a>' +
 
-                    if (destinationId == sourceId) {
-                        // A page cannot be a parent of itself!
-                        return;
-                    }
+                            '<a data-bind="click: pageModel.remove.bind($data,\'#=Id#\',null)" class="btn btn-danger btn-xs" title="' + self.parent.translations.Delete + '">' +
+                            '<i class="kore-icon kore-icon-trash"></i></a>' +
 
-                    var parentId = null;
-                    var destinationPage = null;
+                            '<a data-bind="click: pageModel.create.bind($data,\'#=Id#\')" class="btn btn-primary btn-xs" title="' + self.parent.translations.Create + '">' +
+                            '<i class="kore-icon kore-icon-add"></i></a>' +
 
-                    if (self.parent.pageModel.id() == destinationId) {
-                        destinationPage = {
-                            Id: self.parent.pageModel.id(),
-                            ParentId: self.parent.pageModel.parentId()
-                        };
-                    }
-                    else {
-                        $.ajax({
-                            url: "/odata/kore/cms/PageApi(" + destinationId + ")",
-                            type: "GET",
-                            dataType: "json",
-                            async: false
-                        })
-                        .done(function (json) {
-                            destinationPage = {
-                                Id: json.Id,
-                                ParentId: json.ParentId
-                            };
-                        })
-                        .fail(function (jqXHR, textStatus, errorThrown) {
-                            $.notify(self.parent.translations.GetRecordError, "error");
-                            console.log(textStatus + ': ' + errorThrown);
-                            return;
-                        });
-                    }
+                            '<a data-bind="click: pageModel.showPageHistory.bind($data,\'#=Id#\')" class="btn btn-warning btn-xs" title="' + self.parent.translations.PageHistory + '">' +
+                            '<i class="kore-icon kore-icon-history"></i></a>' +
 
-                    if (destinationPage.ParentId == sourceId) {
-                        $.notify(self.parent.translations.CircularRelationshipError, "error");
-                        $("#treeview").data("kendoTreeView").dataSource.read();
-                        return;
-                    }
+                            '<a href="\\#blocks/content-blocks/#=Id#" class="btn btn-info btn-xs" title="' + self.parent.translations.ContentBlocks + '">' +
+                            '<i class="kore-icon kore-icon-content-blocks"></i></a>' +
 
-                    switch (dropPosition) {
-                        case 'over':
-                            parentId = destinationId;
-                            break;
-                        default:
-                            parentId = destinationPage.ParentId;
-                            break;
-                    }
+                            '<a data-bind="click: pageModel.toggleEnabled.bind($data,\'#=Id#\',\'#=ParentId#\',#=IsEnabled#)" class="btn btn-default btn-xs" title="' + self.parent.translations.Toggle + '">' +
+                            '<i class="kore-icon kore-icon-toggle-on"></i></a>' +
 
-                    var patch = {
-                        ParentId: parentId
-                    };
+                            '<a data-bind="click: pageModel.localize.bind($data,\'#=Id#\')" class="btn btn-primary btn-xs" title="' + self.parent.translations.Localize + '">' +
+                            '<i class="kore-icon kore-icon-globe"></i></a>' +
 
-                    $.ajax({
-                        url: "/odata/kore/cms/PageApi(" + sourceId + ")",
-                        type: "PATCH",
-                        contentType: "application/json; charset=utf-8",
-                        data: JSON.stringify(patch),
-                        dataType: "json",
-                        async: false
-                    })
-                    .done(function (json) {
-                        $("#treeview").data("kendoTreeView").dataSource.read();
-                        self.reloadTopLevelPages();
-                    })
-                    .fail(function (jqXHR, textStatus, errorThrown) {
-                        $.notify(self.parent.translations.UpdateRecordError, "error");
-                        console.log(textStatus + ': ' + errorThrown);
-                    });
-                }
+                            '<a data-bind="click: pageModel.preview.bind($data,\'#=Id#\')" class="btn btn-success btn-xs" title="' + self.parent.translations.Preview + '">' +
+                            '<i class="kore-icon kore-icon-preview"></i></a>' +
+
+                            '<a data-bind="click: pageModel.move.bind($data,\'#=Id#\')" class="btn btn-default btn-xs" title="' + self.parent.translations.Move + '">' +
+                            '<i class="kore-icon kore-icon-move"></i></a>' +
+                        '</div>',
+                    attributes: { "class": "text-center" },
+                    filterable: false,
+                    width: 260
+                }],
+                detailTemplate: kendo.template($("#pages-template").html()),
+                detailInit: self.detailInit
             });
 
             self.pageVersionGrid = $('#PageVersionGrid').data('kendoGrid');
         };
-        self.create = function () {
+        self.create = function (parentId) {
             self.parent.currentCulture = null;
 
             self.id(emptyGuid);
-            self.parentId(self.selectedTopLevelPageId);
+            self.parentId(parentId);
             self.pageTypeId(emptyGuid);
             self.name(null);
             self.isEnabled(false);
@@ -527,9 +514,9 @@
 
             self.roles([]);
 
-            self.setupVersionCreateSection();
+            self.inEditMode(false);
 
-            self.parent.displayMode('CreatePage');
+            self.setupVersionCreateSection();
 
             self.validator.resetForm();
             switchSection($("#form-section"));
@@ -611,7 +598,7 @@
                     console.log(textStatus + ': ' + errorThrown);
                 });
 
-                self.parent.displayMode('EditPage');
+                self.inEditMode(true);
 
                 self.validator.resetForm();
                 switchSection($("#form-section"));
@@ -702,7 +689,7 @@
 
             self.versionValidator.resetForm();
         };
-        self.remove = function () {
+        self.remove = function (parentId) {
             if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
                     url: "/odata/kore/cms/PageApi(" + self.id() + ")",
@@ -710,7 +697,7 @@
                     async: false
                 })
                 .done(function (json) {
-                    self.refresh();
+                    self.refreshGrid(parentId);
                     $.notify(self.parent.translations.DeleteRecordSuccess, "success");
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
@@ -732,9 +719,11 @@
                 }
             }
 
+            var parentId = self.parentId();
+
             var record = {
                 Id: self.id(),
-                ParentId: self.parentId(),
+                ParentId: parentId,
                 PageTypeId: self.pageTypeId(),
                 Name: self.name(),
                 IsEnabled: self.isEnabled(),
@@ -782,7 +771,8 @@
                 self.saveVersion();
             }
 
-            self.refresh();
+            self.refreshGrid(parentId);
+            switchSection($("#page-grid-section"));
         };
         self.saveVersion = function () {
 
@@ -839,7 +829,6 @@
             });
         };
         self.cancel = function () {
-
             // Clean up from previously injected html/scripts
             if (self.parent.pageVersionModel.pageModelStub != null && typeof self.parent.pageVersionModel.pageModelStub.cleanUp === 'function') {
                 self.parent.pageVersionModel.pageModelStub.cleanUp(self.parent.pageVersionModel);
@@ -859,17 +848,15 @@
             ko.cleanNode(elementToBind);
             $("#fields-definition").html("");
 
-            self.parent.displayMode('Blank');
-
-            switchSection($("#blank-section"));
+            switchSection($("#page-grid-section"));
         };
-        self.toggleEnabled = function () {
+        self.toggleEnabled = function (id, parentId, isEnabled) {
             var patch = {
-                IsEnabled: !self.isEnabled()
+                IsEnabled: !isEnabled
             };
 
             $.ajax({
-                url: "/odata/kore/cms/PageApi(" + self.id() + ")",
+                url: "/odata/kore/cms/PageApi(" + id + ")",
                 type: "PATCH",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(patch),
@@ -877,7 +864,7 @@
                 async: false
             })
             .done(function (json) {
-                self.refresh();
+                self.refreshGrid(parentId);
                 $.notify(self.parent.translations.UpdateRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -885,32 +872,172 @@
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
-        self.showPageHistory = function () {
-            self.parent.displayMode('PageHistoryGrid');
-
+        self.showPageHistory = function (id) {
             if (self.parent.currentCulture == null || self.parent.currentCulture == "") {
-                self.pageVersionGrid.dataSource.transport.options.read.url = "/odata/kore/cms/PageVersionApi?$filter=CultureCode eq null and PageId eq " + self.id();
+                self.pageVersionGrid.dataSource.transport.options.read.url = "/odata/kore/cms/PageVersionApi?$filter=CultureCode eq null and PageId eq " + id;
             }
             else {
-                self.pageVersionGrid.dataSource.transport.options.read.url = "/odata/kore/cms/PageVersionApi?$filter=CultureCode eq '" + self.parent.currentCulture + "' and PageId eq " + self.id();
+                self.pageVersionGrid.dataSource.transport.options.read.url = "/odata/kore/cms/PageVersionApi?$filter=CultureCode eq '" + self.parent.currentCulture + "' and PageId eq " + id;
             }
             self.pageVersionGrid.dataSource.page(1);
 
             switchSection($("#version-grid-section"));
         };
         self.showPageTypes = function () {
-            self.parent.displayMode('PageTypeGrid');
             switchSection($("#page-type-grid-section"));
         };
-        self.refresh = function () {
-            switchSection($("#blank-section"));
-            self.parent.displayMode('Blank');
-            self.reloadTopLevelPages();
-            self.filter(null);
-        };
-        self.previewCurrent = function () {
-            self.preview(self.parent.pageVersionModel.id());
-        };
+        self.refreshGrid = function (parentId) {
+            if (parentId && (parentId != "null")) {
+                try {
+                    $('#page-grid-' + parentId).data('kendoGrid').dataSource.read();
+                    $('#page-grid-' + parentId).data('kendoGrid').refresh();
+                }
+                catch (err) {
+                    $('#PageGrid').data('kendoGrid').dataSource.read();
+                    $('#PageGrid').data('kendoGrid').refresh();
+                }
+            }
+            else {
+                $('#PageGrid').data('kendoGrid').dataSource.read();
+                $('#PageGrid').data('kendoGrid').refresh();
+            }
+        }
+
+        self.detailInit = function (e) {
+            var detailRow = e.detailRow;
+
+            detailRow.find(".detail-grid").kendoGrid({
+                data: null,
+                dataSource: {
+                    type: "odata",
+                    transport: {
+                        read: {
+                            url: "/odata/kore/cms/PageApi",
+                            dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options, operation);
+                            if (paramMap.$inlinecount) {
+                                if (paramMap.$inlinecount == "allpages") {
+                                    paramMap.$count = true;
+                                }
+                                delete paramMap.$inlinecount;
+                            }
+                            if (paramMap.$filter) {
+                                paramMap.$filter = paramMap.$filter.replace(/substringof\((.+),(.*?)\)/, "contains($2,$1)");
+
+                                // Fix for GUIDs
+                                var guid = /'([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'/ig;
+                                paramMap.$filter = paramMap.$filter.replace(guid, "$1");
+                            }
+                            return paramMap;
+                        }
+                    },
+                    schema: {
+                        data: function (data) {
+                            return data.value;
+                        },
+                        total: function (data) {
+                            return data["@odata.count"];
+                        },
+                        model: {
+                            id: "Id",
+                            fields: {
+                                Name: { type: "string" },
+                                IsEnabled: { type: "boolean" },
+                                ShowOnMenus: { type: "boolean" }
+                            }
+                        }
+                    },
+                    pageSize: self.parent.gridPageSize,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true,
+                    sort: [
+                        { field: "Order", dir: "asc" },
+                        { field: "Name", dir: "asc" }
+                    ],
+                    filter: {
+                        logic: "and",
+                        filters: [
+                          { field: "ParentId", operator: "eq", value: e.data.Id }
+                        ]
+                    }
+                },
+                dataBound: function (e) {
+                    var body = this.element.find("tbody")[0];
+                    if (body) {
+                        ko.cleanNode(body);
+                        ko.applyBindings(ko.dataFor(body), body);
+                    }
+                },
+                filterable: true,
+                sortable: {
+                    allowUnsort: false
+                },
+                pageable: {
+                    refresh: true
+                },
+                scrollable: false,
+                columns: [{
+                    field: "Name",
+                    title: self.parent.translations.Columns.Page.Name,
+                    filterable: true
+                }, {
+                    field: "IsEnabled",
+                    title: self.parent.translations.Columns.Page.IsEnabled,
+                    template: '<i class="fa #=IsEnabled ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
+                    attributes: { "class": "text-center" },
+                    filterable: true,
+                    width: 70
+                }, {
+                    field: "ShowOnMenus",
+                    title: self.parent.translations.Columns.Page.ShowOnMenus,
+                    template: '<i class="fa #=ShowOnMenus ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
+                    attributes: { "class": "text-center" },
+                    filterable: true,
+                    width: 70
+                }, {
+                    field: "Id",
+                    title: " ",
+                    template:
+                        '<div class="btn-group">' +
+                            '<a data-bind="click: pageModel.edit.bind($data,\'#=Id#\',null)" class="btn btn-default btn-xs" title="' + self.parent.translations.Edit + '">' +
+                            '<i class="kore-icon kore-icon-edit"></i></a>' +
+
+                            '<a data-bind="click: pageModel.remove.bind($data,\'#=Id#\',null)" class="btn btn-danger btn-xs" title="' + self.parent.translations.Delete + '">' +
+                            '<i class="kore-icon kore-icon-trash"></i></a>' +
+
+                            '<a data-bind="click: pageModel.create.bind($data,\'#=Id#\')" class="btn btn-primary btn-xs" title="' + self.parent.translations.Create + '">' +
+                            '<i class="kore-icon kore-icon-add"></i></a>' +
+
+                            '<a data-bind="click: pageModel.showPageHistory.bind($data,\'#=Id#\')" class="btn btn-warning btn-xs" title="' + self.parent.translations.PageHistory + '">' +
+                            '<i class="kore-icon kore-icon-history"></i></a>' +
+
+                            '<a href="\\#blocks/content-blocks/#=Id#" class="btn btn-info btn-xs" title="' + self.parent.translations.ContentBlocks + '">' +
+                            '<i class="kore-icon kore-icon-content-blocks"></i></a>' +
+
+                            '<a data-bind="click: pageModel.toggleEnabled.bind($data,\'#=Id#\',\'#=ParentId#\',#=IsEnabled#)" class="btn btn-default btn-xs" title="' + self.parent.translations.Toggle + '">' +
+                            '<i class="kore-icon kore-icon-toggle-on"></i></a>' +
+
+                            '<a data-bind="click: pageModel.localize.bind($data,\'#=Id#\')" class="btn btn-primary btn-xs" title="' + self.parent.translations.Localize + '">' +
+                            '<i class="kore-icon kore-icon-globe"></i></a>' +
+
+                            '<a data-bind="click: pageModel.preview.bind($data,\'#=Id#\')" class="btn btn-success btn-xs" title="' + self.parent.translations.Preview + '">' +
+                            '<i class="kore-icon kore-icon-preview"></i></a>' +
+
+                            '<a data-bind="click: pageModel.move.bind($data,\'#=Id#\')" class="btn btn-default btn-xs" title="' + self.parent.translations.Move + '">' +
+                            '<i class="kore-icon kore-icon-move"></i></a>' +
+                        '</div>',
+                    attributes: { "class": "text-center" },
+                    filterable: false,
+                    width: 260
+                }],
+                detailTemplate: kendo.template($("#pages-template").html()),
+                detailInit: self.detailInit
+            });
+        }
+
         self.preview = function (id) {
             var win = window.open('/admin/pages/preview/' + id, '_blank');
             if (win) {
@@ -919,56 +1046,6 @@
                 alert('Please allow popups for this site');
             }
             return false;
-        };
-        self.filter = function () {
-            var treeview = $('#treeview').data('kendoTreeView');
-
-            if (!treeview) {
-                return;
-            }
-
-            var id = $('#TopLevelPages').val();
-
-            if (!id) {
-                self.selectedTopLevelPageId = null;
-                treeview.dataSource.transport.options.read.url = "/odata/kore/cms/PageTreeApi?$expand=SubPages($levels=max)",
-                treeview.dataSource.read();
-            }
-            else {
-                self.selectedTopLevelPageId = id;
-                treeview.dataSource.transport.options.read.url = "/odata/kore/cms/PageTreeApi(" + id + ")?$expand=SubPages($levels=max)",
-                treeview.dataSource.read();
-            }
-        };
-        self.reloadTopLevelPages = function () {
-            $.ajax({
-                url: "/odata/kore/cms/PageApi/Default.GetTopLevelPages()",
-                type: "GET",
-                dataType: "json",
-                async: false
-            })
-            .done(function (json) {
-                $('#TopLevelPages,#ParentId').html('');
-                $('#TopLevelPages,#ParentId').append($('<option>', {
-                    value: '',
-                    text: '[Root]'
-                }));
-                $.each(json.value, function () {
-                    var item = this;
-                    $('#TopLevelPages,#ParentId').append($('<option>', {
-                        value: item.Id,
-                        text: item.Name
-                    }));
-                });
-
-                var elementToBind = $("#TopLevelPages,#ParentId")[0];
-                ko.cleanNode(elementToBind);
-                ko.applyBindings(self.parent, elementToBind);
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(self.parent.translations.GetRecordError, "error");
-                console.log(textStatus + ': ' + errorThrown);
-            });
         };
         self.move = function () {
             $("#parentPageModal").modal("show");
@@ -998,7 +1075,7 @@
             })
             .done(function (json) {
                 $("#parentPageModal").modal("hide");
-                self.refresh();
+                self.refreshGrid(parentId);
                 $.notify(self.parent.translations.UpdateRecordSuccess, "success");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -1029,15 +1106,13 @@
         self.pageVersionModel = false;
         self.pageTypeModel = false;
 
-        self.displayMode = ko.observable('Blank');
-
         self.activate = function () {
             self.pageModel = new PageModel(self);
             self.pageVersionModel = new PageVersionModel(self);
             self.pageTypeModel = new PageTypeModel(self);
         };
         self.attached = function () {
-            currentSection = $("#blank-section");
+            currentSection = $("#page-grid-section");
 
             // Load translations first, else will have errors
             $.ajax({

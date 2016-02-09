@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Net.Mail;
 using System.Text;
 using System.Web.Mvc;
@@ -44,6 +45,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
             string redirectUrl = formCollection["RedirectUrl"];
             string emailAddress = formCollection["EmailAddress"];
             string contentBlockTitle = formCollection["ContentBlockTitle"];
+            string formUrl = formCollection["FormUrl"];
 
             #region Validate Captcha
 
@@ -126,6 +128,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 
             #endregion Render Email Body
 
+            #region Create Mail Message
+
             var mailMessage = new MailMessage
             {
                 Subject = subject,
@@ -148,7 +152,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
                 }
             }
 
-            #region Custom Processing
+            #endregion Create Mail Message
+
+            #region Custom Form Processing
 
             try
             {
@@ -162,19 +168,28 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
                 Logger.Error("Error while trying to process form block.", x);
             }
 
-            #endregion Custom Processing
+            #endregion Custom Form Processing
 
-            try
+            if (!string.IsNullOrWhiteSpace(formUrl))
             {
-                // Clear the Recipients list in case it's been set by an IFormBlockProcessor
-                mailMessage.To.Clear();
-                mailMessage.To.Add(emailAddress);
-                emailSender.Send(mailMessage);
+                #region Custom Form URL
 
+                var content = new FormUrlEncodedContent(
+                    formCollection.AllKeys.ToDictionary(k => k, v => formCollection[v]));
+
+                HttpResponseMessage httpResponseMessage;
+                using (var client = new HttpClient())
+                {
+                    httpResponseMessage = client.PostAsync(formUrl, content).Result;
+                }
+
+                bool success = httpResponseMessage.IsSuccessStatusCode;
                 var result = new SaveResultModel
                 {
-                    Success = true,
-                    Message = thankYouMessage,
+                    Success = success,
+                    Message = success
+                        ? thankYouMessage
+                        : string.Format("{0}: {1}", (int)httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase),
                     RedirectUrl = !string.IsNullOrWhiteSpace(redirectUrl) ? redirectUrl : Url.Content("~/")
                 };
 
@@ -184,24 +199,54 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
                 }
 
                 return View("Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.FormBlock.SaveResult", result);
+
+                #endregion Custom Form URL
             }
-            catch (Exception x)
+            else
             {
-                Logger.Error(x.Message, x);
+                #region Default Behaviour (Email)
 
-                var result = new SaveResultModel
+                try
                 {
-                    Success = false,
-                    Message = x.GetBaseException().Message,
-                    RedirectUrl = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.Content("~/")
-                };
+                    // Clear the Recipients list in case it's been set by an IFormBlockProcessor
+                    mailMessage.To.Clear();
+                    mailMessage.To.Add(emailAddress);
+                    emailSender.Send(mailMessage);
 
-                if (Request.IsAjaxRequest())
+                    var result = new SaveResultModel
+                    {
+                        Success = true,
+                        Message = thankYouMessage,
+                        RedirectUrl = !string.IsNullOrWhiteSpace(redirectUrl) ? redirectUrl : Url.Content("~/")
+                    };
+
+                    if (Request.IsAjaxRequest())
+                    {
+                        return Json(result);
+                    }
+
+                    return View("Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.FormBlock.SaveResult", result);
+                }
+                catch (Exception x)
                 {
-                    return Json(result);
+                    Logger.Error(x.Message, x);
+
+                    var result = new SaveResultModel
+                    {
+                        Success = false,
+                        Message = x.GetBaseException().Message,
+                        RedirectUrl = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.Content("~/")
+                    };
+
+                    if (Request.IsAjaxRequest())
+                    {
+                        return Json(result);
+                    }
+
+                    return View("Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.FormBlock.SaveResult", result);
                 }
 
-                return View("Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Views.FormBlock.SaveResult", result);
+                #endregion Default Behaviour (Email)
             }
         }
     }

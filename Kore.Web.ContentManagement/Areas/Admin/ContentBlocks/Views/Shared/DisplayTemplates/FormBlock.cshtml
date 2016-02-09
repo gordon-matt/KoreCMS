@@ -10,16 +10,6 @@
 @{
     var captchaSettings = EngineContext.Current.Resolve<CaptchaSettings>();
     string formId = "form-block-" + Model.Id;
-    string formUrl = string.Empty;
-    
-    if (string.IsNullOrWhiteSpace(Model.FormUrl))
-    {
-        formUrl = Url.Action("Save", "FormBlock", new { area = string.Empty });
-    }
-    else
-    {
-        formUrl = Model.FormUrl;
-    }
 }
 
 <style type="text/css">
@@ -28,12 +18,13 @@
     }
 </style>
 
-<form id="@formId" method="post" action="@formUrl" enctype="multipart/form-data">
+<form id="@formId" method="post" action="@Url.Action("Save", "FormBlock", new { area = string.Empty })" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Id)
     @Html.HiddenFor(m => m.ThankYouMessage)
     @Html.HiddenFor(m => m.RedirectUrl)
     @Html.HiddenFor(m => m.EmailAddress)
+    @Html.HiddenFor(m => m.FormUrl)
     @Html.Hidden("ContentBlockTitle", Model.Title)
 
     @{

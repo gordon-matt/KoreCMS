@@ -1,6 +1,6 @@
-﻿using System.Data.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
@@ -90,7 +90,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
     UpdateTranslationError: '{22}',
     UpdateTranslationSuccess: '{23}',
     View: '{24}',
-        
+
     PageHistoryRestoreConfirm: '{25}',
     PageHistoryRestoreError: '{26}',
     PageHistoryRestoreSuccess: '{27}',
@@ -169,20 +169,32 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         }
 
         [Compress]
-        [Route("preview/{pageVersionId}")]
-        public ActionResult Preview(Guid pageVersionId)
+        [Route("preview/{pageId}")]
+        public ActionResult Preview(Guid pageId)
         {
             var currentCulture = WorkContext.CurrentCultureCode;
+            var pageVersion = pageVersionService.Value.GetCurrentVersion(pageId, currentCulture, false, false);
 
+            return PagePreview(pageVersion);
+        }
+
+        [Compress]
+        [Route("preview-version/{pageVersionId}")]
+        public ActionResult PreviewVersion(Guid pageVersionId)
+        {
             var pageVersion = pageVersionService.Value.Query()
                 .Include(x => x.Page)
                 .FirstOrDefault(x => x.Id == pageVersionId);
 
-            pageVersion.Page.IsEnabled = true; // Override here to make sure it passes the check here: PageSecurityHelper.CheckUserHasAccessToPage
+            return PagePreview(pageVersion);
+        }
 
-            //if (page != null && page.IsEnabled)
+        private ActionResult PagePreview(PageVersion pageVersion)
+        {
             if (pageVersion != null)
             {
+                pageVersion.Page.IsEnabled = true; // Override here to make sure it passes the check here: PageSecurityHelper.CheckUserHasAccessToPage
+
                 // If there are access restrictions
                 if (!PageSecurityHelper.CheckUserHasAccessToPage(pageVersion.Page, User))
                 {

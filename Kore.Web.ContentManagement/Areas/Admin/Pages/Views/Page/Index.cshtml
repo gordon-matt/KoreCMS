@@ -266,6 +266,7 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
+                        @Html.Hidden("PageIdToMove")
                         @Html.Label("ParentId", "Parent", new { @class = "control-label" })
                         <select id="ParentId" class="form-control">
                             <option value="" selected="selected">[Root]</option>
@@ -291,7 +292,7 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        @Html.Hidden("SelectedId")
+                        @Html.Hidden("PageIdToLocalize")
                         @Html.Kore().LanguagesDropDownList("CultureCode", includeInvariant: true, htmlAttributes: new { @class = "form-control" })
                     </div>
                 </form>

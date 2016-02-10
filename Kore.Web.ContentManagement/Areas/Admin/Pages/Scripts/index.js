@@ -299,7 +299,7 @@
                     template:
                         '<div class="btn-group">' +
                         '<a data-bind="click: pageVersionModel.restore.bind($data,\'#=Id#\')" class="btn btn-warning btn-xs">' + self.parent.translations.Restore + '</a>' +
-                        '<a data-bind="click: pageModel.preview.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Preview + '</a>' +
+                        '<a data-bind="click: pageVersionModel.preview.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Preview + '</a>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -324,6 +324,15 @@
                     console.log(textStatus + ': ' + errorThrown);
                 });
             };
+        };
+        self.preview = function (id) {
+            var win = window.open('/admin/pages/preview-version/' + id, '_blank');
+            if (win) {
+                win.focus();
+            } else {
+                alert('Please allow popups for this site');
+            }
+            return false;
         };
         self.goBack = function () {
             switchSection($("#form-section"));
@@ -366,6 +375,8 @@
                     Version_Slug: { required: true, maxlength: 255 }
                 }
             });
+
+            self.reloadTopLevelPages();
 
             $("#PageGrid").kendoGrid({
                 data: null,
@@ -689,10 +700,10 @@
 
             self.versionValidator.resetForm();
         };
-        self.remove = function (parentId) {
+        self.remove = function (id, parentId) {
             if (confirm(self.parent.translations.DeleteRecordConfirm)) {
                 $.ajax({
-                    url: "/odata/kore/cms/PageApi(" + self.id() + ")",
+                    url: "/odata/kore/cms/PageApi(" + id + ")",
                     type: "DELETE",
                     async: false
                 })
@@ -900,6 +911,7 @@
             else {
                 $('#PageGrid').data('kendoGrid').dataSource.read();
                 $('#PageGrid').data('kendoGrid').refresh();
+                self.reloadTopLevelPages();
             }
         }
 
@@ -1047,13 +1059,45 @@
             }
             return false;
         };
-        self.move = function () {
+        self.move = function (id) {
+            $("#PageIdToMove").val(id)
             $("#parentPageModal").modal("show");
         };
+        self.reloadTopLevelPages = function () {
+            $.ajax({
+                url: "/odata/kore/cms/PageApi/Default.GetTopLevelPages()",
+                type: "GET",
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                $('#ParentId').html('');
+                $('#ParentId').append($('<option>', {
+                    value: '',
+                    text: '[Root]'
+                }));
+                $.each(json.value, function () {
+                    var item = this;
+                    $('#ParentId').append($('<option>', {
+                        value: item.Id,
+                        text: item.Name
+                    }));
+                });
+
+                var elementToBind = $("#ParentId")[0];
+                ko.cleanNode(elementToBind);
+                ko.applyBindings(self.parent, elementToBind);
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(self.parent.translations.GetRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
+            });
+        };
         self.onParentSelected = function () {
+            var id = $("#PageIdToMove").val();
             var parentId = $("#ParentId").val();
 
-            if (parentId == self.id()) {
+            if (parentId == id) {
                 $("#parentPageModal").modal("hide");
                 return;
             }
@@ -1066,7 +1110,7 @@
             };
 
             $.ajax({
-                url: "/odata/kore/cms/PageApi(" + self.id() + ")",
+                url: "/odata/kore/cms/PageApi(" + id + ")",
                 type: "PATCH",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(patch),
@@ -1083,11 +1127,12 @@
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
-        self.localize = function () {
+        self.localize = function (id) {
+            $("#PageIdToLocalize").val(id);
             $("#cultureModal").modal("show");
         };
         self.onCultureSelected = function () {
-            var id = self.id();
+            var id = $("#PageIdToLocalize").val();
             var cultureCode = $("#CultureCode").val();
             self.edit(id, cultureCode);
             $("#cultureModal").modal("hide");

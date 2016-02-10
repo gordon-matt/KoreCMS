@@ -72,3 +72,9 @@ label.checkbox-list-group-label {
         display: table-cell;
     }
 }
+
+.detail-grid {
+    border-style: dashed;
+    border-width: 1px;
+    border-color: black;
+}

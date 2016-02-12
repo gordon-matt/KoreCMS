@@ -54,12 +54,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
             string entityType = typeof(Region).FullName;
             string entityId = entity.Id.ToString();
 
-            var localizedRecord = localizablePropertyService.Value.FindOne(x =>
-                x.CultureCode == cultureCode &&
-                x.EntityType == entityType &&
-                x.EntityId == entityId &&
-                x.Property == "Name");
-
+            var localizedRecord = localizablePropertyService.Value.FindOne(cultureCode, entityType, entityId, "Name");
             if (localizedRecord != null)
             {
                 entity.Name = localizedRecord.Value;
@@ -91,12 +86,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
             string entityType = typeof(Region).FullName;
             string entityId = entity.Id.ToString();
 
-            var localizedRecord = localizablePropertyService.Value.FindOne(x =>
-                x.CultureCode == cultureCode &&
-                x.EntityType == entityType &&
-                x.EntityId == entityId &&
-                x.Property == "Name");
-
+            var localizedRecord = localizablePropertyService.Value.FindOne(cultureCode, entityType, entityId, "Name");
             if (localizedRecord == null)
             {
                 localizedRecord = new LocalizableProperty

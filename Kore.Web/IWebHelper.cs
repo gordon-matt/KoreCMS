@@ -83,9 +83,9 @@ namespace Kore.Web
         /// </summary>
         bool IsRequestBeingRedirected { get; }
 
-        /// <summary>
-        /// Gets or sets a value that indicates whether the client is being redirected to a new location using POST
-        /// </summary>
-        bool IsPostBeingDone { get; set; }
+        ///// <summary>
+        ///// Gets or sets a value that indicates whether the client is being redirected to a new location using POST
+        ///// </summary>
+        //bool IsPostBeingDone { get; set; }
     }
 }

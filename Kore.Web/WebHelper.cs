@@ -351,22 +351,22 @@ namespace Kore.Web
             }
         }
 
-        /// <summary>
-        /// Gets or sets a value that indicates whether the client is being redirected to a new location using POST
-        /// </summary>
-        public virtual bool IsPostBeingDone
-        {
-            get
-            {
-                if (_httpContext.Items["kore.IsPOSTBeingDone"] == null)
-                    return false;
-                return Convert.ToBoolean(_httpContext.Items["kore.IsPOSTBeingDone"]);
-            }
-            set
-            {
-                _httpContext.Items["kore.IsPOSTBeingDone"] = value;
-            }
-        }
+        ///// <summary>
+        ///// Gets or sets a value that indicates whether the client is being redirected to a new location using POST
+        ///// </summary>
+        //public virtual bool IsPostBeingDone
+        //{
+        //    get
+        //    {
+        //        if (_httpContext.Items["kore.IsPOSTBeingDone"] == null)
+        //            return false;
+        //        return Convert.ToBoolean(_httpContext.Items["kore.IsPOSTBeingDone"]);
+        //    }
+        //    set
+        //    {
+        //        _httpContext.Items["kore.IsPOSTBeingDone"] = value;
+        //    }
+        //}
 
         private static AspNetHostingPermissionLevel? _trustLevel = null;
 

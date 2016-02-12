@@ -236,11 +236,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
 
             string entityType = typeof(Region).FullName;
 
-            var localizedRecords = localizablePropertyService.Value.Query(x =>
-                x.CultureCode == cultureCode &&
-                x.EntityType == entityType &&
-                x.Property == "Name" &&
-                regionIds.Contains(x.EntityId));
+            var localizedRecords = localizablePropertyService.Value.Find(cultureCode, entityType, regionIds, "Name");
 
             foreach (var region in regions)
             {

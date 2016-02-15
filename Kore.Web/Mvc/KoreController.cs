@@ -56,32 +56,28 @@ namespace Kore.Web.Mvc
             //Logger = NullLogger.Instance;
         }
 
-        #region Authorize
-
         protected virtual bool CheckPermission(Permission permission)
         {
             var authorizationService = EngineContext.Current.Resolve<IAuthorizationService>();
             return authorizationService.TryCheckAccess(permission, WorkContext.CurrentUser);
         }
 
-        #endregion Authorize
+        //#region Update Model
 
-        #region Update Model
+        //protected void TryUpdateModel(object model, Type modelType, IValueProvider valueProvider = null)
+        //{
+        //    var binder = new DefaultModelBinder();
+        //    var bindingContext = new ModelBindingContext
+        //    {
+        //        ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, modelType),
+        //        ModelState = ViewData.ModelState,
+        //        ValueProvider = valueProvider ?? ValueProvider //provider
+        //    };
 
-        protected void TryUpdateModel(object model, Type modelType, IValueProvider valueProvider = null)
-        {
-            var binder = new DefaultModelBinder();
-            var bindingContext = new ModelBindingContext
-            {
-                ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, modelType),
-                ModelState = ViewData.ModelState,
-                ValueProvider = valueProvider ?? ValueProvider //provider
-            };
+        //    binder.BindModel(ControllerContext, bindingContext);
+        //}
 
-            binder.BindModel(ControllerContext, bindingContext);
-        }
-
-        #endregion Update Model
+        //#endregion Update Model
 
         //public string RenderRazorViewToString(string viewName, string masterName, object model)
         //{
@@ -96,7 +92,12 @@ namespace Kore.Web.Mvc
         //    }
         //}
 
-        public string RenderRazorPartialViewToString(string viewName, object model)
+        public virtual ActionResult RedirectToHomePage()
+        {
+            return RedirectToAction("Index", "Home", new { area = string.Empty });
+        }
+
+        public virtual string RenderRazorPartialViewToString(string viewName, object model)
         {
             ViewData.Model = model;
             using (var sw = new StringWriter())

@@ -13,6 +13,8 @@ namespace Kore.Web.Configuration.Services
     {
         IEnumerable<GenericAttribute> GetAttributesForEntity(string entityId, string entityType);
 
+        TPropType GetAttribute<TPropType>(IEntity entity, string property);
+
         void SaveAttribute<TPropType>(IEntity entity, string property, TPropType value);
     }
 
@@ -39,6 +41,28 @@ namespace Kore.Web.Configuration.Services
                 var attributes = query.ToList();
                 return attributes;
             });
+        }
+
+        public virtual TPropType GetAttribute<TPropType>(IEntity entity, string property)
+        {
+            string entityType = GetUnproxiedEntityType(entity).Name;
+            string entityId = string.Join("|", entity.KeyValues);
+            var props = GetAttributesForEntity(entityId, entityType);
+
+            if (props == null)
+            {
+                return default(TPropType);
+            }
+
+            var prop = props.FirstOrDefault(ga =>
+                ga.Property.Equals(property, StringComparison.InvariantCultureIgnoreCase));
+
+            if (prop == null || string.IsNullOrEmpty(prop.Value))
+            {
+                return default(TPropType);
+            }
+
+            return prop.Value.ConvertTo<TPropType>();
         }
 
         public virtual void SaveAttribute<TPropType>(IEntity entity, string property, TPropType value)
@@ -84,9 +108,9 @@ namespace Kore.Web.Configuration.Services
                     //insert
                     prop = new GenericAttribute
                     {
+                        EntityType = entityType,
                         EntityId = entityId,
                         Property = property,
-                        EntityType = entityType,
                         Value = valueStr
                     };
                     Insert(prop);

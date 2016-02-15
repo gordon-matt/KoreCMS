@@ -65,7 +65,8 @@ namespace Kore
 
         public static T ConvertTo<T>(this object source)
         {
-            return (T)Convert.ChangeType(source, typeof(T));
+            //return (T)Convert.ChangeType(source, typeof(T));
+            return (T)ConvertTo(source, typeof(T));
         }
 
         public static object ConvertTo(this object source, Type type)

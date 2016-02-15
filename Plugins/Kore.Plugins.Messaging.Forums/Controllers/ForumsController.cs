@@ -206,7 +206,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             var forumGroups = forumService.GetAllForumGroups();
@@ -226,7 +226,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             int pageSize = forumSettings.ActiveDiscussionsPageSize > 0 ? forumSettings.ActiveDiscussionsPageSize : 50;
@@ -257,7 +257,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             var topics = forumService.GetActiveTopics(0, 0, forumSettings.HomePageActiveDiscussionsTopicCount);
@@ -288,7 +288,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             if (!forumSettings.ActiveDiscussionsFeedEnabled)
@@ -341,7 +341,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             var forumGroup = forumService.GetForumGroupById(id);
@@ -361,7 +361,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             var forum = forumService.GetForumById(id);
@@ -414,7 +414,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             if (!forumSettings.ForumFeedsEnabled)
@@ -526,7 +526,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             var forumTopic = forumService.GetTopicById(id);
@@ -693,7 +693,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             var forumTopic = forumService.GetTopicById(id);
@@ -721,7 +721,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             var forumTopic = forumService.GetTopicById(model.Id);
@@ -747,7 +747,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             var forumTopic = forumService.GetTopicById(id);
@@ -775,7 +775,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             var forum = forumService.GetForumById(id);
@@ -814,7 +814,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             var forum = forumService.GetForumById(model.ForumId);
@@ -936,7 +936,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             var forumTopic = forumService.GetTopicById(id);
@@ -998,7 +998,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             var forumTopic = forumService.GetTopicById(model.Id);
@@ -1153,7 +1153,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             var forumPost = forumService.GetPostById(id);
@@ -1188,7 +1188,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             var forumTopic = forumService.GetTopicById(id);
@@ -1272,7 +1272,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             var forumTopic = forumService.GetTopicById(model.ForumTopicId);
@@ -1390,7 +1390,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             var forumPost = forumService.GetPostById(id);
@@ -1451,7 +1451,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             var forumPost = forumService.GetPostById(model.Id);
@@ -1581,7 +1581,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         {
             if (!forumSettings.ForumsEnabled)
             {
-                return RedirectToAction("Index", "Home", new { area = string.Empty });
+                return RedirectToHomePage();
             }
 
             int pageSize = 10;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kore.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Kore.Caching;
@@ -12,7 +13,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
     {
         T GetSettings<T>(int regionId) where T : IRegionSettings;
 
-        Dictionary<int, T> GetSettings<T>(IEnumerable<int> regionIds) where T : IRegionSettings;
+        Dictionary<int, T> GetSettings<T>(IEnumerable<int> regionIds = null) where T : IRegionSettings;
     }
 
     public class RegionSettingsService : GenericDataService<RegionSettings>, IRegionSettingsService
@@ -34,14 +35,23 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
             return settings.Fields.JsonDeserialize<T>();
         }
 
-        public Dictionary<int, T> GetSettings<T>(IEnumerable<int> regionIds) where T : IRegionSettings
+        public Dictionary<int, T> GetSettings<T>(IEnumerable<int> regionIds = null) where T : IRegionSettings
         {
             var instance = Activator.CreateInstance<T>();
             string settingsId = instance.Name.ToSlugUrl();
 
-            var settings = Find(x =>
-                x.SettingsId == settingsId &&
-                regionIds.Contains(x.RegionId));
+            IEnumerable<RegionSettings> settings;
+
+            if (regionIds.IsNullOrEmpty())
+            {
+                settings = Find(x => x.SettingsId == settingsId);
+            }
+            else
+            {
+                settings = Find(x =>
+                   x.SettingsId == settingsId &&
+                   regionIds.Contains(x.RegionId));
+            }
 
             return settings.ToDictionary(k => k.RegionId, v => v.Fields.JsonDeserialize<T>());
         }

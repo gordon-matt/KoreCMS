@@ -12,6 +12,7 @@
             public const string Close = "Kore.Web/General.Close";
             public const string Configuration = "Kore.Web/General.Configuration";
             public const string Confirm = "Kore.Web/General.Confirm";
+            public const string Continue = "Kore.Web/General.Continue";
             public const string Create = "Kore.Web/General.Create";
             public const string CreateFormat = "Kore.Web/General.CreateFormat";
             public const string DateCreated = "Kore.Web/General.DateCreated";

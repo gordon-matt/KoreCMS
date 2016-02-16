@@ -28,6 +28,7 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.General.Configuration, "Configuration" },
                     { KoreWebLocalizableStrings.General.Confirm, "Confirm" },
                     { KoreWebLocalizableStrings.General.ConfirmDeleteRecord, "Are you sure that you want to delete this record?" },
+                    { KoreWebLocalizableStrings.General.Continue, "Continue" },
                     { KoreWebLocalizableStrings.General.Create, "Create" },
                     { KoreWebLocalizableStrings.General.CreateFormat, "Create {0}" },
                     { KoreWebLocalizableStrings.General.DateCreated, "Date Created" },

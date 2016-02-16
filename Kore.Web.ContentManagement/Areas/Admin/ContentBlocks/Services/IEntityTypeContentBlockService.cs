@@ -60,7 +60,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
 
             var records = CacheManager.Get(key, () =>
             {
-                var zone = zoneRepository.Value.Table.FirstOrDefault(x => x.Name == zoneName);
+                var zone = zoneRepository.Value.FindOne(x => x.Name == zoneName);
 
                 if (zone == null)
                 {

@@ -35,7 +35,7 @@ namespace Kore.Web.Configuration
             string key = string.Format("Kore_Web_Settings_{0}", type);
             return cacheManager.Get<TSettings>(key, () =>
             {
-                var settings = repository.Table.Where(x => x.Type == type).FirstOrDefault();
+                var settings = repository.FindOne(x => x.Type == type);
                 if (settings == null || string.IsNullOrEmpty(settings.Value))
                 {
                     return new TSettings();
@@ -51,7 +51,7 @@ namespace Kore.Web.Configuration
             string key = string.Format("Kore_Web_Settings_{0}", type);
             return cacheManager.Get<ISettings>(key, () =>
             {
-                var settings = repository.Table.Where(x => x.Type == type).FirstOrDefault();
+                var settings = repository.FindOne(x => x.Type == type);
                 if (settings == null || string.IsNullOrEmpty(settings.Value))
                 {
                     return (ISettings)Activator.CreateInstance(settingsType);
@@ -63,7 +63,7 @@ namespace Kore.Web.Configuration
 
         public void SaveSettings(string key, string value)
         {
-            var setting = repository.Table.Where(x => x.Type == key).FirstOrDefault();
+            var setting = repository.FindOne(x => x.Type == key);
             if (setting == null)
             {
                 var iSettings = EngineContext.Current.ResolveAll<ISettings>().FirstOrDefault(x => x.GetType().FullName == key);

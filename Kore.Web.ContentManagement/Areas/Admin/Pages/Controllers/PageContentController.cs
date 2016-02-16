@@ -157,7 +157,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             {
                 string zoneName = match.Groups["Zone"].Value;
 
-                var zone = zoneRepository.Table.FirstOrDefault(x => x.Name == zoneName);
+                var zone = zoneRepository.FindOne(x => x.Name == zoneName);
                 var contentBlocksByZone = contentBlocks.Where(x => x.ZoneId == zone.Id);
 
                 string html = RenderRazorPartialViewToString("Kore.Web.ContentManagement.Views.Frontend.ContentBlocksByZone", contentBlocksByZone);

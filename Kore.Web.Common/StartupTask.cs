@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using Kore.Data;
+using Kore.EntityFramework.Data.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Web.Common.Areas.Admin.Regions.Domain;
 using Kore.Web.Common.Areas.Admin.Regions.Services;
@@ -13,7 +14,8 @@ namespace Kore.Web.Common
 
         public void Execute()
         {
-            var dbContext = EngineContext.Current.Resolve<DbContext>();
+            var dbContextFactory = EngineContext.Current.Resolve<IDbContextFactory>();
+            var dbContext = dbContextFactory.GetContext();
 
             //            if (!CheckIfTableExists(dbContext, Constants.Tables.Regions))
             //            {

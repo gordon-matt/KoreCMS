@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using Kore.EntityFramework.Data.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Plugins.Widgets.FullCalendar.Infrastructure;
 using Kore.Web.Plugins;
@@ -11,7 +12,8 @@ namespace Kore.Plugins.Widgets.FullCalendar
         {
             base.Install();
             InstallLanguagePack<LanguagePackInvariant>();
-            var dbContext = EngineContext.Current.Resolve<DbContext>();
+            var dbContextFactory = EngineContext.Current.Resolve<IDbContextFactory>();
+            var dbContext = dbContextFactory.GetContext();
 
             if (!CheckIfTableExists(dbContext, Constants.Tables.Calendars))
             {
@@ -68,7 +70,9 @@ CHECK CONSTRAINT [FK_dbo.Kore_Plugins_FullCalendar_Events_dbo.Kore_Plugins_FullC
         {
             UninstallLanguagePack<LanguagePackInvariant>();
 
-            var dbContext = EngineContext.Current.Resolve<DbContext>();
+            var dbContextFactory = EngineContext.Current.Resolve<IDbContextFactory>();
+            var dbContext = dbContextFactory.GetContext();
+
             DropTable(dbContext, Constants.Tables.Events);
             DropTable(dbContext, Constants.Tables.Calendars);
 

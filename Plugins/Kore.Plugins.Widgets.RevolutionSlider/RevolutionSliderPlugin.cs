@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using Kore.EntityFramework.Data.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Plugins.Widgets.RevolutionSlider.Infrastructure;
 using Kore.Web.Plugins;
@@ -11,7 +12,8 @@ namespace Kore.Plugins.Widgets.RevolutionSlider
         {
             base.Install();
             InstallLanguagePack<LanguagePackInvariant>();
-            var dbContext = EngineContext.Current.Resolve<DbContext>();
+            var dbContextFactory = EngineContext.Current.Resolve<IDbContextFactory>();
+            var dbContext = dbContextFactory.GetContext();
 
             if (!CheckIfTableExists(dbContext, Constants.Tables.Sliders))
             {
@@ -154,7 +156,9 @@ CHECK CONSTRAINT [FK_Kore_Plugins_RevolutionSlider_Layers_Kore_Plugins_Revolutio
         {
             base.Uninstall();
 
-            var dbContext = EngineContext.Current.Resolve<DbContext>();
+            var dbContextFactory = EngineContext.Current.Resolve<IDbContextFactory>();
+            var dbContext = dbContextFactory.GetContext();
+
             DropTable(dbContext, Constants.Tables.Layers);
             DropTable(dbContext, Constants.Tables.Slides);
             DropTable(dbContext, Constants.Tables.Sliders);

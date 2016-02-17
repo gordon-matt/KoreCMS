@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using Kore.EntityFramework.Data.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Plugins.Widgets.RoyalVideoPlayer.Infrastructure;
 using Kore.Web.Plugins;
@@ -11,7 +12,8 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer
         {
             base.Install();
             InstallLanguagePack<LanguagePackInvariant>();
-            var dbContext = EngineContext.Current.Resolve<DbContext>();
+            var dbContextFactory = EngineContext.Current.Resolve<IDbContextFactory>();
+            var dbContext = dbContextFactory.GetContext();
 
             if (!CheckIfTableExists(dbContext, Constants.Tables.Playlists))
             {
@@ -100,7 +102,8 @@ CHECK CONSTRAINT [Playlist_Videos_Target]");
         {
             UninstallLanguagePack<LanguagePackInvariant>();
 
-            var dbContext = EngineContext.Current.Resolve<DbContext>();
+            var dbContextFactory = EngineContext.Current.Resolve<IDbContextFactory>();
+            var dbContext = dbContextFactory.GetContext();
             DropTable(dbContext, Constants.Tables.PlaylistVideos);
             DropTable(dbContext, Constants.Tables.Videos);
             DropTable(dbContext, Constants.Tables.Playlists);

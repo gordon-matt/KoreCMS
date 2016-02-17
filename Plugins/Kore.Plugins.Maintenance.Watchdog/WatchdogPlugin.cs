@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using Kore.EntityFramework.Data.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Plugins.Maintenance.Watchdog.Infrastructure;
 using Kore.Web.Plugins;
@@ -12,7 +13,9 @@ namespace Kore.Plugins.Maintenance.Watchdog
             base.Install();
             InstallLanguagePack<LanguagePackInvariant>();
 
-            var dbContext = EngineContext.Current.Resolve<DbContext>();
+            var dbContextFactory = EngineContext.Current.Resolve<IDbContextFactory>();
+            var dbContext = dbContextFactory.GetContext();
+
             if (!CheckIfTableExists(dbContext, Constants.Tables.WatchdogInstances))
             {
                 dbContext.Database.ExecuteSqlCommand(
@@ -33,7 +36,9 @@ namespace Kore.Plugins.Maintenance.Watchdog
         {
             base.Uninstall();
             UninstallLanguagePack<LanguagePackInvariant>();
-            var dbContext = EngineContext.Current.Resolve<DbContext>();
+            var dbContextFactory = EngineContext.Current.Resolve<IDbContextFactory>();
+            var dbContext = dbContextFactory.GetContext();
+
             DropTable(dbContext, Constants.Tables.WatchdogInstances);
         }
     }

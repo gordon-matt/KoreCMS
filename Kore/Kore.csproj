@@ -185,6 +185,7 @@
     <Compile Include="IAppContextStateProvider.cs" />
     <Compile Include="IClock.cs" />
     <Compile Include="Infrastructure\AppDomainTypeFinder.cs" />
+    <Compile Include="Infrastructure\DataSettings.cs" />
     <Compile Include="Infrastructure\IOwinStartupConfiguration.cs" />
     <Compile Include="Infrastructure\Old\AutofacDIContainerAdapter.cs" />
     <Compile Include="Infrastructure\Old\AutofacRegistrationBuilder.cs" />

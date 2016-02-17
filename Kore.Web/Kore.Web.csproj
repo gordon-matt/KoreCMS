@@ -204,7 +204,6 @@
     <Compile Include="Html\CodeFormatter\VisualBasicFormat.cs" />
     <Compile Include="Html\HtmlHelper.cs" />
     <Compile Include="Html\ResolveLinksHelper.cs" />
-    <Compile Include="Infrastructure\DataSettings.cs" />
     <Compile Include="Environment\IHttpContextAccessor.cs" />
     <Compile Include="Events\DefaultEventBus.cs" />
     <Compile Include="Events\DelegateHelper.cs" />

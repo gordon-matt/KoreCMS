@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using Kore.EntityFramework.Data.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Plugins.Messaging.Forums.Infrastructure;
 using Kore.Web.Plugins;
@@ -11,7 +12,8 @@ namespace Kore.Plugins.Messaging.Forums
         {
             base.Install();
             InstallLanguagePack<LanguagePackInvariant>();
-            var dbContext = EngineContext.Current.Resolve<DbContext>();
+            var dbContextFactory = EngineContext.Current.Resolve<IDbContextFactory>();
+            var dbContext = dbContextFactory.GetContext();
 
             if (!CheckIfTableExists(dbContext, Constants.Tables.Groups))
             {
@@ -30,7 +32,9 @@ namespace Kore.Plugins.Messaging.Forums
         {
             UninstallLanguagePack<LanguagePackInvariant>();
 
-            var dbContext = EngineContext.Current.Resolve<DbContext>();
+            var dbContextFactory = EngineContext.Current.Resolve<IDbContextFactory>();
+            var dbContext = dbContextFactory.GetContext();
+
             DropTable(dbContext, Constants.Tables.PrivateMessages);
             DropTable(dbContext, Constants.Tables.Subscriptions);
             DropTable(dbContext, Constants.Tables.Posts);

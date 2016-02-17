@@ -74,6 +74,7 @@
     <Compile Include="Data\EntityFramework\DbContextExtensions.cs" />
     <Compile Include="Data\EntityFramework\DependencyRegistrar.cs" />
     <Compile Include="Data\EntityFramework\EntityFrameworkRepository.cs" />
+    <Compile Include="Data\EntityFramework\IDbContextFactory.cs" />
     <Compile Include="Data\EntityFramework\IKoreEntityFrameworkHelper.cs" />
     <Compile Include="Data\EntityFramework\IEntityTypeConfiguration.cs" />
     <Compile Include="Data\EntityFramework\QueryableExtensions.cs" />

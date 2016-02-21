@@ -47,6 +47,11 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
                 x.SettingsId == settingsId &&
                 x.RegionId == regionId);
 
+            if (settings == null)
+            {
+                return default(T);
+            }
+
             return settings.Fields.JsonDeserialize<T>();
         }
 

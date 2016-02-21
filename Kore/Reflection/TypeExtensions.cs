@@ -10,6 +10,46 @@ namespace Kore.Reflection
 {
     public static class TypeExtensions
     {
+        private static readonly Lazy<Type[]> simpleTypes;
+
+        static TypeExtensions()
+        {
+            simpleTypes = new Lazy<Type[]>(() =>
+            {
+                var types = new[]
+                {
+                    typeof(Boolean),
+                    typeof(Byte),
+                    typeof(Char),
+                    typeof(DateTime),
+                    typeof(DateTimeOffset),
+                    typeof(Decimal),
+                    typeof(Double),
+                    typeof(Enum),
+                    typeof(Guid),
+                    typeof(Int16),
+                    typeof(Int32),
+                    typeof(Int64),
+                    typeof(IntPtr),
+                    typeof(SByte),
+                    typeof(Single),
+                    typeof(String),
+                    typeof(TimeSpan),
+                    typeof(UInt16),
+                    typeof(UInt32),
+                    typeof(UInt64),
+                    typeof(UIntPtr),
+                    typeof(Uri)
+                };
+
+                var nullTypes = types
+                    .Where(t => t.IsValueType)
+                    .Select(t => typeof(Nullable<>).MakeGenericType(t));
+
+                return types.Concat(nullTypes).ToArray();
+            });
+        }
+
         public static object GetDefaultValue(this Type type)
         {
             if (type == typeof(Boolean)) return default(Boolean);
@@ -142,6 +182,17 @@ namespace Kore.Reflection
                 return true;
             }
             return false;
+        }
+
+        public static bool IsSimple(this Type type)
+        {
+            if (type.IsPrimitive || simpleTypes.Value.Any(x => x.IsAssignableFrom(type)))
+            {
+                return true;
+            }
+
+            var nut = Nullable.GetUnderlyingType(type);
+            return nut != null && nut.IsEnum;
         }
 
         public static DbType ToDbType(this Type type)

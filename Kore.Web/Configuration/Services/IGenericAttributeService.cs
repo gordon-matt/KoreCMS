@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kore.Reflection;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
@@ -62,7 +63,14 @@ namespace Kore.Web.Configuration.Services
                 return default(TPropType);
             }
 
-            return prop.Value.ConvertTo<TPropType>();
+            if (typeof(TPropType).IsSimple())
+            {
+                return prop.Value.ConvertTo<TPropType>();
+            }
+            else
+            {
+                return prop.Value.JsonDeserialize<TPropType>();
+            }
         }
 
         public virtual void SaveAttribute<TPropType>(IEntity entity, string property, TPropType value)
@@ -85,7 +93,15 @@ namespace Kore.Web.Configuration.Services
             var prop = props.FirstOrDefault(x =>
                 x.Property.Equals(property, StringComparison.InvariantCultureIgnoreCase));
 
-            string valueStr = value.ToString();
+            string valueStr = null;
+            if (typeof(TPropType).IsSimple())
+            {
+                valueStr = value.ToString();
+            }
+            else
+            {
+                valueStr = value.ToJson();
+            }
 
             if (prop != null)
             {

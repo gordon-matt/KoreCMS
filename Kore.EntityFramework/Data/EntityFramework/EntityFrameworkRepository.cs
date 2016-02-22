@@ -81,22 +81,22 @@ namespace Kore.Data.EntityFramework
 
         public IEnumerable<TEntity> Find()
         {
-            return Set.ToHashSet();
+            return Table.ToHashSet();
         }
 
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> filterExpression)
         {
-            return Set.Where(filterExpression).ToHashSet();
+            return Table.Where(filterExpression).ToHashSet();
         }
 
         public async Task<IEnumerable<TEntity>> FindAsync()
         {
-            return await Set.ToHashSetAsync();
+            return await Table.ToHashSetAsync();
         }
 
         public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> filterExpression)
         {
-            return await Set.Where(filterExpression).ToHashSetAsync();
+            return await Table.Where(filterExpression).ToHashSetAsync();
         }
 
         public TEntity FindOne(params object[] keyValues)
@@ -106,7 +106,7 @@ namespace Kore.Data.EntityFramework
 
         public TEntity FindOne(Expression<Func<TEntity, bool>> filterExpression)
         {
-            return Set.FirstOrDefault(filterExpression);
+            return Table.FirstOrDefault(filterExpression);
         }
 
         public async Task<TEntity> FindOneAsync(params object[] keyValues)
@@ -116,7 +116,7 @@ namespace Kore.Data.EntityFramework
 
         public async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> filterExpression)
         {
-            return await Set.FirstOrDefaultAsync(filterExpression);
+            return await Table.FirstOrDefaultAsync(filterExpression);
         }
 
         #endregion Find
@@ -125,22 +125,22 @@ namespace Kore.Data.EntityFramework
 
         public int Count()
         {
-            return Set.Count();
+            return Table.Count();
         }
 
         public int Count(Expression<Func<TEntity, bool>> countExpression)
         {
-            return Set.Count(countExpression);
+            return Table.Count(countExpression);
         }
 
         public async Task<int> CountAsync()
         {
-            return await Set.CountAsync();
+            return await Table.CountAsync();
         }
 
         public async Task<int> CountAsync(Expression<Func<TEntity, bool>> countExpression)
         {
-            return await Set.CountAsync(countExpression);
+            return await Table.CountAsync(countExpression);
         }
 
         #endregion Count

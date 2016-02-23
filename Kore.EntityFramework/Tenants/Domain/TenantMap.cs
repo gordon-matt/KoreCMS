@@ -10,10 +10,10 @@ namespace Kore.EntityFramework.Tenants.Domain
         {
             ToTable("Kore_Tenants");
             HasKey(x => x.Id);
-            Property(x => x.Name).IsRequired().HasMaxLength(255);
-            Property(x => x.Url).IsRequired().HasMaxLength(255);
-            //Property(x => x.SecureUrl).HasMaxLength(255);
-            Property(x => x.Hosts).HasMaxLength(1024);
+            Property(x => x.Name).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.Url).IsRequired().HasMaxLength(255).IsUnicode(true);
+            //Property(x => x.SecureUrl).HasMaxLength(255).IsUnicode(true);
+            Property(x => x.Hosts).HasMaxLength(1024).IsUnicode(true);
         }
 
         #region IEntityTypeConfiguration Members

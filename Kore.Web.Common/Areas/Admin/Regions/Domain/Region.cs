@@ -46,11 +46,11 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Domain
         {
             ToTable(Constants.Tables.Regions);
             HasKey(m => m.Id);
-            Property(m => m.Name).IsRequired().HasMaxLength(255);
+            Property(m => m.Name).IsRequired().HasMaxLength(255).IsUnicode(true);
             Property(m => m.RegionType).IsRequired();
-            Property(m => m.CountryCode).HasMaxLength(10).HasColumnType("varchar");
+            Property(m => m.CountryCode).HasMaxLength(2).IsUnicode(false).IsFixedLength();
             Property(m => m.HasStates).IsRequired();
-            Property(m => m.StateCode).HasMaxLength(10).HasColumnType("varchar");
+            Property(m => m.StateCode).HasMaxLength(10).IsUnicode(false);
             HasOptional(p => p.Parent).WithMany(p => p.Children).HasForeignKey(x => x.ParentId).WillCascadeOnDelete(false);
         }
 

@@ -30,8 +30,9 @@ namespace KoreCMS.Data.Domain
         {
             ToTable(Constants.Tables.UserProfiles);
             HasKey(x => x.Id);
-            Property(x => x.UserId).IsRequired();
-            Property(x => x.Key).HasMaxLength(255).IsRequired();
+            Property(x => x.UserId).IsRequired().HasMaxLength(128).IsUnicode(true);
+            Property(x => x.Key).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.Value).IsRequired().IsMaxLength().IsUnicode(true);
         }
 
         #region IEntityTypeConfiguration Members

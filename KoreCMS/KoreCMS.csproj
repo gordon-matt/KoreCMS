@@ -292,6 +292,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstallationController.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
+    <Compile Include="Data\ApplicationDbContextFactory.cs" />
     <Compile Include="Data\ApplicationUserManager.cs" />
     <Compile Include="Data\Domain\ApplicationUser.cs" />
     <Compile Include="Data\Domain\Permission.cs" />
@@ -843,6 +844,10 @@
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="Icon.png" />
+    <Content Include="Media\kore-logo-dark-small.png" />
+    <Content Include="Media\kore-logo-dark.png" />
+    <Content Include="Media\kore-logo-light-small.png" />
+    <Content Include="Media\kore-logo-light.png" />
     <Content Include="Scripts\almond-custom.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />

@@ -60,7 +60,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink(siteName, "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })
+                @Html.ImageLink("~/Media/kore-logo-dark-small.png", siteName, Url.Action("Index", "Home", new { area = string.Empty }))
+                @*@Html.ActionLink(siteName, "Index", "Home", new { area = string.Empty }, new { @class = "navbar-brand" })*@
             </div>
             <div class="collapse navbar-collapse bs-navbar-collapse">
                 @Html.AutoMenu("MainMenu")

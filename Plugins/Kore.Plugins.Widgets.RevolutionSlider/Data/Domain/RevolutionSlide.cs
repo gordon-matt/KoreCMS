@@ -246,11 +246,11 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
             HasKey(x => x.Id);
             Property(x => x.SliderId).IsRequired();
             Property(x => x.Order).IsRequired();
+            Property(x => x.Title).HasMaxLength(255).IsUnicode(true);
+            Property(x => x.Link).HasMaxLength(255).IsUnicode(true);
             Property(x => x.RandomTransition).IsRequired();
-            Property(x => x.Link).HasMaxLength(255);
-            Property(x => x.Thumb).HasMaxLength(255);
-            Property(x => x.Title).HasMaxLength(255);
-            Property(x => x.ImageUrl).IsRequired().HasMaxLength(255);
+            Property(x => x.Thumb).HasMaxLength(255).IsUnicode(true);
+            Property(x => x.ImageUrl).IsRequired().HasMaxLength(255).IsUnicode(true);
             Property(x => x.LazyLoad).IsRequired();
             Property(x => x.KenBurnsEffect).IsRequired();
         }

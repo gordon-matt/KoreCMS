@@ -42,14 +42,14 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Data.Domain
         {
             ToTable(Constants.Tables.Videos);
             HasKey(x => x.Id);
-            Property(x => x.Title).IsRequired().HasMaxLength(255);
-            Property(x => x.ThumbnailUrl).IsRequired().HasMaxLength(255);
-            Property(x => x.VideoUrl).IsRequired().HasMaxLength(255);
-            Property(x => x.MobileVideoUrl).HasMaxLength(255);
-            Property(x => x.PosterUrl).IsRequired().HasMaxLength(255);
-            Property(x => x.MobilePosterUrl).HasMaxLength(255);
+            Property(x => x.Title).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.ThumbnailUrl).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.VideoUrl).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.MobileVideoUrl).HasMaxLength(255).IsUnicode(true);
+            Property(x => x.PosterUrl).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.MobilePosterUrl).HasMaxLength(255).IsUnicode(true);
             Property(x => x.IsDownloadable).IsRequired();
-            Property(x => x.PopoverHtml).IsMaxLength();
+            Property(x => x.PopoverHtml).IsMaxLength().IsUnicode(true);
         }
 
         #region IEntityTypeConfiguration Members

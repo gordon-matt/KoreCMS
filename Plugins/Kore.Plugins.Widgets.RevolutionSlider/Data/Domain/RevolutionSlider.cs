@@ -27,7 +27,7 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
         {
             ToTable(Constants.Tables.Sliders);
             HasKey(x => x.Id);
-            Property(x => x.Name).IsRequired().HasMaxLength(255);
+            Property(x => x.Name).IsRequired().HasMaxLength(255).IsUnicode(true);
         }
 
         #region IEntityTypeConfiguration Members

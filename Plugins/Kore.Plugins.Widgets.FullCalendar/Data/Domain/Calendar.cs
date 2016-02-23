@@ -36,7 +36,7 @@ namespace Kore.Plugins.Widgets.FullCalendar.Data.Domain
         {
             ToTable(Constants.Tables.Calendars);
             HasKey(x => x.Id);
-            Property(x => x.Name).IsRequired().HasMaxLength(255);
+            Property(x => x.Name).IsRequired().HasMaxLength(255).IsUnicode(true);
         }
 
         #region IEntityTypeConfiguration Members

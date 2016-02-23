@@ -80,12 +80,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Domain
             ToTable(CmsConstants.Tables.QueuedEmails);
             HasKey(x => x.Id);
             Property(x => x.Priority).IsRequired();
-            Property(x => x.FromAddress).HasMaxLength(255);
-            Property(x => x.FromName).HasMaxLength(255);
-            Property(x => x.ToAddress).IsRequired().HasMaxLength(255);
-            Property(x => x.ToName).HasMaxLength(255);
-            Property(x => x.Subject).HasMaxLength(255);
-            Property(x => x.MailMessage).IsRequired();
+            Property(x => x.FromAddress).HasMaxLength(255).IsUnicode(true);
+            Property(x => x.FromName).HasMaxLength(255).IsUnicode(true);
+            Property(x => x.ToAddress).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.ToName).HasMaxLength(255).IsUnicode(true);
+            Property(x => x.Subject).HasMaxLength(255).IsUnicode(true);
+            Property(x => x.MailMessage).IsRequired().IsMaxLength().IsUnicode(true);
             Property(x => x.CreatedOnUtc).IsRequired();
             Property(x => x.SentTries).IsRequired();
         }

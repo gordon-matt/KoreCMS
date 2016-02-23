@@ -29,8 +29,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
         {
             ToTable(CmsConstants.Tables.PageTypes);
             HasKey(x => x.Id);
-            Property(x => x.Name).HasMaxLength(255).IsRequired();
-            Property(x => x.LayoutPath).HasMaxLength(255);
+            Property(x => x.Name).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.LayoutPath).HasMaxLength(255).IsUnicode(true);
         }
 
         #region IEntityTypeConfiguration Members

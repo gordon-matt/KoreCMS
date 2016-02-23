@@ -55,13 +55,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Domain
             ToTable(CmsConstants.Tables.MenuItems);
             HasKey(x => x.Id);
             Property(x => x.MenuId).IsRequired();
-            Property(x => x.Text).IsRequired().HasMaxLength(255);
-            Property(x => x.Description).HasMaxLength(255);
-            Property(x => x.Url).IsRequired().HasMaxLength(255);
-            Property(x => x.CssClass).HasMaxLength(128).HasColumnType("varchar");
+            Property(x => x.Text).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.Description).HasMaxLength(255).IsUnicode(true);
+            Property(x => x.Url).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.CssClass).HasMaxLength(128).IsUnicode(false);
             Property(x => x.Position).IsRequired();
             Property(x => x.Enabled).IsRequired();
             Property(x => x.IsExternalUrl).IsRequired();
+
             //HasRequired(x => x.Menu).WithMany().HasForeignKey(x => x.MenuId);
             //HasOptional(x => x.Parent).WithMany().HasForeignKey(x => x.ParentId);
         }

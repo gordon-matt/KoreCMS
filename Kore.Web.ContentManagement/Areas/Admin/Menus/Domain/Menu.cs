@@ -29,8 +29,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Domain
         {
             ToTable(CmsConstants.Tables.Menus);
             HasKey(x => x.Id);
-            Property(x => x.Name).HasMaxLength(255).IsRequired();
-            Property(x => x.UrlFilter).HasMaxLength(255);
+            Property(x => x.Name).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.UrlFilter).HasMaxLength(255).IsUnicode(true);
         }
 
         #region IEntityTypeConfiguration Members

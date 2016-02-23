@@ -9,8 +9,8 @@ namespace Kore.Localization.Domain
         {
             ToTable("Kore_Languages");
             HasKey(m => m.Id);
-            Property(m => m.Name).HasMaxLength(255).IsRequired();
-            Property(m => m.CultureCode).HasMaxLength(10).IsRequired();
+            Property(m => m.Name).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(m => m.CultureCode).IsRequired().HasMaxLength(10).IsUnicode(false);
             Property(m => m.IsRTL).IsRequired();
             Property(m => m.IsEnabled).IsRequired();
             Property(m => m.SortOrder).IsRequired();

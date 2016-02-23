@@ -37,8 +37,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
         {
             ToTable(CmsConstants.Tables.BlogTags);
             HasKey(x => x.Id);
-            Property(x => x.Name).HasMaxLength(255).IsRequired();
-            Property(x => x.UrlSlug).HasMaxLength(255).IsRequired();
+            Property(x => x.Name).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.UrlSlug).IsRequired().HasMaxLength(255).IsUnicode(true);
         }
 
         #region IEntityTypeConfiguration Members

@@ -45,16 +45,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
         {
             ToTable(CmsConstants.Tables.EntityTypeContentBlocks);
             HasKey(x => x.Id);
-            Property(x => x.EntityType).HasMaxLength(512).HasColumnType("varchar").IsRequired();
-            Property(x => x.EntityId).HasMaxLength(50).HasColumnType("varchar").IsRequired();
-            Property(x => x.BlockName).HasMaxLength(255).IsRequired();
-            Property(x => x.BlockType).HasMaxLength(1024).HasColumnType("varchar").IsRequired();
-            Property(x => x.Title).HasMaxLength(255).IsRequired();
+            Property(x => x.EntityType).IsRequired().HasMaxLength(512).IsUnicode(false);
+            Property(x => x.EntityId).IsRequired().HasMaxLength(50).IsUnicode(false);
+            Property(x => x.BlockName).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.BlockType).IsRequired().HasMaxLength(1024).IsUnicode(false);
+            Property(x => x.Title).IsRequired().HasMaxLength(255).IsUnicode(true);
             Property(x => x.ZoneId).IsRequired();
             Property(x => x.Order).IsRequired();
             Property(x => x.IsEnabled).IsRequired();
-            Property(x => x.BlockValues).IsMaxLength();
-            Property(x => x.CustomTemplatePath).HasMaxLength(255);
+            Property(x => x.BlockValues).IsMaxLength().IsUnicode(true);
+            Property(x => x.CustomTemplatePath).HasMaxLength(255).IsUnicode(true);
         }
 
         #region IEntityTypeConfiguration Members

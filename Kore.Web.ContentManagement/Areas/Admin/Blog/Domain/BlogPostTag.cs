@@ -31,6 +31,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
         {
             ToTable(CmsConstants.Tables.BlogPostTags);
             HasKey(x => new { x.PostId, x.TagId });
+
             HasRequired(x => x.Post).WithMany(x => x.Tags).HasForeignKey(x => x.PostId).WillCascadeOnDelete(true);
             HasRequired(x => x.Tag).WithMany(x => x.Posts).HasForeignKey(x => x.TagId).WillCascadeOnDelete(true);
         }

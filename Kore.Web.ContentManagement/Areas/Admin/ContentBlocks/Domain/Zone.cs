@@ -27,7 +27,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
         {
             ToTable(CmsConstants.Tables.Zones);
             HasKey(x => x.Id);
-            Property(x => x.Name).HasMaxLength(255).IsRequired();
+            Property(x => x.Name).IsRequired().HasMaxLength(255).IsUnicode(true);
         }
 
         #region IEntityTypeConfiguration Members

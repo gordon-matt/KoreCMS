@@ -60,18 +60,19 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
         {
             ToTable(CmsConstants.Tables.BlogPosts);
             HasKey(x => x.Id);
-            Property(x => x.UserId).HasMaxLength(255).IsRequired();
+            Property(x => x.UserId).IsRequired().HasMaxLength(128).IsUnicode(true);
             Property(x => x.DateCreatedUtc).IsRequired();
             Property(x => x.CategoryId).IsRequired();
-            Property(x => x.Headline).HasMaxLength(128).IsRequired();
-            Property(x => x.Slug).HasMaxLength(128).IsRequired();
-            Property(x => x.TeaserImageUrl).HasMaxLength(255);
-            Property(x => x.ShortDescription).IsMaxLength().IsRequired();
-            Property(x => x.FullDescription).IsMaxLength();
+            Property(x => x.Headline).IsRequired().HasMaxLength(128).IsUnicode(true);
+            Property(x => x.Slug).IsRequired().HasMaxLength(128).IsUnicode(true);
+            Property(x => x.TeaserImageUrl).HasMaxLength(255).IsUnicode(true);
+            Property(x => x.ShortDescription).IsRequired().IsMaxLength().IsUnicode(true);
+            Property(x => x.FullDescription).IsMaxLength().IsUnicode(true);
             Property(x => x.UseExternalLink).IsRequired();
-            Property(x => x.ExternalLink).HasMaxLength(255);
-            Property(x => x.MetaKeywords).HasMaxLength(255);
-            Property(x => x.MetaDescription).HasMaxLength(255);
+            Property(x => x.ExternalLink).HasMaxLength(255).IsUnicode(true);
+            Property(x => x.MetaKeywords).HasMaxLength(255).IsUnicode(true);
+            Property(x => x.MetaDescription).HasMaxLength(255).IsUnicode(true);
+
             HasRequired(x => x.Category).WithMany(x => x.Posts).HasForeignKey(x => x.CategoryId);
             //HasMany(c => c.Tags).WithMany(x => x.Posts).Map(m =>
             //{

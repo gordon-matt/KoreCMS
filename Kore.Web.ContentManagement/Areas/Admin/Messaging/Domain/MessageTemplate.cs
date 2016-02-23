@@ -50,9 +50,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Domain
         {
             ToTable(CmsConstants.Tables.MessageTemplates);
             HasKey(x => x.Id);
-            Property(x => x.Name).HasMaxLength(255).IsRequired();
-            Property(x => x.Subject).HasMaxLength(255).IsRequired();
-            Property(x => x.Body).IsRequired();
+            Property(x => x.Name).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.Subject).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.Body).IsRequired().IsMaxLength().IsUnicode(true);
             Property(x => x.Enabled).IsRequired();
         }
 

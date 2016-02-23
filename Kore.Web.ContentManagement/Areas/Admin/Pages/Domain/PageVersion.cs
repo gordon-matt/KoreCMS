@@ -51,13 +51,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
             ToTable(CmsConstants.Tables.PageVersions);
             HasKey(x => x.Id);
             Property(x => x.PageId).IsRequired();
-            Property(x => x.CultureCode).HasMaxLength(10).HasColumnType("varchar");
+            Property(x => x.CultureCode).HasMaxLength(10).IsUnicode(false);
             Property(x => x.DateCreatedUtc).IsRequired();
             Property(x => x.DateModifiedUtc).IsRequired();
             Property(x => x.Status).IsRequired();
-            Property(x => x.Title).IsRequired().HasMaxLength(255);
-            Property(x => x.Slug).IsRequired().HasMaxLength(255);
-            Property(x => x.Fields).IsMaxLength();
+            Property(x => x.Title).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.Slug).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.Fields).IsMaxLength().IsUnicode(true);
+
             HasRequired(x => x.Page).WithMany(x => x.Versions).HasForeignKey(x => x.PageId);
         }
 

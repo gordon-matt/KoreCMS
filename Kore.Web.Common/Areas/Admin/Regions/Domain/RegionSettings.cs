@@ -31,8 +31,8 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Domain
             ToTable(Constants.Tables.RegionSettings);
             HasKey(m => m.Id);
             Property(m => m.RegionId).IsRequired();
-            Property(m => m.SettingsId).IsRequired().HasMaxLength(255);
-            Property(m => m.Fields).IsRequired().IsMaxLength();
+            Property(m => m.SettingsId).IsRequired().HasMaxLength(255).IsUnicode(false);
+            Property(m => m.Fields).IsRequired().IsMaxLength().IsUnicode(true);
         }
 
         #region IEntityTypeConfiguration Members

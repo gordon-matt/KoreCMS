@@ -304,32 +304,33 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
             ToTable(Constants.Tables.Layers);
             HasKey(x => x.Id);
             Property(x => x.SlideId).IsRequired();
-            Property(x => x.CaptionText).HasMaxLength(255);
+            Property(x => x.CaptionText).HasMaxLength(255).IsUnicode(true);
             Property(x => x.X).IsRequired();
             Property(x => x.Y).IsRequired();
             Property(x => x.Speed).IsRequired();
             Property(x => x.Start).IsRequired();
-            Property(x => x.StyleClass).HasMaxLength(50);
+            Property(x => x.StyleClass).HasMaxLength(50).IsUnicode(false);
             Property(x => x.SplitIn).IsRequired();
             Property(x => x.SplitOut).IsRequired();
             Property(x => x.AutoPlay).IsRequired();
             Property(x => x.AutoPlayOnlyFirstTime).IsRequired();
             Property(x => x.NextSlideAtEnd).IsRequired();
-            Property(x => x.VideoPoster).HasMaxLength(255);
+            Property(x => x.VideoPoster).HasMaxLength(255).IsUnicode(true);
             Property(x => x.ForceCover).IsRequired();
             Property(x => x.ForceRewind).IsRequired();
             Property(x => x.Mute).IsRequired();
             Property(x => x.VideoWidthUnit).IsRequired();
             Property(x => x.VideoHeightUnit).IsRequired();
             Property(x => x.VideoPreload).IsRequired();
-            Property(x => x.VideoMp4).HasMaxLength(255);
-            Property(x => x.VideoWebM).HasMaxLength(255);
-            Property(x => x.VideoOgv).HasMaxLength(255);
-            Property(x => x.YouTubeId).HasMaxLength(50);
-            Property(x => x.VimeoId).HasMaxLength(50);
+            Property(x => x.VideoMp4).HasMaxLength(255).IsUnicode(true);
+            Property(x => x.VideoWebM).HasMaxLength(255).IsUnicode(true);
+            Property(x => x.VideoOgv).HasMaxLength(255).IsUnicode(true);
+            Property(x => x.YouTubeId).HasMaxLength(50).IsUnicode(true);
+            Property(x => x.VimeoId).HasMaxLength(50).IsUnicode(true);
             Property(x => x.ShowVideoControls).IsRequired();
-            Property(x => x.VideoAttributes).HasMaxLength(128);
+            Property(x => x.VideoAttributes).HasMaxLength(128).IsUnicode(true);
             Property(x => x.VideoLoop).IsRequired();
+
             HasRequired(x => x.Slide).WithMany(x => x.Layers).HasForeignKey(x => x.SlideId);
         }
 

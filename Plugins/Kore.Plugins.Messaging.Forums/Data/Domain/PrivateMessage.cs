@@ -45,10 +45,10 @@ namespace Kore.Plugins.Messaging.Forums.Data.Domain
         {
             this.ToTable(Constants.Tables.PrivateMessages);
             this.HasKey(x => x.Id);
-            this.Property(x => x.FromUserId).IsRequired().HasMaxLength(128);
-            this.Property(x => x.ToUserId).IsRequired().HasMaxLength(128);
-            this.Property(x => x.Subject).IsRequired().HasMaxLength(512);
-            this.Property(x => x.Text).IsRequired().IsMaxLength();
+            this.Property(x => x.FromUserId).IsRequired().HasMaxLength(128).IsUnicode(true);
+            this.Property(x => x.ToUserId).IsRequired().HasMaxLength(128).IsUnicode(true);
+            this.Property(x => x.Subject).IsRequired().HasMaxLength(512).IsUnicode(true);
+            this.Property(x => x.Text).IsRequired().IsMaxLength().IsUnicode(true);
             this.Property(x => x.IsRead).IsRequired();
             this.Property(x => x.IsDeletedByAuthor).IsRequired();
             this.Property(x => x.IsDeletedByRecipient).IsRequired();

@@ -34,8 +34,8 @@ namespace Kore.Plugins.Maintenance.Watchdog.Data.Domain
         {
             ToTable(Constants.Tables.WatchdogInstances);
             HasKey(x => x.Id);
-            Property(x => x.Url).HasMaxLength(255).IsRequired();
-            Property(x => x.Password).HasMaxLength(255).IsRequired();
+            Property(x => x.Url).IsRequired().HasMaxLength(255).IsUnicode(true);
+            Property(x => x.Password).IsRequired().HasMaxLength(255).IsUnicode(true);
         }
 
         #region IEntityTypeConfiguration Members

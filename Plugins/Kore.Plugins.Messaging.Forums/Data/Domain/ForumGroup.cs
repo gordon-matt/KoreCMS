@@ -44,7 +44,7 @@ namespace Kore.Plugins.Messaging.Forums.Data.Domain
         {
             this.ToTable(Constants.Tables.Groups);
             this.HasKey(x => x.Id);
-            this.Property(x => x.Name).IsRequired().HasMaxLength(255);
+            this.Property(x => x.Name).IsRequired().HasMaxLength(255).IsUnicode(true);
             this.Property(x => x.DisplayOrder).IsRequired();
             this.Property(x => x.CreatedOnUtc).IsRequired();
             this.Property(x => x.UpdatedOnUtc).IsRequired();

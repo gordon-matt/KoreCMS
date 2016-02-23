@@ -37,9 +37,10 @@ namespace Kore.Plugins.Widgets.FullCalendar.Data.Domain
             ToTable(Constants.Tables.Events);
             HasKey(x => x.Id);
             Property(x => x.CalendarId).IsRequired();
-            Property(x => x.Name).IsRequired().HasMaxLength(255);
+            Property(x => x.Name).IsRequired().HasMaxLength(255).IsUnicode(true);
             Property(x => x.StartDateTime).IsRequired();
             Property(x => x.EndDateTime).IsRequired();
+
             HasRequired(x => x.Calendar).WithMany(x => x.Events).HasForeignKey(x => x.CalendarId);
         }
 

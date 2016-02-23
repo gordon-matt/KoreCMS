@@ -54,16 +54,17 @@ namespace Kore.Plugins.Messaging.Forums.Data.Domain
             this.ToTable(Constants.Tables.Forums);
             this.HasKey(x => x.Id);
             this.Property(x => x.ForumGroupId).IsRequired();
-            this.Property(x => x.Name).IsRequired().HasMaxLength(255);
-            this.Property(x => x.Description).IsMaxLength();
+            this.Property(x => x.Name).IsRequired().HasMaxLength(255).IsUnicode(true);
+            this.Property(x => x.Description).IsMaxLength().IsUnicode(true);
             this.Property(x => x.NumTopics).IsRequired();
             this.Property(x => x.NumPosts).IsRequired();
             this.Property(x => x.LastTopicId).IsRequired();
             this.Property(x => x.LastPostId).IsRequired();
-            this.Property(x => x.LastPostUserId).HasMaxLength(128);
+            this.Property(x => x.LastPostUserId).HasMaxLength(128).IsUnicode(true);
             this.Property(x => x.DisplayOrder).IsRequired();
             this.Property(x => x.CreatedOnUtc).IsRequired();
             this.Property(x => x.UpdatedOnUtc).IsRequired();
+
             this.HasRequired(x => x.ForumGroup).WithMany(x => x.Forums).HasForeignKey(x => x.ForumGroupId);
         }
 

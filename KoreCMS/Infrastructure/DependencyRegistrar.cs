@@ -12,6 +12,7 @@ using Kore.Web.ContentManagement.Areas.Admin.Messaging;
 using Kore.Web.Infrastructure;
 using Kore.Web.Navigation;
 using KoreCMS.Areas.Admin;
+using KoreCMS.Data;
 using KoreCMS.Messaging;
 using KoreCMS.Services;
 
@@ -33,17 +34,10 @@ namespace KoreCMS.Infrastructure
 
             #region Entity Framework 6
 
-            // TODO: Consider using a new DbContext for each query
-            builder.RegisterType<KoreCMS.Data.ApplicationDbContext>()
-                .As<DbContext>()
-                .AsSelf()
-                .Named<DbContext>("KoreCMS.ApplicationDbContext")
-                .WithParameter("nameOrConnectionString", settings.ConnectionString)
-                .InstancePerLifetimeScope();
+            builder.RegisterType<ApplicationDbContextFactory>().As<IDbContextFactory>().InstancePerLifetimeScope();
 
             builder.RegisterGeneric(typeof(EntityFrameworkRepository<>))
                 .As(typeof(IRepository<>))
-                .WithParameter(ResolvedParameter.ForNamed<DbContext>("KoreCMS.ApplicationDbContext"))
                 .InstancePerLifetimeScope();
 
             #endregion Entity Framework 6

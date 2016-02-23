@@ -47,11 +47,19 @@ namespace KoreCMS.Data
         {
             var settings = DataSettingsManager.LoadSettings();
             this.Database.Connection.ConnectionString = settings.ConnectionString;
+            this.Init();
         }
 
         public ApplicationDbContext(string nameOrConnectionString)
             : base(nameOrConnectionString)
         {
+            this.Init();
+        }
+
+        private void Init()
+        {
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
 
         #endregion Constructors

@@ -8,6 +8,7 @@ using Kore;
 using Kore.Collections;
 using Kore.Data;
 using Kore.Exceptions;
+using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web.Infrastructure;
 using Kore.Web.Security.Membership;
@@ -689,7 +690,7 @@ namespace KoreCMS.Services
 
         public string GetProfileEntry(string userId, string key)
         {
-            var entry = userProfileRepository.Table.FirstOrDefault(x =>
+            var entry = userProfileRepository.FindOne(x =>
                 x.UserId == userId &&
                 x.Key == key);
 
@@ -703,7 +704,7 @@ namespace KoreCMS.Services
 
         public void SaveProfileEntry(string userId, string key, string value)
         {
-            var entry = userProfileRepository.Table.FirstOrDefault(x =>
+            var entry = userProfileRepository.FindOne(x =>
                 x.UserId == userId &&
                 x.Key == key);
 
@@ -725,7 +726,7 @@ namespace KoreCMS.Services
 
         public void DeleteProfileEntry(string userId, string key)
         {
-            var entry = userProfileRepository.Table.FirstOrDefault(x =>
+            var entry = userProfileRepository.FindOne(x =>
                 x.UserId == userId &&
                 x.Key == key);
 

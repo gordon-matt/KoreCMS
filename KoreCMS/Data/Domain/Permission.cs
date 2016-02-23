@@ -34,9 +34,9 @@ namespace KoreCMS.Data.Domain
         {
             ToTable(Constants.Tables.Permissions);
             HasKey(x => x.Id);
-            Property(x => x.Name).HasMaxLength(50).IsRequired();
-            Property(x => x.Category).HasMaxLength(50).IsRequired();
-            Property(x => x.Description).HasMaxLength(128).IsRequired();
+            Property(x => x.Name).IsRequired().HasMaxLength(50).IsUnicode(true);
+            Property(x => x.Category).IsRequired().HasMaxLength(50).IsUnicode(true);
+            Property(x => x.Description).IsRequired().HasMaxLength(128).IsUnicode(true);
             HasMany(c => c.Roles).WithMany().Map(m =>
             {
                 m.MapLeftKey("PermissionId");

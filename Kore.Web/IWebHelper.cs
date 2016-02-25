@@ -57,6 +57,8 @@ namespace Kore.Web
         /// <returns>The physical path. E.g. "c:\inetpub\wwwroot\bin"</returns>
         string MapPath(string path);
 
+        string ModifyQueryString(string url, string queryStringModification, string anchor);
+
         ///// <summary>
         ///// Restart application domain
         ///// </summary>

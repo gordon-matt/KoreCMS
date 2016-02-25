@@ -301,6 +301,7 @@
     <Compile Include="Mvc\ActionResults\JsonNetResult.cs" />
     <Compile Include="Mvc\ActionResults\RssActionResult.cs" />
     <Compile Include="Mvc\Attributes\ButtonAttribute.cs" />
+    <Compile Include="Mvc\Attributes\FormValueRequiredAttribute.cs" />
     <Compile Include="Mvc\Attributes\TransactionAttribute.cs" />
     <Compile Include="Mvc\CombinedHtmlString.cs" />
     <Compile Include="Mvc\Controls\AdRotator.cs" />

@@ -52,7 +52,8 @@ namespace Kore.Collections
         /// <returns>true if the System.Collections.Generic.IEnumerable&lt;T&gt; is null or empty; otherwise, false.</returns>
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> enumerable)
         {
-            return enumerable == null || !enumerable.Any();
+            return enumerable == null || !enumerable.FastAny();
+            //return enumerable == null || !enumerable.Any();
         }
 
         /// <summary>
@@ -466,6 +467,68 @@ namespace Kore.Collections
             bool result = sb.ToString().ToFile(filePath);
 
             return result;
+        }
+
+        internal static bool FastAny<TSource>(this IEnumerable<TSource> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+
+            var array = source as TSource[];
+
+            if (array != null)
+            {
+                return array.Length > 0;
+            }
+
+            var collection = source as ICollection<TSource>;
+
+            if (collection != null)
+            {
+                return collection.Count > 0;
+            }
+
+            using (var enumerator = source.GetEnumerator())
+            {
+                return enumerator.MoveNext();
+            }
+        }
+
+        public static bool HasMoreThan<TSource>(this IEnumerable<TSource> source, int n)
+        {
+            if (source == null)
+            {
+                return false;
+                //throw new ArgumentNullException("source");
+            }
+
+            var array = source as TSource[];
+
+            if (array != null)
+            {
+                return array.Length > n;
+            }
+
+            var collection = source as ICollection<TSource>;
+
+            if (collection != null)
+            {
+                return collection.Count > n;
+            }
+
+            using (var enumerator = source.GetEnumerator())
+            {
+                for (int i = 0; i < n + 1; i++)
+                {
+                    if (!enumerator.MoveNext())
+                    {
+                        return false;
+                    };
+                }
+                return true;
+            }
         }
     }
 }

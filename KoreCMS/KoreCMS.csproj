@@ -90,7 +90,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.1.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.OData.Core">
       <HintPath>..\packages\Microsoft.OData.Core.6.13.0\lib\portable-net40+sl5+wp8+win8+wpa\Microsoft.OData.Core.dll</HintPath>
     </Reference>
@@ -236,7 +238,7 @@
       <HintPath>..\packages\Microsoft.AspNet.OData.5.7.0\lib\net45\System.Web.OData.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
@@ -844,6 +846,7 @@
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="Icon.png" />
+    <Content Include="Media\installation-background.jpg" />
     <Content Include="Media\kore-logo-dark-small.png" />
     <Content Include="Media\kore-logo-dark.png" />
     <Content Include="Media\kore-logo-light-small.png" />

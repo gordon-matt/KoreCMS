@@ -31,6 +31,7 @@
             public const string Home = "Kore.Web/General.Home";
             public const string Import = "Kore.Web/General.Import";
             public const string Install = "Kore.Web/General.Install";
+            public const string Loading = "Kore.Web/General.Loading";
             public const string Localize = "Kore.Web/General.Localize";
             public const string Miscellaneous = "Kore.Web/General.Miscellaneous";
             public const string Move = "Kore.Web/General.Move";
@@ -40,6 +41,7 @@
             public const string OK = "Kore.Web/General.OK";
             public const string OnOff = "Kore.Web/General.OnOff";
             public const string Order = "Kore.Web/General.Order";
+            public const string PleaseWait = "Kore.Web/General.PleaseWait";
             public const string Preview = "Kore.Web/General.Preview";
             public const string Previous = "Kore.Web/General.Previous";
             public const string Remove = "Kore.Web/General.Remove";

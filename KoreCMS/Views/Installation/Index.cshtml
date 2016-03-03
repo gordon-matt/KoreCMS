@@ -18,7 +18,7 @@
 
     <style type="text/css">
         body {
-            background: url("/Content/images/fresh-green-background.jpg") no-repeat;
+            background: url("/Media/installation-background.jpg") repeat-y;
             background-size: 100%;
         }
     </style>
@@ -28,9 +28,8 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
 
-                <div class="text-center">
-                    <img src="/Media/kore-logo-light.png" alt="Kore CMS" />
-                    <h2>@ViewBag.Title</h2>
+                <div class="text-center" style="background-color:white">
+                    <img src="/Media/kore-logo-dark.png" alt="Kore CMS" />
                 </div>
 
                 @using (Html.BeginForm("PostInstall", "Installation", FormMethod.Post, new { @class = "form-horizontal" }))

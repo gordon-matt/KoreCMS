@@ -69,9 +69,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="@Url.Action("Index", "Dashboard", new { area = KoreWebConstants.Areas.Admin })">
+                @Html.ImageLink(
+                    "~/Media/kore-logo-dark-small.png",
+                    SiteSettings.SiteName,
+                    Url.Action("Index", "Dashboard",
+                    new { area = KoreWebConstants.Areas.Admin }))
+
+                @*<a class="navbar-brand" href="@Url.Action("Index", "Dashboard", new { area = KoreWebConstants.Areas.Admin })">
                     @SiteSettings.SiteName
-                </a>
+                </a>*@
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse-1">
                 @Html.Partial("AdminMenu")

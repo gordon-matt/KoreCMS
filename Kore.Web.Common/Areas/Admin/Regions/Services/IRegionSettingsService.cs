@@ -35,7 +35,10 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
             var instance = Activator.CreateInstance<T>();
             string settingsId = instance.Name.ToSlugUrl();
 
-            return Query(x => x.SettingsId == settingsId).Any();
+            using (var connection = OpenConnection())
+            {
+                return connection.Query(x => x.SettingsId == settingsId).Any();
+            }
         }
 
         public T GetSettings<T>(int regionId) where T : IRegionSettings

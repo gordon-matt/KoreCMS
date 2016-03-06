@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.SqlServer;
 using System.Linq;
 using Kore.Caching;
 using Kore.Collections;
@@ -44,60 +43,66 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
 
         public Region FindOne(int id, string cultureCode = null, bool includeChildren = false, bool includeParent = false)
         {
-            var query = Query();
-
-            if (includeParent)
+            using (var connection = OpenConnection())
             {
-                query = query.Include(x => x.Parent);
-            }
-            if (includeChildren)
-            {
-                query = query.Include(x => x.Children);
-            }
+                var query = connection.Query();
 
-            var region = query.First(x => x.Id == id);
-
-            if (!string.IsNullOrEmpty(cultureCode))
-            {
-                string entityType = typeof(Region).FullName;
-                string entityId = region.Id.ToString();
-
-                var localizedRecord = localizablePropertyService.Value.FindOne(x =>
-                    x.CultureCode == cultureCode &&
-                    x.EntityType == entityType &&
-                    x.Property == "Name" &&
-                    x.EntityId == entityId);
-
-                if (localizedRecord != null)
+                if (includeParent)
                 {
-                    region.Name = localizedRecord.Value;
+                    query = query.Include(x => x.Parent);
                 }
-            }
+                if (includeChildren)
+                {
+                    query = query.Include(x => x.Children);
+                }
 
-            return region;
+                var region = query.First(x => x.Id == id);
+
+                if (!string.IsNullOrEmpty(cultureCode))
+                {
+                    string entityType = typeof(Region).FullName;
+                    string entityId = region.Id.ToString();
+
+                    var localizedRecord = localizablePropertyService.Value.FindOne(x =>
+                        x.CultureCode == cultureCode &&
+                        x.EntityType == entityType &&
+                        x.Property == "Name" &&
+                        x.EntityId == entityId);
+
+                    if (localizedRecord != null)
+                    {
+                        region.Name = localizedRecord.Value;
+                    }
+                }
+
+                return region;
+            }
         }
 
         public IEnumerable<Region> GetContinents(string cultureCode = null, bool includeCountries = false)
         {
             ICollection<Region> continents = null;
 
-            if (includeCountries)
+            using (var connection = OpenConnection())
             {
-                continents = Query()
-                    .Include(x => x.Children)
-                    .Where(x => x.RegionType == RegionType.Continent)
-                    .OrderBy(x => x.Order == null)
-                    .ThenBy(x => x.Order)
-                    .ThenBy(x => x.Name)
-                    .ToList();
-            }
-            else
-            {
-                continents = Query(x => x.RegionType == RegionType.Continent)
-                    .OrderBy(x => x.Order == null)
-                    .ThenBy(x => x.Order)
-                    .ThenBy(x => x.Name)
-                    .ToList();
+                if (includeCountries)
+                {
+                    continents = connection.Query()
+                        .Include(x => x.Children)
+                        .Where(x => x.RegionType == RegionType.Continent)
+                        .OrderBy(x => x.Order == null)
+                        .ThenBy(x => x.Order)
+                        .ThenBy(x => x.Name)
+                        .ToList();
+                }
+                else
+                {
+                    continents = connection.Query(x => x.RegionType == RegionType.Continent)
+                        .OrderBy(x => x.Order == null)
+                        .ThenBy(x => x.Order)
+                        .ThenBy(x => x.Name)
+                        .ToList();
+                }
             }
 
             if (!string.IsNullOrEmpty(cultureCode))
@@ -112,27 +117,30 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
         {
             ICollection<Region> subRegions = null;
 
-            if (regionType.HasValue)
+            using (var connection = OpenConnection())
             {
-                subRegions = Query()
-                    .Include(x => x.Parent)
-                    .Include(x => x.Children)
-                    .Where(x => x.Parent.Id == regionId && x.RegionType == regionType)
-                    .OrderBy(x => x.Order == null)
-                    .ThenBy(x => x.Order)
-                    .ThenBy(x => x.Name)
-                    .ToHashSet();
-            }
-            else
-            {
-                subRegions = Query()
-                   .Include(x => x.Parent)
-                   .Include(x => x.Children)
-                   .Where(x => x.Parent.Id == regionId)
-                   .OrderBy(x => x.Order == null)
-                   .ThenBy(x => x.Order)
-                   .ThenBy(x => x.Name)
-                   .ToHashSet();
+                if (regionType.HasValue)
+                {
+                    subRegions = connection.Query()
+                        .Include(x => x.Parent)
+                        .Include(x => x.Children)
+                        .Where(x => x.Parent.Id == regionId && x.RegionType == regionType)
+                        .OrderBy(x => x.Order == null)
+                        .ThenBy(x => x.Order)
+                        .ThenBy(x => x.Name)
+                        .ToHashSet();
+                }
+                else
+                {
+                    subRegions = connection.Query()
+                       .Include(x => x.Parent)
+                       .Include(x => x.Children)
+                       .Where(x => x.Parent.Id == regionId)
+                       .OrderBy(x => x.Order == null)
+                       .ThenBy(x => x.Order)
+                       .ThenBy(x => x.Name)
+                       .ToHashSet();
+                }
             }
 
             if (!string.IsNullOrEmpty(cultureCode))
@@ -145,79 +153,88 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
 
         public IEnumerable<Region> GetSubRegions(int regionId, int pageIndex, int pageSize, out int total, RegionType? regionType = null, string cultureCode = null)
         {
-            var query = Query()
-                .Include(x => x.Parent)
-                .Include(x => x.Children);
-
-            if (regionType.HasValue)
+            using (var connection = OpenConnection())
             {
-                query = query.Where(x => x.Parent.Id == regionId && x.RegionType == regionType);
+                var query = connection.Query()
+                    .Include(x => x.Parent)
+                    .Include(x => x.Children);
+
+                if (regionType.HasValue)
+                {
+                    query = query.Where(x => x.Parent.Id == regionId && x.RegionType == regionType);
+                }
+                else
+                {
+                    query = query.Where(x => x.Parent.Id == regionId);
+                }
+
+                query = query
+                    .OrderBy(x => x.Order == null)
+                    .ThenBy(x => x.Order)
+                    .ThenBy(x => x.Name);
+
+                total = query.Count();
+
+                var subRegions = query
+                    .Skip((pageIndex - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToHashSet();
+
+                if (!string.IsNullOrEmpty(cultureCode))
+                {
+                    Localize(subRegions, cultureCode);
+                }
+
+                return subRegions;
             }
-            else
-            {
-                query = query.Where(x => x.Parent.Id == regionId);
-            }
-
-            query = query
-                .OrderBy(x => x.Order == null)
-                .ThenBy(x => x.Order)
-                .ThenBy(x => x.Name);
-
-            total = query.Count();
-
-            var subRegions = query
-                .Skip((pageIndex - 1) * pageSize)
-                .Take(pageSize)
-                .ToHashSet();
-
-            if (!string.IsNullOrEmpty(cultureCode))
-            {
-                Localize(subRegions, cultureCode);
-            }
-
-            return subRegions;
         }
 
         public IEnumerable<Region> GetCountries(string cultureCode = null)
         {
-            var countries = Query()
-                .Include(x => x.Parent)
-                .Include(x => x.Children)
-                .Where(x => x.RegionType == RegionType.Country)
-                .OrderBy(x => x.Order == null)
-                .ThenBy(x => x.Order)
-                .ThenBy(x => x.Name)
-                .ToHashSet();
-
-            if (!string.IsNullOrEmpty(cultureCode))
+            using (var connection = OpenConnection())
             {
-                Localize(countries, cultureCode);
-            }
+                var countries = connection.Query()
+                    .Include(x => x.Parent)
+                    .Include(x => x.Children)
+                    .Where(x => x.RegionType == RegionType.Country)
+                    .OrderBy(x => x.Order == null)
+                    .ThenBy(x => x.Order)
+                    .ThenBy(x => x.Name)
+                    .ToHashSet();
 
-            return countries;
+                if (!string.IsNullOrEmpty(cultureCode))
+                {
+                    Localize(countries, cultureCode);
+                }
+
+                return countries;
+            }
         }
 
         public IEnumerable<Region> GetStates(int countryId, string cultureCode = null, bool includeCities = false)
         {
             ICollection<Region> states = null;
 
-            if (includeCities)
+            using (var connection = OpenConnection())
             {
-                states = Query()
-                    .Include(x => x.Children)
-                    .Where(x => x.ParentId == countryId && x.RegionType == RegionType.State)
-                    .OrderBy(x => x.Order == null)
-                    .ThenBy(x => x.Order)
-                    .ThenBy(x => x.Name)
-                    .ToHashSet();
-            }
-            else
-            {
-                states = Query(x => x.ParentId == countryId && x.RegionType == RegionType.State)
-                    .OrderBy(x => x.Order == null)
-                    .ThenBy(x => x.Order)
-                    .ThenBy(x => x.Name)
-                    .ToHashSet();
+                if (includeCities)
+                {
+                    states = connection.Query()
+                        .Include(x => x.Children)
+                        .Where(x => x.ParentId == countryId && x.RegionType == RegionType.State)
+                        .OrderBy(x => x.Order == null)
+                        .ThenBy(x => x.Order)
+                        .ThenBy(x => x.Name)
+                        .ToHashSet();
+                }
+                else
+                {
+                    states = connection.Query(x => x.ParentId == countryId && x.RegionType == RegionType.State)
+                        .OrderBy(x => x.Order == null)
+                        .ThenBy(x => x.Order)
+                        .ThenBy(x => x.Name)
+                        .ToHashSet();
+                }
             }
 
             if (!string.IsNullOrEmpty(cultureCode))

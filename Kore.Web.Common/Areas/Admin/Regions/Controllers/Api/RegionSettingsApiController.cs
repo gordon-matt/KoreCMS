@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
-using System.Web.Http.Results;
+using Kore.Collections;
 using Kore.Infrastructure;
 using Kore.Web.Common.Areas.Admin.Regions.Domain;
 using Kore.Web.Common.Areas.Admin.Regions.Services;
@@ -26,20 +25,30 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
             this.regionSettingsService = regionSettingsService;
         }
 
-        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public virtual IQueryable<EdmRegionSettings> Get()
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        public virtual IEnumerable<EdmRegionSettings> Get(ODataQueryOptions<EdmRegionSettings> options)
         {
             if (!CheckPermission(Permissions.RegionsRead))
             {
                 return Enumerable.Empty<EdmRegionSettings>().AsQueryable();
             }
-            return regionSettings
+
+            var settings = new ODataValidationSettings()
+            {
+                AllowedQueryOptions = AllowedQueryOptions.All
+            };
+            options.Validate(settings);
+
+            var query = regionSettings
                 .Select(x => new EdmRegionSettings
                 {
                     Id = x.Name.ToSlugUrl(),
                     Name = x.Name
                 })
                 .AsQueryable();
+
+            var results = options.ApplyTo(query);
+            return (results as IQueryable<EdmRegionSettings>).ToHashSet();
         }
 
         [HttpPost]

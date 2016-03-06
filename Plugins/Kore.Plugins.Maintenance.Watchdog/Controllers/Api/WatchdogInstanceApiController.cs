@@ -59,14 +59,19 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
 
         #endregion GenericODataController<WatchdogInstance, int> Members
 
-        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         [HttpGet]
-        public IHttpActionResult GetServices([FromODataUri] int watchdogInstanceId)
+        public IHttpActionResult GetServices([FromODataUri] int watchdogInstanceId, ODataQueryOptions<ServiceInfoResult> options)
         {
             if (!CheckPermission(ReadPermission))
             {
                 return Unauthorized();
             }
+
+            options.Validate(new ODataValidationSettings()
+            {
+                AllowedQueryOptions = AllowedQueryOptions.All
+            });
 
             var instance = Service.FindOne(watchdogInstanceId);
 
@@ -87,7 +92,9 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
                         IsWatched = true
                     });
 
-                    return Ok(items.AsQueryable());
+                    var query = items.AsQueryable();
+                    var results = options.ApplyTo(query);
+                    return Ok((results as IQueryable<ServiceInfoResult>).ToHashSet());
                 }
                 else
                 {
@@ -106,7 +113,9 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
                         IsWatched = watchedServiceNames.Contains(x.ServiceName)
                     });
 
-                    return Ok(items.AsQueryable());
+                    var query = items.AsQueryable();
+                    var results = options.ApplyTo(query);
+                    return Ok((results as IQueryable<ServiceInfoResult>).ToHashSet());
                 }
             }
         }

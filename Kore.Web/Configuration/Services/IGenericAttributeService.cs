@@ -1,11 +1,11 @@
-﻿using Kore.Reflection;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
 using Kore.Caching;
 using Kore.Data;
 using Kore.Data.Services;
+using Kore.Reflection;
 using Kore.Web.Configuration.Domain;
 
 namespace Kore.Web.Configuration.Services
@@ -34,13 +34,7 @@ namespace Kore.Web.Configuration.Services
             string cacheKey = string.Format(GenericAttributeKeyFormat, entityId, entityType);
             return CacheManager.Get(cacheKey, () =>
             {
-                var query = from ga in Query()
-                            where ga.EntityId == entityId &&
-                            ga.EntityType == entityType
-                            select ga;
-
-                var attributes = query.ToList();
-                return attributes;
+                return Find(x => x.EntityId == entityId && x.EntityType == entityType);
             });
         }
 

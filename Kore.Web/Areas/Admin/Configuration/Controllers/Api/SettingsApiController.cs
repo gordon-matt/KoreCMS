@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
@@ -32,10 +32,10 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
             entity.Id = Guid.NewGuid();
         }
 
-        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public override IQueryable<Setting> Get()
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        public override IEnumerable<Setting> Get(ODataQueryOptions<Setting> options)
         {
-            return base.Get();
+            return base.Get(options);
         }
 
         public override IHttpActionResult Delete([FromODataUri] Guid key)

@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
-using System.Web.Http.Results;
 using Castle.Core.Logging;
+using Kore.Collections;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web.Security.Membership;
@@ -35,17 +34,25 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             this.logger = logger;
         }
 
-        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public virtual IQueryable<KoreUser> Get()
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        public virtual IEnumerable<KoreUser> Get(ODataQueryOptions<KoreUser> options)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
                 return Enumerable.Empty<KoreUser>().AsQueryable();
             }
-            return Service.GetAllUsersAsQueryable();
+
+            var settings = new ODataValidationSettings()
+            {
+                AllowedQueryOptions = AllowedQueryOptions.All
+            };
+            options.Validate(settings);
+
+            var results = options.ApplyTo(Service.GetAllUsersAsQueryable());
+            return (results as IQueryable<KoreUser>).ToHashSet();
         }
 
-        [EnableQuery]
+        //[EnableQuery]
         public virtual SingleResult<KoreUser> Get([FromODataUri] string key)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
@@ -174,16 +181,24 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             return Service.GetUserById(key) != null;
         }
 
-        [EnableQuery]
+        //[EnableQuery]
         [HttpPost]
-        public virtual IQueryable<KoreUser> GetUsersInRole(ODataActionParameters parameters)
+        public virtual IEnumerable<KoreUser> GetUsersInRole(ODataQueryOptions<KoreUser> options, ODataActionParameters parameters)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
                 return Enumerable.Empty<KoreUser>().AsQueryable();
             }
             string roleId = (string)parameters["roleId"];
-            return Service.GetUsersByRoleId(roleId).AsQueryable();
+
+            var settings = new ODataValidationSettings()
+            {
+                AllowedQueryOptions = AllowedQueryOptions.All
+            };
+            options.Validate(settings);
+
+            var results = options.ApplyTo(Service.GetUsersByRoleId(roleId).AsQueryable());
+            return (results as IQueryable<KoreUser>).ToHashSet();
         }
 
         [HttpPost]

@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.OData;
 using System.Web.OData.Query;
+using Kore.Collections;
 using Kore.Security.Membership;
 
 namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
@@ -14,14 +16,25 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             this.Service = service;
         }
 
-        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public virtual IQueryable<PublicUserInfo> Get()
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        public virtual IEnumerable<PublicUserInfo> Get(ODataQueryOptions<PublicUserInfo> options)
         {
-            return Service.GetAllUsersAsQueryable().Select(x => new PublicUserInfo
+            var settings = new ODataValidationSettings()
             {
-                Id = x.Id,
-                UserName = x.UserName
-            });
+                AllowedQueryOptions = AllowedQueryOptions.All
+            };
+            options.Validate(settings);
+
+            var query = Service.GetAllUsersAsQueryable()
+                .Select(x => new PublicUserInfo
+                {
+                    Id = x.Id,
+                    UserName = x.UserName
+                })
+                .AsQueryable();
+
+            var results = options.ApplyTo(query);
+            return (results as IQueryable<PublicUserInfo>).ToHashSet();
         }
 
         public virtual PublicUserInfo Get([FromODataUri] string key)

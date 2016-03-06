@@ -108,7 +108,7 @@ namespace Kore.Web.Infrastructure
             var settingsRepository = EngineContext.Current.Resolve<IRepository<Setting>>();
             var allSettings = EngineContext.Current.ResolveAll<ISettings>();
             var allSettingNames = allSettings.Select(x => x.Name).ToList();
-            var installedSettings = settingsRepository.Table.ToList();
+            var installedSettings = settingsRepository.Find();
             var installedSettingNames = installedSettings.Select(x => x.Name).ToList();
 
             var settingsToAdd = allSettings.Where(x => !installedSettingNames.Contains(x.Name)).Select(x => new Setting

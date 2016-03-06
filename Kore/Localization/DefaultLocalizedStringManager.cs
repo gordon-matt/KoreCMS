@@ -68,10 +68,10 @@ namespace Kore.Localization
 
             if (string.IsNullOrEmpty(cultureCode))
             {
-                return LoadTranslations(repository.Table.Where(x => x.CultureCode == null).ToList());
+                return LoadTranslations(repository.Find(x => x.CultureCode == null));
             }
 
-            return LoadTranslations(repository.Table.Where(x => x.CultureCode == cultureCode).ToList());
+            return LoadTranslations(repository.Find(x => x.CultureCode == cultureCode));
         }
 
         private static Dictionary<string, string> LoadTranslations(IEnumerable<LocalizableString> items)

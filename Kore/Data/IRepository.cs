@@ -9,7 +9,12 @@ namespace Kore.Data
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        IQueryable<TEntity> Table { get; }
+        //IQueryable<TEntity> Table { get; }
+
+        IRepositoryConnection<TEntity> OpenConnection();
+
+        IRepositoryConnection<TEntity> UseConnection<TOther>(IRepositoryConnection<TOther> connection)
+            where TOther : class;
 
         #region Find
 
@@ -29,7 +34,7 @@ namespace Kore.Data
 
         Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> filterExpression);
 
-        #endregion
+        #endregion Find
 
         #region Count
 

@@ -412,7 +412,8 @@ namespace KoreCMS.Services
         public IEnumerable<KoreUser> GetUsersByRoleId(object roleId)
         {
             string rId = roleId.ToString();
-            var role = roleManager.FindById(rId);
+            //var role = roleManager.FindById(rId);
+            var role = roleManager.Roles.Include(x => x.Users).FirstOrDefault(x => x.Id == rId);
 
             var userIds = role.Users.Select(x => x.UserId).ToList();
             var users = userManager.Users.Where(x => userIds.Contains(x.Id));
@@ -631,12 +632,19 @@ namespace KoreCMS.Services
 
         public IDictionary<string, string> GetProfile(string userId)
         {
-            return userProfileRepository.Table.Where(x => x.UserId == userId).ToDictionary(k => k.Key, v => v.Value);
+            using (var connection = userProfileRepository.OpenConnection())
+            {
+                return connection.Query(x => x.UserId == userId).ToDictionary(k => k.Key, v => v.Value);
+            }
         }
 
         public void UpdateProfile(string userId, IDictionary<string, string> profile, bool deleteExisting = false)
         {
-            var entries = userProfileRepository.Table.Where(x => x.UserId == userId).ToList();
+            List<UserProfileEntry> entries = null;
+            using (var connection = userProfileRepository.OpenConnection())
+            {
+                entries = connection.Query(x => x.UserId == userId).ToList();
+            }
 
             if (deleteExisting)
             {
@@ -738,32 +746,38 @@ namespace KoreCMS.Services
 
         public IEnumerable<KoreUserProfileEntry> GetProfileEntriesByKey(string key)
         {
-            return userProfileRepository.Table
-                .Where(x => x.Key == key)
-                .ToHashSet()
-                .Select(x => new KoreUserProfileEntry
-                {
-                    Id = x.Id.ToString(),
-                    UserId = x.UserId,
-                    Key = x.Key,
-                    Value = x.Value
-                });
+            using (var connection = userProfileRepository.OpenConnection())
+            {
+                return connection
+                    .Query(x => x.Key == key)
+                    .ToHashSet()
+                    .Select(x => new KoreUserProfileEntry
+                    {
+                        Id = x.Id.ToString(),
+                        UserId = x.UserId,
+                        Key = x.Key,
+                        Value = x.Value
+                    });
+            }
         }
 
         public IEnumerable<KoreUserProfileEntry> GetProfileEntriesByKeyAndValue(string key, string value)
         {
-            return userProfileRepository.Table
-                .Where(x =>
-                    x.Key == key &&
-                    x.Value == value)
-                .ToHashSet()
-                .Select(x => new KoreUserProfileEntry
-                {
-                    Id = x.Id.ToString(),
-                    UserId = x.UserId,
-                    Key = x.Key,
-                    Value = x.Value
-                });
+            using (var connection = userProfileRepository.OpenConnection())
+            {
+                return connection
+                    .Query(x =>
+                        x.Key == key &&
+                        x.Value == value)
+                    .ToHashSet()
+                    .Select(x => new KoreUserProfileEntry
+                    {
+                        Id = x.Id.ToString(),
+                        UserId = x.UserId,
+                        Key = x.Key,
+                        Value = x.Value
+                    });
+            }
         }
 
         #endregion Profile

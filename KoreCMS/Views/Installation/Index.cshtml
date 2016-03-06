@@ -35,7 +35,7 @@
                 @using (Html.BeginForm("PostInstall", "Installation", FormMethod.Post, new { @class = "form-horizontal" }))
                 {
                     @Html.AntiForgeryToken()
-                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    @Html.ValidationSummary(string.Empty, new { @class = "text-danger" })
                     
                     using (var panel = Html.KoreUI().Begin(new Panel()))
                     {

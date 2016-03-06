@@ -231,7 +231,13 @@ namespace Kore.Web.ContentManagement.Controllers
             {
                 // We don't care about culture here because the only thing we're interested in getting is
                 //  the Page ID, which will of course be the same for all versions of a page.
-                var anyVersion = pageVersionService.FindOne(y => y.Slug == currentUrlSlug);
+                PageVersion anyVersion = null;
+                using (var connection = pageVersionService.OpenConnection())
+                {
+                    anyVersion = connection.Query(y => y.Slug == currentUrlSlug)
+                        .Include(x => x.Page)
+                        .FirstOrDefault();
+                }
 
                 // If the current page is a CMS page
                 if (anyVersion != null)

@@ -19,6 +19,7 @@ using Kore.Web.ContentManagement.Areas.Admin.Localization;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Domain;
 using Kore.Web.Infrastructure;
 using KoreCMS.Data.Domain;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -57,9 +58,12 @@ namespace KoreCMS.Data
         }
 
         private void Init()
-        {
-            this.Configuration.LazyLoadingEnabled = false;
+        {// Warning: Setting LazyLoadingEnabled to false causes problems with Identity 2.0:
+            //  See: http://stackoverflow.com/questions/22816478/using-usermanager-and-rolemanager-in-microsoft-aspnet-identity
+            //this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.ProxyCreationEnabled = false;
+            this.Configuration.AutoDetectChangesEnabled = false;
+            this.Configuration.ValidateOnSaveEnabled = false;
         }
 
         #endregion Constructors
@@ -68,7 +72,11 @@ namespace KoreCMS.Data
 
         public DbSet<LanguageEntity> Languages { get; set; }
 
+        public DbSet<LocalizableProperty> LocalizableProperties { get; set; }
+
         public DbSet<LocalizableString> LocalizableStrings { get; set; }
+
+        public DbSet<LogEntry> Log { get; set; }
 
         public DbSet<ScheduledTask> ScheduledTasks { get; set; }
 
@@ -78,23 +86,33 @@ namespace KoreCMS.Data
 
         #region IKoreCmsDbContext Members
 
-        public DbSet<BlogPost> Blog { get; set; }
+        public DbSet<BlogCategory> BlogCategories { get; set; }
+
+        public DbSet<BlogPost> BlogPosts { get; set; }
+
+        public DbSet<BlogPostTag> BlogPostTags { get; set; }
+
+        public DbSet<BlogTag> BlogTags { get; set; }
 
         public DbSet<ContentBlock> ContentBlocks { get; set; }
 
-        public DbSet<LogEntry> Log { get; set; }
-
-        public DbSet<MenuItem> MenuItems { get; set; }
+        public DbSet<EntityTypeContentBlock> EntityTypeContentBlocks { get; set; }
 
         public DbSet<Menu> Menus { get; set; }
+
+        public DbSet<MenuItem> MenuItems { get; set; }
 
         public DbSet<MessageTemplate> MessageTemplates { get; set; }
 
         public DbSet<Page> Pages { get; set; }
 
+        public DbSet<PageType> PageTypes { get; set; }
+
         public DbSet<PageVersion> PageVersions { get; set; }
 
         public DbSet<QueuedEmail> QueuedEmails { get; set; }
+
+        public DbSet<SitemapConfig> SitemapConfig { get; set; }
 
         public DbSet<Zone> Zones { get; set; }
 
@@ -104,13 +122,9 @@ namespace KoreCMS.Data
 
         public DbSet<PermissionEntity> Permissions { get; set; }
 
-        #endregion IKoreSecurityDbContext Members
-
-        #region Others
-
         public DbSet<UserProfileEntry> UserProfiles { get; set; }
 
-        #endregion Others
+        #endregion IKoreSecurityDbContext Members
 
         #region ISupportSeed Members
 

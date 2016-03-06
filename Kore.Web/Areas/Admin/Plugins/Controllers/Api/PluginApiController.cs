@@ -1,7 +1,8 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.OData;
 using System.Web.OData.Query;
+using Kore.Collections;
 using Kore.Infrastructure;
 using Kore.Web.Areas.Admin.Plugins.Models;
 using Kore.Web.Plugins;
@@ -20,15 +21,23 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers.Api
         }
 
         // GET: odata/kore/cms/Plugins
-        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public virtual IQueryable<EdmPluginDescriptor> Get()
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        public virtual IEnumerable<EdmPluginDescriptor> Get(ODataQueryOptions<EdmPluginDescriptor> options)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
                 return Enumerable.Empty<EdmPluginDescriptor>().AsQueryable();
             }
 
-            return pluginFinder.GetPluginDescriptors(false).Select(x => (EdmPluginDescriptor)x).AsQueryable();
+            var settings = new ODataValidationSettings()
+            {
+                AllowedQueryOptions = AllowedQueryOptions.All
+            };
+            options.Validate(settings);
+
+            var query = pluginFinder.GetPluginDescriptors(false).Select(x => (EdmPluginDescriptor)x).AsQueryable();
+            var results = options.ApplyTo(query);
+            return (results as IQueryable<EdmPluginDescriptor>).ToHashSet();
         }
 
         protected static bool CheckPermission(Permission permission)

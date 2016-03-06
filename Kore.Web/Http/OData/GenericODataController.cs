@@ -1,14 +1,16 @@
-﻿using System.Data.Entity.Infrastructure;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
+using System.Web.Http.Results;
 using System.Web.OData;
 using System.Web.OData.Query;
-using System.Web.Http.Results;
 using Castle.Core.Logging;
 using Kore.Caching;
+using Kore.Collections;
 using Kore.Data;
 using Kore.Data.Services;
 using Kore.Infrastructure;
@@ -37,14 +39,24 @@ namespace Kore.Web.Http.OData
         }
 
         // GET: odata/<Entity>
-        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public virtual IQueryable<TEntity> Get()
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        public virtual IEnumerable<TEntity> Get(ODataQueryOptions<TEntity> options)
         {
             if (!CheckPermission(ReadPermission))
             {
                 return Enumerable.Empty<TEntity>().AsQueryable();
             }
-            return Service.Query();
+
+            options.Validate(new ODataValidationSettings()
+            {
+                AllowedQueryOptions = AllowedQueryOptions.All
+            });
+
+            using (var connection = Service.OpenConnection())
+            {
+                var results = options.ApplyTo(connection.Query());
+                return (results as IQueryable<TEntity>).ToHashSet();
+            }
         }
 
         // GET: odata/<Entity>(5)
@@ -210,5 +222,12 @@ namespace Kore.Web.Http.OData
         protected abstract Permission ReadPermission { get; }
 
         protected abstract Permission WritePermission { get; }
+
+
+        protected virtual IHttpActionResult Ok(object content, Type type)
+        {
+            var resultType = typeof(OkNegotiatedContentResult<>).MakeGenericType(type);
+            return Activator.CreateInstance(resultType, content, this) as IHttpActionResult;
+        }
     }
 }

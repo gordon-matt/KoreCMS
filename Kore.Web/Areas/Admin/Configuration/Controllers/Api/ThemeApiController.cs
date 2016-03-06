@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
+using Kore.Collections;
 using Kore.Infrastructure;
 using Kore.Web.Areas.Admin.Configuration.Models;
 using Kore.Web.Configuration;
@@ -29,8 +31,8 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
         }
 
         // GET: odata/kore/cms/Plugins
-        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public virtual IQueryable<EdmThemeConfiguration> Get()
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        public virtual IEnumerable<EdmThemeConfiguration> Get(ODataQueryOptions<EdmThemeConfiguration> options)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
@@ -53,7 +55,14 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
                 }
             }
 
-            return themes.AsQueryable();
+            var settings = new ODataValidationSettings()
+            {
+                AllowedQueryOptions = AllowedQueryOptions.All
+            };
+            options.Validate(settings);
+
+            var results = options.ApplyTo(themes.AsQueryable());
+            return (results as IQueryable<EdmThemeConfiguration>).ToHashSet();
         }
 
         [HttpPost]

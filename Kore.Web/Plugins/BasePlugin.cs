@@ -86,9 +86,7 @@ namespace Kore.Web.Plugins
 
             var localizableStringRepository = EngineContext.Current.Resolve<IRepository<LocalizableString>>();
 
-            var toDelete = localizableStringRepository.Table
-                .Where(x => distinctKeys.Contains(x.TextKey))
-                .ToHashSet();
+            var toDelete = localizableStringRepository.Find(x => distinctKeys.Contains(x.TextKey));
 
             localizableStringRepository.Delete(toDelete);
 

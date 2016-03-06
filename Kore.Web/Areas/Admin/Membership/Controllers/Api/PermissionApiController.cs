@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
-using System.Web.Http.Results;
 using Castle.Core.Logging;
+using Kore.Collections;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web.Security.Membership.Permissions;
@@ -28,17 +27,25 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             this.logger = logger;
         }
 
-        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public virtual IQueryable<KorePermission> Get()
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        public virtual IEnumerable<KorePermission> Get(ODataQueryOptions<KorePermission> options)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
                 return Enumerable.Empty<KorePermission>().AsQueryable();
             }
-            return Service.GetAllPermissions().AsQueryable();
+
+            var settings = new ODataValidationSettings()
+            {
+                AllowedQueryOptions = AllowedQueryOptions.All
+            };
+            options.Validate(settings);
+
+            var results = options.ApplyTo(Service.GetAllPermissions().AsQueryable());
+            return (results as IQueryable<KorePermission>).ToHashSet();
         }
 
-        [EnableQuery]
+        //[EnableQuery]
         public virtual SingleResult<KorePermission> Get([FromODataUri] string key)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))

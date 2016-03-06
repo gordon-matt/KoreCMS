@@ -60,15 +60,18 @@ namespace Kore.Tasks.Services
         /// <returns>Task</returns>
         public virtual ScheduledTask GetTaskByType(string type)
         {
-            if (String.IsNullOrWhiteSpace(type))
+            if (string.IsNullOrWhiteSpace(type))
+            {
                 return null;
+            }
 
-            var query = taskRepository.Table;
-            query = query.Where(st => st.Type == type);
-            query = query.OrderByDescending(t => t.Id);
-
-            var task = query.FirstOrDefault();
-            return task;
+            using (var connection = taskRepository.OpenConnection())
+            {
+                return connection
+                    .Query(st => st.Type == type)
+                    .OrderByDescending(t => t.Id)
+                    .FirstOrDefault();
+            }
         }
 
         /// <summary>
@@ -78,15 +81,18 @@ namespace Kore.Tasks.Services
         /// <returns>Tasks</returns>
         public virtual IList<ScheduledTask> GetAllTasks(bool showHidden = false)
         {
-            var query = taskRepository.Table;
-            if (!showHidden)
+            using (var connection = taskRepository.OpenConnection())
             {
-                query = query.Where(t => t.Enabled);
-            }
-            query = query.OrderByDescending(t => t.Seconds);
+                var query = connection.Query();
 
-            var tasks = query.ToList();
-            return tasks;
+                if (!showHidden)
+                {
+                    query = query.Where(t => t.Enabled);
+                }
+                query = query.OrderByDescending(t => t.Seconds);
+
+                return query.ToList();
+            }
         }
 
         /// <summary>

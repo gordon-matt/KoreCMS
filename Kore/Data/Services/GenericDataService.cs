@@ -124,19 +124,20 @@ namespace Kore.Data.Services
 
         #endregion Find
 
-        #region Query
+        #region Open/Use Connection
 
-        public virtual IQueryable<TEntity> Query()
+        public virtual IRepositoryConnection<TEntity> OpenConnection()
         {
-            return repository.Table;
+            return repository.OpenConnection();
         }
 
-        public virtual IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> filterExpression)
+        public virtual IRepositoryConnection<TEntity> UseConnection<TOther>(IRepositoryConnection<TOther> connection)
+            where TOther : class
         {
-            return repository.Table.Where(filterExpression);
+            return repository.UseConnection(connection);
         }
 
-        #endregion Find
+        #endregion Open/Use Connection
 
         #region Count
 

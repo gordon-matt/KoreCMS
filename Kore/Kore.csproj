@@ -173,6 +173,7 @@
     <Compile Include="Data\IKoreDbHelper.cs" />
     <Compile Include="Data\IEntity.cs" />
     <Compile Include="Data\IRepository.cs" />
+    <Compile Include="Data\IRepositoryConnection.cs" />
     <Compile Include="Data\OleDb\OleDbConnectionExtensions.cs" />
     <Compile Include="Data\Services\GenericDataService.cs" />
     <Compile Include="Data\Services\IGenericDataService.cs" />

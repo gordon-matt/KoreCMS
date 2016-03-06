@@ -19,7 +19,7 @@ namespace Kore
                 var taskRepository = EngineContext.Current.Resolve<IRepository<ScheduledTask>>();
                 var allTasks = EngineContext.Current.ResolveAll<ITask>();
                 var allTaskNames = allTasks.Select(x => x.Name).ToList();
-                var installedTasks = taskRepository.Table.ToList();
+                var installedTasks = taskRepository.Find();
                 var installedTaskNames = installedTasks.Select(x => x.Name).ToList();
 
                 var tasksToAdd = allTasks

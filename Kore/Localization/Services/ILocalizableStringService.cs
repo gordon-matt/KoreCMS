@@ -34,19 +34,22 @@ namespace Kore.Localization.Services
 
             try
             {
-                var query = Query(x => x.CultureCode == null || x.CultureCode == cultureCode)
-                    .GroupBy(x => x.TextKey)
-                    .Select(grp => new ComparitiveLocalizableString
-                    {
-                        Key = grp.Key,
-                        InvariantValue = grp.FirstOrDefault(x => x.CultureCode == null).TextValue,
-                        LocalizedValue = grp.FirstOrDefault(x => x.CultureCode == cultureCode) == null ? "" : grp.FirstOrDefault(x => x.CultureCode == cultureCode).TextValue
-                    })
-                    .OrderBy(x => x.Key)
-                    .Skip((pageIndex - 1) * pageSize)
-                    .Take(pageSize);
+                using (var connection = OpenConnection())
+                {
+                    var query = connection.Query(x => x.CultureCode == null || x.CultureCode == cultureCode)
+                        .GroupBy(x => x.TextKey)
+                        .Select(grp => new ComparitiveLocalizableString
+                        {
+                            Key = grp.Key,
+                            InvariantValue = grp.FirstOrDefault(x => x.CultureCode == null).TextValue,
+                            LocalizedValue = grp.FirstOrDefault(x => x.CultureCode == cultureCode) == null ? "" : grp.FirstOrDefault(x => x.CultureCode == cultureCode).TextValue
+                        })
+                        .OrderBy(x => x.Key)
+                        .Skip((pageIndex - 1) * pageSize)
+                        .Take(pageSize);
 
-                table.AddRange(query.ToList());
+                    table.AddRange(query.ToList());
+                }
             }
             catch (Exception)
             {
@@ -73,40 +76,43 @@ namespace Kore.Localization.Services
 
         public virtual void Update(string cultureCode, IEnumerable<ComparitiveLocalizableString> table)
         {
-            var localizedStrings = Query(x => x.CultureCode == cultureCode)
-                .ToDictionary(k => k.TextKey, v => v.TextValue);
-
-            var newItems = table.Where(x => !localizedStrings.Keys.Contains(x.Key));
-
-            var batchInserts = newItems.Select(item => new LocalizableString
+            using (var connection = OpenConnection())
             {
-                Id = Guid.NewGuid(),
-                CultureCode = cultureCode,
-                TextKey = item.Key,
-                TextValue = item.LocalizedValue
-            }).ToList();
+                var localizedStrings = connection.Query(x => x.CultureCode == cultureCode)
+                    .ToDictionary(k => k.TextKey, v => v.TextValue);
 
-            if (batchInserts.Any())
-            {
-                Insert(batchInserts);
-            }
+                var newItems = table.Where(x => !localizedStrings.Keys.Contains(x.Key));
 
-            var changedItems = table.Where(x => localizedStrings.Keys.Contains(x.Key) && localizedStrings[x.Key] != x.LocalizedValue).ToList();
-            var changedItemKeys = changedItems.Select(x => x.Key);
+                var batchInserts = newItems.Select(item => new LocalizableString
+                {
+                    Id = Guid.NewGuid(),
+                    CultureCode = cultureCode,
+                    TextKey = item.Key,
+                    TextValue = item.LocalizedValue
+                }).ToList();
 
-            var toUpdate = Find(x => x.CultureCode == cultureCode && changedItemKeys.Contains(x.TextKey));
+                if (batchInserts.Any())
+                {
+                    Insert(batchInserts);
+                }
 
-            var batchUpdates = new List<LocalizableString>();
+                var changedItems = table.Where(x => localizedStrings.Keys.Contains(x.Key) && localizedStrings[x.Key] != x.LocalizedValue).ToList();
+                var changedItemKeys = changedItems.Select(x => x.Key);
 
-            foreach (var item in toUpdate)
-            {
-                item.TextValue = changedItems.First(x => x.Key == item.TextKey).LocalizedValue;
-                batchUpdates.Add(item);
-            }
+                var toUpdate = Find(x => x.CultureCode == cultureCode && changedItemKeys.Contains(x.TextKey));
 
-            if (batchUpdates.Any())
-            {
-                Update(batchUpdates);
+                var batchUpdates = new List<LocalizableString>();
+
+                foreach (var item in toUpdate)
+                {
+                    item.TextValue = changedItems.First(x => x.Key == item.TextKey).LocalizedValue;
+                    batchUpdates.Add(item);
+                }
+
+                if (batchUpdates.Any())
+                {
+                    Update(batchUpdates);
+                }
             }
         }
     }

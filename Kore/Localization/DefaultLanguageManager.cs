@@ -11,8 +11,7 @@ namespace Kore.Localization
         {
             var repository = EngineContext.Current.Resolve<IRepository<Kore.Localization.Domain.Language>>();
 
-            return repository.Table
-                .Where(x => x.IsEnabled)
+            return repository.Find(x => x.IsEnabled)
                 .Select(x => new Language
                 {
                     CultureCode = x.CultureCode,

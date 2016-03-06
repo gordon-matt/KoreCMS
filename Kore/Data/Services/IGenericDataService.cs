@@ -9,7 +9,18 @@ namespace Kore.Data.Services
 {
     public interface IGenericDataService<TEntity> where TEntity : class
     {
-        //IRepository<TEntity> Repository { get; }
+        #region Open Connection
+
+        /// <summary>
+        /// Used to access an IQueryable and run custom queries directly against the database
+        /// </summary>
+        /// <returns></returns>
+        IRepositoryConnection<TEntity> OpenConnection();
+
+        IRepositoryConnection<TEntity> UseConnection<TOther>(IRepositoryConnection<TOther> connection)
+            where TOther : class;
+
+        #endregion Open Connection
 
         #region Find
 
@@ -32,14 +43,6 @@ namespace Kore.Data.Services
         Task<TEntity> FindOneAsync(params object[] keyValues);
 
         Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> filterExpression);
-
-        #endregion
-
-        #region Query
-
-        IQueryable<TEntity> Query();
-
-        IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> filterExpression);
 
         #endregion Find
 

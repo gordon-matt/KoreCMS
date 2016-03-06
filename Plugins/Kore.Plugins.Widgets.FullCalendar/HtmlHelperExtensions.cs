@@ -49,14 +49,17 @@ namespace Kore.Plugins.Widgets.FullCalendar
         {
             var repository = EngineContext.Current.Resolve<IRepository<Calendar>>();
 
-            return repository.Table
-                .OrderBy(x => x.Name)
-                .ToHashSet()
-                .ToSelectList(
-                    value => value.Id,
-                    text => text.Name,
-                    selectedValue,
-                    emptyText);
+            using (var connection = repository.OpenConnection())
+            {
+                return connection.Query()
+                    .OrderBy(x => x.Name)
+                    .ToHashSet()
+                    .ToSelectList(
+                        value => value.Id,
+                        text => text.Name,
+                        selectedValue,
+                        emptyText);
+            }
         }
     }
 }

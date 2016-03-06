@@ -8,6 +8,7 @@ using Kore.Plugins.Widgets.RoyalVideoPlayer.Data.Domain;
 using Kore.Plugins.Widgets.RoyalVideoPlayer.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
+using System.Collections.Generic;
 
 namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
 {
@@ -62,9 +63,14 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
                 return NotFound();
             }
 
-            var playlistIds = playlistVideoService.Value.Query(x => x.VideoId == videoId)
-                .Select(x => x.PlaylistId)
-                .ToList();
+            List<int> playlistIds = null;
+            using (var connection = playlistVideoService.Value.OpenConnection())
+            {
+                playlistIds = connection
+                    .Query(x => x.VideoId == videoId)
+                    .Select(x => x.PlaylistId)
+                    .ToList();
+            }
 
             return Ok(playlistIds);
         }

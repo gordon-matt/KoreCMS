@@ -48,22 +48,35 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
             get { return Permissions.Write; }
         }
 
-        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         [HttpGet]
-        public virtual IQueryable<Video> GetVideosByPlaylistId([FromODataUri] int playlistId)
+        public virtual IEnumerable<Video> GetVideosByPlaylistId([FromODataUri] int playlistId, ODataQueryOptions<Video> options)
         {
             if (!CheckPermission(ReadPermission))
             {
                 return Enumerable.Empty<Video>().AsQueryable();
             }
 
-            var videoIds = playlistVideoService.Value.Query(x => x.PlaylistId == playlistId)
-                .Select(x => x.VideoId)
-                .ToList();
+            List<int> videoIds = null;
+            using (var connection = playlistVideoService.Value.OpenConnection())
+            {
+                videoIds = connection.Query(x => x.PlaylistId == playlistId)
+                    .Select(x => x.VideoId)
+                    .ToList();
+            }
 
-            var query = Service.Query(x => videoIds.Contains(x.Id));
+            var settings = new ODataValidationSettings()
+            {
+                AllowedQueryOptions = AllowedQueryOptions.All
+            };
+            options.Validate(settings);
 
-            return query;
+            using (var connection = Service.OpenConnection())
+            {
+                var query = connection.Query(x => videoIds.Contains(x.Id));
+                var results = options.ApplyTo(query);
+                return (results as IQueryable<Video>).ToHashSet();
+            }
         }
 
         [HttpPost]
@@ -99,12 +112,22 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
 
             // Insert new entries from the list of IDs provided where those IDs are not already mapped.
 
-            var existingPlaylistIds = playlistService.Value.Query(x => playlists.Contains(x.Id))
-                .Select(x => x.Id);
+            List<int> existingPlaylistIds = null;
+            List<int> existingMappedIds = null;
 
-            var existingMappedIds = playlistVideoService.Value.Query(x => x.VideoId == videoId)
-                .Select(x => x.PlaylistId)
-                .ToList();
+            using (var connection = playlistService.Value.OpenConnection())
+            {
+                existingPlaylistIds = connection.Query(x => playlists.Contains(x.Id))
+                    .Select(x => x.Id)
+                    .ToList();
+            }
+
+            using (var connection = playlistVideoService.Value.OpenConnection())
+            {
+                existingMappedIds = connection.Query(x => x.VideoId == videoId)
+                    .Select(x => x.PlaylistId)
+                    .ToList();
+            }
 
             var toInsert = playlists
                 .Where(x =>

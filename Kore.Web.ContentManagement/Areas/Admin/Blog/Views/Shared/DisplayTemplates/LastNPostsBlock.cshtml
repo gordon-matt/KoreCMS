@@ -1,15 +1,21 @@
 ﻿@using Kore.Infrastructure
 @using Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks
+@using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 @using Kore.Web.ContentManagement.Areas.Admin.Blog.Services
 @using Kore.Web.Mvc.KoreUI
 @model LastNPostsBlock
 
 @{
     var blogService = EngineContext.Current.Resolve<IBlogPostService>();
-    var entries = blogService.Query()
-        .OrderByDescending(x => x.DateCreatedUtc)
-        .Take(Model.NumberOfEntries)
-        .ToList();
+    List<BlogPost> entries = null;
+    
+    using (var connection = blogService.OpenConnection())
+    {
+        entries = connection.Query()
+            .OrderByDescending(x => x.DateCreatedUtc)
+            .Take(Model.NumberOfEntries)
+            .ToList();
+    }
 }
 
 @using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))

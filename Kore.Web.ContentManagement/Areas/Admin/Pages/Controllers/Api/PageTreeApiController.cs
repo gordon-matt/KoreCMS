@@ -21,8 +21,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             this.service = service;
         }
 
-        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All, MaxExpansionDepth = 10)]
-        public IEnumerable<PageTreeItem> Get()
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All, MaxExpansionDepth = 10)]
+        public IEnumerable<PageTreeItem> Get(ODataQueryOptions<PageTreeItem> options)
         {
             if (!CheckPermission(CmsPermissions.PagesRead))
             {
@@ -43,10 +43,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     SubPages = GetSubPages(pages, x.Id).ToList()
                 });
 
-            return hierarchy.ToHashSet();
+            var settings = new ODataValidationSettings()
+            {
+                AllowedQueryOptions = AllowedQueryOptions.All,
+                MaxExpansionDepth = 10
+            };
+            options.Validate(settings);
+
+            var results = options.ApplyTo(hierarchy.AsQueryable());
+            return (results as IQueryable<PageTreeItem>).ToHashSet();
         }
 
-        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All, MaxExpansionDepth = 10)]
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All, MaxExpansionDepth = 10)]
         public virtual SingleResult<PageTreeItem> Get([FromODataUri] Guid key)
         {
             if (!CheckPermission(CmsPermissions.PagesRead))

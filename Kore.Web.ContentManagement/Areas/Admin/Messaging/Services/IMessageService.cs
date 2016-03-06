@@ -104,11 +104,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Services
 
         public IEnumerable<IMailMessage> GetQueuedEmails(int maxSendTries, int maxMessageItems)
         {
-            return Query(x => x.SentTries < maxSendTries && x.SentOnUtc == null)
-                .OrderBy(x => x.Priority)
-                .ThenBy(x => x.CreatedOnUtc)
-                .Take(maxMessageItems)
-                .ToList();
+            using (var connection = OpenConnection())
+            {
+                return connection
+                    .Query(x => x.SentTries < maxSendTries && x.SentOnUtc == null)
+                    .OrderBy(x => x.Priority)
+                    .ThenBy(x => x.CreatedOnUtc)
+                    .Take(maxMessageItems)
+                    .ToList();
+            }
         }
 
         public void OnSendSuccess(IMailMessage mailMessage)

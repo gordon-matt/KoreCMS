@@ -59,11 +59,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                     ? 1
                     : Convert.ToInt32(pageIndexParam);
 
-                var model = postService.Value.Query()
-                    .OrderByDescending(x => x.DateCreatedUtc)
-                    .Skip((pageIndex - 1) * blogSettings.ItemsPerPage)
-                    .Take(blogSettings.ItemsPerPage)
-                    .ToList();
+                List<BlogPost> model = null;
+                using (var connection = postService.Value.OpenConnection())
+                {
+                    model = connection.Query()
+                        .OrderByDescending(x => x.DateCreatedUtc)
+                        .Skip((pageIndex - 1) * blogSettings.ItemsPerPage)
+                        .Take(blogSettings.ItemsPerPage)
+                        .ToList();
+                }
 
                 return Posts(pageIndex, model);
             }
@@ -98,14 +102,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 int pageIndex = string.IsNullOrEmpty(pageIndexParam)
                     ? 1
                     : Convert.ToInt32(pageIndexParam);
-
-                var model = postService.Value.Query()
-                    .Include(x => x.Tags)
-                    .Where(x => x.CategoryId == category.Id)
-                    .OrderByDescending(x => x.DateCreatedUtc)
-                    .Skip((pageIndex - 1) * blogSettings.ItemsPerPage)
-                    .Take(blogSettings.ItemsPerPage)
-                    .ToList();
+                
+                List<BlogPost> model = null;
+                using (var connection = postService.Value.OpenConnection())
+                {
+                    model = connection.Query()
+                        .Include(x => x.Tags)
+                        .Where(x => x.CategoryId == category.Id)
+                        .OrderByDescending(x => x.DateCreatedUtc)
+                        .Skip((pageIndex - 1) * blogSettings.ItemsPerPage)
+                        .Take(blogSettings.ItemsPerPage)
+                        .ToList();
+                }
 
                 return Posts(pageIndex, model);
             }
@@ -134,14 +142,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 int pageIndex = string.IsNullOrEmpty(pageIndexParam)
                     ? 1
                     : Convert.ToInt32(pageIndexParam);
-
-                var model = postService.Value.Query()
-                    .Include(x => x.Tags)
-                    .Where(x => x.Tags.Any(y => y.TagId == tag.Id))
-                    .OrderByDescending(x => x.DateCreatedUtc)
-                    .Skip((pageIndex - 1) * blogSettings.ItemsPerPage)
-                    .Take(blogSettings.ItemsPerPage)
-                    .ToList();
+                
+                List<BlogPost> model = null;
+                using (var connection = postService.Value.OpenConnection())
+                {
+                    model = connection.Query()
+                        .Include(x => x.Tags)
+                        .Where(x => x.Tags.Any(y => y.TagId == tag.Id))
+                        .OrderByDescending(x => x.DateCreatedUtc)
+                        .Skip((pageIndex - 1) * blogSettings.ItemsPerPage)
+                        .Take(blogSettings.ItemsPerPage)
+                        .ToList();
+                }
 
                 return Posts(pageIndex, model);
             }
@@ -227,31 +239,35 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
 
             var model = postService.Value.FindOne(x => x.Slug == slug);
 
-            string previousEntrySlug = null;
-            string nextEntrySlug = null;
-
-            bool hasPreviousEntry = postService.Value.Query().Any(x => x.DateCreatedUtc < model.DateCreatedUtc);
-            if (hasPreviousEntry)
+            DateTime? previousEntryDate = null;
+            DateTime? nextEntryDate = null;
+            using (var connection = postService.Value.OpenConnection())
             {
-                var previousEntryDate = postService.Value.Query(x => x.DateCreatedUtc < model.DateCreatedUtc)
-                    .Select(x => x.DateCreatedUtc)
-                    .Max();
+                bool hasPreviousEntry = connection.Query().Any(x => x.DateCreatedUtc < model.DateCreatedUtc);
+                if (hasPreviousEntry)
+                {
+                    previousEntryDate = connection.Query(x => x.DateCreatedUtc < model.DateCreatedUtc)
+                        .Select(x => x.DateCreatedUtc)
+                        .Max();
+                }
 
-                previousEntrySlug = postService.Value.FindOne(x => x.DateCreatedUtc == previousEntryDate).Slug;
+                bool hasNextEntry = connection.Query().Any(x => x.DateCreatedUtc > model.DateCreatedUtc);
+                if (hasNextEntry)
+                {
+                    nextEntryDate = connection.Query(x => x.DateCreatedUtc > model.DateCreatedUtc)
+                        .Select(x => x.DateCreatedUtc)
+                        .Min();
+                }
             }
 
-            bool hasNextEntry = postService.Value.Query().Any(x => x.DateCreatedUtc > model.DateCreatedUtc);
-            if (hasNextEntry)
-            {
-                var nextEntryDate = postService.Value.Query(x => x.DateCreatedUtc > model.DateCreatedUtc)
-                    .Select(x => x.DateCreatedUtc)
-                    .Min();
+            ViewBag.PreviousEntrySlug = previousEntryDate.HasValue
+                ? postService.Value.FindOne(x => x.DateCreatedUtc == previousEntryDate).Slug
+                : null;
 
-                nextEntrySlug = postService.Value.FindOne(x => x.DateCreatedUtc == nextEntryDate).Slug;
-            }
+            ViewBag.NextEntrySlug = nextEntryDate.HasValue
+                ? postService.Value.FindOne(x => x.DateCreatedUtc == nextEntryDate).Slug
+                : null;
 
-            ViewBag.PreviousEntrySlug = previousEntrySlug;
-            ViewBag.NextEntrySlug = nextEntrySlug;
             ViewBag.UserName = membershipService.Value.GetUserById(model.UserId).UserName;
 
             var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "Details", null);

@@ -391,9 +391,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
 
         public IEnumerable<Page> GetTopLevelPages()
         {
-            return Query(x => x.ParentId == null)
-                .OrderBy(x => x.Name)
-                .ToHashSet();
+            using (var connection = OpenConnection())
+            {
+                return connection
+                    .Query(x => x.ParentId == null)
+                    .OrderBy(x => x.Name)
+                    .ToHashSet();
+            }
         }
 
         #endregion IPageService Members

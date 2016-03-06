@@ -61,25 +61,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             //  we currently do...
 
             // First try get the latest published version for the current culture
-            var pageVersion = pageVersionService.Query()
-                .Include(x => x.Page)
-                .Where(x =>
-                    x.Status == VersionStatus.Published &&
-                    x.CultureCode == currentCulture &&
-                    x.Slug == slug)
-                .OrderByDescending(x => x.DateModifiedUtc)
-                .FirstOrDefault();
-
-            // If there isn't one...
-            if (pageVersion == null)
+            PageVersion pageVersion;
+            using (var connection = pageVersionService.OpenConnection())
             {
-                // ...then try get the last archived one for the current culture
-                // NOTE: there's no need to worry about the last one being a draft before being archived, because
-                //  we ONLY archive the published ones, not drafts.. so getting the last archived one will be the last published one
-                pageVersion = pageVersionService.Query()
+                pageVersion = connection.Query()
                     .Include(x => x.Page)
                     .Where(x =>
-                        x.Status == VersionStatus.Archived &&
+                        x.Status == VersionStatus.Published &&
                         x.CultureCode == currentCulture &&
                         x.Slug == slug)
                     .OrderByDescending(x => x.DateModifiedUtc)
@@ -89,29 +77,54 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             // If there isn't one...
             if (pageVersion == null)
             {
+                // ...then try get the last archived one for the current culture
+                // NOTE: there's no need to worry about the last one being a draft before being archived, because
+                //  we ONLY archive the published ones, not drafts.. so getting the last archived one will be the last published one
+                using (var connection = pageVersionService.OpenConnection())
+                {
+                    pageVersion = connection.Query()
+                        .Include(x => x.Page)
+                        .Where(x =>
+                            x.Status == VersionStatus.Archived &&
+                            x.CultureCode == currentCulture &&
+                            x.Slug == slug)
+                        .OrderByDescending(x => x.DateModifiedUtc)
+                        .FirstOrDefault();
+                }
+            }
+
+            // If there isn't one...
+            if (pageVersion == null)
+            {
                 // ...then try get the latest published version for the invariant culture
-                pageVersion = pageVersionService.Query()
-                    .Include(x => x.Page)
-                    .Where(x =>
-                        x.Status == VersionStatus.Published &&
-                        x.CultureCode == null &&
-                        x.Slug == slug)
-                    .OrderByDescending(x => x.DateModifiedUtc)
-                    .FirstOrDefault();
+                using (var connection = pageVersionService.OpenConnection())
+                {
+                    pageVersion = connection.Query()
+                        .Include(x => x.Page)
+                        .Where(x =>
+                            x.Status == VersionStatus.Published &&
+                            x.CultureCode == null &&
+                            x.Slug == slug)
+                        .OrderByDescending(x => x.DateModifiedUtc)
+                        .FirstOrDefault();
+                }
             }
 
             // If there isn't one...
             if (pageVersion == null)
             {
                 // ...then try get the last archived one for the invariant culture (TODO: What if last archived was a draft??)
-                pageVersion = pageVersionService.Query()
-                    .Include(x => x.Page)
-                    .Where(x =>
-                        x.Status == VersionStatus.Archived &&
-                        x.CultureCode == null &&
-                        x.Slug == slug)
-                    .OrderByDescending(x => x.DateModifiedUtc)
-                    .FirstOrDefault();
+                using (var connection = pageVersionService.OpenConnection())
+                {
+                    pageVersion = connection.Query()
+                        .Include(x => x.Page)
+                        .Where(x =>
+                            x.Status == VersionStatus.Archived &&
+                            x.CultureCode == null &&
+                            x.Slug == slug)
+                        .OrderByDescending(x => x.DateModifiedUtc)
+                        .FirstOrDefault();
+                }
             }
 
             if (pageVersion != null && pageVersion.Page.IsEnabled)

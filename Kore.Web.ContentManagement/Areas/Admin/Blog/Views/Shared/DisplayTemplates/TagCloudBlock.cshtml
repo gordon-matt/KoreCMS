@@ -1,5 +1,6 @@
 ﻿@using Kore.Infrastructure
 @using Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks
+@using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 @using Kore.Web.ContentManagement.Areas.Admin.Blog.Services
 @using Kore.Web.Mvc.KoreUI
 @model TagCloudBlock
@@ -10,12 +11,20 @@
 
     var postTagService = EngineContext.Current.Resolve<IBlogPostTagService>();
     var tagService = EngineContext.Current.Resolve<IBlogTagService>();
+    Dictionary<int, int> data = null;
+    Dictionary<int, BlogTag> tags = null;
+    
+    using (var connection = postTagService.OpenConnection())
+    {
+        data = connection.Query()
+            .GroupBy(x => x.TagId)
+            .ToDictionary(k => k.Key, v => v.Count());
+    }
 
-    var data = postTagService.Query()
-        .GroupBy(x => x.TagId)
-        .ToDictionary(k => k.Key, v => v.Count());
-
-    var tags = tagService.Query().ToDictionary(k => k.Id, v => v);
+    using (var connection = tagService.OpenConnection())
+    {
+        tags = connection.Query().ToDictionary(k => k.Id, v => v);
+    }
 
     string controlId = "blog-tag-cloud-" + Guid.NewGuid();
     string options = Model.GetOptions();

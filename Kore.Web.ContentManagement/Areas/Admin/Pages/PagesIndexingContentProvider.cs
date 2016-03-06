@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Web.Mvc;
 using Kore.Collections;
 using Kore.Infrastructure;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Indexing;
 using Kore.Web.Indexing.Services;
@@ -33,10 +34,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 
         public IEnumerable<IDocumentIndex> GetDocuments(Func<string, IDocumentIndex> factory)
         {
-            var pageVersions = pageVersionService.Query()
-                .Include(x => x.Page)
-                .ToHashSet();
-
             CultureInfo defaultCultureInfo = null;
             var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
             if (!string.IsNullOrEmpty(workContext.CurrentCultureCode))
@@ -49,6 +46,17 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
                 {
                     defaultCultureInfo = null;
                 }
+            }
+
+            // TODO: If there are too many records, we may get issues like "OutOfMemoryException".
+            //  We should implement paging here.
+            //  Also: shouldn't we only be indexing the latest versions of each page, rather than including every old version?
+            HashSet<PageVersion> pageVersions = null;
+            using (var connection = pageVersionService.OpenConnection())
+            {
+                pageVersions = connection.Query()
+                    .Include(x => x.Page)
+                    .ToHashSet();
             }
 
             foreach (var pageVersion in pageVersions)

@@ -62,14 +62,19 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
 
         #endregion GenericODataController<GoogleSitemapPageConfig, int> Members
 
-        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         [HttpGet]
-        public virtual IEnumerable<SitemapConfigModel> GetConfig()
+        public virtual IEnumerable<SitemapConfigModel> GetConfig(ODataQueryOptions<SitemapConfigModel> options)
         {
             if (!CheckPermission(ReadPermission))
             {
                 return Enumerable.Empty<SitemapConfigModel>();
             }
+
+            options.Validate(new ODataValidationSettings()
+            {
+                AllowedQueryOptions = AllowedQueryOptions.All
+            });
 
             // First ensure that current pages are in the config
             var config = Service.Find();
@@ -112,7 +117,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
                     Priority = item.Priority
                 });
             }
-            return collection.OrderBy(x => x.Location);
+            var query = collection.OrderBy(x => x.Location).AsQueryable();
+            var results = options.ApplyTo(query);
+            return (results as IQueryable<SitemapConfigModel>).ToHashSet();
         }
 
         [HttpPost]
@@ -170,7 +177,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
 
             var urls = new HashSet<UrlElement>();
 
-            var cultures = languageService.Value.Query().Select(x => x.CultureCode).ToList();
+            List<string> cultures = null;
+            using (var connection = languageService.Value.OpenConnection())
+            {
+                cultures = connection.Query().Select(x => x.CultureCode).ToList();
+            }
 
             string siteUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
 
@@ -179,7 +190,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
             {
                 var invariantVersion = pageVersions.First(x => x.CultureCode == null && x.Id == item.PageId);
 
-                if (cultures.Count > 1)
+                if (cultures.HasMoreThan(1))
                 {
                     var localizedVersions = pageVersions
                         .Where(x =>

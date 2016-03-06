@@ -26,7 +26,7 @@ namespace Kore.Web.ContentManagement
             var allPageTypes = pageTypeService.GetKorePageTypes();
 
             var allPageTypeNames = allPageTypes.Select(x => x.Name).ToList();
-            var installedPageTypes = pageTypeRepository.Table.ToList();
+            var installedPageTypes = pageTypeRepository.Find();
             var installedPageTypeNames = installedPageTypes.Select(x => x.Name).ToList();
 
             var pageTypesToAdd = allPageTypes.Where(x => !installedPageTypeNames.Contains(x.Name)).Select(x => new PageType

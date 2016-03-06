@@ -67,17 +67,20 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
                     return Enumerable.Empty<EntityTypeContentBlock>();
                 }
 
-                var query = Query(x =>
-                    x.EntityType == entityType &&
-                    x.EntityId == entityId &&
-                    x.ZoneId == zone.Id);
-
-                if (!includeDisabled)
+                using (var connection = OpenConnection())
                 {
-                    query = query.Where(x => x.IsEnabled);
-                }
+                    var query = connection.Query(x =>
+                        x.EntityType == entityType &&
+                        x.EntityId == entityId &&
+                        x.ZoneId == zone.Id);
 
-                return query.ToList();
+                    if (!includeDisabled)
+                    {
+                        query = query.Where(x => x.IsEnabled);
+                    }
+
+                    return query.ToList();
+                }
             });
 
             return GetContentBlocks(records, cultureCode);

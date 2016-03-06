@@ -1,11 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
-using System.Web.Http.Results;
 using Kore.Collections;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
@@ -27,8 +26,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
             this.membershipSettings = membershipSettings;
         }
 
-        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public IQueryable<Subscriber> Get()
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        public IEnumerable<Subscriber> Get(ODataQueryOptions<Subscriber> options)
         {
             if (!CheckPermission(CmsPermissions.NewsletterRead))
             {
@@ -39,7 +38,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
                 .GetProfileEntriesByKeyAndValue(NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "true")
                 .Select(x => x.UserId);
 
-            return membershipService.GetUsers(x => userIds.Contains(x.Id))
+            var settings = new ODataValidationSettings()
+            {
+                AllowedQueryOptions = AllowedQueryOptions.All
+            };
+            options.Validate(settings);
+
+            var query = membershipService.GetUsers(x => userIds.Contains(x.Id))
                 .ToHashSet()
                 .Select(x => new Subscriber
                 {
@@ -49,9 +54,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
                 })
                 .OrderBy(x => x.Name)
                 .AsQueryable();
+
+            var results = options.ApplyTo(query);
+            return (results as IQueryable<Subscriber>).ToHashSet();
         }
 
-        [EnableQuery]
+        //[EnableQuery]
         public SingleResult<Subscriber> Get([FromODataUri] string key)
         {
             if (!CheckPermission(CmsPermissions.NewsletterRead))

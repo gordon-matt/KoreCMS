@@ -243,14 +243,17 @@ namespace Kore.Web.ContentManagement
         {
             var repository = EngineContext.Current.Resolve<IRepository<PageType>>();
 
-            return repository.Table
-                .OrderBy(x => x.Name)
-                .ToList()
-                .ToSelectList(
-                    value => value.Id,
-                    text => text.Name,
-                    selectedValue,
-                    emptyText);
+            using (var connection = repository.OpenConnection())
+            {
+                return connection.Query()
+                    .OrderBy(x => x.Name)
+                    .ToList()
+                    .ToSelectList(
+                        value => value.Id,
+                        text => text.Name,
+                        selectedValue,
+                        emptyText);
+            }
         }
 
         private static IEnumerable<SelectListItem> GetTopLevelPagesSelectList(string selectedValue = null, string emptyText = null)
@@ -274,14 +277,17 @@ namespace Kore.Web.ContentManagement
         {
             var zoneService = EngineContext.Current.Resolve<IZoneService>();
 
-            return zoneService.Query()
-                .OrderBy(x => x.Name)
-                .ToList()
-                .ToSelectList(
-                    value => value.Id,
-                    text => text.Name,
-                    selectedValue,
-                    emptyText);
+            using (var connection = zoneService.OpenConnection())
+            {
+                return connection.Query()
+                    .OrderBy(x => x.Name)
+                    .ToList()
+                    .ToSelectList(
+                        value => value.Id,
+                        text => text.Name,
+                        selectedValue,
+                        emptyText);
+            }
         }
     }
 }

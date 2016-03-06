@@ -47,19 +47,22 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             bool enabledOnly = true,
             bool shownOnMenusOnly = true)
         {
-            var query = Query().Include(x => x.Page);
-
-            if (enabledOnly)
+            using (var pageVersionConnection = OpenConnection())
             {
-                query = query.Where(x => x.Page.IsEnabled);
-            }
+                var query = pageVersionConnection.Query().Include(x => x.Page);
 
-            if (shownOnMenusOnly)
-            {
-                query = query.Where(x => x.Page.ShowOnMenus);
-            }
+                if (enabledOnly)
+                {
+                    query = query.Where(x => x.Page.IsEnabled);
+                }
 
-            return GetCurrentVersionInternal(pageId, query, cultureCode);
+                if (shownOnMenusOnly)
+                {
+                    query = query.Where(x => x.Page.ShowOnMenus);
+                }
+
+                return GetCurrentVersionInternal(pageId, query, cultureCode);
+            }
         }
 
         public IEnumerable<PageVersion> GetCurrentVersions(
@@ -69,33 +72,42 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             bool topLevelOnly = false,
             Guid? parentId = null)
         {
-            var query = pageRepository.Table;
+            ICollection<Page> pages = null;
 
-            if (enabledOnly)
+            using (var pageConnection = pageRepository.OpenConnection())
             {
-                query = query.Where(x => x.IsEnabled);
-            }
+                var query = pageConnection.Query();
 
-            if (shownOnMenusOnly)
+                if (enabledOnly)
+                {
+                    query = query.Where(x => x.IsEnabled);
+                }
+
+                if (shownOnMenusOnly)
+                {
+                    query = query.Where(x => x.ShowOnMenus);
+                }
+
+                if (topLevelOnly)
+                {
+                    query = query.Where(x => x.ParentId == null);
+                }
+                else if (parentId.HasValue)
+                {
+                    query = query.Where(x => x.ParentId == parentId);
+                }
+
+                pages = query.ToHashSet();
+            }
+            
+            using (var pageVersionConnection = OpenConnection())
             {
-                query = query.Where(x => x.ShowOnMenus);
-            }
+                var pageVersions = pageVersionConnection.Query().Include(x => x.Page).ToHashSet();
 
-            if (topLevelOnly)
-            {
-                query = query.Where(x => x.ParentId == null);
+                return pages
+                    .Select(x => GetCurrentVersionInternal(x.Id, pageVersions, cultureCode))
+                    .Where(x => x != null);
             }
-            else if (parentId.HasValue)
-            {
-                query = query.Where(x => x.ParentId == parentId);
-            }
-
-            var pages = query.ToHashSet();
-            var pageVersions = Query().Include(x => x.Page).ToHashSet();
-
-            return pages
-                .Select(x => GetCurrentVersionInternal(x.Id, pageVersions, cultureCode))
-                .Where(x => x != null);
         }
 
         #endregion

@@ -8,19 +8,22 @@
 @{
     var categoryService = EngineContext.Current.Resolve<IBlogCategoryService>();
     List<BlogCategory> entries = null;
-    
-    if (Model.NumberOfCategories > 0)
+
+    using (var connection = categoryService.OpenConnection())
     {
-        entries = categoryService.Query()
-            .OrderBy(x => x.Name)
-            .Take(Model.NumberOfCategories)
-            .ToList();
-    }
-    else
-    {
-        entries = categoryService.Query()
-            .OrderBy(x => x.Name)
-            .ToList();
+        if (Model.NumberOfCategories > 0)
+        {
+            entries = connection.Query()
+                .OrderBy(x => x.Name)
+                .Take(Model.NumberOfCategories)
+                .ToList();
+        }
+        else
+        {
+            entries = connection.Query()
+                .OrderBy(x => x.Name)
+                .ToList();
+        }
     }
 }
 

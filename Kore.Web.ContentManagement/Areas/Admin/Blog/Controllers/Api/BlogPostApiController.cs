@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.OData;
@@ -29,14 +30,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
         }
 
         [AllowAnonymous]
-        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public override IQueryable<BlogPost> Get()
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        public override IEnumerable<BlogPost> Get(ODataQueryOptions<BlogPost> options)
         {
-            return base.Get();
+            return base.Get(options);
         }
 
         [AllowAnonymous]
-        [EnableQuery]
+        //[EnableQuery]
         public override SingleResult<BlogPost> Get([FromODataUri] Guid key)
         {
             return base.Get(key);

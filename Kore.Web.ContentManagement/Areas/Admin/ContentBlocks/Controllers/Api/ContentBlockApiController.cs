@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
+using Kore.Collections;
 using Kore.Infrastructure;
 using Kore.Localization.Domain;
 using Kore.Localization.Services;
@@ -36,20 +38,30 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
             entity.Id = Guid.NewGuid();
         }
 
-        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public override IQueryable<ContentBlock> Get()
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        public override IEnumerable<ContentBlock> Get(ODataQueryOptions<ContentBlock> options)
         {
             if (!CheckPermission(ReadPermission))
             {
                 return Enumerable.Empty<ContentBlock>().AsQueryable();
             }
 
-            return Service.Query(x => x.PageId == null);
+            var settings = new ODataValidationSettings()
+            {
+                AllowedQueryOptions = AllowedQueryOptions.All
+            };
+            options.Validate(settings);
+
+            using (var connection = Service.OpenConnection())
+            {
+                var results = options.ApplyTo(connection.Query(x => x.PageId == null));
+                return (results as IQueryable<ContentBlock>).ToHashSet();
+            }
         }
 
-        [EnableQuery]
+        //[EnableQuery]
         [HttpPost]
-        public virtual IQueryable<ContentBlock> GetByPageId(ODataActionParameters parameters)
+        public virtual IEnumerable<ContentBlock> GetByPageId(ODataQueryOptions<ContentBlock> options, ODataActionParameters parameters)
         {
             if (!CheckPermission(ReadPermission))
             {
@@ -58,9 +70,22 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
 
             var pageId = (Guid)parameters["pageId"];
 
-            return Service.Query(x => x.PageId == pageId)
-                .OrderBy(x => x.ZoneId)
-                .ThenBy(x => x.Order);
+            var settings = new ODataValidationSettings()
+            {
+                AllowedQueryOptions = AllowedQueryOptions.All
+            };
+            options.Validate(settings);
+
+            using (var connection = Service.OpenConnection())
+            {
+                var query = connection
+                    .Query(x => x.PageId == pageId)
+                    .OrderBy(x => x.ZoneId)
+                    .ThenBy(x => x.Order);
+
+                var results = options.ApplyTo(query);
+                return results as IQueryable<ContentBlock>;
+            }
         }
 
         public override IHttpActionResult Put([FromODataUri] Guid key, ContentBlock entity)

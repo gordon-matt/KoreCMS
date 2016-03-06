@@ -154,9 +154,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         [Route("get-editor-ui/{pageVersionId}")]
         public ActionResult GetEditorUI(Guid pageVersionId)
         {
-            var pageVersion = pageVersionService.Value.Query()
-                .Include(x => x.Page)
-                .FirstOrDefault(x => x.Id == pageVersionId);
+            PageVersion pageVersion;
+            using (var connection = pageVersionService.Value.OpenConnection())
+            {
+                pageVersion = connection.Query()
+                    .Include(x => x.Page)
+                    .FirstOrDefault(x => x.Id == pageVersionId);
+            }
 
             var pageType = pageTypeService.Value.FindOne(pageVersion.Page.PageTypeId);
             var korePageTypes = pageTypeService.Value.GetKorePageTypes();
@@ -182,9 +186,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         [Route("preview-version/{pageVersionId}")]
         public ActionResult PreviewVersion(Guid pageVersionId)
         {
-            var pageVersion = pageVersionService.Value.Query()
-                .Include(x => x.Page)
-                .FirstOrDefault(x => x.Id == pageVersionId);
+            PageVersion pageVersion;
+            using (var connection = pageVersionService.Value.OpenConnection())
+            {
+                pageVersion = connection.Query()
+                    .Include(x => x.Page)
+                    .FirstOrDefault(x => x.Id == pageVersionId);
+            }
 
             return PagePreview(pageVersion);
         }

@@ -48,9 +48,13 @@ namespace Kore.Web.ContentManagement.Controllers
             var pageService = EngineContext.Current.Resolve<IPageService>();
             var pageVersionService = EngineContext.Current.Resolve<IPageVersionService>();
 
-            var currentPageVersion = pageVersionService.Query()
-                .Include(x => x.Page)
-                .FirstOrDefault(y => y.Slug == currentUrlSlug);
+            PageVersion currentPageVersion;
+            using (var connection = pageVersionService.OpenConnection())
+            {
+                currentPageVersion = connection.Query()
+                    .Include(x => x.Page)
+                    .FirstOrDefault(y => y.Slug == currentUrlSlug);
+            }
 
             var allPages = pageService.Find(x => x.IsEnabled);
 

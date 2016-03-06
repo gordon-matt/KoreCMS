@@ -11,6 +11,7 @@ using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
+using System.Collections.Generic;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 {
@@ -43,12 +44,17 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             var entity = Service.FindOne(key);
 
             // First find previous version and set it to be the current
-            var previous = Service.Query(x =>
-                    x.Id != entity.Id &&
-                    x.PageId == entity.PageId &&
-                    x.CultureCode == entity.CultureCode)
-                .OrderByDescending(x => x.DateModifiedUtc)
-                .FirstOrDefault();
+            PageVersion previous = null;
+            using (var connection = Service.OpenConnection())
+            {
+                previous = connection
+                    .Query(x =>
+                        x.Id != entity.Id &&
+                        x.PageId == entity.PageId &&
+                        x.CultureCode == entity.CultureCode)
+                    .OrderByDescending(x => x.DateModifiedUtc)
+                    .FirstOrDefault();
+            }
 
             if (previous == null)
             {
@@ -327,13 +333,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
         private void RemoveOldVersions(Guid pageId, string cultureCode)
         {
-            var pageIdsToKeep = Service.Query(x =>
-                    x.PageId == pageId &&
-                    x.CultureCode == cultureCode)
-                .OrderByDescending(x => x.DateModifiedUtc)
-                .Take(settings.NumberOfPageVersionsToKeep)
-                .Select(x => x.Id)
-                .ToList();
+            List<Guid> pageIdsToKeep = null;
+            using (var connection = Service.OpenConnection())
+            {
+                pageIdsToKeep = connection
+                    .Query(x =>
+                        x.PageId == pageId &&
+                        x.CultureCode == cultureCode)
+                    .OrderByDescending(x => x.DateModifiedUtc)
+                    .Take(settings.NumberOfPageVersionsToKeep)
+                    .Select(x => x.Id)
+                    .ToList();
+            }
 
             Service.Delete(x =>
                 x.PageId == pageId &&

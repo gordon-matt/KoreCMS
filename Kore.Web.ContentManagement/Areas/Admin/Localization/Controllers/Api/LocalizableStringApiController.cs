@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Web.Http;
-using System.Web.Http.Results;
 using System.Web.OData;
 using System.Web.OData.Query;
 using Kore.Caching;
+using Kore.Collections;
 using Kore.Localization.Domain;
 using Kore.Localization.Models;
 using Kore.Localization.Services;
@@ -38,9 +37,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
             entity.Id = Guid.NewGuid();
         }
 
-        [EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         [HttpGet]
-        public virtual IHttpActionResult GetComparitiveTable([FromODataUri] string cultureCode)
+        public virtual IHttpActionResult GetComparitiveTable([FromODataUri] string cultureCode, ODataQueryOptions<ComparitiveLocalizableString> options)
         {
             if (!CheckPermission(ReadPermission))
             {
@@ -48,32 +47,25 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
             }
             else
             {
-                var query = Service.Query(x => x.CultureCode == null || x.CultureCode == cultureCode)
-                        .GroupBy(x => x.TextKey)
-                        .Select(grp => new ComparitiveLocalizableString
-                        {
-                            Key = grp.Key,
-                            InvariantValue = grp.Where(x => x.CultureCode == null).FirstOrDefault().TextValue,
-                            LocalizedValue = grp.Where(x => x.CultureCode == cultureCode).FirstOrDefault() == null
-                                ? string.Empty
-                                : grp.Where(x => x.CultureCode == cultureCode).FirstOrDefault().TextValue
-                        });
+                using (var connection = Service.OpenConnection())
+                {
+                    // With grouping, we use .Where() and then .FirstOrDefault() instead of just the .FirstOrDefault() by itself
+                    //  for compatibility with MySQL.
+                    //  See: http://stackoverflow.com/questions/23480044/entity-framework-select-statement-with-logic
+                    var query = connection.Query(x => x.CultureCode == null || x.CultureCode == cultureCode)
+                            .GroupBy(x => x.TextKey)
+                            .Select(grp => new ComparitiveLocalizableString
+                            {
+                                Key = grp.Key,
+                                InvariantValue = grp.Where(x => x.CultureCode == null).FirstOrDefault().TextValue,
+                                LocalizedValue = grp.Where(x => x.CultureCode == cultureCode).FirstOrDefault() == null
+                                    ? string.Empty
+                                    : grp.Where(x => x.CultureCode == cultureCode).FirstOrDefault().TextValue
+                            });
 
-                // Below doesn't work with MySQL.
-                // See: http://stackoverflow.com/questions/23480044/entity-framework-select-statement-with-logic
-                //var query = Service.Repository.Table
-                //        .Where(x => x.CultureCode == null || x.CultureCode == cultureCode)
-                //        .GroupBy(x => x.TextKey)
-                //        .Select(grp => new ComparitiveLocalizableString
-                //        {
-                //            Key = grp.Key,
-                //            InvariantValue = grp.FirstOrDefault(x => x.CultureCode == null).TextValue,
-                //            LocalizedValue = grp.FirstOrDefault(x => x.CultureCode == cultureCode) == null
-                //                ? string.Empty
-                //                : grp.FirstOrDefault(x => x.CultureCode == cultureCode).TextValue
-                //        });
-
-                return Ok(query);
+                    var results = (options.ApplyTo(query) as IQueryable<ComparitiveLocalizableString>).ToHashSet();
+                    return Ok(results, results.GetType());
+                }
             }
         }
 

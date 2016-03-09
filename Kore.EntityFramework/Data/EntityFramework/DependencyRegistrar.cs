@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Autofac;
+using Kore.Collections;
 using Kore.Infrastructure;
 
 namespace Kore.Data.EntityFramework
@@ -13,7 +14,7 @@ namespace Kore.Data.EntityFramework
         {
             var entityTypeConfigurations = typeFinder
                 .FindClassesOfType(typeof(IEntityTypeConfiguration))
-                .ToList();
+                .ToHashSet();
 
             foreach (var configuration in entityTypeConfigurations)
             {

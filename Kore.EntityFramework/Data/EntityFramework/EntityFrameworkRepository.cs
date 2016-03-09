@@ -1093,7 +1093,7 @@ namespace Kore.Data.EntityFramework
         {
             using (var context = contextFactory.GetContext())
             {
-                if (efHelper.Value.SupportsBulkInsert && entities.Count() > 20)
+                if (efHelper.Value.SupportsBulkInsert && entities.HasMoreThan(20))
                 {
                     context.BulkInsert(entities);
                     return entities.Count();

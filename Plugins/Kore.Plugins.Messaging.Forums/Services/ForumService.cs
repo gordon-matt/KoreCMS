@@ -100,11 +100,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             {
                 using (var connection = forumGroupRepository.OpenConnection())
                 {
-                    var query = from fg in connection.Query()
-                                orderby fg.DisplayOrder
-                                select fg;
-
-                    return query.ToList();
+                    return connection.Query().OrderBy(x => x.DisplayOrder).ToList();
                 }
             });
         }
@@ -154,13 +150,8 @@ namespace Kore.Plugins.Messaging.Forums.Services
             using (var forumSubscriptionConnection = forumSubscriptionRepository.UseConnection(forumTopicConnection))
             {
                 //delete forum subscriptions (topics)
-                var queryTopicIds = from ft in forumTopicConnection.Query()
-                                    where ft.ForumId == forum.Id
-                                    select ft.Id;
-
-                var queryFs1 = from fs in forumSubscriptionConnection.Query()
-                               where queryTopicIds.Contains(fs.TopicId)
-                               select fs;
+                var queryTopicIds = forumTopicConnection.Query(x => x.ForumId == forum.Id).Select(x => x.Id);
+                var queryFs1 = forumSubscriptionConnection.Query(x => queryTopicIds.Contains(x.TopicId));
 
                 foreach (var fs in queryFs1.ToList())
                 {
@@ -170,9 +161,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
                 }
 
                 //delete forum subscriptions (forum)
-                var queryFs2 = from fs in forumSubscriptionConnection.Query()
-                               where fs.ForumId == forum.Id
-                               select fs;
+                var queryFs2 = forumSubscriptionConnection.Query(x => x.ForumId == forum.Id);
 
                 foreach (var fs2 in queryFs2.ToList())
                 {
@@ -195,7 +184,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
         public virtual Forum GetForumById(int forumId)
         {
             if (forumId == 0)
+            {
                 return null;
+            }
 
             return forumRepository.FindOne(forumId);
         }
@@ -263,11 +254,10 @@ namespace Kore.Plugins.Messaging.Forums.Services
             using (var forumSubscriptionConnection = forumSubscriptionRepository.OpenConnection())
             {
                 //delete forum subscriptions
-                var queryFs = from ft in forumSubscriptionConnection.Query()
-                              where ft.TopicId == forumTopic.Id
-                              select ft;
+                var forumSubscriptions = forumSubscriptionConnection
+                    .Query(x => x.TopicId == forumTopic.Id)
+                    .ToList();
 
-                var forumSubscriptions = queryFs.ToList();
                 foreach (var fs in forumSubscriptions)
                 {
                     forumSubscriptionRepository.Delete(fs);
@@ -354,8 +344,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
                              orderby ft.TopicType descending, ft.LastPostTime descending, ft.Id descending
                              select ft;
 
-                var topics = new PagedList<ForumTopic>(query2, pageIndex, pageSize);
-                return topics;
+                return new PagedList<ForumTopic>(query2, pageIndex, pageSize);
             }
         }
 
@@ -404,7 +393,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //send notifications
             if (sendNotifications)
             {
-                var forum = forumTopic.Forum;
+                var forum = forumTopic.Forum ?? forumRepository.FindOne(forumTopic.ForumId);
                 var subscriptions = GetAllSubscriptions(forumId: forum.Id);
                 //var languageId = workContext.WorkingLanguage.Id;
 
@@ -443,10 +432,13 @@ namespace Kore.Plugins.Messaging.Forums.Services
         public virtual ForumTopic MoveTopic(int forumTopicId, int newForumId)
         {
             var forumTopic = GetTopicById(forumTopicId);
-            if (forumTopic == null)
-                return null;
 
-            if (this.IsUserAllowedToMoveTopic(workContext.CurrentUser, forumTopic))
+            if (forumTopic == null)
+            {
+                return null;
+            }
+
+            if (IsUserAllowedToMoveTopic(workContext.CurrentUser, forumTopic))
             {
                 int previousForumId = forumTopic.ForumId;
                 var newForum = GetForumById(newForumId);
@@ -546,23 +538,22 @@ namespace Kore.Plugins.Messaging.Forums.Services
                 var query = forumPostConnection.Query();
                 if (forumTopicId > 0)
                 {
-                    query = query.Where(fp => forumTopicId == fp.TopicId);
+                    query = query.Where(x => forumTopicId == x.TopicId);
                 }
                 if (!string.IsNullOrEmpty(userId))
                 {
-                    query = query.Where(fp => userId == fp.UserId);
+                    query = query.Where(x => userId == x.UserId);
                 }
                 if (!string.IsNullOrEmpty(keywords))
                 {
-                    query = query.Where(fp => fp.Text.Contains(keywords));
+                    query = query.Where(x => x.Text.Contains(keywords));
                 }
 
                 query = ascSort ?
-                    query.OrderBy(fp => fp.CreatedOnUtc).ThenBy(fp => fp.Id) :
-                    query.OrderByDescending(fp => fp.CreatedOnUtc).ThenBy(fp => fp.Id);
+                    query.OrderBy(x => x.CreatedOnUtc).ThenBy(fp => fp.Id) :
+                    query.OrderByDescending(x => x.CreatedOnUtc).ThenBy(fp => fp.Id);
 
-                var forumPosts = new PagedList<ForumPost>(query, pageIndex, pageSize);
-                return forumPosts;
+                return new PagedList<ForumPost>(query, pageIndex, pageSize);
             }
         }
 
@@ -593,12 +584,13 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //notifications
             if (sendNotifications)
             {
-                var forum = forumTopic.Forum;
+                var forum = forumTopic.Forum ?? forumRepository.FindOne(forumTopic.ForumId);
                 var subscriptions = GetAllSubscriptions(topicId: forumTopic.Id);
 
                 //var languageId = workContext.WorkingLanguage.Id;
 
-                int friendlyTopicPageIndex = CalculateTopicPageIndex(forumPost.TopicId,
+                int friendlyTopicPageIndex = CalculateTopicPageIndex(
+                    forumPost.TopicId,
                     forumSettings.PostsPageSize > 0 ? forumSettings.PostsPageSize : 10,
                     forumPost.Id) + 1;
 
@@ -700,8 +692,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
                 }
                 query = query.OrderByDescending(pm => pm.CreatedOnUtc);
 
-                var privateMessages = new PagedList<PrivateMessage>(query, pageIndex, pageSize);
-                return privateMessages;
+                return new PagedList<PrivateMessage>(query, pageIndex, pageSize);
             }
         }
 
@@ -790,21 +781,20 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
             using (var forumSubscriptionConnection = forumSubscriptionRepository.OpenConnection())
             {
-                var fsQuery = from fs in forumSubscriptionConnection.Query()
-                              where
-                                  (userId == null || fs.UserId == userId) &&
-                                  (forumId == 0 || fs.ForumId == forumId) &&
-                                  (topicId == 0 || fs.TopicId == topicId) &&
-                                  (!isLockedOut)
-                              select fs.Id;
+                var fsQuery = forumSubscriptionConnection
+                    .Query(x =>
+                        (userId == null || x.UserId == userId) &&
+                        (forumId == 0 || x.ForumId == forumId) &&
+                        (topicId == 0 || x.TopicId == topicId) &&
+                        (!isLockedOut))
+                    .Select(x => x.Id);
 
-                var query = from fs in forumSubscriptionConnection.Query()
-                            where fsQuery.Contains(fs.Id)
-                            orderby fs.CreatedOnUtc descending, fs.Id descending
-                            select fs;
+                var query = forumSubscriptionConnection
+                    .Query(x => fsQuery.Contains(x.Id))
+                    .OrderByDescending(x => x.CreatedOnUtc)
+                    .ThenByDescending(x => x.Id);
 
-                var forumSubscriptions = new PagedList<ForumSubscription>(query, pageIndex, pageSize);
-                return forumSubscriptions;
+                return new PagedList<ForumSubscription>(query, pageIndex, pageSize);
             }
         }
 
@@ -1092,6 +1082,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             {
                 return;
             }
+
             var forum = GetForumById(forumId);
             if (forum == null)
             {
@@ -1160,6 +1151,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             {
                 return;
             }
+
             var forumTopic = GetTopicById(forumTopicId);
             if (forumTopic == null)
             {
@@ -1169,9 +1161,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
             using (var forumPostConnection = forumPostRepository.OpenConnection())
             {
                 //number of posts
-                var queryNumPosts = from fp in forumPostConnection.Query()
-                                    where fp.TopicId == forumTopicId
-                                    select fp.Id;
+                var queryNumPosts = forumPostConnection
+                    .Query(x => x.TopicId == forumTopicId)
+                    .Select(x => x.Id);
 
                 int numPosts = queryNumPosts.Count();
 
@@ -1180,15 +1172,15 @@ namespace Kore.Plugins.Messaging.Forums.Services
                 string lastPostUserId = null;
                 DateTime? lastPostTime = null;
 
-                var queryLastValues = from fp in forumPostConnection.Query()
-                                      where fp.TopicId == forumTopicId
-                                      orderby fp.CreatedOnUtc descending
-                                      select new
-                                      {
-                                          LastPostId = fp.Id,
-                                          LastPostUserId = fp.UserId,
-                                          LastPostTime = fp.CreatedOnUtc
-                                      };
+                var queryLastValues = forumPostConnection
+                    .Query(x => x.TopicId == forumTopicId)
+                    .OrderByDescending(x => x.CreatedOnUtc)
+                    .Select(x => new
+                    {
+                        LastPostId = x.Id,
+                        LastPostUserId = x.UserId,
+                        LastPostTime = x.CreatedOnUtc
+                    });
 
                 var lastValues = queryLastValues.FirstOrDefault();
                 if (lastValues != null)
@@ -1224,11 +1216,10 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
             using (var forumPostConnection = forumPostRepository.OpenConnection())
             {
-                var query = from fp in forumPostConnection.Query()
-                            where fp.UserId == userId
-                            select fp.Id;
-
-                int numPosts = query.Count();
+                int numPosts = forumPostConnection
+                    .Query(x => x.UserId == userId)
+                    .Select(x => x.Id)
+                    .Count();
 
                 genericAttributeService.SaveAttribute(user, SystemUserAttributeNames.ForumPostCount, numPosts);
             }

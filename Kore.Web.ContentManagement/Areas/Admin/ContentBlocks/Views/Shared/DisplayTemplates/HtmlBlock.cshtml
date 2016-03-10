@@ -2,3 +2,7 @@
 
 @Html.Raw(Model.BodyContent)
 
+@using (Script.AtFoot())
+{
+    @Html.Raw(Model.Script)
+}

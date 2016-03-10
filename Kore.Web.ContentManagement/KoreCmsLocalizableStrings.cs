@@ -110,7 +110,14 @@
 
             public static class HtmlBlock
             {
+                public static class HelpText
+                {
+                    public const string BodyContent = "Kore.Web.ContentManagement/ContentBlocks.HtmlBlock.HelpText.BodyContent";
+                    public const string Script = "Kore.Web.ContentManagement/ContentBlocks.HtmlBlock.HelpText.Script";
+                }
+
                 public const string BodyContent = "Kore.Web.ContentManagement/ContentBlocks.HtmlBlock.BodyContent";
+                public const string Script = "Kore.Web.ContentManagement/ContentBlocks.HtmlBlock.Script";
             }
 
             public static class LanguageSwitchBlock

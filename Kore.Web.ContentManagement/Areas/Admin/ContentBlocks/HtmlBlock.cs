@@ -4,10 +4,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
 {
     public class HtmlBlock : ContentBlockBase
     {
-        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.HtmlBlock.BodyContent)]
-        //[LocalizedHelpText(KoreCmsLocalizableStrings.ContentBlocks.HtmlBlock.BodyContent)]
-        public string BodyContent { get; set; }
-
         #region IContentBlock Members
 
         public override string Name
@@ -26,5 +22,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
         }
 
         #endregion IContentBlock Members
+
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.HtmlBlock.BodyContent)]
+        [LocalizedHelpText(KoreCmsLocalizableStrings.ContentBlocks.HtmlBlock.HelpText.BodyContent)]
+        public string BodyContent { get; set; }
+
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.HtmlBlock.Script)]
+        [LocalizedHelpText(KoreCmsLocalizableStrings.ContentBlocks.HtmlBlock.HelpText.Script)]
+        public string Script { get; set; }
     }
 }

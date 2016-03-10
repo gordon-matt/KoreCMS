@@ -2,7 +2,7 @@
 
 @{
     Layout = Model.LayoutPath;
-    ViewBag.Title = Model.MetaTitle;
+    ViewBag.Title = string.IsNullOrWhiteSpace(Model.InstanceName) ? Model.MetaTitle : Model.InstanceName;
     SetMeta("keywords", Model.MetaKeywords);
     SetMeta("description", Model.MetaDescription);
     SetMeta("title", Model.MetaTitle);

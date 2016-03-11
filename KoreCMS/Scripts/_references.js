@@ -1,5 +1,4 @@
 ﻿/// <autosync enabled="true" />
-/// <reference path="../filemanager/plugin.min.js" />
 /// <reference path="almond-custom.js" />
 /// <reference path="bootbox.js" />
 /// <reference path="bootstrap.js" />
@@ -590,6 +589,7 @@
 /// <reference path="../areas/admin/scripts/app/viewmodels/admin/shell.js" />
 /// <reference path="tinymce/plugins/imagetools/plugin.js" />
 /// <reference path="tinymce/jquery.tinymce.min.js" />
+/// <reference path="../filemanager/plugin.js" />
  
  / / /   < r e f e r e n c e   p a t h = " b r e e z e . d e b u g . j s "   / >  
  

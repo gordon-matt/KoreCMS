@@ -66,18 +66,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.AspNet, Version=1.9.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Glimpse.AspNet.1.9.2\lib\net45\Glimpse.AspNet.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Glimpse.Core, Version=1.8.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Glimpse.Mvc5, Version=1.5.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -302,7 +290,6 @@
     <Compile Include="Data\IKoreSecurityDbContext.cs" />
     <Compile Include="Extensions\ScriptRegisterExtensions.cs" />
     <Compile Include="Extensions\StyleRegisterExtensions.cs" />
-    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -831,7 +818,7 @@
     <Content Include="filemanager\lang\tr_TR.php" />
     <Content Include="filemanager\lang\uk_UA.php" />
     <Content Include="filemanager\lang\zh_CN.php" />
-    <Content Include="filemanager\plugin.min.js" />
+    <Content Include="filemanager\plugin.js" />
     <Content Include="filemanager\upload.php" />
     <Content Include="filemanager\uploader\index.php" />
     <Content Include="filemanager\uploader\jupload.php" />
@@ -960,6 +947,7 @@
     <Content Include="Areas\Admin\Views\Home\Host.cshtml" />
     <Content Include="Areas\Admin\Views\Home\_splash.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Shell.cshtml" />
+    <Content Include="filemanager\less\style.less" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

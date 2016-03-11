@@ -312,10 +312,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" onclick="dismissModal('imagesDirectoryModal');" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Select Image</h4>
+                    <h4 class="modal-title">Select Folder</h4>
                 </div>
                 <div class="modal-body">
-                    <iframe src="/filemanager/dialog.php?type=1&relative_url=1&fldr=&field_id=ImagesDirectory&ignore_last_position=1" frameborder="0" style="overflow:hidden;min-height:600px; height:100%;width:100%" height="100%" width="100%"></iframe>
+                    <iframe src="/filemanager/dialog.php?type=2&extensions=[&quot;&quot;]&relative_url=1&fldr=&field_id=ImagesDirectory&ignore_last_position=1" frameborder="0" style="overflow:hidden;min-height:600px; height:100%;width:100%" height="100%" width="100%"></iframe>
                 </div>
             </div>
         </div>
@@ -326,10 +326,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" onclick="dismissModal('fullSizeImagesDirectoryModal');" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Select Image</h4>
+                    <h4 class="modal-title">Select Folder</h4>
                 </div>
                 <div class="modal-body">
-                    <iframe src="/filemanager/dialog.php?type=1&relative_url=1&fldr=&field_id=FullSizeImagesDirectory&ignore_last_position=1" frameborder="0" style="overflow:hidden;min-height:600px; height:100%;width:100%" height="100%" width="100%"></iframe>
+                    <iframe src="/filemanager/dialog.php?type=2&extensions=[&quot;&quot;]&relative_url=1&fldr=&field_id=FullSizeImagesDirectory&ignore_last_position=1" frameborder="0" style="overflow:hidden;min-height:600px; height:100%;width:100%" height="100%" width="100%"></iframe>
                 </div>
             </div>
         </div>
@@ -367,7 +367,9 @@
 
     var contentBlockModel = (function () {
         var f = {};
+        f.internalModel = false;
         f.updateModel = function (blockModel) {
+            internalModel = blockModel;
             blockModel.mode = ko.observable(0);
             blockModel.imagesPattern = ko.observable("image-%COL-%ROW.jpg");
             blockModel.imagesDirectory = ko.observable("");
@@ -456,7 +458,7 @@
                 blockModel.loaderCircleBackgroundColor(data.LoaderCircleBackgroundColor());
             }
         };
-        f.cleanUp= function (blockModel) {
+        f.cleanUp = function (blockModel) {
             delete blockModel.mode;
             delete blockModel.imagesPattern;
             delete blockModel.imagesDirectory;

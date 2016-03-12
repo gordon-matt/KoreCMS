@@ -32,7 +32,8 @@
                     @Html.LabelFor(m => m.ImagesDirectory, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                         <div class="input-group">
-                            @Html.TextBoxFor(m => m.ImagesDirectory, new { @class = "form-control", data_bind = "value: blockModel.imagesDirectory" })
+                            @Html.TextBoxFor(m => m.ImagesDirectory, new { @class = "form-control" })
+                            @*@Html.TextBoxFor(m => m.ImagesDirectory, new { @class = "form-control", data_bind = "value: blockModel.imagesDirectory" })*@
                             <span class="input-group-addon">
                                 <a data-toggle="modal" href="javascript:void(0);" data-target="#imagesDirectoryModal">
                                     <i class="kore-icon kore-icon-search"></i>
@@ -45,7 +46,8 @@
                     @Html.LabelFor(m => m.FullSizeImagesDirectory, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                         <div class="input-group">
-                            @Html.TextBoxFor(m => m.FullSizeImagesDirectory, new { @class = "form-control", data_bind = "value: blockModel.fullSizeImagesDirectory" })
+                            @Html.TextBoxFor(m => m.FullSizeImagesDirectory, new { @class = "form-control" })
+                            @*@Html.TextBoxFor(m => m.FullSizeImagesDirectory, new { @class = "form-control", data_bind = "value: blockModel.fullSizeImagesDirectory" })*@
                             <span class="input-group-addon">
                                 <a data-toggle="modal" href="javascript:void(0);" data-target="#fullSizeImagesDirectoryModal">
                                     <i class="kore-icon kore-icon-search"></i>
@@ -348,18 +350,20 @@
         $('#imagesDirectoryModal').on('hidden.bs.modal', function () {
             if (!modalDismissed) {
                 var url = $('#ImagesDirectory').val();
-                var idx = url.indexOf("/Media");
+                var idx = url.indexOf("Uploads");
                 url = url.substring(idx);
-                blockModel.imagesDirectory(url);
+                //blockModel.imagesDirectory(url);
+                $('#ImagesDirectory').val(url);
             }
             modalDismissed = false;
         })
         $('#fullSizeImagesDirectoryModal').on('hidden.bs.modal', function () {
             if (!modalDismissed) {
                 var url = $('#FullSizeImagesDirectory').val();
-                var idx = url.indexOf("/Media");
+                var idx = url.indexOf("Uploads");
                 url = url.substring(idx);
-                blockModel.fullSizeImagesDirectory(url);
+                //blockModel.fullSizeImagesDirectory(url);
+                $('#FullSizeImagesDirectory').val(url);
             }
             modalDismissed = false;
         })
@@ -372,8 +376,8 @@
             internalModel = blockModel;
             blockModel.mode = ko.observable(0);
             blockModel.imagesPattern = ko.observable("image-%COL-%ROW.jpg");
-            blockModel.imagesDirectory = ko.observable("");
-            blockModel.fullSizeImagesDirectory = ko.observable("");
+            //blockModel.imagesDirectory = ko.observable("");
+            //blockModel.fullSizeImagesDirectory = ko.observable("");
             blockModel.autoRotate = ko.observable(false);
             blockModel.autoRotateDirection = ko.observable(1);
             blockModel.autoRotateSpeed = ko.observable(50);
@@ -419,8 +423,12 @@
                 }
                 blockModel.mode(data.Mode());
                 blockModel.imagesPattern(data.ImagesPattern());
-                blockModel.imagesDirectory(data.ImagesDirectory());
-                blockModel.fullSizeImagesDirectory(data.FullSizeImagesDirectory());
+
+                $('#ImagesDirectory').val(data.ImagesDirectory());
+                $('#FullSizeImagesDirectory').val(data.FullSizeImagesDirectory());
+
+                //blockModel.imagesDirectory(data.ImagesDirectory());
+                //blockModel.fullSizeImagesDirectory(data.FullSizeImagesDirectory());
                 blockModel.autoRotate(data.AutoRotate());
                 blockModel.autoRotateDirection(data.AutoRotateDirection());
                 blockModel.autoRotateSpeed(data.AutoRotateSpeed());
@@ -461,8 +469,8 @@
         f.cleanUp = function (blockModel) {
             delete blockModel.mode;
             delete blockModel.imagesPattern;
-            delete blockModel.imagesDirectory;
-            delete blockModel.fullSizeImagesDirectory;
+            //delete blockModel.imagesDirectory;
+            //delete blockModel.fullSizeImagesDirectory;
             delete blockModel.autoRotate;
             delete blockModel.autoRotateDirection;
             delete blockModel.autoRotateSpeed;
@@ -503,8 +511,10 @@
             var data = {
                 Mode: blockModel.mode(),
                 ImagesPattern: blockModel.imagesPattern(),
-                ImagesDirectory: blockModel.imagesDirectory(),
-                FullSizeImagesDirectory: blockModel.fullSizeImagesDirectory(),
+                ImagesDirectory: $('#ImagesDirectory').val(),
+                FullSizeImagesDirectory: $('#FullSizeImagesDirectory').val(),
+                //ImagesDirectory: blockModel.imagesDirectory(),
+                //FullSizeImagesDirectory: blockModel.fullSizeImagesDirectory(),
                 AutoRotate: blockModel.autoRotate(),
                 AutoRotateDirection: blockModel.autoRotateDirection(),
                 AutoRotateSpeed: blockModel.autoRotateSpeed(),

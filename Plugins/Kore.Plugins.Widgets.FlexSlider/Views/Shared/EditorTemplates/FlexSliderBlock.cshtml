@@ -19,7 +19,8 @@
                     @Html.LabelFor(m => m.MediaFolder, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                         <div class="input-group">
-                            @Html.TextBoxFor(m => m.MediaFolder, new { @class = "form-control", data_bind = "value: blockModel.mediaFolder" })
+                            @Html.TextBoxFor(m => m.MediaFolder, new { @class = "form-control" })
+                            @*@Html.TextBoxFor(m => m.MediaFolder, new { @class = "form-control", data_bind = "value: blockModel.mediaFolder" })*@
                             <span class="input-group-addon">
                                 <a data-toggle="modal" href="javascript:void(0);" data-target="#myModal">
                                     <i class="kore-icon kore-icon-search"></i>
@@ -374,7 +375,8 @@
                 var url = $('#MediaFolder').val();
                 var idx = url.indexOf("Uploads");
                 url = url.substring(idx);
-                blockModel.mediaFolder(url);
+                $('#MediaFolder').val(url);
+                //blockModel.mediaFolder(url);
             }
             modalDismissed = false;
         })
@@ -383,7 +385,7 @@
     var contentBlockModel = (function () {
         var f = {};
         f.updateModel = function (blockModel) {
-            blockModel.mediaFolder = ko.observable("");
+            //blockModel.mediaFolder = ko.observable("");
             blockModel.controlId = ko.observable("slider");
             blockModel.namespace = ko.observable(null);
             blockModel.selector = ko.observable(null);
@@ -437,7 +439,8 @@
                     // If this is not set, it means the contentBlock is new and we have nothing in blockValues
                     return;
                 }
-                blockModel.mediaFolder(data.MediaFolder());
+                $('#MediaFolder').val(data.MediaFolder());
+                //blockModel.mediaFolder(data.MediaFolder());
                 blockModel.controlId(data.ControlId());
                 blockModel.namespace(data.Namespace());
                 blockModel.selector(data.Selector());
@@ -485,8 +488,8 @@
                 blockModel.onRemoved(data.OnRemoved());
             }
         };
-        f.cleanUp= function (blockModel) {
-            delete blockModel.mediaFolder;
+        f.cleanUp = function (blockModel) {
+            //delete blockModel.mediaFolder;
             delete blockModel.controlId;
             delete blockModel.namespace;
             delete blockModel.selector;
@@ -535,7 +538,8 @@
         };
         f.onBeforeSave = function (blockModel) {
             var data = {
-                MediaFolder: blockModel.mediaFolder(),
+                MediaFolder: $('#MediaFolder').val(),
+                //MediaFolder: blockModel.mediaFolder(),
                 ControlId: blockModel.controlId(),
                 Namespace: blockModel.namespace(),
                 Selector: blockModel.selector(),

@@ -27,7 +27,7 @@
     }
 }
 
-@using (var panel = Html.KoreUI().Begin(new Panel(state: State.Primary)))
+@using (var panel = Html.KoreUI(KoreUISettings.DefaultFrontendProvider).Begin(new Panel(state: State.Primary)))
 {
     using (var header = panel.BeginHeader(T(KoreCmsLocalizableStrings.Blog.Categories))) { }
     using (var body = panel.BeginBody())

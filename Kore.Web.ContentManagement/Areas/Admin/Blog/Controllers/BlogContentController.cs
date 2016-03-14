@@ -63,6 +63,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 using (var connection = postService.Value.OpenConnection())
                 {
                     model = connection.Query()
+                        .Include(x => x.Category)
+                        .Include(x => x.Tags)
                         .OrderByDescending(x => x.DateCreatedUtc)
                         .Skip((pageIndex - 1) * blogSettings.ItemsPerPage)
                         .Take(blogSettings.ItemsPerPage)
@@ -107,6 +109,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 using (var connection = postService.Value.OpenConnection())
                 {
                     model = connection.Query()
+                        .Include(x => x.Category)
                         .Include(x => x.Tags)
                         .Where(x => x.CategoryId == category.Id)
                         .OrderByDescending(x => x.DateCreatedUtc)
@@ -147,6 +150,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 using (var connection = postService.Value.OpenConnection())
                 {
                     model = connection.Query()
+                        .Include(x => x.Category)
                         .Include(x => x.Tags)
                         .Where(x => x.Tags.Any(y => y.TagId == tag.Id))
                         .OrderByDescending(x => x.DateCreatedUtc)

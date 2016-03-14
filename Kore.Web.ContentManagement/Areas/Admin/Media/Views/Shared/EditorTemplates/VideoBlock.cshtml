@@ -84,7 +84,7 @@
     $('#myModal').on('hidden.bs.modal', function () {
         if (!modalDismissed) {
             var url = $('#Source').val();
-            url = "/Media/Uploads/" + url;
+            //url = "/Media/Uploads/" + url;
             blockModel.source(url);
         }
         modalDismissed = false;

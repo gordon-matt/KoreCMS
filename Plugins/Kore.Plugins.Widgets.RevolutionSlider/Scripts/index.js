@@ -1003,7 +1003,7 @@
             $('#imageUrlModal').on('hidden.bs.modal', function () {
                 if (!self.modalDismissed) {
                     var url = $('#ImageUrl').val();
-                    url = "/Media/Uploads/" + url;
+                    //url = "/Media/Uploads/" + url;
                     self.slide.imageUrl(url);
                 }
                 self.modalDismissed = false;
@@ -1011,7 +1011,7 @@
             $('#videoPosterModal').on('hidden.bs.modal', function () {
                 if (!self.modalDismissed) {
                     var url = $('#VideoPoster').val();
-                    url = "/Media/Uploads/" + url;
+                    //url = "/Media/Uploads/" + url;
                     self.layer.videoPoster(url);
                 }
                 self.modalDismissed = false;
@@ -1019,7 +1019,7 @@
             $('#videoMp4Modal').on('hidden.bs.modal', function () {
                 if (!self.modalDismissed) {
                     var url = $('#VideoMp4').val();
-                    url = "/Media/Uploads/" + url;
+                    //url = "/Media/Uploads/" + url;
                     self.layer.videoMp4(url);
                 }
                 self.modalDismissed = false;
@@ -1027,7 +1027,7 @@
             $('#videoWebMModal').on('hidden.bs.modal', function () {
                 if (!self.modalDismissed) {
                     var url = $('#VideoWebM').val();
-                    url = "/Media/Uploads/" + url;
+                    //url = "/Media/Uploads/" + url;
                     self.layer.videoWebM(url);
                 }
                 self.modalDismissed = false;
@@ -1035,7 +1035,7 @@
             $('#videoOgvModal').on('hidden.bs.modal', function () {
                 if (!self.modalDismissed) {
                     var url = $('#VideoOgv').val();
-                    url = "/Media/Uploads/" + url;
+                    //url = "/Media/Uploads/" + url;
                     self.layer.videoOgv(url);
                 }
                 self.modalDismissed = false;

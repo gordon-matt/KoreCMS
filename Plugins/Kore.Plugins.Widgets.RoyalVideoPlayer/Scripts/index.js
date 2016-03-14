@@ -651,7 +651,7 @@
             $('#thumbnailUrlModal').on('hidden.bs.modal', function () {
                 if (!self.modalDismissed) {
                     var url = $('#ThumbnailUrl').val();
-                    url = "/Media/Uploads/" + url;
+                    //url = "/Media/Uploads/" + url;
                     self.video.thumbnailUrl(url);
                 }
                 self.modalDismissed = false;
@@ -659,7 +659,7 @@
             $('#videoUrlModal').on('hidden.bs.modal', function () {
                 if (!self.modalDismissed) {
                     var url = $('#VideoUrl').val();
-                    url = "/Media/Uploads/" + url;
+                    //url = "/Media/Uploads/" + url;
                     self.video.videoUrl(url);
                 }
                 self.modalDismissed = false;
@@ -667,7 +667,7 @@
             $('#mobileVideoUrlModal').on('hidden.bs.modal', function () {
                 if (!self.modalDismissed) {
                     var url = $('#MobileVideoUrl').val();
-                    url = "/Media/Uploads/" + url;
+                    //url = "/Media/Uploads/" + url;
                     self.video.mobileVideoUrl(url);
                 }
                 self.modalDismissed = false;
@@ -675,7 +675,7 @@
             $('#posterUrlModal').on('hidden.bs.modal', function () {
                 if (!self.modalDismissed) {
                     var url = $('#PosterUrl').val();
-                    url = "/Media/Uploads/" + url;
+                    //url = "/Media/Uploads/" + url;
                     self.video.posterUrl(url);
                 }
                 self.modalDismissed = false;
@@ -683,7 +683,7 @@
             $('#mobilePosterUrlModal').on('hidden.bs.modal', function () {
                 if (!self.modalDismissed) {
                     var url = $('#MobilePosterUrl').val();
-                    url = "/Media/Uploads/" + url;
+                    //url = "/Media/Uploads/" + url;
                     self.video.mobilePosterUrl(url);
                 }
                 self.modalDismissed = false;

@@ -756,7 +756,7 @@
             $('#myModal').on('hidden.bs.modal', function () {
                 if (!self.modalDismissed) {
                     var url = $('#TeaserImageUrl').val();
-                    url = "/Media/Uploads/" + url;
+                    //url = "/Media/Uploads/" + url;
                     self.postModel.teaserImageUrl(url);
                 }
                 self.modalDismissed = false;

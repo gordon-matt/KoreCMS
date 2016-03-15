@@ -11,6 +11,7 @@ using Kore.Web.ContentManagement.Areas.Admin.Pages;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
 using System.Collections.Generic;
+using Kore.Exceptions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
 {
@@ -47,6 +48,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
             {
                 return new HttpUnauthorizedResult();
             }
+
+            WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Blog.Title));
 
             if (blogSettings.UseAjax)
             {
@@ -93,6 +96,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                     "Could not find a blog category with slug, '", categorySlug, "'"));
             }
 
+            WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Blog.Title), Url.Action("Index"));
+            WorkContext.Breadcrumbs.Add(category.Name);
+
             if (blogSettings.UseAjax)
             {
                 ViewBag.CategoryId = category.Id;
@@ -133,6 +139,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 throw new EntityNotFoundException(string.Concat(
                     "Could not find a blog tag with slug, '", tagSlug, "'"));
             }
+
+            WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Blog.Title), Url.Action("Index"));
+            WorkContext.Breadcrumbs.Add(tag.Name);
 
             if (blogSettings.UseAjax)
             {
@@ -182,7 +191,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
             ViewBag.UserNames = userNames;
 
             var tags = tagService.Value.Find();
-
             ViewBag.Tags = tags.ToDictionary(k => k.Id, v => v.Name);
             ViewBag.TagUrls = tags.ToDictionary(k => k.Id, v => v.UrlSlug);
 
@@ -241,12 +249,22 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            var model = postService.Value.FindOne(x => x.Slug == slug);
-
+            BlogPost model = null;
             DateTime? previousEntryDate = null;
             DateTime? nextEntryDate = null;
             using (var connection = postService.Value.OpenConnection())
             {
+                model = connection
+                    .Query(x => x.Slug == slug)
+                    .Include(x => x.Category)
+                    .Include(x => x.Tags)
+                    .FirstOrDefault();
+
+                if (model == null)
+                {
+                    throw new KoreException("Blog post not found!");
+                }
+
                 bool hasPreviousEntry = connection.Query().Any(x => x.DateCreatedUtc < model.DateCreatedUtc);
                 if (hasPreviousEntry)
                 {
@@ -264,6 +282,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 }
             }
 
+            WorkContext.Breadcrumbs.Add(T(KoreCmsLocalizableStrings.Blog.Title), Url.Action("Index"));
+            WorkContext.Breadcrumbs.Add(model.Headline);
+
             ViewBag.PreviousEntrySlug = previousEntryDate.HasValue
                 ? postService.Value.FindOne(x => x.DateCreatedUtc == previousEntryDate).Slug
                 : null;
@@ -273,6 +294,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 : null;
 
             ViewBag.UserName = membershipService.Value.GetUserById(model.UserId).UserName;
+
+            var tags = tagService.Value.Find();
+            ViewBag.Tags = tags.ToDictionary(k => k.Id, v => v.Name);
+            ViewBag.TagUrls = tags.ToDictionary(k => k.Id, v => v.UrlSlug);
 
             var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, "Details", null);
 

@@ -1,6 +1,7 @@
 ﻿define(function (require) {
     'use strict'
 
+    var router = require('plugins/router');
     var $ = require('jquery');
     var ko = require('knockout');
     var koMap = require('knockout-mapping');
@@ -726,6 +727,9 @@
         };
         self.showZones = function () {
             switchSection($("#zones-grid-section"));
+        };
+        self.goBack = function () {
+            router.navigateBack();
         };
     };
 

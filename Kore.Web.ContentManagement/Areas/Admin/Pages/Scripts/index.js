@@ -913,7 +913,7 @@
                 $('#PageGrid').data('kendoGrid').refresh();
                 self.reloadTopLevelPages();
             }
-        }
+        };
 
         self.detailInit = function (e) {
             var detailRow = e.detailRow;
@@ -1048,7 +1048,7 @@
                 detailTemplate: kendo.template($("#pages-template").html()),
                 detailInit: self.detailInit
             });
-        }
+        };
 
         self.preview = function (id) {
             var win = window.open('/admin/pages/preview/' + id, '_blank');

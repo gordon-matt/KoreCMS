@@ -48,20 +48,23 @@ namespace Kore.Web.Indexing.Services
                 var cultureInfo = new CultureInfo(cultureCode);
                 searchBuilder.WithField("culture", cultureInfo.LCID).AsFilter();
             }
+            else
+            {
+                searchBuilder.WithField("culture", CultureInfo.InvariantCulture.LCID).AsFilter();
+            }
 
             int totalCount = searchBuilder.Count();
 
-            if (pageSize != null)
+            if (pageSize.HasValue)
             {
                 searchBuilder = searchBuilder.Slice(
-                    (pageIndex > 0 ? pageIndex - 1 : 0) * pageSize ?? 0,
-                    pageSize ?? 0);
+                    (pageIndex > 0 ? pageIndex - 1 : 0) * pageSize.Value,
+                    pageSize.Value);
             }
 
             var searchResults = searchBuilder.Search();
 
-            var pageOfItems = new PagedList<ISearchHit>(searchResults, pageIndex, pageSize ?? totalCount, totalCount);
-            return pageOfItems;
+            return new PagedList<ISearchHit>(searchResults, pageIndex, pageSize ?? totalCount, totalCount);
         }
     }
 }

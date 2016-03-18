@@ -4,8 +4,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using Castle.Core.Logging;
-using Kore.Plugins.Indexing.Lucene.Models;
 using Kore.Localization;
+using Kore.Plugins.Indexing.Lucene.Models;
 using Kore.Web.Configuration;
 using Kore.Web.Indexing;
 using Kore.Web.IO.FileSystems.AppData;
@@ -25,24 +25,24 @@ namespace Kore.Plugins.Indexing.Lucene.Services
     /// </summary>
     public class LuceneIndexProvider : IIndexProvider
     {
-        private readonly Analyzer _analyzer;
-        private readonly IAppDataFolder _appDataFolder;
+        private readonly Analyzer analyzer;
+        private readonly IAppDataFolder appDataFolder;
         private readonly Lazy<ILogger> logger;
-        private readonly string _basePath;
+        private readonly string basePath;
 
         public static readonly DateTime DefaultMinDateTime = new DateTime(1980, 1, 1);
         public static readonly Version LuceneVersion = Version.LUCENE_29;
 
         public LuceneIndexProvider(
             IAppDataFolder appDataFolder,
-            KoreSiteSettings shellSettings,
+            KoreSiteSettings siteSettings,
             Lazy<ILogger> logger)
         {
-            _appDataFolder = appDataFolder;
-            _analyzer = CreateAnalyzer();
+            this.appDataFolder = appDataFolder;
+            this.analyzer = CreateAnalyzer();
 
             // TODO: (sebros) Find a common way to get where tenant's specific files should go. "Sites/Tenant" is hard coded in multiple places
-            _basePath = _appDataFolder.Combine("Sites", shellSettings.SiteName, "Indexes");
+            this.basePath = appDataFolder.Combine("Sites", siteSettings.SiteName, "Indexes");
 
             this.logger = logger;
 
@@ -62,7 +62,7 @@ namespace Kore.Plugins.Indexing.Lucene.Services
 
         private void EnsureDirectoryExists()
         {
-            var directory = new DirectoryInfo(_appDataFolder.MapPath(_basePath));
+            var directory = new DirectoryInfo(appDataFolder.MapPath(basePath));
             if (!directory.Exists)
             {
                 directory.Create();
@@ -71,7 +71,7 @@ namespace Kore.Plugins.Indexing.Lucene.Services
 
         protected virtual Directory GetDirectory(string indexName)
         {
-            var directoryInfo = new DirectoryInfo(_appDataFolder.MapPath(_appDataFolder.Combine(_basePath, indexName)));
+            var directoryInfo = new DirectoryInfo(appDataFolder.MapPath(appDataFolder.Combine(basePath, indexName)));
             return FSDirectory.Open(directoryInfo);
         }
 
@@ -89,12 +89,12 @@ namespace Kore.Plugins.Indexing.Lucene.Services
 
         public bool Exists(string indexName)
         {
-            return new DirectoryInfo(_appDataFolder.MapPath(_appDataFolder.Combine(_basePath, indexName))).Exists;
+            return new DirectoryInfo(appDataFolder.MapPath(appDataFolder.Combine(basePath, indexName))).Exists;
         }
 
         public IEnumerable<string> List()
         {
-            return _appDataFolder.ListDirectories(_basePath).Select(Path.GetFileNameWithoutExtension);
+            return appDataFolder.ListDirectories(basePath).Select(Path.GetFileNameWithoutExtension);
         }
 
         public bool IsEmpty(string indexName)
@@ -125,14 +125,14 @@ namespace Kore.Plugins.Indexing.Lucene.Services
 
         public void CreateIndex(string indexName)
         {
-            using (new IndexWriter(GetDirectory(indexName), _analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED))
+            using (new IndexWriter(GetDirectory(indexName), analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED))
             {
             }
         }
 
         public void DeleteIndex(string indexName)
         {
-            new DirectoryInfo(_appDataFolder.MapPath(_appDataFolder.Combine(_basePath, indexName)))
+            new DirectoryInfo(appDataFolder.MapPath(appDataFolder.Combine(basePath, indexName)))
                 .Delete(true);
         }
 
@@ -158,7 +158,7 @@ namespace Kore.Plugins.Indexing.Lucene.Services
             // Remove any previous document for these content items
             Delete(indexName, indexDocuments.Select(i => i.ContentItemId));
 
-            using (var writer = new IndexWriter(GetDirectory(indexName), _analyzer, false, IndexWriter.MaxFieldLength.UNLIMITED))
+            using (var writer = new IndexWriter(GetDirectory(indexName), analyzer, false, IndexWriter.MaxFieldLength.UNLIMITED))
             {
                 foreach (var indexDocument in indexDocuments)
                 {
@@ -184,7 +184,7 @@ namespace Kore.Plugins.Indexing.Lucene.Services
                 return;
             }
 
-            using (var writer = new IndexWriter(GetDirectory(indexName), _analyzer, false, IndexWriter.MaxFieldLength.UNLIMITED))
+            using (var writer = new IndexWriter(GetDirectory(indexName), analyzer, false, IndexWriter.MaxFieldLength.UNLIMITED))
             {
                 var query = new BooleanQuery();
 

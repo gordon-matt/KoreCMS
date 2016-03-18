@@ -84,7 +84,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
                     .ThenBy(x => x.Order);
 
                 var results = options.ApplyTo(query);
-                return results as IQueryable<ContentBlock>;
+                return (results as IQueryable<ContentBlock>).ToHashSet();
             }
         }
 

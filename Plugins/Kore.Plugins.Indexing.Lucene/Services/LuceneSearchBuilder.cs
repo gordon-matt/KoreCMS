@@ -50,7 +50,7 @@ namespace Kore.Plugins.Indexing.Lucene.Services
             _skip = 0;
             _clauses = new List<BooleanClause>();
             _filters = new List<BooleanClause>();
-            _sort = String.Empty;
+            _sort = string.Empty;
             _comparer = 0;
             _sortDescending = true;
 
@@ -66,10 +66,10 @@ namespace Kore.Plugins.Indexing.Lucene.Services
         {
             if (defaultFields.Length == 0)
             {
-                throw new ArgumentException("Default field can't be empty");
+                throw new ArgumentException("Default fields can't be empty");
             }
 
-            if (String.IsNullOrWhiteSpace(query))
+            if (string.IsNullOrWhiteSpace(query))
             {
                 throw new ArgumentException("Query can't be empty");
             }
@@ -146,7 +146,7 @@ namespace Kore.Plugins.Indexing.Lucene.Services
         {
             CreatePendingClause();
 
-            if (!String.IsNullOrWhiteSpace(value))
+            if (!string.IsNullOrWhiteSpace(value))
             {
                 _query = new TermQuery(new Term(field, QueryParser.Escape(value.ToLower())));
             }
@@ -357,7 +357,7 @@ namespace Kore.Plugins.Indexing.Lucene.Services
 
             using (searcher)
             {
-                var sort = String.IsNullOrEmpty(_sort)
+                var sort = string.IsNullOrEmpty(_sort)
                                ? Sort.RELEVANCE
                                : new Sort(new SortField(_sort, _comparer, _sortDescending));
                 var collector = TopFieldCollector.Create(

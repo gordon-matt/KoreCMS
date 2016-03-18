@@ -13,7 +13,7 @@ namespace Kore.Web.Configuration
             DefaultDesktopTheme = "Default";
             DefaultMobileTheme = "Default";
             DefaultGridPageSize = 10;
-            DefaultLanguage = "en-US";
+            //DefaultLanguage = "en-US";
             DefaultFrontendLayoutPath = "~/Views/Shared/_Layout.cshtml";
             AdminLayoutPath = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
             HomePageTitle = "Home Page";
@@ -69,7 +69,8 @@ namespace Kore.Web.Configuration
         [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Site.DefaultLanguage)]
         public string DefaultLanguage
         {
-            get { return string.IsNullOrEmpty(defaultLanguage) ? "en-US" : defaultLanguage; }
+            //get { return string.IsNullOrEmpty(defaultLanguage) ? "en-US" : defaultLanguage; }
+            get { return defaultLanguage; }
             set { defaultLanguage = value; }
         }
 

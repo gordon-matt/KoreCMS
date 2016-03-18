@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
-using Kore.Collections;
-using Kore.Infrastructure;
+using Kore.Localization.Services;
+using Kore.Web.Configuration;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Indexing;
@@ -14,51 +14,62 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 {
     public class PagesIndexingContentProvider : IIndexingContentProvider
     {
+        private readonly ILanguageService languageService;
         private readonly IPageService pageService;
         private readonly IPageVersionService pageVersionService;
         private readonly IPageTypeService pageTypeService;
+        private readonly KoreSiteSettings siteSettings;
         private readonly UrlHelper urlHelper;
-        private readonly static char[] trimCharacters = { ' ', '\r', '\n', '\t' };
+        private static readonly char[] trimCharacters = { ' ', '\r', '\n', '\t' };
 
         public PagesIndexingContentProvider(
+            ILanguageService languageService,
             IPageService pageService,
             IPageVersionService pageVersionService,
             IPageTypeService pageTypeService,
+            KoreSiteSettings siteSettings,
             UrlHelper urlHelper)
         {
+            this.languageService = languageService;
             this.pageService = pageService;
             this.pageVersionService = pageVersionService;
             this.pageTypeService = pageTypeService;
+            this.siteSettings = siteSettings;
             this.urlHelper = urlHelper;
         }
 
         public IEnumerable<IDocumentIndex> GetDocuments(Func<string, IDocumentIndex> factory)
         {
-            CultureInfo defaultCultureInfo = null;
-            var workContext = EngineContext.Current.Resolve<IWebWorkContext>();
-            if (!string.IsNullOrEmpty(workContext.CurrentCultureCode))
+            var pageVersions = pageVersionService.GetCurrentVersions(shownOnMenusOnly: false);
+            foreach (var document in ProcessPageVersions(pageVersions, factory, siteSettings.DefaultLanguage))
             {
-                try
-                {
-                    defaultCultureInfo = new CultureInfo(workContext.CurrentCultureCode);
-                }
-                catch (Exception)
-                {
-                    defaultCultureInfo = null;
-                }
+                yield return document;
             }
 
-            // TODO: If there are too many records, we may get issues like "OutOfMemoryException".
-            //  We should implement paging here.
-            //  Also: shouldn't we only be indexing the latest versions of each page, rather than including every old version?
-            HashSet<PageVersion> pageVersions = null;
-            using (var connection = pageVersionService.OpenConnection())
+            List<string> cultureCodes = null;
+            using (var connection = languageService.OpenConnection())
             {
-                pageVersions = connection.Query()
-                    .Include(x => x.Page)
-                    .ToHashSet();
+                cultureCodes = connection.Query().Select(x => x.CultureCode).ToList();
             }
 
+            foreach (string cultureCode in cultureCodes)
+            {
+                if (siteSettings.DefaultLanguage == cultureCode)
+                {
+                    // Already added (see top of this method)...
+                    continue;
+                }
+
+                pageVersions = pageVersionService.GetCurrentVersions(cultureCode: cultureCode, shownOnMenusOnly: false);
+                foreach (var document in ProcessPageVersions(pageVersions, factory, cultureCode))
+                {
+                    yield return document;
+                }
+            }
+        }
+
+        private IEnumerable<IDocumentIndex> ProcessPageVersions(IEnumerable<PageVersion> pageVersions, Func<string, IDocumentIndex> factory, string cultureCode)
+        {
             foreach (var pageVersion in pageVersions)
             {
                 var document = factory(pageVersion.Id.ToString());
@@ -72,7 +83,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
                 string description;
                 korePageType.PopulateDocumentIndex(document, out description);
 
-                //document.Add("url", urlHelper.Action("Index", "PageContent", new { area = Constants.Areas.Pages, slug = page.Slug })).Store();
                 document.Add("url", "/" + pageVersion.Slug).Store();
 
                 description = CreatePageDescription(description);
@@ -81,18 +91,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
                     document.Add("description", description.Left(256)).Analyze().Store();
                 }
 
-                if (!string.IsNullOrEmpty(pageVersion.CultureCode))
-                {
-                    var cultureInfo = new CultureInfo(pageVersion.CultureCode);
-                    document.Add("culture", cultureInfo.LCID).Store();
-                }
-                else
-                {
-                    if (defaultCultureInfo != null)
-                    {
-                        document.Add("culture", defaultCultureInfo.LCID).Store();
-                    }
-                }
+                var cultureInfo = string.IsNullOrEmpty(cultureCode)
+                    ? CultureInfo.InvariantCulture
+                    : new CultureInfo(cultureCode);
+
+                document.Add("culture", cultureInfo.LCID).Store();
 
                 yield return document;
             }

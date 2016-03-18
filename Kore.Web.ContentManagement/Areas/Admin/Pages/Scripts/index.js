@@ -335,7 +335,7 @@
             return false;
         };
         self.goBack = function () {
-            switchSection($("#form-section"));
+            switchSection($("#page-grid-section"));
         };
     };
 

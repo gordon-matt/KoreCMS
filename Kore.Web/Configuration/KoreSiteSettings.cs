@@ -5,7 +5,7 @@ namespace Kore.Web.Configuration
 {
     public class KoreSiteSettings : ISettings
     {
-        private string defaultLanguage;
+        //private string defaultLanguage;
 
         public KoreSiteSettings()
         {

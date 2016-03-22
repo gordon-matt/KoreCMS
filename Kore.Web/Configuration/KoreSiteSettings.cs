@@ -64,17 +64,17 @@ namespace Kore.Web.Configuration
 
         #endregion Themes
 
-        #region Localization
+        //#region Localization
 
-        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Site.DefaultLanguage)]
-        public string DefaultLanguage
-        {
-            //get { return string.IsNullOrEmpty(defaultLanguage) ? "en-US" : defaultLanguage; }
-            get { return defaultLanguage; }
-            set { defaultLanguage = value; }
-        }
+        //[LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Site.DefaultLanguage)]
+        //public string DefaultLanguage
+        //{
+        //    //get { return string.IsNullOrEmpty(defaultLanguage) ? "en-US" : defaultLanguage; }
+        //    get { return defaultLanguage; }
+        //    set { defaultLanguage = value; }
+        //}
 
-        #endregion Localization
+        //#endregion Localization
 
         #region SEO
 

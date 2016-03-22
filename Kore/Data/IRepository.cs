@@ -20,19 +20,19 @@ namespace Kore.Data
 
         IEnumerable<TEntity> Find();
 
-        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> filterExpression);
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 
         Task<IEnumerable<TEntity>> FindAsync();
 
-        Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> filterExpression);
+        Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
 
         TEntity FindOne(params object[] keyValues);
 
-        TEntity FindOne(Expression<Func<TEntity, bool>> filterExpression);
+        TEntity FindOne(Expression<Func<TEntity, bool>> predicate);
 
         Task<TEntity> FindOneAsync(params object[] keyValues);
 
-        Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> filterExpression);
+        Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> predicate);
 
         #endregion Find
 
@@ -40,11 +40,11 @@ namespace Kore.Data
 
         int Count();
 
-        int Count(Expression<Func<TEntity, bool>> countExpression);
+        int Count(Expression<Func<TEntity, bool>> predicate);
 
         Task<int> CountAsync();
 
-        Task<int> CountAsync(Expression<Func<TEntity, bool>> countExpression);
+        Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate);
 
         #endregion Count
 
@@ -56,7 +56,7 @@ namespace Kore.Data
 
         int Delete(IEnumerable<TEntity> entities);
 
-        int Delete(Expression<Func<TEntity, bool>> filterExpression);
+        int Delete(Expression<Func<TEntity, bool>> predicate);
 
         int Delete(IQueryable<TEntity> query);
 
@@ -66,7 +66,7 @@ namespace Kore.Data
 
         Task<int> DeleteAsync(IEnumerable<TEntity> entities);
 
-        Task<int> DeleteAsync(Expression<Func<TEntity, bool>> filterExpression);
+        Task<int> DeleteAsync(Expression<Func<TEntity, bool>> predicate);
 
         Task<int> DeleteAsync(IQueryable<TEntity> query);
 

@@ -13,9 +13,9 @@
             <li role="presentation">
                 <a href="#Themes" aria-controls="Themes" role="tab" data-toggle="tab">@T(KoreWebLocalizableStrings.Settings.Site.Tabs.Themes)</a>
             </li>
-            <li role="presentation">
+            @*<li role="presentation">
                 <a href="#Localization" aria-controls="Localization" role="tab" data-toggle="tab">@T(KoreWebLocalizableStrings.Settings.Site.Tabs.Localization)</a>
-            </li>
+            </li>*@
             <li role="presentation">
                 <a href="#SEO" aria-controls="SEO" role="tab" data-toggle="tab">@T(KoreWebLocalizableStrings.Settings.Site.Tabs.SEO)</a>
             </li>
@@ -60,13 +60,13 @@
                     </label>
                 </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="Localization">
+            @*<div role="tabpanel" class="tab-pane" id="Localization">
                 <div class="form-group">
                     @Html.LabelFor(m => m.DefaultLanguage)
                     @Html.Kore().LanguagesDropDownListFor(m => m.DefaultLanguage, new { @class = "form-control", data_bind = "value: defaultLanguage" })
                     @Html.ValidationMessageFor(m => m.DefaultLanguage)
                 </div>
-            </div>
+            </div>*@
             <div role="tabpanel" class="tab-pane" id="SEO">
                 <div class="form-group">
                     @Html.LabelFor(m => m.DefaultMetaKeywords)
@@ -97,7 +97,7 @@
         viewModel.defaultDesktopTheme = ko.observable("");
         viewModel.defaultMobileTheme = ko.observable("");
         viewModel.allowUserToSelectTheme = ko.observable(false);
-        viewModel.defaultLanguage = ko.observable("");
+        //viewModel.defaultLanguage = ko.observable("");
         viewModel.defaultMetaKeywords = ko.observable("");
         viewModel.defaultMetaDescription = ko.observable("");
         viewModel.homePageTitle = ko.observable("");
@@ -124,9 +124,9 @@
             if (data.AllowUserToSelectTheme && (typeof data.AllowUserToSelectTheme === 'boolean')) {
                 viewModel.allowUserToSelectTheme(data.AllowUserToSelectTheme);
             }
-            if (data.DefaultLanguage) {
-                viewModel.defaultLanguage(data.DefaultLanguage);
-            }
+            //if (data.DefaultLanguage) {
+            //    viewModel.defaultLanguage(data.DefaultLanguage);
+            //}
             if (data.DefaultMetaKeywords) {
                 viewModel.defaultMetaKeywords(data.DefaultMetaKeywords);
             }
@@ -147,7 +147,7 @@
         delete viewModel.defaultDesktopTheme;
         delete viewModel.defaultMobileTheme;
         delete viewModel.allowUserToSelectTheme;
-        delete viewModel.defaultLanguage;
+        //delete viewModel.defaultLanguage;
         delete viewModel.defaultMetaKeywords;
         delete viewModel.defaultMetaDescription;
         delete viewModel.homePageTitle;
@@ -162,7 +162,7 @@
             DefaultDesktopTheme: viewModel.defaultDesktopTheme(),
             DefaultMobileTheme: viewModel.defaultMobileTheme(),
             AllowUserToSelectTheme: viewModel.allowUserToSelectTheme(),
-            DefaultLanguage: viewModel.defaultLanguage(),
+            //DefaultLanguage: viewModel.defaultLanguage(),
             DefaultMetaKeywords: viewModel.defaultMetaKeywords(),
             DefaultMetaDescription: viewModel.defaultMetaDescription(),
             HomePageTitle: viewModel.homePageTitle()

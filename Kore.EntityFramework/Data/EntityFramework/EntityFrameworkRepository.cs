@@ -83,9 +83,9 @@ namespace Kore.Data.EntityFramework
     //        return Table.ToHashSet();
     //    }
 
-    //    public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> filterExpression)
+    //    public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
     //    {
-    //        return Table.Where(filterExpression).ToHashSet();
+    //        return Table.Where(predicate).ToHashSet();
     //    }
 
     //    public async Task<IEnumerable<TEntity>> FindAsync()
@@ -93,9 +93,9 @@ namespace Kore.Data.EntityFramework
     //        return await Table.ToHashSetAsync();
     //    }
 
-    //    public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> filterExpression)
+    //    public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
     //    {
-    //        return await Table.Where(filterExpression).ToHashSetAsync();
+    //        return await Table.Where(predicate).ToHashSetAsync();
     //    }
 
     //    public TEntity FindOne(params object[] keyValues)
@@ -103,9 +103,9 @@ namespace Kore.Data.EntityFramework
     //        return Set.Find(keyValues);
     //    }
 
-    //    public TEntity FindOne(Expression<Func<TEntity, bool>> filterExpression)
+    //    public TEntity FindOne(Expression<Func<TEntity, bool>> predicate)
     //    {
-    //        return Table.FirstOrDefault(filterExpression);
+    //        return Table.FirstOrDefault(predicate);
     //    }
 
     //    public async Task<TEntity> FindOneAsync(params object[] keyValues)
@@ -113,9 +113,9 @@ namespace Kore.Data.EntityFramework
     //        return await Set.FindAsync(keyValues);
     //    }
 
-    //    public async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> filterExpression)
+    //    public async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> predicate)
     //    {
-    //        return await Table.FirstOrDefaultAsync(filterExpression);
+    //        return await Table.FirstOrDefaultAsync(predicate);
     //    }
 
     //    #endregion Find
@@ -161,17 +161,17 @@ namespace Kore.Data.EntityFramework
     //        }
     //    }
 
-    //    public int Delete(Expression<Func<TEntity, bool>> filterExpression)
+    //    public int Delete(Expression<Func<TEntity, bool>> predicate)
     //    {
     //        if (efHelper.Value.SupportsEFExtended)
     //        {
-    //            int rowsAffected = Table.Where(filterExpression).Delete();
-    //            RefreshMany(Table.Where(filterExpression).ToHashSet());
+    //            int rowsAffected = Table.Where(predicate).Delete();
+    //            RefreshMany(Table.Where(predicate).ToHashSet());
     //            return rowsAffected;
     //        }
     //        else
     //        {
-    //            var entities = Table.Where(filterExpression).ToHashSet();
+    //            var entities = Table.Where(predicate).ToHashSet();
     //            return Delete(entities);
     //        }
     //    }
@@ -255,17 +255,17 @@ namespace Kore.Data.EntityFramework
     //        }
     //    }
 
-    //    public async Task<int> DeleteAsync(Expression<Func<TEntity, bool>> filterExpression)
+    //    public async Task<int> DeleteAsync(Expression<Func<TEntity, bool>> predicate)
     //    {
     //        if (efHelper.Value.SupportsEFExtended)
     //        {
-    //            int rowsAffected = Table.Where(filterExpression).Delete();
-    //            RefreshMany(Table.Where(filterExpression).ToHashSet());
+    //            int rowsAffected = Table.Where(predicate).Delete();
+    //            RefreshMany(Table.Where(predicate).ToHashSet());
     //            return await Task.FromResult(rowsAffected);
     //        }
     //        else
     //        {
-    //            var entities = Table.Where(filterExpression).ToHashSet();
+    //            var entities = Table.Where(predicate).ToHashSet();
     //            return await DeleteAsync(entities);
     //        }
     //    }
@@ -575,12 +575,12 @@ namespace Kore.Data.EntityFramework
     //    //    }
     //    //}
 
-    //    //public int Update(Expression<Func<TEntity, bool>> filterExpression, Expression<Func<TEntity, TEntity>> updateExpression)
+    //    //public int Update(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> updateExpression)
     //    //{
     //    //    if (efHelper.Value.SupportsEFExtended)
     //    //    {
-    //    //        int rowsAffected = Table.Update(filterExpression, updateExpression);
-    //    //        RefreshMany(Table.Where(filterExpression).ToHashSet());
+    //    //        int rowsAffected = Table.Update(predicate, updateExpression);
+    //    //        RefreshMany(Table.Where(predicate).ToHashSet());
     //    //        return rowsAffected;
     //    //    }
     //    //    else
@@ -740,11 +740,11 @@ namespace Kore.Data.EntityFramework
             }
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> filterExpression)
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             using (var context = contextFactory.GetContext())
             {
-                return context.Set<TEntity>().AsNoTracking().Where(filterExpression).ToHashSet();
+                return context.Set<TEntity>().AsNoTracking().Where(predicate).ToHashSet();
             }
         }
 
@@ -756,11 +756,11 @@ namespace Kore.Data.EntityFramework
             }
         }
 
-        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> filterExpression)
+        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
             using (var context = contextFactory.GetContext())
             {
-                return await context.Set<TEntity>().AsNoTracking().Where(filterExpression).ToHashSetAsync();
+                return await context.Set<TEntity>().AsNoTracking().Where(predicate).ToHashSetAsync();
             }
         }
 
@@ -772,11 +772,11 @@ namespace Kore.Data.EntityFramework
             }
         }
 
-        public TEntity FindOne(Expression<Func<TEntity, bool>> filterExpression)
+        public TEntity FindOne(Expression<Func<TEntity, bool>> predicate)
         {
             using (var context = contextFactory.GetContext())
             {
-                return context.Set<TEntity>().AsNoTracking().FirstOrDefault(filterExpression);
+                return context.Set<TEntity>().AsNoTracking().FirstOrDefault(predicate);
             }
         }
 
@@ -788,11 +788,11 @@ namespace Kore.Data.EntityFramework
             }
         }
 
-        public async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> filterExpression)
+        public async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> predicate)
         {
             using (var context = contextFactory.GetContext())
             {
-                return await context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(filterExpression);
+                return await context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(predicate);
             }
         }
 
@@ -808,11 +808,11 @@ namespace Kore.Data.EntityFramework
             }
         }
 
-        public int Count(Expression<Func<TEntity, bool>> countExpression)
+        public int Count(Expression<Func<TEntity, bool>> predicate)
         {
             using (var context = contextFactory.GetContext())
             {
-                return context.Set<TEntity>().AsNoTracking().Count(countExpression);
+                return context.Set<TEntity>().AsNoTracking().Count(predicate);
             }
         }
 
@@ -824,11 +824,11 @@ namespace Kore.Data.EntityFramework
             }
         }
 
-        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> countExpression)
+        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate)
         {
             using (var context = contextFactory.GetContext())
             {
-                return await context.Set<TEntity>().AsNoTracking().CountAsync(countExpression);
+                return await context.Set<TEntity>().AsNoTracking().CountAsync(predicate);
             }
         }
 
@@ -858,7 +858,7 @@ namespace Kore.Data.EntityFramework
             }
         }
 
-        public int Delete(Expression<Func<TEntity, bool>> filterExpression)
+        public int Delete(Expression<Func<TEntity, bool>> predicate)
         {
             using (var context = contextFactory.GetContext())
             {
@@ -866,15 +866,15 @@ namespace Kore.Data.EntityFramework
 
                 if (efHelper.Value.SupportsEFExtended)
                 {
-                    int rowsAffected = set.Where(filterExpression).Delete();
-                    //RefreshMany(set.Where(filterExpression).ToHashSet());
+                    int rowsAffected = set.Where(predicate).Delete();
+                    //RefreshMany(set.Where(predicate).ToHashSet());
                     return rowsAffected;
                 }
                 else
                 {
                     // TODO: This will cause out-of-memory exceptions with tables that have too many records. We need a better solution!
                     //  Change this to use a while loop and use Skip() and Take() to get paged results to delete.
-                    var entities = set.Where(filterExpression).ToHashSet();
+                    var entities = set.Where(predicate).ToHashSet();
                     return Delete(entities);
                 }
             }
@@ -978,7 +978,7 @@ namespace Kore.Data.EntityFramework
             }
         }
 
-        public async Task<int> DeleteAsync(Expression<Func<TEntity, bool>> filterExpression)
+        public async Task<int> DeleteAsync(Expression<Func<TEntity, bool>> predicate)
         {
             using (var context = contextFactory.GetContext())
             {
@@ -986,15 +986,15 @@ namespace Kore.Data.EntityFramework
 
                 if (efHelper.Value.SupportsEFExtended)
                 {
-                    int rowsAffected = set.Where(filterExpression).Delete();
-                    //RefreshMany(Table.Where(filterExpression).ToHashSet());
+                    int rowsAffected = set.Where(predicate).Delete();
+                    //RefreshMany(Table.Where(predicate).ToHashSet());
                     return await Task.FromResult(rowsAffected);
                 }
                 else
                 {
                     // TODO: This will cause out-of-memory exceptions with tables that have too many records. We need a better solution!
                     //  Change this to use a while loop and use Skip() and Take() to get paged results to delete.
-                    var entities = set.Where(filterExpression).ToHashSet();
+                    var entities = set.Where(predicate).ToHashSet();
                     return await DeleteAsync(entities);
                 }
             }

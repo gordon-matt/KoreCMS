@@ -265,7 +265,7 @@
                 public const string DefaultDesktopTheme = "Kore.Web/Settings.Site.DefaultDesktopTheme";
                 public const string DefaultFrontendLayoutPath = "Kore.Web/Settings.Site.DefaultFrontendLayoutPath";
                 public const string DefaultGridPageSize = "Kore.Web/Settings.Site.DefaultGridPageSize";
-                public const string DefaultLanguage = "Kore.Web/Settings.Site.DefaultLanguage";
+                //public const string DefaultLanguage = "Kore.Web/Settings.Site.DefaultLanguage";
                 public const string DefaultMetaDescription = "Kore.Web/Settings.Site.DefaultMetaDescription";
                 public const string DefaultMetaKeywords = "Kore.Web/Settings.Site.DefaultMetaKeywords";
                 public const string DefaultMobileTheme = "Kore.Web/Settings.Site.DefaultMobileTheme";

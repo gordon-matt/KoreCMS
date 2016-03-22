@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using Kore.Localization.Services;
-using Kore.Web.Configuration;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Indexing;
@@ -18,7 +17,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
         private readonly IPageService pageService;
         private readonly IPageVersionService pageVersionService;
         private readonly IPageTypeService pageTypeService;
-        private readonly KoreSiteSettings siteSettings;
         private readonly UrlHelper urlHelper;
         private static readonly char[] trimCharacters = { ' ', '\r', '\n', '\t' };
 
@@ -27,21 +25,19 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
             IPageService pageService,
             IPageVersionService pageVersionService,
             IPageTypeService pageTypeService,
-            KoreSiteSettings siteSettings,
             UrlHelper urlHelper)
         {
             this.languageService = languageService;
             this.pageService = pageService;
             this.pageVersionService = pageVersionService;
             this.pageTypeService = pageTypeService;
-            this.siteSettings = siteSettings;
             this.urlHelper = urlHelper;
         }
 
         public IEnumerable<IDocumentIndex> GetDocuments(Func<string, IDocumentIndex> factory)
         {
             var pageVersions = pageVersionService.GetCurrentVersions(shownOnMenusOnly: false);
-            foreach (var document in ProcessPageVersions(pageVersions, factory, siteSettings.DefaultLanguage))
+            foreach (var document in ProcessPageVersions(pageVersions, factory, null))
             {
                 yield return document;
             }
@@ -54,12 +50,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 
             foreach (string cultureCode in cultureCodes)
             {
-                if (siteSettings.DefaultLanguage == cultureCode)
-                {
-                    // Already added (see top of this method)...
-                    continue;
-                }
-
                 pageVersions = pageVersionService.GetCurrentVersions(cultureCode: cultureCode, shownOnMenusOnly: false);
                 foreach (var document in ProcessPageVersions(pageVersions, factory, cultureCode))
                 {

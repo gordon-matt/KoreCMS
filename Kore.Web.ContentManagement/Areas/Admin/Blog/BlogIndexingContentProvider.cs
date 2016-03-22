@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Web.Mvc;
-using Kore.Web.Configuration;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Services;
 using Kore.Web.Indexing;
 using Kore.Web.Indexing.Services;
@@ -12,17 +11,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog
     public class BlogIndexingContentProvider : IIndexingContentProvider
     {
         private readonly IBlogPostService blogService;
-        private readonly KoreSiteSettings siteSettings;
         private readonly UrlHelper urlHelper;
         private readonly static char[] trimCharacters = { ' ', '\r', '\n', '\t' };
 
         public BlogIndexingContentProvider(
             IBlogPostService blogService,
-            KoreSiteSettings siteSettings,
             UrlHelper urlHelper)
         {
             this.blogService = blogService;
-            this.siteSettings = siteSettings;
             this.urlHelper = urlHelper;
         }
 
@@ -48,11 +44,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog
                 document.Add("meta_description", entry.MetaDescription).Analyze();
                 document.Add("body", entry.FullDescription).Analyze().Store();
 
-                var cultureInfo = string.IsNullOrEmpty(siteSettings.DefaultLanguage)
-                    ? CultureInfo.InvariantCulture
-                    : new CultureInfo(siteSettings.DefaultLanguage);
-
-                document.Add("culture", cultureInfo.LCID).Store();
+                document.Add("culture", CultureInfo.InvariantCulture.LCID).Store();
 
                 yield return document;
             }

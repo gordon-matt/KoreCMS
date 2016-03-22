@@ -156,7 +156,7 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<DefaultLocalizedStringManager>().As<ILocalizedStringManager>().InstancePerLifetimeScope();
             builder.RegisterType<DefaultWebCultureManager>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
-            builder.RegisterType<SiteCultureSelector>().As<ICultureSelector>().SingleInstance();
+            //builder.RegisterType<SiteCultureSelector>().As<ICultureSelector>().SingleInstance();
             builder.RegisterType<CookieCultureSelector>().As<ICultureSelector>().SingleInstance();
 
             // misc

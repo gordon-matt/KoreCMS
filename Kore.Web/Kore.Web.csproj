@@ -291,7 +291,6 @@
     <Compile Include="Localization\CurrentCultureCodeStateProvider.cs" />
     <Compile Include="Localization\DefaultWebCultureManager.cs" />
     <Compile Include="Localization\IWebCultureManager.cs" />
-    <Compile Include="Localization\LanguageContentHandler.cs" />
     <Compile Include="Localization\LocalizationUserProfileProvider.cs" />
     <Compile Include="Localization\Services\CookieCultureSelector.cs" />
     <Compile Include="Localization\Services\CultureSelectorResult.cs" />
@@ -544,7 +543,6 @@
     <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\Roles.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Membership\Views\Membership\Users.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Tenants\Views\Tenant\Index.cshtml" />
-    <None Include="app.config" />
     <None Include="Areas\Admin\Configuration\Views\web.config" />
     <None Include="Areas\Admin\Indexing\Views\web.config" />
     <None Include="Areas\Admin\Log\Views\web.config" />

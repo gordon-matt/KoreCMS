@@ -184,7 +184,7 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.Settings.Site.DefaultDesktopTheme, "Default Desktop Theme" },
                     { KoreWebLocalizableStrings.Settings.Site.DefaultFrontendLayoutPath, "Default Frontend Layout Path" },
                     { KoreWebLocalizableStrings.Settings.Site.DefaultGridPageSize, "Default Grid Page Size" },
-                    { KoreWebLocalizableStrings.Settings.Site.DefaultLanguage, "Default Language" },
+                    //{ KoreWebLocalizableStrings.Settings.Site.DefaultLanguage, "Default Language" },
                     { KoreWebLocalizableStrings.Settings.Site.DefaultMetaDescription, "Default Meta Description" },
                     { KoreWebLocalizableStrings.Settings.Site.DefaultMetaKeywords, "Default Meta Keywords" },
                     { KoreWebLocalizableStrings.Settings.Site.DefaultMobileTheme, "Default Mobile Theme" },

@@ -1,9 +1,7 @@
-﻿using Kore.Collections;
-using System;
+﻿using System;
 using System.Linq;
 using System.Web.Http;
 using System.Web.OData;
-using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Http.OData;
@@ -13,7 +11,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 {
     public class PageApiController : GenericODataController<Page, Guid>
     {
-        private readonly IPageService service;
         private readonly IPageVersionService pageVersionService;
         private readonly IWebWorkContext workContext;
 

@@ -283,11 +283,6 @@ namespace Kore.Data.Services
 
         #endregion Update
 
-        public virtual IEnumerable<TEntity> Translate(string storedProcedure, IEnumerable<DbParameter> parameters)
-        {
-            return repository.Translate(storedProcedure, parameters);
-        }
-
         #endregion IGenericDataService<TEntity> Members
 
         protected virtual void ClearCache()

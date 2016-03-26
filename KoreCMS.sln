@@ -168,6 +168,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Caching.Redis"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Messaging.LiveChat", "Plugins\Kore.Plugins.Messaging.LiveChat\Kore.Plugins.Messaging.LiveChat.csproj", "{F66F4E12-5E0F-4721-A6B2-99C2D9277072}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Data.PostgreSql", "Kore.Data.PostgreSql\Kore.Data.PostgreSql.csproj", "{7CC67B8E-924A-4959-B3FD-581A330C6DDE}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -286,6 +288,10 @@ Global
 		{F66F4E12-5E0F-4721-A6B2-99C2D9277072}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F66F4E12-5E0F-4721-A6B2-99C2D9277072}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F66F4E12-5E0F-4721-A6B2-99C2D9277072}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CC67B8E-924A-4959-B3FD-581A330C6DDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CC67B8E-924A-4959-B3FD-581A330C6DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CC67B8E-924A-4959-B3FD-581A330C6DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CC67B8E-924A-4959-B3FD-581A330C6DDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

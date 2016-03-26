@@ -1,31 +1,31 @@
 ﻿using System;
 using System.Data.Common;
 using System.Linq;
-using MySql.Data.MySqlClient;
+using Npgsql;
 
-namespace Kore.Data.MySql
+namespace Kore.Data.PostgreSql
 {
-    public class MySqlDbHelper : IKoreDbHelper
+    public class PostgreSqlDbHelper : IKoreDbHelper
     {
         public string Escape(string s)
         {
-            return string.Concat('`', s, '`');
+            return string.Concat('\"', s, '\"');
         }
 
         public bool CheckIfTableExists(DbConnection connection, string tableName)
         {
-            if (!(connection is MySqlConnection))
+            if (!(connection is NpgsqlConnection))
             {
-                throw new ArgumentException("Specified connection is not a MySqlConnection.", "connection");
+                throw new ArgumentException("Specified connection is not an NpgsqlConnection.", "connection");
             }
 
-            var mySqlConnection = connection as MySqlConnection;
+            var mySqlConnection = connection as NpgsqlConnection;
             return mySqlConnection.GetTableNames().Contains(tableName);
         }
 
         public DbConnection CreateConnection(string connectionString)
         {
-            return new MySqlConnection(connectionString);
+            return new NpgsqlConnection(connectionString);
         }
     }
 }

@@ -64,6 +64,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
 
                 if (zone == null)
                 {
+                    zoneRepository.Value.Insert(new Zone
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = zoneName
+                    });
                     return Enumerable.Empty<EntityTypeContentBlock>();
                 }
 

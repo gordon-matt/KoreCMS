@@ -1379,30 +1379,30 @@ namespace Kore.Data.EntityFramework
 
         #endregion Update
 
-        public IEnumerable<TEntity> Translate(string storedProcedure, IEnumerable<DbParameter> parameters)
-        {
-            using (var context = contextFactory.GetContext())
-            {
-                try
-                {
-                    var command = context.Database.Connection.CreateCommand();
-                    command.CommandText = storedProcedure;
+        //public IEnumerable<TEntity> Translate(string storedProcedure, IEnumerable<DbParameter> parameters)
+        //{
+        //    using (var context = contextFactory.GetContext())
+        //    {
+        //        try
+        //        {
+        //            var command = context.Database.Connection.CreateCommand();
+        //            command.CommandText = storedProcedure;
 
-                    context.Database.Connection.Open();
+        //            context.Database.Connection.Open();
 
-                    var reader = command.ExecuteReader();
+        //            var reader = command.ExecuteReader();
 
-                    return ((IObjectContextAdapter)context).ObjectContext.Translate<TEntity>(
-                        reader,
-                        context.GetEntitySetName(typeof(TEntity)),
-                        MergeOption.AppendOnly);
-                }
-                finally
-                {
-                    context.Database.Connection.Close();
-                }
-            }
-        }
+        //            return ((IObjectContextAdapter)context).ObjectContext.Translate<TEntity>(
+        //                reader,
+        //                context.GetEntitySetName(typeof(TEntity)),
+        //                MergeOption.AppendOnly);
+        //        }
+        //        finally
+        //        {
+        //            context.Database.Connection.Close();
+        //        }
+        //    }
+        //}
 
         #endregion IRepository<TEntity> Members
 

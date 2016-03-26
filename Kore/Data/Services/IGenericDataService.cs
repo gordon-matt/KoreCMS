@@ -111,7 +111,5 @@ namespace Kore.Data.Services
         //int Update(IQueryable<TEntity> query, Expression<Func<TEntity, TEntity>> updateExpression);
 
         #endregion Update
-
-        IEnumerable<TEntity> Translate(string storedProcedure, IEnumerable<DbParameter> parameters);
     }
 }

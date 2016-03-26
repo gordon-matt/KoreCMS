@@ -58,6 +58,7 @@ namespace Kore.Web.Mvc
 
         protected virtual bool CheckPermission(Permission permission)
         {
+            //TODO: if (membershipService.SupportsRolePermissions)
             var authorizationService = EngineContext.Current.Resolve<IAuthorizationService>();
             return authorizationService.TryCheckAccess(permission, WorkContext.CurrentUser);
         }

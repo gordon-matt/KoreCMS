@@ -94,14 +94,6 @@ namespace Kore.Data
 
         Task<int> UpdateAsync(IEnumerable<TEntity> entities);
 
-        //int Update(Expression<Func<TEntity, TEntity>> updateExpression);
-
-        //int Update(Expression<Func<TEntity, bool>> filterExpression, Expression<Func<TEntity, TEntity>> updateExpression);
-
-        //int Update(IQueryable<TEntity> query, Expression<Func<TEntity, TEntity>> updateExpression);
-
         #endregion Update
-
-        IEnumerable<TEntity> Translate(string storedProcedure, IEnumerable<DbParameter> parameters);
     }
 }

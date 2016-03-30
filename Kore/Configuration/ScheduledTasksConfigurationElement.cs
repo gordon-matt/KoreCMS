@@ -2,7 +2,7 @@
 
 namespace Kore.Configuration
 {
-    public class TasksConfigurationElement : ConfigurationElement
+    public class ScheduledTasksConfigurationElement : ConfigurationElement
     {
         [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = false)]
         public bool Enabled

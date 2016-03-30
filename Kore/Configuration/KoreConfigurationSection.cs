@@ -15,13 +15,6 @@ namespace Kore.Configuration
             }
         }
 
-        [ConfigurationProperty("dynamicDiscovery", IsRequired = true, DefaultValue = true)]
-        public bool DynamicDiscovery
-        {
-            get { return (bool)base["dynamicDiscovery"]; }
-            set { base["dynamicDiscovery"] = value; }
-        }
-
         [ConfigurationProperty("ignoreStartupTasks", IsRequired = true, DefaultValue = false)]
         public bool IgnoreStartupTasks
         {
@@ -35,10 +28,10 @@ namespace Kore.Configuration
             get { return (EngineConfigurationElement)base["engine"]; }
         }
 
-        [ConfigurationProperty("tasks", IsRequired = false)]
-        public TasksConfigurationElement Tasks
+        [ConfigurationProperty("scheduledTasks", IsRequired = false)]
+        public ScheduledTasksConfigurationElement ScheduledTasks
         {
-            get { return (TasksConfigurationElement)base["tasks"]; }
+            get { return (ScheduledTasksConfigurationElement)base["scheduledTasks"]; }
         }
     }
 }

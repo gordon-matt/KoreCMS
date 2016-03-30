@@ -2,6 +2,7 @@
 using System.Linq;
 using Kore.Collections.Generic;
 using Kore.Localization;
+using Kore.Web.Configuration;
 
 namespace Kore.Web.Indexing.Services
 {
@@ -51,6 +52,11 @@ namespace Kore.Web.Indexing.Services
             else
             {
                 searchBuilder.WithField("culture", CultureInfo.InvariantCulture.LCID).AsFilter();
+            }
+
+            if (KoreWebConfigurationSection.Instance.Indexing.ExactMatch)
+            {
+                searchBuilder.ExactMatch();
             }
 
             int totalCount = searchBuilder.Count();

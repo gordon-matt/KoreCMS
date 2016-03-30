@@ -29,6 +29,12 @@ namespace Kore.Web.Configuration
             get { return (HttpCompressionConfigurationElement)base["httpCompression"]; }
         }
 
+        [ConfigurationProperty("indexing", IsRequired = false)]
+        public IndexingConfigurationElement Indexing
+        {
+            get { return (IndexingConfigurationElement)base["indexing"]; }
+        }
+
         [ConfigurationProperty("resources", IsRequired = false)]
         public ResourcesConfigurationElement Resources
         {

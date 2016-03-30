@@ -176,6 +176,7 @@
     <Compile Include="Configuration\Domain\GenericAttribute.cs" />
     <Compile Include="Configuration\Domain\GenericAttributeExtensions.cs" />
     <Compile Include="Configuration\HttpCompressionConfigurationElement.cs" />
+    <Compile Include="Configuration\IndexingConfigurationElement.cs" />
     <Compile Include="Configuration\ISettings.cs" />
     <Compile Include="Configuration\ISettingService.cs" />
     <Compile Include="Configuration\KoreWebConfigurationSection.cs" />

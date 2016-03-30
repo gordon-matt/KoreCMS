@@ -19,21 +19,21 @@ namespace Kore.Web.Configuration
 
     public class ScriptsConfigurationElement : ConfigurationElement
     {
-        [ConfigurationProperty("virtualBasePath", IsRequired = false, DefaultValue = "~/Scripts")]
-        public string VirtualBasePath
+        [ConfigurationProperty("basePath", IsRequired = false, DefaultValue = "~/Scripts")]
+        public string BasePath
         {
-            get { return (string)base["virtualBasePath"]; }
-            set { base["virtualBasePath"] = value; }
+            get { return (string)base["basePath"]; }
+            set { base["basePath"] = value; }
         }
     }
 
     public class StylesConfigurationElement : ConfigurationElement
     {
-        [ConfigurationProperty("virtualBasePath", IsRequired = false, DefaultValue = "~/Content")]
-        public string VirtualBasePath
+        [ConfigurationProperty("basePath", IsRequired = false, DefaultValue = "~/Content")]
+        public string BasePath
         {
-            get { return (string)base["virtualBasePath"]; }
-            set { base["virtualBasePath"] = value; }
+            get { return (string)base["basePath"]; }
+            set { base["basePath"] = value; }
         }
     }
 }

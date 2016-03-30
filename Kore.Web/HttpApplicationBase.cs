@@ -87,7 +87,7 @@ namespace Kore.Web
 
             FilterProviders.Providers.Add(new KoreFilterProvider());
 
-            if (DataSettingsHelper.IsDatabaseInstalled && KoreConfigurationSection.Instance.Tasks.Enabled)
+            if (DataSettingsHelper.IsDatabaseInstalled && KoreConfigurationSection.Instance.ScheduledTasks.Enabled)
             {
                 TaskManager.Instance.Initialize();
                 TaskManager.Instance.Start();

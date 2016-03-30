@@ -136,7 +136,7 @@
     <Compile Include="Configuration\Domain\Setting.cs" />
     <Compile Include="Configuration\EngineConfigurationElement.cs" />
     <Compile Include="Configuration\KoreConfigurationSection.cs" />
-    <Compile Include="Configuration\TasksConfigurationElement.cs" />
+    <Compile Include="Configuration\ScheduledTasksConfigurationElement.cs" />
     <Compile Include="Core\ArrayExtensions.cs" />
     <Compile Include="Core\ByteArrayExtensions.cs" />
     <Compile Include="Core\CharExtensions.cs" />

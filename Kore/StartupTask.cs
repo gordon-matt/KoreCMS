@@ -14,7 +14,7 @@ namespace Kore
 
         public void Execute()
         {
-            if (KoreConfigurationSection.Instance.Tasks.Enabled)
+            if (KoreConfigurationSection.Instance.ScheduledTasks.Enabled)
             {
                 var taskRepository = EngineContext.Current.Resolve<IRepository<ScheduledTask>>();
                 var allTasks = EngineContext.Current.ResolveAll<ITask>();

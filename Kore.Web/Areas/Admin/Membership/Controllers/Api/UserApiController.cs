@@ -52,7 +52,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             return (results as IQueryable<KoreUser>).ToHashSet();
         }
 
-        //[EnableQuery]
+        [EnableQuery]
         public virtual SingleResult<KoreUser> Get([FromODataUri] string key)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))

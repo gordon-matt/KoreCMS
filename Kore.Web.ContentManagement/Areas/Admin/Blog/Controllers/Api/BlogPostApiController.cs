@@ -37,7 +37,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
         }
 
         [AllowAnonymous]
-        //[EnableQuery]
+        [EnableQuery]
         public override SingleResult<BlogPost> Get([FromODataUri] Guid key)
         {
             return base.Get(key);

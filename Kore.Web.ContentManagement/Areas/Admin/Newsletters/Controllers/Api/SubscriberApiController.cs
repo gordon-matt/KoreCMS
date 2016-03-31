@@ -59,7 +59,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
             return (results as IQueryable<Subscriber>).ToHashSet();
         }
 
-        //[EnableQuery]
+        [EnableQuery]
         public SingleResult<Subscriber> Get([FromODataUri] string key)
         {
             if (!CheckPermission(CmsPermissions.NewsletterRead))

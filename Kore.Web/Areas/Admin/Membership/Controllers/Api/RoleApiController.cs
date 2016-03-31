@@ -45,7 +45,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             return (results as IQueryable<KoreRole>).ToHashSet();
         }
 
-        //[EnableQuery]
+        [EnableQuery]
         public virtual SingleResult<KoreRole> Get([FromODataUri] string key)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))

@@ -115,22 +115,46 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers
             return Json(new { Content = content }, JsonRequestBehavior.AllowGet);
         }
 
-        [AllowAnonymous]
-        [Route("get-cities/{countryId}")]
-        public JsonResult GetCities(int countryId)
+        [Route("get-states/{countryId}")]
+        public JsonResult GetStates(int countryId)
         {
-            var cities = regionService.Value
-                .GetSubRegions(countryId, RegionType.City, WorkContext.CurrentCultureCode)
+            var states = regionService.Value
+                .GetStates(countryId, WorkContext.CurrentCultureCode)
                 .ToDictionary(k => k.Id, v => v);
 
-            var data = cities
-                .OrderBy(x => x.Value.Order == null)
-                .ThenBy(x => x.Value.Order)
-                .ThenBy(x => x.Value.Name)
+            if (!states.Any())
+            {
+                return Json(new { Data = new[] { new { Id = -1, Name = "N/A" } } }, JsonRequestBehavior.AllowGet);
+            }
+
+            var data = states.Values
+                .OrderBy(x => x.Order == null)
+                .ThenBy(x => x.Order)
+                .ThenBy(x => x.Name)
                 .Select(x => new
                 {
-                    Id = x.Key,
-                    Name = x.Value.Name
+                    Id = x.Id,
+                    Name = x.Name
+                });
+
+            return Json(new { Data = data }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("get-cities/{regionId}")]
+        public JsonResult GetCities(int regionId)
+        {
+            var cities = regionService.Value
+                .GetSubRegions(regionId, RegionType.City, WorkContext.CurrentCultureCode)
+                .ToDictionary(k => k.Id, v => v);
+
+            var data = cities.Values
+                .OrderBy(x => x.Order == null)
+                .ThenBy(x => x.Order)
+                .ThenBy(x => x.Name)
+                .Select(x => new
+                {
+                    Id = x.Id,
+                    Name = x.Name
                 });
 
             return Json(new { Data = data }, JsonRequestBehavior.AllowGet);

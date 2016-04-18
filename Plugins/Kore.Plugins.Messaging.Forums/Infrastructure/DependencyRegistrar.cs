@@ -3,6 +3,7 @@ using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Plugins.Messaging.Forums.Services;
 using Kore.Web.Configuration;
+using Kore.Web.ContentManagement.Infrastructure;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Navigation;
@@ -32,6 +33,7 @@ namespace Kore.Plugins.Messaging.Forums.Infrastructure
             builder.RegisterType<LocationFormatProvider>().As<ILocationFormatProvider>().SingleInstance();
             builder.RegisterType<NavigationProvider>().As<INavigationProvider>().SingleInstance();
 
+            builder.RegisterType<AutoMenuProvider>().As<IAutoMenuProvider>().SingleInstance();
             builder.RegisterType<ForumService>().As<IForumService>().InstancePerDependency();
         }
 

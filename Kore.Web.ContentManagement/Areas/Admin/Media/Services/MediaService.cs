@@ -83,6 +83,17 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Media.Services
         /// <returns>The media files in the given path.</returns>
         public IEnumerable<MediaFile> GetMediaFiles(string relativePath)
         {
+            if (relativePath.StartsWith("Media"))
+            {
+                relativePath = relativePath.Substring(5, relativePath.Length);
+            }
+            else if (relativePath.StartsWith("/Media"))
+            {
+                relativePath = relativePath.Substring(6, relativePath.Length);
+            }
+
+            relativePath = relativePath.TrimStart(new[] { '/', '\\' });
+            //relativePath = relativePath.Replace("/", "\\");
             var files = storageProvider.ListFiles(relativePath);
             return files.Select(file => BuildMediaFile(relativePath, file)).ToList();
         }

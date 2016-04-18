@@ -218,6 +218,10 @@
             public const string ForumFeedCount = "Plugins.Messaging.Forums/Settings.ForumFeedCount";
             public const string ForumSearchTermMinimumLength = "Plugins.Messaging.Forums/Settings.ForumSearchTermMinimumLength";
             public const string LayoutPathOverride = "Plugins.Messaging.Forums/Settings.LayoutPathOverride";
+
+            public const string PageTitle = "Plugins.Messaging.Forums/Settings.PageTitle";
+            public const string ShowOnMenus = "Plugins.Messaging.Forums/Settings.ShowOnMenus";
+            public const string MenuPosition = "Plugins.Messaging.Forums/Settings.MenuPosition";
         }
     }
 }

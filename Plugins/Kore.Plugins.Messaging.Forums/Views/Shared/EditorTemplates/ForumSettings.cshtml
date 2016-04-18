@@ -80,7 +80,7 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ForumEditor, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.ForumEditor, new { @class = "form-control", data_bind = "value: forumEditor" })
+        @Html.EnumDropDownListFor(m => m.ForumEditor, new { @class = "form-control", data_bind = "value: forumEditor" })
         @Html.ValidationMessageFor(m => m.ForumEditor)
     </div>
     <div class="form-group">
@@ -160,6 +160,23 @@
         @Html.ValidationMessageFor(m => m.ForumSearchTermMinimumLength)
     </div>
     <div class="form-group">
+        @Html.LabelFor(m => m.PageTitle, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.PageTitle, new { @class = "form-control", data_bind = "value: pageTitle" })
+        @Html.ValidationMessageFor(m => m.PageTitle)
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.ShowOnMenus, new { data_bind = "checked: showOnMenus" }) @T(LocalizableStrings.Settings.ShowOnMenus)
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.MenuPosition, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.MenuPosition, new { @class = "form-control", data_bind = "value: menuPosition" })
+        @Html.ValidationMessageFor(m => m.MenuPosition)
+    </div>
+    <div class="form-group">
         @Html.LabelFor(m => m.LayoutPathOverride, new { @class = "control-label" })
         @Html.TextBoxFor(m => m.LayoutPathOverride, new { @class = "form-control", data_bind = "value: layoutPathOverride" })
         @Html.ValidationMessageFor(m => m.LayoutPathOverride)
@@ -168,35 +185,38 @@
 
 <script type="text/javascript">
     function updateModel(viewModel, data) {
-        viewModel.forumsEnabled = ko.observable(false);
-        viewModel.relativeDateTimeFormattingEnabled = ko.observable(false);
-        viewModel.allowUsersToEditPosts = ko.observable(false);
-        viewModel.allowUsersToManageSubscriptions = ko.observable(false);
-        viewModel.allowUsersToDeletePosts = ko.observable(false);
-        viewModel.topicSubjectMaxLength = ko.observable(0);
-        viewModel.strippedTopicMaxLength = ko.observable(0);
-        viewModel.postMaxLength = ko.observable(0);
-        viewModel.topicsPageSize = ko.observable(0);
-        viewModel.postsPageSize = ko.observable(0);
-        viewModel.searchResultsPageSize = ko.observable(0);
-        viewModel.activeDiscussionsPageSize = ko.observable(0);
-        viewModel.latestUserPostsPageSize = ko.observable(0);
-        viewModel.showUsersPostCount = ko.observable(false);
-        viewModel.forumEditor = ko.observable(0);
-        viewModel.signaturesEnabled = ko.observable(false);
+        viewModel.forumsEnabled = ko.observable(true);
+        viewModel.relativeDateTimeFormattingEnabled = ko.observable(true);
+        viewModel.allowUsersToEditPosts = ko.observable(true);
+        viewModel.allowUsersToManageSubscriptions = ko.observable(true);
+        viewModel.allowUsersToDeletePosts = ko.observable(true);
+        viewModel.topicSubjectMaxLength = ko.observable(255);
+        viewModel.strippedTopicMaxLength = ko.observable(255);
+        viewModel.postMaxLength = ko.observable(2048);
+        viewModel.topicsPageSize = ko.observable(10);
+        viewModel.postsPageSize = ko.observable(10);
+        viewModel.searchResultsPageSize = ko.observable(10);
+        viewModel.activeDiscussionsPageSize = ko.observable(10);
+        viewModel.latestUserPostsPageSize = ko.observable(10);
+        viewModel.showUsersPostCount = ko.observable(true);
+        viewModel.forumEditor = ko.observable(20);
+        viewModel.signaturesEnabled = ko.observable(true);
         viewModel.allowPrivateMessages = ko.observable(false);
-        viewModel.showAlertForPM = ko.observable(false);
-        viewModel.privateMessagesPageSize = ko.observable(0);
-        viewModel.forumSubscriptionsPageSize = ko.observable(0);
-        viewModel.notifyAboutPrivateMessages = ko.observable(false);
-        viewModel.pmSubjectMaxLength = ko.observable(0);
-        viewModel.pmTextMaxLength = ko.observable(0);
-        viewModel.homePageActiveDiscussionsTopicCount = ko.observable(0);
-        viewModel.activeDiscussionsFeedCount = ko.observable(0);
-        viewModel.activeDiscussionsFeedEnabled = ko.observable(false);
-        viewModel.forumFeedsEnabled = ko.observable(false);
-        viewModel.forumFeedCount = ko.observable(0);
-        viewModel.forumSearchTermMinimumLength = ko.observable(0);
+        viewModel.showAlertForPM = ko.observable(true);
+        viewModel.privateMessagesPageSize = ko.observable(10);
+        viewModel.forumSubscriptionsPageSize = ko.observable(10);
+        viewModel.notifyAboutPrivateMessages = ko.observable(true);
+        viewModel.pmSubjectMaxLength = ko.observable(128);
+        viewModel.pmTextMaxLength = ko.observable(1024);
+        viewModel.homePageActiveDiscussionsTopicCount = ko.observable(10);
+        viewModel.forumFeedsEnabled = ko.observable(true);
+        viewModel.forumFeedCount = ko.observable(10);
+        viewModel.activeDiscussionsFeedEnabled = ko.observable(true);
+        viewModel.activeDiscussionsFeedCount = ko.observable(10);
+        viewModel.forumSearchTermMinimumLength = ko.observable(2);
+        viewModel.pageTitle = ko.observable(null);
+        viewModel.showOnMenus = ko.observable(true);
+        viewModel.menuPosition = ko.observable(0);
         viewModel.layoutPathOverride = ko.observable('');
 
         if (data) {
@@ -229,6 +249,9 @@
             if (data.ForumFeedsEnabled && typeof data.ForumFeedsEnabled === 'boolean') { viewModel.forumFeedsEnabled(data.ForumFeedsEnabled); }
             if (data.ForumFeedCount) { viewModel.forumFeedCount(data.ForumFeedCount); }
             if (data.ForumSearchTermMinimumLength) { viewModel.forumSearchTermMinimumLength(data.ForumSearchTermMinimumLength); }
+            if (data.PageTitle) { viewModel.pageTitle(data.PageTitle); }
+            if (data.ShowOnMenus && typeof data.ShowOnMenus === 'boolean') { viewModel.showOnMenus(data.ShowOnMenus); }
+            if (data.MenuPosition) { viewModel.menuPosition(data.MenuPosition); }
             if (data.LayoutPathOverride) { viewModel.layoutPathOverride(data.LayoutPathOverride); }
         }
     };
@@ -263,6 +286,9 @@
         delete viewModel.forumFeedsEnabled;
         delete viewModel.forumFeedCount;
         delete viewModel.forumSearchTermMinimumLength;
+        delete viewModel.pageTitle;
+        delete viewModel.showOnMenus;
+        delete viewModel.menuPosition;
         delete viewModel.layoutPathOverride;
     }
 
@@ -297,6 +323,9 @@
             ForumFeedsEnabled: viewModel.forumFeedsEnabled(),
             ForumFeedCount: viewModel.forumFeedCount(),
             ForumSearchTermMinimumLength: viewModel.forumSearchTermMinimumLength(),
+            PageTitle: viewModel.pageTitle(),
+            ShowOnMenus: viewModel.showOnMenus(),
+            MenuPosition: viewModel.menuPosition(),
             LayoutPathOverride: viewModel.layoutPathOverride(),
         };
 

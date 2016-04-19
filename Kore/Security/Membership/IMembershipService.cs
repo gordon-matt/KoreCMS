@@ -17,6 +17,8 @@ namespace Kore.Security.Membership
     {
         bool SupportsRolePermissions { get; }
 
+        string GenerateEmailConfirmationToken(object userId);
+
         #region Users
 
         IEnumerable<KoreUser> GetAllUsers();

@@ -18,6 +18,10 @@ namespace Kore.Web.Infrastructure
             {
                 return new Dictionary<string, string>
                 {
+                    { KoreWebLocalizableStrings.Account.ConfirmPassword, "Confirm Password" },
+                    { KoreWebLocalizableStrings.Account.Email, "Email" },
+                    { KoreWebLocalizableStrings.Account.Password, "Password" },
+                    { KoreWebLocalizableStrings.Account.Username, "Username" },
                     { KoreWebLocalizableStrings.General.Actions, "Actions" },
                     { KoreWebLocalizableStrings.General.Add, "Add" },
                     { KoreWebLocalizableStrings.General.AreYouSure, "Are you sure?" },

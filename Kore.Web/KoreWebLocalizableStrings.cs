@@ -2,6 +2,14 @@
 {
     public static class KoreWebLocalizableStrings
     {
+        public static class Account
+        {
+            public const string Username = "Kore.Web/Account.Username";
+            public const string Email = "Kore.Web/Account.Email";
+            public const string Password = "Kore.Web/Account.Password";
+            public const string ConfirmPassword = "Kore.Web/Account.ConfirmPassword";
+        }
+
         public static class General
         {
             public const string Actions = "Kore.Web/General.Actions";

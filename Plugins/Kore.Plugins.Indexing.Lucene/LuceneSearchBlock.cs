@@ -23,12 +23,12 @@ namespace Kore.Plugins.Indexing.Lucene
 
         public override string DisplayTemplatePath
         {
-            get { return "Kore.Plugins.Indexing.Lucene.Views.Shared.DisplayTemplates.LuceneSearchBlock"; }
+            get { return "~/Plugins/Indexing.Lucene/Views/Shared/DisplayTemplates/LuceneSearchBlock.cshtml"; }
         }
 
         public override string EditorTemplatePath
         {
-            get { return "Kore.Plugins.Indexing.Lucene.Views.Shared.EditorTemplates.LuceneSearchBlock"; }
+            get { return "~/Plugins/Indexing.Lucene/Views/Shared/EditorTemplates/LuceneSearchBlock.cshtml"; }
         }
 
         #endregion ContentBlockBase Overrides

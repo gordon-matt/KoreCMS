@@ -3,7 +3,6 @@
 
     var $ = require('jquery');
     var ko = require('knockout');
-    var moment = require('momentjs');
 
     require('jqueryval');
     require('kendo');

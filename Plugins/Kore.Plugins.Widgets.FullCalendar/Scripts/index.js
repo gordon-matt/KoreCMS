@@ -78,7 +78,10 @@
                     serverPaging: true,
                     serverFiltering: true,
                     serverSorting: true,
-                    sort: { field: "Name", dir: "asc" }
+                    sort: [
+                        { field: "StartDateTime", dir: "desc" },
+                        { field: "Name", dir: "asc" }
+                    ]
                 },
                 dataBound: function (e) {
                     var body = this.element.find("tbody")[0];

@@ -5,15 +5,12 @@ namespace Kore.Web.Configuration
 {
     public class KoreSiteSettings : ISettings
     {
-        //private string defaultLanguage;
-
         public KoreSiteSettings()
         {
             SiteName = "My Kore Site";
             DefaultDesktopTheme = "Default";
             DefaultMobileTheme = "Default";
             DefaultGridPageSize = 10;
-            //DefaultLanguage = "en-US";
             DefaultFrontendLayoutPath = "~/Views/Shared/_Layout.cshtml";
             AdminLayoutPath = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
             HomePageTitle = "Home Page";
@@ -64,17 +61,12 @@ namespace Kore.Web.Configuration
 
         #endregion Themes
 
-        //#region Localization
+        #region Localization
 
-        //[LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Site.DefaultLanguage)]
-        //public string DefaultLanguage
-        //{
-        //    //get { return string.IsNullOrEmpty(defaultLanguage) ? "en-US" : defaultLanguage; }
-        //    get { return defaultLanguage; }
-        //    set { defaultLanguage = value; }
-        //}
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Site.DefaultLanguage)]
+        public string DefaultLanguage { get; set; }
 
-        //#endregion Localization
+        #endregion Localization
 
         #region SEO
 

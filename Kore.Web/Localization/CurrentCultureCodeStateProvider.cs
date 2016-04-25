@@ -1,13 +1,18 @@
 ﻿using System;
+using Kore.Caching;
 
 namespace Kore.Web.Localization
 {
     public class CurrentCultureCodeStateProvider : IWorkContextStateProvider
     {
+        private readonly ICacheManager cacheManager;
         private readonly IWebCultureManager cultureManager;
 
-        public CurrentCultureCodeStateProvider(IWebCultureManager cultureManager)
+        public CurrentCultureCodeStateProvider(
+            ICacheManager cacheManager,
+            IWebCultureManager cultureManager)
         {
+            this.cacheManager = cacheManager;
             this.cultureManager = cultureManager;
         }
 
@@ -17,7 +22,10 @@ namespace Kore.Web.Localization
         {
             if (name == KoreWebConstants.StateProviders.CurrentCultureCode)
             {
-                return ctx => (T)(object)cultureManager.GetCurrentCulture(ctx.HttpContext);
+                return ctx => cacheManager.Get(KoreWebConstants.CacheKeys.CurrentCulture, () =>
+                {
+                    return (T)(object)cultureManager.GetCurrentCulture(ctx.HttpContext);
+                });
             }
             return null;
         }

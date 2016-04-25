@@ -94,7 +94,7 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<PluginFinder>().As<IPluginFinder>().InstancePerLifetimeScope();
 
             //cache manager
-            builder.RegisterType<MemoryCacheManager>().As<ICacheManager>().Named<ICacheManager>("Kore_Cache_Static").SingleInstance();
+            //builder.RegisterType<MemoryCacheManager>().As<ICacheManager>().Named<ICacheManager>("Kore_Cache_Static").SingleInstance();
             builder.RegisterType<PerRequestCacheManager>().As<ICacheManager>().Named<ICacheManager>("Kore_Cache_Per_Request").InstancePerLifetimeScope();
 
             //work context, themes, routes, etc
@@ -156,7 +156,7 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<DefaultLocalizedStringManager>().As<ILocalizedStringManager>().InstancePerLifetimeScope();
             builder.RegisterType<DefaultWebCultureManager>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
-            //builder.RegisterType<SiteCultureSelector>().As<ICultureSelector>().SingleInstance();
+            builder.RegisterType<SiteCultureSelector>().As<ICultureSelector>().SingleInstance();
             builder.RegisterType<CookieCultureSelector>().As<ICultureSelector>().SingleInstance();
 
             // misc

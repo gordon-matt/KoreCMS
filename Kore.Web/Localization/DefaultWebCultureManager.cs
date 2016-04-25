@@ -19,11 +19,6 @@ namespace Kore.Web.Localization
 
         public virtual string GetCurrentCulture(HttpContextBase requestContext)
         {
-            if (requestContext.Items.Contains("CachedCurrentCulture"))
-            {
-                return (string)requestContext.Items["CachedCurrentCulture"];
-            }
-
             var requestedCultures = cultureSelectors
                 .Select(x => x.GetCulture(requestContext))
                 .ToList()
@@ -42,7 +37,6 @@ namespace Kore.Web.Localization
                 cultureCode = null;
             }
 
-            requestContext.Items["CachedCurrentCulture"] = cultureCode;
             return cultureCode;
         }
 

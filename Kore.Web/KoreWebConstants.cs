@@ -54,6 +54,7 @@ namespace Kore.Web
 
         public static class CacheKeys
         {
+            public const string CurrentCulture = "CacheKeys.CurrentCulture";
         }
 
         public static class Indexing

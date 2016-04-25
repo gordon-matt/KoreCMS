@@ -6,6 +6,7 @@ using System.Web.OData.Query;
 using Kore.Caching;
 using Kore.Configuration.Domain;
 using Kore.Data;
+using Kore.Web.Configuration;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -65,6 +66,12 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
 
             string cacheKey = string.Format("Kore_Web_Settings_{0}", entity.Type);
             cacheManager.Remove(cacheKey);
+
+            // TODO: This is an ugly hack. We need to have a way for each setting to perform some tasks after update
+            if (entity.Name == new KoreSiteSettings().Name)
+            {
+                cacheManager.Remove(KoreWebConstants.CacheKeys.CurrentCulture);
+            }
 
             return result;
         }

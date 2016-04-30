@@ -214,6 +214,11 @@ namespace Kore.Web.Http.OData
 
         protected static bool CheckPermission(Permission permission)
         {
+            if (permission == null)
+            {
+                return true;
+            }
+
             var authorizationService = EngineContext.Current.Resolve<IAuthorizationService>();
             var workContext = EngineContext.Current.Resolve<IWorkContext>();
             return authorizationService.TryCheckAccess(permission, workContext.CurrentUser);

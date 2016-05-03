@@ -208,23 +208,6 @@ namespace Kore.Data.EntityFramework
             }
         }
 
-        public int Delete(IQueryable<TEntity> query)
-        {
-            if (efHelper.Value.SupportsEFExtended)
-            {
-                int rowsAffected = query.Delete();
-                //RefreshAll();
-                return rowsAffected;
-            }
-            else
-            {
-                // TODO: This will cause out-of-memory exceptions with tables that have too many records. We need a better solution!
-                //  Change this to use a while loop and use Skip() and Take() to get paged results to delete.
-                var entities = query.ToHashSet();
-                return Delete(entities);
-            }
-        }
-
         public int Delete(TEntity entity)
         {
             using (var context = contextFactory.GetContext())
@@ -325,23 +308,6 @@ namespace Kore.Data.EntityFramework
                     var entities = set.Where(predicate).ToHashSet();
                     return await DeleteAsync(entities);
                 }
-            }
-        }
-
-        public async Task<int> DeleteAsync(IQueryable<TEntity> query)
-        {
-            if (efHelper.Value.SupportsEFExtended)
-            {
-                int rowsAffected = query.Delete();
-                //RefreshAll();
-                return await Task.FromResult(rowsAffected);
-            }
-            else
-            {
-                // TODO: This will cause out-of-memory exceptions with tables that have too many records. We need a better solution!
-                //  Change this to use a while loop and use Skip() and Take() to get paged results to delete.
-                var entities = query.ToHashSet();
-                return await DeleteAsync(entities);
             }
         }
 

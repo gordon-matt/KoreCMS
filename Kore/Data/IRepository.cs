@@ -58,8 +58,6 @@ namespace Kore.Data
 
         int Delete(Expression<Func<TEntity, bool>> predicate);
 
-        int Delete(IQueryable<TEntity> query);
-
         Task<int> DeleteAllAsync();
 
         Task<int> DeleteAsync(TEntity entity);
@@ -67,8 +65,6 @@ namespace Kore.Data
         Task<int> DeleteAsync(IEnumerable<TEntity> entities);
 
         Task<int> DeleteAsync(Expression<Func<TEntity, bool>> predicate);
-
-        Task<int> DeleteAsync(IQueryable<TEntity> query);
 
         #endregion Delete
 

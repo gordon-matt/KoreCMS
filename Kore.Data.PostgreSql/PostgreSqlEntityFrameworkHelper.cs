@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using Kore.Collections;
 using Kore.EntityFramework.Data.EntityFramework;
+using Npgsql;
 
 namespace Kore.Data.PostgreSql
 {
@@ -27,6 +28,37 @@ namespace Kore.Data.PostgreSql
 
         public void EnsureTables<TContext>(TContext context) where TContext : DbContext
         {
+            if (!context.Database.Exists())
+            {
+                string databaseToCreate = context.Database.Connection.Database;
+
+                string connectionString = context.Database.Connection.ConnectionString.Replace(
+                    "Database=" + databaseToCreate,
+                    "Database=postgres");
+
+                using (var connection = new NpgsqlConnection(connectionString))
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = string.Format(
+                        @"CREATE DATABASE ""{0}"" WITH OWNER = ""postgres"" ENCODING = 'UTF8' CONNECTION LIMIT = -1;",
+                        databaseToCreate);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+
+                using (var connection = new NpgsqlConnection(context.Database.Connection.ConnectionString))
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = @"CREATE SCHEMA ""dbo"";";
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+
             var objectContext = ((IObjectContextAdapter)context).ObjectContext;
             var metadata = objectContext.MetadataWorkspace;
             var sSpaceEntityTypes = metadata.GetItemCollection(DataSpace.SSpace).OfType<EntityType>();

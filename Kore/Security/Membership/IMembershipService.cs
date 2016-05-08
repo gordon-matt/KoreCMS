@@ -19,6 +19,8 @@ namespace Kore.Security.Membership
 
         string GenerateEmailConfirmationToken(object userId);
 
+        void ConfirmEmail(object userId, string token);
+
         #region Users
 
         IEnumerable<KoreUser> GetAllUsers();

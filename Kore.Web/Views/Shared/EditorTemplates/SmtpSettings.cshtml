@@ -41,12 +41,12 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.MaxTries)
-        @Html.TextBoxFor(m => m.MaxTries, new { @class = "form-control", data_bind = "value: maxTries" })
+        @Html.TextBoxFor(m => m.MaxTries, new { type = "number", @class = "form-control", data_bind = "value: maxTries" })
         @Html.ValidationMessageFor(m => m.MaxTries)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.MessagesPerBatch)
-        @Html.TextBoxFor(m => m.MessagesPerBatch, new { @class = "form-control", data_bind = "value: messagesPerBatch" })
+        @Html.TextBoxFor(m => m.MessagesPerBatch, new { type = "number", @class = "form-control", data_bind = "value: messagesPerBatch" })
         @Html.ValidationMessageFor(m => m.MessagesPerBatch)
     </div>
 </div>

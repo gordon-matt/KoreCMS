@@ -80,6 +80,11 @@ namespace Kore.Web.Infrastructure
                 membershipService.InsertUser(new KoreUser { UserName = dataSettings.AdminEmail, Email = dataSettings.AdminEmail }, dataSettings.AdminPassword);
                 adminUser = membershipService.GetUserByEmail(dataSettings.AdminEmail);
 
+                // TODO: Test
+                // Confirm User
+                string token = membershipService.GenerateEmailConfirmationToken(adminUser.Id);
+                membershipService.ConfirmEmail(adminUser.Id, token);
+
                 KoreRole administratorsRole = null;
                 if (adminUser != null)
                 {

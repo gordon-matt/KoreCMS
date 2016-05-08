@@ -6,12 +6,12 @@
     <p>Generated Passwords</p>
     <div class="form-group">
         @Html.LabelFor(m => m.GeneratedPasswordLength)
-        @Html.TextBoxFor(m => m.GeneratedPasswordLength, new { @class = "form-control", data_bind = "value: generatedPasswordLength" })
+        @Html.TextBoxFor(m => m.GeneratedPasswordLength, new { type = "number", @class = "form-control", data_bind = "value: generatedPasswordLength" })
         @Html.ValidationMessageFor(m => m.GeneratedPasswordLength)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.GeneratedPasswordNumberOfNonAlphanumericChars)
-        @Html.TextBoxFor(m => m.GeneratedPasswordNumberOfNonAlphanumericChars, new { @class = "form-control", data_bind = "value: generatedPasswordNumberOfNonAlphanumericChars" })
+        @Html.TextBoxFor(m => m.GeneratedPasswordNumberOfNonAlphanumericChars, new { type = "number", @class = "form-control", data_bind = "value: generatedPasswordNumberOfNonAlphanumericChars" })
         @Html.ValidationMessageFor(m => m.GeneratedPasswordNumberOfNonAlphanumericChars)
     </div>
 </div>

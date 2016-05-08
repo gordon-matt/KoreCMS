@@ -35,7 +35,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.Delay, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.Delay, new { @class = "form-control", data_bind = "value: blockModel.delay" })
+                        @Html.TextBoxFor(m => m.Delay, new { type = "number", @class = "form-control", data_bind = "value: blockModel.delay" })
                         @Html.HelpTextFor(m => m.Delay)
                     </div>
                 </div>
@@ -44,14 +44,14 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.StartHeight, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.StartHeight, new { @class = "form-control", data_bind = "value: blockModel.startHeight" })
+                        @Html.TextBoxFor(m => m.StartHeight, new { type = "number", @class = "form-control", data_bind = "value: blockModel.startHeight" })
                         @Html.HelpTextFor(m => m.StartHeight)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.StartWidth, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.StartWidth, new { @class = "form-control", data_bind = "value: blockModel.startWidth" })
+                        @Html.TextBoxFor(m => m.StartWidth, new { type = "number", @class = "form-control", data_bind = "value: blockModel.startWidth" })
                         @Html.HelpTextFor(m => m.StartWidth)
                     </div>
                 </div>
@@ -101,28 +101,28 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.ThumbWidth, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.ThumbWidth, new { @class = "form-control", data_bind = "value: blockModel.thumbWidth" })
+                        @Html.TextBoxFor(m => m.ThumbWidth, new { type = "number", @class = "form-control", data_bind = "value: blockModel.thumbWidth" })
                         @Html.HelpTextFor(m => m.ThumbWidth)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.ThumbHeight, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.ThumbHeight, new { @class = "form-control", data_bind = "value: blockModel.thumbHeight" })
+                        @Html.TextBoxFor(m => m.ThumbHeight, new { type = "number", @class = "form-control", data_bind = "value: blockModel.thumbHeight" })
                         @Html.HelpTextFor(m => m.ThumbHeight)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.ThumbAmount, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.ThumbAmount, new { @class = "form-control", data_bind = "value: blockModel.thumbAmount" })
+                        @Html.TextBoxFor(m => m.ThumbAmount, new { type = "number", @class = "form-control", data_bind = "value: blockModel.thumbAmount" })
                         @Html.HelpTextFor(m => m.ThumbAmount)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.HideThumbs, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.HideThumbs, new { @class = "form-control", data_bind = "value: blockModel.hideThumbs" })
+                        @Html.TextBoxFor(m => m.HideThumbs, new { type = "number", @class = "form-control", data_bind = "value: blockModel.hideThumbs" })
                         @Html.HelpTextFor(m => m.HideThumbs)
                     </div>
                 </div>
@@ -166,14 +166,14 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.NavigationHOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.NavigationHOffset, new { @class = "form-control", data_bind = "value: blockModel.navigationHOffset" })
+                        @Html.TextBoxFor(m => m.NavigationHOffset, new { type = "number", @class = "form-control", data_bind = "value: blockModel.navigationHOffset" })
                         @Html.HelpTextFor(m => m.NavigationHOffset)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.NavigationVOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.NavigationVOffset, new { @class = "form-control", data_bind = "value: blockModel.navigationVOffset" })
+                        @Html.TextBoxFor(m => m.NavigationVOffset, new { type = "number", @class = "form-control", data_bind = "value: blockModel.navigationVOffset" })
                         @Html.HelpTextFor(m => m.NavigationVOffset)
                     </div>
                 </div>
@@ -204,28 +204,28 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.SoloArrowLeftHOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.SoloArrowLeftHOffset, new { @class = "form-control", data_bind = "value: blockModel.soloArrowLeftHOffset" })
+                        @Html.TextBoxFor(m => m.SoloArrowLeftHOffset, new { type = "number", @class = "form-control", data_bind = "value: blockModel.soloArrowLeftHOffset" })
                         @Html.HelpTextFor(m => m.SoloArrowLeftHOffset)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.SoloArrowRightHOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.SoloArrowRightHOffset, new { @class = "form-control", data_bind = "value: blockModel.soloArrowRightHOffset" })
+                        @Html.TextBoxFor(m => m.SoloArrowRightHOffset, new { type = "number", @class = "form-control", data_bind = "value: blockModel.soloArrowRightHOffset" })
                         @Html.HelpTextFor(m => m.SoloArrowRightHOffset)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.SoloArrowLeftVOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.SoloArrowLeftVOffset, new { @class = "form-control", data_bind = "value: blockModel.soloArrowLeftVOffset" })
+                        @Html.TextBoxFor(m => m.SoloArrowLeftVOffset, new { type = "number", @class = "form-control", data_bind = "value: blockModel.soloArrowLeftVOffset" })
                         @Html.HelpTextFor(m => m.SoloArrowLeftVOffset)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.SoloArrowRightVOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.SoloArrowRightVOffset, new { @class = "form-control", data_bind = "value: blockModel.soloArrowRightVOffset" })
+                        @Html.TextBoxFor(m => m.SoloArrowRightVOffset, new { type = "number", @class = "form-control", data_bind = "value: blockModel.soloArrowRightVOffset" })
                         @Html.HelpTextFor(m => m.SoloArrowRightVOffset)
                     </div>
                 </div>
@@ -239,14 +239,14 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.SwipeMaxTouches, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.SwipeMaxTouches, new { @class = "form-control", data_bind = "value: blockModel.swipeMaxTouches" })
+                        @Html.TextBoxFor(m => m.SwipeMaxTouches, new { type = "number", @class = "form-control", data_bind = "value: blockModel.swipeMaxTouches" })
                         @Html.HelpTextFor(m => m.SwipeMaxTouches)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.SwipeMinTouches, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.SwipeMinTouches, new { @class = "form-control", data_bind = "value: blockModel.swipeMinTouches" })
+                        @Html.TextBoxFor(m => m.SwipeMinTouches, new { type = "number", @class = "form-control", data_bind = "value: blockModel.swipeMinTouches" })
                         @Html.HelpTextFor(m => m.SwipeMinTouches)
                     </div>
                 </div>
@@ -259,14 +259,14 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.StartWithSlide, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.StartWithSlide, new { @class = "form-control", data_bind = "value: blockModel.startWithSlide" })
+                        @Html.TextBoxFor(m => m.StartWithSlide, new { type = "number", @class = "form-control", data_bind = "value: blockModel.startWithSlide" })
                         @Html.HelpTextFor(m => m.StartWithSlide)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.StopAtSlide, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.StopAtSlide, new { @class = "form-control", data_bind = "value: blockModel.stopAtSlide" })
+                        @Html.TextBoxFor(m => m.StopAtSlide, new { type = "number", @class = "form-control", data_bind = "value: blockModel.stopAtSlide" })
                         @Html.HelpTextFor(m => m.StopAtSlide)
                     </div>
                 </div>
@@ -275,7 +275,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.StopAfterLoops, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.StopAfterLoops, new { @class = "form-control", data_bind = "value: blockModel.stopAfterLoops" })
+                        @Html.TextBoxFor(m => m.StopAfterLoops, new { type = "number", @class = "form-control", data_bind = "value: blockModel.stopAfterLoops" })
                         @Html.HelpTextFor(m => m.StopAfterLoops)
                     </div>
                 </div>
@@ -288,21 +288,21 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.HideCaptionAtLimit, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.HideCaptionAtLimit, new { @class = "form-control", data_bind = "value: blockModel.hideCaptionAtLimit" })
+                        @Html.TextBoxFor(m => m.HideCaptionAtLimit, new { type = "number", @class = "form-control", data_bind = "value: blockModel.hideCaptionAtLimit" })
                         @Html.HelpTextFor(m => m.HideCaptionAtLimit)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.HideAllCaptionAtLimit, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.HideAllCaptionAtLimit, new { @class = "form-control", data_bind = "value: blockModel.hideAllCaptionAtLimit" })
+                        @Html.TextBoxFor(m => m.HideAllCaptionAtLimit, new { type = "number", @class = "form-control", data_bind = "value: blockModel.hideAllCaptionAtLimit" })
                         @Html.HelpTextFor(m => m.HideAllCaptionAtLimit)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.HideSliderAtLimit, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.HideSliderAtLimit, new { @class = "form-control", data_bind = "value: blockModel.hideSliderAtLimit" })
+                        @Html.TextBoxFor(m => m.HideSliderAtLimit, new { type = "number", @class = "form-control", data_bind = "value: blockModel.hideSliderAtLimit" })
                         @Html.HelpTextFor(m => m.HideSliderAtLimit)
                     </div>
                 </div>
@@ -311,14 +311,14 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.HideNavDelayOnMobile, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.HideNavDelayOnMobile, new { @class = "form-control", data_bind = "value: blockModel.hideNavDelayOnMobile" })
+                        @Html.TextBoxFor(m => m.HideNavDelayOnMobile, new { type = "number", @class = "form-control", data_bind = "value: blockModel.hideNavDelayOnMobile" })
                         @Html.HelpTextFor(m => m.HideNavDelayOnMobile)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.HideThumbsUnderResolution, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.HideThumbsUnderResolution, new { @class = "form-control", data_bind = "value: blockModel.hideThumbsUnderResolution" })
+                        @Html.TextBoxFor(m => m.HideThumbsUnderResolution, new { type = "number", @class = "form-control", data_bind = "value: blockModel.hideThumbsUnderResolution" })
                         @Html.HelpTextFor(m => m.HideThumbsUnderResolution)
                     </div>
                 </div>
@@ -361,7 +361,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.MinHeight, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.MinHeight, new { @class = "form-control", data_bind = "value: blockModel.minHeight" })
+                        @Html.TextBoxFor(m => m.MinHeight, new { type = "number", @class = "form-control", data_bind = "value: blockModel.minHeight" })
                         @Html.HelpTextFor(m => m.MinHeight)
                     </div>
                 </div>
@@ -375,7 +375,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.FullScreenOffset, new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                        @Html.TextBoxFor(m => m.FullScreenOffset, new { @class = "form-control", data_bind = "value: blockModel.fullScreenOffset" })
+                        @Html.TextBoxFor(m => m.FullScreenOffset, new { type = "number", @class = "form-control", data_bind = "value: blockModel.fullScreenOffset" })
                         @Html.HelpTextFor(m => m.FullScreenOffset)
                     </div>
                 </div>

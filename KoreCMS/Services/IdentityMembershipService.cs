@@ -63,6 +63,11 @@ namespace KoreCMS.Services
             return userManager.GenerateEmailConfirmationTokenAsync(id).Result;
         }
 
+        public void ConfirmEmail(object userId, string token)
+        {
+            userManager.ConfirmEmail(userId.ToString(), token);
+        }
+
         #region Users
 
         public IEnumerable<KoreUser> GetAllUsers()

@@ -16,7 +16,7 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ItemsPerPage, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.ItemsPerPage, new { @class = "form-control", data_bind = "value: itemsPerPage" })
+        @Html.TextBoxFor(m => m.ItemsPerPage, new { type = "number", @class = "form-control", data_bind = "value: itemsPerPage" })
         @Html.ValidationMessageFor(m => m.ItemsPerPage)
     </div>
     <div class="form-group">
@@ -28,7 +28,7 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.MenuPosition, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.MenuPosition, new { @class = "form-control", data_bind = "value: menuPosition" })
+        @Html.TextBoxFor(m => m.MenuPosition, new { type = "number", @class = "form-control", data_bind = "value: menuPosition" })
         @Html.ValidationMessageFor(m => m.MenuPosition)
     </div>
     <div class="form-group">

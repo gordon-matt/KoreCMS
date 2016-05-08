@@ -33,42 +33,42 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.TopicSubjectMaxLength, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.TopicSubjectMaxLength, new { @class = "form-control", data_bind = "value: topicSubjectMaxLength" })
+        @Html.TextBoxFor(m => m.TopicSubjectMaxLength, new { type = "number", @class = "form-control", data_bind = "value: topicSubjectMaxLength" })
         @Html.ValidationMessageFor(m => m.TopicSubjectMaxLength)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.StrippedTopicMaxLength, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.StrippedTopicMaxLength, new { @class = "form-control", data_bind = "value: strippedTopicMaxLength" })
+        @Html.TextBoxFor(m => m.StrippedTopicMaxLength, new { type = "number", @class = "form-control", data_bind = "value: strippedTopicMaxLength" })
         @Html.ValidationMessageFor(m => m.StrippedTopicMaxLength)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.PostMaxLength, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.PostMaxLength, new { @class = "form-control", data_bind = "value: postMaxLength" })
+        @Html.TextBoxFor(m => m.PostMaxLength, new { type = "number", @class = "form-control", data_bind = "value: postMaxLength" })
         @Html.ValidationMessageFor(m => m.PostMaxLength)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.TopicsPageSize, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.TopicsPageSize, new { @class = "form-control", data_bind = "value: topicsPageSize" })
+        @Html.TextBoxFor(m => m.TopicsPageSize, new { type = "number", @class = "form-control", data_bind = "value: topicsPageSize" })
         @Html.ValidationMessageFor(m => m.TopicsPageSize)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.PostsPageSize, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.PostsPageSize, new { @class = "form-control", data_bind = "value: postsPageSize" })
+        @Html.TextBoxFor(m => m.PostsPageSize, new { type = "number", @class = "form-control", data_bind = "value: postsPageSize" })
         @Html.ValidationMessageFor(m => m.PostsPageSize)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.SearchResultsPageSize, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.SearchResultsPageSize, new { @class = "form-control", data_bind = "value: searchResultsPageSize" })
+        @Html.TextBoxFor(m => m.SearchResultsPageSize, new { type = "number", @class = "form-control", data_bind = "value: searchResultsPageSize" })
         @Html.ValidationMessageFor(m => m.SearchResultsPageSize)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ActiveDiscussionsPageSize, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.ActiveDiscussionsPageSize, new { @class = "form-control", data_bind = "value: activeDiscussionsPageSize" })
+        @Html.TextBoxFor(m => m.ActiveDiscussionsPageSize, new { type = "number", @class = "form-control", data_bind = "value: activeDiscussionsPageSize" })
         @Html.ValidationMessageFor(m => m.ActiveDiscussionsPageSize)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.LatestUserPostsPageSize, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.LatestUserPostsPageSize, new { @class = "form-control", data_bind = "value: latestUserPostsPageSize" })
+        @Html.TextBoxFor(m => m.LatestUserPostsPageSize, new { type = "number", @class = "form-control", data_bind = "value: latestUserPostsPageSize" })
         @Html.ValidationMessageFor(m => m.LatestUserPostsPageSize)
     </div>
     <div class="form-group">
@@ -102,12 +102,12 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.PrivateMessagesPageSize, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.PrivateMessagesPageSize, new { @class = "form-control", data_bind = "value: privateMessagesPageSize" })
+        @Html.TextBoxFor(m => m.PrivateMessagesPageSize, new { type = "number", @class = "form-control", data_bind = "value: privateMessagesPageSize" })
         @Html.ValidationMessageFor(m => m.PrivateMessagesPageSize)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ForumSubscriptionsPageSize, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.ForumSubscriptionsPageSize, new { @class = "form-control", data_bind = "value: forumSubscriptionsPageSize" })
+        @Html.TextBoxFor(m => m.ForumSubscriptionsPageSize, new { type = "number", @class = "form-control", data_bind = "value: forumSubscriptionsPageSize" })
         @Html.ValidationMessageFor(m => m.ForumSubscriptionsPageSize)
     </div>
     <div class="form-group">
@@ -119,22 +119,22 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.PMSubjectMaxLength, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.PMSubjectMaxLength, new { @class = "form-control", data_bind = "value: pmSubjectMaxLength" })
+        @Html.TextBoxFor(m => m.PMSubjectMaxLength, new { type = "number", @class = "form-control", data_bind = "value: pmSubjectMaxLength" })
         @Html.ValidationMessageFor(m => m.PMSubjectMaxLength)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.PMTextMaxLength, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.PMTextMaxLength, new { @class = "form-control", data_bind = "value: pmTextMaxLength" })
+        @Html.TextBoxFor(m => m.PMTextMaxLength, new { type = "number", @class = "form-control", data_bind = "value: pmTextMaxLength" })
         @Html.ValidationMessageFor(m => m.PMTextMaxLength)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.HomePageActiveDiscussionsTopicCount, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.HomePageActiveDiscussionsTopicCount, new { @class = "form-control", data_bind = "value: homePageActiveDiscussionsTopicCount" })
+        @Html.TextBoxFor(m => m.HomePageActiveDiscussionsTopicCount, new { type = "number", @class = "form-control", data_bind = "value: homePageActiveDiscussionsTopicCount" })
         @Html.ValidationMessageFor(m => m.HomePageActiveDiscussionsTopicCount)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ActiveDiscussionsFeedCount, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.ActiveDiscussionsFeedCount, new { @class = "form-control", data_bind = "value: activeDiscussionsFeedCount" })
+        @Html.TextBoxFor(m => m.ActiveDiscussionsFeedCount, new { type = "number", @class = "form-control", data_bind = "value: activeDiscussionsFeedCount" })
         @Html.ValidationMessageFor(m => m.ActiveDiscussionsFeedCount)
     </div>
     <div class="form-group">
@@ -151,12 +151,12 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ForumFeedCount, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.ForumFeedCount, new { @class = "form-control", data_bind = "value: forumFeedCount" })
+        @Html.TextBoxFor(m => m.ForumFeedCount, new { type = "number", @class = "form-control", data_bind = "value: forumFeedCount" })
         @Html.ValidationMessageFor(m => m.ForumFeedCount)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ForumSearchTermMinimumLength, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.ForumSearchTermMinimumLength, new { @class = "form-control", data_bind = "value: forumSearchTermMinimumLength" })
+        @Html.TextBoxFor(m => m.ForumSearchTermMinimumLength, new { type = "number", @class = "form-control", data_bind = "value: forumSearchTermMinimumLength" })
         @Html.ValidationMessageFor(m => m.ForumSearchTermMinimumLength)
     </div>
     <div class="form-group">
@@ -173,7 +173,7 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.MenuPosition, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.MenuPosition, new { @class = "form-control", data_bind = "value: menuPosition" })
+        @Html.TextBoxFor(m => m.MenuPosition, new { type = "number", @class = "form-control", data_bind = "value: menuPosition" })
         @Html.ValidationMessageFor(m => m.MenuPosition)
     </div>
     <div class="form-group">

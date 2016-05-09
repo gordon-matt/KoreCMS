@@ -37,6 +37,7 @@
             public const string Error = "Kore.Web/General.Error";
             public const string Export = "Kore.Web/General.Export";
             public const string Home = "Kore.Web/General.Home";
+            public const string Id = "Kore.Web/General.Id";
             public const string Import = "Kore.Web/General.Import";
             public const string Install = "Kore.Web/General.Install";
             public const string Loading = "Kore.Web/General.Loading";

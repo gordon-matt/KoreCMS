@@ -53,6 +53,7 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.General.Export, "Export" },
                     { KoreWebLocalizableStrings.General.GetRecordError, "There was an error when retrieving the record." },
                     { KoreWebLocalizableStrings.General.Home, "Home" },
+                    { KoreWebLocalizableStrings.General.Id, "ID" },
                     { KoreWebLocalizableStrings.General.Import, "Import" },
                     { KoreWebLocalizableStrings.General.InsertRecordError, "There was an error when inserting the record." },
                     { KoreWebLocalizableStrings.General.InsertRecordSuccess, "Successfully inserted record." },

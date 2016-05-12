@@ -28,21 +28,25 @@ namespace Kore.Data.Services
         /// Retrieve all entities
         /// </summary>
         /// <returns></returns>
-        IEnumerable<TEntity> Find();
+        IEnumerable<TEntity> Find(params Expression<Func<TEntity, dynamic>>[] includePaths);
 
-        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> filterExpression);
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> filterExpression, params Expression<Func<TEntity, dynamic>>[] includePaths);
 
-        Task<IEnumerable<TEntity>> FindAsync();
+        Task<IEnumerable<TEntity>> FindAsync(params Expression<Func<TEntity, dynamic>>[] includePaths);
 
-        Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> filterExpression);
+        Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> filterExpression, params Expression<Func<TEntity, dynamic>>[] includePaths);
 
         TEntity FindOne(params object[] keyValues);
 
-        TEntity FindOne(Expression<Func<TEntity, bool>> filterExpression);
+        TEntity FindOne(object[] keyValues, params Expression<Func<TEntity, dynamic>>[] includePaths);
+
+        TEntity FindOne(Expression<Func<TEntity, bool>> filterExpression, params Expression<Func<TEntity, dynamic>>[] includePaths);
 
         Task<TEntity> FindOneAsync(params object[] keyValues);
 
-        Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> filterExpression);
+        Task<TEntity> FindOneAsync(object[] keyValues, params Expression<Func<TEntity, dynamic>>[] includePaths);
+
+        Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> filterExpression, params Expression<Func<TEntity, dynamic>>[] includePaths);
 
         #endregion Find
 

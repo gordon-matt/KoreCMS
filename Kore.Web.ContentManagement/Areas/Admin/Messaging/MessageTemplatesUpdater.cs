@@ -12,7 +12,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging
 
         public void Execute()
         {
-            var providers = EngineContext.Current.Resolve<IEnumerable<IMessageTemplatesProvider>>();
+            var providers = EngineContext.Current.ResolveAll<IMessageTemplatesProvider>();
             var templateService = EngineContext.Current.Resolve<IMessageTemplateService>();
 
             var templates = templateService.Find();

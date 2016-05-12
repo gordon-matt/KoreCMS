@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kore.Reflection;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
@@ -13,6 +14,7 @@ using Kore.EntityFramework.Data;
 using Kore.EntityFramework.Data.EntityFramework;
 using Kore.Exceptions;
 using Kore.Logging;
+using System.Collections;
 
 namespace Kore.Data.EntityFramework
 {
@@ -60,35 +62,63 @@ namespace Kore.Data.EntityFramework
 
         #region Find
 
-        public IEnumerable<TEntity> Find()
+        public IEnumerable<TEntity> Find(params Expression<Func<TEntity, dynamic>>[] includePaths)
         {
             using (var context = contextFactory.GetContext())
             {
-                return context.Set<TEntity>().AsNoTracking().ToHashSet();
+                IQueryable<TEntity> query = context.Set<TEntity>().AsNoTracking();
+
+                foreach (var path in includePaths)
+                {
+                    query = query.Include(path);
+                }
+
+                return query.ToHashSet();
             }
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, dynamic>>[] includePaths)
         {
             using (var context = contextFactory.GetContext())
             {
-                return context.Set<TEntity>().AsNoTracking().Where(predicate).ToHashSet();
+                var query = context.Set<TEntity>().AsNoTracking().Where(predicate);
+
+                foreach (var path in includePaths)
+                {
+                    query = query.Include(path);
+                }
+
+                return query.ToHashSet();
             }
         }
 
-        public async Task<IEnumerable<TEntity>> FindAsync()
+        public async Task<IEnumerable<TEntity>> FindAsync(params Expression<Func<TEntity, dynamic>>[] includePaths)
         {
             using (var context = contextFactory.GetContext())
             {
-                return await context.Set<TEntity>().AsNoTracking().ToHashSetAsync();
+                IQueryable<TEntity> query = context.Set<TEntity>().AsNoTracking();
+
+                foreach (var path in includePaths)
+                {
+                    query = query.Include(path);
+                }
+
+                return await query.ToHashSetAsync();
             }
         }
 
-        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, dynamic>>[] includePaths)
         {
             using (var context = contextFactory.GetContext())
             {
-                return await context.Set<TEntity>().AsNoTracking().Where(predicate).ToHashSetAsync();
+                var query = context.Set<TEntity>().AsNoTracking().Where(predicate);
+
+                foreach (var path in includePaths)
+                {
+                    query = query.Include(path);
+                }
+
+                return await query.ToHashSetAsync();
             }
         }
 
@@ -100,11 +130,40 @@ namespace Kore.Data.EntityFramework
             }
         }
 
-        public TEntity FindOne(Expression<Func<TEntity, bool>> predicate)
+        public TEntity FindOne(object[] keyValues, params Expression<Func<TEntity, dynamic>>[] includePaths)
         {
             using (var context = contextFactory.GetContext())
             {
-                return context.Set<TEntity>().AsNoTracking().FirstOrDefault(predicate);
+                var entity = context.Set<TEntity>().Find(keyValues);
+
+                foreach (var path in includePaths)
+                {
+                    if (path.Body.Type.IsCollection())
+                    {
+                        context.Entry(entity).Collection((path.Body as MemberExpression).Member.Name).Load();
+                    }
+                    else
+                    {
+                        context.Entry(entity).Reference(path).Load();
+                    }
+                }
+
+                return entity;
+            }
+        }
+
+        public TEntity FindOne(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, dynamic>>[] includePaths)
+        {
+            using (var context = contextFactory.GetContext())
+            {
+                var query = context.Set<TEntity>().AsNoTracking().Where(predicate);
+
+                foreach (var path in includePaths)
+                {
+                    query = query.Include(path);
+                }
+
+                return query.FirstOrDefault();
             }
         }
 
@@ -116,11 +175,40 @@ namespace Kore.Data.EntityFramework
             }
         }
 
-        public async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntity> FindOneAsync(object[] keyValues, params Expression<Func<TEntity, dynamic>>[] includePaths)
         {
             using (var context = contextFactory.GetContext())
             {
-                return await context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(predicate);
+                var entity = await context.Set<TEntity>().FindAsync(keyValues);
+
+                foreach (var path in includePaths)
+                {
+                    if (path.Body.Type.IsCollection())
+                    {
+                        await context.Entry(entity).Collection((path.Body as MemberExpression).Member.Name).LoadAsync();
+                    }
+                    else
+                    {
+                        await context.Entry(entity).Reference(path).LoadAsync();
+                    }
+                }
+
+                return entity;
+            }
+        }
+
+        public async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, dynamic>>[] includePaths)
+        {
+            using (var context = contextFactory.GetContext())
+            {
+                var query = context.Set<TEntity>().AsNoTracking().Where(predicate);
+
+                foreach (var path in includePaths)
+                {
+                    query = query.Include(path);
+                }
+
+                return await query.FirstOrDefaultAsync();
             }
         }
 

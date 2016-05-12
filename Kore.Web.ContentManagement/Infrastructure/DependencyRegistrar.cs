@@ -164,6 +164,8 @@ namespace Kore.Web.ContentManagement.Infrastructure
             // Indexing
             builder.RegisterType<PagesIndexingContentProvider>().As<IIndexingContentProvider>().InstancePerDependency();
             builder.RegisterType<BlogIndexingContentProvider>().As<IIndexingContentProvider>().InstancePerDependency();
+
+            builder.RegisterType<NewsletterMessageTemplates>().As<IMessageTemplatesProvider>().InstancePerDependency();
         }
 
         public int Order

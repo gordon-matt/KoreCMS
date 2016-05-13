@@ -9,8 +9,6 @@ namespace Kore.Data
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        //IQueryable<TEntity> Table { get; }
-
         IRepositoryConnection<TEntity> OpenConnection();
 
         IRepositoryConnection<TEntity> UseConnection<TOther>(IRepositoryConnection<TOther> connection)
@@ -28,13 +26,9 @@ namespace Kore.Data
 
         TEntity FindOne(params object[] keyValues);
 
-        TEntity FindOne(object[] keyValues, params Expression<Func<TEntity, dynamic>>[] includePaths);
-
         TEntity FindOne(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, dynamic>>[] includePaths);
 
         Task<TEntity> FindOneAsync(params object[] keyValues);
-
-        Task<TEntity> FindOneAsync(object[] keyValues, params Expression<Func<TEntity, dynamic>>[] includePaths);
 
         Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, dynamic>>[] includePaths);
 

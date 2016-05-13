@@ -80,26 +80,26 @@ namespace Kore.Data.Services
         {
             return CacheManager.Get(CacheKey, () =>
             {
-                return repository.Find();
+                return repository.Find(includePaths);
             });
         }
 
         public virtual IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> filterExpression, params Expression<Func<TEntity, dynamic>>[] includePaths)
         {
-            return repository.Find(filterExpression);
+            return repository.Find(filterExpression, includePaths);
         }
 
         public virtual async Task<IEnumerable<TEntity>> FindAsync(params Expression<Func<TEntity, dynamic>>[] includePaths)
         {
             return await CacheManager.Get(CacheKey, async () =>
             {
-                return await repository.FindAsync();
+                return await repository.FindAsync(includePaths);
             });
         }
 
         public virtual async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> filterExpression, params Expression<Func<TEntity, dynamic>>[] includePaths)
         {
-            return await repository.FindAsync(filterExpression);
+            return await repository.FindAsync(filterExpression, includePaths);
         }
 
         public virtual TEntity FindOne(params object[] keyValues)
@@ -107,14 +107,9 @@ namespace Kore.Data.Services
             return repository.FindOne(keyValues);
         }
 
-        public virtual TEntity FindOne(object[] keyValues, params Expression<Func<TEntity, dynamic>>[] includePaths)
-        {
-            return repository.FindOne(keyValues, includePaths);
-        }
-
         public virtual TEntity FindOne(Expression<Func<TEntity, bool>> filterExpression, params Expression<Func<TEntity, dynamic>>[] includePaths)
         {
-            return repository.FindOne(filterExpression);
+            return repository.FindOne(filterExpression, includePaths);
         }
 
         public virtual async Task<TEntity> FindOneAsync(params object[] keyValues)
@@ -122,14 +117,9 @@ namespace Kore.Data.Services
             return await repository.FindOneAsync(keyValues);
         }
 
-        public virtual async Task<TEntity> FindOneAsync(object[] keyValues, params Expression<Func<TEntity, dynamic>>[] includePaths)
-        {
-            return await repository.FindOneAsync(keyValues, includePaths);
-        }
-
         public virtual async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> filterExpression, params Expression<Func<TEntity, dynamic>>[] includePaths)
         {
-            return await repository.FindOneAsync(filterExpression);
+            return await repository.FindOneAsync(filterExpression, includePaths);
         }
 
         #endregion Find

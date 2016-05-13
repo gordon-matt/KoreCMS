@@ -60,6 +60,7 @@
     <Compile Include="MySqlConnectionExtensions.cs" />
     <Compile Include="MySqlEntityFrameworkHelper.cs" />
     <Compile Include="MySqlDbHelper.cs" />
+    <Compile Include="MySqlSelectQueryBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

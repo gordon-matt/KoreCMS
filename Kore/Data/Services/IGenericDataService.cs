@@ -38,13 +38,13 @@ namespace Kore.Data.Services
 
         TEntity FindOne(params object[] keyValues);
 
-        TEntity FindOne(object[] keyValues, params Expression<Func<TEntity, dynamic>>[] includePaths);
+        //TEntity FindOne(object[] keyValues, params Expression<Func<TEntity, dynamic>>[] includePaths);
 
         TEntity FindOne(Expression<Func<TEntity, bool>> filterExpression, params Expression<Func<TEntity, dynamic>>[] includePaths);
 
         Task<TEntity> FindOneAsync(params object[] keyValues);
 
-        Task<TEntity> FindOneAsync(object[] keyValues, params Expression<Func<TEntity, dynamic>>[] includePaths);
+        //Task<TEntity> FindOneAsync(object[] keyValues, params Expression<Func<TEntity, dynamic>>[] includePaths);
 
         Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> filterExpression, params Expression<Func<TEntity, dynamic>>[] includePaths);
 

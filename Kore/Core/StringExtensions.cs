@@ -468,19 +468,19 @@ namespace Kore
         }
 
         /// <summary>
-        /// Returns all characters to the left of the first occurrence of [c] in this System.String.
+        /// Returns all characters to the left of the first occurrence of [value] in this System.String.
         /// </summary>
         /// <param name="s">This System.String.</param>
-        /// <param name="c"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        public static string LeftOf(this string s, char c)
+        public static string LeftOf(this string s, char value)
         {
             if (s == null)
             {
                 return null;
             }
 
-            int index = s.IndexOf(c);
+            int index = s.IndexOf(value);
             if (index != -1)
             {
                 return s.Substring(0, index);
@@ -489,13 +489,13 @@ namespace Kore
         }
 
         /// <summary>
-        /// Returns all characters to the left of the [n]th occurrence of [c] in this System.String.
+        /// Returns all characters to the left of the [n]th occurrence of [value] in this System.String.
         /// </summary>
         /// <param name="s">This System.String.</param>
-        /// <param name="c"></param>
+        /// <param name="value"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        public static string LeftOf(this string s, char c, int n)
+        public static string LeftOf(this string s, char value, int n)
         {
             if (s == null)
             {
@@ -505,7 +505,7 @@ namespace Kore
             int index = -1;
             while (n > 0)
             {
-                index = s.IndexOf(c, index + 1);
+                index = s.IndexOf(value, index + 1);
                 if (index == -1)
                 { break; }
                 --n;
@@ -518,12 +518,33 @@ namespace Kore
         }
 
         /// <summary>
-        /// Returns all characters to the left of the last occurrence of [c] in this System.String.
+        /// Returns all characters to the left of the first occurrence of [value] in this System.String.
         /// </summary>
         /// <param name="s">This System.String.</param>
-        /// <param name="c"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        public static string LeftOfLastIndexOf(this string s, char c)
+        public static string LeftOf(this string s, string value)
+        {
+            if (value == null)
+            {
+                return null;
+            }
+
+            int index = s.IndexOf(value);
+            if (index != -1)
+            {
+                return s.Substring(0, index);
+            }
+            return s;
+        }
+
+        /// <summary>
+        /// Returns all characters to the left of the last occurrence of [value] in this System.String.
+        /// </summary>
+        /// <param name="s">This System.String.</param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string LeftOfLastIndexOf(this string s, char value)
         {
             if (s == null)
             {
@@ -531,7 +552,29 @@ namespace Kore
             }
 
             string ret = s;
-            int index = s.LastIndexOf(c);
+            int index = s.LastIndexOf(value);
+            if (index != -1)
+            {
+                ret = s.Substring(0, index);
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// Returns all characters to the left of the last occurrence of [value] in this System.String.
+        /// </summary>
+        /// <param name="s">This System.String.</param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string LeftOfLastIndexOf(this string s, string value)
+        {
+            if (s == null)
+            {
+                return null;
+            }
+
+            string ret = s;
+            int index = s.LastIndexOf(value);
             if (index != -1)
             {
                 ret = s.Substring(0, index);
@@ -701,19 +744,19 @@ namespace Kore
         }
 
         /// <summary>
-        /// Returns all characters to the right of the first occurrence of [c] in this System.String.
+        /// Returns all characters to the right of the first occurrence of [value] in this System.String.
         /// </summary>
         /// <param name="s">This System.String.</param>
-        /// <param name="c"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        public static string RightOf(this string s, char c)
+        public static string RightOf(this string s, char value)
         {
             if (s == null)
             {
                 return null;
             }
 
-            int index = s.IndexOf(c);
+            int index = s.IndexOf(value);
             if (index != -1)
             {
                 return s.Substring(index + 1);
@@ -722,13 +765,13 @@ namespace Kore
         }
 
         /// <summary>
-        /// Returns all characters to the right of the [n]th occurrence of [c] in this System.String.
+        /// Returns all characters to the right of the [n]th occurrence of [value] in this System.String.
         /// </summary>
         /// <param name="s">This System.String.</param>
-        /// <param name="c"></param>
+        /// <param name="value"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        public static string RightOf(this string s, char c, int n)
+        public static string RightOf(this string s, char value, int n)
         {
             if (s == null)
             {
@@ -738,7 +781,7 @@ namespace Kore
             int index = -1;
             while (n > 0)
             {
-                index = s.IndexOf(c, index + 1);
+                index = s.IndexOf(value, index + 1);
                 if (index == -1)
                 { break; }
                 --n;
@@ -752,12 +795,33 @@ namespace Kore
         }
 
         /// <summary>
-        /// Returns all characters to the right of the last occurrence of [c] in this System.String.
+        /// Returns all characters to the right of the first occurrence of [value] in this System.String.
         /// </summary>
         /// <param name="s">This System.String.</param>
-        /// <param name="c"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        public static string RightOfLastIndexOf(this string s, char c)
+        public static string RightOf(this string s, string value)
+        {
+            if (s == null)
+            {
+                return null;
+            }
+
+            int index = s.IndexOf(value);
+            if (index != -1)
+            {
+                return s.Substring(index + 1);
+            }
+            return s;
+        }
+
+        /// <summary>
+        /// Returns all characters to the right of the last occurrence of [value] in this System.String.
+        /// </summary>
+        /// <param name="s">This System.String.</param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string RightOfLastIndexOf(this string s, char value)
         {
             if (s == null)
             {
@@ -765,7 +829,29 @@ namespace Kore
             }
 
             string ret = string.Empty;
-            int index = s.LastIndexOf(c);
+            int index = s.LastIndexOf(value);
+            if (index != -1)
+            {
+                ret = s.Substring(index + 1);
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// Returns all characters to the right of the last occurrence of [value] in this System.String.
+        /// </summary>
+        /// <param name="s">This System.String.</param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string RightOfLastIndexOf(this string s, string value)
+        {
+            if (s == null)
+            {
+                return null;
+            }
+
+            string ret = string.Empty;
+            int index = s.LastIndexOf(value);
             if (index != -1)
             {
                 ret = s.Substring(index + 1);

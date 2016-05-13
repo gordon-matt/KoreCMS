@@ -130,27 +130,27 @@ namespace Kore.Data.EntityFramework
             }
         }
 
-        public TEntity FindOne(object[] keyValues, params Expression<Func<TEntity, dynamic>>[] includePaths)
-        {
-            using (var context = contextFactory.GetContext())
-            {
-                var entity = context.Set<TEntity>().Find(keyValues);
+        //public TEntity FindOne(object[] keyValues, params Expression<Func<TEntity, dynamic>>[] includePaths)
+        //{
+        //    using (var context = contextFactory.GetContext())
+        //    {
+        //        var entity = context.Set<TEntity>().Find(keyValues);
 
-                foreach (var path in includePaths)
-                {
-                    if (path.Body.Type.IsCollection())
-                    {
-                        context.Entry(entity).Collection((path.Body as MemberExpression).Member.Name).Load();
-                    }
-                    else
-                    {
-                        context.Entry(entity).Reference(path).Load();
-                    }
-                }
+        //        foreach (var path in includePaths)
+        //        {
+        //            if (path.Body.Type.IsCollection())
+        //            {
+        //                context.Entry(entity).Collection((path.Body as MemberExpression).Member.Name).Load();
+        //            }
+        //            else
+        //            {
+        //                context.Entry(entity).Reference(path).Load();
+        //            }
+        //        }
 
-                return entity;
-            }
-        }
+        //        return entity;
+        //    }
+        //}
 
         public TEntity FindOne(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, dynamic>>[] includePaths)
         {
@@ -175,27 +175,27 @@ namespace Kore.Data.EntityFramework
             }
         }
 
-        public async Task<TEntity> FindOneAsync(object[] keyValues, params Expression<Func<TEntity, dynamic>>[] includePaths)
-        {
-            using (var context = contextFactory.GetContext())
-            {
-                var entity = await context.Set<TEntity>().FindAsync(keyValues);
+        //public async Task<TEntity> FindOneAsync(object[] keyValues, params Expression<Func<TEntity, dynamic>>[] includePaths)
+        //{
+        //    using (var context = contextFactory.GetContext())
+        //    {
+        //        var entity = await context.Set<TEntity>().FindAsync(keyValues);
 
-                foreach (var path in includePaths)
-                {
-                    if (path.Body.Type.IsCollection())
-                    {
-                        await context.Entry(entity).Collection((path.Body as MemberExpression).Member.Name).LoadAsync();
-                    }
-                    else
-                    {
-                        await context.Entry(entity).Reference(path).LoadAsync();
-                    }
-                }
+        //        foreach (var path in includePaths)
+        //        {
+        //            if (path.Body.Type.IsCollection())
+        //            {
+        //                await context.Entry(entity).Collection((path.Body as MemberExpression).Member.Name).LoadAsync();
+        //            }
+        //            else
+        //            {
+        //                await context.Entry(entity).Reference(path).LoadAsync();
+        //            }
+        //        }
 
-                return entity;
-            }
-        }
+        //        return entity;
+        //    }
+        //}
 
         public async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, dynamic>>[] includePaths)
         {

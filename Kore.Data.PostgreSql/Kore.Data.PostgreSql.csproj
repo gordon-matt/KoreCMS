@@ -60,6 +60,7 @@
     <Compile Include="NpgsqlConnectionExtensions.cs" />
     <Compile Include="PostgreSqlEntityFrameworkHelper.cs" />
     <Compile Include="PostgreSqlDbHelper.cs" />
+    <Compile Include="PostgreSqlSelectQueryBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -99,6 +99,8 @@ namespace Kore.Security.Membership
 
         IDictionary<string, string> GetProfile(string userId);
 
+        IEnumerable<UserProfile> GetProfiles(IEnumerable<string> userIds);
+
         void UpdateProfile(string userId, IDictionary<string, string> profile, bool deleteExisting = false);
 
         string GetProfileEntry(string userId, string key);
@@ -112,5 +114,12 @@ namespace Kore.Security.Membership
         IEnumerable<KoreUserProfileEntry> GetProfileEntriesByKeyAndValue(string key, string value);
 
         #endregion Profile
+    }
+
+    public class UserProfile
+    {
+        public string UserId { get; set; }
+
+        public IDictionary<string, string> Profile { get; set; }
     }
 }

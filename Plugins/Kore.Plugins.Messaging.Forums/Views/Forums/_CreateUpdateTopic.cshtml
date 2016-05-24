@@ -68,7 +68,7 @@
             </div>
             <div class="buttons">
                 <input type="submit" value="@T(KoreWebLocalizableStrings.General.Submit)" class="btn btn-primary submit-topic-button" />
-                <input type="button" class="btn btn-default cancel-topic-button" value="@T(KoreWebLocalizableStrings.General.Cancel)" onclick="setLocation('@Url.Action("Forum", new { id = Model.ForumId, slug = Model.ForumSeName })')" />
+                @Html.ActionLink(T(KoreWebLocalizableStrings.General.Cancel), "Forum", new { id = Model.ForumId, slug = Model.ForumSeName }, new { @class = "btn btn-default cancel-topic-button" })
             </div>
         }
     </div>

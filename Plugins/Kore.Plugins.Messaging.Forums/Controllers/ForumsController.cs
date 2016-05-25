@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Web.Mvc;
@@ -1932,6 +1933,46 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             }
 
             return RedirectToAction("UserForumSubscriptions");
+        }
+
+
+        [HttpPost]
+        [Route("upload-file")]
+        public JsonResult UploadFile()
+        {
+            try
+            {
+                #region Save File
+
+                var file = Request.Files["Upload"];
+                var stream = file.InputStream;
+
+                string uploadFileName = Path.Combine(
+                    Server.MapPath("~/Media/Uploads/_Users/" + WorkContext.CurrentUser.Id + "/"),
+                    file.FileName);
+
+                string directory = Path.GetDirectoryName(uploadFileName);
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+
+                using (var fs = new FileStream(uploadFileName, FileMode.Create, FileAccess.Write))
+                using (var bw = new BinaryWriter(fs))
+                {
+                    var bytes = new byte[stream.Length];
+                    stream.Read(bytes, 0, bytes.Length);
+                    bw.Write(bytes);
+                }
+
+                #endregion Save File
+
+                return Json(new { Success = true, Url = string.Format("/Media/Uploads/_Users/{0}/{1}", WorkContext.CurrentUser.Id, file.FileName) });
+            }
+            catch (Exception x)
+            {
+                return Json(new { Success = false, error = x.GetBaseException().Message });
+            }
         }
 
         #endregion Methods

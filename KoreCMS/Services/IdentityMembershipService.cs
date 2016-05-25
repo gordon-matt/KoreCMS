@@ -649,6 +649,19 @@ namespace KoreCMS.Services
             }
         }
 
+        public IEnumerable<UserProfile> GetProfiles(IEnumerable<string> userIds)
+        {
+            using (var connection = userProfileRepository.OpenConnection())
+            {
+                var entries = connection.Query(x => userIds.Contains(x.UserId)).ToList();
+                return entries.GroupBy(x => x.UserId).Select(x => new UserProfile
+                {
+                    UserId = x.Key,
+                    Profile = x.ToDictionary(k => k.Key, v => v.Value)
+                });
+            }
+        }
+
         public void UpdateProfile(string userId, IDictionary<string, string> profile, bool deleteExisting = false)
         {
             List<UserProfileEntry> entries = null;

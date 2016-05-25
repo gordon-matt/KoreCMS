@@ -7,23 +7,35 @@
 // URL: http://www.corpocrat.com
 /******************************************/
 
+// Modified for Kore
+// Last Modified: 2016.05.24
+
 var textarea;
 var content;
 
-function edToolbar(obj, webRoot) {
+function edToolbar(elementId, webRoot, allowUploads) {
     document.write("<div class=\"toolbar\">");
-    document.write("<img class=\"btn btn-default markup-button\" src=\"" + webRoot + "BBEditor/images/bold.gif\" title=\"Bold\" name=\"btnBold\" onClick=\"doAddTags('[b]','[/b]','" + obj + "')\">");
-    document.write("<img class=\"btn btn-default markup-button\" src=\"" + webRoot + "BBEditor/images/italic.gif\" title=\"Italic\" name=\"btnItalic\" onClick=\"doAddTags('[i]','[/i]','" + obj + "')\">");
-    document.write("<img class=\"btn btn-default markup-button\" src=\"" + webRoot + "BBEditor/images/underline.gif\" title=\"Underline\" name=\"btnUnderline\" onClick=\"doAddTags('[u]','[/u]','" + obj + "')\">");
-    document.write("<img class=\"btn btn-default markup-button\" src=\"" + webRoot + "BBEditor/images/link.gif\" title=\"Link\" name=\"btnLink\" onClick=\"doURL('" + obj + "')\">");
-    document.write("<img class=\"btn btn-default markup-button\" src=\"" + webRoot + "BBEditor/images/picture.gif\" title=\"Picture\" name=\"btnLink\" onClick=\"doImg('" + obj + "')\">");
-    document.write("<img class=\"btn btn-default markup-button\" src=\"" + webRoot + "BBEditor/images/code.gif\" title=\"Code\" name=\"btnCode\" onClick=\"doAddTags('[code]','[/code]','" + obj + "')\">");
+    document.write("<img class=\"btn btn-default markup-button\" src=\"" + webRoot + "BBEditor/images/bold.gif\" title=\"Bold\" name=\"btnBold\" onClick=\"doAddTags('[b]','[/b]','" + elementId + "')\">");
+    document.write("<img class=\"btn btn-default markup-button\" src=\"" + webRoot + "BBEditor/images/italic.gif\" title=\"Italic\" name=\"btnItalic\" onClick=\"doAddTags('[i]','[/i]','" + elementId + "')\">");
+    document.write("<img class=\"btn btn-default markup-button\" src=\"" + webRoot + "BBEditor/images/underline.gif\" title=\"Underline\" name=\"btnUnderline\" onClick=\"doAddTags('[u]','[/u]','" + elementId + "')\">");
+    document.write("<img class=\"btn btn-default markup-button\" src=\"" + webRoot + "BBEditor/images/link.gif\" title=\"Link\" name=\"btnLink\" onClick=\"doURL('" + elementId + "')\">");
+    document.write("<img class=\"btn btn-default markup-button\" src=\"" + webRoot + "BBEditor/images/picture.gif\" title=\"Picture\" name=\"btnLink\" onClick=\"doImg('" + elementId + "')\">");
+    document.write("<img class=\"btn btn-default markup-button\" src=\"" + webRoot + "BBEditor/images/code.gif\" title=\"Code\" name=\"btnCode\" onClick=\"doAddTags('[code]','[/code]','" + elementId + "')\">");
+
+    if (allowUploads) {
+        document.write("<img class=\"btn btn-default markup-button\" src=\"" + webRoot + "BBEditor/images/upload-img.gif\" title=\"Upload Image\" name=\"btnUploadImg\" onClick=\"uploadFile('" + elementId + "','img')\">");
+        document.write("<img class=\"btn btn-default markup-button\" src=\"" + webRoot + "BBEditor/images/upload-file.gif\" title=\"Upload File\" name=\"btnUploadFile\" onClick=\"uploadFile('" + elementId + "','file')\">");
+    }
+
     document.write("</div>");
 }
 
-function doURL(obj) {
-    textarea = document.getElementById(obj);
-    var url = prompt('Enter the URL:', 'http://');
+function doURL(elementId, url) {
+    if (!url) {
+        url = prompt('Enter the URL:', 'http://');
+    }
+
+    textarea = document.getElementById(elementId);
     var scrollTop = textarea.scrollTop;
     var scrollLeft = textarea.scrollLeft;
     if (url != '' && url != null) {
@@ -58,9 +70,12 @@ function doURL(obj) {
     }
 }
 
-function doImg(obj) {
-    textarea = document.getElementById(obj);
-    var url = prompt('Enter the picture URL:', 'http://');
+function doImg(elementId, url) {
+    if (!url) {
+        url = prompt('Enter the picture URL:', 'http://');
+    }
+
+    textarea = document.getElementById(elementId);
     var scrollTop = textarea.scrollTop;
     var scrollLeft = textarea.scrollLeft;
     if (url != '' && url != null) {
@@ -83,8 +98,8 @@ function doImg(obj) {
     }
 }
 
-function doAddTags(tag1, tag2, obj) {
-    textarea = document.getElementById(obj);
+function doAddTags(tag1, tag2, elementId) {
+    textarea = document.getElementById(elementId);
     // Code for IE
     if (document.selection) {
         textarea.focus();
@@ -102,5 +117,25 @@ function doAddTags(tag1, tag2, obj) {
         textarea.value = textarea.value.substring(0, start) + rep + textarea.value.substring(end, len);
         textarea.scrollTop = scrollTop;
         textarea.scrollLeft = scrollLeft;
+    }
+}
+
+
+
+var ed_UploadFileType = '';
+var ed_TextAreaElementId = '';
+
+function uploadFile(elementId, fileType) {
+    $("#UploadModal").modal("show");
+    ed_TextAreaElementId = elementId;
+    ed_UploadFileType = fileType;
+}
+
+function uploadFileDone(url) {
+    $("#UploadModal").modal("hide");
+    switch (ed_UploadFileType) {
+        case 'img': doImg(ed_TextAreaElementId, url); break;
+        case 'file': doURL(ed_TextAreaElementId, url); break;
+        default: break;
     }
 }

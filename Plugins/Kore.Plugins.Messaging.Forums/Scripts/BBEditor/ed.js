@@ -8,7 +8,7 @@
 /******************************************/
 
 // Modified for Kore
-// Last Modified: 2016.05.24
+// Last Modified: 2016.05.25
 
 var textarea;
 var content;
@@ -131,11 +131,31 @@ function uploadFile(elementId, fileType) {
     ed_UploadFileType = fileType;
 }
 
-function uploadFileDone(url) {
+function uploadFileDone(url, fileName) {
     $("#UploadModal").modal("hide");
     switch (ed_UploadFileType) {
         case 'img': doImg(ed_TextAreaElementId, url); break;
-        case 'file': doURL(ed_TextAreaElementId, url); break;
+            //case 'file': doURL(ed_TextAreaElementId, url); break;
+        case 'file':
+
+            textarea = document.getElementById(ed_TextAreaElementId);
+            var scrollTop = textarea.scrollTop;
+            var scrollLeft = textarea.scrollLeft;
+            if (url != '' && url != null) {
+                var len = textarea.value.length;
+                var start = textarea.selectionStart;
+                var end = textarea.selectionEnd;
+
+                var sel = textarea.value.substring(start, end);
+
+                var rep = '[url=' + url + ']' + fileName + '[/url]';
+
+                textarea.value = textarea.value.substring(0, start) + rep + textarea.value.substring(end, len);
+                textarea.scrollTop = scrollTop;
+                textarea.scrollLeft = scrollLeft;
+            }
+
+            break;
         default: break;
     }
 }

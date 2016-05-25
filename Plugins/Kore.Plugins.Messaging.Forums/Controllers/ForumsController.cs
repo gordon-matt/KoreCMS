@@ -1967,7 +1967,12 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
                 #endregion Save File
 
-                return Json(new { Success = true, Url = string.Format("/Media/Uploads/_Users/{0}/{1}", WorkContext.CurrentUser.Id, file.FileName) });
+                return Json(new
+                {
+                    Success = true,
+                    Url = string.Format("/Media/Uploads/_Users/{0}/{1}", WorkContext.CurrentUser.Id, file.FileName),
+                    FileName = file.FileName
+                });
             }
             catch (Exception x)
             {

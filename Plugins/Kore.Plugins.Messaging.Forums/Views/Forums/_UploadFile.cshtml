@@ -21,12 +21,12 @@
             maxFileCount: 1,
             showPreview: false,
             showRemove: false,
-            allowedFileExtensions: ['jpg','png','xls','xlsx','doc','docx','pdf']
+            allowedFileExtensions: ['jpg','png','gif','xls','xlsx','doc','docx','pdf','ppt','pptx']
         });
         $('#Upload').on('filebatchuploadsuccess', function (event, data, previewId, index) {
             var response = data.response;
             console.log("File uploaded to: " + response.Url);
-            uploadFileDone(response.Url);
+            uploadFileDone(response.Url, response.FileName);
         });
     </script>
 }

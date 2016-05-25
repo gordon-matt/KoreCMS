@@ -4,6 +4,11 @@
 @using Kore.Plugins.Messaging.Forums.Models
 @model EditForumTopicModel
 
+@{
+    Style.IncludeBundle("third-party/bootstrap-fileinput");
+    Script.IncludeBundle("third-party/bootstrap-fileinput");
+}
+
 @Html.Action("ForumBreadcrumb", new { forumId = Model.ForumId, forumTopicId = Model.Id })
 <div class="page forum-edit-page">
     <div class="page-title">
@@ -27,6 +32,7 @@
             }
             @Html.HiddenFor(x => x.Id)
             @Html.HiddenFor(x => x.ForumId)
+            @Html.HiddenFor(x => x.IsEdit)
             <div class="fieldset">
                 <div class="form-fields">
                     <div class="form-group inputs">
@@ -43,7 +49,7 @@
                         {
                             <script type="text/javascript" src="/Plugins/Messaging.Forums/Scripts/BBEditor/ed.js"></script>
                             <script type="text/javascript">
-                                edToolbar('Text', '/Plugins/Messaging.Forums/Scripts/');
+                                edToolbar('Text', '/Plugins/Messaging.Forums/Scripts/', true);
                             </script>
                         }
                         <br />
@@ -74,3 +80,4 @@
     </div>
 </div>
 
+@Html.Partial("_UploadFile")

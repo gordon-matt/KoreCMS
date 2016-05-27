@@ -131,5 +131,17 @@ namespace Kore.Web.Mvc
                 JsonRequestBehavior = behavior
             };
         }
+
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            // Maintain ModelState, if necessary
+            // See: http://stackoverflow.com/questions/658747/how-do-i-maintain-modelstate-errors-when-using-redirecttoaction
+            if (TempData["ModelState"] != null && !ModelState.Equals(TempData["ModelState"]))
+            {
+                ModelState.Merge((ModelStateDictionary)TempData["ModelState"]);
+            }
+
+            base.OnActionExecuted(filterContext);
+        }
     }
 }

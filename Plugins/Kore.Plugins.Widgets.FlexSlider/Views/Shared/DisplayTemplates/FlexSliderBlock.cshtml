@@ -6,9 +6,9 @@
 @model FlexSliderBlock
 
 @{
-    Style.IncludePluginStyle("FlexSlider/flexslider.css");
+    Style.IncludePluginStyle("FlexSlider/flexslider.css", order: 99999);
     //Script.IncludeBundle("jquery");
-    Script.IncludePluginScript("jquery.flexslider-min.js");
+    Script.IncludePluginScript("jquery.flexslider-min.js", order: 99999);
 
     var mediaService = EngineContext.Current.Resolve<IMediaService>();
     var images = mediaService.GetMediaFiles(Model.MediaFolder);

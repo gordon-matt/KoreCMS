@@ -113,6 +113,8 @@ namespace Kore.Security.Membership
 
         IEnumerable<KoreUserProfileEntry> GetProfileEntriesByKeyAndValue(string key, string value);
 
+        bool ProfileEntryExists(string key, string value, string userId = null);
+
         #endregion Profile
     }
 

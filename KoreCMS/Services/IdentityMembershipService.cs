@@ -804,6 +804,19 @@ namespace KoreCMS.Services
             }
         }
 
+        public bool ProfileEntryExists(string key, string value, string userId = null)
+        {
+            using (var connection = userProfileRepository.OpenConnection())
+            {
+                var query = connection.Query(x => x.Key == key && x.Value == value);
+                if (!string.IsNullOrEmpty(userId))
+                {
+                    query = query.Where(x => x.UserId == userId);
+                }
+                return query.Any();
+            }
+        }
+
         #endregion Profile
 
         #endregion IMembershipService Members

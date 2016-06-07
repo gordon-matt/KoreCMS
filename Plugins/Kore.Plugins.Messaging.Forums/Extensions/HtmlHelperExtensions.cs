@@ -47,14 +47,14 @@ namespace Kore.Plugins.Messaging.Forums.Extensions
                         model.RouteValues.page = 1;
 
                         links.Append("<li class=\"first-page\">");
-                        if (model.UseRouteLinks)
-                        {
-                            links.Append(html.RouteLink(model.FirstButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.FirstPageTitle) }));
-                        }
-                        else
-                        {
+                        //if (model.UseRouteLinks)
+                        //{
+                        //    links.Append(html.RouteLink(model.FirstButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.FirstPageTitle) }));
+                        //}
+                        //else
+                        //{
                             links.Append(html.ActionLink(model.FirstButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.FirstPageTitle) }));
-                        }
+                        //}
                         links.Append("</li>");
                     }
                 }
@@ -66,14 +66,14 @@ namespace Kore.Plugins.Messaging.Forums.Extensions
                         model.RouteValues.page = (model.PageIndex);
 
                         links.Append("<li class=\"previous-page\">");
-                        if (model.UseRouteLinks)
-                        {
-                            links.Append(html.RouteLink(model.PreviousButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.PreviousPageTitle) }));
-                        }
-                        else
-                        {
+                        //if (model.UseRouteLinks)
+                        //{
+                        //    links.Append(html.RouteLink(model.PreviousButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.PreviousPageTitle) }));
+                        //}
+                        //else
+                        //{
                             links.Append(html.ActionLink(model.PreviousButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.PreviousPageTitle) }));
-                        }
+                        //}
                         links.Append("</li>");
                     }
                 }
@@ -93,14 +93,14 @@ namespace Kore.Plugins.Messaging.Forums.Extensions
                             model.RouteValues.page = (i + 1);
 
                             links.Append("<li class=\"individual-page\">");
-                            if (model.UseRouteLinks)
-                            {
-                                links.Append(html.RouteLink((i + 1).ToString(), model.RouteActionName, model.RouteValues, new { title = string.Format(localizer(LocalizableStrings.Pager.PageLinkTitle), (i + 1)) }));
-                            }
-                            else
-                            {
+                            //if (model.UseRouteLinks)
+                            //{
+                            //    links.Append(html.RouteLink((i + 1).ToString(), model.RouteActionName, model.RouteValues, new { title = string.Format(localizer(LocalizableStrings.Pager.PageLinkTitle), (i + 1)) }));
+                            //}
+                            //else
+                            //{
                                 links.Append(html.ActionLink((i + 1).ToString(), model.RouteActionName, model.RouteValues, new { title = string.Format(localizer(LocalizableStrings.Pager.PageLinkTitle), (i + 1)) }));
-                            }
+                            //}
                             links.Append("</li>");
                         }
                     }
@@ -113,14 +113,14 @@ namespace Kore.Plugins.Messaging.Forums.Extensions
                         model.RouteValues.page = (model.PageIndex + 2);
 
                         links.Append("<li class=\"next-page\">");
-                        if (model.UseRouteLinks)
-                        {
-                            links.Append(html.RouteLink(model.NextButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.NextPageTitle) }));
-                        }
-                        else
-                        {
+                        //if (model.UseRouteLinks)
+                        //{
+                        //    links.Append(html.RouteLink(model.NextButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.NextPageTitle) }));
+                        //}
+                        //else
+                        //{
                             links.Append(html.ActionLink(model.NextButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.NextPageTitle) }));
-                        }
+                        //}
                         links.Append("</li>");
                     }
                 }
@@ -132,14 +132,14 @@ namespace Kore.Plugins.Messaging.Forums.Extensions
                         model.RouteValues.page = model.TotalPages;
 
                         links.Append("<li class=\"last-page\">");
-                        if (model.UseRouteLinks)
-                        {
-                            links.Append(html.RouteLink(model.LastButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.LastPageTitle) }));
-                        }
-                        else
-                        {
+                        //if (model.UseRouteLinks)
+                        //{
+                        //    links.Append(html.RouteLink(model.LastButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.LastPageTitle) }));
+                        //}
+                        //else
+                        //{
                             links.Append(html.ActionLink(model.LastButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.LastPageTitle) }));
-                        }
+                        //}
                         links.Append("</li>");
                     }
                 }
@@ -168,7 +168,7 @@ namespace Kore.Plugins.Messaging.Forums.Extensions
                 {
                     for (int x = 1; x <= totalPages; x++)
                     {
-                        links.Append(html.RouteLink(x.ToString(), "Topic", new { id = forumTopicId, page = (x), slug = forumTopicSlug }, new { title = string.Format(localizer(LocalizableStrings.Pager.PageLinkTitle), x.ToString()) }));
+                        links.Append(html.ActionLink(x.ToString(), "Topic", new { id = forumTopicId, page = (x), slug = forumTopicSlug }, new { title = string.Format(localizer(LocalizableStrings.Pager.PageLinkTitle), x.ToString()) }));
                         if (x < totalPages)
                         {
                             links.Append(", ");
@@ -177,12 +177,12 @@ namespace Kore.Plugins.Messaging.Forums.Extensions
                 }
                 else
                 {
-                    links.Append(html.RouteLink("1", "Topic", new { id = forumTopicId, page = (1), slug = forumTopicSlug }, new { title = string.Format(localizer(LocalizableStrings.Pager.PageLinkTitle), 1) }));
+                    links.Append(html.ActionLink("1", "Topic", new { id = forumTopicId, page = (1), slug = forumTopicSlug }, new { title = string.Format(localizer(LocalizableStrings.Pager.PageLinkTitle), 1) }));
                     links.Append(" ... ");
 
                     for (int x = (totalPages - 2); x <= totalPages; x++)
                     {
-                        links.Append(html.RouteLink(x.ToString(), "Topic", new { id = forumTopicId, page = (x), slug = forumTopicSlug }, new { title = string.Format(localizer(LocalizableStrings.Pager.PageLinkTitle), x.ToString()) }));
+                        links.Append(html.ActionLink(x.ToString(), "Topic", new { id = forumTopicId, page = (x), slug = forumTopicSlug }, new { title = string.Format(localizer(LocalizableStrings.Pager.PageLinkTitle), x.ToString()) }));
 
                         if (x < totalPages)
                         {

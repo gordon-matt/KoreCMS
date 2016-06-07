@@ -321,11 +321,11 @@ namespace Kore.Plugins.Messaging.Forums.Models
         /// </summary>
         public string RouteActionName { get; set; }
 
-        /// <summary>
-        /// Gets or sets whether the links are created using RouteLink instead of Action Link
-        /// (for additional route values such as slugs or page numbers)
-        /// </summary>
-        public bool UseRouteLinks { get; set; }
+        ///// <summary>
+        ///// Gets or sets whether the links are created using RouteLink instead of Action Link
+        ///// (for additional route values such as slugs or page numbers)
+        ///// </summary>
+        //public bool UseRouteLinks { get; set; }
 
         /// <summary>
         /// Gets or sets the RouteValues object. Allows for custom route values other than page.

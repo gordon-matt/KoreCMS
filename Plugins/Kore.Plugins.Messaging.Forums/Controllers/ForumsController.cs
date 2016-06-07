@@ -1901,7 +1901,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 PageIndex = subscriptions.PageIndex,
                 ShowTotalSummary = false,
                 RouteActionName = "UserForumSubscriptionsPaged",
-                UseRouteLinks = true,
+                //UseRouteLinks = true,
                 RouteValues = new ForumSubscriptionsRouteValues { page = pageIndex }
             };
 

@@ -585,7 +585,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                         IsCurrentUserAllowedToDeletePost = forumService.IsUserAllowedToDeletePost(WorkContext.CurrentUser, post),
                         UserId = post.UserId,
                         //AllowViewingProfiles = _customerSettings.AllowViewingProfiles, //TODO
-                        AllowViewingProfiles = true,
+                        AllowViewingProfiles = false,
                         UserName = membershipService.GetUserDisplayName(postUser),
                         IsUserForumModerator = IsForumModerator(postUser),
                         ShowUsersPostCount = forumSettings.ShowUsersPostCount,

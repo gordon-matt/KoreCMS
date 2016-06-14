@@ -35,7 +35,12 @@ namespace Kore.Web
             }
 
             // Replace some characters
-            stringBuilder.Replace(",", "-").Replace(".", "-").Replace("&", "-").Replace("?", "-");
+            stringBuilder
+                .Replace(":", "-")
+                .Replace(",", "-")
+                .Replace(".", "-")
+                .Replace("&", "-")
+                .Replace("?", "-");
 
             var slug = stringBuilder.ToString().Normalize(NormalizationForm.FormKC);
 

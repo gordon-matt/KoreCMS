@@ -10,7 +10,7 @@ namespace Kore.Data.QueryBuilder
     /// </summary>
     public enum LogicOperator : byte
     {
-        And,
-        Or
+        And = 0,
+        Or = 1
     }
 }

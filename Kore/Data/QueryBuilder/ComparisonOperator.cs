@@ -10,18 +10,18 @@ namespace Kore.Data.QueryBuilder
     /// </summary>
     public enum ComparisonOperator : byte
     {
-        EqualTo,
-        NotEqualTo,
-        Like,
-        NotLike,
-        GreaterThan,
-        GreaterThanOrEqualTo,
-        LessThan,
-        LessThanOrEqualTo,
-        In,
-        Contains,
-        NotContains,
-        StartsWith,
-        EndsWith,
+        EqualTo = 0,
+        NotEqualTo = 1,
+        Like = 2,
+        NotLike = 3,
+        GreaterThan = 4,
+        GreaterThanOrEqualTo = 5,
+        LessThan = 6,
+        LessThanOrEqualTo = 7,
+        In = 8,
+        Contains = 9,
+        NotContains = 10,
+        StartsWith = 11,
+        EndsWith = 12,
     }
 }

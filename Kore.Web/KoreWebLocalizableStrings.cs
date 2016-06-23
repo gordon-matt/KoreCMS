@@ -244,6 +244,7 @@
 
             public static class Membership
             {
+                public const string DisallowUnconfirmedUserLogin = "Kore.Web/Settings.Membership.DisallowUnconfirmedUserLogin";
                 public const string GeneratedPasswordLength = "Kore.Web/Settings.Membership.GeneratedPasswordLength";
                 public const string GeneratedPasswordNumberOfNonAlphanumericChars = "Kore.Web/Settings.Membership.GeneratedPasswordNumberOfNonAlphanumericChars";
             }

@@ -181,6 +181,7 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.Settings.Captcha.PrivateKey, "Private Key" },
                     { KoreWebLocalizableStrings.Settings.Captcha.PublicKey, "Public Key" },
                     { KoreWebLocalizableStrings.Settings.Captcha.Theme, "Theme" },
+                    { KoreWebLocalizableStrings.Settings.Membership.DisallowUnconfirmedUserLogin, "Disallow Unconfirmed User Login" },
                     { KoreWebLocalizableStrings.Settings.Membership.GeneratedPasswordLength, "Length" },
                     { KoreWebLocalizableStrings.Settings.Membership.GeneratedPasswordNumberOfNonAlphanumericChars, "# Non-Alphanumeric Characters" },
                     { KoreWebLocalizableStrings.Settings.Model.Name, "Name" },

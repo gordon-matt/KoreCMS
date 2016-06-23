@@ -28,7 +28,7 @@
         viewModel.generatedPasswordNumberOfNonAlphanumericChars = ko.observable(3);
 
         if (data) {
-            if (data.DisallowUnconfirmedUserLogin) {
+            if (data.DisallowUnconfirmedUserLogin && (typeof data.DisallowUnconfirmedUserLogin === 'boolean')) {
                 viewModel.disallowUnconfirmedUserLogin(data.DisallowUnconfirmedUserLogin);
             }
             if (data.GeneratedPasswordLength) {

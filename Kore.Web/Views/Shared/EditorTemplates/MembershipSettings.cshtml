@@ -14,14 +14,23 @@
         @Html.TextBoxFor(m => m.GeneratedPasswordNumberOfNonAlphanumericChars, new { type = "number", @class = "form-control", data_bind = "value: generatedPasswordNumberOfNonAlphanumericChars" })
         @Html.ValidationMessageFor(m => m.GeneratedPasswordNumberOfNonAlphanumericChars)
     </div>
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.DisallowUnconfirmedUserLogin) @T(KoreWebLocalizableStrings.Settings.Membership.DisallowUnconfirmedUserLogin)
+        </label>
+    </div>
 </div>
 
 <script type="text/javascript">
     function updateModel(viewModel, data) {
+        viewModel.disallowUnconfirmedUserLogin = ko.observable(false);
         viewModel.generatedPasswordLength = ko.observable(7);
         viewModel.generatedPasswordNumberOfNonAlphanumericChars = ko.observable(3);
 
         if (data) {
+            if (data.DisallowUnconfirmedUserLogin) {
+                viewModel.disallowUnconfirmedUserLogin(data.DisallowUnconfirmedUserLogin);
+            }
             if (data.GeneratedPasswordLength) {
                 viewModel.generatedPasswordLength(data.GeneratedPasswordLength);
             }
@@ -32,12 +41,14 @@
     };
 
     function cleanUp(viewModel) {
+        delete viewModel.disallowUnconfirmedUserLogin;
         delete viewModel.generatedPasswordLength;
         delete viewModel.generatedPasswordNumberOfNonAlphanumericChars;
     }
 
     function onBeforeSave(viewModel) {
         var data = {
+            DisallowUnconfirmedUserLogin: viewModel.disallowUnconfirmedUserLogin(),
             GeneratedPasswordLength: viewModel.generatedPasswordLength(),
             GeneratedPasswordNumberOfNonAlphanumericChars: viewModel.generatedPasswordNumberOfNonAlphanumericChars()
         };

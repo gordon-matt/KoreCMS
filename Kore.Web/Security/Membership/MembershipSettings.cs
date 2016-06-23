@@ -17,6 +17,9 @@ namespace Kore.Web.Security.Membership
         [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Membership.GeneratedPasswordNumberOfNonAlphanumericChars)]
         public byte GeneratedPasswordNumberOfNonAlphanumericChars { get; set; }
 
+        [LocalizedDisplayName(KoreWebLocalizableStrings.Settings.Membership.DisallowUnconfirmedUserLogin)]
+        public bool DisallowUnconfirmedUserLogin { get; set; }
+
         #region ISettings Members
 
         public string Name

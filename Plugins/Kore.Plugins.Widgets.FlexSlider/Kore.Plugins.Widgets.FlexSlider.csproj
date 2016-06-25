@@ -103,7 +103,9 @@
     <Compile Include="ContentBlocks\EasingMethod.cs" />
     <Compile Include="ContentBlocks\FlexSliderBlock.cs" />
     <Compile Include="ContentBlocks\SlideDirection.cs" />
-    <Content Include="Content\FlexSlider\flexslider.css" />
+    <Content Include="Content\FlexSlider\flexslider.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\FlexSlider\OLD-flexslider.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -113,7 +115,9 @@
     <Content Include="Content\FlexSlider\images\bg_play_pause.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\jquery.flexslider-min.js" />
+    <Content Include="Scripts\jquery.flexslider-min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\OLD-jquery.flexslider-min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

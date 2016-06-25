@@ -36,11 +36,37 @@ namespace Kore.Web
 
             // Replace some characters
             stringBuilder
-                .Replace(":", "-")
-                .Replace(",", "-")
-                .Replace(".", "-")
+                .Replace("!", "-")
+                .Replace("$", "-")
                 .Replace("&", "-")
-                .Replace("?", "-");
+                .Replace("\"", "-")
+                .Replace("'", "-")
+                .Replace("(", "-")
+                .Replace(")", "-")
+                .Replace("*", "-")
+                .Replace("+", "-")
+                .Replace(",", "-")
+                .Replace(";", "-")
+                .Replace(".", "-")
+                .Replace("/", "-")
+                .Replace("\\", "-")
+                .Replace(":", "-")
+                .Replace("=", "-")
+                .Replace("?", "-")
+                .Replace("&", "-")
+                .Replace("_", "-")
+                .Replace("~", "-")
+                .Replace("`", "-")
+                .Replace("#", "-")
+                .Replace("%", "-")
+                .Replace("^", "-")
+                .Replace("[", "-")
+                .Replace("]", "-")
+                .Replace("{", "-")
+                .Replace("}", "-")
+                .Replace("|", "-")
+                .Replace("<", "-")
+                .Replace(">", "-");
 
             var slug = stringBuilder.ToString().Normalize(NormalizationForm.FormKC);
 
@@ -54,7 +80,7 @@ namespace Kore.Web
                 slug = Encoding.ASCII.GetString(bytes);
 
                 //Remove invalid chars
-                slug = Regex.Replace(slug, @"[^a-z0-9\s-_]", "", RegexOptions.Compiled);
+                slug = Regex.Replace(slug, @"[^a-z0-9\s-_]", string.Empty, RegexOptions.Compiled);
             }
 
             //Replace spaces

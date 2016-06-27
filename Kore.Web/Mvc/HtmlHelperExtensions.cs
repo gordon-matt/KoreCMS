@@ -250,7 +250,6 @@ namespace Kore.Web.Mvc
             string name,
             IEnumerable<SelectListItem> selectList,
             IEnumerable<string> selectedValues,
-            bool groupByCategory = false,
             byte numberOfColumns = 1,
             object labelHtmlAttributes = null,
             object checkboxHtmlAttributes = null)
@@ -272,6 +271,8 @@ namespace Kore.Web.Mvc
             int index = 0;
 
             var sb = new StringBuilder();
+
+            bool groupByCategory = (selectList.First() is ExtendedSelectListItem);
 
             if (groupByCategory)
             {
@@ -370,7 +371,6 @@ namespace Kore.Web.Mvc
             this HtmlHelper<TModel> html,
             Expression<Func<TModel, IEnumerable<TProperty>>> expression,
             IEnumerable<SelectListItem> selectList,
-            bool groupByCategory = false,
             byte numberOfColumns = 1,
             object labelHtmlAttributes = null,
             object checkboxHtmlAttributes = null) where TModel : class
@@ -396,6 +396,8 @@ namespace Kore.Web.Mvc
             int index = 0;
 
             var sb = new StringBuilder();
+
+            bool groupByCategory = (selectList.First() is ExtendedSelectListItem);
 
             if (groupByCategory)
             {
@@ -720,7 +722,6 @@ namespace Kore.Web.Mvc
                 name,
                 selectList,
                 selectedPermissionIds,
-                groupByCategory: true,
                 labelHtmlAttributes: labelHtmlAttributes,
                 checkboxHtmlAttributes: checkboxHtmlAttributes);
         }

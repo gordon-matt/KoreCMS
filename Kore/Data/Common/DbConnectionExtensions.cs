@@ -67,21 +67,23 @@ namespace Kore.Data.Common
 
         public static DbProviderFactory GetDbProviderFactory(this DbConnection connection)
         {
-            if (connection is SqlConnection)
-            {
-                return DbProviderFactories.GetFactory("System.Data.SqlClient");
-            }
-            if (connection is OleDbConnection)
-            {
-                return DbProviderFactories.GetFactory("System.Data.OleDb");
-            }
-            if (connection is OdbcConnection)
-            {
-                return DbProviderFactories.GetFactory("System.Data.Odbc");
-            }
+            return DbProviderFactories.GetFactory(connection);
 
-            // Only use reflection as last option
-            return (DbProviderFactory)connection.GetPrivatePropertyValue("DbProviderFactory");
+            //if (connection is SqlConnection)
+            //{
+            //    return DbProviderFactories.GetFactory("System.Data.SqlClient");
+            //}
+            //if (connection is OleDbConnection)
+            //{
+            //    return DbProviderFactories.GetFactory("System.Data.OleDb");
+            //}
+            //if (connection is OdbcConnection)
+            //{
+            //    return DbProviderFactories.GetFactory("System.Data.Odbc");
+            //}
+
+            //// Only use reflection as last option
+            //return (DbProviderFactory)connection.GetPrivatePropertyValue("DbProviderFactory");
         }
 
         public static DataSet ExecuteStoredProcedure(this DbConnection connection, string storedProcedure, IEnumerable<DbParameter> parameters)

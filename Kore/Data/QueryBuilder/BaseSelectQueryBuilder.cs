@@ -3,8 +3,7 @@ using System.Data.Common;
 
 namespace Kore.Data.QueryBuilder
 {
-    public abstract class BaseSelectQueryBuilder<T> : ISelectQueryBuilder<T>
-        where T : BaseSelectQueryBuilder<T>
+    public abstract class BaseSelectQueryBuilder : ISelectQueryBuilder
     {
         #region Non-Public Members
 
@@ -19,6 +18,9 @@ namespace Kore.Data.QueryBuilder
         protected ICollection<string> selectedTables = new List<string>();
         protected WhereStatement whereStatement = new WhereStatement();
         protected IDictionary<string, string> tableAliases = new Dictionary<string, string>();
+
+        protected int skipCount;
+        protected int takeCount;
 
         #endregion Non-Public Members
 
@@ -37,20 +39,20 @@ namespace Kore.Data.QueryBuilder
 
         #region Public Methods
 
-        public virtual T SelectAll()
+        public virtual ISelectQueryBuilder SelectAll()
         {
             selectedColumns.Clear();
-            return (T)this;
+            return this;
         }
 
-        public virtual T Select(string tableName, string column)
+        public virtual ISelectQueryBuilder Select(string tableName, string column)
         {
             selectedColumns.Clear();
             selectedColumns.Add(string.Concat(EncloseTable(tableName), '.', EncloseIdentifier(column)));
-            return (T)this;
+            return this;
         }
 
-        public virtual T Select(string tableName, params string[] columns)
+        public virtual ISelectQueryBuilder Select(string tableName, params string[] columns)
         {
             selectedColumns.Clear();
             string enclosedTableName = EncloseTable(tableName);
@@ -58,50 +60,50 @@ namespace Kore.Data.QueryBuilder
             {
                 selectedColumns.Add(string.Concat(enclosedTableName, '.', EncloseIdentifier(column)));
             }
-            return (T)this;
+            return this;
         }
 
-        public virtual T Select(IEnumerable<TableColumnPair> columns)
+        public virtual ISelectQueryBuilder Select(IEnumerable<TableColumnPair> columns)
         {
             selectedColumns.Clear();
             foreach (var column in columns)
             {
                 selectedColumns.Add(string.Concat(EncloseTable(column.TableName), '.', EncloseIdentifier(column.ColumnName)));
             }
-            return (T)this;
+            return this;
         }
 
-        public virtual T SelectCount()
+        public virtual ISelectQueryBuilder SelectCount()
         {
             selectedColumns.Clear();
             selectedColumns.Add("COUNT(1)");
-            return (T)this;
+            return this;
         }
 
-        public virtual T Distinct(bool isDistinct = true)
+        public virtual ISelectQueryBuilder Distinct(bool isDistinct = true)
         {
             this.isDistinct = isDistinct;
-            return (T)this;
+            return this;
         }
 
-        public virtual T From(string tableName)
+        public virtual ISelectQueryBuilder From(string tableName)
         {
             selectedTables.Clear();
             selectedTables.Add(EncloseTable(tableName));
-            return (T)this;
+            return this;
         }
 
-        public virtual T From(params string[] tableNames)
+        public virtual ISelectQueryBuilder From(params string[] tableNames)
         {
             selectedTables.Clear();
             foreach (string table in tableNames)
             {
                 selectedTables.Add(EncloseTable(table));
             }
-            return (T)this;
+            return this;
         }
 
-        public virtual T Join(
+        public virtual ISelectQueryBuilder Join(
             JoinType joinType,
             string toTableName,
             string toColumnName,
@@ -118,16 +120,16 @@ namespace Kore.Data.QueryBuilder
                 EncloseIdentifier(fromColumnName));
 
             joins.Add(join);
-            return (T)this;
+            return this;
         }
 
-        public virtual T Where(string tableName, string column, ComparisonOperator comparisonOperator, object value)
+        public virtual ISelectQueryBuilder Where(string tableName, string column, ComparisonOperator comparisonOperator, object value)
         {
             Where(tableName, column, comparisonOperator, value, 1);
-            return (T)this;
+            return this;
         }
 
-        public virtual T Where(string tableName, string column, ComparisonOperator comparisonOperator, object value, int level)
+        public virtual ISelectQueryBuilder Where(string tableName, string column, ComparisonOperator comparisonOperator, object value, int level)
         {
             var whereClause = new WhereClause(
                 string.Concat(EncloseTable(tableName), '.', EncloseIdentifier(column)),
@@ -135,45 +137,45 @@ namespace Kore.Data.QueryBuilder
                 value);
 
             whereStatement.Add(whereClause, level);
-            return (T)this;
+            return this;
         }
 
-        public virtual T OrderBy(string tableName, string column, SortDirection order)
+        public virtual ISelectQueryBuilder OrderBy(string tableName, string column, SortDirection order)
         {
             var orderByClause = new OrderByClause(
                 string.Concat(EncloseTable(tableName), '.', EncloseIdentifier(column)),
                 order);
 
             orderByStatement.Add(orderByClause);
-            return (T)this;
+            return this;
         }
 
-        public virtual T GroupBy(string tableName, params string[] columns)
+        public virtual ISelectQueryBuilder GroupBy(string tableName, params string[] columns)
         {
             string enclosedTableName = EncloseTable(tableName);
             foreach (string column in columns)
             {
                 groupByColumns.Add(string.Concat(enclosedTableName, '.', EncloseIdentifier(column)));
             }
-            return (T)this;
+            return this;
         }
 
-        public virtual T GroupBy(IEnumerable<TableColumnPair> columns)
+        public virtual ISelectQueryBuilder GroupBy(IEnumerable<TableColumnPair> columns)
         {
             foreach (var column in columns)
             {
                 groupByColumns.Add(string.Concat(EncloseTable(column.TableName), '.', EncloseIdentifier(column.ColumnName)));
             }
-            return (T)this;
+            return this;
         }
 
-        public virtual T Having(string tableName, string column, ComparisonOperator comparisonOperator, object value)
+        public virtual ISelectQueryBuilder Having(string tableName, string column, ComparisonOperator comparisonOperator, object value)
         {
             Having(tableName, column, comparisonOperator, value, 1);
-            return (T)this;
+            return this;
         }
 
-        public virtual T Having(string tableName, string column, ComparisonOperator comparisonOperator, object value, int level)
+        public virtual ISelectQueryBuilder Having(string tableName, string column, ComparisonOperator comparisonOperator, object value, int level)
         {
             var whereClause = new WhereClause(
                 string.Concat(EncloseTable(tableName), '.', EncloseIdentifier(column)),
@@ -181,13 +183,25 @@ namespace Kore.Data.QueryBuilder
                 value);
 
             havingStatement.Add(whereClause, level);
-            return (T)this;
+            return this;
         }
 
-        public virtual T SetDbProviderFactory(DbProviderFactory factory)
+        public virtual ISelectQueryBuilder Skip(int count)
+        {
+            skipCount = count;
+            return this;
+        }
+
+        public virtual ISelectQueryBuilder Take(int count)
+        {
+            takeCount = count;
+            return this;
+        }
+
+        public virtual ISelectQueryBuilder SetDbProviderFactory(DbProviderFactory factory)
         {
             dbProviderFactory = factory;
-            return (T)this;
+            return this;
         }
 
         public virtual DbCommand BuildCommand()

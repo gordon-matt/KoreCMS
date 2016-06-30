@@ -98,7 +98,7 @@ namespace Kore.Web.Mvc
             return RedirectToAction("Index", "Home", new { area = string.Empty });
         }
 
-        public virtual string RenderRazorPartialViewToString(string viewName, object model, dynamic viewBag = null)
+        public virtual string RenderRazorPartialViewToString(string viewName, object model)
         {
             ViewData.Model = model;
             using (var sw = new StringWriter())

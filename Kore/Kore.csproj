@@ -186,8 +186,6 @@
     <Compile Include="Data\QueryBuilder\SortDirection.cs" />
     <Compile Include="Data\QueryBuilder\SqlLiteral.cs" />
     <Compile Include="Data\QueryBuilder\SqlServerSelectQueryBuilder.cs" />
-    <Compile Include="Data\QueryBuilder\TopClause.cs" />
-    <Compile Include="Data\QueryBuilder\TopUnit.cs" />
     <Compile Include="Data\QueryBuilder\WhereClause.cs" />
     <Compile Include="Data\QueryBuilder\WhereStatement.cs" />
     <Compile Include="Data\Services\GenericDataService.cs" />

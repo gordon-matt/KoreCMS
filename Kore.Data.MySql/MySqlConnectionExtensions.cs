@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using Kore.Data.Common;
 using MySql.Data.MySqlClient;
 
@@ -191,142 +193,142 @@ AND CONSTRAINT_NAME <> 'PRIMARY';";
             return tables;
         }
 
-        //TODO
-        //        public static ColumnInfoCollection GetColumnData(this MySqlConnection connection, string tableName)
-        //        {
-        //            const string CMD_COLUMN_INFO_FORMAT =
-        //@"SELECT COLUMN_NAME, COLUMN_DEFAULT, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, IS_NULLABLE
-        //FROM INFORMATION_SCHEMA.COLUMNS
-        //WHERE TABLE_NAME = '{0}'";
+        public static ColumnInfoCollection GetColumnData(this MySqlConnection connection, string tableName)
+        {
+            const string CMD_COLUMN_INFO_FORMAT =
+@"SELECT column_name, column_default, data_type, character_maximum_length, is_nullable
+FROM information_schema.columns
+WHERE table_name = '{0}';";
 
-        //            const string CMD_IS_PRIMARY_KEY_FORMAT =
-        //@"SELECT COLUMN_NAME
-        //FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
-        //WHERE OBJECTPROPERTY(OBJECT_ID(CONSTRAINT_NAME), 'IsPrimaryKey') = 1
-        //AND TABLE_NAME = '{0}'";
+            const string CMD_IS_PRIMARY_KEY_FORMAT =
+@"SELECT column_name
+FROM information_schema.key_column_usage kcu
+INNER JOIN information_schema.table_constraints tc ON kcu.constraint_name = tc.constraint_name
+WHERE kcu.table_name = '{0}'
+AND tc.constraint_type = 'PRIMARY KEY'";
 
-        //            var list = new ColumnInfoCollection();
+            ColumnInfoCollection list = new ColumnInfoCollection();
 
-        //            bool alreadyOpen = (connection.State != ConnectionState.Closed);
+            bool alreadyOpen = (connection.State != ConnectionState.Closed);
 
-        //            try
-        //            {
-        //                var foreignKeyColumns = connection.GetForeignKeyData(tableName);
+            try
+            {
+                ForeignKeyInfoCollection foreignKeyColumns = connection.GetForeignKeyData(tableName);
 
-        //                if (!alreadyOpen)
-        //                {
-        //                    connection.Open();
-        //                }
+                if (!alreadyOpen)
+                {
+                    connection.Open();
+                }
 
-        //                using (var command = new MySqlCommand(string.Format(CMD_COLUMN_INFO_FORMAT, tableName), connection))
-        //                {
-        //                    command.CommandType = CommandType.Text;
-        //                    using (var reader = command.ExecuteReader())
-        //                    {
-        //                        ColumnInfo columnInfo = null;
+                using (var command = new MySqlCommand(string.Format(CMD_COLUMN_INFO_FORMAT, tableName), connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    using (var reader = command.ExecuteReader())
+                    {
+                        ColumnInfo columnInfo = null;
 
-        //                        while (reader.Read())
-        //                        {
-        //                            columnInfo = new ColumnInfo();
+                        while (reader.Read())
+                        {
+                            columnInfo = new ColumnInfo();
 
-        //                            if (!reader.IsDBNull(0))
-        //                            { columnInfo.ColumnName = reader.GetString(0); }
+                            if (!reader.IsDBNull(0))
+                            { columnInfo.ColumnName = reader.GetString(0); }
 
-        //                            if (!reader.IsDBNull(1))
-        //                            { columnInfo.DefaultValue = reader.GetString(1); }
-        //                            else
-        //                            { columnInfo.DefaultValue = string.Empty; }
+                            if (!reader.IsDBNull(1))
+                            { columnInfo.DefaultValue = reader.GetString(1); }
+                            else
+                            { columnInfo.DefaultValue = string.Empty; }
 
-        //                            if (foreignKeyColumns.Contains(columnInfo.ColumnName))
-        //                            {
-        //                                columnInfo.KeyType = KeyType.ForeignKey;
-        //                            }
+                            if (foreignKeyColumns.Contains(columnInfo.ColumnName))
+                            {
+                                columnInfo.KeyType = KeyType.ForeignKey;
+                            }
 
-        //                            //else
-        //                            //{
-        //                            try
-        //                            {
-        //                                columnInfo.DataType = DataTypeConvertor.GetSystemType(reader.GetString(2).ToEnum<SqlDbType>(true));
-        //                            }
-        //                            catch (ArgumentNullException)
-        //                            {
-        //                                columnInfo.DataType = typeof(object);
-        //                            }
-        //                            catch (ArgumentException)
-        //                            {
-        //                                columnInfo.DataType = typeof(object);
-        //                            }
+                            //else
+                            //{
+                            try
+                            {
+                                columnInfo.DataType = DataTypeConvertor.GetSystemType(reader.GetString(2).ToEnum<SqlDbType>(true));
+                            }
+                            catch (ArgumentNullException)
+                            {
+                                columnInfo.DataType = typeof(object);
+                            }
+                            catch (ArgumentException)
+                            {
+                                columnInfo.DataType = typeof(object);
+                            }
 
-        //                            //}
+                            //}
 
-        //                            if (!reader.IsDBNull(3))
-        //                            { columnInfo.MaximumLength = reader.GetInt32(3); }
+                            if (!reader.IsDBNull(3))
+                            { columnInfo.MaximumLength = reader.GetInt32(3); }
 
-        //                            if (!reader.IsDBNull(4))
-        //                            {
-        //                                if (reader.GetString(4).ToUpperInvariant().Equals("NO"))
-        //                                { columnInfo.IsNullable = false; }
-        //                                else
-        //                                { columnInfo.IsNullable = true; }
-        //                            }
+                            if (!reader.IsDBNull(4))
+                            {
+                                if (reader.GetString(4).ToUpperInvariant().Equals("NO"))
+                                { columnInfo.IsNullable = false; }
+                                else
+                                { columnInfo.IsNullable = true; }
+                            }
 
-        //                            list.Add(columnInfo);
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //            finally
-        //            {
-        //                if (!alreadyOpen && connection.State != ConnectionState.Closed)
-        //                { connection.Close(); }
-        //            }
+                            list.Add(columnInfo);
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                if (!alreadyOpen && connection.State != ConnectionState.Closed)
+                { connection.Close(); }
+            }
 
-        //            #region Primary Keys
+            #region Primary Keys
 
-        //            using (var command = connection.CreateCommand())
-        //            {
-        //                command.CommandText = string.Format(CMD_IS_PRIMARY_KEY_FORMAT, tableName);
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = string.Format(CMD_IS_PRIMARY_KEY_FORMAT, tableName);
 
-        //                alreadyOpen = (connection.State != ConnectionState.Closed);
+                alreadyOpen = (connection.State != ConnectionState.Closed);
 
-        //                if (!alreadyOpen)
-        //                {
-        //                    connection.Open();
-        //                }
+                if (!alreadyOpen)
+                {
+                    connection.Open();
+                }
 
-        //                using (var reader = command.ExecuteReader())
-        //                {
-        //                    while (reader.Read())
-        //                    {
-        //                        string pkColumn = reader.GetString(0);
-        //                        ColumnInfo match = list[pkColumn];
-        //                        if (match != null)
-        //                        {
-        //                            match.KeyType = KeyType.PrimaryKey;
-        //                        }
-        //                    }
-        //                }
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string pkColumn = reader.GetString(0);
+                        ColumnInfo match = list[pkColumn];
+                        if (match != null)
+                        {
+                            match.KeyType = KeyType.PrimaryKey;
+                        }
+                    }
+                }
 
-        //                if (!alreadyOpen)
-        //                {
-        //                    connection.Close();
-        //                }
-        //            }
+                if (!alreadyOpen)
+                {
+                    connection.Close();
+                }
+            }
 
-        //            #endregion Primary Keys
+            #endregion Primary Keys
 
-        //            return list;
-        //        }
+            return list;
+        }
 
-        //        public static ColumnInfoCollection GetColumnData(this MySqlConnection connection, string tableName, IEnumerable<string> columnNames)
-        //        {
-        //            var data = from x in connection.GetColumnData(tableName)
-        //                       where columnNames.Contains(x.ColumnName)
-        //                       select x;
+        public static ColumnInfoCollection GetColumnData(this MySqlConnection connection, string tableName, IEnumerable<string> columnNames)
+        {
+            var data = from x in connection.GetColumnData(tableName)
+                       where columnNames.Contains(x.ColumnName)
+                       select x;
 
-        //            var collection = new ColumnInfoCollection();
-        //            collection.AddRange(data);
-        //            return collection;
-        //        }
+            var collection = new ColumnInfoCollection();
+            collection.AddRange(data);
+            return collection;
+        }
     }
 }

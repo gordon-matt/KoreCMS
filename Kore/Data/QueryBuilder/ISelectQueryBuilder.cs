@@ -3,42 +3,45 @@ using System.Data.Common;
 
 namespace Kore.Data.QueryBuilder
 {
-    public interface ISelectQueryBuilder<T> : IQueryBuilder
-        where T : ISelectQueryBuilder<T>
+    public interface ISelectQueryBuilder : IQueryBuilder
     {
-        T SelectAll();
+        ISelectQueryBuilder SelectAll();
 
-        T Select(string tableName, string column);
+        ISelectQueryBuilder Select(string tableName, string column);
 
-        T Select(string tableName, params string[] columns);
+        ISelectQueryBuilder Select(string tableName, params string[] columns);
 
-        T Select(IEnumerable<TableColumnPair> columns);
+        ISelectQueryBuilder Select(IEnumerable<TableColumnPair> columns);
 
-        T SelectCount();
+        ISelectQueryBuilder SelectCount();
 
-        T Distinct(bool isDistinct = true);
+        ISelectQueryBuilder Distinct(bool isDistinct = true);
 
-        T From(string tableName);
+        ISelectQueryBuilder From(string tableName);
 
-        T From(params string[] tableNames);
+        ISelectQueryBuilder From(params string[] tableNames);
 
-        T Join(JoinType joinType, string toTableName, string toColumnName, ComparisonOperator comparisonOperator, string fromTableName, string fromColumnName);
+        ISelectQueryBuilder Join(JoinType joinType, string toTableName, string toColumnName, ComparisonOperator comparisonOperator, string fromTableName, string fromColumnName);
 
-        T Where(string tableName, string column, ComparisonOperator comparisonOperator, object value);
+        ISelectQueryBuilder Where(string tableName, string column, ComparisonOperator comparisonOperator, object value);
 
-        T Where(string tableName, string column, ComparisonOperator comparisonOperator, object value, int level);
+        ISelectQueryBuilder Where(string tableName, string column, ComparisonOperator comparisonOperator, object value, int level);
 
-        T OrderBy(string tableName, string column, SortDirection sortDirection);
+        ISelectQueryBuilder OrderBy(string tableName, string column, SortDirection sortDirection);
 
-        T GroupBy(string tableName, params string[] columns);
+        ISelectQueryBuilder GroupBy(string tableName, params string[] columns);
 
-        T GroupBy(IEnumerable<TableColumnPair> columns);
+        ISelectQueryBuilder GroupBy(IEnumerable<TableColumnPair> columns);
 
-        T Having(string tableName, string column, ComparisonOperator comparisonOperator, object value);
+        ISelectQueryBuilder Having(string tableName, string column, ComparisonOperator comparisonOperator, object value);
 
-        T Having(string tableName, string column, ComparisonOperator comparisonOperator, object value, int level);
+        ISelectQueryBuilder Having(string tableName, string column, ComparisonOperator comparisonOperator, object value, int level);
 
-        T SetDbProviderFactory(DbProviderFactory factory);
+        ISelectQueryBuilder Skip(int count);
+
+        ISelectQueryBuilder Take(int count);
+
+        ISelectQueryBuilder SetDbProviderFactory(DbProviderFactory factory);
 
         DbCommand BuildCommand();
     }

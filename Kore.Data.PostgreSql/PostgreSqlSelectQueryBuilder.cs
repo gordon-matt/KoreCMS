@@ -6,11 +6,8 @@
     using System.Text;
     using Kore.Data.QueryBuilder;
 
-    public class PostgreSqlSelectQueryBuilder : BaseSelectQueryBuilder<PostgreSqlSelectQueryBuilder>
+    public class PostgreSqlSelectQueryBuilder : BaseSelectQueryBuilder
     {
-        private int skipClause;
-        private int topClause;
-
         public PostgreSqlSelectQueryBuilder(string schema)
             : base()
         {
@@ -23,24 +20,12 @@
             base.schema = schema;
         }
 
-        public override PostgreSqlSelectQueryBuilder SelectCount()
+        public override ISelectQueryBuilder SelectCount()
         {
             selectedColumns.Clear();
             selectedColumns.Add("COUNT(1)");
             orderByStatement.Clear();
-            topClause = 0;
-            return this;
-        }
-
-        public PostgreSqlSelectQueryBuilder Skip(int count)
-        {
-            skipClause = count;
-            return this;
-        }
-
-        public PostgreSqlSelectQueryBuilder Take(int count)
-        {
-            topClause = count;
+            takeCount = 0;
             return this;
         }
 
@@ -193,12 +178,12 @@
             }
 
             // Output Top clause
-            if (topClause > 0)
+            if (takeCount > 0)
             {
                 query.Append("LIMIT ");
-                query.Append(topClause);
+                query.Append(takeCount);
                 query.Append(" OFFSET ");
-                query.Append(skipClause);
+                query.Append(skipCount);
             }
 
             if (buildCommand && command != null)

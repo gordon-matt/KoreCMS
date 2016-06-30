@@ -6,11 +6,8 @@
     using System.Text;
     using Kore.Data.QueryBuilder;
 
-    public class MySqlSelectQueryBuilder : BaseSelectQueryBuilder<MySqlSelectQueryBuilder>
+    public class MySqlSelectQueryBuilder : BaseSelectQueryBuilder
     {
-        private int skipClause;
-        private int topClause;
-
         public MySqlSelectQueryBuilder()
             : base()
         {
@@ -21,24 +18,12 @@
         {
         }
 
-        public override MySqlSelectQueryBuilder SelectCount()
+        public override ISelectQueryBuilder SelectCount()
         {
             selectedColumns.Clear();
             selectedColumns.Add("COUNT(1)");
             orderByStatement.Clear();
-            topClause = 0;
-            return this;
-        }
-
-        public MySqlSelectQueryBuilder Skip(int count)
-        {
-            skipClause = count;
-            return this;
-        }
-
-        public MySqlSelectQueryBuilder Take(int count)
-        {
-            topClause = count;
+            takeCount = 0;
             return this;
         }
 
@@ -186,12 +171,12 @@
             }
 
             // Output Top clause
-            if (topClause > 0)
+            if (takeCount > 0)
             {
                 query.Append("LIMIT ");
-                query.Append(skipClause);
+                query.Append(skipCount);
                 query.Append(",");
-                query.Append(topClause);
+                query.Append(takeCount);
             }
 
             if (buildCommand && command != null)

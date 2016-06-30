@@ -10,10 +10,8 @@ namespace Kore.Data.QueryBuilder
     using System.Linq;
     using System.Text;
 
-    public class SqlServerSelectQueryBuilder : BaseSelectQueryBuilder<SqlServerSelectQueryBuilder>
+    public class SqlServerSelectQueryBuilder : BaseSelectQueryBuilder
     {
-        protected TopClause topClause = new TopClause(100, TopUnit.Percent);
-
         public SqlServerSelectQueryBuilder()
             : base()
         {
@@ -56,15 +54,10 @@ namespace Kore.Data.QueryBuilder
                 query.Append("DISTINCT ");
             }
 
-            // Output Top clause
-            if (!(topClause.Quantity == 100 & topClause.Unit == TopUnit.Percent))
+            if (takeCount > 0 && skipCount == 0)
             {
                 query.Append("TOP ");
-                query.Append(topClause.Quantity);
-                if (topClause.Unit == TopUnit.Percent)
-                {
-                    query.Append(" PERCENT");
-                }
+                query.Append(takeCount);
                 query.Append(" ");
             }
 
@@ -186,6 +179,12 @@ namespace Kore.Data.QueryBuilder
                 }
                 query.Remove(query.Length - 1, 1); // Trim the last comma inserted by foreach loop
                 query.Append(' ');
+            }
+
+
+            if (takeCount > 0 && skipCount > 0)
+            {
+                query.AppendFormat(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY", skipCount, takeCount);
             }
 
             if (buildCommand)

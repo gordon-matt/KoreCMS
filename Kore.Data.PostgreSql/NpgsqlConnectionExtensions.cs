@@ -170,13 +170,13 @@ INNER JOIN information_schema.""table_constraints"" tc ON kcu.""constraint_name"
 WHERE kcu.""table_name"" = '{0}'
 AND tc.""constraint_type"" = 'PRIMARY KEY'";
 
-            ColumnInfoCollection list = new ColumnInfoCollection();
+            var list = new ColumnInfoCollection();
 
             bool alreadyOpen = (connection.State != ConnectionState.Closed);
 
             try
             {
-                ForeignKeyInfoCollection foreignKeyColumns = connection.GetForeignKeyData(tableName);
+                var foreignKeyColumns = connection.GetForeignKeyData(tableName);
 
                 if (!alreadyOpen)
                 {

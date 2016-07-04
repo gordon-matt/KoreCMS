@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net;
+using System.Net.NetworkInformation;
 using Npgsql;
+using NpgsqlTypes;
 
 namespace Kore.Data.PostgreSql
 {
@@ -207,7 +211,51 @@ AND tc.""constraint_type"" = 'PRIMARY KEY'";
                             //{
                             try
                             {
-                                columnInfo.DataType = DataTypeConvertor.GetSystemType(reader.GetString(2).ToEnum<SqlDbType>(true));
+                                // TODO: SqlDbType won't work for PG!! Need to update this ASAP... get System.Type from PG type
+                                string type = reader.GetString(2).ToLowerInvariant();
+                                switch (type)
+                                {
+                                    case "bigint": columnInfo.DataType = typeof(long); break;
+                                    case "bigserial": columnInfo.DataType = typeof(long); break;
+                                    case "bit": columnInfo.DataType = typeof(bool); break;
+                                    case "bit varying": columnInfo.DataType = typeof(BitArray); break;
+                                    case "boolean": columnInfo.DataType = typeof(bool); break;
+                                    case "box": columnInfo.DataType = typeof(NpgsqlBox); break;
+                                    case "bytea": columnInfo.DataType = typeof(byte[]); break;
+                                    case "character": columnInfo.DataType = typeof(string); break;
+                                    case "character varying": columnInfo.DataType = typeof(string); break;
+                                    case "cidr": columnInfo.DataType = typeof(NpgsqlInet); break;
+                                    case "circle": columnInfo.DataType = typeof(NpgsqlCircle); break;
+                                    case "date": columnInfo.DataType = typeof(DateTime); break;
+                                    case "double precision": columnInfo.DataType = typeof(double); break;
+                                    case "inet": columnInfo.DataType = typeof(IPAddress); break;
+                                    case "integer": columnInfo.DataType = typeof(int); break;
+                                    case "interval": columnInfo.DataType = typeof(TimeSpan); break;
+                                    case "json": columnInfo.DataType = typeof(string); break;
+                                    case "line": columnInfo.DataType = typeof(NpgsqlLine); break;
+                                    case "lseg": columnInfo.DataType = typeof(NpgsqlLSeg); break;
+                                    case "macaddr": columnInfo.DataType = typeof(PhysicalAddress); break;
+                                    case "money": columnInfo.DataType = typeof(decimal); break;
+                                    case "numeric": columnInfo.DataType = typeof(decimal); break;
+                                    case "path": columnInfo.DataType = typeof(NpgsqlPath); break;
+                                    case "point": columnInfo.DataType = typeof(NpgsqlPoint); break;
+                                    case "polygon": columnInfo.DataType = typeof(NpgsqlPolygon); break;
+                                    case "real": columnInfo.DataType = typeof(float); break;
+                                    case "smallint": columnInfo.DataType = typeof(short); break;
+                                    case "smallserial": columnInfo.DataType = typeof(short); break;
+                                    case "serial": columnInfo.DataType = typeof(int); break;
+                                    case "text": columnInfo.DataType = typeof(string); break;
+                                    case "time without time zone": columnInfo.DataType = typeof(TimeSpan); break;
+                                    case "time with time zone": columnInfo.DataType = typeof(DateTimeOffset); break;
+                                    case "timestamp without time zone": columnInfo.DataType = typeof(DateTime); break;
+                                    case "timestamp with time zone": columnInfo.DataType = typeof(DateTime); break;
+                                    case "tsquery": columnInfo.DataType = typeof(NpgsqlTsQuery); break;
+                                    case "tsvector": columnInfo.DataType = typeof(NpgsqlTsVector); break;
+                                    case "txid_snapshot": columnInfo.DataType = typeof(object); break;
+                                    case "uuid": columnInfo.DataType = typeof(Guid); break;
+                                    case "xml": columnInfo.DataType = typeof(string); break;
+                                    default: columnInfo.DataType = typeof(object); break;
+                                }
                             }
                             catch (ArgumentNullException)
                             {

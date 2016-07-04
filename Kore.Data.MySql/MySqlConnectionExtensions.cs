@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Spatial;
 using System.Linq;
 using Kore.Data.Common;
 using MySql.Data.MySqlClient;
@@ -244,11 +245,99 @@ AND tc.constraint_type = 'PRIMARY KEY'";
                                 columnInfo.KeyType = KeyType.ForeignKey;
                             }
 
-                            //else
-                            //{
+                            if (!reader.IsDBNull(3))
+                            { columnInfo.MaximumLength = reader.GetInt32(3); }
+
                             try
                             {
-                                columnInfo.DataType = DataTypeConvertor.GetSystemType(reader.GetString(2).ToEnum<SqlDbType>(true));
+                                // Based on: https://www.devart.com/dotconnect/mysql/docs/datatypemapping.html
+                                string type = reader.GetString(2).ToLowerInvariant();
+                                switch (type)
+                                {
+                                    case "bool": columnInfo.DataType = typeof(bool); break;
+                                    case "boolean": columnInfo.DataType = typeof(bool); break;
+
+                                    case "bit":
+                                        {
+                                            // TODO: This won't work. Because that is for character max length. We need to add 2 properties to
+                                            //  ColumnInfo object: "NumericPrecision" and "NumericScale" to be used for numerical data types
+                                            if (columnInfo.MaximumLength == 1)
+                                            {
+                                                columnInfo.DataType = typeof(bool);
+                                            }
+                                            else
+                                            {
+                                                columnInfo.DataType = typeof(long);
+                                            }
+                                        }
+                                        break;
+
+                                    case "tinyint": columnInfo.DataType = typeof(sbyte); break;
+                                    case "tinyint unsigned": columnInfo.DataType = typeof(byte); break;
+                                    case "smallint": columnInfo.DataType = typeof(short); break;
+                                    case "year": columnInfo.DataType = typeof(short); break;
+                                    case "int": columnInfo.DataType = typeof(int); break;
+                                    case "integer": columnInfo.DataType = typeof(int); break;
+                                    case "smallint unsigned": columnInfo.DataType = typeof(ushort); break;
+                                    case "mediumint": columnInfo.DataType = typeof(int); break;
+                                    case "bigint": columnInfo.DataType = typeof(long); break;
+                                    case "int unsigned": columnInfo.DataType = typeof(uint); break;
+                                    case "integer unsigned": columnInfo.DataType = typeof(uint); break;
+                                    case "float": columnInfo.DataType = typeof(float); break;
+                                    case "double": columnInfo.DataType = typeof(double); break;
+                                    case "real": columnInfo.DataType = typeof(double); break;
+                                    case "decimal": columnInfo.DataType = typeof(decimal); break;
+                                    case "numeric": columnInfo.DataType = typeof(decimal); break;
+                                    case "dec": columnInfo.DataType = typeof(decimal); break;
+                                    case "fixed": columnInfo.DataType = typeof(decimal); break;
+                                    case "bigint unsigned": columnInfo.DataType = typeof(ulong); break;
+                                    case "float unsigned": columnInfo.DataType = typeof(decimal); break;
+                                    case "double unsigned": columnInfo.DataType = typeof(decimal); break;
+                                    case "serial": columnInfo.DataType = typeof(decimal); break;
+                                    case "date": columnInfo.DataType = typeof(DateTime); break;
+                                    case "timestamp": columnInfo.DataType = typeof(DateTime); break;
+                                    case "datetime": columnInfo.DataType = typeof(DateTime); break;
+                                    case "datetimeoffset": columnInfo.DataType = typeof(DateTimeOffset); break;
+                                    case "time": columnInfo.DataType = typeof(TimeSpan); break;
+
+                                    case "char":
+                                        {
+                                            if (columnInfo.MaximumLength == 36)
+                                            {
+                                                // This might not be a Guid, but most likely (99% sure) it will be
+                                                columnInfo.DataType = typeof(Guid);
+                                            }
+                                            else
+                                            {
+                                                columnInfo.DataType = typeof(string);
+                                            }
+                                        }
+                                        break;
+
+                                    case "varchar": columnInfo.DataType = typeof(string); break;
+                                    case "tinytext": columnInfo.DataType = typeof(string); break;
+                                    case "text": columnInfo.DataType = typeof(string); break;
+                                    case "mediumtext": columnInfo.DataType = typeof(string); break;
+                                    case "longtext": columnInfo.DataType = typeof(string); break;
+                                    case "set": columnInfo.DataType = typeof(string); break;
+                                    case "enum": columnInfo.DataType = typeof(string); break;
+                                    case "nchar": columnInfo.DataType = typeof(string); break;
+                                    case "national char": columnInfo.DataType = typeof(string); break;
+                                    case "nvarchar": columnInfo.DataType = typeof(string); break;
+                                    case "national varchar": columnInfo.DataType = typeof(string); break;
+                                    case "character varying": columnInfo.DataType = typeof(string); break;
+                                    case "binary": columnInfo.DataType = typeof(byte[]); break;
+                                    case "varbinary": columnInfo.DataType = typeof(byte[]); break;
+                                    case "tinyblob": columnInfo.DataType = typeof(byte[]); break;
+                                    case "blob": columnInfo.DataType = typeof(byte[]); break;
+                                    case "mediumblob": columnInfo.DataType = typeof(byte[]); break;
+                                    case "longblob": columnInfo.DataType = typeof(byte[]); break;
+                                    case "char byte": columnInfo.DataType = typeof(byte[]); break;
+                                    case "gemoetry": columnInfo.DataType = typeof(DbGeometry); break;
+                                    default: columnInfo.DataType = typeof(object); break;
+                                }
+
+                                //columnInfo.DataType = DataTypeConvertor.GetSystemType(reader.GetString(2).ToEnum<SqlDbType>(true));
                             }
                             catch (ArgumentNullException)
                             {
@@ -258,11 +347,6 @@ AND tc.constraint_type = 'PRIMARY KEY'";
                             {
                                 columnInfo.DataType = typeof(object);
                             }
-
-                            //}
-
-                            if (!reader.IsDBNull(3))
-                            { columnInfo.MaximumLength = reader.GetInt32(3); }
 
                             if (!reader.IsDBNull(4))
                             {

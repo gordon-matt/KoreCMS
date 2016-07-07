@@ -77,6 +77,10 @@ namespace Kore.Plugins.Indexing.Lucene.Services
             if (escape)
             {
                 query = QueryParser.Escape(query);
+
+                // Need to escape spaces, but for some reason, QueryParser.Escape doesn't do that
+                // https://dismantledtech.wordpress.com/2011/05/15/handling-spaces-in-lucene-wild-card-searches/
+                query = query.Replace(" ", "\\ ");
             }
 
             foreach (var defaultField in defaultFields)

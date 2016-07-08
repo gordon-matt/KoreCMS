@@ -1,17 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
-using System.Web.OData.Query;
-using System.Web.Http.Results;
 using Kore.Localization;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
-using System.Collections.Generic;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 {
@@ -39,21 +38,21 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         //    };
         //}
 
-        public override IHttpActionResult Delete([FromODataUri] Guid key)
+        public override async Task<IHttpActionResult> Delete([FromODataUri] Guid key)
         {
-            var entity = Service.FindOne(key);
+            var entity = await Service.FindOneAsync(key);
 
             // First find previous version and set it to be the current
             PageVersion previous = null;
             using (var connection = Service.OpenConnection())
             {
-                previous = connection
+                previous = await connection
                     .Query(x =>
                         x.Id != entity.Id &&
                         x.PageId == entity.PageId &&
                         x.CultureCode == entity.CultureCode)
                     .OrderByDescending(x => x.DateModifiedUtc)
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
             }
 
             if (previous == null)
@@ -63,12 +62,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             }
 
             previous.Status = VersionStatus.Published;
-            Service.Update(previous);
+            await Service.UpdateAsync(previous);
 
-            return base.Delete(key);
+            return await base.Delete(key);
         }
 
-        public override IHttpActionResult Patch([FromODataUri] Guid key, Delta<PageVersion> patch)
+        public override async Task<IHttpActionResult> Patch([FromODataUri] Guid key, Delta<PageVersion> patch)
         {
             if (!CheckPermission(WritePermission))
             {
@@ -80,7 +79,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            var entity = Service.FindOne(key);
+            var entity = await Service.FindOneAsync(key);
             if (entity == null)
             {
                 return NotFound();
@@ -92,7 +91,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             {
                 //TODO: might have a big bug here:
                 // shouldn't we be gettig BY culture code?
-                var currentVersion = Service.FindOne(entity.Id);
+                var currentVersion = await Service.FindOneAsync(entity.Id);
 
                 if (currentVersion.Status == VersionStatus.Published)
                 {
@@ -109,13 +108,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                         Slug = currentVersion.Slug,
                         Fields = currentVersion.Fields,
                     };
-                    Service.Insert(backup);
+                    await Service.InsertAsync(backup);
 
                     RemoveOldVersions(currentVersion.PageId, currentVersion.CultureCode);
                 }
 
                 entity.DateModifiedUtc = DateTime.UtcNow;
-                Service.Update(entity);
+                await Service.UpdateAsync(entity);
             }
             catch (DbUpdateConcurrencyException x)
             {
@@ -131,14 +130,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             return Updated(entity);
         }
 
-        public override IHttpActionResult Post(PageVersion entity)
+        public override async Task<IHttpActionResult> Post(PageVersion entity)
         {
             entity.DateCreatedUtc = DateTime.UtcNow;
             entity.DateModifiedUtc = DateTime.UtcNow;
-            return base.Post(entity);
+            return await base.Post(entity);
         }
 
-        public override IHttpActionResult Put([FromODataUri] Guid key, PageVersion entity)
+        public override async Task<IHttpActionResult> Put([FromODataUri] Guid key, PageVersion entity)
         {
             if (!CheckPermission(WritePermission))
             {
@@ -161,7 +160,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 //  will return the invariant record if no localized record exists. That means when an entity is updated to here,
                 //  we are trying to update a localized one, but using the ID of the invariant one! So, we need to get by culture code AND ID
                 //  and then if not exists, create it.
-                var currentVersion = Service.FindOne(entity.Id);
+                var currentVersion = await Service.FindOneAsync(entity.Id);
 
                 if (currentVersion.CultureCode != entity.CultureCode)
                 {
@@ -178,7 +177,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                         DateCreatedUtc = DateTime.UtcNow,
                         DateModifiedUtc = DateTime.UtcNow,
                     };
-                    Service.Insert(newRecord);
+                    await Service.InsertAsync(newRecord);
                 }
                 else
                 {
@@ -197,7 +196,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                             Slug = currentVersion.Slug,
                             Fields = currentVersion.Fields,
                         };
-                        Service.Insert(backup);
+                        await Service.InsertAsync(backup);
 
                         RemoveOldVersions(currentVersion.PageId, currentVersion.CultureCode);
                     }
@@ -232,14 +231,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         }
 
         [HttpPost]
-        public IHttpActionResult RestoreVersion([FromODataUri] Guid key, ODataActionParameters parameters)
+        public async Task<IHttpActionResult> RestoreVersion([FromODataUri] Guid key, ODataActionParameters parameters)
         {
             if (!CheckPermission(CmsPermissions.PageHistoryRestore))
             {
                 return Unauthorized();
             }
 
-            var versionToRestore = Service.FindOne(key);
+            var versionToRestore = await Service.FindOneAsync(key);
 
             if (versionToRestore == null)
             {
@@ -270,7 +269,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 Slug = current.Slug,
                 Fields = current.Fields,
             };
-            Service.Insert(backup);
+            await Service.InsertAsync(backup);
 
             RemoveOldVersions(current.PageId, current.CultureCode);
 
@@ -283,7 +282,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             current.Slug = versionToRestore.Slug;
             current.Fields = versionToRestore.Fields;
 
-            Service.Update(current);
+            await Service.UpdateAsync(current);
 
             return Ok();
         }

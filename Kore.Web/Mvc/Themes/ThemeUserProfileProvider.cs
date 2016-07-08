@@ -2,6 +2,7 @@
 using Kore.ComponentModel;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
+using Kore.Threading;
 using Kore.Web.Security.Membership;
 
 namespace Kore.Web.Mvc.Themes
@@ -49,7 +50,7 @@ namespace Kore.Web.Mvc.Themes
         public void PopulateFields(string userId)
         {
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
-            PreferredTheme = membershipService.GetProfileEntry(userId, Fields.PreferredTheme);
+            PreferredTheme = AsyncHelper.RunSync(() => membershipService.GetProfileEntry(userId, Fields.PreferredTheme));
         }
 
         #endregion IUserProfileProvider Members

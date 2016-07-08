@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
-using System.Web.Http.Results;
 using Kore.Data;
-using Kore.Tasks;
 using Kore.Tasks.Domain;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
+using KoreTask = Kore.Tasks.Task;
 
 namespace Kore.Web.Areas.Admin.ScheduledTasks.Controllers.Api
 {
@@ -29,17 +28,17 @@ namespace Kore.Web.Areas.Admin.ScheduledTasks.Controllers.Api
             // Do nothing (int is auto incremented)
         }
 
-        public override IHttpActionResult Put(int key, ScheduledTask entity)
+        public override async Task<IHttpActionResult> Put(int key, ScheduledTask entity)
         {
-            var existingEntity = Service.FindOne(key);
+            var existingEntity = await Service.FindOneAsync(key);
             existingEntity.Seconds = entity.Seconds;
             existingEntity.Enabled = entity.Enabled;
             existingEntity.StopOnError = entity.StopOnError;
-            return base.Put(key, existingEntity);
+            return await base.Put(key, existingEntity);
         }
 
         [HttpPost]
-        public IHttpActionResult RunNow(ODataActionParameters parameters)
+        public async Task<IHttpActionResult> RunNow(ODataActionParameters parameters)
         {
             if (!CheckPermission(WritePermission))
             {
@@ -48,11 +47,11 @@ namespace Kore.Web.Areas.Admin.ScheduledTasks.Controllers.Api
 
             int taskId = (int)parameters["taskId"];
 
-            var scheduleTask = Service.FindOne(taskId);
+            var scheduleTask = await Service.FindOneAsync(taskId);
             if (scheduleTask == null)
                 return NotFound();
 
-            var task = new Task(scheduleTask);
+            var task = new KoreTask(scheduleTask);
             //ensure that the task is enabled
             task.Enabled = true;
 

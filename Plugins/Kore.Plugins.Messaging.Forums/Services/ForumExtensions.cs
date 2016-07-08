@@ -2,6 +2,7 @@
 using Kore.Infrastructure;
 using Kore.Plugins.Messaging.Forums.Data.Domain;
 using Kore.Security.Membership;
+using Kore.Threading;
 using Kore.Web.Html;
 
 namespace Kore.Plugins.Messaging.Forums.Services
@@ -87,7 +88,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             if (forum == null)
                 throw new ArgumentNullException("forum");
 
-            return forumService.GetTopicById(forum.LastTopicId);
+            return AsyncHelper.RunSync(() => forumService.GetTopicById(forum.LastTopicId));
         }
 
         public static ForumPost GetLastPost(this Forum forum, IForumService forumService)
@@ -95,7 +96,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             if (forum == null)
                 throw new ArgumentNullException("forum");
 
-            return forumService.GetPostById(forum.LastPostId);
+            return AsyncHelper.RunSync(() => forumService.GetPostById(forum.LastPostId));
         }
 
         public static KoreUser GetLastPostCustomer(this Forum forum, IMembershipService membershipService)
@@ -103,7 +104,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             if (forum == null)
                 throw new ArgumentNullException("forum");
 
-            return membershipService.GetUserById(forum.LastPostUserId);
+            return AsyncHelper.RunSync(() => membershipService.GetUserById(forum.LastPostUserId));
         }
 
         public static ForumPost GetFirstPost(this ForumTopic forumTopic, IForumService forumService)
@@ -111,7 +112,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             if (forumTopic == null)
                 throw new ArgumentNullException("forumTopic");
 
-            var forumPosts = forumService.GetAllPosts(forumTopic.Id, null, string.Empty, 0, 1);
+            var forumPosts = AsyncHelper.RunSync(() => forumService.GetAllPosts(forumTopic.Id, null, string.Empty, 0, 1));
             if (forumPosts.Count > 0)
                 return forumPosts[0];
 
@@ -123,7 +124,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             if (forumTopic == null)
                 throw new ArgumentNullException("forumTopic");
 
-            return forumService.GetPostById(forumTopic.LastPostId);
+            return AsyncHelper.RunSync(() => forumService.GetPostById(forumTopic.LastPostId));
         }
 
         public static KoreUser GetLastPostCustomer(this ForumTopic forumTopic, IMembershipService membershipService)
@@ -131,7 +132,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             if (forumTopic == null)
                 throw new ArgumentNullException("forumTopic");
 
-            return membershipService.GetUserById(forumTopic.LastPostUserId);
+            return AsyncHelper.RunSync(() => membershipService.GetUserById(forumTopic.LastPostUserId));
         }
     }
 }

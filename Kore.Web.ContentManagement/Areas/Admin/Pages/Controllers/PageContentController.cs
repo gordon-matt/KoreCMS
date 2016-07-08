@@ -13,6 +13,7 @@ using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
+using System.Threading.Tasks;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 {
@@ -46,7 +47,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 
         //[OutputCache(Duration = 600, VaryByParam = "slug")] //TODO: Uncomment this when ready
         [Compress]
-        public ActionResult Index(string slug)
+        public async Task<ActionResult> Index(string slug)
         {
             // Hack to make it search the correct path for the view
             if (!this.ControllerContext.RouteData.DataTokens.ContainsKey("area"))
@@ -64,14 +65,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             PageVersion pageVersion;
             using (var connection = pageVersionService.OpenConnection())
             {
-                pageVersion = connection.Query()
+                pageVersion = await connection.Query()
                     .Include(x => x.Page)
                     .Where(x =>
                         x.Status == VersionStatus.Published &&
                         x.CultureCode == currentCulture &&
                         x.Slug == slug)
                     .OrderByDescending(x => x.DateModifiedUtc)
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
             }
 
             // If there isn't one...
@@ -82,14 +83,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                 //  we ONLY archive the published ones, not drafts.. so getting the last archived one will be the last published one
                 using (var connection = pageVersionService.OpenConnection())
                 {
-                    pageVersion = connection.Query()
+                    pageVersion = await connection.Query()
                         .Include(x => x.Page)
                         .Where(x =>
                             x.Status == VersionStatus.Archived &&
                             x.CultureCode == currentCulture &&
                             x.Slug == slug)
                         .OrderByDescending(x => x.DateModifiedUtc)
-                        .FirstOrDefault();
+                        .FirstOrDefaultAsync();
                 }
             }
 
@@ -99,14 +100,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                 // ...then try get the latest published version for the invariant culture
                 using (var connection = pageVersionService.OpenConnection())
                 {
-                    pageVersion = connection.Query()
+                    pageVersion = await connection.Query()
                         .Include(x => x.Page)
                         .Where(x =>
                             x.Status == VersionStatus.Published &&
                             x.CultureCode == null &&
                             x.Slug == slug)
                         .OrderByDescending(x => x.DateModifiedUtc)
-                        .FirstOrDefault();
+                        .FirstOrDefaultAsync();
                 }
             }
 
@@ -116,21 +117,21 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                 // ...then try get the last archived one for the invariant culture (TODO: What if last archived was a draft??)
                 using (var connection = pageVersionService.OpenConnection())
                 {
-                    pageVersion = connection.Query()
+                    pageVersion = await connection.Query()
                         .Include(x => x.Page)
                         .Where(x =>
                             x.Status == VersionStatus.Archived &&
                             x.CultureCode == null &&
                             x.Slug == slug)
                         .OrderByDescending(x => x.DateModifiedUtc)
-                        .FirstOrDefault();
+                        .FirstOrDefaultAsync();
                 }
             }
 
             if (pageVersion != null && pageVersion.Page.IsEnabled)
             {
                 // If there are access restrictions
-                if (!PageSecurityHelper.CheckUserHasAccessToPage(pageVersion.Page, User))
+                if (!await PageSecurityHelper.CheckUserHasAccessToPage(pageVersion.Page, User))
                 {
                     return new HttpUnauthorizedResult();
                 }
@@ -139,7 +140,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                 WorkContext.SetState("CurrentPageId", pageVersion.PageId);
                 WorkContext.Breadcrumbs.Add(pageVersion.Title);
 
-                var pageType = pageTypeService.FindOne(pageVersion.Page.PageTypeId);
+                var pageType = await pageTypeService.FindOneAsync(pageVersion.Page.PageTypeId);
                 var korePageType = pageTypeService.GetKorePageType(pageType.Name);
                 korePageType.InstanceName = pageVersion.Title;
                 korePageType.InstanceParentId = pageVersion.Page.ParentId;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging;
@@ -42,17 +41,6 @@ namespace Kore.Controllers
             this.messageService = messageService;
             this.userProfileProviders = userProfileProviders;
         }
-
-        //public AccountController(ApplicationUserManager userManager)
-        //{
-        //    UserManager = userManager;
-        //    this.membershipService = EngineContext.Current.Resolve<IMembershipService>();
-        //    this.messageService = EngineContext.Current.Resolve<IMessageService>();
-        //    this.userProfileProviders = new Lazy<IEnumerable<IUserProfileProvider>>(() =>
-        //    {
-        //        return EngineContext.Current.ResolveAll<IUserProfileProvider>();
-        //    });
-        //}
 
         public ApplicationUserManager UserManager
         {
@@ -193,7 +181,7 @@ namespace Kore.Controllers
             IdentityResult result = await UserManager.ConfirmEmailAsync(userId, code);
             if (result.Succeeded)
             {
-                var user = membershipService.GetUserById(userId);
+                var user = await membershipService.GetUserById(userId);
                 var tokens = new List<Token>
                 {
                     new Token("[UserName]", user.UserName),
@@ -588,7 +576,7 @@ namespace Kore.Controllers
 
         [Compress]
         [Route("profile/{userId}")]
-        public virtual ActionResult ViewProfile(string userId)
+        public virtual async Task<ActionResult> ViewProfile(string userId)
         {
             WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Account.Title));
 
@@ -600,14 +588,14 @@ namespace Kore.Controllers
             }
             else if (CheckPermission(StandardPermissions.FullAccess))
             {
-                var user = membershipService.GetUserById(userId);
+                var user = await membershipService.GetUserById(userId);
                 ViewBag.Title = string.Format(T(LocalizableStrings.Account.ProfileForUser), user.UserName);
                 WorkContext.Breadcrumbs.Add(string.Format(T(LocalizableStrings.Account.ProfileForUser), user.UserName));
                 ViewBag.CanEdit = true;
             }
             else
             {
-                var user = membershipService.GetUserById(userId);
+                var user = await membershipService.GetUserById(userId);
                 ViewBag.Title = string.Format(T(LocalizableStrings.Account.ProfileForUser), user.UserName);
                 WorkContext.Breadcrumbs.Add(string.Format(T(LocalizableStrings.Account.ProfileForUser), user.UserName));
                 ViewBag.CanEdit = false;
@@ -618,14 +606,14 @@ namespace Kore.Controllers
 
         [Compress]
         [Route("my-profile")]
-        public virtual ActionResult ViewMyProfile()
+        public virtual async Task<ActionResult> ViewMyProfile()
         {
-            return ViewProfile(WorkContext.CurrentUser.Id);
+            return await ViewProfile(WorkContext.CurrentUser.Id);
         }
 
         [Compress]
         [Route("profile/edit/{userId}/")]
-        public virtual ActionResult EditProfile(string userId)
+        public virtual async Task<ActionResult> EditProfile(string userId)
         {
             WorkContext.Breadcrumbs.Add(T(LocalizableStrings.Account.Title));
 
@@ -638,7 +626,7 @@ namespace Kore.Controllers
             else if (CheckPermission(StandardPermissions.FullAccess))
             {
                 ViewBag.Title = T(LocalizableStrings.Account.EditProfile);
-                var user = membershipService.GetUserById(userId);
+                var user = await membershipService.GetUserById(userId);
                 WorkContext.Breadcrumbs.Add(string.Format(T(LocalizableStrings.Account.ProfileForUser), user.UserName), Url.Action("ViewProfile", new { userId = userId }));
                 WorkContext.Breadcrumbs.Add(T(KoreWebLocalizableStrings.General.Edit));
             }
@@ -652,16 +640,16 @@ namespace Kore.Controllers
 
         [Compress]
         [Route("my-profile/edit")]
-        public virtual ActionResult EditMyProfile()
+        public virtual async Task<ActionResult> EditMyProfile()
         {
-            return EditProfile(WorkContext.CurrentUser.Id);
+            return await EditProfile(WorkContext.CurrentUser.Id);
         }
 
         [HttpPost]
         [Compress]
         [Route("update-profile")]
         [ValidateInput(false)]
-        public virtual ActionResult UpdateProfile()
+        public virtual async Task<ActionResult> UpdateProfile()
         {
             var userId = Request.Form["UserId"];
 
@@ -682,7 +670,7 @@ namespace Kore.Controllers
                 }
             }
 
-            membershipService.UpdateProfile(userId, newProfile);
+            await membershipService.UpdateProfile(userId, newProfile);
 
             //eventBus.Notify<IMembershipEventHandler>(x => x.ProfileChanged(userId, newProfile));
 

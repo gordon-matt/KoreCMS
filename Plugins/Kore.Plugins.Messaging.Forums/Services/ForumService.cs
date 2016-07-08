@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Kore.Caching;
 using Kore.Collections.Generic;
 using Kore.Data;
@@ -9,6 +10,8 @@ using Kore.Plugins.Messaging.Forums.Data.Domain;
 using Kore.Security.Membership;
 using Kore.Web.Configuration.Services;
 using Kore.Web.Security.Membership;
+using System.Data.Entity;
+using Kore.EntityFramework.Data;
 
 namespace Kore.Plugins.Messaging.Forums.Services
 {
@@ -67,14 +70,14 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
         #region Methods
 
-        public virtual void DeleteForumGroup(ForumGroup forumGroup)
+        public virtual async Task DeleteForumGroup(ForumGroup forumGroup)
         {
             if (forumGroup == null)
             {
                 throw new ArgumentNullException("forumGroup");
             }
 
-            forumGroupRepository.Delete(forumGroup);
+            await forumGroupRepository.DeleteAsync(forumGroup);
 
             cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
             cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
@@ -83,36 +86,36 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //_eventPublisher.EntityDeleted(forumGroup);
         }
 
-        public virtual ForumGroup GetForumGroupById(int forumGroupId)
+        public virtual async Task<ForumGroup> GetForumGroupById(int forumGroupId)
         {
             if (forumGroupId == 0)
             {
                 return null;
             }
 
-            return forumGroupRepository.FindOne(forumGroupId);
+            return await forumGroupRepository.FindOneAsync(forumGroupId);
         }
 
-        public virtual IEnumerable<ForumGroup> GetAllForumGroups()
+        public virtual async Task<IEnumerable<ForumGroup>> GetAllForumGroups()
         {
             string key = string.Format(CacheKey_ForumGroupAll);
-            return cacheManager.Get(key, () =>
+            return await cacheManager.Get(key, async () =>
             {
                 using (var connection = forumGroupRepository.OpenConnection())
                 {
-                    return connection.Query().OrderBy(x => x.DisplayOrder).ToList();
+                    return await connection.Query().OrderBy(x => x.DisplayOrder).ToListAsync();
                 }
             });
         }
 
-        public virtual void InsertForumGroup(ForumGroup forumGroup)
+        public virtual async Task InsertForumGroup(ForumGroup forumGroup)
         {
             if (forumGroup == null)
             {
                 throw new ArgumentNullException("forumGroup");
             }
 
-            forumGroupRepository.Insert(forumGroup);
+            await forumGroupRepository.InsertAsync(forumGroup);
 
             //cache
             cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
@@ -122,14 +125,14 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //_eventPublisher.EntityInserted(forumGroup);
         }
 
-        public virtual void UpdateForumGroup(ForumGroup forumGroup)
+        public virtual async Task UpdateForumGroup(ForumGroup forumGroup)
         {
             if (forumGroup == null)
             {
                 throw new ArgumentNullException("forumGroup");
             }
 
-            forumGroupRepository.Update(forumGroup);
+            await forumGroupRepository.UpdateAsync(forumGroup);
 
             //cache
             cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
@@ -139,7 +142,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //_eventPublisher.EntityUpdated(forumGroup);
         }
 
-        public virtual void DeleteForum(Forum forum)
+        public virtual async Task DeleteForum(Forum forum)
         {
             if (forum == null)
             {
@@ -153,9 +156,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
                 var queryTopicIds = forumTopicConnection.Query(x => x.ForumId == forum.Id).Select(x => x.Id);
                 var queryFs1 = forumSubscriptionConnection.Query(x => queryTopicIds.Contains(x.TopicId));
 
-                foreach (var fs in queryFs1.ToList())
+                foreach (var fs in await queryFs1.ToListAsync())
                 {
-                    forumSubscriptionRepository.Delete(fs);
+                    await forumSubscriptionRepository.DeleteAsync(fs);
                     //event notification
                     //_eventPublisher.EntityDeleted(fs);
                 }
@@ -163,16 +166,16 @@ namespace Kore.Plugins.Messaging.Forums.Services
                 //delete forum subscriptions (forum)
                 var queryFs2 = forumSubscriptionConnection.Query(x => x.ForumId == forum.Id);
 
-                foreach (var fs2 in queryFs2.ToList())
+                foreach (var fs2 in await queryFs2.ToListAsync())
                 {
-                    forumSubscriptionRepository.Delete(fs2);
+                    await forumSubscriptionRepository.DeleteAsync(fs2);
                     //event notification
                     //_eventPublisher.EntityDeleted(fs2);
                 }
             }
 
             //delete forum
-            forumRepository.Delete(forum);
+            await forumRepository.DeleteAsync(forum);
 
             cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
             cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
@@ -181,39 +184,39 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //_eventPublisher.EntityDeleted(forum);
         }
 
-        public virtual Forum GetForumById(int forumId)
+        public virtual async Task<Forum> GetForumById(int forumId)
         {
             if (forumId == 0)
             {
                 return null;
             }
 
-            return forumRepository.FindOne(forumId);
+            return await forumRepository.FindOneAsync(forumId);
         }
 
-        public virtual IEnumerable<Forum> GetAllForumsByGroupId(int forumGroupId)
+        public virtual async Task<IEnumerable<Forum>> GetAllForumsByGroupId(int forumGroupId)
         {
             string key = string.Format(CacheKey_ForumAllByForumGroupId, forumGroupId);
-            return cacheManager.Get(key, () =>
+            return await cacheManager.Get(key, async () =>
             {
                 using (var connection = forumRepository.OpenConnection())
                 {
-                    return connection
+                    return await connection
                         .Query(f => f.ForumGroupId == forumGroupId)
                         .OrderBy(f => f.DisplayOrder)
-                        .ToList();
+                        .ToListAsync();
                 }
             });
         }
 
-        public virtual void InsertForum(Forum forum)
+        public virtual async Task InsertForum(Forum forum)
         {
             if (forum == null)
             {
                 throw new ArgumentNullException("forum");
             }
 
-            forumRepository.Insert(forum);
+            await forumRepository.InsertAsync(forum);
 
             cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
             cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
@@ -222,14 +225,14 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //_eventPublisher.EntityInserted(forum);
         }
 
-        public virtual void UpdateForum(Forum forum)
+        public virtual async Task UpdateForum(Forum forum)
         {
             if (forum == null)
             {
                 throw new ArgumentNullException("forum");
             }
 
-            forumRepository.Update(forum);
+            await forumRepository.UpdateAsync(forum);
 
             cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
             cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
@@ -238,7 +241,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //_eventPublisher.EntityUpdated(forum);
         }
 
-        public virtual void DeleteTopic(ForumTopic forumTopic)
+        public virtual async Task DeleteTopic(ForumTopic forumTopic)
         {
             if (forumTopic == null)
             {
@@ -249,7 +252,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             int forumId = forumTopic.ForumId;
 
             //delete topic
-            forumTopicRepository.Delete(forumTopic);
+            await forumTopicRepository.DeleteAsync(forumTopic);
 
             using (var forumSubscriptionConnection = forumSubscriptionRepository.OpenConnection())
             {
@@ -260,15 +263,15 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
                 foreach (var fs in forumSubscriptions)
                 {
-                    forumSubscriptionRepository.Delete(fs);
+                    await forumSubscriptionRepository.DeleteAsync(fs);
                     //event notification
                     //_eventPublisher.EntityDeleted(fs);
                 }
             }
 
             //update stats
-            UpdateForumStats(forumId);
-            UpdateUserStats(userId);
+            await UpdateForumStats(forumId);
+            await UpdateUserStats(userId);
 
             cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
             cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
@@ -277,19 +280,19 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //_eventPublisher.EntityDeleted(forumTopic);
         }
 
-        public virtual ForumTopic GetTopicById(int forumTopicId)
+        public virtual async Task<ForumTopic> GetTopicById(int forumTopicId)
         {
-            return GetTopicById(forumTopicId, false);
+            return await GetTopicById(forumTopicId, false);
         }
 
-        public virtual ForumTopic GetTopicById(int forumTopicId, bool increaseViews)
+        public virtual async Task<ForumTopic> GetTopicById(int forumTopicId, bool increaseViews)
         {
             if (forumTopicId == 0)
             {
                 return null;
             }
 
-            var forumTopic = forumTopicRepository.FindOne(forumTopicId);
+            var forumTopic = await forumTopicRepository.FindOneAsync(forumTopicId);
             if (forumTopic == null)
             {
                 return null;
@@ -298,13 +301,13 @@ namespace Kore.Plugins.Messaging.Forums.Services
             if (increaseViews)
             {
                 forumTopic.Views = ++forumTopic.Views;
-                UpdateTopic(forumTopic);
+                await UpdateTopic(forumTopic);
             }
 
             return forumTopic;
         }
 
-        public virtual IPagedList<ForumTopic> GetAllTopics(
+        public virtual async Task<IPagedList<ForumTopic>> GetAllTopics(
             int forumId = 0,
             string userId = null,
             string keywords = null,
@@ -344,11 +347,11 @@ namespace Kore.Plugins.Messaging.Forums.Services
                              orderby ft.TopicType descending, ft.LastPostTime descending, ft.Id descending
                              select ft;
 
-                return new PagedList<ForumTopic>(query2, pageIndex, pageSize);
+                return await Task.FromResult(new PagedList<ForumTopic>(query2, pageIndex, pageSize));
             }
         }
 
-        public virtual IPagedList<ForumTopic> GetActiveTopics(
+        public virtual async Task<IPagedList<ForumTopic>> GetActiveTopics(
             int forumId = 0,
             int pageIndex = 0,
             int pageSize = int.MaxValue)
@@ -367,21 +370,22 @@ namespace Kore.Plugins.Messaging.Forums.Services
                              select ft;
 
                 var topics = new PagedList<ForumTopic>(query2, pageIndex, pageSize);
-                return topics;
+
+                return await Task.FromResult(topics);
             }
         }
 
-        public virtual void InsertTopic(ForumTopic forumTopic, bool sendNotifications)
+        public virtual async Task InsertTopic(ForumTopic forumTopic, bool sendNotifications)
         {
             if (forumTopic == null)
             {
                 throw new ArgumentNullException("forumTopic");
             }
 
-            forumTopicRepository.Insert(forumTopic);
+            await forumTopicRepository.InsertAsync(forumTopic);
 
             //update stats
-            UpdateForumStats(forumTopic.ForumId);
+            await UpdateForumStats(forumTopic.ForumId);
 
             //cache
             cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
@@ -393,8 +397,8 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //send notifications
             if (sendNotifications)
             {
-                var forum = forumTopic.Forum ?? forumRepository.FindOne(forumTopic.ForumId);
-                var subscriptions = GetAllSubscriptions(forumId: forum.Id);
+                var forum = forumTopic.Forum ?? await forumRepository.FindOneAsync(forumTopic.ForumId);
+                var subscriptions = await GetAllSubscriptions(forumId: forum.Id);
                 //var languageId = workContext.WorkingLanguage.Id;
 
                 foreach (var subscription in subscriptions)
@@ -413,14 +417,14 @@ namespace Kore.Plugins.Messaging.Forums.Services
             }
         }
 
-        public virtual void UpdateTopic(ForumTopic forumTopic)
+        public virtual async Task UpdateTopic(ForumTopic forumTopic)
         {
             if (forumTopic == null)
             {
                 throw new ArgumentNullException("forumTopic");
             }
 
-            forumTopicRepository.Update(forumTopic);
+            await forumTopicRepository.UpdateAsync(forumTopic);
 
             cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
             cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
@@ -429,19 +433,19 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //_eventPublisher.EntityUpdated(forumTopic);
         }
 
-        public virtual ForumTopic MoveTopic(int forumTopicId, int newForumId)
+        public virtual async Task<ForumTopic> MoveTopic(int forumTopicId, int newForumId)
         {
-            var forumTopic = GetTopicById(forumTopicId);
+            var forumTopic = await GetTopicById(forumTopicId);
 
             if (forumTopic == null)
             {
                 return null;
             }
 
-            if (IsUserAllowedToMoveTopic(workContext.CurrentUser, forumTopic))
+            if (await IsUserAllowedToMoveTopic(workContext.CurrentUser, forumTopic))
             {
                 int previousForumId = forumTopic.ForumId;
-                var newForum = GetForumById(newForumId);
+                var newForum = await GetForumById(newForumId);
 
                 if (newForum != null)
                 {
@@ -449,18 +453,18 @@ namespace Kore.Plugins.Messaging.Forums.Services
                     {
                         forumTopic.ForumId = newForum.Id;
                         forumTopic.UpdatedOnUtc = DateTime.UtcNow;
-                        UpdateTopic(forumTopic);
+                        await UpdateTopic(forumTopic);
 
                         //update forum stats
-                        UpdateForumStats(previousForumId);
-                        UpdateForumStats(newForumId);
+                        await UpdateForumStats(previousForumId);
+                        await UpdateForumStats(newForumId);
                     }
                 }
             }
             return forumTopic;
         }
 
-        public virtual void DeletePost(ForumPost forumPost)
+        public virtual async Task DeletePost(ForumPost forumPost)
         {
             if (forumPost == null)
             {
@@ -469,7 +473,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
             int forumTopicId = forumPost.TopicId;
             string userId = forumPost.UserId;
-            var forumTopic = this.GetTopicById(forumTopicId);
+            var forumTopic = await GetTopicById(forumTopicId);
             int forumId = forumTopic.ForumId;
 
             //delete topic if it was the first post
@@ -481,21 +485,21 @@ namespace Kore.Plugins.Messaging.Forums.Services
             }
 
             //delete forum post
-            forumPostRepository.Delete(forumPost);
+            await forumPostRepository.DeleteAsync(forumPost);
 
             //delete topic
             if (deleteTopic)
             {
-                DeleteTopic(forumTopic);
+                await DeleteTopic(forumTopic);
             }
 
             //update stats
             if (!deleteTopic)
             {
-                UpdateForumTopicStats(forumTopicId);
+                await UpdateForumTopicStats(forumTopicId);
             }
-            UpdateForumStats(forumId);
-            UpdateUserStats(userId);
+            await UpdateForumStats(forumId);
+            await UpdateUserStats(userId);
 
             //clear cache
             cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
@@ -505,27 +509,27 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //_eventPublisher.EntityDeleted(forumPost);
         }
 
-        public virtual ForumPost GetPostById(int forumPostId)
+        public virtual async Task<ForumPost> GetPostById(int forumPostId)
         {
             if (forumPostId == 0)
             {
                 return null;
             }
 
-            return forumPostRepository.FindOne(forumPostId);
+            return await forumPostRepository.FindOneAsync(forumPostId);
         }
 
-        public virtual IPagedList<ForumPost> GetAllPosts(
+        public virtual async Task<IPagedList<ForumPost>> GetAllPosts(
             int forumTopicId = 0,
             string userId = null,
             string keywords = null,
             int pageIndex = 0,
             int pageSize = int.MaxValue)
         {
-            return GetAllPosts(forumTopicId, userId, keywords, true, pageIndex, pageSize);
+            return await GetAllPosts(forumTopicId, userId, keywords, true, pageIndex, pageSize);
         }
 
-        public virtual IPagedList<ForumPost> GetAllPosts(
+        public virtual async Task<IPagedList<ForumPost>> GetAllPosts(
             int forumTopicId = 0,
             string userId = null,
             string keywords = null,
@@ -553,26 +557,26 @@ namespace Kore.Plugins.Messaging.Forums.Services
                     query.OrderBy(x => x.CreatedOnUtc).ThenBy(fp => fp.Id) :
                     query.OrderByDescending(x => x.CreatedOnUtc).ThenBy(fp => fp.Id);
 
-                return new PagedList<ForumPost>(query, pageIndex, pageSize);
+                return await Task.FromResult(new PagedList<ForumPost>(query, pageIndex, pageSize));
             }
         }
 
-        public virtual void InsertPost(ForumPost forumPost, bool sendNotifications)
+        public virtual async Task InsertPost(ForumPost forumPost, bool sendNotifications)
         {
             if (forumPost == null)
             {
                 throw new ArgumentNullException("forumPost");
             }
 
-            forumPostRepository.Insert(forumPost);
+            await forumPostRepository.InsertAsync(forumPost);
 
             //update stats
             string userId = forumPost.UserId;
-            var forumTopic = this.GetTopicById(forumPost.TopicId);
+            var forumTopic = await GetTopicById(forumPost.TopicId);
             int forumId = forumTopic.ForumId;
-            UpdateForumTopicStats(forumPost.TopicId);
-            UpdateForumStats(forumId);
-            UpdateUserStats(userId);
+            await UpdateForumTopicStats(forumPost.TopicId);
+            await UpdateForumStats(forumId);
+            await UpdateUserStats(userId);
 
             //clear cache
             cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
@@ -581,36 +585,36 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //event notification
             //_eventPublisher.EntityInserted(forumPost);
 
-            //notifications
-            if (sendNotifications)
-            {
-                var forum = forumTopic.Forum ?? forumRepository.FindOne(forumTopic.ForumId);
-                var subscriptions = GetAllSubscriptions(topicId: forumTopic.Id);
+            ////notifications
+            //if (sendNotifications)
+            //{
+            //    var forum = forumTopic.Forum ?? await forumRepository.FindOneAsync(forumTopic.ForumId);
+            //    var subscriptions = await GetAllSubscriptions(topicId: forumTopic.Id);
 
-                //var languageId = workContext.WorkingLanguage.Id;
+            //    //var languageId = workContext.WorkingLanguage.Id;
 
-                int friendlyTopicPageIndex = CalculateTopicPageIndex(
-                    forumPost.TopicId,
-                    forumSettings.PostsPageSize > 0 ? forumSettings.PostsPageSize : 10,
-                    forumPost.Id) + 1;
+            //    int friendlyTopicPageIndex = (await CalculateTopicPageIndex(
+            //        forumPost.TopicId,
+            //        forumSettings.PostsPageSize > 0 ? forumSettings.PostsPageSize : 10,
+            //        forumPost.Id)) + 1;
 
-                foreach (ForumSubscription subscription in subscriptions)
-                {
-                    if (subscription.UserId == forumPost.UserId)
-                    {
-                        continue;
-                    }
+            //    foreach (ForumSubscription subscription in subscriptions)
+            //    {
+            //        if (subscription.UserId == forumPost.UserId)
+            //        {
+            //            continue;
+            //        }
 
-                    //if (!string.IsNullOrEmpty(subscription.User.Email))
-                    //{
-                    //    //_workflowMessageService.SendNewForumPostMessage(subscription.User, forumPost,
-                    //    //    forumTopic, forum, friendlyTopicPageIndex, languageId);
-                    //}
-                }
-            }
+            //        //if (!string.IsNullOrEmpty(subscription.User.Email))
+            //        //{
+            //        //    //_workflowMessageService.SendNewForumPostMessage(subscription.User, forumPost,
+            //        //    //    forumTopic, forum, friendlyTopicPageIndex, languageId);
+            //        //}
+            //    }
+            //}
         }
 
-        public virtual void UpdatePost(ForumPost forumPost)
+        public virtual async Task UpdatePost(ForumPost forumPost)
         {
             //validation
             if (forumPost == null)
@@ -618,7 +622,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
                 throw new ArgumentNullException("forumPost");
             }
 
-            forumPostRepository.Update(forumPost);
+            await forumPostRepository.UpdateAsync(forumPost);
 
             cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
             cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
@@ -627,30 +631,30 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //_eventPublisher.EntityUpdated(forumPost);
         }
 
-        public virtual void DeletePrivateMessage(PrivateMessage privateMessage)
+        public virtual async Task DeletePrivateMessage(PrivateMessage privateMessage)
         {
             if (privateMessage == null)
             {
                 throw new ArgumentNullException("privateMessage");
             }
 
-            forumPrivateMessageRepository.Delete(privateMessage);
+            await forumPrivateMessageRepository.DeleteAsync(privateMessage);
 
             //event notification
             //_eventPublisher.EntityDeleted(privateMessage);
         }
 
-        public virtual PrivateMessage GetPrivateMessageById(int privateMessageId)
+        public virtual async Task<PrivateMessage> GetPrivateMessageById(int privateMessageId)
         {
             if (privateMessageId == 0)
             {
                 return null;
             }
 
-            return forumPrivateMessageRepository.FindOne(privateMessageId);
+            return await forumPrivateMessageRepository.FindOneAsync(privateMessageId);
         }
 
-        public virtual IPagedList<PrivateMessage> GetAllPrivateMessages(
+        public virtual async Task<IPagedList<PrivateMessage>> GetAllPrivateMessages(
             string fromUserId,
             string toUserId,
             bool? isRead,
@@ -692,23 +696,23 @@ namespace Kore.Plugins.Messaging.Forums.Services
                 }
                 query = query.OrderByDescending(pm => pm.CreatedOnUtc);
 
-                return new PagedList<PrivateMessage>(query, pageIndex, pageSize);
+                return await Task.FromResult(new PagedList<PrivateMessage>(query, pageIndex, pageSize));
             }
         }
 
-        public virtual void InsertPrivateMessage(PrivateMessage privateMessage)
+        public virtual async Task InsertPrivateMessage(PrivateMessage privateMessage)
         {
             if (privateMessage == null)
             {
                 throw new ArgumentNullException("privateMessage");
             }
 
-            forumPrivateMessageRepository.Insert(privateMessage);
+            await forumPrivateMessageRepository.InsertAsync(privateMessage);
 
             //event notification
             //_eventPublisher.EntityInserted(privateMessage);
 
-            var userTo = membershipService.GetUserById(privateMessage.ToUserId);
+            var userTo = await membershipService.GetUserById(privateMessage.ToUserId);
             if (userTo == null)
             {
                 throw new KoreException("Recipient could not be loaded");
@@ -724,7 +728,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             }
         }
 
-        public virtual void UpdatePrivateMessage(PrivateMessage privateMessage)
+        public virtual async Task UpdatePrivateMessage(PrivateMessage privateMessage)
         {
             if (privateMessage == null)
             {
@@ -733,42 +737,42 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
             if (privateMessage.IsDeletedByAuthor && privateMessage.IsDeletedByRecipient)
             {
-                forumPrivateMessageRepository.Delete(privateMessage);
+                await forumPrivateMessageRepository.DeleteAsync(privateMessage);
                 //event notification
                 //_eventPublisher.EntityDeleted(privateMessage);
             }
             else
             {
-                forumPrivateMessageRepository.Update(privateMessage);
+                await forumPrivateMessageRepository.UpdateAsync(privateMessage);
                 //event notification
                 //_eventPublisher.EntityUpdated(privateMessage);
             }
         }
 
-        public virtual void DeleteSubscription(ForumSubscription forumSubscription)
+        public virtual async Task DeleteSubscription(ForumSubscription forumSubscription)
         {
             if (forumSubscription == null)
             {
                 throw new ArgumentNullException("forumSubscription");
             }
 
-            forumSubscriptionRepository.Delete(forumSubscription);
+            await forumSubscriptionRepository.DeleteAsync(forumSubscription);
 
             //event notification
             //_eventPublisher.EntityDeleted(forumSubscription);
         }
 
-        public virtual ForumSubscription GetSubscriptionById(int forumSubscriptionId)
+        public virtual async Task<ForumSubscription> GetSubscriptionById(int forumSubscriptionId)
         {
             if (forumSubscriptionId == 0)
             {
                 return null;
             }
 
-            return forumSubscriptionRepository.FindOne(forumSubscriptionId);
+            return await forumSubscriptionRepository.FindOneAsync(forumSubscriptionId);
         }
 
-        public virtual IPagedList<ForumSubscription> GetAllSubscriptions(
+        public virtual async Task<IPagedList<ForumSubscription>> GetAllSubscriptions(
             string userId = null,
             int forumId = 0,
             int topicId = 0,
@@ -777,7 +781,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
         {
             bool isLockedOut = string.IsNullOrEmpty(userId)
                 ? false
-                : membershipService.GetUserById(userId).IsLockedOut;
+                : (await membershipService.GetUserById(userId)).IsLockedOut;
 
             using (var forumSubscriptionConnection = forumSubscriptionRepository.OpenConnection())
             {
@@ -794,37 +798,37 @@ namespace Kore.Plugins.Messaging.Forums.Services
                     .OrderByDescending(x => x.CreatedOnUtc)
                     .ThenByDescending(x => x.Id);
 
-                return new PagedList<ForumSubscription>(query, pageIndex, pageSize);
+                return  await Task.FromResult(new PagedList<ForumSubscription>(query, pageIndex, pageSize));
             }
         }
 
-        public virtual void InsertSubscription(ForumSubscription forumSubscription)
+        public virtual async Task InsertSubscription(ForumSubscription forumSubscription)
         {
             if (forumSubscription == null)
             {
                 throw new ArgumentNullException("forumSubscription");
             }
 
-            forumSubscriptionRepository.Insert(forumSubscription);
+            await forumSubscriptionRepository.InsertAsync(forumSubscription);
 
             //event notification
             //_eventPublisher.EntityInserted(forumSubscription);
         }
 
-        public virtual void UpdateSubscription(ForumSubscription forumSubscription)
+        public virtual async Task UpdateSubscription(ForumSubscription forumSubscription)
         {
             if (forumSubscription == null)
             {
                 throw new ArgumentNullException("forumSubscription");
             }
 
-            forumSubscriptionRepository.Update(forumSubscription);
+            await forumSubscriptionRepository.UpdateAsync(forumSubscription);
 
             //event notification
             //_eventPublisher.EntityUpdated(forumSubscription);
         }
 
-        public virtual bool IsUserAllowedToCreateTopic(KoreUser user, Forum forum)
+        public virtual async Task<bool> IsUserAllowedToCreateTopic(KoreUser user, Forum forum)
         {
             if (forum == null)
             {
@@ -841,7 +845,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //    return false;
             //}
 
-            if (IsForumModerator(user))
+            if (await IsForumModerator(user))
             {
                 return true;
             }
@@ -849,7 +853,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             return true;
         }
 
-        public virtual bool IsUserAllowedToEditTopic(KoreUser user, ForumTopic topic)
+        public virtual async Task<bool> IsUserAllowedToEditTopic(KoreUser user, ForumTopic topic)
         {
             if (topic == null)
             {
@@ -866,7 +870,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //    return false;
             //}
 
-            if (IsForumModerator(user))
+            if (await IsForumModerator(user))
             {
                 return true;
             }
@@ -880,7 +884,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             return false;
         }
 
-        public virtual bool IsUserAllowedToMoveTopic(KoreUser user, ForumTopic topic)
+        public virtual async Task<bool> IsUserAllowedToMoveTopic(KoreUser user, ForumTopic topic)
         {
             if (topic == null)
             {
@@ -897,7 +901,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //    return false;
             //}
 
-            if (IsForumModerator(user))
+            if (await IsForumModerator(user))
             {
                 return true;
             }
@@ -905,7 +909,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             return false;
         }
 
-        public virtual bool IsUserAllowedToDeleteTopic(KoreUser user, ForumTopic topic)
+        public virtual async Task<bool> IsUserAllowedToDeleteTopic(KoreUser user, ForumTopic topic)
         {
             if (topic == null)
             {
@@ -922,7 +926,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //    return false;
             //}
 
-            if (IsForumModerator(user))
+            if (await IsForumModerator(user))
             {
                 return true;
             }
@@ -936,7 +940,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             return false;
         }
 
-        public virtual bool IsUserAllowedToCreatePost(KoreUser user, ForumTopic topic)
+        public virtual async Task<bool> IsUserAllowedToCreatePost(KoreUser user, ForumTopic topic)
         {
             if (topic == null)
             {
@@ -953,10 +957,10 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //    return false;
             //}
 
-            return true;
+            return await Task.FromResult(true);
         }
 
-        public virtual bool IsUserAllowedToEditPost(KoreUser user, ForumPost post)
+        public virtual async Task<bool> IsUserAllowedToEditPost(KoreUser user, ForumPost post)
         {
             if (post == null)
             {
@@ -973,7 +977,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //    return false;
             //}
 
-            if (IsForumModerator(user))
+            if (await IsForumModerator(user))
             {
                 return true;
             }
@@ -987,7 +991,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             return false;
         }
 
-        public virtual bool IsUserAllowedToDeletePost(KoreUser user, ForumPost post)
+        public virtual async Task<bool> IsUserAllowedToDeletePost(KoreUser user, ForumPost post)
         {
             if (post == null)
             {
@@ -1004,7 +1008,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //    return false;
             //}
 
-            if (IsForumModerator(user))
+            if (await IsForumModerator(user))
             {
                 return true;
             }
@@ -1018,7 +1022,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             return false;
         }
 
-        public virtual bool IsUserAllowedToSetTopicPriority(KoreUser user)
+        public virtual async Task<bool> IsUserAllowedToSetTopicPriority(KoreUser user)
         {
             if (user == null)
             {
@@ -1030,7 +1034,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //    return false;
             //}
 
-            if (IsForumModerator(user))
+            if (await IsForumModerator(user))
             {
                 return true;
             }
@@ -1038,7 +1042,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
             return false;
         }
 
-        public virtual bool IsUserAllowedToSubscribe(KoreUser user)
+        public virtual async Task<bool> IsUserAllowedToSubscribe(KoreUser user)
         {
             if (user == null)
             {
@@ -1050,13 +1054,13 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //    return false;
             //}
 
-            return true;
+            return await Task.FromResult(true);
         }
 
-        public virtual int CalculateTopicPageIndex(int forumTopicId, int pageSize, int postId)
+        public virtual async Task<int> CalculateTopicPageIndex(int forumTopicId, int pageSize, int postId)
         {
             int pageIndex = 0;
-            var forumPosts = GetAllPosts(forumTopicId: forumTopicId, ascSort: true);
+            var forumPosts = await GetAllPosts(forumTopicId: forumTopicId, ascSort: true);
 
             for (int i = 0; i < forumPosts.ItemCount; i++)
             {
@@ -1076,14 +1080,14 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
         #region Utilities
 
-        private void UpdateForumStats(int forumId)
+        private async Task UpdateForumStats(int forumId)
         {
             if (forumId == 0)
             {
                 return;
             }
 
-            var forum = GetForumById(forumId);
+            var forum = await GetForumById(forumId);
             if (forum == null)
             {
                 return;
@@ -1142,17 +1146,17 @@ namespace Kore.Plugins.Messaging.Forums.Services
                 forum.LastPostTime = lastPostTime;
             }
 
-            UpdateForum(forum);
+            await UpdateForum(forum);
         }
 
-        private void UpdateForumTopicStats(int forumTopicId)
+        private async Task UpdateForumTopicStats(int forumTopicId)
         {
             if (forumTopicId == 0)
             {
                 return;
             }
 
-            var forumTopic = GetTopicById(forumTopicId);
+            var forumTopic = await GetTopicById(forumTopicId);
             if (forumTopic == null)
             {
                 return;
@@ -1197,17 +1201,17 @@ namespace Kore.Plugins.Messaging.Forums.Services
                 forumTopic.LastPostTime = lastPostTime;
             }
 
-            UpdateTopic(forumTopic);
+            await UpdateTopic(forumTopic);
         }
 
-        private void UpdateUserStats(string userId)
+        private async Task UpdateUserStats(string userId)
         {
             if (string.IsNullOrEmpty(userId))
             {
                 return;
             }
 
-            var user = membershipService.GetUserById(userId);
+            var user = await membershipService.GetUserById(userId);
 
             if (user == null)
             {
@@ -1216,18 +1220,18 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
             using (var forumPostConnection = forumPostRepository.OpenConnection())
             {
-                int numPosts = forumPostConnection
+                int numPosts = await forumPostConnection
                     .Query(x => x.UserId == userId)
                     .Select(x => x.Id)
-                    .Count();
+                    .CountAsync();
 
                 genericAttributeService.SaveAttribute(user, SystemUserAttributeNames.ForumPostCount, numPosts);
             }
         }
 
-        private bool IsForumModerator(KoreUser user)
+        private async Task<bool> IsForumModerator(KoreUser user)
         {
-            var roles = membershipService.GetRolesForUser(user.Id);
+            var roles = await membershipService.GetRolesForUser(user.Id);
             return roles.Any(x => x.Name == Constants.Roles.ForumModerators);
         }
 

@@ -2,6 +2,7 @@
 using System.Linq;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
+using Kore.Threading;
 using Kore.Web.Configuration;
 
 namespace Kore.Web.Mvc.Themes
@@ -46,7 +47,7 @@ namespace Kore.Web.Mvc.Themes
                     if (workContext.CurrentUser != null)
                     {
                         var membershipService = EngineContext.Current.Resolve<IMembershipService>();
-                        string userTheme = membershipService.GetProfileEntry(workContext.CurrentUser.Id, ThemeUserProfileProvider.Fields.PreferredTheme);
+                        string userTheme = AsyncHelper.RunSync(() => membershipService.GetProfileEntry(workContext.CurrentUser.Id, ThemeUserProfileProvider.Fields.PreferredTheme));
 
                         if (!string.IsNullOrEmpty(userTheme))
                         {

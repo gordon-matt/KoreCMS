@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Kore.Localization;
 using Kore.Security.Membership;
+using Kore.Threading;
 using Kore.Web.Events;
 using Kore.Web.Security.Membership;
 
@@ -44,7 +43,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Services
                 return false;
             }
 
-            var existingUser = membershipService.Value.GetUserByEmail(email);
+            var existingUser = AsyncHelper.RunSync(() => membershipService.Value.GetUserByEmail(email));
 
             // Check if a user exists with that email..
             if (existingUser != null)
@@ -53,10 +52,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Services
                 if (currentUser != null && currentUser.Id == existingUser.Id)
                 {
                     //auto set "ReceiveNewsletters" in profile to true
-                    membershipService.Value.SaveProfileEntry(
+                    AsyncHelper.RunSync(() => membershipService.Value.SaveProfileEntry(
                         currentUser.Id,
                         NewsletterUserProfileProvider.Fields.SubscribeToNewsletters,
-                        bool.TrueString);
+                        bool.TrueString));
 
                     eventBus.Value.Notify<INewsletterEventHandler>(x => x.Subscribed(existingUser));
 
@@ -74,11 +73,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Services
                 membershipSettings.Value.GeneratedPasswordLength,
                 membershipSettings.Value.GeneratedPasswordNumberOfNonAlphanumericChars);
 
-            membershipService.Value.InsertUser(new KoreUser { UserName = email, Email = email }, password);
-            var user = membershipService.Value.GetUserByEmail(email);
+            AsyncHelper.RunSync(() => membershipService.Value.InsertUser(new KoreUser { UserName = email, Email = email }, password));
+            var user = AsyncHelper.RunSync(() => membershipService.Value.GetUserByEmail(email));
 
             // and sign up for newsletter, as requested.
-            membershipService.Value.SaveProfileEntry(user.Id, NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, bool.TrueString);
+            AsyncHelper.RunSync(() => membershipService.Value.SaveProfileEntry(user.Id, NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, bool.TrueString));
 
             name = name.Trim();
             if (name.Contains(" "))
@@ -86,12 +85,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Services
                 string[] nameArray = name.Split(' ');
                 string familyName = nameArray.Last();
                 string givenNames = name.Replace(familyName, string.Empty).Trim();
-                membershipService.Value.SaveProfileEntry(user.Id, AccountUserProfileProvider.Fields.FamilyName, familyName);
-                membershipService.Value.SaveProfileEntry(user.Id, AccountUserProfileProvider.Fields.GivenNames, givenNames);
+                AsyncHelper.RunSync(() => membershipService.Value.SaveProfileEntry(user.Id, AccountUserProfileProvider.Fields.FamilyName, familyName));
+                AsyncHelper.RunSync(() => membershipService.Value.SaveProfileEntry(user.Id, AccountUserProfileProvider.Fields.GivenNames, givenNames));
             }
             else
             {
-                membershipService.Value.SaveProfileEntry(user.Id, AccountUserProfileProvider.Fields.GivenNames, name);
+                AsyncHelper.RunSync(() => membershipService.Value.SaveProfileEntry(user.Id, AccountUserProfileProvider.Fields.GivenNames, name));
             }
 
             eventBus.Value.Notify<INewsletterEventHandler>(x => x.Subscribed(user));
@@ -100,6 +99,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Services
             return true;
         }
 
-        #endregion
+        #endregion INewsletterService Members
     }
 }

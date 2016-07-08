@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
@@ -31,27 +32,27 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 
         [AllowAnonymous]
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public override IEnumerable<BlogPost> Get(ODataQueryOptions<BlogPost> options)
+        public override async Task<IEnumerable<BlogPost>> Get(ODataQueryOptions<BlogPost> options)
         {
-            return base.Get(options);
+            return await base.Get(options);
         }
 
         [AllowAnonymous]
         [EnableQuery]
-        public override SingleResult<BlogPost> Get([FromODataUri] Guid key)
+        public override async Task<SingleResult<BlogPost>> Get([FromODataUri] Guid key)
         {
-            return base.Get(key);
+            return await base.Get(key);
         }
 
-        public override IHttpActionResult Post(BlogPost entity)
+        public override async Task<IHttpActionResult> Post(BlogPost entity)
         {
             entity.DateCreatedUtc = DateTime.UtcNow;
-            entity.UserId = membershipService.Value.GetUserByName(User.Identity.Name).Id;
+            entity.UserId = (await membershipService.Value.GetUserByName(User.Identity.Name)).Id;
 
             var tags = entity.Tags;
             entity.Tags = null;
 
-            var result = base.Post(entity);
+            var result = await base.Post(entity);
 
             if (!tags.IsNullOrEmpty())
             {
@@ -66,17 +67,17 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
             return result;
         }
 
-        public override IHttpActionResult Put([FromODataUri] Guid key, BlogPost entity)
+        public override async Task<IHttpActionResult> Put([FromODataUri] Guid key, BlogPost entity)
         {
-            var currentEntry = Service.FindOne(entity.Id);
+            var currentEntry = await Service.FindOneAsync(entity.Id);
             entity.UserId = currentEntry.UserId;
             entity.DateCreatedUtc = currentEntry.DateCreatedUtc;
-            var result = base.Put(key, entity);
+            var result = await base.Put(key, entity);
 
             if (!entity.Tags.IsNullOrEmpty())
             {
                 var chosenTagIds = entity.Tags.Select(x => x.TagId);
-                var existingTags = postTagService.Value.Find(x => x.PostId == entity.Id);
+                var existingTags = await postTagService.Value.FindAsync(x => x.PostId == entity.Id);
                 var existingTagIds = existingTags.Select(x => x.TagId);
 
                 var toDelete = existingTags.Where(x => !chosenTagIds.Contains(x.TagId));
@@ -86,8 +87,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
                     TagId = x
                 });
 
-                postTagService.Value.Delete(toDelete);
-                postTagService.Value.Insert(toInsert);
+                await postTagService.Value.DeleteAsync(toDelete);
+                await postTagService.Value.InsertAsync(toInsert);
             }
 
             return result;

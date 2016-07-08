@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using Kore.Infrastructure;
+using Kore.Threading;
 using Kore.Web.ContentManagement.Areas.Admin.Blog;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
@@ -70,7 +71,8 @@ namespace Kore.Web.ContentManagement.Controllers
                         break;
                     }
 
-                    if (PageSecurityHelper.CheckUserHasAccessToPage(parentPage, User))
+                    bool hasAccess = AsyncHelper.RunSync(() => PageSecurityHelper.CheckUserHasAccessToPage(parentPage, User));
+                    if (hasAccess)
                     {
                         var currentVersion = pageVersionService.GetCurrentVersion(parentPage.Id, WorkContext.CurrentCultureCode);
                         breadcrumbs.Add(new Breadcrumb
@@ -127,7 +129,7 @@ namespace Kore.Web.ContentManagement.Controllers
                 enabledOnly: true,
                 shownOnMenusOnly: true);
 
-            var authorizedPages = pageVersions.Where(x => PageSecurityHelper.CheckUserHasAccessToPage(x.Page, User));
+            var authorizedPages = pageVersions.Where(x => AsyncHelper.RunSync(() => PageSecurityHelper.CheckUserHasAccessToPage(x.Page, User)));
 
             var items = authorizedPages
                 .Select(x => new MenuItem
@@ -142,7 +144,8 @@ namespace Kore.Web.ContentManagement.Controllers
 
             menuItems.AddRange(items);
 
-            if (PageSecurityHelper.CheckUserHasAccessToBlog(User) && blogSettings.Value.ShowOnMenus)
+            bool hasAccess = AsyncHelper.RunSync(() => PageSecurityHelper.CheckUserHasAccessToBlog(User));
+            if (hasAccess && blogSettings.Value.ShowOnMenus)
             {
                 menuItems.Add(new MenuItem
                 {
@@ -185,8 +188,8 @@ namespace Kore.Web.ContentManagement.Controllers
             // If home page
             if (string.IsNullOrEmpty(currentUrlSlug))
             {
-                if (blogSettings.Value.ShowOnMenus &&
-                    PageSecurityHelper.CheckUserHasAccessToBlog(User))
+                bool hasAccess = AsyncHelper.RunSync(() => PageSecurityHelper.CheckUserHasAccessToBlog(User));
+                if (blogSettings.Value.ShowOnMenus && hasAccess)
                 {
                     menuItems.Add(new MenuItem
                     {
@@ -256,7 +259,7 @@ namespace Kore.Web.ContentManagement.Controllers
 
             if (hasCmsPages)
             {
-                var authorizedPages = pageVersions.Where(x => PageSecurityHelper.CheckUserHasAccessToPage(x.Page, User));
+                var authorizedPages = pageVersions.Where(x => AsyncHelper.RunSync(() => PageSecurityHelper.CheckUserHasAccessToPage(x.Page, User)));
 
                 var items = authorizedPages
                     .Select(x => new MenuItem

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
@@ -22,14 +23,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         }
 
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All, MaxExpansionDepth = 10)]
-        public IEnumerable<PageTreeItem> Get(ODataQueryOptions<PageTreeItem> options)
+        public async Task<IEnumerable<PageTreeItem>> Get(ODataQueryOptions<PageTreeItem> options)
         {
             if (!CheckPermission(CmsPermissions.PagesRead))
             {
                 return Enumerable.Empty<PageTreeItem>();
             }
 
-            var pages = service.Find();
+            var pages = await service.FindAsync();
 
             var hierarchy = pages
                 .Where(x => x.ParentId == null)
@@ -55,14 +56,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         }
 
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All, MaxExpansionDepth = 10)]
-        public virtual SingleResult<PageTreeItem> Get([FromODataUri] Guid key)
+        public virtual async Task<SingleResult<PageTreeItem>> Get([FromODataUri] Guid key)
         {
             if (!CheckPermission(CmsPermissions.PagesRead))
             {
                 return SingleResult.Create(Enumerable.Empty<PageTreeItem>().AsQueryable());
             }
 
-            var pages = service.Find();
+            var pages = await service.FindAsync();
             var entity = pages.FirstOrDefault(x => x.Id == key);
 
             return SingleResult.Create(new[] { entity }.Select(x => new PageTreeItem

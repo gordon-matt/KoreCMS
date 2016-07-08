@@ -9,10 +9,12 @@ using System.Text;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
+using Kore.Collections;
 using Kore.ComponentModel;
 using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Security.Membership;
+using Kore.Threading;
 using Kore.Web.Collections;
 using Kore.Web.Mvc.Controls;
 using Kore.Web.Mvc.KoreUI;
@@ -684,7 +686,7 @@ namespace Kore.Web.Mvc
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
             var permissionProviders = EngineContext.Current.ResolveAll<IPermissionProvider>();
             var permissions = permissionProviders.SelectMany(x => x.GetPermissions()).ToList();
-            var allPermissions = membershipService.GetAllPermissions().ToList();
+            var allPermissions = AsyncHelper.RunSync(() => membershipService.GetAllPermissions()).ToHashSet();
             var T = LocalizationUtilities.Resolve();
 
             #region First check if all permissions are in the DB
@@ -734,7 +736,7 @@ namespace Kore.Web.Mvc
         {
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
 
-            var selectList = membershipService.GetAllRoles()
+            var selectList = AsyncHelper.RunSync(() => membershipService.GetAllRoles())
                 .ToSelectList(
                     value => value.Id,
                     text => text.Name);
@@ -746,7 +748,7 @@ namespace Kore.Web.Mvc
         {
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
 
-            var selectList = membershipService.GetAllRoles()
+            var selectList = AsyncHelper.RunSync(() => membershipService.GetAllRoles())
                 .ToSelectList(
                     value => value.Id,
                     text => text.Name,
@@ -763,7 +765,7 @@ namespace Kore.Web.Mvc
 
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
 
-            var selectList = membershipService.GetAllRoles()
+            var selectList = AsyncHelper.RunSync(() => membershipService.GetAllRoles())
                 .ToSelectList(
                     value => value.Id,
                     text => text.Name,

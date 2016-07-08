@@ -2,6 +2,7 @@
 using Kore.ComponentModel;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
+using Kore.Threading;
 using Kore.Web.Security.Membership;
 
 namespace Kore.Web.Localization
@@ -49,7 +50,7 @@ namespace Kore.Web.Localization
         public void PopulateFields(string userId)
         {
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
-            PreferredLanguage = membershipService.GetProfileEntry(userId, Fields.PreferredLanguage);
+            PreferredLanguage = AsyncHelper.RunSync(() => membershipService.GetProfileEntry(userId, Fields.PreferredLanguage));
         }
 
         #endregion IUserProfileProvider Members

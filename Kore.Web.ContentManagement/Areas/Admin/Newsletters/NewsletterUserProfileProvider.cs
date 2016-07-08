@@ -2,6 +2,7 @@
 using Kore.ComponentModel;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
+using Kore.Threading;
 using Kore.Web.Security.Membership;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters
@@ -49,7 +50,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters
         public void PopulateFields(string userId)
         {
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
-            string subscribeToNewsletters = membershipService.GetProfileEntry(userId, Fields.SubscribeToNewsletters);
+            string subscribeToNewsletters = AsyncHelper.RunSync(() => membershipService.GetProfileEntry(userId, Fields.SubscribeToNewsletters));
             SubscribeToNewsletters = !string.IsNullOrEmpty(subscribeToNewsletters) && bool.Parse(subscribeToNewsletters);
         }
 

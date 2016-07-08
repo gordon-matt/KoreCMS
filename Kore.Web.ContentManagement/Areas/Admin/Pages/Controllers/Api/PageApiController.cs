@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
@@ -24,13 +25,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             this.workContext = workContext;
         }
 
-        public override SingleResult<Page> Get([FromODataUri] Guid key)
+        public override async Task<SingleResult<Page>> Get([FromODataUri] Guid key)
         {
             if (!CheckPermission(ReadPermission))
             {
                 return SingleResult.Create(Enumerable.Empty<Page>().AsQueryable());
             }
-            var entity = Service.FindOne(key);
+            var entity = await Service.FindOneAsync(key);
 
             string currentCulture = workContext.CurrentCultureCode;
 

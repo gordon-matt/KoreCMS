@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
@@ -174,37 +175,37 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 
         [Compress]
         [Route("preview/{pageId}")]
-        public ActionResult Preview(Guid pageId)
+        public async Task<ActionResult> Preview(Guid pageId)
         {
             var currentCulture = WorkContext.CurrentCultureCode;
             var pageVersion = pageVersionService.Value.GetCurrentVersion(pageId, currentCulture, false, false);
 
-            return PagePreview(pageVersion);
+            return await PagePreview(pageVersion);
         }
 
         [Compress]
         [Route("preview-version/{pageVersionId}")]
-        public ActionResult PreviewVersion(Guid pageVersionId)
+        public async Task<ActionResult> PreviewVersion(Guid pageVersionId)
         {
             PageVersion pageVersion;
             using (var connection = pageVersionService.Value.OpenConnection())
             {
-                pageVersion = connection.Query()
+                pageVersion = await connection.Query()
                     .Include(x => x.Page)
-                    .FirstOrDefault(x => x.Id == pageVersionId);
+                    .FirstOrDefaultAsync(x => x.Id == pageVersionId);
             }
 
-            return PagePreview(pageVersion);
+            return await PagePreview(pageVersion);
         }
 
-        private ActionResult PagePreview(PageVersion pageVersion)
+        private async Task<ActionResult> PagePreview(PageVersion pageVersion)
         {
             if (pageVersion != null)
             {
                 pageVersion.Page.IsEnabled = true; // Override here to make sure it passes the check here: PageSecurityHelper.CheckUserHasAccessToPage
 
                 // If there are access restrictions
-                if (!PageSecurityHelper.CheckUserHasAccessToPage(pageVersion.Page, User))
+                if (!await PageSecurityHelper.CheckUserHasAccessToPage(pageVersion.Page, User))
                 {
                     return new HttpUnauthorizedResult();
                 }
@@ -213,7 +214,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                 WorkContext.SetState("CurrentPageId", pageVersion.Id);
                 WorkContext.Breadcrumbs.Add(pageVersion.Title);
 
-                var pageType = pageTypeService.Value.FindOne(pageVersion.Page.PageTypeId);
+                var pageType = await pageTypeService.Value.FindOneAsync(pageVersion.Page.PageTypeId);
                 var korePageType = pageTypeService.Value.GetKorePageType(pageType.Name);
                 korePageType.InstanceName = pageVersion.Title;
                 korePageType.InstanceParentId = pageVersion.Page.ParentId;

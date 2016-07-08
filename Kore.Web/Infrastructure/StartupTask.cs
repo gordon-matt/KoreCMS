@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using Kore.Collections;
 using Kore.Configuration.Domain;
 using Kore.Data;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
+using Kore.Threading;
 using Kore.Web.Configuration;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -18,12 +21,13 @@ namespace Kore.Web.Infrastructure
         {
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
 
-            EnsurePermissions(membershipService);
-            EnsureMembership(membershipService);
+            AsyncHelper.RunSync(() => EnsurePermissions(membershipService));
+            AsyncHelper.RunSync(() => EnsureMembership(membershipService));
+
             EnsureSettings();
         }
 
-        private static void EnsurePermissions(IMembershipService membershipService)
+        private static async Task EnsurePermissions(IMembershipService membershipService)
         {
             if (membershipService.SupportsRolePermissions)
             {
@@ -32,7 +36,7 @@ namespace Kore.Web.Infrastructure
                 var allPermissions = permissionProviders.SelectMany(x => x.GetPermissions());
                 var allPermissionNames = allPermissions.Select(x => x.Name).ToHashSet();
 
-                var installedPermissions = membershipService.GetAllPermissions();
+                var installedPermissions = await membershipService.GetAllPermissions();
                 var installedPermissionNames = installedPermissions.Select(x => x.Name).ToHashSet();
 
                 var permissionsToAdd = allPermissions
@@ -48,7 +52,7 @@ namespace Kore.Web.Infrastructure
 
                 if (!permissionsToAdd.IsNullOrEmpty())
                 {
-                    membershipService.InsertPermissions(permissionsToAdd);
+                    await membershipService.InsertPermissions(permissionsToAdd);
                 }
 
                 var permissionIdsToDelete = installedPermissions
@@ -57,16 +61,16 @@ namespace Kore.Web.Infrastructure
 
                 if (!permissionIdsToDelete.IsNullOrEmpty())
                 {
-                    membershipService.DeletePermissions(permissionIdsToDelete);
+                    await membershipService.DeletePermissions(permissionIdsToDelete);
                 }
             }
         }
 
-        private static void EnsureMembership(IMembershipService membershipService)
+        private static async Task EnsureMembership(IMembershipService membershipService)
         {
             // We only run this method to ensure that the admin user has been setup as part of the installation process.
             //  If there are any users already in the DB...
-            if (membershipService.GetAllUsersAsQueryable().Any())
+            if (await membershipService.GetAllUsersAsQueryable().AnyAsync())
             {
                 // ... we assume the admin user is one of them. No need for further querying...
                 return;
@@ -74,33 +78,33 @@ namespace Kore.Web.Infrastructure
 
             var dataSettings = EngineContext.Current.Resolve<DataSettings>();
 
-            var adminUser = membershipService.GetUserByEmail(dataSettings.AdminEmail);
+            var adminUser = await membershipService.GetUserByEmail(dataSettings.AdminEmail);
             if (adminUser == null)
             {
-                membershipService.InsertUser(new KoreUser { UserName = dataSettings.AdminEmail, Email = dataSettings.AdminEmail }, dataSettings.AdminPassword);
-                adminUser = membershipService.GetUserByEmail(dataSettings.AdminEmail);
+                await membershipService.InsertUser(new KoreUser { UserName = dataSettings.AdminEmail, Email = dataSettings.AdminEmail }, dataSettings.AdminPassword);
+                adminUser = await membershipService.GetUserByEmail(dataSettings.AdminEmail);
 
                 // TODO: This doesn't work. Gets error like "No owin.Environment item was found in the context."
                 //// Confirm User
-                //string token = membershipService.GenerateEmailConfirmationToken(adminUser.Id);
-                //membershipService.ConfirmEmail(adminUser.Id, token);
+                //string token = await membershipService.GenerateEmailConfirmationToken(adminUser.Id);
+                //await membershipService.ConfirmEmail(adminUser.Id, token);
 
                 KoreRole administratorsRole = null;
                 if (adminUser != null)
                 {
-                    administratorsRole = membershipService.GetRoleByName(KoreWebConstants.Roles.Administrators);
+                    administratorsRole = await membershipService.GetRoleByName(KoreWebConstants.Roles.Administrators);
                     if (administratorsRole == null)
                     {
-                        membershipService.InsertRole(new KoreRole { Name = KoreWebConstants.Roles.Administrators });
-                        administratorsRole = membershipService.GetRoleByName(KoreWebConstants.Roles.Administrators);
-                        membershipService.AssignUserToRoles(adminUser.Id, new[] { administratorsRole.Id });
+                        await membershipService.InsertRole(new KoreRole { Name = KoreWebConstants.Roles.Administrators });
+                        administratorsRole = await membershipService.GetRoleByName(KoreWebConstants.Roles.Administrators);
+                        await membershipService.AssignUserToRoles(adminUser.Id, new[] { administratorsRole.Id });
                     }
                 }
 
                 if (membershipService.SupportsRolePermissions && administratorsRole != null)
                 {
-                    var fullAccessPermission = membershipService.GetPermissionByName(StandardPermissions.FullAccess.Name);
-                    membershipService.AssignPermissionsToRole(administratorsRole.Id, new[] { fullAccessPermission.Id });
+                    var fullAccessPermission = await membershipService.GetPermissionByName(StandardPermissions.FullAccess.Name);
+                    await membershipService.AssignPermissionsToRole(administratorsRole.Id, new[] { fullAccessPermission.Id });
                 }
 
                 dataSettings.AdminPassword = null;

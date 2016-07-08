@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
 using Kore.Caching;
-using Kore.Collections;
+using Kore.EntityFramework.Data;
 using Kore.Localization.Domain;
 using Kore.Localization.Models;
 using Kore.Localization.Services;
@@ -39,7 +40,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
 
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         [HttpGet]
-        public virtual IHttpActionResult GetComparitiveTable([FromODataUri] string cultureCode, ODataQueryOptions<ComparitiveLocalizableString> options)
+        public virtual async Task<IHttpActionResult> GetComparitiveTable([FromODataUri] string cultureCode, ODataQueryOptions<ComparitiveLocalizableString> options)
         {
             if (!CheckPermission(ReadPermission))
             {
@@ -63,14 +64,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
                                     : grp.Where(x => x.CultureCode == cultureCode).FirstOrDefault().TextValue
                             });
 
-                    var results = (options.ApplyTo(query) as IQueryable<ComparitiveLocalizableString>).ToHashSet();
+                    var results = await (options.ApplyTo(query) as IQueryable<ComparitiveLocalizableString>).ToHashSetAsync();
                     return Ok(results, results.GetType());
                 }
             }
         }
 
         [HttpPost]
-        public virtual IHttpActionResult PutComparitive(ODataActionParameters parameters)
+        public virtual async Task<IHttpActionResult> PutComparitive(ODataActionParameters parameters)
         {
             if (!CheckPermission(WritePermission))
             {
@@ -91,7 +92,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
                 return BadRequest();
             }
 
-            var localizedString = Service.FindOne(x => x.CultureCode == cultureCode && x.TextKey == key);
+            var localizedString = await Service.FindOneAsync(x => x.CultureCode == cultureCode && x.TextKey == key);
 
             if (localizedString == null)
             {
@@ -102,12 +103,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
                     TextKey = key,
                     TextValue = entity.LocalizedValue
                 };
-                Service.Insert(localizedString);
+                await Service.InsertAsync(localizedString);
             }
             else
             {
                 localizedString.TextValue = entity.LocalizedValue;
-                Service.Update(localizedString);
+                await Service.UpdateAsync(localizedString);
             }
 
             cacheManager.Remove(string.Concat("Kore_LocalizableStrings_", cultureCode));
@@ -116,7 +117,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
         }
 
         [HttpPost]
-        public virtual IHttpActionResult DeleteComparitive(ODataActionParameters parameters)
+        public virtual async Task<IHttpActionResult> DeleteComparitive(ODataActionParameters parameters)
         {
             if (!CheckPermission(WritePermission))
             {
@@ -126,14 +127,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
             string cultureCode = (string)parameters["cultureCode"];
             string key = (string)parameters["key"];
 
-            var entity = Service.FindOne(x => x.CultureCode == cultureCode && x.TextKey == key);
+            var entity = await Service.FindOneAsync(x => x.CultureCode == cultureCode && x.TextKey == key);
             if (entity == null)
             {
                 return NotFound();
             }
 
             entity.TextValue = null;
-            Service.Update(entity);
+            await Service.UpdateAsync(entity);
             //Repository.Delete(entity);
 
             cacheManager.Remove(string.Concat("Kore_LocalizableStrings_", cultureCode));

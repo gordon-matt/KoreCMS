@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
-using System.Web.Http.Results;
 using Kore.Caching;
-using Kore.Data;
-using Kore.Data.Services;
 using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Localization.Domain;
@@ -44,14 +41,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
         }
 
         [HttpPost]
-        public virtual IHttpActionResult ResetLocalizableStrings(ODataActionParameters parameters)
+        public virtual async Task<IHttpActionResult> ResetLocalizableStrings(ODataActionParameters parameters)
         {
             if (!CheckPermission(WritePermission))
             {
                 return Unauthorized();
             }
 
-            localizableStringService.Value.DeleteAll();
+            await localizableStringService.Value.DeleteAllAsync();
 
             var languagePacks = EngineContext.Current.ResolveAll<ILanguagePack>();
 
@@ -69,7 +66,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
                     });
                 }
             }
-            localizableStringService.Value.Insert(toInsert);
+            await localizableStringService.Value.InsertAsync(toInsert);
 
             cacheManager.Value.RemoveByPattern("Kore_LocalizableStrings_.*");
 

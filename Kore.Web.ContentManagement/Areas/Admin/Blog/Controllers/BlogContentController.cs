@@ -12,6 +12,7 @@ using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
 using System.Collections.Generic;
 using Kore.Exceptions;
+using System.Threading.Tasks;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
 {
@@ -41,10 +42,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
 
         [Compress]
         [Route("")]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             // If there are access restrictions
-            if (!PageSecurityHelper.CheckUserHasAccessToBlog(User))
+            if (!await PageSecurityHelper.CheckUserHasAccessToBlog(User))
             {
                 return new HttpUnauthorizedResult();
             }
@@ -65,30 +66,30 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 List<BlogPost> model = null;
                 using (var connection = postService.Value.OpenConnection())
                 {
-                    model = connection.Query()
+                    model = await connection.Query()
                         .Include(x => x.Category)
                         .Include(x => x.Tags)
                         .OrderByDescending(x => x.DateCreatedUtc)
                         .Skip((pageIndex - 1) * blogSettings.ItemsPerPage)
                         .Take(blogSettings.ItemsPerPage)
-                        .ToList();
+                        .ToListAsync();
                 }
 
-                return Posts(pageIndex, model);
+                return await Posts(pageIndex, model);
             }
         }
 
         [Compress]
         [Route("category/{categorySlug}")]
-        public ActionResult Category(string categorySlug)
+        public async Task<ActionResult> Category(string categorySlug)
         {
             // If there are access restrictions
-            if (!PageSecurityHelper.CheckUserHasAccessToBlog(User))
+            if (!await PageSecurityHelper.CheckUserHasAccessToBlog(User))
             {
                 return new HttpUnauthorizedResult();
             }
 
-            var category = categoryService.Value.FindOne(x => x.UrlSlug == categorySlug);
+            var category = await categoryService.Value.FindOneAsync(x => x.UrlSlug == categorySlug);
 
             if (category == null)
             {
@@ -110,29 +111,29 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 int pageIndex = string.IsNullOrEmpty(pageIndexParam)
                     ? 1
                     : Convert.ToInt32(pageIndexParam);
-                
+
                 List<BlogPost> model = null;
                 using (var connection = postService.Value.OpenConnection())
                 {
-                    model = connection.Query()
+                    model = await connection.Query()
                         .Include(x => x.Category)
                         .Include(x => x.Tags)
                         .Where(x => x.CategoryId == category.Id)
                         .OrderByDescending(x => x.DateCreatedUtc)
                         .Skip((pageIndex - 1) * blogSettings.ItemsPerPage)
                         .Take(blogSettings.ItemsPerPage)
-                        .ToList();
+                        .ToListAsync();
                 }
 
-                return Posts(pageIndex, model);
+                return await Posts(pageIndex, model);
             }
         }
 
         [Compress]
         [Route("tag/{tagSlug}")]
-        public ActionResult Tag(string tagSlug)
+        public async Task<ActionResult> Tag(string tagSlug)
         {
-            var tag = tagService.Value.FindOne(x => x.UrlSlug == tagSlug);
+            var tag = await tagService.Value.FindOneAsync(x => x.UrlSlug == tagSlug);
 
             if (tag == null)
             {
@@ -154,43 +155,39 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 int pageIndex = string.IsNullOrEmpty(pageIndexParam)
                     ? 1
                     : Convert.ToInt32(pageIndexParam);
-                
+
                 List<BlogPost> model = null;
                 using (var connection = postService.Value.OpenConnection())
                 {
-                    model = connection.Query()
+                    model = await connection.Query()
                         .Include(x => x.Category)
                         .Include(x => x.Tags)
                         .Where(x => x.Tags.Any(y => y.TagId == tag.Id))
                         .OrderByDescending(x => x.DateCreatedUtc)
                         .Skip((pageIndex - 1) * blogSettings.ItemsPerPage)
                         .Take(blogSettings.ItemsPerPage)
-                        .ToList();
+                        .ToListAsync();
                 }
 
-                return Posts(pageIndex, model);
+                return await Posts(pageIndex, model);
             }
         }
 
-        private ActionResult Posts(int pageIndex, IEnumerable<BlogPost> model)
+        private async Task<ActionResult> Posts(int pageIndex, IEnumerable<BlogPost> model)
         {
             bool isChildAction = ControllerContext.IsChildAction;
             ViewBag.IsChildAction = isChildAction;
 
-            var userNames = model
-                .Select(x => x.UserId)
-                .Distinct()
-                .ToDictionary(
-                    k => k,
-                    v => membershipService.Value.GetUserById(v).UserName);
+            var userIds = model.Select(x => x.UserId).Distinct();
+            var userNames = (await membershipService.Value.GetUsers(x => userIds.Contains(x.Id))).ToDictionary(k => k.Id, v => v.UserName);
 
-            int total = postService.Value.Count();
+            int total = await postService.Value.CountAsync();
 
             ViewBag.PageCount = (int)Math.Ceiling((double)total / blogSettings.ItemsPerPage);
             ViewBag.PageIndex = pageIndex;
             ViewBag.UserNames = userNames;
 
-            var tags = tagService.Value.Find();
+            var tags = await tagService.Value.FindAsync();
             ViewBag.Tags = tags.ToDictionary(k => k.Id, v => v.Name);
             ViewBag.TagUrls = tags.ToDictionary(k => k.Id, v => v.UrlSlug);
 
@@ -241,10 +238,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
 
         [Compress]
         [Route("{slug}")]
-        public ActionResult Details(string slug)
+        public async Task<ActionResult> Details(string slug)
         {
             // If there are access restrictions
-            if (!PageSecurityHelper.CheckUserHasAccessToBlog(User))
+            if (!await PageSecurityHelper.CheckUserHasAccessToBlog(User))
             {
                 return new HttpUnauthorizedResult();
             }
@@ -254,31 +251,31 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
             DateTime? nextEntryDate = null;
             using (var connection = postService.Value.OpenConnection())
             {
-                model = connection
+                model = await connection
                     .Query(x => x.Slug == slug)
                     .Include(x => x.Category)
                     .Include(x => x.Tags)
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
 
                 if (model == null)
                 {
                     throw new KoreException("Blog post not found!");
                 }
 
-                bool hasPreviousEntry = connection.Query().Any(x => x.DateCreatedUtc < model.DateCreatedUtc);
+                bool hasPreviousEntry = await connection.Query().AnyAsync(x => x.DateCreatedUtc < model.DateCreatedUtc);
                 if (hasPreviousEntry)
                 {
-                    previousEntryDate = connection.Query(x => x.DateCreatedUtc < model.DateCreatedUtc)
+                    previousEntryDate = await connection.Query(x => x.DateCreatedUtc < model.DateCreatedUtc)
                         .Select(x => x.DateCreatedUtc)
-                        .Max();
+                        .MaxAsync();
                 }
 
-                bool hasNextEntry = connection.Query().Any(x => x.DateCreatedUtc > model.DateCreatedUtc);
+                bool hasNextEntry = await connection.Query().AnyAsync(x => x.DateCreatedUtc > model.DateCreatedUtc);
                 if (hasNextEntry)
                 {
-                    nextEntryDate = connection.Query(x => x.DateCreatedUtc > model.DateCreatedUtc)
+                    nextEntryDate = await connection.Query(x => x.DateCreatedUtc > model.DateCreatedUtc)
                         .Select(x => x.DateCreatedUtc)
-                        .Min();
+                        .MinAsync();
                 }
             }
 
@@ -286,16 +283,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
             WorkContext.Breadcrumbs.Add(model.Headline);
 
             ViewBag.PreviousEntrySlug = previousEntryDate.HasValue
-                ? postService.Value.FindOne(x => x.DateCreatedUtc == previousEntryDate).Slug
+                ? (await postService.Value.FindOneAsync(x => x.DateCreatedUtc == previousEntryDate)).Slug
                 : null;
 
             ViewBag.NextEntrySlug = nextEntryDate.HasValue
-                ? postService.Value.FindOne(x => x.DateCreatedUtc == nextEntryDate).Slug
+                ? (await postService.Value.FindOneAsync(x => x.DateCreatedUtc == nextEntryDate)).Slug
                 : null;
 
-            ViewBag.UserName = membershipService.Value.GetUserById(model.UserId).UserName;
+            ViewBag.UserName = (await membershipService.Value.GetUserById(model.UserId)).UserName;
 
-            var tags = tagService.Value.Find();
+            var tags = await tagService.Value.FindAsync();
             ViewBag.Tags = tags.ToDictionary(k => k.Id, v => v.Name);
             ViewBag.TagUrls = tags.ToDictionary(k => k.Id, v => v.UrlSlug);
 

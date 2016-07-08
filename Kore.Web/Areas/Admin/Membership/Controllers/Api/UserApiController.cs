@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
 using Castle.Core.Logging;
 using Kore.Collections;
+using Kore.EntityFramework.Data;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
+using Kore.Threading;
 using Kore.Web.Security.Membership;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -35,7 +38,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         }
 
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public virtual IEnumerable<KoreUser> Get(ODataQueryOptions<KoreUser> options)
+        public virtual async Task<IEnumerable<KoreUser>> Get(ODataQueryOptions<KoreUser> options)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
@@ -49,21 +52,21 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             options.Validate(settings);
 
             var results = options.ApplyTo(Service.GetAllUsersAsQueryable());
-            return (results as IQueryable<KoreUser>).ToHashSet();
+            return await (results as IQueryable<KoreUser>).ToHashSetAsync();
         }
 
         [EnableQuery]
-        public virtual SingleResult<KoreUser> Get([FromODataUri] string key)
+        public virtual async Task<SingleResult<KoreUser>> Get([FromODataUri] string key)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
                 return SingleResult.Create(Enumerable.Empty<KoreUser>().AsQueryable());
             }
-            var entity = Service.GetUserById(key);
+            var entity = await Service.GetUserById(key);
             return SingleResult.Create(new[] { entity }.AsQueryable());
         }
 
-        public virtual IHttpActionResult Put([FromODataUri] string key, KoreUser entity)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] string key, KoreUser entity)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
@@ -82,7 +85,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
 
             try
             {
-                Service.UpdateUser(entity);
+                await Service.UpdateUser(entity);
             }
             catch (DbUpdateConcurrencyException x)
             {
@@ -98,7 +101,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             return Updated(entity);
         }
 
-        public virtual IHttpActionResult Post(KoreUser entity)
+        public virtual async Task<IHttpActionResult> Post(KoreUser entity)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
@@ -114,13 +117,13 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
                 membershipSettings.Value.GeneratedPasswordLength,
                 membershipSettings.Value.GeneratedPasswordNumberOfNonAlphanumericChars);
 
-            Service.InsertUser(entity, password);
+            await Service.InsertUser(entity, password);
 
             return Created(entity);
         }
 
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual IHttpActionResult Patch([FromODataUri] string key, Delta<KoreUser> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] string key, Delta<KoreUser> patch)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
@@ -132,7 +135,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            KoreUser entity = Service.GetUserById(key);
+            KoreUser entity = await Service.GetUserById(key);
             if (entity == null)
             {
                 return NotFound();
@@ -142,7 +145,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
 
             try
             {
-                Service.UpdateUser(entity);
+                await Service.UpdateUser(entity);
             }
             catch (DbUpdateConcurrencyException x)
             {
@@ -158,32 +161,32 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             return Updated(entity);
         }
 
-        public virtual IHttpActionResult Delete([FromODataUri] string key)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] string key)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
                 return Unauthorized();
             }
 
-            KoreUser entity = Service.GetUserById(key);
+            KoreUser entity = await Service.GetUserById(key);
             if (entity == null)
             {
                 return NotFound();
             }
 
-            Service.DeleteUser(key);
+            await Service.DeleteUser(key);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         protected virtual bool EntityExists(string key)
         {
-            return Service.GetUserById(key) != null;
+            return AsyncHelper.RunSync(() => Service.GetUserById(key)) != null;
         }
 
         //[EnableQuery]
         [HttpPost]
-        public virtual IEnumerable<KoreUser> GetUsersInRole(ODataQueryOptions<KoreUser> options, ODataActionParameters parameters)
+        public virtual async Task<IEnumerable<KoreUser>> GetUsersInRole(ODataQueryOptions<KoreUser> options, ODataActionParameters parameters)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
@@ -197,12 +200,12 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             };
             options.Validate(settings);
 
-            var results = options.ApplyTo(Service.GetUsersByRoleId(roleId).AsQueryable());
+            var results = options.ApplyTo((await Service.GetUsersByRoleId(roleId)).AsQueryable());
             return (results as IQueryable<KoreUser>).ToHashSet();
         }
 
         [HttpPost]
-        public virtual IHttpActionResult AssignUserToRoles(ODataActionParameters parameters)
+        public virtual async Task<IHttpActionResult> AssignUserToRoles(ODataActionParameters parameters)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
@@ -212,13 +215,13 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             string userId = (string)parameters["userId"];
             var roleIds = (IEnumerable<string>)parameters["roles"];
 
-            Service.AssignUserToRoles(userId, roleIds);
+            await Service.AssignUserToRoles(userId, roleIds);
 
             return Ok();
         }
 
         [HttpPost]
-        public virtual IHttpActionResult ChangePassword(ODataActionParameters parameters)
+        public virtual async Task<IHttpActionResult> ChangePassword(ODataActionParameters parameters)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
@@ -228,7 +231,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             string userId = (string)parameters["userId"];
             string password = (string)parameters["password"];
 
-            Service.ChangePassword(userId, password);
+            await Service.ChangePassword(userId, password);
 
             return Ok();
         }

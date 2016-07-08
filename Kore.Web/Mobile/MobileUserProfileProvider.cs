@@ -2,6 +2,7 @@
 using Kore.ComponentModel;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
+using Kore.Threading;
 using Kore.Web.Security.Membership;
 
 namespace Kore.Web.Mobile
@@ -49,7 +50,7 @@ namespace Kore.Web.Mobile
         public void PopulateFields(string userId)
         {
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
-            string dontUseMobileVersion = membershipService.GetProfileEntry(userId, Fields.DontUseMobileVersion);
+            string dontUseMobileVersion = AsyncHelper.RunSync(() => membershipService.GetProfileEntry(userId, Fields.DontUseMobileVersion));
             DontUseMobileVersion = !string.IsNullOrEmpty(dontUseMobileVersion) && bool.Parse(dontUseMobileVersion);
         }
 

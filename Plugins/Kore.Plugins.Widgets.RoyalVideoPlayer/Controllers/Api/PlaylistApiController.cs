@@ -1,14 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
-using System.Web.Http.Results;
 using Kore.Plugins.Widgets.RoyalVideoPlayer.Data.Domain;
 using Kore.Plugins.Widgets.RoyalVideoPlayer.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
-using System.Collections.Generic;
 
 namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
 {
@@ -47,7 +47,7 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
         }
 
         [HttpPost]
-        public virtual IHttpActionResult GetPlaylistsForVideo(ODataActionParameters parameters)
+        public virtual async Task<IHttpActionResult> GetPlaylistsForVideo(ODataActionParameters parameters)
         {
             if (!CheckPermission(WritePermission))
             {
@@ -66,10 +66,10 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
             List<int> playlistIds = null;
             using (var connection = playlistVideoService.Value.OpenConnection())
             {
-                playlistIds = connection
+                playlistIds = await connection
                     .Query(x => x.VideoId == videoId)
                     .Select(x => x.PlaylistId)
-                    .ToList();
+                    .ToListAsync();
             }
 
             return Ok(playlistIds);

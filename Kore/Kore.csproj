@@ -328,6 +328,7 @@
     <Compile Include="Tenants\Services\ITenantService.cs" />
     <Compile Include="Tenants\TenantExtensions.cs" />
     <Compile Include="Text\StringBuilderExtensions.cs" />
+    <Compile Include="Threading\AsyncHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

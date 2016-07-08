@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using System.Web.Http.Results;
@@ -10,9 +11,9 @@ using System.Web.OData;
 using System.Web.OData.Query;
 using Castle.Core.Logging;
 using Kore.Caching;
-using Kore.Collections;
 using Kore.Data;
 using Kore.Data.Services;
+using Kore.EntityFramework.Data;
 using Kore.Infrastructure;
 using Kore.Logging;
 using Kore.Web.Security.Membership.Permissions;
@@ -21,9 +22,15 @@ namespace Kore.Web.Http.OData
 {
     public abstract class GenericODataController<TEntity, TKey> : ODataController where TEntity : class
     {
+        #region Non-Public Properties
+
         protected IGenericDataService<TEntity> Service { get; private set; }
 
         protected ILogger Logger { get; private set; }
+
+        #endregion Non-Public Properties
+
+        #region Constructor
 
         public GenericODataController(IGenericDataService<TEntity> service)
         {
@@ -38,9 +45,13 @@ namespace Kore.Web.Http.OData
             this.Logger = LoggingUtilities.Resolve();
         }
 
+        #endregion Constructor
+
+        #region Public Methods
+
         // GET: odata/<Entity>
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public virtual IEnumerable<TEntity> Get(ODataQueryOptions<TEntity> options)
+        public virtual async Task<IEnumerable<TEntity>> Get(ODataQueryOptions<TEntity> options)
         {
             if (!CheckPermission(ReadPermission))
             {
@@ -55,24 +66,24 @@ namespace Kore.Web.Http.OData
             using (var connection = Service.OpenConnection())
             {
                 var results = options.ApplyTo(connection.Query());
-                return (results as IQueryable<TEntity>).ToHashSet();
+                return await (results as IQueryable<TEntity>).ToHashSetAsync();
             }
         }
 
         // GET: odata/<Entity>(5)
         [EnableQuery]
-        public virtual SingleResult<TEntity> Get([FromODataUri] TKey key)
+        public virtual async Task<SingleResult<TEntity>> Get([FromODataUri] TKey key)
         {
             if (!CheckPermission(ReadPermission))
             {
                 return SingleResult.Create(Enumerable.Empty<TEntity>().AsQueryable());
             }
-            var entity = Service.FindOne(key);
+            var entity = await Service.FindOneAsync(key);
             return SingleResult.Create(new[] { entity }.AsQueryable());
         }
 
         // PUT: odata/<Entity>(5)
-        public virtual IHttpActionResult Put([FromODataUri] TKey key, TEntity entity)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] TKey key, TEntity entity)
         {
             if (!CheckPermission(WritePermission))
             {
@@ -92,7 +103,7 @@ namespace Kore.Web.Http.OData
             try
             {
                 OnBeforeSave(entity);
-                Service.Update(entity);
+                await Service.UpdateAsync(entity);
                 OnAfterSave(entity);
             }
             catch (DbUpdateConcurrencyException x)
@@ -110,7 +121,7 @@ namespace Kore.Web.Http.OData
         }
 
         // POST: odata/<Entity>
-        public virtual IHttpActionResult Post(TEntity entity)
+        public virtual async Task<IHttpActionResult> Post(TEntity entity)
         {
             if (!CheckPermission(WritePermission))
             {
@@ -125,7 +136,7 @@ namespace Kore.Web.Http.OData
             SetNewId(entity);
 
             OnBeforeSave(entity);
-            Service.Insert(entity);
+            await Service.InsertAsync(entity);
             OnAfterSave(entity);
 
             return Created(entity);
@@ -133,7 +144,7 @@ namespace Kore.Web.Http.OData
 
         // PATCH: odata/<Entity>(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual IHttpActionResult Patch([FromODataUri] TKey key, Delta<TEntity> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] TKey key, Delta<TEntity> patch)
         {
             if (!CheckPermission(WritePermission))
             {
@@ -145,7 +156,7 @@ namespace Kore.Web.Http.OData
                 return BadRequest(ModelState);
             }
 
-            TEntity entity = Service.FindOne(key);
+            TEntity entity = await Service.FindOneAsync(key);
             if (entity == null)
             {
                 return NotFound();
@@ -155,7 +166,7 @@ namespace Kore.Web.Http.OData
 
             try
             {
-                Service.Update(entity);
+                await Service.UpdateAsync(entity);
                 //db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException x)
@@ -173,23 +184,27 @@ namespace Kore.Web.Http.OData
         }
 
         // DELETE: odata/<Entity>(5)
-        public virtual IHttpActionResult Delete([FromODataUri] TKey key)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] TKey key)
         {
             if (!CheckPermission(WritePermission))
             {
                 return Unauthorized();
             }
 
-            TEntity entity = Service.FindOne(key);
+            TEntity entity = await Service.FindOneAsync(key);
             if (entity == null)
             {
                 return NotFound();
             }
 
-            Service.Delete(entity);
+            await Service.DeleteAsync(entity);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
+
+        #endregion Public Methods
+
+        #region Non-Public Methods
 
         protected virtual bool EntityExists(TKey key)
         {
@@ -228,11 +243,12 @@ namespace Kore.Web.Http.OData
 
         protected abstract Permission WritePermission { get; }
 
-
         protected virtual IHttpActionResult Ok(object content, Type type)
         {
             var resultType = typeof(OkNegotiatedContentResult<>).MakeGenericType(type);
             return Activator.CreateInstance(resultType, content, this) as IHttpActionResult;
         }
+
+        #endregion Non-Public Methods
     }
 }

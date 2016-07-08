@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Threading.Tasks;
+using System.Web.Mvc;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
 using Kore.Web.Security.Membership.Permissions;
@@ -16,7 +17,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(StandardPermissions.FullAccess))
+            if (! CheckPermission(StandardPermissions.FullAccess))
             {
                 return new HttpUnauthorizedResult();
             }

@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
-using System.Web.Http.Results;
+using System.Web.OData.Query;
 using Kore.Collections;
+using Kore.EntityFramework.Data;
 using Kore.Plugins.Widgets.RoyalVideoPlayer.Data.Domain;
 using Kore.Plugins.Widgets.RoyalVideoPlayer.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
-using System.Web.OData.Query;
 
 namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
 {
@@ -50,7 +51,7 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
 
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         [HttpGet]
-        public virtual IEnumerable<Video> GetVideosByPlaylistId([FromODataUri] int playlistId, ODataQueryOptions<Video> options)
+        public virtual async Task<IEnumerable<Video>> GetVideosByPlaylistId([FromODataUri] int playlistId, ODataQueryOptions<Video> options)
         {
             if (!CheckPermission(ReadPermission))
             {
@@ -60,9 +61,9 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
             List<int> videoIds = null;
             using (var connection = playlistVideoService.Value.OpenConnection())
             {
-                videoIds = connection.Query(x => x.PlaylistId == playlistId)
+                videoIds = await connection.Query(x => x.PlaylistId == playlistId)
                     .Select(x => x.VideoId)
-                    .ToList();
+                    .ToListAsync();
             }
 
             var settings = new ODataValidationSettings()
@@ -75,12 +76,12 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
             {
                 var query = connection.Query(x => videoIds.Contains(x.Id));
                 var results = options.ApplyTo(query);
-                return (results as IQueryable<Video>).ToHashSet();
+                return await (results as IQueryable<Video>).ToHashSetAsync();
             }
         }
 
         [HttpPost]
-        public virtual IHttpActionResult AssignVideoToPlaylists(ODataActionParameters parameters)
+        public virtual async Task<IHttpActionResult> AssignVideoToPlaylists(ODataActionParameters parameters)
         {
             if (!CheckPermission(WritePermission))
             {
@@ -95,7 +96,7 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
                 return BadRequest("playlists cannot be empty.");
             }
 
-            var video = Service.FindOne(videoId);
+            var video = await Service.FindOneAsync(videoId);
 
             if (video == null)
             {
@@ -104,11 +105,11 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
 
             // Delete any from DB that are not in the list of IDs provided
 
-            var toDelete = playlistVideoService.Value.Find(x =>
+            var toDelete = await playlistVideoService.Value.FindAsync(x =>
                 x.VideoId == videoId &&
                 !playlists.Contains(x.PlaylistId));
 
-            playlistVideoService.Value.Delete(toDelete);
+            await playlistVideoService.Value.DeleteAsync(toDelete);
 
             // Insert new entries from the list of IDs provided where those IDs are not already mapped.
 
@@ -117,16 +118,16 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
 
             using (var connection = playlistService.Value.OpenConnection())
             {
-                existingPlaylistIds = connection.Query(x => playlists.Contains(x.Id))
+                existingPlaylistIds = await connection.Query(x => playlists.Contains(x.Id))
                     .Select(x => x.Id)
-                    .ToList();
+                    .ToListAsync();
             }
 
             using (var connection = playlistVideoService.Value.OpenConnection())
             {
-                existingMappedIds = connection.Query(x => x.VideoId == videoId)
+                existingMappedIds = await connection.Query(x => x.VideoId == videoId)
                     .Select(x => x.PlaylistId)
-                    .ToList();
+                    .ToListAsync();
             }
 
             var toInsert = playlists
@@ -139,7 +140,7 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
                     VideoId = videoId
                 });
 
-            playlistVideoService.Value.Insert(toInsert);
+            await playlistVideoService.Value.InsertAsync(toInsert);
 
             return Ok();
         }

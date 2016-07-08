@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.OData;
 using System.Web.OData.Query;
 using Kore.Collections;
@@ -37,9 +38,9 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             return (results as IQueryable<PublicUserInfo>).ToHashSet();
         }
 
-        public virtual PublicUserInfo Get([FromODataUri] string key)
+        public virtual async Task<PublicUserInfo> Get([FromODataUri] string key)
         {
-            var entity = Service.GetUserById(key);
+            var entity = await Service.GetUserById(key);
             return new PublicUserInfo
             {
                 Id = entity.Id,

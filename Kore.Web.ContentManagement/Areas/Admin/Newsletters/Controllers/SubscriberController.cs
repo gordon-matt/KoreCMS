@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Kore.Collections;
 using Kore.Security.Membership;
@@ -9,7 +10,6 @@ using Kore.Web.Events;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
 using Kore.Web.Security.Membership;
-using Kore.Web.Security.Membership.Permissions;
 using Newtonsoft.Json.Linq;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
@@ -98,14 +98,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
 
         [Compress]
         [Route("download-csv")]
-        public FileContentResult DownloadCsv()
+        public async Task<FileContentResult> DownloadCsv()
         {
-            var userIds = membershipService.Value
-                .GetProfileEntriesByKeyAndValue(NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "true")
+            var userIds = (await membershipService.Value
+                .GetProfileEntriesByKeyAndValue(NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "true"))
                 .Select(x => x.UserId);
 
-            var users = membershipService.Value.GetUsers(x => userIds.Contains(x.Id))
-                .ToHashSet()
+            var users = (await membershipService.Value.GetUsers(x => userIds.Contains(x.Id)))
                 .Select(x => new
                 {
                     Email = x.Email,

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
-using System.Web.Http.Results;
 using Kore.Collections;
 using Kore.Localization;
 using Kore.Plugins.Maintenance.Watchdog.Data.Domain;
@@ -61,7 +60,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
 
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         [HttpGet]
-        public IHttpActionResult GetServices([FromODataUri] int watchdogInstanceId, ODataQueryOptions<ServiceInfoResult> options)
+        public async Task<IHttpActionResult> GetServices([FromODataUri] int watchdogInstanceId, ODataQueryOptions<ServiceInfoResult> options)
         {
             if (!CheckPermission(ReadPermission))
             {
@@ -73,12 +72,12 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
                 AllowedQueryOptions = AllowedQueryOptions.All
             });
 
-            var instance = Service.FindOne(watchdogInstanceId);
+            var instance = await Service.FindOneAsync(watchdogInstanceId);
 
             using (var client = new HttpClient())
             {
-                var response = client.GetAsync(instance.Url.TrimEnd('/') + "/api/WatchdogApi/GetWatchedServices?password=" + instance.Password).Result;
-                var content = response.Content.ReadAsStringAsync().Result;
+                var response = await client.GetAsync(instance.Url.TrimEnd('/') + "/api/WatchdogApi/GetWatchedServices?password=" + instance.Password);
+                var content = await response.Content.ReadAsStringAsync();
                 var watchedServices = JsonConvert.DeserializeObject<List<ServiceInfoResult>>(content);
 
                 if (settings.Value.OnlyShowWatched)
@@ -98,8 +97,8 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
                 }
                 else
                 {
-                    response = client.GetAsync(instance.Url.TrimEnd('/') + "/api/WatchdogApi/GetServices?password=" + instance.Password).Result;
-                    content = response.Content.ReadAsStringAsync().Result;
+                    response = await client.GetAsync(instance.Url.TrimEnd('/') + "/api/WatchdogApi/GetServices?password=" + instance.Password);
+                    content = await response.Content.ReadAsStringAsync();
                     var allServices = JsonConvert.DeserializeObject<List<ServiceInfoResult>>(content);
 
                     var watchedServiceNames = watchedServices.Select(x => x.ServiceName).ToHashSet();
@@ -121,7 +120,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
         }
 
         [HttpPost]
-        public ChangeStatusResult StopService(ODataActionParameters parameters)
+        public async Task<ChangeStatusResult> StopService(ODataActionParameters parameters)
         {
             if (!CheckPermission(WatchdogPermissions.StartStopServices))
             {
@@ -133,23 +132,23 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
 
             using (var client = new HttpClient())
             {
-                var watchdogInstance = Service.FindOne(watchdogInstanceId);
+                var watchdogInstance = await Service.FindOneAsync(watchdogInstanceId);
 
-                var response = client.GetAsync(string.Format(
+                var response = await client.GetAsync(string.Format(
                     urlFormat,
                     watchdogInstance.Url.TrimEnd('/'),
                     "Stop",
                     watchdogInstance.Password,
-                    serviceName)).Result;
+                    serviceName));
 
-                string content = response.Content.ReadAsStringAsync().Result;
+                string content = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<ChangeStatusResult>(content);
                 return result;
             }
         }
 
         [HttpPost]
-        public ChangeStatusResult StartService(ODataActionParameters parameters)
+        public async Task<ChangeStatusResult> StartService(ODataActionParameters parameters)
         {
             if (!CheckPermission(WatchdogPermissions.StartStopServices))
             {
@@ -161,22 +160,22 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
 
             using (var client = new HttpClient())
             {
-                var watchdogInstance = Service.FindOne(watchdogInstanceId);
+                var watchdogInstance = await Service.FindOneAsync(watchdogInstanceId);
 
-                var response = client.GetAsync(string.Format(
+                var response = await client.GetAsync(string.Format(
                     urlFormat,
                     watchdogInstance.Url.TrimEnd('/'),
                     "Start",
                     watchdogInstance.Password,
-                    serviceName)).Result;
+                    serviceName));
 
-                string content = response.Content.ReadAsStringAsync().Result;
+                string content = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<ChangeStatusResult>(content);
             }
         }
 
         [HttpPost]
-        public ChangeStatusResult RestartService(ODataActionParameters parameters)
+        public async Task<ChangeStatusResult> RestartService(ODataActionParameters parameters)
         {
             if (!CheckPermission(WatchdogPermissions.StartStopServices))
             {
@@ -188,22 +187,22 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
 
             using (var client = new HttpClient())
             {
-                var watchdogInstance = Service.FindOne(watchdogInstanceId);
+                var watchdogInstance = await Service.FindOneAsync(watchdogInstanceId);
 
-                var response = client.GetAsync(string.Format(
+                var response = await client.GetAsync(string.Format(
                     urlFormat,
                     watchdogInstance.Url.TrimEnd('/'),
                     "Restart",
                     watchdogInstance.Password,
-                    serviceName)).Result;
+                    serviceName));
 
-                string content = response.Content.ReadAsStringAsync().Result;
+                string content = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<ChangeStatusResult>(content);
             }
         }
 
         [HttpPost]
-        public IHttpActionResult AddService(ODataActionParameters parameters)
+        public async Task<IHttpActionResult> AddService(ODataActionParameters parameters)
         {
             if (!CheckPermission(WritePermission))
             {
@@ -215,21 +214,21 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
 
             using (var client = new HttpClient())
             {
-                var watchdogInstance = Service.FindOne(watchdogInstanceId);
+                var watchdogInstance = await Service.FindOneAsync(watchdogInstanceId);
 
-                var response = client.GetAsync(string.Format(
+                var response = await client.GetAsync(string.Format(
                     urlFormat,
                     watchdogInstance.Url.TrimEnd('/'),
                     "Add",
                     watchdogInstance.Password,
-                    serviceName)).Result;
+                    serviceName));
 
                 return Ok();
             }
         }
 
         [HttpPost]
-        public IHttpActionResult RemoveService(ODataActionParameters parameters)
+        public async Task<IHttpActionResult> RemoveService(ODataActionParameters parameters)
         {
             if (!CheckPermission(WritePermission))
             {
@@ -241,14 +240,14 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
 
             using (var client = new HttpClient())
             {
-                var watchdogInstance = Service.FindOne(watchdogInstanceId);
+                var watchdogInstance = await Service.FindOneAsync(watchdogInstanceId);
 
-                var response = client.GetAsync(string.Format(
+                var response = await client.GetAsync(string.Format(
                     urlFormat,
                     watchdogInstance.Url.TrimEnd('/'),
                     "Remove",
                     watchdogInstance.Password,
-                    serviceName)).Result;
+                    serviceName));
 
                 return Ok();
             }

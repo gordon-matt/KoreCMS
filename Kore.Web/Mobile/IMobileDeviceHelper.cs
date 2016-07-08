@@ -1,6 +1,7 @@
 using System.Web;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
+using Kore.Threading;
 using Kore.Web.Configuration;
 
 namespace Kore.Web.Mobile
@@ -106,7 +107,7 @@ namespace Kore.Web.Mobile
             }
 
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
-            string dontUseMobileVersion = membershipService.GetProfileEntry(_workContext.CurrentUser.Id, MobileUserProfileProvider.Fields.DontUseMobileVersion);
+            string dontUseMobileVersion = AsyncHelper.RunSync(() => membershipService.GetProfileEntry(_workContext.CurrentUser.Id, MobileUserProfileProvider.Fields.DontUseMobileVersion));
             return !string.IsNullOrEmpty(dontUseMobileVersion) && bool.Parse(dontUseMobileVersion);
             //return _workContext.CurrentCustomer.GetAttribute<bool>(SystemCustomerAttributeNames.DontUseMobileVersion, _tenantContext.CurrentStore.Id);
         }

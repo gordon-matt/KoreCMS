@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
 using Kore.Data;
@@ -24,23 +25,23 @@ namespace Kore.Plugins.Messaging.Forums.Controllers.Api
         {
         }
 
-        public override IHttpActionResult Post(ForumGroup entity)
+        public override async Task<IHttpActionResult> Post(ForumGroup entity)
         {
             entity.CreatedOnUtc = DateTime.UtcNow;
             entity.UpdatedOnUtc = DateTime.UtcNow;
-            return base.Post(entity);
+            return await base.Post(entity);
         }
 
-        public override IHttpActionResult Put([FromODataUri] int key, ForumGroup entity)
+        public override async Task<IHttpActionResult> Put([FromODataUri] int key, ForumGroup entity)
         {
             // Client does not send all fields, so we get existing and update only the fields that are sent from the client...
-            var originalEntity = Service.FindOne(key);
+            var originalEntity = await Service.FindOneAsync(key);
             originalEntity.Name = entity.Name;
             originalEntity.DisplayOrder = entity.DisplayOrder;
 
             // ... and we set this too.
             originalEntity.UpdatedOnUtc = DateTime.UtcNow;
-            return base.Put(key, originalEntity);
+            return await base.Put(key, originalEntity);
         }
 
         protected override Permission ReadPermission

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
 using Kore.Localization.Domain;
@@ -32,7 +33,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
         }
 
         [HttpGet]
-        public IHttpActionResult GetLocalized([FromODataUri] int id, [FromODataUri] string cultureCode)
+        public async Task<IHttpActionResult> GetLocalized([FromODataUri] int id, [FromODataUri] string cultureCode)
         {
             if (!CheckPermission(ReadPermission))
             {
@@ -44,7 +45,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
                 return BadRequest();
             }
 
-            var entity = Service.FindOne(id);
+            var entity = await Service.FindOneAsync(id);
 
             if (entity == null)
             {
@@ -54,7 +55,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
             string entityType = typeof(Region).FullName;
             string entityId = entity.Id.ToString();
 
-            var localizedRecord = localizablePropertyService.Value.FindOne(cultureCode, entityType, entityId, "Name");
+            var localizedRecord = await localizablePropertyService.Value.FindOneAsync(cultureCode, entityType, entityId, "Name");
             if (localizedRecord != null)
             {
                 entity.Name = localizedRecord.Value;
@@ -64,7 +65,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
         }
 
         [HttpPost]
-        public IHttpActionResult SaveLocalized(ODataActionParameters parameters)
+        public async Task<IHttpActionResult> SaveLocalized(ODataActionParameters parameters)
         {
             if (!CheckPermission(WritePermission))
             {
@@ -86,7 +87,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
             string entityType = typeof(Region).FullName;
             string entityId = entity.Id.ToString();
 
-            var localizedRecord = localizablePropertyService.Value.FindOne(cultureCode, entityType, entityId, "Name");
+            var localizedRecord = await localizablePropertyService.Value.FindOneAsync(cultureCode, entityType, entityId, "Name");
             if (localizedRecord == null)
             {
                 localizedRecord = new LocalizableProperty
@@ -97,13 +98,13 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
                     Property = "Name",
                     Value = entity.Name
                 };
-                localizablePropertyService.Value.Insert(localizedRecord);
+                await localizablePropertyService.Value.InsertAsync(localizedRecord);
                 return Ok();
             }
             else
             {
                 localizedRecord.Value = entity.Name;
-                localizablePropertyService.Value.Update(localizedRecord);
+                await localizablePropertyService.Value.UpdateAsync(localizedRecord);
                 return Ok();
             }
         }

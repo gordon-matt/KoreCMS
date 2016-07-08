@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Security.Principal;
+using System.Threading.Tasks;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.Blog;
@@ -10,7 +11,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 {
     public static class PageSecurityHelper
     {
-        public static bool CheckUserHasAccessToBlog(IPrincipal user)
+        public static async Task<bool> CheckUserHasAccessToBlog(IPrincipal user)
         {
             var blogSettings = EngineContext.Current.Resolve<BlogSettings>();
 
@@ -22,17 +23,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
                 if (!string.IsNullOrEmpty(roleIds))
                 {
                     var membershipService = EngineContext.Current.Resolve<IMembershipService>();
+                    var roles = await membershipService.GetRolesByIds(roleIds.Split(','));
 
-                    var roleNames = roleIds.Split(',')
-                        .Select(id =>
-                        {
-                            if (!string.IsNullOrEmpty(id))
-                            {
-                                var role = membershipService.GetRoleById(id);
-                                return role == null ? null : role.Name;
-                            }
-                            return null;
-                        })
+                    var roleNames = roles
+                        .Select(x => x.Name)
                         .Where(x => x != null)
                         .ToList();
 
@@ -46,7 +40,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
             return true;
         }
 
-        public static bool CheckUserHasAccessToPage(Page page, IPrincipal user)
+        public static async Task<bool> CheckUserHasAccessToPage(Page page, IPrincipal user)
         {
             if (!page.IsEnabled)
             {
@@ -61,17 +55,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
                 if (!string.IsNullOrEmpty(roleIds))
                 {
                     var membershipService = EngineContext.Current.Resolve<IMembershipService>();
+                    var roles = await membershipService.GetRolesByIds(roleIds.Split(','));
 
-                    var roleNames = roleIds.Split(',')
-                        .Select(id =>
-                        {
-                            if (!string.IsNullOrEmpty(id))
-                            {
-                                var role = membershipService.GetRoleById(id);
-                                return role == null ? null : role.Name;
-                            }
-                            return null;
-                        })
+                    var roleNames = roles
+                        .Select(x => x.Name)
                         .Where(x => x != null)
                         .ToList();
 

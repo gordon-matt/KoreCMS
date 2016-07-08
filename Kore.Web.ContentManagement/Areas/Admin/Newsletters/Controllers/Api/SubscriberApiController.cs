@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
-using Kore.Collections;
+using Kore.EntityFramework.Data;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web.Security.Membership;
@@ -27,15 +28,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
         }
 
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public IEnumerable<Subscriber> Get(ODataQueryOptions<Subscriber> options)
+        public async Task<IEnumerable<Subscriber>> Get(ODataQueryOptions<Subscriber> options)
         {
             if (!CheckPermission(CmsPermissions.NewsletterRead))
             {
                 return Enumerable.Empty<Subscriber>().AsQueryable();
             }
 
-            var userIds = membershipService
-                .GetProfileEntriesByKeyAndValue(NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "true")
+            var userIds = (await membershipService
+                .GetProfileEntriesByKeyAndValue(NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "true"))
                 .Select(x => x.UserId);
 
             var settings = new ODataValidationSettings()
@@ -44,30 +45,35 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
             };
             options.Validate(settings);
 
-            var query = membershipService.GetUsers(x => userIds.Contains(x.Id))
-                .ToHashSet()
-                .Select(x => new Subscriber
+            var users = await membershipService.GetUsers(x => userIds.Contains(x.Id));
+
+            var tasks = users
+                .Select(async x => new Subscriber
                 {
                     Id = x.Id,
                     Email = x.Email,
-                    Name = membershipService.GetUserDisplayName(x)
-                })
+                    Name = await membershipService.GetUserDisplayName(x)
+                });
+
+            var subscribers = await Task.WhenAll(tasks);
+
+            var query = subscribers
                 .OrderBy(x => x.Name)
                 .AsQueryable();
 
             var results = options.ApplyTo(query);
-            return (results as IQueryable<Subscriber>).ToHashSet();
+            return await (results as IQueryable<Subscriber>).ToHashSetAsync();
         }
 
         [EnableQuery]
-        public SingleResult<Subscriber> Get([FromODataUri] string key)
+        public async Task<SingleResult<Subscriber>> Get([FromODataUri] string key)
         {
             if (!CheckPermission(CmsPermissions.NewsletterRead))
             {
                 return SingleResult.Create(Enumerable.Empty<Subscriber>().AsQueryable());
             }
 
-            var entity = membershipService.GetUserById(key);
+            var entity = await membershipService.GetUserById(key);
             var subscriber = new Subscriber
             {
                 Id = entity.Id,
@@ -77,20 +83,20 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
             return SingleResult.Create(new[] { subscriber }.AsQueryable());
         }
 
-        public IHttpActionResult Delete([FromODataUri] string key)
+        public async Task<IHttpActionResult> Delete([FromODataUri] string key)
         {
             if (!CheckPermission(CmsPermissions.NewsletterWrite))
             {
                 return Unauthorized();
             }
 
-            var entity = membershipService.GetUserById(key);
+            var entity = await membershipService.GetUserById(key);
             if (entity == null)
             {
                 return NotFound();
             }
 
-            membershipService.SaveProfileEntry(key, NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "false");
+            await membershipService.SaveProfileEntry(key, NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "false");
 
             return StatusCode(HttpStatusCode.NoContent);
         }

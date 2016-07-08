@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.OData;
-using System.Web.Http.Results;
+using System.Web.OData.Query;
 using System.Xml.Serialization;
 using Kore.Collections;
 using Kore.Data;
@@ -16,7 +17,6 @@ using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Models;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
-using System.Web.OData.Query;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
 {
@@ -64,7 +64,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
 
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         [HttpGet]
-        public virtual IEnumerable<SitemapConfigModel> GetConfig(ODataQueryOptions<SitemapConfigModel> options)
+        public virtual async Task<IEnumerable<SitemapConfigModel>> GetConfig(ODataQueryOptions<SitemapConfigModel> options)
         {
             if (!CheckPermission(ReadPermission))
             {
@@ -77,7 +77,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
             });
 
             // First ensure that current pages are in the config
-            var config = Service.Find();
+            var config = await Service.FindAsync();
             var configPageIds = config.Select(x => x.PageId).ToHashSet();
             var pageVersions = pageVersionService.GetCurrentVersions(shownOnMenusOnly: false); // temp fix: since we don't support localized routes yet
             var pageVersionIds = pageVersions.Select(x => x.Id).ToHashSet();
@@ -87,7 +87,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
 
             if (pageVersionIdsToDelete.Any())
             {
-                Service.Delete(x => pageVersionIdsToDelete.Contains(x.PageId));
+                await Service.DeleteAsync(x => pageVersionIdsToDelete.Contains(x.PageId));
             }
 
             if (newPageVersionIds.Any())
@@ -101,9 +101,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
                         Priority = .5f
                     });
 
-                Service.Insert(toInsert);
+                await Service.InsertAsync(toInsert);
             }
-            config = Service.Find();
+            config = await Service.FindAsync();
 
             var collection = new HashSet<SitemapConfigModel>();
             foreach (var item in config)
@@ -123,7 +123,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
         }
 
         [HttpPost]
-        public virtual IHttpActionResult SetConfig(ODataActionParameters parameters)
+        public virtual async Task<IHttpActionResult> SetConfig(ODataActionParameters parameters)
         {
             if (!CheckPermission(WritePermission))
             {
@@ -139,7 +139,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            var entity = Service.FindOne(id);
+            var entity = await Service.FindOneAsync(id);
 
             if (entity == null)
             {
@@ -149,7 +149,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
             {
                 entity.ChangeFrequency = (ChangeFrequency)changeFrequency;
                 entity.Priority = priority;
-                Service.Update(entity);
+                await Service.UpdateAsync(entity);
 
                 return Updated(entity);
                 //return Updated(new SitemapConfigModel
@@ -163,24 +163,24 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
         }
 
         [HttpPost]
-        public virtual IHttpActionResult Generate(ODataActionParameters parameters)
+        public virtual async Task<IHttpActionResult> Generate(ODataActionParameters parameters)
         {
             if (!CheckPermission(WritePermission))
             {
                 return Unauthorized();
             }
 
-            var config = Service.Find();
+            var config = await Service.FindAsync();
             var file = new SitemapXmlFile();
 
-            var pageVersions = pageVersionService.Find();
+            var pageVersions = await pageVersionService.FindAsync();
 
             var urls = new HashSet<UrlElement>();
 
             List<string> cultures = null;
             using (var connection = languageService.Value.OpenConnection())
             {
-                cultures = connection.Query().Select(x => x.CultureCode).ToList();
+                cultures = await connection.Query().Select(x => x.CultureCode).ToListAsync();
             }
 
             string siteUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);

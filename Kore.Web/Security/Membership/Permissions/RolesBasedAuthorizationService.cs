@@ -5,18 +5,19 @@ using System.Security;
 using Kore.Collections;
 using Kore.Localization;
 using Kore.Security.Membership;
+using Kore.Threading;
 
 namespace Kore.Web.Security.Membership.Permissions
 {
     public class RolesBasedAuthorizationService : IAuthorizationService
     {
-        private readonly IMembershipService roleService;
+        private readonly IMembershipService membershipService;
         private static readonly string[] anonymousRole = new[] { "Anonymous" };
         private static readonly string[] authenticatedRole = new[] { "Authenticated" };
 
-        public RolesBasedAuthorizationService(IMembershipService roleService)
+        public RolesBasedAuthorizationService(IMembershipService membershipService)
         {
-            this.roleService = roleService;
+            this.membershipService = membershipService;
         }
 
         public Localizer T { get; set; }
@@ -53,7 +54,7 @@ namespace Kore.Web.Security.Membership.Permissions
                     }
                     else
                     {
-                        rolesToExamine = roleService.GetRolesForUser(context.User.Id).Select(x => x.Name).ToList();
+                        rolesToExamine = (AsyncHelper.RunSync(() => membershipService.GetRolesForUser(context.User.Id))).Select(x => x.Name).ToList();
                         if (!rolesToExamine.Contains(anonymousRole[0]))
                         {
                             rolesToExamine = rolesToExamine.Concat(authenticatedRole);
@@ -62,7 +63,8 @@ namespace Kore.Web.Security.Membership.Permissions
 
                     foreach (var role in rolesToExamine)
                     {
-                        foreach (var rolePermission in roleService.GetPermissionsForRole(role))
+                        var rolePermissions = AsyncHelper.RunSync(() => membershipService.GetPermissionsForRole(role));
+                        foreach (var rolePermission in rolePermissions)
                         {
                             string possessedName = rolePermission.Name;
                             if (grantingNames.Any(grantingName => String.Equals(possessedName, grantingName, StringComparison.OrdinalIgnoreCase)))

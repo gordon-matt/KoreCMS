@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
@@ -52,7 +53,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
         }
 
         [HttpPost]
-        public virtual EdmRegionSettings GetSettings(ODataActionParameters parameters)
+        public virtual async Task<EdmRegionSettings> GetSettings(ODataActionParameters parameters)
         {
             if (!CheckPermission(Permissions.RegionsRead))
             {
@@ -71,7 +72,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
 
             var settings = dictionary[settingsId];
 
-            var dataEntity = regionSettingsService.Value.FindOne(x =>
+            var dataEntity = await regionSettingsService.Value.FindOneAsync(x =>
                 x.RegionId == regionId &&
                 x.SettingsId == settingsId);
 
@@ -94,7 +95,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
         }
 
         [HttpPost]
-        public virtual IHttpActionResult SaveSettings(ODataActionParameters parameters)
+        public virtual async Task<IHttpActionResult> SaveSettings(ODataActionParameters parameters)
         {
             if (!CheckPermission(Permissions.RegionsWrite))
             {
@@ -121,7 +122,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
                 return this.BadRequest(string.Format("SettingsId, '{0}' is not recognized.", settingsId));
             }
 
-            var dataEntity = regionSettingsService.Value.FindOne(x =>
+            var dataEntity = await regionSettingsService.Value.FindOneAsync(x =>
                 x.RegionId == regionId &&
                 x.SettingsId == settingsId);
 
@@ -133,7 +134,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
                     RegionId = regionId,
                     Fields = fields
                 };
-                regionSettingsService.Value.Insert(dataEntity);
+                await regionSettingsService.Value.InsertAsync(dataEntity);
                 return Ok();
                 //TODO (currently throws error because of missing entity set on odata, basically we need to create
                 //      the separate Api Controller for it. A good idea might be to make this controller do that and make the
@@ -143,7 +144,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
             else
             {
                 dataEntity.Fields = fields;
-                regionSettingsService.Value.Update(dataEntity);
+                await regionSettingsService.Value.UpdateAsync(dataEntity);
                 return Ok();
                 //TODO (currently throws error because of missing entity set on odata, basically we need to create
                 //      the separate Api Controller for it. A good idea might be to make this controller do that and make the

@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Threading.Tasks;
+using System.Web.Mvc;
 using Kore.Security.Membership;
 using Kore.Web.Collections;
 using Kore.Web.Mvc;
@@ -31,7 +32,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers
         [Compress]
         [OutputCache(Duration = 86400, VaryByParam = "none")]
         [Route("")]
-        public virtual ActionResult Index()
+        public virtual async Task<ActionResult> Index()
         {
             if (!CheckPermissions())
             {
@@ -42,7 +43,8 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers
 
             ViewBag.Title = T(KoreWebLocalizableStrings.Membership.Title);
 
-            ViewBag.SelectList = membershipService.GetAllRoles().ToSelectList(v => v.Id.ToString(), t => t.Name, T(KoreWebLocalizableStrings.Membership.AllRolesSelectListOption));
+            ViewBag.SelectList = (await membershipService.GetAllRoles())
+                .ToSelectList(v => v.Id.ToString(), t => t.Name, T(KoreWebLocalizableStrings.Membership.AllRolesSelectListOption));
 
             return PartialView("Kore.Web.Areas.Admin.Membership.Views.Membership.Index");
         }

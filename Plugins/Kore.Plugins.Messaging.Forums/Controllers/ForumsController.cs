@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.ServiceModel.Syndication;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Kore.Exceptions;
-using Kore.Localization;
 using Kore.Plugins.Messaging.Forums.Data.Domain;
 using Kore.Plugins.Messaging.Forums.Extensions;
 using Kore.Plugins.Messaging.Forums.Models;
 using Kore.Plugins.Messaging.Forums.Services;
 using Kore.Security.Membership;
+using Kore.Threading;
 using Kore.Web;
 using Kore.Web.Common.Areas.Admin.Regions.Services;
 using Kore.Web.Configuration;
@@ -78,9 +79,9 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         #region Utilities
 
         [NonAction]
-        protected virtual ForumTopicRowModel PrepareForumTopicRowModel(ForumTopic topic)
+        protected virtual async Task<ForumTopicRowModel> PrepareForumTopicRowModel(ForumTopic topic)
         {
-            var user = membershipService.GetUserById(topic.UserId);
+            var user = await membershipService.GetUserById(topic.UserId);
 
             var topicModel = new ForumTopicRowModel
             {
@@ -95,10 +96,10 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 UserId = topic.UserId,
                 //AllowViewingProfiles = _customerSettings.AllowViewingProfiles, //TODO
                 AllowViewingProfiles = true,
-                UserName = membershipService.GetUserDisplayName(user)
+                UserName = await membershipService.GetUserDisplayName(user)
             };
 
-            var posts = forumService.GetAllPosts(topic.Id, null, string.Empty, 1, forumSettings.PostsPageSize);
+            var posts = await forumService.GetAllPosts(topic.Id, null, string.Empty, 1, forumSettings.PostsPageSize);
             topicModel.TotalPostPages = posts.ItemCount;
 
             return topicModel;
@@ -121,7 +122,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         }
 
         [NonAction]
-        protected virtual ForumGroupModel PrepareForumGroupModel(ForumGroup forumGroup)
+        protected virtual async Task<ForumGroupModel> PrepareForumGroupModel(ForumGroup forumGroup)
         {
             var forumGroupModel = new ForumGroupModel
             {
@@ -129,7 +130,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 Name = forumGroup.Name,
                 SeName = forumGroup.GetSeName(),
             };
-            var forums = forumService.GetAllForumsByGroupId(forumGroup.Id);
+            var forums = await forumService.GetAllForumsByGroupId(forumGroup.Id);
             foreach (var forum in forums)
             {
                 var forumModel = PrepareForumRowModel(forum);
@@ -165,18 +166,18 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         }
 
         [NonAction]
-        protected virtual IEnumerable<SelectListItem> ForumGroupsForumsList()
+        protected virtual async Task<IEnumerable<SelectListItem>> ForumGroupsForumsList()
         {
             var forumsSelectList = new List<SelectListItem>();
             var separator = "--";
-            var groups = forumService.GetAllForumGroups();
+            var groups = await forumService.GetAllForumGroups();
 
             foreach (var group in groups)
             {
                 // Add the forum group with Value of 0 so it won't be used as a target forum
                 forumsSelectList.Add(new SelectListItem { Text = group.Name, Value = "0" });
 
-                var forums = forumService.GetAllForumsByGroupId(group.Id);
+                var forums = await forumService.GetAllForumsByGroupId(group.Id);
                 foreach (var f in forums)
                 {
                     forumsSelectList.Add(new SelectListItem { Text = string.Format("{0}{1}", separator, f.Name), Value = f.Id.ToString() });
@@ -187,9 +188,9 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         }
 
         [NonAction]
-        private bool IsForumModerator(KoreUser user)
+        private async Task<bool> IsForumModerator(KoreUser user)
         {
-            var roles = membershipService.GetRolesForUser(user.Id);
+            var roles = await membershipService.GetRolesForUser(user.Id);
             return roles.Any(x => x.Name == Constants.Roles.ForumModerators);
         }
 
@@ -198,19 +199,19 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         #region Methods
 
         [Route("")]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             if (!forumSettings.ForumsEnabled)
             {
                 return RedirectToHomePage();
             }
 
-            var groups = forumService.GetAllForumGroups();
+            var groups = await forumService.GetAllForumGroups();
 
             var model = new IndexModel();
             foreach (var group in groups)
             {
-                var groupModel = PrepareForumGroupModel(group);
+                var groupModel = await PrepareForumGroupModel(group);
                 model.ForumGroups.Add(groupModel);
             }
             return View(model);
@@ -218,7 +219,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
         [Route("active-discussions")]
         [Route("active-discussions/{forumId}/{page}")]
-        public ActionResult ActiveDiscussions(int forumId = 0, int page = 1)
+        public async Task<ActionResult> ActiveDiscussions(int forumId = 0, int page = 1)
         {
             if (!forumSettings.ForumsEnabled)
             {
@@ -226,7 +227,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             }
 
             int pageSize = forumSettings.ActiveDiscussionsPageSize > 0 ? forumSettings.ActiveDiscussionsPageSize : 50;
-            var topics = forumService.GetActiveTopics(forumId, (page - 1), pageSize);
+            var topics = await forumService.GetActiveTopics(forumId, (page - 1), pageSize);
 
             var model = new ActiveDiscussionsModel
             {
@@ -240,7 +241,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
             foreach (var topic in topics)
             {
-                var topicModel = PrepareForumTopicRowModel(topic);
+                var topicModel = await PrepareForumTopicRowModel(topic);
                 model.ForumTopics.Add(topicModel);
             }
 
@@ -256,7 +257,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 return RedirectToHomePage();
             }
 
-            var topics = forumService.GetActiveTopics(0, 0, forumSettings.HomePageActiveDiscussionsTopicCount);
+            var topics = AsyncHelper.RunSync(() => forumService.GetActiveTopics(0, 0, forumSettings.HomePageActiveDiscussionsTopicCount));
             if (topics.Count == 0)
             {
                 return Content(string.Empty);
@@ -271,7 +272,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
             foreach (var topic in topics)
             {
-                var topicModel = PrepareForumTopicRowModel(topic);
+                var topicModel = AsyncHelper.RunSync(() => PrepareForumTopicRowModel(topic));
                 model.ForumTopics.Add(topicModel);
             }
 
@@ -280,7 +281,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
         [Route("active-discussions/rss")]
         [Route("active-discussions/rss/{forumId}")]
-        public ActionResult ActiveDiscussionsRss(int forumId = 0)
+        public async Task<ActionResult> ActiveDiscussionsRss(int forumId = 0)
         {
             if (!forumSettings.ForumsEnabled)
             {
@@ -292,7 +293,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 return RedirectToAction("Index");
             }
 
-            var topics = forumService.GetActiveTopics(forumId, 0, forumSettings.ActiveDiscussionsFeedCount);
+            var topics = await forumService.GetActiveTopics(forumId, 0, forumSettings.ActiveDiscussionsFeedCount);
             string url = Url.Action("ActiveDiscussionsRSS", "Forums", null, "http");
 
             string feedTitle = T(LocalizableStrings.ActiveDiscussionsFeedTitle);
@@ -333,39 +334,39 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         }
 
         [Route("forum-group/{id}/{slug}")]
-        public ActionResult ForumGroup(int id)
+        public async Task<ActionResult> ForumGroup(int id)
         {
             if (!forumSettings.ForumsEnabled)
             {
                 return RedirectToHomePage();
             }
 
-            var group = forumService.GetForumGroupById(id);
+            var group = await forumService.GetForumGroupById(id);
 
             if (group == null)
             {
                 return RedirectToAction("Index");
             }
 
-            var model = PrepareForumGroupModel(group);
+            var model = await PrepareForumGroupModel(group);
             return View(model);
         }
 
         [Route("forum/{id}/{slug}")]
         [Route("forum/{id}/{slug}/page/{page}")]
-        public ActionResult Forum(int id, int page = 1)
+        public async Task<ActionResult> Forum(int id, int page = 1)
         {
             if (!forumSettings.ForumsEnabled)
             {
                 return RedirectToHomePage();
             }
 
-            var forum = forumService.GetForumById(id);
+            var forum = await forumService.GetForumById(id);
 
             if (forum != null)
             {
                 int pageSize = forumSettings.TopicsPageSize > 0 ? forumSettings.TopicsPageSize : 10;
-                var topics = forumService.GetAllTopics(forum.Id, null, string.Empty, ForumSearchType.All, 0, (page - 1), pageSize);
+                var topics = await forumService.GetAllTopics(forum.Id, null, string.Empty, ForumSearchType.All, 0, (page - 1), pageSize);
 
                 var model = new ForumPageModel
                 {
@@ -376,23 +377,23 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                     TopicPageSize = topics.PageSize,
                     TopicTotalRecords = topics.ItemCount,
                     TopicPageIndex = topics.PageIndex,
-                    IsUserAllowedToSubscribe = forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser),
+                    IsUserAllowedToSubscribe = await forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser),
                     ForumFeedsEnabled = forumSettings.ForumFeedsEnabled,
                     PostsPageSize = forumSettings.PostsPageSize
                 };
 
                 foreach (var topic in topics)
                 {
-                    var topicModel = PrepareForumTopicRowModel(topic);
+                    var topicModel = await PrepareForumTopicRowModel(topic);
                     model.ForumTopics.Add(topicModel);
                 }
 
                 //subscription
-                if (forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser))
+                if (await forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser))
                 {
                     model.WatchForumText = T(LocalizableStrings.WatchForum);
 
-                    var forumSubscription = forumService.GetAllSubscriptions(WorkContext.CurrentUser.Id, forum.Id, 0, 0, 1).FirstOrDefault();
+                    var forumSubscription = (await forumService.GetAllSubscriptions(WorkContext.CurrentUser.Id, forum.Id, 0, 0, 1)).FirstOrDefault();
                     if (forumSubscription != null)
                     {
                         model.WatchForumText = T(LocalizableStrings.UnwatchForum);
@@ -406,7 +407,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         }
 
         [Route("forum/rss/{id}")]
-        public ActionResult ForumRss(int id)
+        public async Task<ActionResult> ForumRss(int id)
         {
             if (!forumSettings.ForumsEnabled)
             {
@@ -419,12 +420,12 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             }
 
             int topicLimit = forumSettings.ForumFeedCount;
-            var forum = forumService.GetForumById(id);
+            var forum = await forumService.GetForumById(id);
 
             if (forum != null)
             {
                 //Order by newest topic posts & limit the number of topics to return
-                var topics = forumService.GetAllTopics(forum.Id, null, string.Empty, ForumSearchType.All, 0, 0, topicLimit);
+                var topics = await forumService.GetAllTopics(forum.Id, null, string.Empty, ForumSearchType.All, 0, 0, topicLimit);
 
                 string url = Url.Action("ForumRSS", "Forums", new { id = forum.Id }, "http");
 
@@ -472,25 +473,25 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
         [HttpPost]
         [Route("forum/watch/{id}")]
-        public ActionResult ForumWatch(int id)
+        public async Task<ActionResult> ForumWatch(int id)
         {
             string watchTopic = T(LocalizableStrings.WatchForum);
             string unwatchTopic = T(LocalizableStrings.UnwatchForum);
             string returnText = watchTopic;
 
-            var forum = forumService.GetForumById(id);
+            var forum = await forumService.GetForumById(id);
             if (forum == null)
             {
                 return Json(new { Subscribed = false, Text = returnText, Error = true });
             }
 
-            if (!forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser))
+            if (!await forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser))
             {
                 return Json(new { Subscribed = false, Text = returnText, Error = true });
             }
 
-            var subscription = forumService
-                .GetAllSubscriptions(WorkContext.CurrentUser.Id, forum.Id, 0, 0, 1)
+            var subscription = (await forumService
+                .GetAllSubscriptions(WorkContext.CurrentUser.Id, forum.Id, 0, 0, 1))
                 .FirstOrDefault();
 
             bool subscribed;
@@ -503,13 +504,13 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                     ForumId = forum.Id,
                     CreatedOnUtc = DateTime.UtcNow
                 };
-                forumService.InsertSubscription(subscription);
+                await forumService.InsertSubscription(subscription);
                 subscribed = true;
                 returnText = unwatchTopic;
             }
             else
             {
-                forumService.DeleteSubscription(subscription);
+                await forumService.DeleteSubscription(subscription);
                 subscribed = false;
             }
 
@@ -518,19 +519,19 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
         [Route("topic/{id}/{slug}")]
         [Route("topic/{id}/{slug}/page/{page}")]
-        public ActionResult Topic(int id, int page = 1)
+        public async Task<ActionResult> Topic(int id, int page = 1)
         {
             if (!forumSettings.ForumsEnabled)
             {
                 return RedirectToHomePage();
             }
 
-            var topic = forumService.GetTopicById(id);
+            var topic = await forumService.GetTopicById(id);
 
             if (topic != null)
             {
                 //load posts
-                var posts = forumService.GetAllPosts(topic.Id, null, string.Empty, page - 1, forumSettings.PostsPageSize);
+                var posts = await forumService.GetAllPosts(topic.Id, null, string.Empty, page - 1, forumSettings.PostsPageSize);
 
                 //if not posts loaded, redirect to the first page
                 if (posts.Count == 0 && page > 1)
@@ -540,7 +541,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
                 //update view count
                 topic.Views += 1;
-                forumService.UpdateTopic(topic);
+                await forumService.UpdateTopic(topic);
 
                 //prepare model
                 var model = new ForumTopicPageModel
@@ -548,10 +549,10 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                     Id = topic.Id,
                     Subject = topic.Subject,
                     SeName = topic.GetSeName(),
-                    IsUserAllowedToEditTopic = forumService.IsUserAllowedToEditTopic(WorkContext.CurrentUser, topic),
-                    IsUserAllowedToDeleteTopic = forumService.IsUserAllowedToDeleteTopic(WorkContext.CurrentUser, topic),
-                    IsUserAllowedToMoveTopic = forumService.IsUserAllowedToMoveTopic(WorkContext.CurrentUser, topic),
-                    IsUserAllowedToSubscribe = forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser),
+                    IsUserAllowedToEditTopic = await forumService.IsUserAllowedToEditTopic(WorkContext.CurrentUser, topic),
+                    IsUserAllowedToDeleteTopic = await forumService.IsUserAllowedToDeleteTopic(WorkContext.CurrentUser, topic),
+                    IsUserAllowedToMoveTopic = await forumService.IsUserAllowedToMoveTopic(WorkContext.CurrentUser, topic),
+                    IsUserAllowedToSubscribe = await forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser),
                     PostsPageIndex = posts.PageIndex,
                     PostsPageSize = posts.PageSize,
                     PostsTotalRecords = posts.ItemCount
@@ -561,8 +562,8 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 {
                     model.WatchTopicText = T(LocalizableStrings.WatchTopic);
 
-                    var forumTopicSubscription = forumService
-                        .GetAllSubscriptions(WorkContext.CurrentUser.Id, 0, topic.Id, 0, 1)
+                    var forumTopicSubscription = (await forumService
+                        .GetAllSubscriptions(WorkContext.CurrentUser.Id, 0, topic.Id, 0, 1))
                         .FirstOrDefault();
 
                     if (forumTopicSubscription != null)
@@ -573,7 +574,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
                 foreach (var post in posts)
                 {
-                    var postUser = membershipService.GetUserById(post.UserId);
+                    var postUser = await membershipService.GetUserById(post.UserId);
 
                     var postModel = new ForumPostModel
                     {
@@ -581,13 +582,13 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                         ForumTopicId = post.TopicId,
                         ForumTopicSeName = topic.GetSeName(),
                         FormattedText = post.FormatPostText(),
-                        IsCurrentUserAllowedToEditPost = forumService.IsUserAllowedToEditPost(WorkContext.CurrentUser, post),
-                        IsCurrentUserAllowedToDeletePost = forumService.IsUserAllowedToDeletePost(WorkContext.CurrentUser, post),
+                        IsCurrentUserAllowedToEditPost = await forumService.IsUserAllowedToEditPost(WorkContext.CurrentUser, post),
+                        IsCurrentUserAllowedToDeletePost = await forumService.IsUserAllowedToDeletePost(WorkContext.CurrentUser, post),
                         UserId = post.UserId,
                         //AllowViewingProfiles = _customerSettings.AllowViewingProfiles, //TODO
                         AllowViewingProfiles = false,
-                        UserName = membershipService.GetUserDisplayName(postUser),
-                        IsUserForumModerator = IsForumModerator(postUser),
+                        UserName = await membershipService.GetUserDisplayName(postUser),
+                        IsUserForumModerator = await IsForumModerator(postUser),
                         ShowUsersPostCount = forumSettings.ShowUsersPostCount,
                         ForumPostCount = postUser.GetAttribute<int>(SystemUserAttributeNames.ForumPostCount),
                         //ShowUsersJoinDate = _customerSettings.ShowUsersJoinDate, // TODO
@@ -640,25 +641,25 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
         [HttpPost]
         [Route("topic/watch/{id}")]
-        public ActionResult TopicWatch(int id)
+        public async Task<ActionResult> TopicWatch(int id)
         {
             string watchTopic = T(LocalizableStrings.WatchTopic);
             string unwatchTopic = T(LocalizableStrings.UnwatchTopic);
             string returnText = watchTopic;
 
-            var topic = forumService.GetTopicById(id);
+            var topic = await forumService.GetTopicById(id);
             if (topic == null)
             {
                 return Json(new { Subscribed = false, Text = returnText, Error = true });
             }
 
-            if (!forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser))
+            if (!await forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser))
             {
                 return Json(new { Subscribed = false, Text = returnText, Error = true });
             }
 
-            var subscription = forumService
-                .GetAllSubscriptions(WorkContext.CurrentUser.Id, 0, topic.Id, 0, 1)
+            var subscription = (await forumService
+                .GetAllSubscriptions(WorkContext.CurrentUser.Id, 0, topic.Id, 0, 1))
                 .FirstOrDefault();
 
             bool subscribed;
@@ -671,13 +672,13 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                     TopicId = topic.Id,
                     CreatedOnUtc = DateTime.UtcNow
                 };
-                forumService.InsertSubscription(subscription);
+                await forumService.InsertSubscription(subscription);
                 subscribed = true;
                 returnText = unwatchTopic;
             }
             else
             {
-                forumService.DeleteSubscription(subscription);
+                await forumService.DeleteSubscription(subscription);
                 subscribed = false;
             }
 
@@ -685,14 +686,14 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         }
 
         [Route("topic/move/{id}")]
-        public ActionResult TopicMove(int id)
+        public async Task<ActionResult> TopicMove(int id)
         {
             if (!forumSettings.ForumsEnabled)
             {
                 return RedirectToHomePage();
             }
 
-            var topic = forumService.GetTopicById(id);
+            var topic = await forumService.GetTopicById(id);
             if (topic == null)
             {
                 return RedirectToAction("Index");
@@ -700,7 +701,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
             var model = new TopicMoveModel
             {
-                ForumList = ForumGroupsForumsList(),
+                ForumList = await ForumGroupsForumsList(),
                 Id = topic.Id,
                 TopicSeName = topic.GetSeName(),
                 ForumSelected = topic.ForumId
@@ -712,48 +713,48 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         [HttpPost]
         [FrontendAntiForgery]
         [Route("topic/move-post")]
-        public ActionResult TopicMovePost(TopicMoveModel model)
+        public async Task<ActionResult> TopicMovePost(TopicMoveModel model)
         {
             if (!forumSettings.ForumsEnabled)
             {
                 return RedirectToHomePage();
             }
 
-            var topic = forumService.GetTopicById(model.Id);
+            var topic = await forumService.GetTopicById(model.Id);
             if (topic == null)
             {
                 return RedirectToAction("Index");
             }
 
             int newForumId = model.ForumSelected;
-            var forum = forumService.GetForumById(newForumId);
+            var forum = await forumService.GetForumById(newForumId);
 
             if (forum != null && topic.ForumId != newForumId)
             {
-                forumService.MoveTopic(topic.Id, newForumId);
+                await forumService.MoveTopic(topic.Id, newForumId);
             }
 
             return RedirectToAction("Topic", new { id = topic.Id, slug = topic.GetSeName() });
         }
 
         [Route("topic/delete/{id}")]
-        public ActionResult TopicDelete(int id)
+        public async Task<ActionResult> TopicDelete(int id)
         {
             if (!forumSettings.ForumsEnabled)
             {
                 return RedirectToHomePage();
             }
 
-            var topic = forumService.GetTopicById(id);
+            var topic = await forumService.GetTopicById(id);
             if (topic != null)
             {
-                if (!forumService.IsUserAllowedToDeleteTopic(WorkContext.CurrentUser, topic))
+                if (!await forumService.IsUserAllowedToDeleteTopic(WorkContext.CurrentUser, topic))
                 {
                     return new HttpUnauthorizedResult();
                 }
-                var forum = forumService.GetForumById(topic.ForumId);
+                var forum = await forumService.GetForumById(topic.ForumId);
 
-                forumService.DeleteTopic(topic);
+                await forumService.DeleteTopic(topic);
 
                 if (forum != null)
                 {
@@ -765,20 +766,20 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         }
 
         [Route("topic/create/{id}")]
-        public ActionResult TopicCreate(int id)
+        public async Task<ActionResult> TopicCreate(int id)
         {
             if (!forumSettings.ForumsEnabled)
             {
                 return RedirectToHomePage();
             }
 
-            var forum = forumService.GetForumById(id);
+            var forum = await forumService.GetForumById(id);
             if (forum == null)
             {
                 return RedirectToAction("Index");
             }
 
-            if (forumService.IsUserAllowedToCreateTopic(WorkContext.CurrentUser, forum) == false)
+            if (await forumService.IsUserAllowedToCreateTopic(WorkContext.CurrentUser, forum) == false)
             {
                 return new HttpUnauthorizedResult();
             }
@@ -791,9 +792,9 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 ForumName = forum.Name,
                 ForumSeName = forum.GetSeName(),
                 ForumEditor = forumSettings.ForumEditor,
-                IsUserAllowedToSetTopicPriority = forumService.IsUserAllowedToSetTopicPriority(WorkContext.CurrentUser),
+                IsUserAllowedToSetTopicPriority = await forumService.IsUserAllowedToSetTopicPriority(WorkContext.CurrentUser),
                 TopicPriorities = ForumTopicTypesList(),
-                IsUserAllowedToSubscribe = forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser),
+                IsUserAllowedToSubscribe = await forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser),
                 Subscribed = false
             };
             return View(model);
@@ -803,14 +804,14 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         [FrontendAntiForgery]
         [Route("topic/create-post")]
         [ValidateInput(false)]
-        public ActionResult TopicCreatePost(EditForumTopicModel model)
+        public async Task<ActionResult> TopicCreatePost(EditForumTopicModel model)
         {
             if (!forumSettings.ForumsEnabled)
             {
                 return RedirectToHomePage();
             }
 
-            var forum = forumService.GetForumById(model.ForumId);
+            var forum = await forumService.GetForumById(model.ForumId);
             if (forum == null)
             {
                 return RedirectToAction("Index");
@@ -820,7 +821,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             {
                 try
                 {
-                    if (!forumService.IsUserAllowedToCreateTopic(WorkContext.CurrentUser, forum))
+                    if (!await forumService.IsUserAllowedToCreateTopic(WorkContext.CurrentUser, forum))
                     {
                         return new HttpUnauthorizedResult();
                     }
@@ -847,7 +848,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
                     var nowUtc = DateTime.UtcNow;
 
-                    if (forumService.IsUserAllowedToSetTopicPriority(WorkContext.CurrentUser))
+                    if (await forumService.IsUserAllowedToSetTopicPriority(WorkContext.CurrentUser))
                     {
                         topicType = model.TopicType;
                     }
@@ -862,7 +863,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                         CreatedOnUtc = nowUtc,
                         UpdatedOnUtc = nowUtc
                     };
-                    forumService.InsertTopic(topic, true);
+                    await forumService.InsertTopic(topic, true);
 
                     //forum post
                     var post = new ForumPost
@@ -874,7 +875,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                         CreatedOnUtc = nowUtc,
                         UpdatedOnUtc = nowUtc
                     };
-                    forumService.InsertPost(post, false);
+                    await forumService.InsertPost(post, false);
 
                     //update forum topic
                     topic.NumPosts = 1;
@@ -882,10 +883,10 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                     topic.LastPostUserId = post.UserId;
                     topic.LastPostTime = post.CreatedOnUtc;
                     topic.UpdatedOnUtc = nowUtc;
-                    forumService.UpdateTopic(topic);
+                    await forumService.UpdateTopic(topic);
 
                     //subscription
-                    if (forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser))
+                    if (await forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser))
                     {
                         if (model.Subscribed)
                         {
@@ -897,7 +898,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                                 CreatedOnUtc = nowUtc
                             };
 
-                            forumService.InsertSubscription(forumSubscription);
+                            await forumService.InsertSubscription(forumSubscription);
                         }
                     }
 
@@ -916,33 +917,33 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             model.ForumName = forum.Name;
             model.ForumSeName = forum.GetSeName();
             model.Id = 0;
-            model.IsUserAllowedToSetTopicPriority = forumService.IsUserAllowedToSetTopicPriority(WorkContext.CurrentUser);
-            model.IsUserAllowedToSubscribe = forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser);
+            model.IsUserAllowedToSetTopicPriority = await forumService.IsUserAllowedToSetTopicPriority(WorkContext.CurrentUser);
+            model.IsUserAllowedToSubscribe = await forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser);
             model.ForumEditor = forumSettings.ForumEditor;
 
             return View("TopicCreate", model);
         }
 
         [Route("topic/edit/{id}")]
-        public ActionResult TopicEdit(int id)
+        public async Task<ActionResult> TopicEdit(int id)
         {
             if (!forumSettings.ForumsEnabled)
             {
                 return RedirectToHomePage();
             }
 
-            var topic = forumService.GetTopicById(id);
+            var topic = await forumService.GetTopicById(id);
             if (topic == null)
             {
                 return RedirectToAction("Index");
             }
 
-            if (!forumService.IsUserAllowedToEditTopic(WorkContext.CurrentUser, topic))
+            if (!await forumService.IsUserAllowedToEditTopic(WorkContext.CurrentUser, topic))
             {
                 return new HttpUnauthorizedResult();
             }
 
-            var forum = topic.Forum ?? forumService.GetForumById(topic.ForumId);
+            var forum = topic.Forum ?? await forumService.GetForumById(topic.ForumId);
             if (forum == null)
             {
                 return RedirectToAction("Index");
@@ -962,15 +963,15 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 Id = topic.Id,
                 ForumId = forum.Id,
                 ForumEditor = forumSettings.ForumEditor,
-                IsUserAllowedToSetTopicPriority = forumService.IsUserAllowedToSetTopicPriority(WorkContext.CurrentUser),
-                IsUserAllowedToSubscribe = forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser)
+                IsUserAllowedToSetTopicPriority = await forumService.IsUserAllowedToSetTopicPriority(WorkContext.CurrentUser),
+                IsUserAllowedToSubscribe = await forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser)
             };
 
             //subscription
             if (model.IsUserAllowedToSubscribe)
             {
-                var subscription = forumService
-                    .GetAllSubscriptions(WorkContext.CurrentUser.Id, 0, topic.Id, 0, 1)
+                var subscription = (await forumService
+                    .GetAllSubscriptions(WorkContext.CurrentUser.Id, 0, topic.Id, 0, 1))
                     .FirstOrDefault();
 
                 model.Subscribed = subscription != null;
@@ -983,20 +984,20 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         [FrontendAntiForgery]
         [Route("topic/edit-post")]
         [ValidateInput(false)]
-        public ActionResult TopicEditPost(EditForumTopicModel model)
+        public async Task<ActionResult> TopicEditPost(EditForumTopicModel model)
         {
             if (!forumSettings.ForumsEnabled)
             {
                 return RedirectToHomePage();
             }
 
-            var topic = forumService.GetTopicById(model.Id);
+            var topic = await forumService.GetTopicById(model.Id);
             if (topic == null)
             {
                 return RedirectToAction("Index");
             }
 
-            var forum = topic.Forum ?? forumService.GetForumById(topic.ForumId);
+            var forum = topic.Forum ?? await forumService.GetForumById(topic.ForumId);
             if (forum == null)
             {
                 return RedirectToAction("Index");
@@ -1006,7 +1007,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             {
                 try
                 {
-                    if (!forumService.IsUserAllowedToEditTopic(WorkContext.CurrentUser, topic))
+                    if (!await forumService.IsUserAllowedToEditTopic(WorkContext.CurrentUser, topic))
                     {
                         return new HttpUnauthorizedResult();
                     }
@@ -1033,7 +1034,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
                     DateTime nowUtc = DateTime.UtcNow;
 
-                    if (forumService.IsUserAllowedToSetTopicPriority(WorkContext.CurrentUser))
+                    if (await forumService.IsUserAllowedToSetTopicPriority(WorkContext.CurrentUser))
                     {
                         topicType = model.TopicType;
                     }
@@ -1042,7 +1043,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                     topic.TopicType = topicType;
                     topic.Subject = subject;
                     topic.UpdatedOnUtc = nowUtc;
-                    forumService.UpdateTopic(topic);
+                    await forumService.UpdateTopic(topic);
 
                     //forum post
                     var firstPost = topic.GetFirstPost(forumService);
@@ -1050,7 +1051,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                     {
                         firstPost.Text = text;
                         firstPost.UpdatedOnUtc = nowUtc;
-                        forumService.UpdatePost(firstPost);
+                        await forumService.UpdatePost(firstPost);
                     }
                     else
                     {
@@ -1064,14 +1065,14 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                             UpdatedOnUtc = nowUtc
                         };
 
-                        forumService.InsertPost(firstPost, false);
+                        await forumService.InsertPost(firstPost, false);
                     }
 
                     //subscription
-                    if (forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser))
+                    if (await forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser))
                     {
-                        var subscription = forumService
-                            .GetAllSubscriptions(WorkContext.CurrentUser.Id, 0, topic.Id, 0, 1)
+                        var subscription = (await forumService
+                            .GetAllSubscriptions(WorkContext.CurrentUser.Id, 0, topic.Id, 0, 1))
                             .FirstOrDefault();
 
                         if (model.Subscribed)
@@ -1086,14 +1087,14 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                                     CreatedOnUtc = nowUtc
                                 };
 
-                                forumService.InsertSubscription(subscription);
+                                await forumService.InsertSubscription(subscription);
                             }
                         }
                         else
                         {
                             if (subscription != null)
                             {
-                                forumService.DeleteSubscription(subscription);
+                                await forumService.DeleteSubscription(subscription);
                             }
                         }
                     }
@@ -1115,8 +1116,8 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             model.ForumId = forum.Id;
             model.ForumEditor = forumSettings.ForumEditor;
 
-            model.IsUserAllowedToSetTopicPriority = forumService.IsUserAllowedToSetTopicPriority(WorkContext.CurrentUser);
-            model.IsUserAllowedToSubscribe = forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser);
+            model.IsUserAllowedToSetTopicPriority = await forumService.IsUserAllowedToSetTopicPriority(WorkContext.CurrentUser);
+            model.IsUserAllowedToSubscribe = await forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser);
 
             return View("TopicEdit", model);
         }
@@ -1125,44 +1126,44 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         [FrontendAntiForgery]
         [Route("topic/save")]
         [ValidateInput(false)]
-        public ActionResult TopicSave(EditForumTopicModel model)
+        public async Task<ActionResult> TopicSave(EditForumTopicModel model)
         {
             if (model.IsEdit)
             {
-                return TopicEditPost(model);
+                return await TopicEditPost(model);
             }
             else
             {
-                return TopicCreatePost(model);
+                return await TopicCreatePost(model);
             }
         }
 
         [Route("post/delete/{id}")]
-        public ActionResult PostDelete(int id)
+        public async Task<ActionResult> PostDelete(int id)
         {
             if (!forumSettings.ForumsEnabled)
             {
                 return RedirectToHomePage();
             }
 
-            var post = forumService.GetPostById(id);
+            var post = await forumService.GetPostById(id);
             if (post != null)
             {
-                if (!forumService.IsUserAllowedToDeletePost(WorkContext.CurrentUser, post))
+                if (!await forumService.IsUserAllowedToDeletePost(WorkContext.CurrentUser, post))
                 {
                     return new HttpUnauthorizedResult();
                 }
 
-                var topic = post.ForumTopic ?? forumService.GetTopicById(post.TopicId);
-                var forum = topic.Forum ?? forumService.GetForumById(topic.ForumId);
+                var topic = post.ForumTopic ?? await forumService.GetTopicById(post.TopicId);
+                var forum = topic.Forum ?? await forumService.GetForumById(topic.ForumId);
 
                 int forumId = forum.Id;
                 string forumSlug = forum.GetSeName();
 
-                forumService.DeletePost(post);
+                await forumService.DeletePost(post);
 
                 //get topic one more time because it can be deleted (first or only post deleted)
-                topic = forumService.GetTopicById(post.TopicId);
+                topic = await forumService.GetTopicById(post.TopicId);
                 if (topic == null)
                 {
                     return RedirectToAction("Forum", new { id = forumId, slug = forumSlug });
@@ -1174,25 +1175,25 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         }
 
         [Route("post/create/{id}/{quote?}")]
-        public ActionResult PostCreate(int id, int? quote)
+        public async Task<ActionResult> PostCreate(int id, int? quote)
         {
             if (!forumSettings.ForumsEnabled)
             {
                 return RedirectToHomePage();
             }
 
-            var topic = forumService.GetTopicById(id);
+            var topic = await forumService.GetTopicById(id);
             if (topic == null)
             {
                 return RedirectToAction("Index");
             }
 
-            if (!forumService.IsUserAllowedToCreatePost(WorkContext.CurrentUser, topic))
+            if (!await forumService.IsUserAllowedToCreatePost(WorkContext.CurrentUser, topic))
             {
                 return new HttpUnauthorizedResult();
             }
 
-            var forum = topic.Forum ?? forumService.GetForumById(topic.ForumId);
+            var forum = topic.Forum ?? await forumService.GetForumById(topic.ForumId);
             if (forum == null)
             {
                 return RedirectToAction("Index");
@@ -1207,15 +1208,15 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 ForumName = forum.Name,
                 ForumTopicSubject = topic.Subject,
                 ForumTopicSeName = topic.GetSeName(),
-                IsUserAllowedToSubscribe = forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser),
+                IsUserAllowedToSubscribe = await forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser),
                 Subscribed = false,
             };
 
             //subscription
             if (model.IsUserAllowedToSubscribe)
             {
-                var subscription = forumService
-                    .GetAllSubscriptions(WorkContext.CurrentUser.Id, 0, topic.Id, 0, 1)
+                var subscription = (await forumService
+                    .GetAllSubscriptions(WorkContext.CurrentUser.Id, 0, topic.Id, 0, 1))
                     .FirstOrDefault();
 
                 model.Subscribed = subscription != null;
@@ -1225,8 +1226,8 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             string text = string.Empty;
             if (quote.HasValue)
             {
-                var quotePost = forumService.GetPostById(quote.Value);
-                var quotePostUser = membershipService.GetUserById(quotePost.UserId);
+                var quotePost = await forumService.GetPostById(quote.Value);
+                var quotePostUser = await membershipService.GetUserById(quotePost.UserId);
 
                 if (quotePost != null && quotePost.TopicId == topic.Id)
                 {
@@ -1235,14 +1236,14 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                         case EditorType.SimpleTextBox:
                             text = string.Format(
                                 "{0}:\n{1}\n",
-                                membershipService.GetUserDisplayName(quotePostUser),
+                                await membershipService.GetUserDisplayName(quotePostUser),
                                 quotePost.Text);
                             break;
 
                         case EditorType.BBCodeEditor:
                             text = string.Format(
                                 "[quote={0}]{1}[/quote]",
-                                membershipService.GetUserDisplayName(quotePostUser),
+                                await membershipService.GetUserDisplayName(quotePostUser),
                                 BBCodeHelper.RemoveQuotes(quotePost.Text));
                             break;
                     }
@@ -1257,14 +1258,14 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         [FrontendAntiForgery]
         [Route("post/create-post")]
         [ValidateInput(false)]
-        public ActionResult PostCreatePost(EditForumPostModel model)
+        public async Task<ActionResult> PostCreatePost(EditForumPostModel model)
         {
             if (!forumSettings.ForumsEnabled)
             {
                 return RedirectToHomePage();
             }
 
-            var topic = forumService.GetTopicById(model.ForumTopicId);
+            var topic = await forumService.GetTopicById(model.ForumTopicId);
             if (topic == null)
             {
                 return RedirectToAction("Index");
@@ -1274,7 +1275,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             {
                 try
                 {
-                    if (!forumService.IsUserAllowedToCreatePost(WorkContext.CurrentUser, topic))
+                    if (!await forumService.IsUserAllowedToCreatePost(WorkContext.CurrentUser, topic))
                     {
                         return new HttpUnauthorizedResult();
                     }
@@ -1300,13 +1301,13 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                         CreatedOnUtc = nowUtc,
                         UpdatedOnUtc = nowUtc
                     };
-                    forumService.InsertPost(post, true);
+                    await forumService.InsertPost(post, true);
 
                     //subscription
-                    if (forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser))
+                    if (await forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser))
                     {
-                        var forumSubscription = forumService
-                            .GetAllSubscriptions(WorkContext.CurrentUser.Id, 0, post.TopicId, 0, 1)
+                        var forumSubscription = (await forumService
+                            .GetAllSubscriptions(WorkContext.CurrentUser.Id, 0, post.TopicId, 0, 1))
                             .FirstOrDefault();
 
                         if (model.Subscribed)
@@ -1321,21 +1322,21 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                                     CreatedOnUtc = nowUtc
                                 };
 
-                                forumService.InsertSubscription(forumSubscription);
+                                await forumService.InsertSubscription(forumSubscription);
                             }
                         }
                         else
                         {
                             if (forumSubscription != null)
                             {
-                                forumService.DeleteSubscription(forumSubscription);
+                                await forumService.DeleteSubscription(forumSubscription);
                             }
                         }
                     }
 
                     int pageSize = forumSettings.PostsPageSize > 0 ? forumSettings.PostsPageSize : 10;
 
-                    int pageIndex = (forumService.CalculateTopicPageIndex(post.TopicId, pageSize, post.Id) + 1);
+                    int pageIndex = (await forumService.CalculateTopicPageIndex(post.TopicId, pageSize, post.Id) + 1);
                     string url = string.Empty;
 
                     if (pageIndex > 1)
@@ -1355,7 +1356,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             }
 
             // redisplay form
-            var forum = topic.Forum ?? forumService.GetForumById(topic.ForumId);
+            var forum = topic.Forum ?? await forumService.GetForumById(topic.ForumId);
             if (forum == null)
             {
                 return RedirectToAction("Index");
@@ -1367,37 +1368,37 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             model.ForumTopicSubject = topic.Subject;
             model.ForumTopicSeName = topic.GetSeName();
             model.Id = 0;
-            model.IsUserAllowedToSubscribe = forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser);
+            model.IsUserAllowedToSubscribe = await forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser);
             model.ForumEditor = forumSettings.ForumEditor;
 
             return View("PostCreate", model);
         }
 
         [Route("post/edit/{id}")]
-        public ActionResult PostEdit(int id)
+        public async Task<ActionResult> PostEdit(int id)
         {
             if (!forumSettings.ForumsEnabled)
             {
                 return RedirectToHomePage();
             }
 
-            var post = forumService.GetPostById(id);
+            var post = await forumService.GetPostById(id);
             if (post == null)
             {
                 return RedirectToAction("Index");
             }
-            if (!forumService.IsUserAllowedToEditPost(WorkContext.CurrentUser, post))
+            if (!await forumService.IsUserAllowedToEditPost(WorkContext.CurrentUser, post))
             {
                 return new HttpUnauthorizedResult();
             }
 
-            var topic = post.ForumTopic ?? forumService.GetTopicById(post.TopicId);
+            var topic = post.ForumTopic ?? await forumService.GetTopicById(post.TopicId);
             if (topic == null)
             {
                 return RedirectToAction("Index");
             }
 
-            var forum = topic.Forum ?? forumService.GetForumById(topic.ForumId);
+            var forum = topic.Forum ?? await forumService.GetForumById(topic.ForumId);
             if (forum == null)
             {
                 return RedirectToAction("Index");
@@ -1412,7 +1413,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 ForumName = forum.Name,
                 ForumTopicSubject = topic.Subject,
                 ForumTopicSeName = topic.GetSeName(),
-                IsUserAllowedToSubscribe = forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser),
+                IsUserAllowedToSubscribe = await forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser),
                 Subscribed = false,
                 Text = post.Text,
             };
@@ -1420,8 +1421,8 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             //subscription
             if (model.IsUserAllowedToSubscribe)
             {
-                var subscription = forumService
-                    .GetAllSubscriptions(WorkContext.CurrentUser.Id, 0, topic.Id, 0, 1)
+                var subscription = (await forumService
+                    .GetAllSubscriptions(WorkContext.CurrentUser.Id, 0, topic.Id, 0, 1))
                     .FirstOrDefault();
 
                 model.Subscribed = subscription != null;
@@ -1434,31 +1435,31 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         [FrontendAntiForgery]
         [Route("post/edit-post")]
         [ValidateInput(false)]
-        public ActionResult PostEditPost(EditForumPostModel model)
+        public async Task<ActionResult> PostEditPost(EditForumPostModel model)
         {
             if (!forumSettings.ForumsEnabled)
             {
                 return RedirectToHomePage();
             }
 
-            var post = forumService.GetPostById(model.Id);
+            var post = await forumService.GetPostById(model.Id);
             if (post == null)
             {
                 return RedirectToAction("Index");
             }
 
-            if (!forumService.IsUserAllowedToEditPost(WorkContext.CurrentUser, post))
+            if (!await forumService.IsUserAllowedToEditPost(WorkContext.CurrentUser, post))
             {
                 return new HttpUnauthorizedResult();
             }
 
-            var topic = post.ForumTopic ?? forumService.GetTopicById(post.TopicId);
+            var topic = post.ForumTopic ?? await forumService.GetTopicById(post.TopicId);
             if (topic == null)
             {
                 return RedirectToAction("Index");
             }
 
-            var forum = topic.Forum ?? forumService.GetForumById(topic.ForumId);
+            var forum = topic.Forum ?? await forumService.GetForumById(topic.ForumId);
             if (forum == null)
             {
                 return RedirectToAction("Index");
@@ -1479,13 +1480,13 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
                     post.UpdatedOnUtc = nowUtc;
                     post.Text = text;
-                    forumService.UpdatePost(post);
+                    await forumService.UpdatePost(post);
 
                     //subscription
-                    if (forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser))
+                    if (await forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser))
                     {
-                        var subscription = forumService
-                            .GetAllSubscriptions(WorkContext.CurrentUser.Id, 0, post.TopicId, 0, 1)
+                        var subscription = (await forumService
+                            .GetAllSubscriptions(WorkContext.CurrentUser.Id, 0, post.TopicId, 0, 1))
                             .FirstOrDefault();
 
                         if (model.Subscribed)
@@ -1499,20 +1500,20 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                                     TopicId = post.TopicId,
                                     CreatedOnUtc = nowUtc
                                 };
-                                forumService.InsertSubscription(subscription);
+                                await forumService.InsertSubscription(subscription);
                             }
                         }
                         else
                         {
                             if (subscription != null)
                             {
-                                forumService.DeleteSubscription(subscription);
+                                await forumService.DeleteSubscription(subscription);
                             }
                         }
                     }
 
                     int pageSize = forumSettings.PostsPageSize > 0 ? forumSettings.PostsPageSize : 10;
-                    int pageIndex = (forumService.CalculateTopicPageIndex(post.TopicId, pageSize, post.Id) + 1);
+                    int pageIndex = (await forumService.CalculateTopicPageIndex(post.TopicId, pageSize, post.Id) + 1);
                     var url = string.Empty;
                     if (pageIndex > 1)
                     {
@@ -1537,7 +1538,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             model.ForumTopicSubject = topic.Subject;
             model.ForumTopicSeName = topic.GetSeName();
             model.Id = post.Id;
-            model.IsUserAllowedToSubscribe = forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser);
+            model.IsUserAllowedToSubscribe = await forumService.IsUserAllowedToSubscribe(WorkContext.CurrentUser);
             model.ForumEditor = forumSettings.ForumEditor;
 
             return View("PostEdit", model);
@@ -1547,20 +1548,20 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         [FrontendAntiForgery]
         [Route("post/save")]
         [ValidateInput(false)]
-        public ActionResult PostSave(EditForumPostModel model)
+        public async Task<ActionResult> PostSave(EditForumPostModel model)
         {
             if (model.IsEdit)
             {
-                return PostEditPost(model);
+                return await PostEditPost(model);
             }
             else
             {
-                return PostCreatePost(model);
+                return await PostCreatePost(model);
             }
         }
 
         [Route("search")]
-        public ActionResult Search(
+        public async Task<ActionResult> Search(
             string searchterms,
             bool? adv,
             string forumId,
@@ -1636,21 +1637,20 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
             string separator = "--";
 
-            var groups = forumService.GetAllForumGroups();
+            var groups = await forumService.GetAllForumGroups();
             foreach (var group in groups)
             {
                 // Add the forum group with value as '-' so it can't be used as a target forum id
                 forumsSelectList.Add(new SelectListItem { Text = group.Name, Value = "-" });
 
-                var forums = forumService.GetAllForumsByGroupId(group.Id);
+                var forums = await forumService.GetAllForumsByGroupId(group.Id);
                 foreach (var forum in forums)
                 {
-                    forumsSelectList.Add(
-                        new SelectListItem
-                        {
-                            Text = string.Format("{0}{1}", separator, forum.Name),
-                            Value = forum.Id.ToString()
-                        });
+                    forumsSelectList.Add(new SelectListItem
+                    {
+                        Text = string.Format("{0}{1}", separator, forum.Name),
+                        Value = forum.Id.ToString()
+                    });
                 }
             }
             model.ForumList = forumsSelectList;
@@ -1722,7 +1722,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                         pageSize = forumSettings.SearchResultsPageSize;
                     }
 
-                    var topics = forumService.GetAllTopics(
+                    var topics = await forumService.GetAllTopics(
                         forumIdSelected,
                         null,
                         searchterms,
@@ -1737,7 +1737,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
                     foreach (var topic in topics)
                     {
-                        var topicModel = PrepareForumTopicRowModel(topic);
+                        var topicModel = await PrepareForumTopicRowModel(topic);
                         model.ForumTopics.Add(topicModel);
                     }
 
@@ -1765,13 +1765,13 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         [Route("last-post/{forumPostId}/{showTopic}")]
         public ActionResult LastPost(int forumPostId, bool showTopic)
         {
-            var post = forumService.GetPostById(forumPostId);
+            var post = AsyncHelper.RunSync(() => forumService.GetPostById(forumPostId));
             var model = new LastPostModel();
 
             if (post != null)
             {
-                var postUser = membershipService.GetUserById(post.UserId);
-                var topic = post.ForumTopic ?? forumService.GetTopicById(post.TopicId);
+                var postUser = AsyncHelper.RunSync(() => membershipService.GetUserById(post.UserId));
+                var topic = post.ForumTopic ?? AsyncHelper.RunSync(() => forumService.GetTopicById(post.TopicId));
 
                 model.Id = post.Id;
                 model.ForumTopicId = post.TopicId;
@@ -1780,7 +1780,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 model.UserId = post.UserId;
                 //model.AllowViewingProfiles = _customerSettings.AllowViewingProfiles; //TODO
                 model.AllowViewingProfiles = true;
-                model.UserName = membershipService.GetUserDisplayName(postUser);
+                model.UserName = AsyncHelper.RunSync(() => membershipService.GetUserDisplayName(postUser));
                 //created on string
                 if (forumSettings.RelativeDateTimeFormattingEnabled)
                 {
@@ -1804,7 +1804,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
             ForumTopic topic = null;
             if (forumTopicId.HasValue)
             {
-                topic = forumService.GetTopicById(forumTopicId.Value);
+                topic = AsyncHelper.RunSync(() => forumService.GetTopicById(forumTopicId.Value));
                 if (topic != null)
                 {
                     model.ForumTopicId = topic.Id;
@@ -1813,7 +1813,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 }
             }
 
-            Forum forum = forumService.GetForumById(topic != null ? topic.ForumId : (forumId.HasValue ? forumId.Value : 0));
+            Forum forum = AsyncHelper.RunSync(() => forumService.GetForumById(topic != null ? topic.ForumId : (forumId.HasValue ? forumId.Value : 0)));
             if (forum != null)
             {
                 model.ForumId = forum.Id;
@@ -1821,7 +1821,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 model.ForumSeName = forum.GetSeName();
             }
 
-            var forumGroup = forumService.GetForumGroupById(forum != null ? forum.ForumGroupId : (forumGroupId.HasValue ? forumGroupId.Value : 0));
+            var forumGroup = AsyncHelper.RunSync(() => forumService.GetForumGroupById(forum != null ? forum.ForumGroupId : (forumGroupId.HasValue ? forumGroupId.Value : 0)));
             if (forumGroup != null)
             {
                 model.ForumGroupId = forumGroup.Id;
@@ -1833,12 +1833,12 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         }
 
         [Route("subscribe/{page?}")]
-        public ActionResult UserForumSubscriptions(int? page)
+        public async Task<ActionResult> UserForumSubscriptions(int? page)
         {
             if (!forumSettings.AllowUsersToManageSubscriptions)
             {
                 return RedirectToAction("Index");
-                //return RedirectToRoute("UserInfo"); // TODO: Is this meant o be the user's profile page? 
+                //return RedirectToRoute("UserInfo"); // TODO: Is this meant o be the user's profile page?
             }
 
             int pageIndex = 0;
@@ -1851,7 +1851,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
             var pageSize = forumSettings.ForumSubscriptionsPageSize;
 
-            var subscriptions = forumService.GetAllSubscriptions(customer.Id, 0, 0, pageIndex, pageSize);
+            var subscriptions = await forumService.GetAllSubscriptions(customer.Id, 0, 0, pageIndex, pageSize);
 
             var model = new UserForumSubscriptionsModel();
 
@@ -1866,7 +1866,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 if (topicId > 0)
                 {
                     topicSubscription = true;
-                    var topic = forumService.GetTopicById(topicId);
+                    var topic = await forumService.GetTopicById(topicId);
                     if (topic != null)
                     {
                         title = topic.Subject;
@@ -1875,7 +1875,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                 }
                 else
                 {
-                    var forum = forumService.GetForumById(forumId);
+                    var forum = await forumService.GetForumById(forumId);
                     if (forum != null)
                     {
                         title = forum.Name;
@@ -1911,7 +1911,7 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         [HttpPost]
         [ActionName("UserForumSubscriptions")]
         [Route("subscribe-post")]
-        public ActionResult UserForumSubscriptionsPOST(FormCollection formCollection)
+        public async Task<ActionResult> UserForumSubscriptionsPOST(FormCollection formCollection)
         {
             foreach (string key in formCollection.AllKeys)
             {
@@ -1923,10 +1923,10 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
                     int subscriptionId;
                     if (int.TryParse(id, out subscriptionId))
                     {
-                        var subscription = forumService.GetSubscriptionById(subscriptionId);
+                        var subscription = await forumService.GetSubscriptionById(subscriptionId);
                         if (subscription != null && subscription.UserId == WorkContext.CurrentUser.Id)
                         {
-                            forumService.DeleteSubscription(subscription);
+                            await forumService.DeleteSubscription(subscription);
                         }
                     }
                 }
@@ -1934,7 +1934,6 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
 
             return RedirectToAction("UserForumSubscriptions");
         }
-
 
         [HttpPost]
         [Route("upload-file")]

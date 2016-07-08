@@ -98,7 +98,6 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
                 //check whether plugin is not installed
                 if (pluginDescriptor.Installed)
                 {
-
                     return Json(new { Success = false, Message = "Plugin Not Installed" });
                     //return RedirectToAction("Index");
                 }

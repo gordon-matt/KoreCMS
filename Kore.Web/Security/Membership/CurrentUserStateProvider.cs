@@ -1,5 +1,6 @@
 ﻿using System;
 using Kore.Security.Membership;
+using Kore.Threading;
 using Kore.Web.Environment;
 
 namespace Kore.Web.Security.Membership
@@ -20,9 +21,15 @@ namespace Kore.Web.Security.Membership
             if (name == KoreWebConstants.StateProviders.CurrentUser)
             {
                 var httpContext = httpContextAccessor.Current();
+
+                if (httpContext == null)
+                {
+                    return null;
+                }
+
                 if (httpContext.User.Identity.IsAuthenticated)
                 {
-                    var user = membershipService.GetUserByName(httpContext.User.Identity.Name);
+                    var user = AsyncHelper.RunSync(() => membershipService.GetUserByName(httpContext.User.Identity.Name));
                     if (user == null)
                     {
                         return null;

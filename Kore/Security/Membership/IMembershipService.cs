@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Kore.Security.Membership
 {
@@ -17,103 +18,105 @@ namespace Kore.Security.Membership
     {
         bool SupportsRolePermissions { get; }
 
-        string GenerateEmailConfirmationToken(object userId);
+        Task<string> GenerateEmailConfirmationToken(object userId);
 
-        void ConfirmEmail(object userId, string token);
+        Task ConfirmEmail(object userId, string token);
 
         #region Users
 
-        IEnumerable<KoreUser> GetAllUsers();
-
         IQueryable<KoreUser> GetAllUsersAsQueryable();
 
-        IEnumerable<KoreUser> GetUsers(Expression<Func<KoreUser, bool>> predicate);
+        Task<IEnumerable<KoreUser>> GetAllUsers();
 
-        KoreUser GetUserById(object userId);
+        Task<IEnumerable<KoreUser>> GetUsers(Expression<Func<KoreUser, bool>> predicate);
 
-        KoreUser GetUserByEmail(string email);
+        Task<KoreUser> GetUserById(object userId);
 
-        KoreUser GetUserByName(string userName);
+        Task<KoreUser> GetUserByEmail(string email);
 
-        IEnumerable<KoreRole> GetRolesForUser(object userId);
+        Task<KoreUser> GetUserByName(string userName);
 
-        bool DeleteUser(object userId);
+        Task<IEnumerable<KoreRole>> GetRolesForUser(object userId);
 
-        void InsertUser(KoreUser user, string password);
+        Task<bool> DeleteUser(object userId);
 
-        void UpdateUser(KoreUser user);
+        Task InsertUser(KoreUser user, string password);
 
-        void AssignUserToRoles(object userId, IEnumerable<object> roleIds);
+        Task UpdateUser(KoreUser user);
 
-        void ChangePassword(object userId, string newPassword);
+        Task AssignUserToRoles(object userId, IEnumerable<object> roleIds);
 
-        string GetUserDisplayName(KoreUser user);
+        Task ChangePassword(object userId, string newPassword);
+
+        Task<string> GetUserDisplayName(KoreUser user);
 
         #endregion Users
 
         #region Roles
 
-        IEnumerable<KoreRole> GetAllRoles();
+        Task<IEnumerable<KoreRole>> GetAllRoles();
 
-        KoreRole GetRoleById(object roleId);
+        Task<KoreRole> GetRoleById(object roleId);
 
-        KoreRole GetRoleByName(string roleName);
+        Task<IEnumerable<KoreRole>> GetRolesByIds(IEnumerable<object> roleIds);
 
-        bool DeleteRole(object roleId);
+        Task<KoreRole> GetRoleByName(string roleName);
 
-        void InsertRole(KoreRole role);
+        Task<bool> DeleteRole(object roleId);
 
-        void UpdateRole(KoreRole role);
+        Task InsertRole(KoreRole role);
 
-        IEnumerable<KoreUser> GetUsersByRoleId(object roleId);
+        Task UpdateRole(KoreRole role);
 
-        IEnumerable<KoreUser> GetUsersByRoleName(string roleName);
+        Task<IEnumerable<KoreUser>> GetUsersByRoleId(object roleId);
+
+        Task<IEnumerable<KoreUser>> GetUsersByRoleName(string roleName);
 
         #endregion Roles
 
         #region Permissions
 
-        IEnumerable<KorePermission> GetAllPermissions();
+        Task<IEnumerable<KorePermission>> GetAllPermissions();
 
-        KorePermission GetPermissionById(object permissionId);
+        Task<KorePermission> GetPermissionById(object permissionId);
 
-        KorePermission GetPermissionByName(string permissionName);
+        Task<KorePermission> GetPermissionByName(string permissionName);
 
-        IEnumerable<KorePermission> GetPermissionsForRole(string roleName);
+        Task<IEnumerable<KorePermission>> GetPermissionsForRole(string roleName);
 
-        void AssignPermissionsToRole(object roleId, IEnumerable<object> permissionIds);
+        Task AssignPermissionsToRole(object roleId, IEnumerable<object> permissionIds);
 
-        bool DeletePermission(object permissionId);
+        Task<bool> DeletePermission(object permissionId);
 
-        bool DeletePermissions(IEnumerable<object> permissionIds);
+        Task<bool> DeletePermissions(IEnumerable<object> permissionIds);
 
-        void InsertPermission(KorePermission permission);
+        Task InsertPermission(KorePermission permission);
 
-        void InsertPermissions(IEnumerable<KorePermission> permissions);
+        Task InsertPermissions(IEnumerable<KorePermission> permissions);
 
-        void UpdatePermission(KorePermission permission);
+        Task UpdatePermission(KorePermission permission);
 
         #endregion Permissions
 
         #region Profile
 
-        IDictionary<string, string> GetProfile(string userId);
+        Task<IDictionary<string, string>> GetProfile(string userId);
 
-        IEnumerable<UserProfile> GetProfiles(IEnumerable<string> userIds);
+        Task<IEnumerable<UserProfile>> GetProfiles(IEnumerable<string> userIds);
 
-        void UpdateProfile(string userId, IDictionary<string, string> profile, bool deleteExisting = false);
+        Task UpdateProfile(string userId, IDictionary<string, string> profile, bool deleteExisting = false);
 
-        string GetProfileEntry(string userId, string key);
+        Task<string> GetProfileEntry(string userId, string key);
 
-        void SaveProfileEntry(string userId, string key, string value);
+        Task SaveProfileEntry(string userId, string key, string value);
 
-        void DeleteProfileEntry(string userId, string key);
+        Task DeleteProfileEntry(string userId, string key);
 
-        IEnumerable<KoreUserProfileEntry> GetProfileEntriesByKey(string key);
+        Task<IEnumerable<KoreUserProfileEntry>> GetProfileEntriesByKey(string key);
 
-        IEnumerable<KoreUserProfileEntry> GetProfileEntriesByKeyAndValue(string key, string value);
+        Task<IEnumerable<KoreUserProfileEntry>> GetProfileEntriesByKeyAndValue(string key, string value);
 
-        bool ProfileEntryExists(string key, string value, string userId = null);
+        Task<bool> ProfileEntryExists(string key, string value, string userId = null);
 
         #endregion Profile
     }

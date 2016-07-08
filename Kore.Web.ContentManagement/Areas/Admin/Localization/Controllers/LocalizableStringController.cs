@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Kore.Localization.Services;
 using Kore.Web.Configuration;
@@ -36,7 +37,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(StandardPermissions.FullAccess))
+            if (! CheckPermission(StandardPermissions.FullAccess))
             {
                 return new HttpUnauthorizedResult();
             }

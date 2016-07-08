@@ -2,6 +2,7 @@
 using Kore.ComponentModel;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
+using Kore.Threading;
 
 namespace Kore.Web.Security.Membership
 {
@@ -58,7 +59,8 @@ namespace Kore.Web.Security.Membership
         public void PopulateFields(string userId)
         {
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
-            var profile = membershipService.GetProfile(userId);
+
+            var profile = AsyncHelper.RunSync(() => membershipService.GetProfile(userId));
 
             if (profile.ContainsKey(Fields.FamilyName))
             {

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
-using Kore.Collections;
+using Kore.EntityFramework.Data;
 using Kore.Infrastructure;
 using Kore.Localization.Domain;
 using Kore.Localization.Services;
@@ -39,7 +40,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
         }
 
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public override IEnumerable<ContentBlock> Get(ODataQueryOptions<ContentBlock> options)
+        public override async Task<IEnumerable<ContentBlock>> Get(ODataQueryOptions<ContentBlock> options)
         {
             if (!CheckPermission(ReadPermission))
             {
@@ -55,13 +56,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
             using (var connection = Service.OpenConnection())
             {
                 var results = options.ApplyTo(connection.Query(x => x.PageId == null));
-                return (results as IQueryable<ContentBlock>).ToHashSet();
+                return await (results as IQueryable<ContentBlock>).ToHashSetAsync();
             }
         }
 
         //[EnableQuery]
         [HttpPost]
-        public virtual IEnumerable<ContentBlock> GetByPageId(ODataQueryOptions<ContentBlock> options, ODataActionParameters parameters)
+        public virtual async Task<IEnumerable<ContentBlock>> GetByPageId(ODataQueryOptions<ContentBlock> options, ODataActionParameters parameters)
         {
             if (!CheckPermission(ReadPermission))
             {
@@ -84,30 +85,30 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
                     .ThenBy(x => x.Order);
 
                 var results = options.ApplyTo(query);
-                return (results as IQueryable<ContentBlock>).ToHashSet();
+                return await (results as IQueryable<ContentBlock>).ToHashSetAsync();
             }
         }
 
-        public override IHttpActionResult Put([FromODataUri] Guid key, ContentBlock entity)
+        public override async Task<IHttpActionResult> Put([FromODataUri] Guid key, ContentBlock entity)
         {
             var blockType = Type.GetType(entity.BlockType);
             var contentBlocks = EngineContext.Current.ResolveAll<IContentBlock>();
             var contentBlock = contentBlocks.First(x => x.GetType() == blockType);
             entity.BlockName = contentBlock.Name;
-            return base.Put(key, entity);
+            return await base.Put(key, entity);
         }
 
-        public override IHttpActionResult Post(ContentBlock entity)
+        public override async Task<IHttpActionResult> Post(ContentBlock entity)
         {
             var blockType = Type.GetType(entity.BlockType);
             var contentBlocks = EngineContext.Current.ResolveAll<IContentBlock>();
             var contentBlock = contentBlocks.First(x => x.GetType() == blockType);
             entity.BlockName = contentBlock.Name;
-            return base.Post(entity);
+            return await base.Post(entity);
         }
 
         [HttpGet]
-        public IHttpActionResult GetLocalized([FromODataUri] Guid id, [FromODataUri] string cultureCode)
+        public async Task<IHttpActionResult> GetLocalized([FromODataUri] Guid id, [FromODataUri] string cultureCode)
         {
             if (!CheckPermission(ReadPermission))
             {
@@ -119,7 +120,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
                 return BadRequest();
             }
 
-            var entity = Service.FindOne(id);
+            var entity = await Service.FindOneAsync(id);
 
             if (entity == null)
             {
@@ -129,7 +130,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
             string entityType = typeof(ContentBlock).FullName;
             string entityId = entity.Id.ToString();
 
-            var localizedRecord = localizablePropertyService.Value.FindOne(x =>
+            var localizedRecord = await localizablePropertyService.Value.FindOneAsync(x =>
                 x.CultureCode == cultureCode &&
                 x.EntityType == entityType &&
                 x.EntityId == entityId &&
@@ -144,7 +145,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
         }
 
         [HttpPost]
-        public IHttpActionResult SaveLocalized(ODataActionParameters parameters)
+        public async Task<IHttpActionResult> SaveLocalized(ODataActionParameters parameters)
         {
             if (!CheckPermission(WritePermission))
             {
@@ -166,7 +167,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
             string entityType = typeof(ContentBlock).FullName;
             string entityId = entity.Id.ToString();
 
-            var localizedRecord = localizablePropertyService.Value.FindOne(x =>
+            var localizedRecord = await localizablePropertyService.Value.FindOneAsync(x =>
                 x.CultureCode == cultureCode &&
                 x.EntityType == entityType &&
                 x.EntityId == entityId &&
@@ -182,13 +183,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
                     Property = "BlockValues",
                     Value = entity.BlockValues
                 };
-                localizablePropertyService.Value.Insert(localizedRecord);
+                await localizablePropertyService.Value.InsertAsync(localizedRecord);
                 return Ok();
             }
             else
             {
                 localizedRecord.Value = entity.BlockValues;
-                localizablePropertyService.Value.Update(localizedRecord);
+                await localizablePropertyService.Value.UpdateAsync(localizedRecord);
                 return Ok();
             }
         }

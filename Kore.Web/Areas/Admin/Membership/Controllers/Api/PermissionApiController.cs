@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
@@ -10,6 +11,7 @@ using Castle.Core.Logging;
 using Kore.Collections;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
+using Kore.Threading;
 using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
@@ -28,7 +30,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         }
 
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public virtual IEnumerable<KorePermission> Get(ODataQueryOptions<KorePermission> options)
+        public virtual async Task<IEnumerable<KorePermission>> Get(ODataQueryOptions<KorePermission> options)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
@@ -41,22 +43,22 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             };
             options.Validate(settings);
 
-            var results = options.ApplyTo(Service.GetAllPermissions().AsQueryable());
+            var results = options.ApplyTo((await Service.GetAllPermissions()).AsQueryable());
             return (results as IQueryable<KorePermission>).ToHashSet();
         }
 
         [EnableQuery]
-        public virtual SingleResult<KorePermission> Get([FromODataUri] string key)
+        public virtual async Task<SingleResult<KorePermission>> Get([FromODataUri] string key)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
                 return SingleResult.Create(Enumerable.Empty<KorePermission>().AsQueryable());
             }
-            var entity = Service.GetPermissionById(key);
+            var entity = await Service.GetPermissionById(key);
             return SingleResult.Create(new[] { entity }.AsQueryable());
         }
 
-        public virtual IHttpActionResult Put([FromODataUri] string key, KorePermission entity)
+        public virtual async Task<IHttpActionResult> Put([FromODataUri] string key, KorePermission entity)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
@@ -75,7 +77,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
 
             try
             {
-                Service.UpdatePermission(entity);
+                await Service.UpdatePermission(entity);
             }
             catch (DbUpdateConcurrencyException x)
             {
@@ -91,7 +93,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             return Updated(entity);
         }
 
-        public virtual IHttpActionResult Post(KorePermission entity)
+        public virtual async Task<IHttpActionResult> Post(KorePermission entity)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
@@ -103,13 +105,13 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            Service.InsertPermission(entity);
+            await Service.InsertPermission(entity);
 
             return Created(entity);
         }
 
         [AcceptVerbs("PATCH", "MERGE")]
-        public virtual IHttpActionResult Patch([FromODataUri] string key, Delta<KorePermission> patch)
+        public virtual async Task<IHttpActionResult> Patch([FromODataUri] string key, Delta<KorePermission> patch)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
@@ -121,7 +123,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            KorePermission entity = Service.GetPermissionById(key);
+            KorePermission entity = await Service.GetPermissionById(key);
             if (entity == null)
             {
                 return NotFound();
@@ -131,7 +133,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
 
             try
             {
-                Service.UpdatePermission(entity);
+                await Service.UpdatePermission(entity);
             }
             catch (DbUpdateConcurrencyException x)
             {
@@ -147,34 +149,34 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             return Updated(entity);
         }
 
-        public virtual IHttpActionResult Delete([FromODataUri] string key)
+        public virtual async Task<IHttpActionResult> Delete([FromODataUri] string key)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
                 return Unauthorized();
             }
 
-            KorePermission entity = Service.GetPermissionById(key);
+            KorePermission entity = await Service.GetPermissionById(key);
             if (entity == null)
             {
                 return NotFound();
             }
 
-            Service.DeletePermission(key);
+            await Service.DeletePermission(key);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         [HttpPost]
-        public virtual IEnumerable<EdmKorePermission> GetPermissionsForRole(ODataActionParameters parameters)
+        public virtual async Task<IEnumerable<EdmKorePermission>> GetPermissionsForRole(ODataActionParameters parameters)
         {
             if (!CheckPermission(StandardPermissions.FullAccess))
             {
                 return Enumerable.Empty<EdmKorePermission>().AsQueryable();
             }
             string roleId = (string)parameters["roleId"];
-            var role = Service.GetRoleById(roleId);
-            return Service.GetPermissionsForRole(role.Name).Select(x => new EdmKorePermission
+            var role = await Service.GetRoleById(roleId);
+            return (await Service.GetPermissionsForRole(role.Name)).Select(x => new EdmKorePermission
             {
                 Id = x.Id,
                 Name = x.Name
@@ -183,7 +185,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
 
         protected virtual bool EntityExists(string key)
         {
-            return Service.GetUserById(key) != null;
+            return AsyncHelper.RunSync(() => Service.GetUserById(key)) != null;
         }
 
         protected static bool CheckPermission(Permission permission)

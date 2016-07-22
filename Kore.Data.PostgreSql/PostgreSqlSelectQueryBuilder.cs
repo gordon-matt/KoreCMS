@@ -1,9 +1,9 @@
 ﻿namespace Kore.Data.PostgreSql
 {
     using System;
-    using System.Data.Common;
     using System.Linq;
     using System.Text;
+    using Kore.Collections;
     using Kore.Data.QueryBuilder;
 
     public class PostgreSqlSelectQueryBuilder : BaseSelectQueryBuilder
@@ -14,34 +14,17 @@
             base.schema = schema;
         }
 
-        public PostgreSqlSelectQueryBuilder(string schema, DbProviderFactory factory)
-            : base(factory)
-        {
-            base.schema = schema;
-        }
-
         public override ISelectQueryBuilder SelectCount()
         {
             selectedColumns.Clear();
-            selectedColumns.Add("COUNT(1)");
+            selectedColumns.Add("COUNT(1)", null);
             orderByStatement.Clear();
             takeCount = 0;
             return this;
         }
 
-        protected override object BuildQuery(bool buildCommand)
+        public override string BuildQuery()
         {
-            if (buildCommand && dbProviderFactory == null)
-            {
-                throw new Exception("Cannot build a command when the Db Factory hasn't been specified. Call SetDbProviderFactory first.");
-            }
-
-            DbCommand command = null;
-            if (buildCommand)
-            {
-                command = dbProviderFactory.CreateCommand();
-            }
-
             var query = new StringBuilder();
             query.Append("SELECT ");
 
@@ -64,9 +47,19 @@
             }
             else
             {
-                foreach (string columnName in selectedColumns)
+                foreach (var column in selectedColumns)
                 {
-                    query.Append(columnName);
+                    if (column.Value == null)
+                    {
+                        query.Append(column.Key);
+                    }
+                    else
+                    {
+                        query.Append(column.Key);
+                        query.Append(" AS ");
+                        query.Append(EncloseIdentifier(column.Value));
+                    }
+
                     query.Append(',');
                 }
                 query.Remove(query.Length - 1, 1); // Trim the last comma inserted by foreach loop
@@ -100,10 +93,10 @@
                     }
                     joinString += " " + clause.ToTable + " ON ";
 
-                    joinString += WhereStatement.CreateComparisonClause(
-                        clause.FromTable + '.' + clause.FromColumn,
-                        clause.ComparisonOperator,
-                        new SqlLiteral(clause.ToTable + '.' + clause.ToColumn));
+                    string fromField = CreateFieldName(clause.FromTable, clause.FromColumn);
+                    string toField = CreateFieldName(clause.ToTable, clause.ToColumn);
+
+                    joinString += CreateComparisonClause(fromField, clause.ComparisonOperator, new SqlLiteral(toField));
 
                     query.Append(joinString);
                     query.Append(' ');
@@ -111,18 +104,13 @@
             }
 
             // Output where statement
-            if (whereStatement.ClauseLevels > 0)
+            if (!whereStatement.Clauses.IsNullOrEmpty())
             {
-                if (buildCommand)
-                {
-                    query.Append(" WHERE ");
-                    query.Append(whereStatement.BuildWhereStatement(true, ref command));
-                }
-                else
-                {
-                    query.Append(" WHERE ");
-                    query.Append(whereStatement.BuildWhereStatement());
-                }
+                query.Append(" ");
+                query.Append(CreateWhereStatement(whereStatement));
+
+                //query.Append(" WHERE ");
+                //query.Append(whereStatement.BuildWhereStatement());
             }
 
             // Output GroupBy statement
@@ -139,23 +127,17 @@
             }
 
             // Output having statement
-            if (havingStatement.ClauseLevels > 0)
+            if (!havingStatement.Clauses.IsNullOrEmpty())
             {
                 // Check if a Group By Clause was set
                 if (groupByColumns.Count == 0)
                 {
                     throw new Exception("Having statement was set without Group By");
                 }
-                if (buildCommand)
-                {
-                    query.Append(" HAVING ");
-                    query.Append(havingStatement.BuildWhereStatement(true, ref command));
-                }
-                else
-                {
-                    query.Append(" HAVING ");
-                    query.Append(havingStatement.BuildWhereStatement());
-                }
+                query.Append(" ");
+                query.Append(CreateWhereStatement(havingStatement));
+                //query.Append(" HAVING ");
+                //query.Append(havingStatement.BuildWhereStatement());
             }
 
             // Output OrderBy statement
@@ -186,17 +168,7 @@
                 query.Append(skipCount);
             }
 
-            if (buildCommand && command != null)
-            {
-                // Return the build command
-                command.CommandText = query.ToString();
-                return command;
-            }
-            else
-            {
-                // Return the built query
-                return query.ToString();
-            }
+            return query.ToString();
         }
 
         protected override string EncloseIdentifier(string identifier)

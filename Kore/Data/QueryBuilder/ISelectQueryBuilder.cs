@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data.Common;
 
 namespace Kore.Data.QueryBuilder
 {
@@ -7,7 +6,7 @@ namespace Kore.Data.QueryBuilder
     {
         ISelectQueryBuilder SelectAll();
 
-        ISelectQueryBuilder Select(string tableName, string column);
+        ISelectQueryBuilder SelectAs(string tableName, string column, string alias = null);
 
         ISelectQueryBuilder Select(string tableName, params string[] columns);
 
@@ -23,9 +22,9 @@ namespace Kore.Data.QueryBuilder
 
         ISelectQueryBuilder Join(JoinType joinType, string toTableName, string toColumnName, ComparisonOperator comparisonOperator, string fromTableName, string fromColumnName);
 
-        ISelectQueryBuilder Where(string tableName, string column, ComparisonOperator comparisonOperator, object value);
+        ISelectQueryBuilder Where(string tableName, string column, ComparisonOperator comparisonOperator, object value, LogicOperator logicOperator = LogicOperator.And);
 
-        ISelectQueryBuilder Where(string tableName, string column, ComparisonOperator comparisonOperator, object value, int level);
+        ISelectQueryBuilder Where(WhereStatement whereStatement);
 
         ISelectQueryBuilder OrderBy(string tableName, string column, SortDirection sortDirection);
 
@@ -33,17 +32,13 @@ namespace Kore.Data.QueryBuilder
 
         ISelectQueryBuilder GroupBy(IEnumerable<TableColumnPair> columns);
 
-        ISelectQueryBuilder Having(string tableName, string column, ComparisonOperator comparisonOperator, object value);
+        ISelectQueryBuilder Having(string tableName, string column, ComparisonOperator comparisonOperator, object value, LogicOperator logicOperator = LogicOperator.And);
 
-        ISelectQueryBuilder Having(string tableName, string column, ComparisonOperator comparisonOperator, object value, int level);
+        ISelectQueryBuilder Having(WhereStatement havingStatement);
 
         ISelectQueryBuilder Skip(int count);
 
         ISelectQueryBuilder Take(int count);
-
-        ISelectQueryBuilder SetDbProviderFactory(DbProviderFactory factory);
-
-        DbCommand BuildCommand();
     }
 
     public struct TableColumnPair

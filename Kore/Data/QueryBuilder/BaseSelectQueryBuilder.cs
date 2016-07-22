@@ -1,5 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Data.Common;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Kore.Collections;
+using Kore.Reflection;
 
 namespace Kore.Data.QueryBuilder
 {
@@ -9,8 +14,7 @@ namespace Kore.Data.QueryBuilder
 
         protected string schema;
         protected readonly ICollection<string> groupByColumns = new List<string>();
-        protected readonly ICollection<string> selectedColumns = new List<string>();
-        protected DbProviderFactory dbProviderFactory;
+        protected readonly IDictionary<string, string> selectedColumns = new Dictionary<string, string>();
         protected WhereStatement havingStatement = new WhereStatement();
         protected bool isDistinct;
         protected ICollection<JoinClause> joins = new List<JoinClause>();
@@ -24,19 +28,6 @@ namespace Kore.Data.QueryBuilder
 
         #endregion Non-Public Members
 
-        #region Constructors
-
-        public BaseSelectQueryBuilder()
-        {
-        }
-
-        public BaseSelectQueryBuilder(DbProviderFactory factory)
-        {
-            dbProviderFactory = factory;
-        }
-
-        #endregion Constructors
-
         #region Public Methods
 
         public virtual ISelectQueryBuilder SelectAll()
@@ -45,10 +36,11 @@ namespace Kore.Data.QueryBuilder
             return this;
         }
 
-        public virtual ISelectQueryBuilder Select(string tableName, string column)
+        public virtual ISelectQueryBuilder SelectAs(string tableName, string column, string alias = null)
         {
-            selectedColumns.Clear();
-            selectedColumns.Add(string.Concat(EncloseTable(tableName), '.', EncloseIdentifier(column)));
+            //selectedColumns.Clear();
+            string columnName = CreateFieldName(tableName, column);
+            selectedColumns.Add(columnName, alias);
             return this;
         }
 
@@ -58,7 +50,7 @@ namespace Kore.Data.QueryBuilder
             string enclosedTableName = EncloseTable(tableName);
             foreach (string column in columns)
             {
-                selectedColumns.Add(string.Concat(enclosedTableName, '.', EncloseIdentifier(column)));
+                selectedColumns.Add(string.Concat(enclosedTableName, '.', EncloseIdentifier(column)), null);
             }
             return this;
         }
@@ -68,7 +60,7 @@ namespace Kore.Data.QueryBuilder
             selectedColumns.Clear();
             foreach (var column in columns)
             {
-                selectedColumns.Add(string.Concat(EncloseTable(column.TableName), '.', EncloseIdentifier(column.ColumnName)));
+                selectedColumns.Add(CreateFieldName(column.TableName, column.ColumnName), null);
             }
             return this;
         }
@@ -76,7 +68,7 @@ namespace Kore.Data.QueryBuilder
         public virtual ISelectQueryBuilder SelectCount()
         {
             selectedColumns.Clear();
-            selectedColumns.Add("COUNT(1)");
+            selectedColumns.Add("COUNT(1)", null);
             return this;
         }
 
@@ -123,20 +115,22 @@ namespace Kore.Data.QueryBuilder
             return this;
         }
 
-        public virtual ISelectQueryBuilder Where(string tableName, string column, ComparisonOperator comparisonOperator, object value)
-        {
-            Where(tableName, column, comparisonOperator, value, 1);
-            return this;
-        }
-
-        public virtual ISelectQueryBuilder Where(string tableName, string column, ComparisonOperator comparisonOperator, object value, int level)
+        public virtual ISelectQueryBuilder Where(string tableName, string column, ComparisonOperator comparisonOperator, object value, LogicOperator logicOperator = LogicOperator.And)
         {
             var whereClause = new WhereClause(
-                string.Concat(EncloseTable(tableName), '.', EncloseIdentifier(column)),
+                logicOperator,
+                tableName,
+                column,
                 comparisonOperator,
                 value);
 
-            whereStatement.Add(whereClause, level);
+            whereStatement.AddClause(whereClause);
+            return this;
+        }
+
+        public virtual ISelectQueryBuilder Where(WhereStatement whereStatement)
+        {
+            this.whereStatement = whereStatement;
             return this;
         }
 
@@ -164,25 +158,27 @@ namespace Kore.Data.QueryBuilder
         {
             foreach (var column in columns)
             {
-                groupByColumns.Add(string.Concat(EncloseTable(column.TableName), '.', EncloseIdentifier(column.ColumnName)));
+                groupByColumns.Add(CreateFieldName(column.TableName, column.ColumnName));
             }
             return this;
         }
 
-        public virtual ISelectQueryBuilder Having(string tableName, string column, ComparisonOperator comparisonOperator, object value)
-        {
-            Having(tableName, column, comparisonOperator, value, 1);
-            return this;
-        }
-
-        public virtual ISelectQueryBuilder Having(string tableName, string column, ComparisonOperator comparisonOperator, object value, int level)
+        public virtual ISelectQueryBuilder Having(string tableName, string column, ComparisonOperator comparisonOperator, object value, LogicOperator logicOperator = LogicOperator.And)
         {
             var whereClause = new WhereClause(
-                string.Concat(EncloseTable(tableName), '.', EncloseIdentifier(column)),
+                logicOperator,
+                tableName,
+                column,
                 comparisonOperator,
                 value);
 
-            havingStatement.Add(whereClause, level);
+            havingStatement.AddClause(whereClause);
+            return this;
+        }
+
+        public virtual ISelectQueryBuilder Having(WhereStatement havingStatement)
+        {
+            this.havingStatement = havingStatement;
             return this;
         }
 
@@ -198,27 +194,11 @@ namespace Kore.Data.QueryBuilder
             return this;
         }
 
-        public virtual ISelectQueryBuilder SetDbProviderFactory(DbProviderFactory factory)
-        {
-            dbProviderFactory = factory;
-            return this;
-        }
-
-        public virtual DbCommand BuildCommand()
-        {
-            return (DbCommand)BuildQuery(true);
-        }
-
-        public virtual string BuildQuery()
-        {
-            return (string)BuildQuery(false);
-        }
+        public abstract string BuildQuery();
 
         #endregion Public Methods
 
         #region Non-Public Methods
-
-        protected abstract object BuildQuery(bool buildCommand);
 
         protected abstract string EncloseIdentifier(string identifier);
 
@@ -229,6 +209,169 @@ namespace Kore.Data.QueryBuilder
                 return string.Concat(schema, '.', EncloseIdentifier(tableName));
             }
             return EncloseIdentifier(tableName);
+        }
+
+        protected virtual string CreateFieldName(string tableName, string column)
+        {
+            return string.Concat(EncloseTable(tableName), '.', EncloseIdentifier(column));
+        }
+
+        protected virtual string CreateWhereStatement(WhereStatement statement)
+        {
+            var sb = new StringBuilder();
+            sb.Append("WHERE ");
+
+            bool isFirst = true;
+            foreach (var clause in statement.Clauses)
+            {
+                CreateWhereClause(clause, sb, isFirst);
+                isFirst = false;
+            }
+
+            return sb.ToString();
+        }
+
+        protected virtual void CreateWhereClause(WhereClause clause, StringBuilder sb, bool isFirst = false)
+        {
+            if (!isFirst)
+            {
+                sb.Append(clause.LogicOperator == LogicOperator.Or ? "OR " : "AND ");
+            }
+
+            string fieldName = string.Concat(EncloseTable(clause.Table), '.', EncloseIdentifier(clause.Column));
+
+            sb.Append("(");
+            sb.Append(CreateComparisonClause(fieldName, clause.ComparisonOperator, clause.Value));
+            sb.Append(") ");
+            sb.Append(" ");
+
+            if (!clause.SubClauses.IsNullOrEmpty())
+            {
+                sb.Append("AND (");
+
+                isFirst = true;
+                foreach (var subClause in clause.SubClauses)
+                {
+                    CreateWhereClause(subClause, sb, isFirst);
+                    isFirst = false;
+                }
+                sb.Append(") ");
+            }
+        }
+
+        protected virtual string CreateComparisonClause(string fieldName, ComparisonOperator comparisonOperator, object value)
+        {
+            string output = string.Empty;
+            if (value != null && value != System.DBNull.Value)
+            {
+                switch (comparisonOperator)
+                {
+                    case ComparisonOperator.EqualTo: output = fieldName + " = " + FormatSQLValue(value); break;
+                    case ComparisonOperator.NotEqualTo: output = fieldName + " <> " + FormatSQLValue(value); break;
+                    case ComparisonOperator.GreaterThan: output = fieldName + " > " + FormatSQLValue(value); break;
+                    case ComparisonOperator.GreaterThanOrEqualTo: output = fieldName + " >= " + FormatSQLValue(value); break;
+                    case ComparisonOperator.LessThan: output = fieldName + " < " + FormatSQLValue(value); break;
+                    case ComparisonOperator.LessThanOrEqualTo: output = fieldName + " <= " + FormatSQLValue(value); break;
+                    case ComparisonOperator.Like: output = fieldName + " LIKE " + FormatSQLValue(value); break;
+                    case ComparisonOperator.NotLike: output = "NOT " + fieldName + " LIKE " + FormatSQLValue(value); break;
+                    case ComparisonOperator.In: output = fieldName + " IN (" + FormatSQLValue(value) + ")"; break;
+                    case ComparisonOperator.Contains: output = string.Format("{0} LIKE ({1})", fieldName, FormatSQLValue("%" + value + "%")); break;
+                    case ComparisonOperator.NotContains: output = string.Format("NOT {0} LIKE {1}", fieldName, FormatSQLValue("%" + value + "%")); break;
+                    case ComparisonOperator.StartsWith: output = string.Format("{0} LIKE ({1})", fieldName, FormatSQLValue(value + "%")); break;
+                    case ComparisonOperator.EndsWith: output = string.Format("{0} LIKE ({1})", fieldName, FormatSQLValue("%" + value)); break;
+                }
+            }
+            else // value==null	|| value==DBNull.Value
+            {
+                if ((comparisonOperator != ComparisonOperator.EqualTo) && (comparisonOperator != ComparisonOperator.NotEqualTo))
+                {
+                    throw new Exception("Cannot use comparison operator " + comparisonOperator.ToString() + " for NULL values.");
+                }
+                else
+                {
+                    switch (comparisonOperator)
+                    {
+                        case ComparisonOperator.EqualTo: output = fieldName + " IS NULL"; break;
+                        case ComparisonOperator.NotEqualTo: output = "NOT " + fieldName + " IS NULL"; break;
+                    }
+                }
+            }
+            return output;
+        }
+
+        protected virtual string FormatSQLValue(object someValue)
+        {
+            string formattedValue = string.Empty;
+            // string StringType = Type.GetType("string").Name;
+            // string DateTimeType = Type.GetType("DateTime").Name;
+
+            if (someValue == null)
+            {
+                formattedValue = "NULL";
+                return formattedValue;
+            }
+
+            var type = someValue.GetType();
+
+            if (type.IsCollection())
+            {
+                var collection = (someValue as IEnumerable);
+                Type collectionType;
+
+                if (type.IsGenericType)
+                {
+                    collectionType = type.GetGenericArguments().Single();
+                }
+                else
+                {
+                    var firstItem = collection.OfType<object>().FirstOrDefault();
+                    if (firstItem == null)
+                    {
+                        formattedValue = "NULL";
+                        return formattedValue;
+                    }
+                    else
+                    {
+                        collectionType = firstItem.GetType();
+                    }
+                }
+
+                switch (collectionType.Name)
+                {
+                    case "String":
+                        formattedValue = string.Join("','", collection.OfType<string>()).AddSingleQuotes();
+                        break;
+
+                    case "DateTime":
+                        formattedValue = string.Join("','", collection.OfType<DateTime>().Select(x => x.ToString("yyyy/MM/dd HH:mm:ss"))).AddSingleQuotes();
+                        break;
+
+                    case "Guid":
+                        formattedValue = string.Join("','", collection.OfType<Guid>().Select(x => x.ToString())).AddSingleQuotes();
+                        break;
+
+                    //case "SqlLiteral":
+                    //    formattedValue = string.Join(",", collection.OfType<SqlLiteral>().Select(x => x.Value));
+                    //    break;
+
+                    case "DBNull": formattedValue = "NULL"; break;
+                    default: formattedValue = string.Join(",", collection.OfType<object>()); break;
+                }
+            }
+            else
+            {
+                switch (type.Name)
+                {
+                    case "String": formattedValue = string.Format("'{0}'", ((string)someValue).Replace("'", "''")); break;
+                    case "DateTime": formattedValue = string.Format("'{0:yyyy/MM/dd HH:mm:ss}'", (DateTime)someValue); break;
+                    case "Guid": formattedValue = string.Format("'{0}'", (Guid)someValue); break;
+                    case "Boolean": formattedValue = (bool)someValue ? "1" : "0"; break;
+                    //case "SqlLiteral": formattedValue = ((SqlLiteral)someValue).Value; break;
+                    case "DBNull": formattedValue = "NULL"; break;
+                    default: formattedValue = someValue.ToString(); break;
+                }
+            }
+            return formattedValue;
         }
 
         #endregion Non-Public Methods

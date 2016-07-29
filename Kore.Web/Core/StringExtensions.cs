@@ -10,6 +10,11 @@ namespace Kore.Web
     {
         public static T JsonDeserialize<T>(this string json)
         {
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return default(T);
+            }
+
             return JsonConvert.DeserializeObject<T>(json);
             //return new JavaScriptSerializer().Deserialize<T>(json);
         }

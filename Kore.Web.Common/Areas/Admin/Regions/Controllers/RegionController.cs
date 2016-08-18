@@ -115,6 +115,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers
             return Json(new { Content = content }, JsonRequestBehavior.AllowGet);
         }
 
+        [AllowAnonymous]
         [Route("get-states/{countryId}")]
         public JsonResult GetStates(int countryId)
         {
@@ -140,6 +141,7 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Controllers
             return Json(new { Data = data }, JsonRequestBehavior.AllowGet);
         }
 
+        [AllowAnonymous]
         [Route("get-cities/{regionId}")]
         public JsonResult GetCities(int regionId)
         {

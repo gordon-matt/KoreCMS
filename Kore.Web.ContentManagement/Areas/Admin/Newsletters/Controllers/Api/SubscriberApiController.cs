@@ -18,13 +18,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
     {
         private readonly IMembershipService membershipService;
         private readonly Lazy<MembershipSettings> membershipSettings;
+        private readonly IWorkContext workContext;
 
         public SubscriberApiController(
             IMembershipService membershipService,
-            Lazy<MembershipSettings> membershipSettings)
+            Lazy<MembershipSettings> membershipSettings,
+            IWorkContext workContext)
         {
             this.membershipService = membershipService;
             this.membershipSettings = membershipSettings;
+            this.workContext = workContext;
         }
 
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
@@ -36,7 +39,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
             }
 
             var userIds = (await membershipService
-                .GetProfileEntriesByKeyAndValue(NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "true"))
+                .GetProfileEntriesByKeyAndValue(workContext.CurrentTenant.Id, NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "true"))
                 .Select(x => x.UserId);
 
             var settings = new ODataValidationSettings()
@@ -45,7 +48,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
             };
             options.Validate(settings);
 
-            var users = await membershipService.GetUsers(x => userIds.Contains(x.Id));
+            var users = await membershipService.GetUsers(workContext.CurrentTenant.Id, x => userIds.Contains(x.Id));
 
             var tasks = users
                 .Select(async x => new Subscriber

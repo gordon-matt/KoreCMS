@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
-using Kore.Data;
 using Kore.Data.EntityFramework;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Kore.Tenants.Domain;
 
 namespace KoreCMS.Data.Domain
 {
-    public class Permission : IEntity
+    public class Permission : ITenantEntity
     {
         public int Id { get; set; }
+
+        public int? TenantId { get; set; }
 
         public string Name { get; set; }
 
@@ -25,7 +26,7 @@ namespace KoreCMS.Data.Domain
 
         #endregion IEntity Members
 
-        public virtual ICollection<IdentityRole> Roles { get; set; }
+        public virtual ICollection<ApplicationRole> Roles { get; set; }
     }
 
     public class PermissionMap : EntityTypeConfiguration<Permission>, IEntityTypeConfiguration

@@ -21,6 +21,7 @@ namespace Kore.Infrastructure
         {
             builder.RegisterType<ClearCacheTask>().As<ITask>().SingleInstance();
 
+            // Tenants
             builder.RegisterType<TenantService>().As<ITenantService>().InstancePerDependency();
 
             // Localization

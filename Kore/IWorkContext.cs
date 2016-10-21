@@ -1,4 +1,5 @@
 ﻿using Kore.Security.Membership;
+using Kore.Tenants.Domain;
 
 namespace Kore
 {
@@ -9,6 +10,8 @@ namespace Kore
         void SetState<T>(string name, T value);
 
         string CurrentCultureCode { get; }
+
+        Tenant CurrentTenant { get; }
 
         KoreUser CurrentUser { get; }
     }

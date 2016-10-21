@@ -19,15 +19,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
     {
         private readonly Lazy<IMembershipService> membershipService;
         private readonly Lazy<IBlogPostTagService> postTagService;
+        private readonly IWorkContext workContext;
 
         public BlogPostApiController(
             IBlogPostService service,
             Lazy<IMembershipService> membershipService,
-            Lazy<IBlogPostTagService> postTagService)
+            Lazy<IBlogPostTagService> postTagService,
+            IWorkContext workContext)
             : base(service)
         {
             this.membershipService = membershipService;
             this.postTagService = postTagService;
+            this.workContext = workContext;
         }
 
         [AllowAnonymous]
@@ -47,7 +50,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
         public override async Task<IHttpActionResult> Post(BlogPost entity)
         {
             entity.DateCreatedUtc = DateTime.UtcNow;
-            entity.UserId = (await membershipService.Value.GetUserByName(User.Identity.Name)).Id;
+            entity.UserId = (await membershipService.Value.GetUserByName(workContext.CurrentTenant.Id, User.Identity.Name)).Id;
 
             var tags = entity.Tags;
             entity.Tags = null;

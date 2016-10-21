@@ -29,12 +29,15 @@ namespace Kore.Web.Security.Membership
 
                 if (httpContext.User.Identity.IsAuthenticated)
                 {
-                    var user = AsyncHelper.RunSync(() => membershipService.GetUserByName(httpContext.User.Identity.Name));
-                    if (user == null)
+                    return ctx =>
                     {
-                        return null;
-                    }
-                    return ctx => (T)(object)user;
+                        var user = AsyncHelper.RunSync(() => membershipService.GetUserByName(ctx.CurrentTenant.Id, httpContext.User.Identity.Name));
+                        if (user == null)
+                        {
+                            return default(T);
+                        }
+                        return (T)(object)user;
+                    };
                 }
             }
             return null;

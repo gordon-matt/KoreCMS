@@ -1,12 +1,14 @@
 ﻿using System.Data.Entity.ModelConfiguration;
-using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Tenants.Domain;
 
 namespace KoreCMS.Data.Domain
 {
-    public class UserProfileEntry : IEntity
+    public class UserProfileEntry : ITenantEntity
     {
         public int Id { get; set; }
+
+        public int? TenantId { get; set; }
 
         public string UserId { get; set; }
 

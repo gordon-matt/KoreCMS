@@ -324,6 +324,7 @@
     <Compile Include="Serialization\SharpSerializer.cs" />
     <Compile Include="Serialization\SharpSerializerBinarySettings.cs" />
     <Compile Include="Serialization\SharpSerializerXmlSettings.cs" />
+    <Compile Include="Tenants\Domain\ITenantEntity.cs" />
     <Compile Include="Tenants\Domain\Tenant.cs" />
     <Compile Include="Tenants\Services\ITenantService.cs" />
     <Compile Include="Tenants\TenantExtensions.cs" />

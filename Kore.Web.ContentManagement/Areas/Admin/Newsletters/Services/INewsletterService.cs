@@ -20,15 +20,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Services
         private readonly Lazy<MembershipSettings> membershipSettings;
         private readonly Lazy<IEventBus> eventBus;
         private readonly Localizer T;
+        private readonly Lazy<IWorkContext> workContext;
 
         public NewsletterService(
             Lazy<IMembershipService> membershipService,
             Lazy<MembershipSettings> membershipSettings,
-            Lazy<IEventBus> eventBus)
+            Lazy<IEventBus> eventBus,
+            Lazy<IWorkContext> workContext)
         {
             this.membershipService = membershipService;
             this.membershipSettings = membershipSettings;
             this.eventBus = eventBus;
+            this.workContext = workContext;
             T = LocalizationUtilities.Resolve();
         }
 
@@ -43,7 +46,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Services
                 return false;
             }
 
-            var existingUser = AsyncHelper.RunSync(() => membershipService.Value.GetUserByEmail(email));
+            var existingUser = AsyncHelper.RunSync(() => membershipService.Value.GetUserByEmail(workContext.Value.CurrentTenant.Id, email));
 
             // Check if a user exists with that email..
             if (existingUser != null)
@@ -73,8 +76,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Services
                 membershipSettings.Value.GeneratedPasswordLength,
                 membershipSettings.Value.GeneratedPasswordNumberOfNonAlphanumericChars);
 
-            AsyncHelper.RunSync(() => membershipService.Value.InsertUser(new KoreUser { UserName = email, Email = email }, password));
-            var user = AsyncHelper.RunSync(() => membershipService.Value.GetUserByEmail(email));
+            AsyncHelper.RunSync(() => membershipService.Value.InsertUser(workContext.Value.CurrentTenant.Id, new KoreUser { UserName = email, Email = email }, password));
+            var user = AsyncHelper.RunSync(() => membershipService.Value.GetUserByEmail(workContext.Value.CurrentTenant.Id, email));
 
             // and sign up for newsletter, as requested.
             AsyncHelper.RunSync(() => membershipService.Value.SaveProfileEntry(user.Id, NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, bool.TrueString));

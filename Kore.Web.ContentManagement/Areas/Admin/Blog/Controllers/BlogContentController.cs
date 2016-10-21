@@ -179,7 +179,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
             ViewBag.IsChildAction = isChildAction;
 
             var userIds = model.Select(x => x.UserId).Distinct();
-            var userNames = (await membershipService.Value.GetUsers(x => userIds.Contains(x.Id))).ToDictionary(k => k.Id, v => v.UserName);
+            var userNames = (await membershipService.Value.GetUsers(WorkContext.CurrentTenant.Id, x => userIds.Contains(x.Id))).ToDictionary(k => k.Id, v => v.UserName);
 
             int total = await postService.Value.CountAsync();
 

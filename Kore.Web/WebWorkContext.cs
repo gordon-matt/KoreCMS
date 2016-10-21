@@ -18,14 +18,12 @@ namespace Kore.Web
     {
         private Tenant cachedTenant;
 
-        private readonly ITenantService tenantService;
         private readonly IWebHelper webHelper;
         private readonly ConcurrentDictionary<string, Func<object>> stateResolvers = new ConcurrentDictionary<string, Func<object>>();
         private readonly IEnumerable<IWorkContextStateProvider> workContextStateProviders;
 
         public WebWorkContext()
         {
-            tenantService = EngineContext.Current.Resolve<ITenantService>();
             webHelper = EngineContext.Current.Resolve<IWebHelper>();
             workContextStateProviders = EngineContext.Current.ResolveAll<IWorkContextStateProvider>();
             Breadcrumbs = new BreadcrumbCollection();
@@ -86,6 +84,8 @@ namespace Kore.Web
 
                 // Try to determine the current tenant by HTTP_HOST
                 var host = webHelper.ServerVariables("HTTP_HOST");
+
+                var tenantService = EngineContext.Current.Resolve<ITenantService>();
                 var allTenants = tenantService.Find();
                 var tenant = allTenants.FirstOrDefault(s => s.ContainsHostValue(host));
 

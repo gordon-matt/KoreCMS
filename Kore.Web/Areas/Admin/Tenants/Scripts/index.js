@@ -23,6 +23,8 @@
 
         self.id = ko.observable(0);
         self.name = ko.observable(null);
+        self.url = ko.observable(null);
+        self.hosts = ko.observable(null);
 
         self.attached = function () {
             currentSection = $("#grid-section");
@@ -45,7 +47,9 @@
 
             self.validator = $("#form-section-form").validate({
                 rules: {
-                    Name: { required: true, maxlength: 255 }
+                    Name: { required: true, maxlength: 255 },
+                    Url: { required: true, maxlength: 255 },
+                    Hosts: { required: true }
                 }
             });
 
@@ -127,6 +131,8 @@
         self.create = function () {
             self.id(0);
             self.name(null);
+            self.url(null);
+            self.hosts(null);
 
             self.validator.resetForm();
             switchSection($("#form-section"));
@@ -142,6 +148,8 @@
             .done(function (json) {
                 self.id(json.Id);
                 self.name(json.Name);
+                self.url(json.Url);
+                self.hosts(json.Hosts);
 
                 switchSection($("#form-section"));
                 $("#form-section-legend").html(self.translations.Edit);
@@ -179,7 +187,9 @@
 
             var record = {
                 Id: self.id(),
-                Name: self.name()
+                Name: self.name(),
+                Url: self.url(),
+                Hosts: self.hosts()
             };
 
             if (isNew) {

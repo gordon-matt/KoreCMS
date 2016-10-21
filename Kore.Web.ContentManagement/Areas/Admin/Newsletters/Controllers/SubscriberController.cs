@@ -101,10 +101,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
         public async Task<FileContentResult> DownloadCsv()
         {
             var userIds = (await membershipService.Value
-                .GetProfileEntriesByKeyAndValue(NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "true"))
+                .GetProfileEntriesByKeyAndValue(WorkContext.CurrentTenant.Id, NewsletterUserProfileProvider.Fields.SubscribeToNewsletters, "true"))
                 .Select(x => x.UserId);
 
-            var users = (await membershipService.Value.GetUsers(x => userIds.Contains(x.Id)))
+            var users = (await membershipService.Value.GetUsers(WorkContext.CurrentTenant.Id, x => userIds.Contains(x.Id)))
                 .Select(x => new
                 {
                     Email = x.Email,

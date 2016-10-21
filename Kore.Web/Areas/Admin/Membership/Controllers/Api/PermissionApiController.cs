@@ -20,13 +20,15 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
     public class PermissionApiController : ODataController
     {
         private readonly Lazy<ILogger> logger;
+        private readonly IWorkContext workContext;
 
         protected IMembershipService Service { get; private set; }
 
-        public PermissionApiController(IMembershipService service, Lazy<ILogger> logger)
+        public PermissionApiController(IMembershipService service, Lazy<ILogger> logger, IWorkContext workContext)
         {
             this.Service = service;
             this.logger = logger;
+            this.workContext = workContext;
         }
 
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
@@ -43,7 +45,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             };
             options.Validate(settings);
 
-            var results = options.ApplyTo((await Service.GetAllPermissions()).AsQueryable());
+            var results = options.ApplyTo((await Service.GetAllPermissions(workContext.CurrentTenant.Id)).AsQueryable());
             return (results as IQueryable<KorePermission>).ToHashSet();
         }
 
@@ -105,7 +107,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            await Service.InsertPermission(entity);
+            await Service.InsertPermission(workContext.CurrentTenant.Id, entity);
 
             return Created(entity);
         }
@@ -176,7 +178,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             }
             string roleId = (string)parameters["roleId"];
             var role = await Service.GetRoleById(roleId);
-            return (await Service.GetPermissionsForRole(role.Name)).Select(x => new EdmKorePermission
+            return (await Service.GetPermissionsForRole(workContext.CurrentTenant.Id, role.Name)).Select(x => new EdmKorePermission
             {
                 Id = x.Id,
                 Name = x.Name

@@ -686,7 +686,9 @@ namespace Kore.Web.Mvc
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
             var permissionProviders = EngineContext.Current.ResolveAll<IPermissionProvider>();
             var permissions = permissionProviders.SelectMany(x => x.GetPermissions()).ToList();
-            var allPermissions = AsyncHelper.RunSync(() => membershipService.GetAllPermissions()).ToHashSet();
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+
+            var allPermissions = AsyncHelper.RunSync(() => membershipService.GetAllPermissions(workContext.CurrentTenant.Id)).ToHashSet();
             var T = LocalizationUtilities.Resolve();
 
             #region First check if all permissions are in the DB
@@ -701,7 +703,7 @@ namespace Kore.Web.Mvc
                         Category = string.IsNullOrEmpty(permission.Category) ? T(KoreWebLocalizableStrings.General.Miscellaneous) : permission.Category,
                         Description = permission.Description
                     };
-                    membershipService.InsertPermission(newPermission);
+                    membershipService.InsertPermission(workContext.CurrentTenant.Id, newPermission);
                     allPermissions.Add(newPermission);
                 }
             }
@@ -735,8 +737,9 @@ namespace Kore.Web.Mvc
             object checkboxHtmlAttributes = null)
         {
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
 
-            var selectList = AsyncHelper.RunSync(() => membershipService.GetAllRoles())
+            var selectList = AsyncHelper.RunSync(() => membershipService.GetAllRoles(workContext.CurrentTenant.Id))
                 .ToSelectList(
                     value => value.Id,
                     text => text.Name);
@@ -747,8 +750,9 @@ namespace Kore.Web.Mvc
         public MvcHtmlString RolesDropDownList(string name, string selectedValue = null, object htmlAttributes = null, string emptyText = null)
         {
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
 
-            var selectList = AsyncHelper.RunSync(() => membershipService.GetAllRoles())
+            var selectList = AsyncHelper.RunSync(() => membershipService.GetAllRoles(workContext.CurrentTenant.Id))
                 .ToSelectList(
                     value => value.Id,
                     text => text.Name,
@@ -764,8 +768,9 @@ namespace Kore.Web.Mvc
             var selectedValue = func(html.ViewData.Model);
 
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
 
-            var selectList = AsyncHelper.RunSync(() => membershipService.GetAllRoles())
+            var selectList = AsyncHelper.RunSync(() => membershipService.GetAllRoles(workContext.CurrentTenant.Id))
                 .ToSelectList(
                     value => value.Id,
                     text => text.Name,

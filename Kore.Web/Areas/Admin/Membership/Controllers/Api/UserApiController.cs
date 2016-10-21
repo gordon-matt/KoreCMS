@@ -22,6 +22,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
     public class UserApiController : ODataController
     {
         private readonly Lazy<ILogger> logger;
+        private readonly IWorkContext workContext;
 
         protected IMembershipService Service { get; private set; }
 
@@ -30,11 +31,13 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         public UserApiController(
             IMembershipService service,
             Lazy<MembershipSettings> membershipSettings,
-            Lazy<ILogger> logger)
+            Lazy<ILogger> logger,
+            IWorkContext workContext)
         {
             this.Service = service;
             this.membershipSettings = membershipSettings;
             this.logger = logger;
+            this.workContext = workContext;
         }
 
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
@@ -51,7 +54,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             };
             options.Validate(settings);
 
-            var results = options.ApplyTo(Service.GetAllUsersAsQueryable());
+            var results = options.ApplyTo(Service.GetAllUsersAsQueryable(workContext.CurrentTenant.Id));
             return await (results as IQueryable<KoreUser>).ToHashSetAsync();
         }
 
@@ -117,7 +120,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
                 membershipSettings.Value.GeneratedPasswordLength,
                 membershipSettings.Value.GeneratedPasswordNumberOfNonAlphanumericChars);
 
-            await Service.InsertUser(entity, password);
+            await Service.InsertUser(workContext.CurrentTenant.Id, entity, password);
 
             return Created(entity);
         }

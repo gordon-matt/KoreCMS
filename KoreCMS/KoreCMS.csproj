@@ -284,7 +284,9 @@
     <Compile Include="Controllers\InstallationController.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
     <Compile Include="Data\ApplicationDbContextFactory.cs" />
+    <Compile Include="Data\ApplicationRoleManager.cs" />
     <Compile Include="Data\ApplicationUserManager.cs" />
+    <Compile Include="Data\Domain\ApplicationRole.cs" />
     <Compile Include="Data\Domain\ApplicationUser.cs" />
     <Compile Include="Data\Domain\Permission.cs" />
     <Compile Include="Data\Domain\UserProfileEntry.cs" />

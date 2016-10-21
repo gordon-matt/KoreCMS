@@ -34,11 +34,31 @@
                     <fieldset>
                         <legend id="form-section-legend"></legend>
                         <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     @Html.Label("Name", T(KoreWebLocalizableStrings.General.Name), new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
                                     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                                         @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    @Html.Label("Url", T(KoreWebLocalizableStrings.Tenants.Model.Url), new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                                        @Html.TextBox("Url", null, new { @class = "form-control", data_bind = "value: url" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    @Html.Label("Hosts", T(KoreWebLocalizableStrings.Tenants.Model.Hosts), new { @class = "control-label col-xs-12 col-sm-4 col-md-3 col-lg-3" })
+                                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                                        @Html.TextBox("Hosts", null, new { @class = "form-control", data_bind = "value: hosts" })
                                     </div>
                                 </div>
                             </div>

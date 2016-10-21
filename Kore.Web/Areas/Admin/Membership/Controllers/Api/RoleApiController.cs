@@ -20,13 +20,15 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
     public class RoleApiController : ODataController
     {
         private readonly Lazy<ILogger> logger;
+        private readonly IWorkContext workContext;
 
         protected IMembershipService Service { get; private set; }
 
-        public RoleApiController(IMembershipService service, Lazy<ILogger> logger)
+        public RoleApiController(IMembershipService service, Lazy<ILogger> logger, IWorkContext workContext)
         {
             this.Service = service;
             this.logger = logger;
+            this.workContext = workContext;
         }
 
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
@@ -43,7 +45,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             };
             options.Validate(settings);
 
-            var results = options.ApplyTo((await Service.GetAllRoles()).AsQueryable());
+            var results = options.ApplyTo((await Service.GetAllRoles(workContext.CurrentTenant.Id)).AsQueryable());
             return (results as IQueryable<KoreRole>).ToHashSet();
         }
 
@@ -105,7 +107,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            await Service.InsertRole(entity);
+            await Service.InsertRole(workContext.CurrentTenant.Id, entity);
 
             return Created(entity);
         }

@@ -43,7 +43,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers
 
             ViewBag.Title = T(KoreWebLocalizableStrings.Membership.Title);
 
-            ViewBag.SelectList = (await membershipService.GetAllRoles())
+            ViewBag.SelectList = (await membershipService.GetAllRoles(WorkContext.CurrentTenant.Id))
                 .ToSelectList(v => v.Id.ToString(), t => t.Name, T(KoreWebLocalizableStrings.Membership.AllRolesSelectListOption));
 
             return PartialView("Kore.Web.Areas.Admin.Membership.Views.Membership.Index");

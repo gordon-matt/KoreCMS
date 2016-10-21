@@ -12,12 +12,15 @@ namespace Kore.Web.Security.Membership.Permissions
     public class RolesBasedAuthorizationService : IAuthorizationService
     {
         private readonly IMembershipService membershipService;
+        private readonly IWorkContext workContext;
+
         private static readonly string[] anonymousRole = new[] { "Anonymous" };
         private static readonly string[] authenticatedRole = new[] { "Authenticated" };
 
-        public RolesBasedAuthorizationService(IMembershipService membershipService)
+        public RolesBasedAuthorizationService(IMembershipService membershipService, IWorkContext workContext)
         {
             this.membershipService = membershipService;
+            this.workContext = workContext;
         }
 
         public Localizer T { get; set; }
@@ -63,7 +66,7 @@ namespace Kore.Web.Security.Membership.Permissions
 
                     foreach (var role in rolesToExamine)
                     {
-                        var rolePermissions = AsyncHelper.RunSync(() => membershipService.GetPermissionsForRole(role));
+                        var rolePermissions = AsyncHelper.RunSync(() => membershipService.GetPermissionsForRole(workContext.CurrentTenant.Id, role));
                         foreach (var rolePermission in rolePermissions)
                         {
                             string possessedName = rolePermission.Name;

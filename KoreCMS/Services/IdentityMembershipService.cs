@@ -28,8 +28,8 @@ namespace KoreCMS.Services
 
         private readonly UserStore<ApplicationUser> userStore;
         private readonly ApplicationUserManager userManager;
-        private readonly RoleStore<IdentityRole> roleStore;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly RoleStore<ApplicationRole> roleStore;
+        private readonly ApplicationRoleManager roleManager;
         private readonly IRepository<UserProfileEntry> userProfileRepository;
 
         private static Dictionary<string, List<KoreRole>> cachedUserRoles;
@@ -47,9 +47,9 @@ namespace KoreCMS.Services
             dbContext = new ApplicationDbContext(settings.ConnectionString);
 
             this.userStore = new UserStore<ApplicationUser>(dbContext);
-            this.roleStore = new RoleStore<IdentityRole>(dbContext);
+            this.roleStore = new RoleStore<ApplicationRole>(dbContext);
             this.userManager = new ApplicationUserManager(userStore);
-            this.roleManager = new RoleManager<IdentityRole>(roleStore);
+            this.roleManager = new ApplicationRoleManager(roleStore);
             this.userProfileRepository = userProfileRepository;
         }
 
@@ -73,25 +73,33 @@ namespace KoreCMS.Services
 
         #region Users
 
-        public IQueryable<KoreUser> GetAllUsersAsQueryable()
+        public IQueryable<KoreUser> GetAllUsersAsQueryable(int? tenantId)
         {
-            return dbContext.Users.Select(x => new KoreUser
+            IQueryable<ApplicationUser> query = dbContext.Users;
+
+            if (tenantId.HasValue)
             {
-                Id = x.Id,
-                UserName = x.UserName,
-                Email = x.Email,
-                IsLockedOut = x.LockoutEnabled
-            });
+                query = query.Where(x => x.TenantId == tenantId);
+            }
+
+            return query
+                .Select(x => new KoreUser
+                {
+                    Id = x.Id,
+                    UserName = x.UserName,
+                    Email = x.Email,
+                    IsLockedOut = x.LockoutEnabled
+                });
         }
 
-        public async Task<IEnumerable<KoreUser>> GetAllUsers()
+        public async Task<IEnumerable<KoreUser>> GetAllUsers(int? tenantId)
         {
-            return await GetAllUsersAsQueryable().ToHashSetAsync();
+            return await GetAllUsersAsQueryable(tenantId).ToHashSetAsync();
         }
 
-        public async Task<IEnumerable<KoreUser>> GetUsers(Expression<Func<KoreUser, bool>> predicate)
+        public async Task<IEnumerable<KoreUser>> GetUsers(int? tenantId, Expression<Func<KoreUser, bool>> predicate)
         {
-            return await GetAllUsersAsQueryable()
+            return await GetAllUsersAsQueryable(tenantId)
                 .Where(predicate)
                 .ToHashSetAsync();
         }
@@ -117,9 +125,18 @@ namespace KoreCMS.Services
             });
         }
 
-        public async Task<KoreUser> GetUserByEmail(string email)
+        public async Task<KoreUser> GetUserByEmail(int? tenantId, string email)
         {
-            var user = await userManager.FindByEmailAsync(email);
+            ApplicationUser user;
+
+            if (tenantId.HasValue)
+            {
+                user = await dbContext.Users.FirstOrDefaultAsync(x => x.TenantId == tenantId && x.Email == email);
+            }
+            else
+            {
+                user = await userManager.FindByEmailAsync(email);
+            }
 
             if (user == null)
             {
@@ -135,9 +152,18 @@ namespace KoreCMS.Services
             };
         }
 
-        public async Task<KoreUser> GetUserByName(string userName)
+        public async Task<KoreUser> GetUserByName(int? tenantId, string userName)
         {
-            var user = await userManager.FindByNameAsync(userName);
+            ApplicationUser user;
+
+            if (tenantId.HasValue)
+            {
+                user = await dbContext.Users.FirstOrDefaultAsync(x => x.TenantId == tenantId && x.UserName == userName);
+            }
+            else
+            {
+                user = await userManager.FindByNameAsync(userName);
+            }
 
             if (user == null)
             {
@@ -190,7 +216,7 @@ namespace KoreCMS.Services
             return false;
         }
 
-        public async Task InsertUser(KoreUser user, string password)
+        public async Task InsertUser(int? tenantId, KoreUser user, string password)
         {
             // Check for spaces in UserName above, because of this:
             // http://stackoverflow.com/questions/30078332/bug-in-asp-net-identitys-usermanager
@@ -198,6 +224,7 @@ namespace KoreCMS.Services
 
             var appUser = new ApplicationUser
             {
+                TenantId = tenantId,
                 UserName = userName,
                 Email = user.Email,
                 LockoutEnabled = user.IsLockedOut
@@ -342,13 +369,22 @@ namespace KoreCMS.Services
 
         #region Roles
 
-        public async Task<IEnumerable<KoreRole>> GetAllRoles()
+        public async Task<IEnumerable<KoreRole>> GetAllRoles(int? tenantId)
         {
-            return await roleManager.Roles.Select(x => new KoreRole
+            IQueryable<ApplicationRole> query = roleManager.Roles;
+
+            if (tenantId.HasValue)
             {
-                Id = x.Id,
-                Name = x.Name
-            }).ToListAsync();
+                query = query.Where(x => x.TenantId == tenantId);
+            }
+
+            return await query
+                .Select(x => new KoreRole
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                })
+                .ToListAsync();
         }
 
         public async Task<KoreRole> GetRoleById(object roleId)
@@ -366,7 +402,7 @@ namespace KoreCMS.Services
         public async Task<IEnumerable<KoreRole>> GetRolesByIds(IEnumerable<object> roleIds)
         {
             var ids = roleIds.ToListOf<string>();
-            var roles = new List<IdentityRole>();
+            var roles = new List<ApplicationRole>();
 
             foreach (string id in ids)
             {
@@ -381,9 +417,18 @@ namespace KoreCMS.Services
             });
         }
 
-        public async Task<KoreRole> GetRoleByName(string roleName)
+        public async Task<KoreRole> GetRoleByName(int? tenantId, string roleName)
         {
-            var role = await roleManager.FindByNameAsync(roleName);
+            ApplicationRole role;
+
+            if (tenantId.HasValue)
+            {
+                role = await roleManager.Roles.FirstOrDefaultAsync(x => x.TenantId == tenantId && x.Name == roleName);
+            }
+            else
+            {
+                role = await roleManager.FindByNameAsync(roleName);
+            }
 
             if (role == null)
             {
@@ -411,9 +456,13 @@ namespace KoreCMS.Services
             return false;
         }
 
-        public async Task InsertRole(KoreRole role)
+        public async Task InsertRole(int? tenantId, KoreRole role)
         {
-            var result = await roleManager.CreateAsync(new IdentityRole { Name = role.Name });
+            var result = await roleManager.CreateAsync(new ApplicationRole
+            {
+                TenantId = tenantId,
+                Name = role.Name
+            });
 
             if (!result.Succeeded)
             {
@@ -457,9 +506,18 @@ namespace KoreCMS.Services
             });
         }
 
-        public async Task<IEnumerable<KoreUser>> GetUsersByRoleName(string roleName)
+        public async Task<IEnumerable<KoreUser>> GetUsersByRoleName(int? tenantId, string roleName)
         {
-            var role = await roleManager.FindByNameAsync(roleName);
+            ApplicationRole role;
+
+            if (tenantId.HasValue)
+            {
+                role = await roleManager.Roles.FirstOrDefaultAsync(x => x.TenantId == tenantId && x.Name == roleName);
+            }
+            else
+            {
+                role = await roleManager.FindByNameAsync(roleName);
+            }
 
             var userIds = role.Users.Select(x => x.UserId).ToList();
             var users = await userManager.Users.Where(x => userIds.Contains(x.Id)).ToHashSetAsync();
@@ -477,9 +535,16 @@ namespace KoreCMS.Services
 
         #region Permissions
 
-        public async Task<IEnumerable<KorePermission>> GetAllPermissions()
+        public async Task<IEnumerable<KorePermission>> GetAllPermissions(int? tenantId)
         {
-            return (await dbContext.Permissions.ToListAsync()).Select(x => new KorePermission
+            IQueryable<Permission> query = dbContext.Permissions;
+
+            if (tenantId.HasValue)
+            {
+                query = query.Where(x => x.TenantId == tenantId);
+            }
+
+            return (await query.ToListAsync()).Select(x => new KorePermission
             {
                 Id = x.Id.ToString(),
                 Name = x.Name,
@@ -507,9 +572,18 @@ namespace KoreCMS.Services
             };
         }
 
-        public async Task<KorePermission> GetPermissionByName(string permissionName)
+        public async Task<KorePermission> GetPermissionByName(int? tenantId, string permissionName)
         {
-            var entity = await dbContext.Permissions.FirstOrDefaultAsync(x => x.Name == permissionName);
+            Permission entity = null;
+
+            if (tenantId.HasValue)
+            {
+                entity = await dbContext.Permissions.FirstOrDefaultAsync(x => x.TenantId == tenantId && x.Name == permissionName);
+            }
+            else
+            {
+                entity = await dbContext.Permissions.FirstOrDefaultAsync(x => x.Name == permissionName);
+            }
 
             if (entity == null)
             {
@@ -525,17 +599,30 @@ namespace KoreCMS.Services
             };
         }
 
-        public async Task<IEnumerable<KorePermission>> GetPermissionsForRole(string roleName)
+        public async Task<IEnumerable<KorePermission>> GetPermissionsForRole(int? tenantId, string roleName)
         {
             if (cachedRolePermissions.ContainsKey(roleName))
             {
                 return cachedRolePermissions[roleName];
             }
 
-            var permissions = await (from p in dbContext.Permissions.Include(x => x.Roles)
+            var query = dbContext.Permissions.Include(x => x.Roles);
+
+            List<Permission> permissions = null;
+            if (tenantId.HasValue)
+            {
+                permissions = await (from p in query
+                                     from rp in p.Roles
+                                     where p.TenantId == tenantId && rp.Name == roleName
+                                     select p).ToListAsync();
+            }
+            else
+            {
+                permissions = await (from p in query
                                      from rp in p.Roles
                                      where rp.Name == roleName
                                      select p).ToListAsync();
+            }
 
             var rolePermissions = permissions.Select(x => new KorePermission
             {
@@ -624,10 +711,11 @@ namespace KoreCMS.Services
             return false;
         }
 
-        public async Task InsertPermission(KorePermission permission)
+        public async Task InsertPermission(int? tenantId, KorePermission permission)
         {
             dbContext.Permissions.Add(new Permission
             {
+                TenantId = tenantId,
                 Name = permission.Name,
                 Category = permission.Category,
                 Description = permission.Description
@@ -635,10 +723,11 @@ namespace KoreCMS.Services
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task InsertPermissions(IEnumerable<KorePermission> permissions)
+        public async Task InsertPermissions(int? tenantId, IEnumerable<KorePermission> permissions)
         {
             var toInsert = permissions.Select(x => new Permission
             {
+                TenantId = tenantId,
                 Name = x.Name,
                 Category = x.Category,
                 Description = x.Description
@@ -788,13 +877,22 @@ namespace KoreCMS.Services
             }
         }
 
-        public async Task<IEnumerable<KoreUserProfileEntry>> GetProfileEntriesByKey(string key)
+        public async Task<IEnumerable<KoreUserProfileEntry>> GetProfileEntriesByKey(int? tenantId, string key)
         {
             using (var connection = userProfileRepository.OpenConnection())
             {
-                return (await connection
-                    .Query(x => x.Key == key)
-                    .ToHashSetAsync())
+                var query = connection.Query();
+
+                if (tenantId.HasValue)
+                {
+                    query = query.Where(x => x.TenantId == tenantId && x.Key == key);
+                }
+                else
+                {
+                    query = query.Where(x => x.Key == key);
+                }
+
+                return (await query.ToHashSetAsync())
                     .Select(x => new KoreUserProfileEntry
                     {
                         Id = x.Id.ToString(),
@@ -805,15 +903,22 @@ namespace KoreCMS.Services
             }
         }
 
-        public async Task<IEnumerable<KoreUserProfileEntry>> GetProfileEntriesByKeyAndValue(string key, string value)
+        public async Task<IEnumerable<KoreUserProfileEntry>> GetProfileEntriesByKeyAndValue(int? tenantId, string key, string value)
         {
             using (var connection = userProfileRepository.OpenConnection())
             {
-                return (await connection
-                    .Query(x =>
-                        x.Key == key &&
-                        x.Value == value)
-                    .ToHashSetAsync())
+                var query = connection.Query();
+
+                if (tenantId.HasValue)
+                {
+                    query = query.Where(x => x.TenantId == tenantId && x.Key == key && x.Value == value);
+                }
+                else
+                {
+                    query = query.Where(x => x.Key == key && x.Value == value);
+                }
+
+                return (await query.ToHashSetAsync())
                     .Select(x => new KoreUserProfileEntry
                     {
                         Id = x.Id.ToString(),
@@ -824,11 +929,21 @@ namespace KoreCMS.Services
             }
         }
 
-        public async Task<bool> ProfileEntryExists(string key, string value, string userId = null)
+        public async Task<bool> ProfileEntryExists(int? tenantId, string key, string value, string userId = null)
         {
             using (var connection = userProfileRepository.OpenConnection())
             {
-                var query = connection.Query(x => x.Key == key && x.Value == value);
+                IQueryable<UserProfileEntry> query = null;
+
+                if (tenantId.HasValue)
+                {
+                    query = connection.Query(x => x.TenantId == tenantId && x.Key == key && x.Value == value);
+                }
+                else
+                {
+                    query = connection.Query(x => x.Key == key && x.Value == value);
+                }
+
                 if (!string.IsNullOrEmpty(userId))
                 {
                     query = query.Where(x => x.UserId == userId);

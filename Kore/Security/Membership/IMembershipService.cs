@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Kore.Security.Membership
 {
-    public enum UserStatus
-    {
-        NotRegistered = 0,
-        Unconfirmed = 1,
-        Locked = 2,
-        Active = 3
-    }
+    //public enum UserStatus
+    //{
+    //    NotRegistered = 0,
+    //    Unconfirmed = 1,
+    //    Locked = 2,
+    //    Active = 3
+    //}
 
     public interface IMembershipService
     {
@@ -24,23 +24,23 @@ namespace Kore.Security.Membership
 
         #region Users
 
-        IQueryable<KoreUser> GetAllUsersAsQueryable();
+        IQueryable<KoreUser> GetAllUsersAsQueryable(int? tenantId);
 
-        Task<IEnumerable<KoreUser>> GetAllUsers();
+        Task<IEnumerable<KoreUser>> GetAllUsers(int? tenantId);
 
-        Task<IEnumerable<KoreUser>> GetUsers(Expression<Func<KoreUser, bool>> predicate);
+        Task<IEnumerable<KoreUser>> GetUsers(int? tenantId, Expression<Func<KoreUser, bool>> predicate);
 
         Task<KoreUser> GetUserById(object userId);
 
-        Task<KoreUser> GetUserByEmail(string email);
+        Task<KoreUser> GetUserByEmail(int? tenantId, string email);
 
-        Task<KoreUser> GetUserByName(string userName);
+        Task<KoreUser> GetUserByName(int? tenantId, string userName);
 
         Task<IEnumerable<KoreRole>> GetRolesForUser(object userId);
 
         Task<bool> DeleteUser(object userId);
 
-        Task InsertUser(KoreUser user, string password);
+        Task InsertUser(int? tenantId, KoreUser user, string password);
 
         Task UpdateUser(KoreUser user);
 
@@ -54,35 +54,35 @@ namespace Kore.Security.Membership
 
         #region Roles
 
-        Task<IEnumerable<KoreRole>> GetAllRoles();
+        Task<IEnumerable<KoreRole>> GetAllRoles(int? tenantId);
 
         Task<KoreRole> GetRoleById(object roleId);
 
         Task<IEnumerable<KoreRole>> GetRolesByIds(IEnumerable<object> roleIds);
 
-        Task<KoreRole> GetRoleByName(string roleName);
+        Task<KoreRole> GetRoleByName(int? tenantId, string roleName);
 
         Task<bool> DeleteRole(object roleId);
 
-        Task InsertRole(KoreRole role);
+        Task InsertRole(int? tenantId, KoreRole role);
 
         Task UpdateRole(KoreRole role);
 
         Task<IEnumerable<KoreUser>> GetUsersByRoleId(object roleId);
 
-        Task<IEnumerable<KoreUser>> GetUsersByRoleName(string roleName);
+        Task<IEnumerable<KoreUser>> GetUsersByRoleName(int? tenantId, string roleName);
 
         #endregion Roles
 
         #region Permissions
 
-        Task<IEnumerable<KorePermission>> GetAllPermissions();
+        Task<IEnumerable<KorePermission>> GetAllPermissions(int? tenantId);
 
         Task<KorePermission> GetPermissionById(object permissionId);
 
-        Task<KorePermission> GetPermissionByName(string permissionName);
+        Task<KorePermission> GetPermissionByName(int? tenantId, string permissionName);
 
-        Task<IEnumerable<KorePermission>> GetPermissionsForRole(string roleName);
+        Task<IEnumerable<KorePermission>> GetPermissionsForRole(int? tenantId, string roleName);
 
         Task AssignPermissionsToRole(object roleId, IEnumerable<object> permissionIds);
 
@@ -90,9 +90,9 @@ namespace Kore.Security.Membership
 
         Task<bool> DeletePermissions(IEnumerable<object> permissionIds);
 
-        Task InsertPermission(KorePermission permission);
+        Task InsertPermission(int? tenantId, KorePermission permission);
 
-        Task InsertPermissions(IEnumerable<KorePermission> permissions);
+        Task InsertPermissions(int? tenantId, IEnumerable<KorePermission> permissions);
 
         Task UpdatePermission(KorePermission permission);
 
@@ -112,11 +112,11 @@ namespace Kore.Security.Membership
 
         Task DeleteProfileEntry(string userId, string key);
 
-        Task<IEnumerable<KoreUserProfileEntry>> GetProfileEntriesByKey(string key);
+        Task<IEnumerable<KoreUserProfileEntry>> GetProfileEntriesByKey(int? tenantId, string key);
 
-        Task<IEnumerable<KoreUserProfileEntry>> GetProfileEntriesByKeyAndValue(string key, string value);
+        Task<IEnumerable<KoreUserProfileEntry>> GetProfileEntriesByKeyAndValue(int? tenantId, string key, string value);
 
-        Task<bool> ProfileEntryExists(string key, string value, string userId = null);
+        Task<bool> ProfileEntryExists(int? tenantId, string key, string value, string userId = null);
 
         #endregion Profile
     }

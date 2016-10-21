@@ -10,11 +10,14 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
 {
     public class PublicUserApiController : ODataController
     {
+        private readonly IWorkContext workContext;
+
         protected IMembershipService Service { get; private set; }
 
-        public PublicUserApiController(IMembershipService service)
+        public PublicUserApiController(IMembershipService service, IWorkContext workContext)
         {
             this.Service = service;
+            this.workContext = workContext;
         }
 
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
@@ -26,13 +29,12 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             };
             options.Validate(settings);
 
-            var query = Service.GetAllUsersAsQueryable()
+            var query = Service.GetAllUsersAsQueryable(workContext.CurrentTenant.Id)
                 .Select(x => new PublicUserInfo
                 {
                     Id = x.Id,
                     UserName = x.UserName
-                })
-                .AsQueryable();
+                });
 
             var results = options.ApplyTo(query);
             return (results as IQueryable<PublicUserInfo>).ToHashSet();

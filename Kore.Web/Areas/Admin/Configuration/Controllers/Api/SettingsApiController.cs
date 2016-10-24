@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
-using System.Web.OData.Query;
 using Kore.Caching;
 using Kore.Configuration.Domain;
 using Kore.Data;
@@ -14,7 +12,7 @@ using Kore.Web.Security.Membership.Permissions;
 namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
 {
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class SettingsApiController : GenericODataController<Setting, Guid>
+    public class SettingsApiController : GenericTenantODataController<Setting, Guid>
     {
         private readonly ICacheManager cacheManager;
 
@@ -34,33 +32,6 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
             entity.Id = Guid.NewGuid();
         }
 
-        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public override async Task<IEnumerable<Setting>> Get(ODataQueryOptions<Setting> options)
-        {
-            return await base.Get(options);
-        }
-
-        public override async Task<IHttpActionResult> Delete([FromODataUri] Guid key)
-        {
-            var result = base.Delete(key);
-
-            var entity = await Service.FindOneAsync(key);
-            string cacheKey = string.Format("Kore_Web_Settings_{0}", entity.Type);
-            cacheManager.Remove(cacheKey);
-
-            return await result;
-        }
-
-        public override async Task<IHttpActionResult> Post(Setting entity)
-        {
-            var result = await base.Post(entity);
-
-            string cacheKey = string.Format("Kore_Web_Settings_{0}", entity.Type);
-            cacheManager.Remove(cacheKey);
-
-            return result;
-        }
-
         public override async Task<IHttpActionResult> Put([FromODataUri] Guid key, Setting entity)
         {
             var result = await base.Put(key, entity);
@@ -77,6 +48,16 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
             return result;
         }
 
+        public override async Task<IHttpActionResult> Post(Setting entity)
+        {
+            var result = await base.Post(entity);
+
+            string cacheKey = string.Format("Kore_Web_Settings_{0}", entity.Type);
+            cacheManager.Remove(cacheKey);
+
+            return result;
+        }
+
         public override async Task<IHttpActionResult> Patch([FromODataUri] Guid key, Delta<Setting> patch)
         {
             var result = await base.Patch(key, patch);
@@ -86,6 +67,17 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
             cacheManager.Remove(cacheKey);
 
             return result;
+        }
+
+        public override async Task<IHttpActionResult> Delete([FromODataUri] Guid key)
+        {
+            var result = base.Delete(key);
+
+            var entity = await Service.FindOneAsync(key);
+            string cacheKey = string.Format("Kore_Web_Settings_{0}", entity.Type);
+            cacheManager.Remove(cacheKey);
+
+            return await result;
         }
 
         protected override Permission ReadPermission

@@ -1,11 +1,13 @@
 ﻿using System;
-using Kore.Data;
+using Kore.Tenants.Domain;
 
 namespace Kore.Configuration.Domain
 {
-    public class Setting : IEntity
+    public class Setting : ITenantEntity
     {
         public Guid Id { get; set; }
+
+        public int? TenantId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

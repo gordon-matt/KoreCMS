@@ -36,7 +36,18 @@ namespace Kore.Web.Infrastructure
             internal static IComponentRegistration BuildRegistration<TSettings>() where TSettings : ISettings, new()
             {
                 return RegistrationBuilder
-                    .ForDelegate((c, p) => c.Resolve<ISettingService>().GetSettings<TSettings>())
+                    .ForDelegate((c, p) =>
+                    {
+                        var currentTenantId = c.Resolve<IWorkContext>().CurrentTenant.Id;
+                        // Uncomment the code below if you want load settings per tenant only when you have two tenants installed.
+                        //var currentTenantId = c.Resolve<IWorkContext>().GetAllTenants().Count > 1
+                        //    c.Resolve<IWorkContext>().CurrentTenant.Id : 0;
+
+                        // Although it's better to connect to your database and execute the following SQL:
+                        //DELETE FROM [Setting] WHERE [TenantId] > 0
+                        return c.Resolve<ISettingService>().GetSettings<TSettings>(currentTenantId);
+                    })
+                    .InstancePerLifetimeScope()
                     .CreateRegistration();
             }
 

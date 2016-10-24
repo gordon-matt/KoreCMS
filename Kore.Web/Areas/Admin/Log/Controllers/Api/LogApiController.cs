@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
+using Kore.Infrastructure;
 using Kore.Logging.Domain;
 using Kore.Web.Areas.Admin.Log.Services;
 using Kore.Web.Http.OData;
@@ -9,7 +10,7 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.Areas.Admin.Log.Controllers.Api
 {
-    public class LogApiController : GenericODataController<LogEntry, Guid>
+    public class LogApiController : GenericTenantODataController<LogEntry, Guid>
     {
         public LogApiController(ILogService service)
             : base(service)
@@ -44,7 +45,8 @@ namespace Kore.Web.Areas.Admin.Log.Controllers.Api
                 return Unauthorized();
             }
 
-            await Service.DeleteAllAsync();
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            await Service.DeleteAsync(x => x.TenantId == workContext.CurrentTenant.Id);
 
             return Ok();
         }

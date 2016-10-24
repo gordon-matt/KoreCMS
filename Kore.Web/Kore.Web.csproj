@@ -227,6 +227,7 @@
     <Compile Include="Fakes\FakeIdentity.cs" />
     <Compile Include="Fakes\FakePrincipal.cs" />
     <Compile Include="HttpContextStateProvider.cs" />
+    <Compile Include="Http\OData\GenericTenantODataController.cs" />
     <Compile Include="Indexing\Configuration\IndexSettings.cs" />
     <Compile Include="Indexing\DefaultIndexManager.cs" />
     <Compile Include="Indexing\Extensions\StringExtensions.cs" />

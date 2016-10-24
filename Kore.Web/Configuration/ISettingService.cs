@@ -9,13 +9,13 @@ namespace Kore.Web.Configuration
 {
     public interface ISettingService
     {
-        TSettings GetSettings<TSettings>() where TSettings : ISettings, new();
+        TSettings GetSettings<TSettings>(int? tenantId = null) where TSettings : ISettings, new();
 
-        ISettings GetSettings(Type settingsType);
+        ISettings GetSettings(Type settingsType, int? tenantId = null);
 
-        void SaveSettings(string key, string value);
+        void SaveSettings(string key, string value, int? tenantId = null);
 
-        void SaveSettings<TSettings>(TSettings settings) where TSettings : ISettings;
+        void SaveSettings<TSettings>(TSettings settings, int? tenantId = null) where TSettings : ISettings;
     }
 
     public class DefaultSettingService : ISettingService
@@ -29,13 +29,23 @@ namespace Kore.Web.Configuration
             this.repository = repository;
         }
 
-        public TSettings GetSettings<TSettings>() where TSettings : ISettings, new()
+        public TSettings GetSettings<TSettings>(int? tenantId = null) where TSettings : ISettings, new()
         {
             string type = typeof(TSettings).FullName;
             string key = string.Format("Kore_Web_Settings_{0}", type);
             return cacheManager.Get<TSettings>(key, () =>
             {
-                var settings = repository.FindOne(x => x.Type == type);
+                Setting settings = null;
+
+                if (tenantId.HasValue)
+                {
+                    settings = repository.FindOne(x => x.TenantId == tenantId && x.Type == type);
+                }
+                else
+                {
+                    settings = repository.FindOne(x => x.TenantId == null && x.Type == type);
+                }
+
                 if (settings == null || string.IsNullOrEmpty(settings.Value))
                 {
                     return new TSettings();
@@ -45,13 +55,23 @@ namespace Kore.Web.Configuration
             });
         }
 
-        public ISettings GetSettings(Type settingsType)
+        public ISettings GetSettings(Type settingsType, int? tenantId = null)
         {
             string type = settingsType.FullName;
             string key = string.Format("Kore_Web_Settings_{0}", type);
             return cacheManager.Get<ISettings>(key, () =>
             {
-                var settings = repository.FindOne(x => x.Type == type);
+                Setting settings = null;
+
+                if (tenantId.HasValue)
+                {
+                    settings = repository.FindOne(x => x.TenantId == tenantId && x.Type == type);
+                }
+                else
+                {
+                    settings = repository.FindOne(x => x.TenantId == null && x.Type == type);
+                }
+
                 if (settings == null || string.IsNullOrEmpty(settings.Value))
                 {
                     return (ISettings)Activator.CreateInstance(settingsType);
@@ -61,16 +81,26 @@ namespace Kore.Web.Configuration
             });
         }
 
-        public void SaveSettings(string key, string value)
+        public void SaveSettings(string key, string value, int? tenantId = null)
         {
-            var setting = repository.FindOne(x => x.Type == key);
+            Setting setting = null;
+
+            if (tenantId.HasValue)
+            {
+                setting = repository.FindOne(x => x.TenantId == tenantId && x.Type == key);
+            }
+            else
+            {
+                setting = repository.FindOne(x => x.TenantId == null && x.Type == key);
+            }
+
             if (setting == null)
             {
                 var iSettings = EngineContext.Current.ResolveAll<ISettings>().FirstOrDefault(x => x.GetType().FullName == key);
 
                 if (iSettings != null)
                 {
-                    setting = new Setting { Name = iSettings.Name, Type = key, Value = value };
+                    setting = new Setting { TenantId = tenantId, Name = iSettings.Name, Type = key, Value = value };
                     repository.Insert(setting);
                     cacheManager.RemoveByPattern("Kore_Web_Settings_.*");
                 }
@@ -83,12 +113,12 @@ namespace Kore.Web.Configuration
             }
         }
 
-        public void SaveSettings<TSettings>(TSettings settings) where TSettings : ISettings
+        public void SaveSettings<TSettings>(TSettings settings, int? tenantId = null) where TSettings : ISettings
         {
             var type = settings.GetType();
             var key = type.FullName;
             var value = settings.ToJson();
-            SaveSettings(key, value);
+            SaveSettings(key, value, tenantId);
         }
     }
 }

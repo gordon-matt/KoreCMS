@@ -31,17 +31,17 @@ namespace Kore.Web.Helpers
 
         TimeZoneInfo GetUserTimeZone(KoreUser user);
 
-        TimeZoneInfo DefaultStoreTimeZone { get; set; }
+        TimeZoneInfo DefaultTenantTimeZone { get; set; }
 
         TimeZoneInfo CurrentTimeZone { get; set; }
     }
 
     public partial class DateTimeHelper : IDateTimeHelper
     {
-        private readonly IWorkContext _workContext;
-        private readonly IGenericAttributeService _genericAttributeService;
-        private readonly ISettingService _settingService;
-        private readonly DateTimeSettings _dateTimeSettings;
+        private readonly IWorkContext workContext;
+        private readonly IGenericAttributeService genericAttributeService;
+        private readonly ISettingService settingService;
+        private readonly DateTimeSettings dateTimeSettings;
 
         public DateTimeHelper(
             IWorkContext workContext,
@@ -49,10 +49,10 @@ namespace Kore.Web.Helpers
             ISettingService settingService,
             DateTimeSettings dateTimeSettings)
         {
-            this._workContext = workContext;
-            this._genericAttributeService = genericAttributeService;
-            this._settingService = settingService;
-            this._dateTimeSettings = dateTimeSettings;
+            this.workContext = workContext;
+            this.genericAttributeService = genericAttributeService;
+            this.settingService = settingService;
+            this.dateTimeSettings = dateTimeSettings;
         }
 
         public TimeZoneInfo FindTimeZoneById(string id)
@@ -114,16 +114,21 @@ namespace Kore.Web.Helpers
         {
             //registered user
             TimeZoneInfo timeZoneInfo = null;
-            if (_dateTimeSettings.AllowUsersToSetTimeZone)
+            if (dateTimeSettings.AllowUsersToSetTimeZone)
             {
                 string timeZoneId = string.Empty;
+
                 if (user != null)
-                    timeZoneId = user.GetAttribute<string>(SystemUserAttributeNames.TimeZoneId, _genericAttributeService);
+                {
+                    timeZoneId = user.GetAttribute<string>(SystemUserAttributeNames.TimeZoneId, genericAttributeService);
+                }
 
                 try
                 {
                     if (!string.IsNullOrEmpty(timeZoneId))
+                    {
                         timeZoneInfo = FindTimeZoneById(timeZoneId);
+                    }
                 }
                 catch (Exception exc)
                 {
@@ -133,20 +138,24 @@ namespace Kore.Web.Helpers
 
             //default timezone
             if (timeZoneInfo == null)
-                timeZoneInfo = this.DefaultStoreTimeZone;
+            {
+                timeZoneInfo = this.DefaultTenantTimeZone;
+            }
 
             return timeZoneInfo;
         }
 
-        public TimeZoneInfo DefaultStoreTimeZone
+        public TimeZoneInfo DefaultTenantTimeZone
         {
             get
             {
                 TimeZoneInfo timeZoneInfo = null;
                 try
                 {
-                    if (!string.IsNullOrEmpty(_dateTimeSettings.DefaultTimeZoneId))
-                        timeZoneInfo = FindTimeZoneById(_dateTimeSettings.DefaultTimeZoneId);
+                    if (!string.IsNullOrEmpty(dateTimeSettings.DefaultTimeZoneId))
+                    {
+                        timeZoneInfo = FindTimeZoneById(dateTimeSettings.DefaultTimeZoneId);
+                    }
                 }
                 catch (Exception exc)
                 {
@@ -154,8 +163,10 @@ namespace Kore.Web.Helpers
                 }
 
                 if (timeZoneInfo == null)
+                {
                     timeZoneInfo = TimeZoneInfo.Local;
 
+                }
                 return timeZoneInfo;
             }
             set
@@ -166,8 +177,8 @@ namespace Kore.Web.Helpers
                     defaultTimeZoneId = value.Id;
                 }
 
-                _dateTimeSettings.DefaultTimeZoneId = defaultTimeZoneId;
-                _settingService.SaveSettings(_dateTimeSettings);
+                dateTimeSettings.DefaultTimeZoneId = defaultTimeZoneId;
+                settingService.SaveSettings(dateTimeSettings);
             }
         }
 
@@ -175,11 +186,11 @@ namespace Kore.Web.Helpers
         {
             get
             {
-                return GetUserTimeZone(_workContext.CurrentUser);
+                return GetUserTimeZone(workContext.CurrentUser);
             }
             set
             {
-                if (!_dateTimeSettings.AllowUsersToSetTimeZone)
+                if (!dateTimeSettings.AllowUsersToSetTimeZone)
                 {
                     return;
                 }
@@ -190,8 +201,8 @@ namespace Kore.Web.Helpers
                     timeZoneId = value.Id;
                 }
 
-                _genericAttributeService.SaveAttribute(
-                    _workContext.CurrentUser,
+                genericAttributeService.SaveAttribute(
+                    workContext.CurrentUser,
                     SystemUserAttributeNames.TimeZoneId,
                     timeZoneId);
             }

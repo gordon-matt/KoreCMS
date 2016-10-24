@@ -12,6 +12,7 @@ namespace Kore.Web.Mvc.Themes
     /// </summary>
     public partial class ThemeContext : IThemeContext
     {
+        private readonly IWorkContext workContext;
         private readonly IThemeProvider themeProvider;
         private readonly KoreSiteSettings siteSettings;
 
@@ -21,8 +22,12 @@ namespace Kore.Web.Mvc.Themes
         private bool isMobileThemeCached;
         private string cachedMobileThemeName;
 
-        public ThemeContext(IThemeProvider themeProvider, KoreSiteSettings siteSettings)
+        public ThemeContext(
+            IWorkContext workContext,
+            IThemeProvider themeProvider,
+            KoreSiteSettings siteSettings)
         {
+            this.workContext = workContext;
             this.themeProvider = themeProvider;
             this.siteSettings = siteSettings;
         }
@@ -43,7 +48,6 @@ namespace Kore.Web.Mvc.Themes
 
                 if (siteSettings.AllowUserToSelectTheme)
                 {
-                    var workContext = EngineContext.Current.Resolve<IWorkContext>();
                     if (workContext.CurrentUser != null)
                     {
                         var membershipService = EngineContext.Current.Resolve<IMembershipService>();
@@ -56,20 +60,13 @@ namespace Kore.Web.Mvc.Themes
                     }
                 }
 
-                //TODO
-                //if (KoreWebConfigurationSection.WebInstance.Themes.AllowUserToSelectTheme)
-                //{
-                //    //if (_workContext.CurrentCustomer != null)
-                //    //    theme = _workContext.CurrentCustomer.GetAttribute<string>(SystemCustomerAttributeNames.WorkingDesktopThemeName, _genericAttributeService, _storeContext.CurrentStore.Id);
-                //}
-
-                //default store theme
+                // Default tenant theme
                 if (string.IsNullOrEmpty(theme))
                 {
                     theme = siteSettings.DefaultDesktopTheme ?? "Default";
                 }
 
-                //ensure that theme exists
+                // Ensure that theme exists
                 if (!themeProvider.ThemeConfigurationExists(theme))
                 {
                     var themeInstance = themeProvider.GetThemeConfigurations()
@@ -83,7 +80,7 @@ namespace Kore.Web.Mvc.Themes
                     theme = themeInstance.ThemeName;
                 }
 
-                //cache theme
+                // Cache theme
                 this.cachedDesktopThemeName = theme;
                 this.isDesktopThemeCached = true;
                 return theme;
@@ -94,6 +91,14 @@ namespace Kore.Web.Mvc.Themes
                 {
                     return;
                 }
+
+                if (workContext.CurrentUser == null)
+                {
+                    return;
+                }
+
+                var membershipService = EngineContext.Current.Resolve<IMembershipService>();
+                AsyncHelper.RunSync(() => membershipService.SaveProfileEntry(workContext.CurrentUser.Id, ThemeUserProfileProvider.Fields.PreferredTheme, value));
 
                 //clear cache
                 this.isDesktopThemeCached = false;
@@ -110,10 +115,10 @@ namespace Kore.Web.Mvc.Themes
                 if (isMobileThemeCached)
                     return cachedMobileThemeName;
 
-                //default store theme
+                // Default store theme
                 string theme = siteSettings.DefaultMobileTheme;
 
-                //ensure that theme exists
+                // Ensure that theme exists
                 if (!themeProvider.ThemeConfigurationExists(theme))
                 {
                     var themeInstance = themeProvider.GetThemeConfigurations().FirstOrDefault(x => x.MobileTheme);

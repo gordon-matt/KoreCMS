@@ -1,11 +1,14 @@
 ﻿using System;
 using Kore.Data;
+using Kore.Tenants.Domain;
 
 namespace Kore.Logging.Domain
 {
-    public class LogEntry : IEntity
+    public class LogEntry : ITenantEntity
     {
         public Guid Id { get; set; }
+
+        public int? TenantId { get; set; }
 
         public DateTime EventDateTime { get; set; }
 

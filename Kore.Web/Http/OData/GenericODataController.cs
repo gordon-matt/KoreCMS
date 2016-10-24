@@ -20,7 +20,8 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.Http.OData
 {
-    public abstract class GenericODataController<TEntity, TKey> : ODataController where TEntity : class
+    public abstract class GenericODataController<TEntity, TKey> : ODataController 
+        where TEntity : class
     {
         #region Non-Public Properties
 
@@ -30,7 +31,7 @@ namespace Kore.Web.Http.OData
 
         #endregion Non-Public Properties
 
-        #region Constructor
+        #region Constructors
 
         public GenericODataController(IGenericDataService<TEntity> service)
         {
@@ -45,7 +46,7 @@ namespace Kore.Web.Http.OData
             this.Logger = LoggingUtilities.Resolve();
         }
 
-        #endregion Constructor
+        #endregion Constructors
 
         #region Public Methods
 
@@ -65,7 +66,9 @@ namespace Kore.Web.Http.OData
 
             using (var connection = Service.OpenConnection())
             {
-                var results = options.ApplyTo(connection.Query());
+                var query = connection.Query();
+                query = ApplyMandatoryFilter(query);
+                var results = options.ApplyTo(query);
                 return await (results as IQueryable<TEntity>).ToHashSetAsync();
             }
         }
@@ -79,13 +82,20 @@ namespace Kore.Web.Http.OData
                 return SingleResult.Create(Enumerable.Empty<TEntity>().AsQueryable());
             }
             var entity = await Service.FindOneAsync(key);
+
+            // TODO: CheckPermission(ReadPermission) is getting done twice.. once above, and once in CanViewEntity(). Unnecessary... see if this can be modified
+            if (!CanViewEntity(entity))
+            {
+                return SingleResult.Create(Enumerable.Empty<TEntity>().AsQueryable());
+            }
+
             return SingleResult.Create(new[] { entity }.AsQueryable());
         }
 
         // PUT: odata/<Entity>(5)
         public virtual async Task<IHttpActionResult> Put([FromODataUri] TKey key, TEntity entity)
         {
-            if (!CheckPermission(WritePermission))
+            if (!CanModifyEntity(entity))
             {
                 return Unauthorized();
             }
@@ -123,7 +133,7 @@ namespace Kore.Web.Http.OData
         // POST: odata/<Entity>
         public virtual async Task<IHttpActionResult> Post(TEntity entity)
         {
-            if (!CheckPermission(WritePermission))
+            if (!CanModifyEntity(entity))
             {
                 return Unauthorized();
             }
@@ -146,20 +156,21 @@ namespace Kore.Web.Http.OData
         [AcceptVerbs("PATCH", "MERGE")]
         public virtual async Task<IHttpActionResult> Patch([FromODataUri] TKey key, Delta<TEntity> patch)
         {
-            if (!CheckPermission(WritePermission))
-            {
-                return Unauthorized();
-            }
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             TEntity entity = await Service.FindOneAsync(key);
+
             if (entity == null)
             {
                 return NotFound();
+            }
+
+            if (!CanModifyEntity(entity))
+            {
+                return Unauthorized();
             }
 
             patch.Patch(entity);
@@ -186,15 +197,16 @@ namespace Kore.Web.Http.OData
         // DELETE: odata/<Entity>(5)
         public virtual async Task<IHttpActionResult> Delete([FromODataUri] TKey key)
         {
-            if (!CheckPermission(WritePermission))
-            {
-                return Unauthorized();
-            }
-
             TEntity entity = await Service.FindOneAsync(key);
+
             if (entity == null)
             {
                 return NotFound();
+            }
+
+            if (!CanModifyEntity(entity))
+            {
+                return Unauthorized();
             }
 
             await Service.DeleteAsync(entity);
@@ -218,6 +230,37 @@ namespace Kore.Web.Http.OData
         /// </summary>
         /// <param name="entity"></param>
         protected abstract void SetNewId(TEntity entity);
+
+        /// <summary>
+        /// Add any filters which must be applied for the client. Mostly used for fields such as "TenantId", where you don't want
+        /// the user viewing data for a different site (tenant)
+        /// </summary>
+        /// <param name="entity"></param>
+        protected virtual IQueryable<TEntity> ApplyMandatoryFilter(IQueryable<TEntity> query)
+        {
+            // Do nothing, by default
+            return query;
+        }
+
+        protected virtual bool CanViewEntity(TEntity entity)
+        {
+            if (entity == null)
+            {
+                return false;
+            }
+
+            return CheckPermission(ReadPermission);
+        }
+
+        protected virtual bool CanModifyEntity(TEntity entity)
+        {
+            if (entity == null)
+            {
+                return false;
+            }
+
+            return CheckPermission(WritePermission);
+        }
 
         protected virtual void OnBeforeSave(TEntity entity)
         {

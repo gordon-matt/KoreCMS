@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
 using Kore.Collections;
-using Kore.Infrastructure;
 using Kore.Web.Areas.Admin.Configuration.Models;
 using Kore.Web.Configuration;
 using Kore.Web.Mvc.Themes;
@@ -17,18 +15,24 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
     public class ThemeApiController : ODataController
     {
+        private readonly IAuthorizationService authorizationService;
         private readonly IThemeProvider themeProvider;
+        private readonly IWorkContext workContext;
         private readonly KoreSiteSettings siteSettings;
         private readonly Lazy<ISettingService> settingsService;
 
         public ThemeApiController(
+            IAuthorizationService authorizationService,
             IThemeProvider themeProvider,
+            IWorkContext workContext,
             KoreSiteSettings siteSettings,
             Lazy<ISettingService> settingsService)
         {
-            this.themeProvider = themeProvider;
-            this.siteSettings = siteSettings;
+            this.authorizationService = authorizationService;
             this.settingsService = settingsService;
+            this.siteSettings = siteSettings;
+            this.themeProvider = themeProvider;
+            this.workContext = workContext;
         }
 
         // GET: odata/kore/cms/Plugins
@@ -89,7 +93,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
                 siteSettings.DefaultFrontendLayoutPath = "~/Views/Shared/_Layout.cshtml";
             }
 
-            settingsService.Value.SaveSettings(siteSettings);
+            settingsService.Value.SaveSettings(siteSettings, workContext.CurrentTenant.Id);
             KoreWebConstants.ResetCache();
         }
 
@@ -116,14 +120,12 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
                 siteSettings.DefaultFrontendLayoutPath = "~/Views/Shared/_Layout.cshtml";
             }
 
-            settingsService.Value.SaveSettings(siteSettings);
+            settingsService.Value.SaveSettings(siteSettings, workContext.CurrentTenant.Id);
             KoreWebConstants.ResetCache();
         }
 
-        protected static bool CheckPermission(Permission permission)
+        protected bool CheckPermission(Permission permission)
         {
-            var authorizationService = EngineContext.Current.Resolve<IAuthorizationService>();
-            var workContext = EngineContext.Current.Resolve<IWorkContext>();
             return authorizationService.TryCheckAccess(permission, workContext.CurrentUser);
         }
     }

@@ -14,6 +14,7 @@ using Kore.ComponentModel;
 using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Security.Membership;
+using Kore.Tenants.Services;
 using Kore.Threading;
 using Kore.Web.Collections;
 using Kore.Web.Mvc.Controls;
@@ -801,6 +802,40 @@ namespace Kore.Web.Mvc
 
             return html.DropDownListFor(expression, selectList, htmlAttributes);
         }
+
+
+
+
+        public MvcHtmlString TenantsCheckBoxList(
+            string name,
+            IEnumerable<string> selectedTenantIds,
+            object labelHtmlAttributes = null,
+            object checkboxHtmlAttributes = null)
+        {
+            var service = EngineContext.Current.Resolve<ITenantService>();
+
+            var selectList = GetTenantsMultiSelectList(selectedTenantIds);
+
+            return html.CheckBoxList(name, selectList, selectedTenantIds, labelHtmlAttributes: labelHtmlAttributes, checkboxHtmlAttributes: checkboxHtmlAttributes);
+        }
+
+        private static IEnumerable<SelectListItem> GetTenantsMultiSelectList(IEnumerable<string> selectedValues = null, string emptyText = null)
+        {
+            var service = EngineContext.Current.Resolve<ITenantService>();
+
+            using (var connection = service.OpenConnection())
+            {
+                return connection.Query()
+                    .OrderBy(x => x.Name)
+                    .ToList()
+                    .ToMultiSelectList(
+                        value => value.Id,
+                        text => text.Name,
+                        selectedValues,
+                        emptyText);
+            }
+        }
+
 
         private static IEnumerable<SelectListItem> GetLanguages(string selectedValue = null, string emptyText = null, bool includeInvariant = false, string invariantText = null)
         {

@@ -197,6 +197,9 @@
             {
                 public const string Group = "Kore.Web/Plugins.Model.Group";
                 public const string PluginInfo = "Kore.Web/Plugins.Model.PluginInfo";
+                public const string FriendlyName = "Kore.Web/Plugins.Model.FriendlyName";
+                public const string DisplayOrder = "Kore.Web/Plugins.Model.DisplayOrder";
+                public const string LimitedToTenants = "Kore.Web/Plugins.Model.LimitedToTenants";
             }
 
             public const string InstallPluginError = "Kore.Web/Plugins.InstallPluginError";

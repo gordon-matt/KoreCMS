@@ -39,24 +39,30 @@ namespace Kore.Web.Plugins
         #region Methods
 
         /// <summary>
-        /// Check whether the plugin is available in a certain tenant
+        /// Check whether the plugin is available for a specific tenant
         /// </summary>
         /// <param name="pluginDescriptor">Plugin descriptor to check</param>
         /// <param name="tenantId">Tenant identifier to check</param>
         /// <returns>true - available; false - no</returns>
-        public virtual bool AuthenticateTenant(PluginDescriptor pluginDescriptor, int tenantId)
+        public virtual bool AuthenticateTenant(PluginDescriptor pluginDescriptor, int? tenantId)
         {
             if (pluginDescriptor == null)
+            {
                 throw new ArgumentNullException("pluginDescriptor");
+            }
 
             //no validation required
-            if (tenantId == 0)
+            if (!tenantId.HasValue)
+            {
                 return true;
+            }
 
             if (pluginDescriptor.LimitedToTenants.Count == 0)
+            {
                 return true;
+            }
 
-            return pluginDescriptor.LimitedToTenants.Contains(tenantId);
+            return pluginDescriptor.LimitedToTenants.Contains(tenantId.Value);
         }
 
         /// <summary>
@@ -66,15 +72,23 @@ namespace Kore.Web.Plugins
         /// <param name="installedOnly">A value indicating whether to load only installed plugins</param>
         /// <param name="tenantId">Load records allowed only in a specified store; pass 0 to load all records</param>
         /// <returns>Plugins</returns>
-        public virtual IEnumerable<T> GetPlugins<T>(bool installedOnly = true, int tenantId = 0) where T : class, IPlugin
+        public virtual IEnumerable<T> GetPlugins<T>(bool installedOnly = true, int? tenantId = null) where T : class, IPlugin
         {
             EnsurePluginsAreLoaded();
 
             foreach (var plugin in _plugins)
+            {
                 if (typeof(T).IsAssignableFrom(plugin.PluginType))
+                {
                     if (!installedOnly || plugin.Installed)
+                    {
                         if (AuthenticateTenant(plugin, tenantId))
+                        {
                             yield return plugin.Instance<T>();
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -83,14 +97,20 @@ namespace Kore.Web.Plugins
         /// <param name="installedOnly">A value indicating whether to load only installed plugins</param>
         /// <param name="tenantId">Load records allowed only in a specified store; pass 0 to load all records</param>
         /// <returns>Plugin descriptors</returns>
-        public virtual IEnumerable<PluginDescriptor> GetPluginDescriptors(bool installedOnly = true, int tenantId = 0)
+        public virtual IEnumerable<PluginDescriptor> GetPluginDescriptors(bool installedOnly = true, int? tenantId = null)
         {
             EnsurePluginsAreLoaded();
 
             foreach (var plugin in _plugins)
+            {
                 if (!installedOnly || plugin.Installed)
+                {
                     if (AuthenticateTenant(plugin, tenantId))
+                    {
                         yield return plugin;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -100,16 +120,24 @@ namespace Kore.Web.Plugins
         /// <param name="installedOnly">A value indicating whether to load only installed plugins</param>
         /// <param name="tenantId">Load records allowed only in a specified tenant; pass 0 to load all records</param>
         /// <returns>Plugin descriptors</returns>
-        public virtual IEnumerable<PluginDescriptor> GetPluginDescriptors<T>(bool installedOnly = true, int tenantId = 0)
+        public virtual IEnumerable<PluginDescriptor> GetPluginDescriptors<T>(bool installedOnly = true, int? tenantId = null)
             where T : class, IPlugin
         {
             EnsurePluginsAreLoaded();
 
             foreach (var plugin in _plugins)
+            {
                 if (typeof(T).IsAssignableFrom(plugin.PluginType))
+                {
                     if (!installedOnly || plugin.Installed)
+                    {
                         if (AuthenticateTenant(plugin, tenantId))
+                        {
                             yield return plugin;
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>

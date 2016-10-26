@@ -164,6 +164,11 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.Plugins.Title, "Plugins" },
                     { KoreWebLocalizableStrings.Plugins.Model.Group, "Group" },
                     { KoreWebLocalizableStrings.Plugins.Model.PluginInfo, "Plugin Info" },
+                    
+                    { KoreWebLocalizableStrings.Plugins.Model.DisplayOrder, "Display Order" },
+                    { KoreWebLocalizableStrings.Plugins.Model.FriendlyName, "Friendly Name" },
+                    { KoreWebLocalizableStrings.Plugins.Model.LimitedToTenants, "Limited to Tenants" },
+
                     { KoreWebLocalizableStrings.Plugins.UninstallPluginError, "There was an error when uninstalling the plugin." },
                     { KoreWebLocalizableStrings.Plugins.UninstallPluginSuccess, "Successfully uninstalled plugin." },
                     { KoreWebLocalizableStrings.ScheduledTasks.ExecutedTaskError, "There was an error when executing the task." },

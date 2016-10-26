@@ -9,11 +9,18 @@ function ($, ko, kendo, kore_common, notify) {
 
     //require('kore-common');
 
+    var apiUrl = "/odata/kore/web/PluginApi";
+
     var ViewModel = function () {
         var self = this;
 
         self.gridPageSize = 10;
         self.translations = false;
+
+        self.systemName = ko.observable(null);
+        self.friendlyName = ko.observable(null);
+        self.displayOrder = ko.observable(0);
+        self.limitedToTenants = ko.observableArray([]);
 
         self.attached = function () {
             // Load translations first, else will have errors
@@ -103,7 +110,8 @@ function ($, ko, kendo, kore_common, notify) {
                         '<br />Author: #:Author#' +
                         '<br />SystemName: #:SystemName#' +
                         '<br />DisplayOrder: #:DisplayOrder#' +
-                        '<br />Installed: <i class="kore-icon #=Installed ? \'kore-icon-ok-circle kore-icon-2x text-success\' : \'kore-icon-no-circle kore-icon-2x text-danger\'#"></i>',
+                        '<br />Installed: <i class="kore-icon #=Installed ? \'kore-icon-ok-circle kore-icon-2x text-success\' : \'kore-icon-no-circle kore-icon-2x text-danger\'#"></i>' +
+                        '<br /><a data-bind="click: edit.bind($data,\'#=SystemName#\')" class="btn btn-default btn-xs">' + self.translations.Edit + '</a>',
                     filterable: false
                 }, {
                     field: "Installed",
@@ -117,6 +125,71 @@ function ($, ko, kendo, kore_common, notify) {
                 }]
             });
         };
+
+        self.edit = function (systemName) {
+            systemName = replaceAll(systemName, ".", "-");
+
+            self.limitedToTenants([]);
+
+            $.ajax({
+                url: apiUrl + "('" + systemName + "')",
+                type: "GET",
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                self.systemName(systemName);
+                self.friendlyName(json.FriendlyName);
+                self.displayOrder(json.DisplayOrder);
+                $(json.LimitedToTenants).each(function () {
+                    self.limitedToTenants.push(this);
+                });
+
+                self.validator.resetForm();
+                switchSection($("#form-section"));
+                $("#form-section-legend").html(self.parent.translations.Edit);
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(self.parent.translations.GetRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
+            });
+        };
+        self.save = function () {
+            if (!$("#form-section-form").valid()) {
+                return false;
+            }
+
+            var record = {
+                FriendlyName: self.friendlyName(),
+                DisplayOrder: self.displayOrder(),
+                LimitedToTenants: self.limitedToTenants()
+            };
+
+            $.ajax({
+                url: apiUrl + "('" + self.systemName() + "')",
+                type: "PUT",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(record),
+                dataType: "json",
+                async: false
+            })
+            .done(function (json) {
+                $('#Grid').data('kendoGrid').dataSource.read();
+                $('#Grid').data('kendoGrid').refresh();
+
+                switchSection($("#grid-section"));
+
+                $.notify(self.translations.UpdateRecordSuccess, "success");
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                $.notify(self.translations.UpdateRecordError, "error");
+                console.log(textStatus + ': ' + errorThrown);
+            });
+        };
+        self.cancel = function () {
+            switchSection($("#grid-section"));
+        };
+
         self.install = function (systemName) {
             systemName = replaceAll(systemName, ".", "-");
 

@@ -37,6 +37,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
+                                @Html.Label("LimitedToTenants", T(KoreWebLocalizableStrings.Plugins.Model.LimitedToTenants), new { @class = "control-label" })
                                 @Html.Kore().TenantsCheckBoxList("LimitedToTenants", null, new { @class = "checkbox" }, new { data_bind = "checked: limitedToTenants" })
                             </div>
                         </div>

@@ -9,14 +9,16 @@ namespace Kore.Logging
     public class NLogFilteredLogger : LevelFilteredLogger
     {
         private readonly Logger logger;
-        private readonly IWorkContext workContext;
+        //private readonly IWorkContext workContext;
 
         #region Constructors
 
         public NLogFilteredLogger(string name)
         {
             logger = LogManager.GetLogger(name);
-            workContext = EngineContext.Current.Resolve<IWorkContext>();
+
+            // NOTE: Don't try resolving this here, because it will cause a StackoverflowException. Resolve in Log() method instead
+            //workContext = EngineContext.Current.Resolve<IWorkContext>();
 
             if (logger.IsDebugEnabled)
             {
@@ -80,6 +82,8 @@ namespace Kore.Logging
             var logEventInfo = new LogEventInfo(logLevel, loggerName, CultureInfo.InvariantCulture, message, null, exception);
 
             int? tenantId = null;
+
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
             if (workContext.CurrentTenant != null)
             {
                 tenantId = workContext.CurrentTenant.Id;

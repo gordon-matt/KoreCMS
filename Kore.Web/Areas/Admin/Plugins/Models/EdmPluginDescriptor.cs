@@ -7,7 +7,7 @@ namespace Kore.Web.Areas.Admin.Plugins.Models
 {
     public class EdmPluginDescriptor
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         public string Group { get; set; }
 
@@ -29,7 +29,8 @@ namespace Kore.Web.Areas.Admin.Plugins.Models
         {
             return new EdmPluginDescriptor
             {
-                Id = Guid.NewGuid(), //To Keep OData v4 happy
+                //Id = Guid.NewGuid(), //To Keep OData v4 happy
+                Id = other.SystemName.Replace('.', '-'), //To Keep OData v4 happy
                 Group = other.Group,
                 FriendlyName = other.FriendlyName,
                 SystemName = other.SystemName,

@@ -44,30 +44,24 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    Install: '{0}',
-    InstallPluginSuccess: '{1}',
-    InstallPluginError: '{2}',
-    Uninstall: '{3}',
-    UninstallPluginSuccess: '{4}',
-    UninstallPluginError: '{5}',
-
-    Columns: {{
-        Group: '{6}',
-        PluginInfo: '{7}',
-    }}
-}}",
-   T(KoreWebLocalizableStrings.General.Install),
-   T(KoreWebLocalizableStrings.Plugins.InstallPluginSuccess),
-   T(KoreWebLocalizableStrings.Plugins.InstallPluginError),
-   T(KoreWebLocalizableStrings.General.Uninstall),
-   T(KoreWebLocalizableStrings.Plugins.UninstallPluginSuccess),
-   T(KoreWebLocalizableStrings.Plugins.UninstallPluginError),
-   T(KoreWebLocalizableStrings.Plugins.Model.Group),
-   T(KoreWebLocalizableStrings.Plugins.Model.PluginInfo));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                Edit = T(KoreWebLocalizableStrings.General.Edit).Text,
+                GetRecordError = T(KoreWebLocalizableStrings.General.GetRecordError).Text,
+                Install = T(KoreWebLocalizableStrings.General.Install).Text,
+                InstallPluginSuccess = T(KoreWebLocalizableStrings.Plugins.InstallPluginSuccess).Text,
+                InstallPluginError = T(KoreWebLocalizableStrings.Plugins.InstallPluginError).Text,
+                Uninstall = T(KoreWebLocalizableStrings.General.Uninstall).Text,
+                UninstallPluginSuccess = T(KoreWebLocalizableStrings.Plugins.UninstallPluginSuccess).Text,
+                UninstallPluginError = T(KoreWebLocalizableStrings.Plugins.UninstallPluginError).Text,
+                UpdateRecordError = T(KoreWebLocalizableStrings.General.UpdateRecordError).Text,
+                UpdateRecordSuccess = T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text,
+                Columns = new
+                {
+                    Group = T(KoreWebLocalizableStrings.Plugins.Model.Group).Text,
+                    PluginInfo = T(KoreWebLocalizableStrings.Plugins.Model.PluginInfo).Text,
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
 
         [Compress]
@@ -114,7 +108,7 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
                 return Json(new { Success = false, Message = x.GetBaseException().Message });
             }
 
-            return Json(new { Success = true, Message = "Successfully installed the specified plugin." });
+            return Json(new { Success = true, Message = T(KoreWebLocalizableStrings.Plugins.InstallPluginSuccess).Text });
             //return RedirectToAction("Index");
         }
 
@@ -162,7 +156,7 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
                 return Json(new { Success = false, Message = x.GetBaseException().Message });
             }
 
-            return Json(new { Success = true, Message = "Successfully uninstalled the specified plugin." });
+            return Json(new { Success = true, Message = T(KoreWebLocalizableStrings.Plugins.UninstallPluginSuccess).Text });
             //return RedirectToAction("Index");
         }
     }

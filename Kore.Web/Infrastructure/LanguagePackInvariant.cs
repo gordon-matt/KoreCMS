@@ -159,7 +159,7 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.Membership.UserModel.UserName, "Username" },
                     { KoreWebLocalizableStrings.Membership.Users, "Users" },
                     { KoreWebLocalizableStrings.Plugins.InstallPluginError, "There was an error when installing the plugin." },
-                    { KoreWebLocalizableStrings.Plugins.InstallPluginSuccess, "Successfully installed plugin." },
+                    { KoreWebLocalizableStrings.Plugins.InstallPluginSuccess, "Successfully installed the specified plugin." },
                     { KoreWebLocalizableStrings.Plugins.ManagePlugins, "Manage Plugins" },
                     { KoreWebLocalizableStrings.Plugins.Title, "Plugins" },
                     { KoreWebLocalizableStrings.Plugins.Model.Group, "Group" },
@@ -169,7 +169,7 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.Plugins.Model.FriendlyName, "Friendly Name" },
                     { KoreWebLocalizableStrings.Plugins.Model.LimitedToTenants, "Limited to Tenants" },
 
-                    { KoreWebLocalizableStrings.Plugins.UninstallPluginError, "There was an error when uninstalling the plugin." },
+                    { KoreWebLocalizableStrings.Plugins.UninstallPluginError, "There was an error when uninstalling the specified plugin." },
                     { KoreWebLocalizableStrings.Plugins.UninstallPluginSuccess, "Successfully uninstalled plugin." },
                     { KoreWebLocalizableStrings.ScheduledTasks.ExecutedTaskError, "There was an error when executing the task." },
                     { KoreWebLocalizableStrings.ScheduledTasks.ExecutedTaskSuccess, "Successfully executed task." },

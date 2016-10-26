@@ -1,13 +1,17 @@
-﻿define(['jquery', 'knockout', 'kendo', 'kore-common', 'notify'],
+﻿define(['jquery', 'knockout', 'kendo', 'kore-common', 'notify', 'jqueryval', 'kore-section-switching', 'kore-jqueryval'],
 function ($, ko, kendo, kore_common, notify) {
     'use strict'
 
     //var $ = require('jquery');
     //var ko = require('knockout');
 
+    //require('jqueryval');
     //require('kendo');
+    //require('notify');
 
     //require('kore-common');
+    //require('kore-section-switching');
+    //require('kore-jqueryval');
 
     var apiUrl = "/odata/kore/web/PluginApi";
 
@@ -22,7 +26,11 @@ function ($, ko, kendo, kore_common, notify) {
         self.displayOrder = ko.observable(0);
         self.limitedToTenants = ko.observableArray([]);
 
+        self.validator = false;
+
         self.attached = function () {
+            currentSection = $("#grid-section");
+
             // Load translations first, else will have errors
             $.ajax({
                 url: "/admin/plugins/get-translations",
@@ -38,6 +46,13 @@ function ($, ko, kendo, kore_common, notify) {
             });
 
             self.gridPageSize = $("#GridPageSize").val();
+
+            self.validator = $("#form-section-form").validate({
+                rules: {
+                    FriendlyName: { required: true, maxlength: 255 },
+                    DisplayOrder: { required: true, digits: true }
+                }
+            });
 
             $("#Grid").kendoGrid({
                 data: null,
@@ -111,7 +126,7 @@ function ($, ko, kendo, kore_common, notify) {
                         '<br />SystemName: #:SystemName#' +
                         '<br />DisplayOrder: #:DisplayOrder#' +
                         '<br />Installed: <i class="kore-icon #=Installed ? \'kore-icon-ok-circle kore-icon-2x text-success\' : \'kore-icon-no-circle kore-icon-2x text-danger\'#"></i>' +
-                        '<br /><a data-bind="click: edit.bind($data,\'#=SystemName#\')" class="btn btn-default btn-xs">' + self.translations.Edit + '</a>',
+                        '<br /><a data-bind="click: edit.bind($data,\'#=SystemName#\')" class="btn btn-default btn-sm">' + self.translations.Edit + '</a>',
                     filterable: false
                 }, {
                     field: "Installed",
@@ -147,10 +162,10 @@ function ($, ko, kendo, kore_common, notify) {
 
                 self.validator.resetForm();
                 switchSection($("#form-section"));
-                $("#form-section-legend").html(self.parent.translations.Edit);
+                $("#form-section-legend").html(self.translations.Edit);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(self.parent.translations.GetRecordError, "error");
+                $.notify(self.translations.GetRecordError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         };
@@ -210,7 +225,7 @@ function ($, ko, kendo, kore_common, notify) {
                 }, 1000);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(self.translations.ClearError, "error");
+                $.notify(self.translations.InstallPluginError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         }
@@ -234,7 +249,7 @@ function ($, ko, kendo, kore_common, notify) {
                 }, 1000);
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                $.notify(self.translations.ClearError, "error");
+                $.notify(self.translations.UninstallPluginError, "error");
                 console.log(textStatus + ': ' + errorThrown);
             });
         }

@@ -8,13 +8,21 @@ namespace Kore.Web.Plugins
     public interface IPluginFinder
     {
         /// <summary>
+        /// Check whether the plugin is available for a specific tenant
+        /// </summary>
+        /// <param name="pluginDescriptor">Plugin descriptor to check</param>
+        /// <param name="storeId">Tenant identifier to check</param>
+        /// <returns>true - available; false - no</returns>
+        bool AuthenticateTenant(PluginDescriptor pluginDescriptor, int? tenantId);
+
+        /// <summary>
         /// Gets plugins
         /// </summary>
         /// <typeparam name="T">The type of plugins to get.</typeparam>
         /// <param name="installedOnly">A value indicating whether to load only installed plugins</param>
         /// <param name="tenantId">Load records allowed only in a specified tenant; pass 0 to load all records</param>
         /// <returns>Plugins</returns>
-        IEnumerable<T> GetPlugins<T>(bool installedOnly = true, int tenantId = 0) where T : class, IPlugin;
+        IEnumerable<T> GetPlugins<T>(bool installedOnly = true, int? tenantId = null) where T : class, IPlugin;
 
         /// <summary>
         /// Get plugin descriptors
@@ -22,7 +30,7 @@ namespace Kore.Web.Plugins
         /// <param name="installedOnly">A value indicating whether to load only installed plugins</param>
         /// <param name="tenantId">Load records allowed only in a specified tenant; pass 0 to load all records</param>
         /// <returns>Plugin descriptors</returns>
-        IEnumerable<PluginDescriptor> GetPluginDescriptors(bool installedOnly = true, int tenantId = 0);
+        IEnumerable<PluginDescriptor> GetPluginDescriptors(bool installedOnly = true, int? tenantId = null);
 
         /// <summary>
         /// Get plugin descriptors
@@ -31,7 +39,7 @@ namespace Kore.Web.Plugins
         /// <param name="installedOnly">A value indicating whether to load only installed plugins</param>
         /// <param name="tenantId">Load records allowed only in a specified tenant; pass 0 to load all records</param>
         /// <returns>Plugin descriptors</returns>
-        IEnumerable<PluginDescriptor> GetPluginDescriptors<T>(bool installedOnly = true, int tenantId = 0) where T : class, IPlugin;
+        IEnumerable<PluginDescriptor> GetPluginDescriptors<T>(bool installedOnly = true, int? tenantId = null) where T : class, IPlugin;
 
         /// <summary>
         /// Get a plugin descriptor by its system name

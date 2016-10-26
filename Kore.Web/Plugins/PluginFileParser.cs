@@ -120,16 +120,15 @@ namespace Kore.Web.Plugins
 
                     case "FileName": descriptor.PluginFileName = value; break;
 
-                    case "LimitedToStores":
+                    case "LimitedToTenants":
                         {
                             //parse list of store IDs
-                            foreach (var str1 in value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                                .Select(x => x.Trim()))
+                            foreach (var item in value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()))
                             {
-                                int storeId = 0;
-                                if (int.TryParse(str1, out storeId))
+                                int tenantId = 0;
+                                if (int.TryParse(item, out tenantId))
                                 {
-                                    descriptor.LimitedToTenants.Add(storeId);
+                                    descriptor.LimitedToTenants.Add(tenantId);
                                 }
                             }
                         }
@@ -178,16 +177,16 @@ namespace Kore.Web.Plugins
 
             if (plugin.LimitedToTenants.Count > 0)
             {
-                var storeList = "";
+                string tenantList = "";
                 for (int i = 0; i < plugin.LimitedToTenants.Count; i++)
                 {
-                    storeList += plugin.LimitedToTenants[i];
+                    tenantList += plugin.LimitedToTenants[i];
                     if (i != plugin.LimitedToTenants.Count - 1)
                     {
-                        storeList += ",";
+                        tenantList += ",";
                     }
                 }
-                keyValues.Add(new KeyValuePair<string, string>("LimitedToStores", storeList));
+                keyValues.Add(new KeyValuePair<string, string>("LimitedToTenants", tenantList));
             }
 
             var sb = new StringBuilder();

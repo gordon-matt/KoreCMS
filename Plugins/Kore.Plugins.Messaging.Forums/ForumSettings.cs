@@ -55,6 +55,11 @@ namespace Kore.Plugins.Messaging.Forums
             get { return "Forum Settings"; }
         }
 
+        public bool IsTenantRestricted
+        {
+            get { return false; }
+        }
+
         public string EditorTemplatePath
         {
             get { return "/Plugins/Messaging.Forums/Views/Shared/EditorTemplates/ForumSettings.cshtml"; }

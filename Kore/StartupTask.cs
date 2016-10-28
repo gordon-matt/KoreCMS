@@ -14,6 +14,11 @@ namespace Kore
 
         public void Execute()
         {
+            EnsureScheduledTasks();
+        }
+
+        private static void EnsureScheduledTasks()
+        {
             if (KoreConfigurationSection.Instance.ScheduledTasks.Enabled)
             {
                 var taskRepository = EngineContext.Current.Resolve<IRepository<ScheduledTask>>();

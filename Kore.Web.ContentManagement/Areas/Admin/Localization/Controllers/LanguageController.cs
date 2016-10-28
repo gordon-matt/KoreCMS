@@ -148,6 +148,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
                     cultureExistsInDb = connection.Query(x => x.CultureCode == languagePackFile.CultureCode).Any();
                 }
 
+                int tenantId = WorkContext.CurrentTenant.Id;
                 if (!cultureExistsInDb)
                 {
                     try
@@ -156,6 +157,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
                         languageService.Value.Insert(new Language
                         {
                             Id = Guid.NewGuid(),
+                            TenantId = tenantId,
                             CultureCode = languagePackFile.CultureCode,
                             Name = culture.DisplayName
                         });
@@ -168,6 +170,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
 
                 var localizedStrings = languagePackFile.LocalizedStrings.Select(x => new LocalizableString
                 {
+                    TenantId = tenantId,
                     CultureCode = languagePackFile.CultureCode,
                     TextKey = x.Key,
                     TextValue = x.Value
@@ -175,7 +178,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
 
                 // Ignore strings that don't have an invariant version
                 var allInvariantStrings = localizableStringService.Value
-                    .Find(x => x.CultureCode == null)
+                    .Find(x => x.TenantId == tenantId && x.CultureCode == null)
                     .Select(x => x.TextKey);
 
                 var toInsert = localizedStrings.Where(x => allInvariantStrings.Contains(x.TextKey));

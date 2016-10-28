@@ -12,6 +12,7 @@ using Kore.Localization;
 using Kore.Localization.Domain;
 using Kore.Logging.Domain;
 using Kore.Tasks.Domain;
+using Kore.Tenants.Domain;
 using Kore.Web.ContentManagement;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
@@ -82,6 +83,8 @@ namespace KoreCMS.Data
 
         public DbSet<Setting> Settings { get; set; }
 
+        public DbSet<Tenant> Tenants { get; set; }
+
         #endregion IKoreDbContext Members
 
         #region IKoreCmsDbContext Members
@@ -130,6 +133,15 @@ namespace KoreCMS.Data
 
         public virtual void Seed()
         {
+            // Create default tenant
+            Tenants.Add(new Tenant
+            {
+                Name = "Default",
+                Url = "my-domain.com",
+                Hosts = "my-domain.com"
+            });
+            SaveChanges();
+
             InitializeLocalizableStrings();
 
             var dataSettings = EngineContext.Current.Resolve<DataSettings>();
@@ -156,6 +168,10 @@ namespace KoreCMS.Data
 
         private void InitializeLocalizableStrings()
         {
+            // We need to create localizable strings for all tenants,
+            //  but at this point there will only be 1 tenant, because this is initialization for the DB.
+            //  TODO: When admin user creates a new tenant, we need to insert localized strings for it. Probably in TenantApiController somewhere...
+            int tenantId = Tenants.First().Id;
             var languagePacks = EngineContext.Current.ResolveAll<ILanguagePack>();
 
             var toInsert = new HashSet<LocalizableString>();
@@ -166,6 +182,7 @@ namespace KoreCMS.Data
                     toInsert.Add(new LocalizableString
                     {
                         Id = Guid.NewGuid(),
+                        TenantId = tenantId,
                         CultureCode = languagePack.CultureCode,
                         TextKey = localizedString.Key,
                         TextValue = localizedString.Value

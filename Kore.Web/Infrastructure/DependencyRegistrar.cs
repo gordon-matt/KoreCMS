@@ -38,6 +38,7 @@ using Kore.Web.Mvc.Routing;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Navigation;
 using Kore.Web.Plugins;
+using Kore.Web.Security;
 using Kore.Web.Security.Membership;
 using Kore.Web.Security.Membership.Permissions;
 using IFilterProvider = Kore.Web.Mvc.Filters.IFilterProvider;
@@ -120,14 +121,13 @@ namespace Kore.Web.Infrastructure
             builder.RegisterModule<ConfigurationModule>();
             builder.RegisterType<DefaultSettingService>().As<ISettingService>();
             builder.RegisterType<ScheduledTaskService>().As<IScheduledTaskService>().InstancePerDependency();
-            builder.RegisterType<KoreSiteSettings>().As<ISettings>().SingleInstance();
-            builder.RegisterType<SmtpSettings>().As<ISettings>().SingleInstance();
-            builder.RegisterType<CaptchaSettings>().As<ISettings>().SingleInstance();
-            builder.RegisterType<MembershipSettings>().As<ISettings>().SingleInstance();
+            builder.RegisterType<KoreSiteSettings>().As<ISettings>().InstancePerLifetimeScope();
+            builder.RegisterType<MembershipSettings>().As<ISettings>().InstancePerLifetimeScope();
+            builder.RegisterType<CaptchaSettings>().As<ISettings>().InstancePerLifetimeScope();
+            builder.RegisterType<SecuritySettings>().As<ISettings>().InstancePerLifetimeScope();
+            builder.RegisterType<SmtpSettings>().As<ISettings>().InstancePerLifetimeScope();
 
             builder.RegisterType<ResourceBundleRegistrar>().As<IResourceBundleRegistrar>().SingleInstance();
-
-            //builder.RegisterType<SearchSettings>().As<ISettings>().SingleInstance();
 
             builder.RegisterModule<LoggingModule>();
             builder.RegisterType<NLogFilteredLogger>()

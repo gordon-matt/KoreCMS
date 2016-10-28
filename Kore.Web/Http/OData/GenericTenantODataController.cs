@@ -37,10 +37,15 @@ namespace Kore.Web.Http.OData
 
             if (tenantId.HasValue)
             {
+                if (CheckPermission(StandardPermissions.FullAccess))
+                {
+                    return query.Where(x => x.TenantId == null || x.TenantId == tenantId);
+                }
                 return query.Where(x => x.TenantId == tenantId);
             }
             else
             {
+                // Should never be able to get here... since, workContext.CurrentTenant should never be null
                 return query.Where(x => x.TenantId == null);
             }
         }

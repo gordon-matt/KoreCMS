@@ -840,7 +840,8 @@ namespace Kore.Web.Mvc
         private static IEnumerable<SelectListItem> GetLanguages(string selectedValue = null, string emptyText = null, bool includeInvariant = false, string invariantText = null)
         {
             var languageManager = EngineContext.Current.Resolve<ILanguageManager>();
-            var languages = languageManager.GetActiveLanguages().ToList();
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            var languages = languageManager.GetActiveLanguages(workContext.CurrentTenant.Id).ToList();
 
             if (includeInvariant)
             {

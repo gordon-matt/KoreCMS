@@ -7,11 +7,11 @@ namespace Kore.Localization
 {
     public class LanguageManager : ILanguageManager
     {
-        public IEnumerable<Language> GetActiveLanguages()
+        public IEnumerable<Language> GetActiveLanguages(int tenantId)
         {
             var repository = EngineContext.Current.Resolve<IRepository<Kore.Localization.Domain.Language>>();
 
-            return repository.Find(x => x.IsEnabled)
+            return repository.Find(x => x.TenantId == tenantId && x.IsEnabled)
                 .Select(x => new Language
                 {
                     CultureCode = x.CultureCode,

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -144,12 +145,16 @@ namespace Kore.Web.Infrastructure
             var settingsRepository = EngineContext.Current.Resolve<IRepository<Setting>>();
             var allSettings = EngineContext.Current.ResolveAll<ISettings>();
             var allSettingNames = allSettings.Select(x => x.Name).ToList();
-            var installedSettings = settingsRepository.Find();
+
+            #region NULL Tenant (In case we want default settings)
+
+            var installedSettings = settingsRepository.Find(x => x.TenantId == null);
             var installedSettingNames = installedSettings.Select(x => x.Name).ToList();
 
-            var settingsToAdd = allSettings.Where(x => !installedSettingNames.Contains(x.Name)).Select(x => new Setting
+            var settingsToAdd = allSettings.Where(x => x.IsTenantRestricted && !installedSettingNames.Contains(x.Name)).Select(x => new Setting
             {
                 Id = Guid.NewGuid(),
+                TenantId = null,
                 Name = x.Name,
                 Type = x.GetType().FullName,
                 Value = Activator.CreateInstance(x.GetType()).ToJson()
@@ -166,6 +171,47 @@ namespace Kore.Web.Infrastructure
             {
                 settingsRepository.Delete(settingsToDelete);
             }
+
+            #endregion NULL Tenant (In case we want default settings)
+
+            #region Tenants
+
+            var tenantService = EngineContext.Current.Resolve<ITenantService>();
+            IEnumerable<int> tenantIds = null;
+
+            using (var connection = tenantService.OpenConnection())
+            {
+                tenantIds = connection.Query().Select(x => x.Id).ToList();
+            }
+
+            foreach (var tenantId in tenantIds)
+            {
+                installedSettings = settingsRepository.Find(x => x.TenantId == tenantId);
+                installedSettingNames = installedSettings.Select(x => x.Name).ToList();
+
+                settingsToAdd = allSettings.Where(x => !x.IsTenantRestricted && !installedSettingNames.Contains(x.Name)).Select(x => new Setting
+                {
+                    Id = Guid.NewGuid(),
+                    TenantId = tenantId,
+                    Name = x.Name,
+                    Type = x.GetType().FullName,
+                    Value = Activator.CreateInstance(x.GetType()).ToJson()
+                }).ToList();
+
+                if (!settingsToAdd.IsNullOrEmpty())
+                {
+                    settingsRepository.Insert(settingsToAdd);
+                }
+
+                settingsToDelete = installedSettings.Where(x => !allSettingNames.Contains(x.Name)).ToList();
+
+                if (!settingsToDelete.IsNullOrEmpty())
+                {
+                    settingsRepository.Delete(settingsToDelete);
+                }
+            }
+
+            #endregion Tenants
         }
 
         public int Order

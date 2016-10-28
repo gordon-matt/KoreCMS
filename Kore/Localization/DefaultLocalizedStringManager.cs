@@ -11,41 +11,38 @@ namespace Kore.Localization
     public class DefaultLocalizedStringManager : ILocalizedStringManager
     {
         private readonly ICacheManager cacheManager;
+        private readonly IWorkContext workContext;
         private readonly object objSync = new object();
 
-        public DefaultLocalizedStringManager(ICacheManager cacheManager)
+        public DefaultLocalizedStringManager(ICacheManager cacheManager, IWorkContext workContext)
         {
             this.cacheManager = cacheManager;
+            this.workContext = workContext;
         }
 
         #region ILocalizedStringManager Members
 
-        public virtual string GetLocalizedString(string text, string cultureCode)
+        public virtual string GetLocalizedString(string key, string cultureCode)
         {
-            return GetResource(text, cultureCode);
-        }
+            int tenantId = workContext.CurrentTenant.Id;
 
-        #endregion ILocalizedStringManager Members
-
-        protected virtual string GetResource(string key, string cultureCode)
-        {
             lock (objSync)
             {
-                var resourceCache = LoadCulture(cultureCode);
+                var resourceCache = LoadCulture(tenantId, cultureCode);
 
                 if (resourceCache.ContainsKey(key))
                 {
                     return resourceCache[key];
                 }
 
-                var invariantResourceCache = LoadCulture(null);
+                var invariantResourceCache = LoadCulture(tenantId, null);
 
                 if (invariantResourceCache.ContainsKey(key))
                 {
                     return invariantResourceCache[key];
                 }
 
-                string value = AddTranslation(null, key);
+                string value = AddTranslation(tenantId, null, key);
 
                 invariantResourceCache.Add(key, value);
             }
@@ -53,25 +50,27 @@ namespace Kore.Localization
             return key;
         }
 
-        protected virtual IDictionary<string, string> LoadCulture(string cultureCode)
+        #endregion ILocalizedStringManager Members
+
+        protected virtual IDictionary<string, string> LoadCulture(int tenantId, string cultureCode)
         {
             string cacheKey = string.Concat("Kore_LocalizableStrings_", cultureCode);
             return cacheManager.Get<Dictionary<string, string>>(cacheKey, () =>
             {
-                return LoadTranslationsForCulture(cultureCode);
+                return LoadTranslationsForCulture(tenantId, cultureCode);
             });
         }
 
-        protected virtual Dictionary<string, string> LoadTranslationsForCulture(string cultureCode)
+        protected virtual Dictionary<string, string> LoadTranslationsForCulture(int tenantId, string cultureCode)
         {
             var repository = EngineContext.Current.Resolve<IRepository<LocalizableString>>();
 
             if (string.IsNullOrEmpty(cultureCode))
             {
-                return LoadTranslations(repository.Find(x => x.CultureCode == null));
+                return LoadTranslations(repository.Find(x => x.TenantId == tenantId && x.CultureCode == null));
             }
 
-            return LoadTranslations(repository.Find(x => x.CultureCode == cultureCode));
+            return LoadTranslations(repository.Find(x => x.TenantId == tenantId && x.CultureCode == cultureCode));
         }
 
         private static Dictionary<string, string> LoadTranslations(IEnumerable<LocalizableString> items)
@@ -86,7 +85,7 @@ namespace Kore.Localization
             return dictionary;
         }
 
-        protected virtual string AddTranslation(string cultureCode, string key)
+        protected virtual string AddTranslation(int tenantId, string cultureCode, string key)
         {
             // TODO: Consider resolving this once for better performance?
             var providers = EngineContext.Current.ResolveAll<ILanguagePack>();
@@ -107,6 +106,7 @@ namespace Kore.Localization
             repository.Insert(new LocalizableString
             {
                 Id = Guid.NewGuid(),
+                TenantId = tenantId,
                 CultureCode = cultureCode,
                 TextKey = key,
                 TextValue = value

@@ -3,6 +3,7 @@ using Kore.Configuration.Domain;
 using Kore.Localization.Domain;
 using Kore.Logging.Domain;
 using Kore.Tasks.Domain;
+using Kore.Tenants.Domain;
 using LanguageEntity = Kore.Localization.Domain.Language;
 
 namespace Kore.Data
@@ -20,5 +21,7 @@ namespace Kore.Data
         DbSet<ScheduledTask> ScheduledTasks { get; set; }
 
         DbSet<Setting> Settings { get; set; }
+
+        DbSet<Tenant> Tenants { get; set; }
     }
 }

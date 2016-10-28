@@ -45,6 +45,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog
             get { return "CMS: Blog Settings"; }
         }
 
+        public bool IsTenantRestricted
+        {
+            get { return false; }
+        }
+
         public string EditorTemplatePath
         {
             get { return "Kore.Web.ContentManagement.Areas.Admin.Blog.Views.Shared.EditorTemplates.BlogSettings"; }

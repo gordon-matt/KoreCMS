@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Kore.ComponentModel;
+﻿using Kore.ComponentModel;
 
 namespace Kore.Web.Configuration
 {
@@ -18,13 +17,16 @@ namespace Kore.Web.Configuration
 
         #region ISettings Members
 
-        [ScaffoldColumn(false)]
         public string Name
         {
             get { return "Kore Site Settings"; }
         }
 
-        [ScaffoldColumn(false)]
+        public bool IsTenantRestricted
+        {
+            get { return false; }
+        }
+
         public string EditorTemplatePath
         {
             get { return "Kore.Web.Views.Shared.EditorTemplates.KoreSiteSettings"; }

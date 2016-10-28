@@ -22,8 +22,8 @@ namespace Kore.Web.Infrastructure
                 BindingFlags.Static | BindingFlags.NonPublic);
 
             public IEnumerable<IComponentRegistration> RegistrationsFor(
-                    Service service,
-                    Func<Service, IEnumerable<IComponentRegistration>> registrations)
+                Service service,
+                Func<Service, IEnumerable<IComponentRegistration>> registrations)
             {
                 var ts = service as TypedService;
                 if (ts != null && ts.ServiceType.IsClass && !ts.ServiceType.IsAbstract && typeof(ISettings).IsAssignableFrom(ts.ServiceType))

@@ -20,6 +20,11 @@ namespace Kore.Web.Configuration
             get { return "Date/Time Settings"; }
         }
 
+        public bool IsTenantRestricted
+        {
+            get { return false; }
+        }
+
         public string EditorTemplatePath
         {
             get { return "Kore.Web.Views.Shared.EditorTemplates.DateTimeSettings"; }

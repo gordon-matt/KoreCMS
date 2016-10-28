@@ -15,7 +15,7 @@ using LanguageEntity = Kore.Localization.Domain.Language;
 namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
 {
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class LanguageApiController : GenericODataController<LanguageEntity, Guid>
+    public class LanguageApiController : GenericTenantODataController<LanguageEntity, Guid>
     {
         private readonly Lazy<ICacheManager> cacheManager;
         private readonly Lazy<ILocalizableStringService> localizableStringService;
@@ -48,7 +48,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
                 return Unauthorized();
             }
 
-            await localizableStringService.Value.DeleteAllAsync();
+            int? tenantId = GetTenantId();
+            await localizableStringService.Value.DeleteAsync(x => x.TenantId == tenantId);
 
             var languagePacks = EngineContext.Current.ResolveAll<ILanguagePack>();
 
@@ -60,6 +61,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
                     toInsert.Add(new LocalizableString
                     {
                         Id = Guid.NewGuid(),
+                        TenantId = tenantId,
                         CultureCode = languagePack.CultureCode,
                         TextKey = localizedString.Key,
                         TextValue = localizedString.Value

@@ -70,23 +70,30 @@ namespace Kore.Web.Security.Membership.Permissions
                         foreach (var rolePermission in rolePermissions)
                         {
                             string possessedName = rolePermission.Name;
-                            if (grantingNames.Any(grantingName => String.Equals(possessedName, grantingName, StringComparison.OrdinalIgnoreCase)))
+                            if (grantingNames.Any(grantingName => string.Equals(possessedName, grantingName, StringComparison.OrdinalIgnoreCase)))
                             {
                                 context.Granted = true;
                             }
 
                             if (context.Granted)
+                            {
                                 break;
+                            }
                         }
 
                         if (context.Granted)
+                        {
                             break;
+                        }
                     }
                 }
 
                 context.Adjusted = false;
+
                 if (!context.Adjusted)
+                {
                     break;
+                }
             }
 
             return context.Granted;
@@ -104,7 +111,9 @@ namespace Kore.Web.Security.Membership.Permissions
                 {
                     // avoid potential recursion
                     if (stack.Contains(impliedBy.Name))
+                    {
                         continue;
+                    }
 
                     // otherwise accumulate the implied permission names recursively
                     foreach (var impliedName in PermissionNames(impliedBy, stack.Concat(new[] { permission.Name })))

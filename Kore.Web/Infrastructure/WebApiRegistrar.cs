@@ -8,6 +8,7 @@ using Kore.Web.Areas.Admin.Configuration.Models;
 using Kore.Web.Areas.Admin.Membership.Controllers.Api;
 using Kore.Web.Areas.Admin.Plugins.Models;
 using System.Web.OData.Extensions;
+using Kore.Tenants.Domain;
 
 namespace Kore.Web.Infrastructure
 {
@@ -27,6 +28,8 @@ namespace Kore.Web.Infrastructure
             builder.EntitySet<ScheduledTask>("ScheduledTaskApi");
             builder.EntitySet<Setting>("SettingsApi");
             builder.EntitySet<EdmThemeConfiguration>("ThemeApi");
+
+            builder.EntitySet<Tenant>("TenantApi");
 
             RegisterLogODataActions(builder);
             RegisterMembershipODataActions(builder);

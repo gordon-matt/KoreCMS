@@ -83,7 +83,13 @@ namespace Kore.Web
                 }
 
                 // Try to determine the current tenant by HTTP_HOST
-                var host = webHelper.ServerVariables("HTTP_HOST");
+                //string host = webHelper.GetServerVariable("HTTP_HOST");
+                string host = webHelper.GetServerVariable("HTTP_HOST");
+
+                if (host.Contains(":"))
+                {
+                    host = host.LeftOf(':');
+                }
 
                 var tenantService = EngineContext.Current.Resolve<ITenantService>();
                 var allTenants = tenantService.Find();

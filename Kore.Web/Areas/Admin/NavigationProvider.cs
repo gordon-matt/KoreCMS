@@ -35,11 +35,11 @@ namespace Kore.Web.Areas.Admin
         {
             builder.IconCssClass("kore-icon kore-icon-config");
 
-            // Tenants (NOT READY YET)
-            //builder.Add(T(KoreWebLocalizableStrings.Tenants.Title), "5", item => item
-            //    .Url("#tenants")
-            //    .IconCssClass("kore-icon kore-icon-tenants")
-            //    .Permission(StandardPermissions.FullAccess));
+            // Tenants
+            builder.Add(T(KoreWebLocalizableStrings.Tenants.Title), "5", item => item
+                .Url("#tenants")
+                .IconCssClass("kore-icon kore-icon-tenants")
+                .Permission(StandardPermissions.FullAccess));
 
             // Indexing
             builder.Add(T(KoreWebLocalizableStrings.Indexing.Title), "5", item => item

@@ -26,7 +26,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Infrastructure
             builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();
             builder.RegisterType<NavigationProvider>().As<INavigationProvider>().SingleInstance();
             builder.RegisterType<LocationFormatProvider>().As<ILocationFormatProvider>().SingleInstance();
-            builder.RegisterType<WatchdogSettings>().As<ISettings>().SingleInstance();
+            builder.RegisterType<WatchdogSettings>().As<ISettings>().InstancePerLifetimeScope();
             builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();
             builder.RegisterType<WatchdogPermissions>().As<IPermissionProvider>().SingleInstance();
             builder.RegisterType<WatchdogInstanceService>().As<IWatchdogInstanceService>().InstancePerDependency();

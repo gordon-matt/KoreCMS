@@ -101,8 +101,8 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             #region Configuration
 
-            builder.RegisterType<BlogSettings>().As<ISettings>().SingleInstance();
-            builder.RegisterType<PageSettings>().As<ISettings>().SingleInstance();
+            builder.RegisterType<BlogSettings>().As<ISettings>().InstancePerLifetimeScope();
+            builder.RegisterType<PageSettings>().As<ISettings>().InstancePerLifetimeScope();
 
             #endregion Configuration
 

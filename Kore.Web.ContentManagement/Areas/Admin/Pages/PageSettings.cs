@@ -13,10 +13,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 
         #region ISettings Members
 
-        [ScaffoldColumn(false)]
         public string Name
         {
             get { return "CMS: Page Settings"; }
+        }
+
+        public bool IsTenantRestricted
+        {
+            get { return false; }
         }
 
         public string EditorTemplatePath

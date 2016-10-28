@@ -15,10 +15,14 @@ namespace Kore.Net.Mail
 
         #region ISettings Members
 
-        [ScaffoldColumn(false)]
         public string Name
         {
             get { return "SMTP Settings"; }
+        }
+
+        public bool IsTenantRestricted
+        {
+            get { return false; }
         }
 
         public string EditorTemplatePath

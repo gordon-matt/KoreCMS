@@ -4,7 +4,7 @@ namespace Kore.Localization
 {
     public interface ILanguageManager
     {
-        IEnumerable<Language> GetActiveLanguages();
+        IEnumerable<Language> GetActiveLanguages(int tenantId);
     }
 
     //public class DefaultLanguageManager : ILanguageManager

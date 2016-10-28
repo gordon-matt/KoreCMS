@@ -8,10 +8,14 @@ namespace Kore.Web.Configuration
     {
         #region ISettings Members
 
-        [ScaffoldColumn(false)]
         public string Name
         {
             get { return "reCAPTCHA Settings"; }
+        }
+
+        public bool IsTenantRestricted
+        {
+            get { return false; }
         }
 
         public string EditorTemplatePath

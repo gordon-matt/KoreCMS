@@ -12,7 +12,7 @@ namespace Kore.Localization.Services
     {
         IEnumerable<LanguageEntity> GetActiveLanguages();
 
-        LanguageEntity GetLanguage(string cultureCode);
+        //LanguageEntity GetLanguage(string cultureCode);
 
         bool CheckIfRightToLeft(string cultureCode);
     }
@@ -29,40 +29,40 @@ namespace Kore.Localization.Services
             return Find(x => x.IsEnabled);
         }
 
-        public LanguageEntity GetLanguage(string cultureCode)
-        {
-            if (string.IsNullOrEmpty(cultureCode))
-            {
-                return null;
-            }
+        //public LanguageEntity GetLanguage(string cultureCode)
+        //{
+        //    if (string.IsNullOrEmpty(cultureCode))
+        //    {
+        //        return null;
+        //    }
 
-            return CacheManager.Get(string.Format(CacheKeyFiltered, cultureCode), () =>
-            {
-                var language = FindOne(x => x.CultureCode == cultureCode);
-                if (language == null)
-                {
-                    try
-                    {
-                        var parent = CultureInfo.GetCultureInfo(cultureCode);
-                        var cultures = CultureInfo.GetCultures(CultureTypes.AllCultures).Where(x => x.Parent.Equals(parent));
-                        foreach (var cultureInfo in cultures)
-                        {
-                            language = FindOne(x => x.CultureCode == cultureInfo.Name);
-                            if (language != null)
-                            {
-                                break;
-                            }
-                        }
-                    }
-                    catch (CultureNotFoundException)
-                    {
-                        language = null;
-                    }
-                }
+        //    return CacheManager.Get(string.Format(CacheKeyFiltered, cultureCode), () =>
+        //    {
+        //        var language = FindOne(x => x.CultureCode == cultureCode);
+        //        if (language == null)
+        //        {
+        //            try
+        //            {
+        //                var parent = CultureInfo.GetCultureInfo(cultureCode);
+        //                var cultures = CultureInfo.GetCultures(CultureTypes.AllCultures).Where(x => x.Parent.Equals(parent));
+        //                foreach (var cultureInfo in cultures)
+        //                {
+        //                    language = FindOne(x => x.CultureCode == cultureInfo.Name);
+        //                    if (language != null)
+        //                    {
+        //                        break;
+        //                    }
+        //                }
+        //            }
+        //            catch (CultureNotFoundException)
+        //            {
+        //                language = null;
+        //            }
+        //        }
 
-                return language;
-            });
-        }
+        //        return language;
+        //    });
+        //}
 
         public bool CheckIfRightToLeft(string cultureCode)
         {
@@ -72,6 +72,7 @@ namespace Kore.Localization.Services
                 {
                     return connection.Query(x => x.IsRTL)
                         .Select(k => k.CultureCode)
+                        .Distinct() // Tenants feature has been added, so we could get duplicates of same culture code
                         .ToList();
                 }
             });

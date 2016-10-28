@@ -24,6 +24,11 @@ namespace Kore.Plugins.Maintenance.Watchdog
             get { return "Maintenance: Watchdog Settings"; }
         }
 
+        public bool IsTenantRestricted
+        {
+            get { return false; }
+        }
+
         public string EditorTemplatePath
         {
             get { return "/Plugins/Maintenance.Watchdog/Views/Shared/EditorTemplates/WatchdogSettings.cshtml"; }

@@ -24,6 +24,11 @@ namespace Kore.Web.Security
             get { return "Security Settings"; }
         }
 
+        public bool IsTenantRestricted
+        {
+            get { return true; }
+        }
+
         public string EditorTemplatePath
         {
             get { return "Kore.Web.Views.Shared.EditorTemplates.SecuritySettings"; }

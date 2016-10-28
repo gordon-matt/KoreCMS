@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using Kore.Data;
+using Kore.Tenants.Domain;
 
 namespace Kore.Localization.Domain
 {
     [DataContract]
-    public class LocalizableString : IEntity
+    public class LocalizableString : ITenantEntity
     {
         [DataMember]
         public Guid Id { get; set; }
+
+        [DataMember]
+        public int? TenantId { get; set; }
 
         [DataMember]
         public string CultureCode { get; set; }

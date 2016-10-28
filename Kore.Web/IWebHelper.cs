@@ -30,7 +30,7 @@ namespace Kore.Web
         /// </summary>
         /// <param name="name">Name</param>
         /// <returns>Server variable</returns>
-        string ServerVariables(string name);
+        string GetServerVariable(string name);
 
         /// <summary>
         /// Returns true if the requested resource is one of the typical resources that needn't be processed by the cms engine.

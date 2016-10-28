@@ -98,11 +98,11 @@ namespace Kore.Web.Infrastructure
 
             var dataSettings = EngineContext.Current.Resolve<DataSettings>();
 
-            var adminUser = await membershipService.GetUserByEmail(workContext.CurrentTenant.Id, dataSettings.AdminEmail);
+            var adminUser = await membershipService.GetUserByEmail(null, dataSettings.AdminEmail);
             if (adminUser == null)
             {
                 await membershipService.InsertUser(
-                    workContext.CurrentTenant.Id,
+                    null,
                     new KoreUser
                     {
                         UserName = dataSettings.AdminEmail,
@@ -110,7 +110,7 @@ namespace Kore.Web.Infrastructure
                     },
                     dataSettings.AdminPassword);
 
-                adminUser = await membershipService.GetUserByEmail(workContext.CurrentTenant.Id, dataSettings.AdminEmail);
+                adminUser = await membershipService.GetUserByEmail(null, dataSettings.AdminEmail);
 
                 // TODO: This doesn't work. Gets error like "No owin.Environment item was found in the context."
                 //// Confirm User
@@ -120,18 +120,18 @@ namespace Kore.Web.Infrastructure
                 KoreRole administratorsRole = null;
                 if (adminUser != null)
                 {
-                    administratorsRole = await membershipService.GetRoleByName(workContext.CurrentTenant.Id, KoreWebConstants.Roles.Administrators);
+                    administratorsRole = await membershipService.GetRoleByName(null, KoreWebConstants.Roles.Administrators);
                     if (administratorsRole == null)
                     {
-                        await membershipService.InsertRole(workContext.CurrentTenant.Id, new KoreRole { Name = KoreWebConstants.Roles.Administrators });
-                        administratorsRole = await membershipService.GetRoleByName(workContext.CurrentTenant.Id, KoreWebConstants.Roles.Administrators);
+                        await membershipService.InsertRole(null, new KoreRole { Name = KoreWebConstants.Roles.Administrators });
+                        administratorsRole = await membershipService.GetRoleByName(null, KoreWebConstants.Roles.Administrators);
                         await membershipService.AssignUserToRoles(adminUser.Id, new[] { administratorsRole.Id });
                     }
                 }
 
                 if (membershipService.SupportsRolePermissions && administratorsRole != null)
                 {
-                    var fullAccessPermission = await membershipService.GetPermissionByName(workContext.CurrentTenant.Id, StandardPermissions.FullAccess.Name);
+                    var fullAccessPermission = await membershipService.GetPermissionByName(null, StandardPermissions.FullAccess.Name);
                     await membershipService.AssignPermissionsToRole(administratorsRole.Id, new[] { fullAccessPermission.Id });
                 }
 

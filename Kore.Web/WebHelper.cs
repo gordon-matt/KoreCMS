@@ -17,7 +17,7 @@ namespace Kore.Web
     /// </summary>
     public partial class WebHelper : IWebHelper
     {
-        private readonly HttpContextBase _httpContext;
+        private readonly HttpContextBase httpContext;
         private readonly Lazy<ILogger> logger;
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Kore.Web
         /// <param name="httpContext">HTTP context</param>
         public WebHelper(HttpContextBase httpContext, Lazy<ILogger> logger)
         {
-            this._httpContext = httpContext;
+            this.httpContext = httpContext;
             this.logger = logger;
         }
 
@@ -39,10 +39,10 @@ namespace Kore.Web
             string referrerUrl = string.Empty;
 
             //URL referrer is null in some case (for example, in IE 8)
-            if (_httpContext != null &&
-                _httpContext.Request != null &&
-                _httpContext.Request.UrlReferrer != null)
-                referrerUrl = _httpContext.Request.UrlReferrer.PathAndQuery;
+            if (httpContext != null &&
+                httpContext.Request != null &&
+                httpContext.Request.UrlReferrer != null)
+                referrerUrl = httpContext.Request.UrlReferrer.PathAndQuery;
 
             return referrerUrl;
         }
@@ -53,17 +53,17 @@ namespace Kore.Web
         /// <returns>URL referrer</returns>
         public virtual string GetCurrentIpAddress()
         {
-            if (_httpContext == null || _httpContext.Request == null)
+            if (httpContext == null || httpContext.Request == null)
                 return string.Empty;
 
             var result = "";
-            if (_httpContext.Request.Headers != null)
+            if (httpContext.Request.Headers != null)
             {
                 //look for the X-Forwarded-For (XFF) HTTP header field
                 //it's used for identifying the originating IP address of a client connecting to a web server through an HTTP proxy or load balancer.
-                string xff = _httpContext.Request.Headers.AllKeys
+                string xff = httpContext.Request.Headers.AllKeys
                     .Where(x => "X-FORWARDED-FOR".Equals(x, StringComparison.InvariantCultureIgnoreCase))
-                    .Select(k => _httpContext.Request.Headers[k])
+                    .Select(k => httpContext.Request.Headers[k])
                     .FirstOrDefault();
 
                 //if you want to exclude private IP addresses, then see http://stackoverflow.com/questions/2577496/how-can-i-get-the-clients-ip-address-in-asp-net-mvc
@@ -75,9 +75,9 @@ namespace Kore.Web
                 }
             }
 
-            if (String.IsNullOrEmpty(result) && _httpContext.Request.UserHostAddress != null)
+            if (String.IsNullOrEmpty(result) && httpContext.Request.UserHostAddress != null)
             {
-                result = _httpContext.Request.UserHostAddress;
+                result = httpContext.Request.UserHostAddress;
             }
 
             //some validation
@@ -100,9 +100,9 @@ namespace Kore.Web
         public virtual bool IsCurrentConnectionSecured()
         {
             bool useSsl = false;
-            if (_httpContext != null && _httpContext.Request != null)
+            if (httpContext != null && httpContext.Request != null)
             {
-                useSsl = _httpContext.Request.IsSecureConnection;
+                useSsl = httpContext.Request.IsSecureConnection;
                 //when your hosting uses a load balancer on their server then the Request.IsSecureConnection is never got set to true, use the statement below
                 //just uncomment it
                 //useSSL = _httpContext.Request.ServerVariables["HTTP_CLUSTER_HTTPS"] == "on" ? true : false;
@@ -138,20 +138,22 @@ namespace Kore.Web
         /// </summary>
         /// <param name="name">Name</param>
         /// <returns>Server variable</returns>
-        public virtual string ServerVariables(string name)
+        public virtual string GetServerVariable(string name)
         {
             string result = string.Empty;
 
             try
             {
-                if (_httpContext == null || _httpContext.Request == null)
+                if (httpContext == null || httpContext.Request == null)
+                {
                     return result;
+                }
 
                 //put this method is try-catch
                 //as described here
-                if (_httpContext.Request.ServerVariables[name] != null)
+                if (httpContext.Request.ServerVariables[name] != null)
                 {
-                    result = _httpContext.Request.ServerVariables[name];
+                    result = httpContext.Request.ServerVariables[name];
                 }
             }
             catch
@@ -458,7 +460,7 @@ namespace Kore.Web
         {
             get
             {
-                var response = _httpContext.Response;
+                var response = httpContext.Response;
                 return response.IsRequestBeingRedirected;
             }
         }
@@ -579,11 +581,11 @@ namespace Kore.Web
             // If setting up extensions/modules requires an AppDomain restart, it's very unlikely the
             // current request can be processed correctly.  So, we redirect to the same URL, so that the
             // new request will come to the newly started AppDomain.
-            if (_httpContext != null && makeRedirect)
+            if (httpContext != null && makeRedirect)
             {
                 if (string.IsNullOrEmpty(redirectUrl))
                     redirectUrl = GetThisPageUrl(true);
-                _httpContext.Response.Redirect(redirectUrl, true /*endResponse*/);
+                httpContext.Response.Redirect(redirectUrl, true /*endResponse*/);
             }
         }
 
@@ -607,7 +609,7 @@ namespace Kore.Web
         public virtual string GetThisPageUrl(bool includeQueryString, bool useSsl)
         {
             string url = string.Empty;
-            if (!IsRequestAvailable(_httpContext))
+            if (!IsRequestAvailable(httpContext))
                 return url;
 
             if (includeQueryString)
@@ -615,13 +617,13 @@ namespace Kore.Web
                 string tenantHost = GetTenantHost(useSsl);
                 if (tenantHost.EndsWith("/"))
                     tenantHost = tenantHost.Substring(0, tenantHost.Length - 1);
-                url = tenantHost + _httpContext.Request.RawUrl;
+                url = tenantHost + httpContext.Request.RawUrl;
             }
             else
             {
-                if (_httpContext.Request.Url != null)
+                if (httpContext.Request.Url != null)
                 {
-                    url = _httpContext.Request.Url.GetLeftPart(UriPartial.Path);
+                    url = httpContext.Request.Url.GetLeftPart(UriPartial.Path);
                 }
             }
             url = url.ToLowerInvariant();
@@ -636,7 +638,7 @@ namespace Kore.Web
         public virtual string GetTenantHost(bool useSsl)
         {
             string result = string.Empty;
-            string httpHost = ServerVariables("HTTP_HOST");
+            string httpHost = GetServerVariable("HTTP_HOST");
             if (!string.IsNullOrEmpty(httpHost))
             {
                 result = "http://" + httpHost;

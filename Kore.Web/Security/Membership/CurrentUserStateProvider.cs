@@ -32,6 +32,12 @@ namespace Kore.Web.Security.Membership
                     return ctx =>
                     {
                         var user = AsyncHelper.RunSync(() => membershipService.GetUserByName(ctx.CurrentTenant.Id, httpContext.User.Identity.Name));
+
+                        if (user == null)
+                        {
+                            user = AsyncHelper.RunSync(() => membershipService.GetUserByName(null, httpContext.User.Identity.Name));
+                        }
+
                         if (user == null)
                         {
                             return default(T);

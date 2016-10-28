@@ -304,6 +304,12 @@
         {
             public const string ManageTenants = "Kore.Web/Tenants.ManageTenants";
             public const string Title = "Kore.Web/Tenants.Title";
+
+            public static class Model
+            {
+                public const string Url = "Kore.Web/Tenants.Model.Url";
+                public const string Hosts = "Kore.Web/Tenants.Model.Hosts";
+            }
         }
 
         public static class Themes

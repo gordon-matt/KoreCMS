@@ -48,7 +48,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
                 return Unauthorized();
             }
 
-            int? tenantId = GetTenantId();
+            int tenantId = GetTenantId();
             await localizableStringService.Value.DeleteAsync(x => x.TenantId == tenantId);
 
             var languagePacks = EngineContext.Current.ResolveAll<ILanguagePack>();

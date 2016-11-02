@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure.Annotations;
+using System.Data.Entity.ModelConfiguration;
+using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Linq;
+using System.Linq.Expressions;
 using Kore.Configuration.Domain;
 using Kore.Data;
 using Kore.Data.EntityFramework;
@@ -29,7 +34,7 @@ using PermissionEntity = KoreCMS.Data.Domain.Permission;
 
 namespace KoreCMS.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>,
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>,
         ISupportSeed,
         IKoreDbContext,
         IKoreCmsDbContext,
@@ -154,9 +159,72 @@ namespace KoreCMS.Data
 
         #endregion ISupportSeed Members
 
+        //public DbSet<ApplicationUser> Users { get; set; }
+
+        //public DbSet<ApplicationRole> Roles { get; set; }
+
+        //public DbSet<IdentityUserRole> UserRoles { get; set; }
+
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
+
+        //    var configurations = EngineContext.Current.ResolveAll<IEntityTypeConfiguration>();
+
+        //    foreach (dynamic configuration in configurations)
+        //    {
+        //        modelBuilder.Configurations.Add(configuration);
+        //    }
+        //}
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            if (modelBuilder == null)
+            {
+                throw new ArgumentNullException("modelBuilder");
+            }
+
+            var usersTable = modelBuilder.Entity<ApplicationUser>().ToTable("AspNetUsers");
+            usersTable.HasMany(x => x.Roles).WithRequired().HasForeignKey(x => x.UserId);
+            usersTable.HasMany(x => x.Claims).WithRequired().HasForeignKey(x => x.UserId);
+            usersTable.HasMany(x => x.Logins).WithRequired().HasForeignKey(x => x.UserId);
+
+            usersTable.Property(x => x.TenantId)
+                .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("UserNameIndex") { IsUnique = true, Order = 1 }));
+
+            usersTable.Property(x => x.UserName)
+                .IsRequired()
+                .HasMaxLength(256)
+                .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("UserNameIndex") { IsUnique = true, Order = 2 }));
+
+            usersTable.Property(x => x.Email).HasMaxLength(256);
+
+            modelBuilder.Entity<IdentityUserRole>().HasKey(x => new
+            {
+                UserId = x.UserId,
+                RoleId = x.RoleId
+            }).ToTable("AspNetUserRoles");
+
+            modelBuilder.Entity<IdentityUserLogin>().HasKey(x => new
+            {
+                LoginProvider = x.LoginProvider,
+                ProviderKey = x.ProviderKey,
+                UserId = x.UserId
+            }).ToTable("AspNetUserLogins");
+
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("AspNetUserClaims");
+
+            var rolesTable = modelBuilder.Entity<ApplicationRole>().ToTable("AspNetRoles");
+
+            rolesTable.Property(x => x.TenantId)
+                .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("RoleNameIndex") { IsUnique = true, Order = 1 }));
+
+            rolesTable.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(256)
+                .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("RoleNameIndex") { IsUnique = true, Order = 2 }));
+
+            rolesTable.HasMany(x => x.Users).WithRequired().HasForeignKey(x => x.RoleId);
 
             var configurations = EngineContext.Current.ResolveAll<IEntityTypeConfiguration>();
 

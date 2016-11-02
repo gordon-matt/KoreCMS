@@ -55,6 +55,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                 this.ControllerContext.RouteData.DataTokens.Add("area", CmsConstants.Areas.Pages);
             }
 
+            int tenantId = WorkContext.CurrentTenant.Id;
             var currentCulture = WorkContext.CurrentCultureCode;
 
             //TODO: To support localized routes, we should probably first try get a single record by slug,
@@ -68,6 +69,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                 pageVersion = await connection.Query()
                     .Include(x => x.Page)
                     .Where(x =>
+                        x.TenantId == tenantId &&
                         x.Status == VersionStatus.Published &&
                         x.CultureCode == currentCulture &&
                         x.Slug == slug)
@@ -86,6 +88,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                     pageVersion = await connection.Query()
                         .Include(x => x.Page)
                         .Where(x =>
+                            x.TenantId == tenantId &&
                             x.Status == VersionStatus.Archived &&
                             x.CultureCode == currentCulture &&
                             x.Slug == slug)
@@ -103,6 +106,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                     pageVersion = await connection.Query()
                         .Include(x => x.Page)
                         .Where(x =>
+                            x.TenantId == tenantId &&
                             x.Status == VersionStatus.Published &&
                             x.CultureCode == null &&
                             x.Slug == slug)
@@ -120,6 +124,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                     pageVersion = await connection.Query()
                         .Include(x => x.Page)
                         .Where(x =>
+                            x.TenantId == tenantId &&
                             x.Status == VersionStatus.Archived &&
                             x.CultureCode == null &&
                             x.Slug == slug)
@@ -171,13 +176,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             {
                 string zoneName = match.Groups["Zone"].Value;
 
-                var zone = zoneRepository.FindOne(x => x.Name == zoneName);
+                int tenantId = WorkContext.CurrentTenant.Id;
+                var zone = zoneRepository.FindOne(x => x.TenantId == tenantId && x.Name == zoneName);
 
                 if (zone == null)
                 {
                     zoneRepository.Insert(new Zone
                     {
                         Id = Guid.NewGuid(),
+                        TenantId = tenantId,
                         Name = zoneName
                     });
                     continue;

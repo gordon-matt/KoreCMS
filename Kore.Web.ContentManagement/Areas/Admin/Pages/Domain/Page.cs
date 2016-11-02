@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Tenants.Domain;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
 {
-    public class Page : IEntity
+    public class Page : ITenantEntity
     {
         private ICollection<PageVersion> versions;
 
         public Guid Id { get; set; }
+
+        public int? TenantId { get; set; }
 
         public Guid? ParentId { get; set; }
 

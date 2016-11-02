@@ -13,12 +13,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
     public interface IPageVersionService : IGenericDataService<PageVersion>
     {
         PageVersion GetCurrentVersion(
+            int tenantId,
             Guid pageId,
             string cultureCode = null,
             bool enabledOnly = true,
             bool shownOnMenusOnly = true);
 
         IEnumerable<PageVersion> GetCurrentVersions(
+            int tenantId,
             string cultureCode = null,
             bool enabledOnly = true,
             bool shownOnMenusOnly = true,
@@ -42,6 +44,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
         #region IPageVersionService Members
 
         public PageVersion GetCurrentVersion(
+            int tenantId,
             Guid pageId,
             string cultureCode = null,
             bool enabledOnly = true,
@@ -49,7 +52,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
         {
             using (var pageVersionConnection = OpenConnection())
             {
-                var query = pageVersionConnection.Query().Include(x => x.Page);
+                var query = pageVersionConnection.Query(x => x.TenantId == tenantId).Include(x => x.Page);
 
                 if (enabledOnly)
                 {
@@ -66,6 +69,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
         }
 
         public IEnumerable<PageVersion> GetCurrentVersions(
+            int tenantId,
             string cultureCode = null,
             bool enabledOnly = true,
             bool shownOnMenusOnly = true,
@@ -76,7 +80,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
 
             using (var pageConnection = pageRepository.OpenConnection())
             {
-                var query = pageConnection.Query();
+                var query = pageConnection.Query(x => x.TenantId == tenantId);
 
                 if (enabledOnly)
                 {
@@ -99,10 +103,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
 
                 pages = query.ToHashSet();
             }
-            
+
             using (var pageVersionConnection = OpenConnection())
             {
-                var pageVersions = pageVersionConnection.Query().Include(x => x.Page).ToHashSet();
+                var pageVersions = pageVersionConnection
+                    .Query(x => x.TenantId == tenantId)
+                    .Include(x => x.Page)
+                    .ToHashSet();
 
                 return pages
                     .Select(x => GetCurrentVersionInternal(x.Id, pageVersions, cultureCode))

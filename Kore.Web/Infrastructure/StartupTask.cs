@@ -24,13 +24,20 @@ namespace Kore.Web.Infrastructure
         {
             EnsureTenant();
 
+            var tenantService = EngineContext.Current.Resolve<ITenantService>();
+            IEnumerable<int> tenantIds = null;
+
+            using (var connection = tenantService.OpenConnection())
+            {
+                tenantIds = connection.Query().Select(x => x.Id).ToList();
+            }
+
             var membershipService = EngineContext.Current.Resolve<IMembershipService>();
-            var workContext = EngineContext.Current.Resolve<IWorkContext>();
 
-            AsyncHelper.RunSync(() => EnsurePermissions(membershipService, workContext));
-            AsyncHelper.RunSync(() => EnsureMembership(membershipService, workContext));
+            AsyncHelper.RunSync(() => EnsurePermissions(membershipService, tenantIds));
+            AsyncHelper.RunSync(() => EnsureMembership(membershipService, tenantIds));
 
-            EnsureSettings();
+            EnsureSettings(tenantIds);
         }
 
         private static void EnsureTenant()
@@ -47,16 +54,18 @@ namespace Kore.Web.Infrastructure
             }
         }
 
-        private static async Task EnsurePermissions(IMembershipService membershipService, IWorkContext workContext)
+        private static async Task EnsurePermissions(IMembershipService membershipService, IEnumerable<int> tenantIds)
         {
             if (membershipService.SupportsRolePermissions)
             {
+                #region NULL Tenant
+
                 var permissionProviders = EngineContext.Current.ResolveAll<IPermissionProvider>();
 
                 var allPermissions = permissionProviders.SelectMany(x => x.GetPermissions());
                 var allPermissionNames = allPermissions.Select(x => x.Name).ToHashSet();
 
-                var installedPermissions = await membershipService.GetAllPermissions(workContext.CurrentTenant.Id);
+                var installedPermissions = await membershipService.GetAllPermissions(null);
                 var installedPermissionNames = installedPermissions.Select(x => x.Name).ToHashSet();
 
                 var permissionsToAdd = allPermissions
@@ -72,7 +81,7 @@ namespace Kore.Web.Infrastructure
 
                 if (!permissionsToAdd.IsNullOrEmpty())
                 {
-                    await membershipService.InsertPermissions(workContext.CurrentTenant.Id, permissionsToAdd);
+                    await membershipService.InsertPermissions(null, permissionsToAdd);
                 }
 
                 var permissionIdsToDelete = installedPermissions
@@ -83,14 +92,51 @@ namespace Kore.Web.Infrastructure
                 {
                     await membershipService.DeletePermissions(permissionIdsToDelete);
                 }
+
+                #endregion NULL Tenant
+
+                #region Tenants
+
+                foreach (int tenantId in tenantIds)
+                {
+                    installedPermissions = await membershipService.GetAllPermissions(tenantId);
+                    installedPermissionNames = installedPermissions.Select(x => x.Name).ToHashSet();
+
+                    permissionsToAdd = allPermissions
+                       .Where(x => !installedPermissionNames.Contains(x.Name))
+                       .Select(x => new KorePermission
+                       {
+                           Name = x.Name,
+                           Category = x.Category,
+                           Description = x.Description
+                       })
+                       .OrderBy(x => x.Category)
+                       .ThenBy(x => x.Name);
+
+                    if (!permissionsToAdd.IsNullOrEmpty())
+                    {
+                        await membershipService.InsertPermissions(tenantId, permissionsToAdd);
+                    }
+
+                    permissionIdsToDelete = installedPermissions
+                       .Where(x => !allPermissionNames.Contains(x.Name))
+                       .Select(x => x.Id);
+
+                    if (!permissionIdsToDelete.IsNullOrEmpty())
+                    {
+                        await membershipService.DeletePermissions(permissionIdsToDelete);
+                    }
+                }
+
+                #endregion Tenants
             }
         }
 
-        private static async Task EnsureMembership(IMembershipService membershipService, IWorkContext workContext)
+        private static async Task EnsureMembership(IMembershipService membershipService, IEnumerable<int> tenantIds)
         {
             // We only run this method to ensure that the admin user has been setup as part of the installation process.
             //  If there are any users already in the DB...
-            if (await membershipService.GetAllUsersAsQueryable(workContext.CurrentTenant.Id).AnyAsync())
+            if (await membershipService.GetAllUsersAsQueryable(null).AnyAsync())
             {
                 // ... we assume the admin user is one of them. No need for further querying...
                 return;
@@ -138,9 +184,29 @@ namespace Kore.Web.Infrastructure
                 dataSettings.AdminPassword = null;
                 DataSettingsManager.SaveSettings(dataSettings);
             }
+
+            if (membershipService.SupportsRolePermissions)
+            {
+                foreach (int tenantId in tenantIds)
+                {
+                    var administratorsRole = await membershipService.GetRoleByName(tenantId, KoreWebConstants.Roles.Administrators);
+                    if (administratorsRole == null)
+                    {
+                        await membershipService.InsertRole(tenantId, new KoreRole { Name = KoreWebConstants.Roles.Administrators });
+                        administratorsRole = await membershipService.GetRoleByName(tenantId, KoreWebConstants.Roles.Administrators);
+
+                        if (administratorsRole != null)
+                        {
+                            var permissions = await membershipService.GetAllPermissions(tenantId);
+                            var permissionIds = permissions.Select(x => x.Id);
+                            await membershipService.AssignPermissionsToRole(administratorsRole.Id, permissionIds);
+                        }
+                    }
+                }
+            }
         }
 
-        private static void EnsureSettings()
+        private static void EnsureSettings(IEnumerable<int> tenantIds)
         {
             var settingsRepository = EngineContext.Current.Resolve<IRepository<Setting>>();
             var allSettings = EngineContext.Current.ResolveAll<ISettings>();
@@ -175,14 +241,6 @@ namespace Kore.Web.Infrastructure
             #endregion NULL Tenant (In case we want default settings)
 
             #region Tenants
-
-            var tenantService = EngineContext.Current.Resolve<ITenantService>();
-            IEnumerable<int> tenantIds = null;
-
-            using (var connection = tenantService.OpenConnection())
-            {
-                tenantIds = connection.Query().Select(x => x.Id).ToList();
-            }
 
             foreach (var tenantId in tenantIds)
             {

@@ -18,6 +18,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
         private readonly IPageVersionService pageVersionService;
         private readonly IPageTypeService pageTypeService;
         private readonly UrlHelper urlHelper;
+        private readonly IWorkContext workContext;
         private static readonly char[] trimCharacters = { ' ', '\r', '\n', '\t' };
 
         public PagesIndexingContentProvider(
@@ -25,18 +26,21 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
             IPageService pageService,
             IPageVersionService pageVersionService,
             IPageTypeService pageTypeService,
-            UrlHelper urlHelper)
+            UrlHelper urlHelper,
+            IWorkContext workContext)
         {
             this.languageService = languageService;
             this.pageService = pageService;
             this.pageVersionService = pageVersionService;
             this.pageTypeService = pageTypeService;
             this.urlHelper = urlHelper;
+            this.workContext = workContext;
         }
 
         public IEnumerable<IDocumentIndex> GetDocuments(Func<string, IDocumentIndex> factory)
         {
-            var pageVersions = pageVersionService.GetCurrentVersions(shownOnMenusOnly: false);
+            int tenantId = workContext.CurrentTenant.Id; // TODO: Shouldn't we be generating indexes for all tenants?
+            var pageVersions = pageVersionService.GetCurrentVersions(tenantId, shownOnMenusOnly: false);
             foreach (var document in ProcessPageVersions(pageVersions, factory, null))
             {
                 yield return document;
@@ -50,7 +54,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 
             foreach (string cultureCode in cultureCodes)
             {
-                pageVersions = pageVersionService.GetCurrentVersions(cultureCode: cultureCode, shownOnMenusOnly: false);
+                pageVersions = pageVersionService.GetCurrentVersions(tenantId, cultureCode: cultureCode, shownOnMenusOnly: false);
                 foreach (var document in ProcessPageVersions(pageVersions, factory, cultureCode))
                 {
                     yield return document;

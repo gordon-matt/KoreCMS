@@ -26,7 +26,7 @@ namespace KoreCMS.Services
     {
         private readonly ApplicationDbContext dbContext;
 
-        private readonly UserStore<ApplicationUser> userStore;
+        private readonly TenantUserStore<ApplicationUser> userStore;
         private readonly ApplicationUserManager userManager;
         private readonly RoleStore<ApplicationRole> roleStore;
         private readonly ApplicationRoleManager roleManager;
@@ -46,7 +46,7 @@ namespace KoreCMS.Services
             var settings = DataSettingsManager.LoadSettings();
             dbContext = new ApplicationDbContext(settings.ConnectionString);
 
-            this.userStore = new UserStore<ApplicationUser>(dbContext);
+            this.userStore = new TenantUserStore<ApplicationUser>(dbContext);
             this.roleStore = new RoleStore<ApplicationRole>(dbContext);
             this.userManager = new ApplicationUserManager(userStore);
             this.roleManager = new ApplicationRoleManager(roleStore);
@@ -80,6 +80,10 @@ namespace KoreCMS.Services
             if (tenantId.HasValue)
             {
                 query = query.Where(x => x.TenantId == tenantId);
+            }
+            else
+            {
+                query = query.Where(x => x.TenantId == null);
             }
 
             return query
@@ -135,7 +139,7 @@ namespace KoreCMS.Services
             }
             else
             {
-                user = await userManager.FindByEmailAsync(email);
+                user = await dbContext.Users.FirstOrDefaultAsync(x => x.TenantId == null && x.Email == email);
             }
 
             if (user == null)
@@ -162,7 +166,7 @@ namespace KoreCMS.Services
             }
             else
             {
-                user = await userManager.FindByNameAsync(userName);
+                user = await dbContext.Users.FirstOrDefaultAsync(x => x.TenantId == null && x.UserName == userName);
             }
 
             if (user == null)
@@ -377,6 +381,10 @@ namespace KoreCMS.Services
             {
                 query = query.Where(x => x.TenantId == tenantId);
             }
+            else
+            {
+                query = query.Where(x => x.TenantId == null);
+            }
 
             return await query
                 .Select(x => new KoreRole
@@ -427,7 +435,7 @@ namespace KoreCMS.Services
             }
             else
             {
-                role = await roleManager.FindByNameAsync(roleName);
+                role = await roleManager.Roles.FirstOrDefaultAsync(x => x.TenantId == null && x.Name == roleName);
             }
 
             if (role == null)
@@ -516,7 +524,7 @@ namespace KoreCMS.Services
             }
             else
             {
-                role = await roleManager.FindByNameAsync(roleName);
+                role = await roleManager.Roles.FirstOrDefaultAsync(x => x.TenantId == null && x.Name == roleName);
             }
 
             var userIds = role.Users.Select(x => x.UserId).ToList();
@@ -542,6 +550,10 @@ namespace KoreCMS.Services
             if (tenantId.HasValue)
             {
                 query = query.Where(x => x.TenantId == tenantId);
+            }
+            else
+            {
+                query = query.Where(x => x.TenantId == null);
             }
 
             return (await query.ToListAsync()).Select(x => new KorePermission
@@ -582,7 +594,7 @@ namespace KoreCMS.Services
             }
             else
             {
-                entity = await dbContext.Permissions.FirstOrDefaultAsync(x => x.Name == permissionName);
+                entity = await dbContext.Permissions.FirstOrDefaultAsync(x => x.TenantId == null && x.Name == permissionName);
             }
 
             if (entity == null)
@@ -620,7 +632,7 @@ namespace KoreCMS.Services
             {
                 permissions = await (from p in query
                                      from rp in p.Roles
-                                     where rp.Name == roleName
+                                     where p.TenantId == null && rp.Name == roleName
                                      select p).ToListAsync();
             }
 
@@ -889,7 +901,7 @@ namespace KoreCMS.Services
                 }
                 else
                 {
-                    query = query.Where(x => x.Key == key);
+                    query = query.Where(x => x.TenantId == null && x.Key == key);
                 }
 
                 return (await query.ToHashSetAsync())
@@ -915,7 +927,7 @@ namespace KoreCMS.Services
                 }
                 else
                 {
-                    query = query.Where(x => x.Key == key && x.Value == value);
+                    query = query.Where(x => x.TenantId == null && x.Key == key && x.Value == value);
                 }
 
                 return (await query.ToHashSetAsync())
@@ -941,7 +953,7 @@ namespace KoreCMS.Services
                 }
                 else
                 {
-                    query = connection.Query(x => x.Key == key && x.Value == value);
+                    query = connection.Query(x => x.TenantId == null && x.Key == key && x.Value == value);
                 }
 
                 if (!string.IsNullOrEmpty(userId))

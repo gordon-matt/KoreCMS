@@ -178,7 +178,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         public async Task<ActionResult> Preview(Guid pageId)
         {
             var currentCulture = WorkContext.CurrentCultureCode;
-            var pageVersion = pageVersionService.Value.GetCurrentVersion(pageId, currentCulture, false, false);
+            var tenantId = WorkContext.CurrentTenant.Id;
+            var pageVersion = pageVersionService.Value.GetCurrentVersion(tenantId, pageId, currentCulture, false, false);
 
             return await PagePreview(pageVersion);
         }

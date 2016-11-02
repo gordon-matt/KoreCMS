@@ -1,4 +1,5 @@
-﻿using Kore.Data;
+﻿using Kore;
+using Kore.Data;
 using KoreCMS.Data;
 using KoreCMS.Data.Domain;
 

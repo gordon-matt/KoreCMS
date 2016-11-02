@@ -16,10 +16,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
     public class PageTreeApiController : ODataController
     {
         private readonly IPageService service;
+        private readonly IWorkContext workContext;
 
-        public PageTreeApiController(IPageService service)
+        public PageTreeApiController(IPageService service, IWorkContext workContext)
         {
             this.service = service;
+            this.workContext = workContext;
         }
 
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All, MaxExpansionDepth = 10)]
@@ -30,7 +32,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 return Enumerable.Empty<PageTreeItem>();
             }
 
-            var pages = await service.FindAsync();
+            int tenantId = GetTenantId();
+            var pages = await service.FindAsync(x => x.TenantId == tenantId);
 
             var hierarchy = pages
                 .Where(x => x.ParentId == null)
@@ -63,7 +66,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 return SingleResult.Create(Enumerable.Empty<PageTreeItem>().AsQueryable());
             }
 
-            var pages = await service.FindAsync();
+            int tenantId = GetTenantId();
+            var pages = await service.FindAsync(x => x.TenantId == tenantId);
             var entity = pages.FirstOrDefault(x => x.Id == key);
 
             return SingleResult.Create(new[] { entity }.Select(x => new PageTreeItem
@@ -90,11 +94,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 });
         }
 
-        protected static bool CheckPermission(Permission permission)
+        protected virtual bool CheckPermission(Permission permission)
         {
             var authorizationService = EngineContext.Current.Resolve<IAuthorizationService>();
-            var workContext = EngineContext.Current.Resolve<IWorkContext>();
             return authorizationService.TryCheckAccess(permission, workContext.CurrentUser);
+        }
+
+        protected virtual int GetTenantId()
+        {
+            return workContext.CurrentTenant.Id;
         }
     }
 

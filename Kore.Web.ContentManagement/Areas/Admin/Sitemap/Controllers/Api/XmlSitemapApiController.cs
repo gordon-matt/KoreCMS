@@ -25,17 +25,20 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
         private readonly IPageService pageService;
         private readonly IPageVersionService pageVersionService;
         private readonly Lazy<ILanguageService> languageService;
+        private readonly IWorkContext workContext;
 
         public XmlSitemapApiController(
             IRepository<SitemapConfig> repository,
             IPageService pageService,
             IPageVersionService pageVersionService,
-            Lazy<ILanguageService> languageService)
+            Lazy<ILanguageService> languageService,
+            IWorkContext workContext)
             : base(repository)
         {
             this.pageService = pageService;
             this.pageVersionService = pageVersionService;
             this.languageService = languageService;
+            this.workContext = workContext;
         }
 
         #region GenericODataController<GoogleSitemapPageConfig, int> Members
@@ -79,7 +82,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
             // First ensure that current pages are in the config
             var config = await Service.FindAsync();
             var configPageIds = config.Select(x => x.PageId).ToHashSet();
-            var pageVersions = pageVersionService.GetCurrentVersions(shownOnMenusOnly: false); // temp fix: since we don't support localized routes yet
+            int tenantId = workContext.CurrentTenant.Id;
+            var pageVersions = pageVersionService.GetCurrentVersions(tenantId, shownOnMenusOnly: false); // temp fix: since we don't support localized routes yet
             var pageVersionIds = pageVersions.Select(x => x.Id).ToHashSet();
 
             var newPageVersionIds = pageVersionIds.Except(configPageIds);

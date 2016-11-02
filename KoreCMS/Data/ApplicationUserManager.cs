@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Kore;
 using Kore.Infrastructure;
 using Kore.Net.Mail;
 using KoreCMS.Data.Domain;
@@ -14,12 +15,12 @@ namespace KoreCMS.Data
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
             : base(store)
         {
+            //this.UserValidator
         }
 
-        public static ApplicationUserManager Create<TDbContext>(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
-            where TDbContext : IdentityDbContext<ApplicationUser>
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<TDbContext>()));
+            var manager = new ApplicationUserManager(new TenantUserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {

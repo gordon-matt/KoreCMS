@@ -259,8 +259,11 @@ namespace Kore.Web.ContentManagement
         private static IEnumerable<SelectListItem> GetTopLevelPagesSelectList(string selectedValue = null, string emptyText = null)
         {
             var pageService = EngineContext.Current.Resolve<IPageService>();
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
 
-            return pageService.GetTopLevelPages()
+            int tenantId = workContext.CurrentTenant.Id;
+
+            return pageService.GetTopLevelPages(tenantId)
                 .ToSelectList(
                     value => value.Id,
                     text => text.Name,

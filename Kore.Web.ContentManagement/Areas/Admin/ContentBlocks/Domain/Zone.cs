@@ -2,12 +2,15 @@
 using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Tenants.Domain;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
 {
-    public class Zone : IEntity
+    public class Zone : ITenantEntity
     {
         public Guid Id { get; set; }
+
+        public int? TenantId { get; set; }
 
         public string Name { get; set; }
 

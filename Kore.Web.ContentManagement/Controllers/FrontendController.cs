@@ -74,7 +74,8 @@ namespace Kore.Web.ContentManagement.Controllers
                     bool hasAccess = AsyncHelper.RunSync(() => PageSecurityHelper.CheckUserHasAccessToPage(parentPage, User));
                     if (hasAccess)
                     {
-                        var currentVersion = pageVersionService.GetCurrentVersion(parentPage.Id, WorkContext.CurrentCultureCode);
+                        int tenantId = WorkContext.CurrentTenant.Id;
+                        var currentVersion = pageVersionService.GetCurrentVersion(tenantId, parentPage.Id, WorkContext.CurrentCultureCode);
                         breadcrumbs.Add(new Breadcrumb
                         {
                             Text = currentVersion.Title,
@@ -124,7 +125,10 @@ namespace Kore.Web.ContentManagement.Controllers
                 });
             }
 
+            int tenantId = WorkContext.CurrentTenant.Id;
+
             var pageVersions = pageVersionService.GetCurrentVersions(
+                tenantId,
                 WorkContext.CurrentCultureCode,
                 enabledOnly: true,
                 shownOnMenusOnly: true);
@@ -221,10 +225,13 @@ namespace Kore.Web.ContentManagement.Controllers
 
             bool hasCmsPages = true;
 
+            int tenantId = WorkContext.CurrentTenant.Id;
+
             // If on home page
             if (string.IsNullOrEmpty(currentUrlSlug))
             {
                 pageVersions = pageVersionService.GetCurrentVersions(
+                    tenantId,
                     WorkContext.CurrentCultureCode,
                     enabledOnly: true,
                     shownOnMenusOnly: true,
@@ -246,6 +253,7 @@ namespace Kore.Web.ContentManagement.Controllers
                 if (anyVersion != null)
                 {
                     pageVersions = pageVersionService.GetCurrentVersions(
+                        tenantId,
                         WorkContext.CurrentCultureCode,
                         enabledOnly: true,
                         shownOnMenusOnly: true,

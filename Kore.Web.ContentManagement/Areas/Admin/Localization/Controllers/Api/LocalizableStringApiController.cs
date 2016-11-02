@@ -48,7 +48,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
             }
             else
             {
-                int? tenantId = GetTenantId();
+                int tenantId = GetTenantId();
                 using (var connection = Service.OpenConnection())
                 {
                     // With grouping, we use .Where() and then .FirstOrDefault() instead of just the .FirstOrDefault() by itself
@@ -93,7 +93,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
                 return BadRequest();
             }
 
-            int? tenantId = GetTenantId();
+            int tenantId = GetTenantId();
             var localizedString = await Service.FindOneAsync(x => x.TenantId == tenantId && x.CultureCode == cultureCode && x.TextKey == key);
 
             if (localizedString == null)
@@ -130,7 +130,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
             string cultureCode = (string)parameters["cultureCode"];
             string key = (string)parameters["key"];
 
-            int? tenantId = GetTenantId();
+            int tenantId = GetTenantId();
             var entity = await Service.FindOneAsync(x => x.TenantId == tenantId && x.CultureCode == cultureCode && x.TextKey == key);
             if (entity == null)
             {

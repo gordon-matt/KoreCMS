@@ -20,16 +20,19 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
     {
         private readonly Lazy<IRepository<Zone>> zoneRepository;
         private readonly Lazy<ILocalizablePropertyService> localizablePropertyService;
+        private readonly IWorkContext workContext;
 
         public ContentBlockService(
             ICacheManager cacheManager,
             IRepository<ContentBlock> repository,
             Lazy<IRepository<Zone>> zoneRepository,
-            Lazy<ILocalizablePropertyService> localizablePropertyService)
+            Lazy<ILocalizablePropertyService> localizablePropertyService,
+            IWorkContext workContext)
             : base(cacheManager, repository)
         {
             this.zoneRepository = zoneRepository;
             this.localizablePropertyService = localizablePropertyService;
+            this.workContext = workContext;
         }
 
         #region GenericDataService<ContentBlock> Overrides
@@ -87,17 +90,19 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
 
             var records = Enumerable.Empty<ContentBlock>();
 
+            int tenantId = GetTenantId();
             if (includeDisabled)
             {
                 records = CacheManager.Get(key, () =>
                 {
-                    var zone = zoneRepository.Value.FindOne(x => x.Name == zoneName);
+                    var zone = zoneRepository.Value.FindOne(x => x.TenantId == tenantId && x.Name == zoneName);
 
                     if (zone == null)
                     {
                         zoneRepository.Value.Insert(new Zone
                         {
                             Id = Guid.NewGuid(),
+                            TenantId = tenantId,
                             Name = zoneName
                         });
                         return Enumerable.Empty<ContentBlock>();
@@ -112,13 +117,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
             {
                 records = CacheManager.Get(key, () =>
                 {
-                    var zone = zoneRepository.Value.FindOne(x => x.Name == zoneName);
+                    var zone = zoneRepository.Value.FindOne(x => x.TenantId == tenantId && x.Name == zoneName);
 
                     if (zone == null)
                     {
                         zoneRepository.Value.Insert(new Zone
                         {
                             Id = Guid.NewGuid(),
+                            TenantId = tenantId,
                             Name = zoneName
                         });
                         return Enumerable.Empty<ContentBlock>();
@@ -195,6 +201,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
                 result.Add(contentBlock);
             }
             return result;
+        }
+
+        protected virtual int GetTenantId()
+        {
+            return workContext.CurrentTenant.Id;
         }
     }
 }

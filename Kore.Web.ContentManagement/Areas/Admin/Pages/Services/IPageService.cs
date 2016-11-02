@@ -15,7 +15,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
 {
     public interface IPageService : IGenericDataService<Page>
     {
-        IEnumerable<Page> GetTopLevelPages();
+        IEnumerable<Page> GetTopLevelPages(int tenantId);
     }
 
     public class PageService : GenericDataService<Page>, IPageService
@@ -389,12 +389,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
 
         #region IPageService Members
 
-        public IEnumerable<Page> GetTopLevelPages()
+        public IEnumerable<Page> GetTopLevelPages(int tenantId)
         {
             using (var connection = OpenConnection())
             {
                 return connection
-                    .Query(x => x.ParentId == null)
+                    .Query(x => x.TenantId == tenantId && x.ParentId == null)
                     .OrderBy(x => x.Name)
                     .ToHashSet();
             }

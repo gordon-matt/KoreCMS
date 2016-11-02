@@ -20,7 +20,7 @@ namespace KoreCMS
             // Configure the db context and user manager to use a single instance per request
             var dataSettings = EngineContext.Current.Resolve<DataSettings>();
             app.CreatePerOwinContext(() => new ApplicationDbContext(dataSettings.ConnectionString));
-            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create<ApplicationDbContext>);
+            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
 
             // Enable the application to use a cookie to store information for the signed in user

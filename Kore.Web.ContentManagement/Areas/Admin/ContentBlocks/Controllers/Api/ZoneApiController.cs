@@ -7,7 +7,7 @@ using Kore.Web.Security.Membership.Permissions;
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
 {
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class ZoneApiController : GenericODataController<Zone, Guid>
+    public class ZoneApiController : GenericTenantODataController<Zone, Guid>
     {
         public ZoneApiController(IZoneService service)
             : base(service)

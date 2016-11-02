@@ -271,6 +271,11 @@ namespace Kore.Web.Mvc
                 throw new ArgumentNullException("selectList");
             }
 
+            if (!selectList.Any())
+            {
+                throw new ArgumentException("selectList must contain at least 1 item");
+            }
+
             int index = 0;
 
             var sb = new StringBuilder();
@@ -744,6 +749,9 @@ namespace Kore.Web.Mvc
                 .ToSelectList(
                     value => value.Id,
                     text => text.Name);
+
+            //TODO: problem when no roles, which happens now because current tenant does not have an admin role.. only NULL tenant has admin role.
+            //      need to auto create admin roles for each tenant
 
             return html.CheckBoxList(name, selectList, selectedRoleIds, labelHtmlAttributes: labelHtmlAttributes, checkboxHtmlAttributes: checkboxHtmlAttributes);
         }

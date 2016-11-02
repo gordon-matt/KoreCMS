@@ -33,31 +33,18 @@ namespace Kore.Web.Http.OData
 
         protected override IQueryable<TEntity> ApplyMandatoryFilter(IQueryable<TEntity> query)
         {
-            int? tenantId = GetTenantId();
-
-            if (tenantId.HasValue)
+            int tenantId = GetTenantId();
+            if (CheckPermission(StandardPermissions.FullAccess))
             {
-                if (CheckPermission(StandardPermissions.FullAccess))
-                {
-                    return query.Where(x => x.TenantId == null || x.TenantId == tenantId);
-                }
-                return query.Where(x => x.TenantId == tenantId);
+                return query.Where(x => x.TenantId == null || x.TenantId == tenantId);
             }
-            else
-            {
-                // Should never be able to get here... since, workContext.CurrentTenant should never be null
-                return query.Where(x => x.TenantId == null);
-            }
+            return query.Where(x => x.TenantId == tenantId);
         }
 
         #endregion GenericODataController<TEntity, TKey> Members
 
-        protected virtual int? GetTenantId()
+        protected virtual int GetTenantId()
         {
-            if (workContext.CurrentTenant == null)
-            {
-                return null;
-            }
             return workContext.CurrentTenant.Id;
         }
 
@@ -77,14 +64,8 @@ namespace Kore.Web.Http.OData
 
             if (CheckPermission(ReadPermission))
             {
-                int? tenantId = GetTenantId();
-
-                if (tenantId == null)
-                {
-                    return entity.TenantId == null;
-                }
-
-                return entity.TenantId == null || entity.TenantId == tenantId;
+                int tenantId = GetTenantId();
+                return entity.TenantId == tenantId;
             }
 
             return false;
@@ -106,17 +87,17 @@ namespace Kore.Web.Http.OData
 
             if (CheckPermission(WritePermission))
             {
-                int? tenantId = GetTenantId();
-
-                if (tenantId == null)
-                {
-                    return entity.TenantId == null;
-                }
-
-                return entity.TenantId == null || entity.TenantId == tenantId;
+                int tenantId = GetTenantId();
+                return entity.TenantId == tenantId;
             }
 
             return false;
+        }
+
+        protected override void OnBeforeSave(TEntity entity)
+        {
+            base.OnBeforeSave(entity);
+            entity.TenantId = GetTenantId();
         }
     }
 }

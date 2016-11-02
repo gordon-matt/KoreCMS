@@ -14,7 +14,7 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 {
-    public class PageVersionApiController : GenericODataController<PageVersion, Guid>
+    public class PageVersionApiController : GenericTenantODataController<PageVersion, Guid>
     {
         private readonly Lazy<IPageService> pageService;
         private readonly PageSettings settings;
@@ -29,18 +29,19 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             this.settings = settings;
         }
 
-        //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        //public override IQueryable<PageVersion> Get()
-        //{
-        //    if (!CheckPermission(ReadPermission))
-        //    {
-        //        return Enumerable.Empty<PageVersion>().AsQueryable();
-        //    };
-        //}
-
         public override async Task<IHttpActionResult> Delete([FromODataUri] Guid key)
         {
             var entity = await Service.FindOneAsync(key);
+
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
+            if (!CanModifyEntity(entity))
+            {
+                return Unauthorized();
+            }
 
             // First find previous version and set it to be the current
             PageVersion previous = null;
@@ -67,22 +68,24 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             return await base.Delete(key);
         }
 
+        [AcceptVerbs("PATCH", "MERGE")]
         public override async Task<IHttpActionResult> Patch([FromODataUri] Guid key, Delta<PageVersion> patch)
         {
-            if (!CheckPermission(WritePermission))
-            {
-                return Unauthorized();
-            }
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             var entity = await Service.FindOneAsync(key);
+
             if (entity == null)
             {
                 return NotFound();
+            }
+
+            if (!CanModifyEntity(entity))
+            {
+                return Unauthorized();
             }
 
             patch.Patch(entity);
@@ -99,6 +102,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     var backup = new PageVersion
                     {
                         Id = Guid.NewGuid(),
+                        TenantId = currentVersion.TenantId,
                         PageId = currentVersion.PageId,
                         CultureCode = currentVersion.CultureCode,
                         DateCreatedUtc = currentVersion.DateCreatedUtc,
@@ -139,7 +143,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
         public override async Task<IHttpActionResult> Put([FromODataUri] Guid key, PageVersion entity)
         {
-            if (!CheckPermission(WritePermission))
+            if (!CanModifyEntity(entity))
             {
                 return Unauthorized();
             }
@@ -168,6 +172,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     var newRecord = new PageVersion
                     {
                         Id = Guid.NewGuid(),
+                        TenantId = currentVersion.TenantId,
                         PageId = entity.PageId,
                         CultureCode = entity.CultureCode,
                         Status = currentVersion.Status,
@@ -187,6 +192,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                         var backup = new PageVersion
                         {
                             Id = Guid.NewGuid(),
+                            TenantId = currentVersion.TenantId,
                             PageId = currentVersion.PageId,
                             CultureCode = currentVersion.CultureCode,
                             DateCreatedUtc = currentVersion.DateCreatedUtc,
@@ -203,7 +209,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 
                     entity.DateCreatedUtc = currentVersion.DateCreatedUtc;
                     entity.DateModifiedUtc = DateTime.UtcNow;
-                    Service.Update(entity);
+                    await Service.UpdateAsync(entity);
                 }
             }
             catch (DbUpdateConcurrencyException x)
@@ -245,7 +251,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 return NotFound();
             }
 
+            if (!CanModifyEntity(versionToRestore))
+            {
+                return Unauthorized();
+            }
+
+            int tenantId = GetTenantId();
             var current = ((IPageVersionService)Service).GetCurrentVersion(
+                tenantId,
                 versionToRestore.PageId,
                 versionToRestore.CultureCode,
                 enabledOnly: false,
@@ -260,6 +273,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             var backup = new PageVersion
             {
                 Id = Guid.NewGuid(),
+                TenantId = current.TenantId,
                 PageId = current.PageId,
                 CultureCode = current.CultureCode,
                 DateCreatedUtc = current.DateCreatedUtc,
@@ -295,7 +309,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 return Unauthorized();
             }
 
+            int tenantId = GetTenantId();
             var currentVersion = ((IPageVersionService)Service).GetCurrentVersion(
+                tenantId,
                 pageId,
                 cultureCode,
                 enabledOnly: false,

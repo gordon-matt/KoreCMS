@@ -10,7 +10,7 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
 {
-    public class PageApiController : GenericODataController<Page, Guid>
+    public class PageApiController : GenericTenantODataController<Page, Guid>
     {
         private readonly IPageVersionService pageVersionService;
         private readonly IWebWorkContext workContext;
@@ -23,41 +23,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         {
             this.pageVersionService = pageVersionService;
             this.workContext = workContext;
-        }
-
-        public override async Task<SingleResult<Page>> Get([FromODataUri] Guid key)
-        {
-            if (!CheckPermission(ReadPermission))
-            {
-                return SingleResult.Create(Enumerable.Empty<Page>().AsQueryable());
-            }
-            var entity = await Service.FindOneAsync(key);
-
-            string currentCulture = workContext.CurrentCultureCode;
-
-            //if (!string.IsNullOrEmpty(currentCulture))
-            //{
-            //    var localized = pageVersionService.FindOne(x => x.PageId == key && x.CultureCode == currentCulture);
-            //    if (localized == null)
-            //    {
-            //        var invariantVersion = pageVersionService.FindOne(x => x.PageId == key && x.CultureCode == null);
-
-            //        pageVersionService.Insert(new PageVersion
-            //        {
-            //            Id = Guid.NewGuid(),
-            //            PageId = key,
-            //            CultureCode = currentCulture,
-            //            DateCreatedUtc = DateTime.UtcNow,
-            //            DateModifiedUtc = DateTime.UtcNow,
-            //            Status = invariantVersion.Status,
-            //            Title = invariantVersion.Title,
-            //            Slug = invariantVersion.Slug,
-            //            Fields = invariantVersion.Fields
-            //        });
-            //    }
-            //}
-
-            return SingleResult.Create(new[] { entity }.AsQueryable());
         }
 
         protected override Guid GetId(Page entity)
@@ -88,7 +53,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 return Unauthorized();
             }
 
-            var topLevelPages = (Service as IPageService).GetTopLevelPages();
+            int tenantId = GetTenantId();
+            var topLevelPages = (Service as IPageService).GetTopLevelPages(tenantId);
 
             return Ok(topLevelPages);
         }

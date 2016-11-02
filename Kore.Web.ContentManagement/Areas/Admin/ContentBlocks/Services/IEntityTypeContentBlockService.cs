@@ -18,16 +18,19 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
     {
         private readonly Lazy<IRepository<Zone>> zoneRepository;
         private readonly Lazy<ILocalizablePropertyService> localizablePropertyService;
+        private readonly IWorkContext workContext;
 
         public EntityTypeContentBlockService(
             ICacheManager cacheManager,
             IRepository<EntityTypeContentBlock> repository,
             Lazy<IRepository<Zone>> zoneRepository,
-            Lazy<ILocalizablePropertyService> localizablePropertyService)
+            Lazy<ILocalizablePropertyService> localizablePropertyService,
+            IWorkContext workContext)
             : base(cacheManager, repository)
         {
             this.zoneRepository = zoneRepository;
             this.localizablePropertyService = localizablePropertyService;
+            this.workContext = workContext;
         }
 
         //TODO: Override other Delete() methods with similar logic to this one
@@ -58,15 +61,17 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
                 zoneName,
                 includeDisabled);
 
+            int tenantId = GetTenantId();
             var records = CacheManager.Get(key, () =>
             {
-                var zone = zoneRepository.Value.FindOne(x => x.Name == zoneName);
+                var zone = zoneRepository.Value.FindOne(x => x.TenantId == tenantId && x.Name == zoneName);
 
                 if (zone == null)
                 {
                     zoneRepository.Value.Insert(new Zone
                     {
                         Id = Guid.NewGuid(),
+                        TenantId = tenantId,
                         Name = zoneName
                     });
                     return Enumerable.Empty<EntityTypeContentBlock>();
@@ -145,6 +150,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
                 result.Add(contentBlock);
             }
             return result;
+        }
+
+        protected virtual int GetTenantId()
+        {
+            return workContext.CurrentTenant.Id;
         }
     }
 }

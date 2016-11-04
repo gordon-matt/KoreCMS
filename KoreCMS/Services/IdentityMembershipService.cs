@@ -19,6 +19,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Kore.EntityFramework.Data;
 using Kore.EntityFramework.Data.EntityFramework;
+using Kore.Web;
 
 namespace KoreCMS.Services
 {
@@ -26,7 +27,7 @@ namespace KoreCMS.Services
     {
         private readonly ApplicationDbContext dbContext;
 
-        private readonly TenantUserStore<ApplicationUser> userStore;
+        private readonly TenantUserStore userStore;
         private readonly ApplicationUserManager userManager;
         private readonly RoleStore<ApplicationRole> roleStore;
         private readonly ApplicationRoleManager roleManager;
@@ -46,7 +47,7 @@ namespace KoreCMS.Services
             var settings = DataSettingsManager.LoadSettings();
             dbContext = new ApplicationDbContext(settings.ConnectionString);
 
-            this.userStore = new TenantUserStore<ApplicationUser>(dbContext);
+            this.userStore = new TenantUserStore(dbContext);
             this.roleStore = new RoleStore<ApplicationRole>(dbContext);
             this.userManager = new ApplicationUserManager(userStore);
             this.roleManager = new ApplicationRoleManager(roleStore);
@@ -263,47 +264,97 @@ namespace KoreCMS.Services
             }
         }
 
-        public async Task AssignUserToRoles(object userId, IEnumerable<object> roleIds)
+        //public async Task AssignUserToRoles(object userId, IEnumerable<object> roleIds)
+        //{
+        //    string uId = userId.ToString();
+
+        //    var ids = roleIds.Select(x => Convert.ToString(x));
+        //    var roleNames = await roleManager.Roles.Where(x => ids.Contains(x.Id)).Select(x => x.Name).ToListAsync();
+
+        //    var currentRoles = await userManager.GetRolesAsync(uId);
+
+        //    var toDelete = currentRoles.Where(x => !roleNames.Contains(x));
+        //    var toAdd = roleNames.Where(x => !currentRoles.Contains(x));
+
+        //    if (toDelete.Any())
+        //    {
+        //        foreach (string roleName in toDelete)
+        //        {
+        //            var result = await userManager.RemoveFromRoleAsync(uId, roleName);
+
+        //            if (!result.Succeeded)
+        //            {
+        //                string errorMessage = string.Join(Environment.NewLine, result.Errors);
+        //                throw new KoreException(errorMessage);
+        //            }
+        //        }
+        //        cachedUserRoles.Remove(uId);
+        //    }
+
+        //    if (toAdd.Any())
+        //    {
+        //        foreach (string roleName in toAdd)
+        //        {
+        //            var result = await userManager.AddToRoleAsync(uId, roleName);
+
+        //            if (!result.Succeeded)
+        //            {
+        //                string errorMessage = string.Join(Environment.NewLine, result.Errors);
+        //                throw new KoreException(errorMessage);
+        //            }
+        //        }
+        //        cachedUserRoles.Remove(uId);
+        //    }
+        //}
+
+        public async Task AssignUserToRoles(int? tenantId, object userId, IEnumerable<object> roleIds)
         {
             string uId = userId.ToString();
 
-            var ids = roleIds.Select(x => Convert.ToString(x));
-            var roleNames = await roleManager.Roles.Where(x => ids.Contains(x.Id)).Select(x => x.Name).ToListAsync();
+            IQueryable<string> currentRoleIds;
 
-            var currentRoles = await userManager.GetRolesAsync(uId);
+            if (tenantId.HasValue)
+            {
+                currentRoleIds = from ur in dbContext.UserRoles
+                                 join r in dbContext.Roles on ur.RoleId equals r.Id
+                                 where r.TenantId == tenantId && ur.UserId == uId
+                                 select ur.RoleId;
+            }
+            else
+            {
+                currentRoleIds = from ur in dbContext.UserRoles
+                                 join r in dbContext.Roles on ur.RoleId equals r.Id
+                                 where r.TenantId == null && ur.UserId == uId
+                                 select ur.RoleId;
+            }
 
-            var toDelete = currentRoles.Where(x => !roleNames.Contains(x));
-            var toAdd = roleNames.Where(x => !currentRoles.Contains(x));
+            var rIds = roleIds.ToListOf<string>();
+
+            var toDelete = from ur in dbContext.UserRoles
+                           join r in dbContext.Roles on ur.RoleId equals r.Id
+                           where r.TenantId == tenantId
+                           && ur.UserId == uId
+                           && !rIds.Contains(ur.RoleId)
+                           select ur;
+
+            var toAdd = rIds.Where(x => !currentRoleIds.Contains(x)).Select(x => new IdentityUserRole
+            {
+                UserId = uId,
+                RoleId = x
+            });
 
             if (toDelete.Any())
             {
-                foreach (string roleName in toDelete)
-                {
-                    var result = await userManager.RemoveFromRoleAsync(uId, roleName);
-
-                    if (!result.Succeeded)
-                    {
-                        string errorMessage = string.Join(Environment.NewLine, result.Errors);
-                        throw new KoreException(errorMessage);
-                    }
-                }
-                cachedUserRoles.Remove(uId);
+                dbContext.UserRoles.RemoveRange(toDelete);
             }
 
             if (toAdd.Any())
             {
-                foreach (string roleName in toAdd)
-                {
-                    var result = await userManager.AddToRoleAsync(uId, roleName);
-
-                    if (!result.Succeeded)
-                    {
-                        string errorMessage = string.Join(Environment.NewLine, result.Errors);
-                        throw new KoreException(errorMessage);
-                    }
-                }
-                cachedUserRoles.Remove(uId);
+                dbContext.UserRoles.AddRange(toAdd);
             }
+
+            await dbContext.SaveChangesAsync();
+            cachedUserRoles.Remove(uId);
         }
 
         public async Task ChangePassword(object userId, string newPassword)
@@ -520,11 +571,15 @@ namespace KoreCMS.Services
 
             if (tenantId.HasValue)
             {
-                role = await roleManager.Roles.FirstOrDefaultAsync(x => x.TenantId == tenantId && x.Name == roleName);
+                role = await roleManager.Roles
+                    .Include(x => x.Users)
+                    .FirstOrDefaultAsync(x => x.TenantId == tenantId && x.Name == roleName);
             }
             else
             {
-                role = await roleManager.Roles.FirstOrDefaultAsync(x => x.TenantId == null && x.Name == roleName);
+                role = await roleManager.Roles
+                    .Include(x => x.Users)
+                    .FirstOrDefaultAsync(x => x.TenantId == null && x.Name == roleName);
             }
 
             var userIds = role.Users.Select(x => x.UserId).ToList();
@@ -965,6 +1020,33 @@ namespace KoreCMS.Services
         }
 
         #endregion Profile
+
+        public async Task EnsureAdminRoleForTenant(int? tenantId)
+        {
+            if (SupportsRolePermissions)
+            {
+                var administratorsRole = await GetRoleByName(tenantId, KoreWebConstants.Roles.Administrators);
+                if (administratorsRole == null)
+                {
+                    await InsertRole(tenantId, new KoreRole { Name = KoreWebConstants.Roles.Administrators });
+                    administratorsRole = await GetRoleByName(tenantId, KoreWebConstants.Roles.Administrators);
+
+                    if (administratorsRole != null)
+                    {
+                        var permissions = await GetAllPermissions(tenantId);
+                        var permissionIds = permissions.Select(x => x.Id);
+                        await AssignPermissionsToRole(administratorsRole.Id, permissionIds);
+
+                        // Assign all super admin users (NULL TenantId) to this new admin role
+                        var superAdminUsers = await GetUsersByRoleName(null, KoreWebConstants.Roles.Administrators);
+                        foreach (var user in superAdminUsers)
+                        {
+                            await AssignUserToRoles(tenantId, user.Id, new[] { administratorsRole.Id });
+                        }
+                    }
+                }
+            }
+        }
 
         #endregion IMembershipService Members
 

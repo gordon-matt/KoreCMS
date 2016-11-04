@@ -207,6 +207,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                         RemoveOldVersions(currentVersion.PageId, currentVersion.CultureCode);
                     }
 
+                    entity.TenantId = currentVersion.TenantId;
                     entity.DateCreatedUtc = currentVersion.DateCreatedUtc;
                     entity.DateModifiedUtc = DateTime.UtcNow;
                     await Service.UpdateAsync(entity);

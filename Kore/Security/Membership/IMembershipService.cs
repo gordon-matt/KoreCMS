@@ -44,7 +44,7 @@ namespace Kore.Security.Membership
 
         Task UpdateUser(KoreUser user);
 
-        Task AssignUserToRoles(object userId, IEnumerable<object> roleIds);
+        Task AssignUserToRoles(int? tenantId, object userId, IEnumerable<object> roleIds);
 
         Task ChangePassword(object userId, string newPassword);
 
@@ -119,6 +119,8 @@ namespace Kore.Security.Membership
         Task<bool> ProfileEntryExists(int? tenantId, string key, string value, string userId = null);
 
         #endregion Profile
+
+        Task EnsureAdminRoleForTenant(int? tenantId);
     }
 
     public class UserProfile

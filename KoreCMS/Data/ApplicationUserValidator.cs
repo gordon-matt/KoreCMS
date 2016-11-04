@@ -9,11 +9,11 @@ using Microsoft.AspNet.Identity;
 
 namespace KoreCMS.Data
 {
-    public class TenantUserValidator : UserValidator<ApplicationUser>
+    public class ApplicationUserValidator : UserValidator<ApplicationUser>
     {
         private UserManager<ApplicationUser, string> Manager { get; set; }
 
-        public TenantUserValidator(UserManager<ApplicationUser, string> manager)
+        public ApplicationUserValidator(UserManager<ApplicationUser, string> manager)
             : base(manager)
         {
             this.Manager = manager;

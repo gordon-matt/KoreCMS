@@ -11,7 +11,7 @@ namespace KoreCMS.Data
         public ApplicationRoleManager(IRoleStore<ApplicationRole, string> store)
             : base(store)
         {
-            this.RoleValidator = new TenantRoleValidator(this);
+            this.RoleValidator = new ApplicationRoleValidator(this);
         }
 
         public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)

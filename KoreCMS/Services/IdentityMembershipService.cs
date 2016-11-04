@@ -27,7 +27,7 @@ namespace KoreCMS.Services
     {
         private readonly ApplicationDbContext dbContext;
 
-        private readonly TenantUserStore userStore;
+        private readonly ApplicationUserStore userStore;
         private readonly ApplicationUserManager userManager;
         private readonly RoleStore<ApplicationRole> roleStore;
         private readonly ApplicationRoleManager roleManager;
@@ -47,7 +47,7 @@ namespace KoreCMS.Services
             var settings = DataSettingsManager.LoadSettings();
             dbContext = new ApplicationDbContext(settings.ConnectionString);
 
-            this.userStore = new TenantUserStore(dbContext);
+            this.userStore = new ApplicationUserStore(dbContext);
             this.roleStore = new RoleStore<ApplicationRole>(dbContext);
             this.userManager = new ApplicationUserManager(userStore);
             this.roleManager = new ApplicationRoleManager(roleStore);

@@ -191,6 +191,7 @@
     <Compile Include="FileSystems\Media\IStorageFolder.cs" />
     <Compile Include="FileSystems\Media\IStorageProvider.cs" />
     <Compile Include="FileSystems\PathValidation.cs" />
+    <Compile Include="Infrastructure\DbSeeder.cs" />
     <Compile Include="Infrastructure\DurandalRouteProvider.cs" />
     <Compile Include="Infrastructure\IAutoMenuProvider.cs" />
     <Compile Include="Areas\Admin\Newsletters\ContentBlocks\NewsletterSubscriptionBlock.cs" />

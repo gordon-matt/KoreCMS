@@ -6,5 +6,7 @@ namespace KoreCMS.Data
     public interface IKoreSecurityDbContext
     {
         DbSet<Permission> Permissions { get; set; }
+
+        DbSet<UserProfileEntry> UserProfiles { get; set; }
     }
 }

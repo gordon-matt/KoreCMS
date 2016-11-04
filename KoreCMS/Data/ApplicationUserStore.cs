@@ -9,11 +9,11 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace KoreCMS.Data
 {
-    public class TenantUserStore : UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>
+    public class ApplicationUserStore : UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>
     {
         private IWorkContext workContext;
 
-        public TenantUserStore(DbContext context)
+        public ApplicationUserStore(DbContext context)
             : base(context)
         {
         }

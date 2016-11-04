@@ -7,11 +7,11 @@ using Microsoft.AspNet.Identity;
 
 namespace KoreCMS.Data
 {
-    public class TenantRoleValidator : RoleValidator<ApplicationRole>
+    public class ApplicationRoleValidator : RoleValidator<ApplicationRole>
     {
         private RoleManager<ApplicationRole, string> Manager { get; set; }
 
-        public TenantRoleValidator(RoleManager<ApplicationRole, string> manager)
+        public ApplicationRoleValidator(RoleManager<ApplicationRole, string> manager)
             : base(manager)
         {
             this.Manager = manager;

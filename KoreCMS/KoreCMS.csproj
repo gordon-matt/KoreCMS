@@ -291,11 +291,9 @@
     <Compile Include="Data\Domain\Permission.cs" />
     <Compile Include="Data\Domain\UserProfileEntry.cs" />
     <Compile Include="Data\IKoreSecurityDbContext.cs" />
-    <Compile Include="Data\TenantRoleStore.cs" />
-    <Compile Include="Data\TenantRoleManager.cs" />
-    <Compile Include="Data\TenantRoleValidator.cs" />
-    <Compile Include="Data\TenantUserStore.cs" />
-    <Compile Include="Data\TenantUserValidator.cs" />
+    <Compile Include="Data\ApplicationRoleValidator.cs" />
+    <Compile Include="Data\ApplicationUserStore.cs" />
+    <Compile Include="Data\ApplicationUserValidator.cs" />
     <Compile Include="Extensions\ScriptRegisterExtensions.cs" />
     <Compile Include="Extensions\StyleRegisterExtensions.cs" />
     <Compile Include="Global.asax.cs">

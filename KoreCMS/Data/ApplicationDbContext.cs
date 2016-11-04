@@ -159,11 +159,11 @@ namespace KoreCMS.Data
 
         #endregion ISupportSeed Members
 
-        //public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<IdentityUserRole> UserRoles { get; set; }
 
-        //public DbSet<ApplicationRole> Roles { get; set; }
+        public DbSet<IdentityUserLogin> UserLogins { get; set; }
 
-        //public DbSet<IdentityUserRole> UserRoles { get; set; }
+        public DbSet<IdentityUserClaim> UserClaims { get; set; }
 
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)
         //{

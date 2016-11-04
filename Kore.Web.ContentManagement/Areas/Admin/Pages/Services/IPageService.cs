@@ -254,6 +254,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             var pageVersions = entities.Select(x => new PageVersion
             {
                 Id = Guid.NewGuid(),
+                TenantId = x.TenantId,
                 PageId = x.Id,
                 CultureCode = null,
                 DateCreatedUtc = DateTime.UtcNow,
@@ -274,6 +275,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             rowsAffected += pageVersionRepository.Value.Insert(new PageVersion
             {
                 Id = Guid.NewGuid(),
+                TenantId = entity.TenantId,
                 PageId = entity.Id,
                 CultureCode = null,
                 DateCreatedUtc = DateTime.UtcNow,
@@ -293,6 +295,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             var pageVersions = entities.Select(x => new PageVersion
             {
                 Id = Guid.NewGuid(),
+                TenantId = x.TenantId,
                 PageId = x.Id,
                 CultureCode = null,
                 DateCreatedUtc = DateTime.UtcNow,
@@ -313,6 +316,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             rowsAffected += await pageVersionRepository.Value.InsertAsync(new PageVersion
             {
                 Id = Guid.NewGuid(),
+                TenantId = entity.TenantId,
                 PageId = entity.Id,
                 CultureCode = null,
                 DateCreatedUtc = DateTime.UtcNow,

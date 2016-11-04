@@ -9,8 +9,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace KoreCMS.Data
 {
-    public class TenantUserStore<TUser> : UserStore<TUser>
-        where TUser : ApplicationUser
+    public class TenantUserStore : UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>
     {
         private IWorkContext workContext;
 
@@ -39,21 +38,21 @@ namespace KoreCMS.Data
             }
         }
 
-        public override Task<TUser> FindByEmailAsync(string email)
+        public override Task<ApplicationUser> FindByEmailAsync(string email)
         {
             return this.GetUserAggregateAsync(x =>
-                x.Email.ToUpper() == email.ToUpper() &&
-                x.TenantId == this.TenantId);
+                x.Email.ToUpper() == email.ToUpper()
+                && (x.TenantId == this.TenantId) || (x.TenantId == null));
         }
 
-        public override Task<TUser> FindByNameAsync(string userName)
+        public override Task<ApplicationUser> FindByNameAsync(string userName)
         {
             return this.GetUserAggregateAsync(x =>
-                x.UserName.ToUpper() == userName.ToUpper() &&
-                x.TenantId == this.TenantId);
+                x.UserName.ToUpper() == userName.ToUpper()
+                && (x.TenantId == this.TenantId) || (x.TenantId == null));
         }
 
-        public override Task AddToRoleAsync(TUser user, string roleName)
+        public override Task AddToRoleAsync(ApplicationUser user, string roleName)
         {
             if (user == null)
             {
@@ -90,7 +89,7 @@ namespace KoreCMS.Data
             return Task.FromResult<int>(0);
         }
 
-        public override Task<bool> IsInRoleAsync(TUser user, string roleName)
+        public override Task<bool> IsInRoleAsync(ApplicationUser user, string roleName)
         {
             if (user == null)
             {
@@ -123,7 +122,7 @@ namespace KoreCMS.Data
             return Task.FromResult(flag);
         }
 
-        public override Task RemoveFromRoleAsync(TUser user, string roleName)
+        public override Task RemoveFromRoleAsync(ApplicationUser user, string roleName)
         {
             if (user == null)
             {

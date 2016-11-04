@@ -171,7 +171,7 @@ namespace Kore.Web.Infrastructure
                     {
                         await membershipService.InsertRole(null, new KoreRole { Name = KoreWebConstants.Roles.Administrators });
                         administratorsRole = await membershipService.GetRoleByName(null, KoreWebConstants.Roles.Administrators);
-                        await membershipService.AssignUserToRoles(adminUser.Id, new[] { administratorsRole.Id });
+                        await membershipService.AssignUserToRoles(null, adminUser.Id, new[] { administratorsRole.Id });
                     }
                 }
 
@@ -189,19 +189,7 @@ namespace Kore.Web.Infrastructure
             {
                 foreach (int tenantId in tenantIds)
                 {
-                    var administratorsRole = await membershipService.GetRoleByName(tenantId, KoreWebConstants.Roles.Administrators);
-                    if (administratorsRole == null)
-                    {
-                        await membershipService.InsertRole(tenantId, new KoreRole { Name = KoreWebConstants.Roles.Administrators });
-                        administratorsRole = await membershipService.GetRoleByName(tenantId, KoreWebConstants.Roles.Administrators);
-
-                        if (administratorsRole != null)
-                        {
-                            var permissions = await membershipService.GetAllPermissions(tenantId);
-                            var permissionIds = permissions.Select(x => x.Id);
-                            await membershipService.AssignPermissionsToRole(administratorsRole.Id, permissionIds);
-                        }
-                    }
+                    await membershipService.EnsureAdminRoleForTenant(tenantId);
                 }
             }
         }

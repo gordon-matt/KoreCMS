@@ -218,7 +218,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
             string userId = (string)parameters["userId"];
             var roleIds = (IEnumerable<string>)parameters["roles"];
 
-            await Service.AssignUserToRoles(userId, roleIds);
+            await Service.AssignUserToRoles(workContext.CurrentTenant.Id, userId, roleIds);
 
             return Ok();
         }

@@ -2,18 +2,21 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Kore;
+using Kore.EntityFramework.Data.EntityFramework;
 using Kore.Infrastructure;
-using KoreCMS.Data.Domain;
+using Kore.Web.Identity.Domain;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace KoreCMS.Data
+namespace Kore.Web.Identity
 {
-    public class ApplicationUserStore : UserStore<ApplicationUser, ApplicationRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>
+    public class KoreUserStore<TUser, TRole> : UserStore<TUser, TRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>
+        where TUser : KoreIdentityUser
+        where TRole : KoreIdentityRole
     {
         private IWorkContext workContext;
+        private IDbContextFactory contextFactory;
 
-        public ApplicationUserStore(DbContext context)
+        public KoreUserStore(DbContext context)
             : base(context)
         {
         }
@@ -30,6 +33,18 @@ namespace KoreCMS.Data
             }
         }
 
+        private IDbContextFactory ContextFactory
+        {
+            get
+            {
+                if (contextFactory == null)
+                {
+                    contextFactory = EngineContext.Current.Resolve<IDbContextFactory>();
+                }
+                return contextFactory;
+            }
+        }
+
         private int TenantId
         {
             get
@@ -38,21 +53,21 @@ namespace KoreCMS.Data
             }
         }
 
-        public override Task<ApplicationUser> FindByEmailAsync(string email)
+        public override Task<TUser> FindByEmailAsync(string email)
         {
             return this.GetUserAggregateAsync(x =>
                 x.Email.ToUpper() == email.ToUpper()
                 && (x.TenantId == this.TenantId) || (x.TenantId == null));
         }
 
-        public override Task<ApplicationUser> FindByNameAsync(string userName)
+        public override Task<TUser> FindByNameAsync(string userName)
         {
             return this.GetUserAggregateAsync(x =>
                 x.UserName.ToUpper() == userName.ToUpper()
                 && (x.TenantId == this.TenantId) || (x.TenantId == null));
         }
 
-        public override Task AddToRoleAsync(ApplicationUser user, string roleName)
+        public override Task AddToRoleAsync(TUser user, string roleName)
         {
             if (user == null)
             {
@@ -63,10 +78,10 @@ namespace KoreCMS.Data
                 throw new ArgumentException("Value cannot be null or empty.", "roleName");
             }
 
-            ApplicationRole role;
-            using (var context = new ApplicationDbContext())
+            TRole role;
+            using (var context = ContextFactory.GetContext())
             {
-                role = context.Set<ApplicationRole>().SingleOrDefault(x => x.TenantId == TenantId && x.Name == roleName);
+                role = context.Set<TRole>().SingleOrDefault(x => x.TenantId == TenantId && x.Name == roleName);
             }
 
             if (role == null)
@@ -80,7 +95,7 @@ namespace KoreCMS.Data
                 RoleId = role.Id
             };
 
-            using (var context = new ApplicationDbContext())
+            using (var context = ContextFactory.GetContext())
             {
                 context.Set<IdentityUserRole>().Add(userRole);
                 context.SaveChanges();
@@ -89,7 +104,7 @@ namespace KoreCMS.Data
             return Task.FromResult<int>(0);
         }
 
-        public override Task<bool> IsInRoleAsync(ApplicationUser user, string roleName)
+        public override Task<bool> IsInRoleAsync(TUser user, string roleName)
         {
             if (user == null)
             {
@@ -101,10 +116,10 @@ namespace KoreCMS.Data
                 throw new ArgumentException("Value cannot be null or empty.", "roleName");
             }
 
-            ApplicationRole role;
-            using (var context = new ApplicationDbContext())
+            TRole role;
+            using (var context = ContextFactory.GetContext())
             {
-                role = context.Set<ApplicationRole>().SingleOrDefault(x => x.TenantId == TenantId && x.Name == roleName);
+                role = context.Set<TRole>().SingleOrDefault(x => x.TenantId == TenantId && x.Name == roleName);
             }
 
             bool flag = false;
@@ -122,7 +137,7 @@ namespace KoreCMS.Data
             return Task.FromResult(flag);
         }
 
-        public override Task RemoveFromRoleAsync(ApplicationUser user, string roleName)
+        public override Task RemoveFromRoleAsync(TUser user, string roleName)
         {
             if (user == null)
             {
@@ -133,10 +148,10 @@ namespace KoreCMS.Data
                 throw new ArgumentException("Value cannot be null or empty.", "roleName");
             }
 
-            ApplicationRole role;
-            using (var context = new ApplicationDbContext())
+            TRole role;
+            using (var context = ContextFactory.GetContext())
             {
-                role = context.Set<ApplicationRole>().SingleOrDefault(x => x.TenantId == TenantId && x.Name == roleName);
+                role = context.Set<TRole>().SingleOrDefault(x => x.TenantId == TenantId && x.Name == roleName);
 
                 if (role != null)
                 {

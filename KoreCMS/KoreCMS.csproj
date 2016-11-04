@@ -271,6 +271,9 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig\ApplicationSignInManager.cs" />
+    <Compile Include="App_Start\IdentityConfig\EmailService.cs" />
+    <Compile Include="App_Start\IdentityConfig\SmsService.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -284,16 +287,16 @@
     <Compile Include="Controllers\InstallationController.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
     <Compile Include="Data\ApplicationDbContextFactory.cs" />
-    <Compile Include="Data\ApplicationRoleManager.cs" />
-    <Compile Include="Data\ApplicationUserManager.cs" />
+    <Compile Include="App_Start\IdentityConfig\ApplicationRoleManager.cs" />
+    <Compile Include="App_Start\IdentityConfig\ApplicationUserManager.cs" />
     <Compile Include="Data\Domain\ApplicationRole.cs" />
     <Compile Include="Data\Domain\ApplicationUser.cs" />
     <Compile Include="Data\Domain\Permission.cs" />
     <Compile Include="Data\Domain\UserProfileEntry.cs" />
     <Compile Include="Data\IKoreSecurityDbContext.cs" />
-    <Compile Include="Data\ApplicationRoleValidator.cs" />
-    <Compile Include="Data\ApplicationUserStore.cs" />
-    <Compile Include="Data\ApplicationUserValidator.cs" />
+    <Compile Include="App_Start\IdentityConfig\ApplicationRoleValidator.cs" />
+    <Compile Include="App_Start\IdentityConfig\ApplicationUserStore.cs" />
+    <Compile Include="App_Start\IdentityConfig\ApplicationUserValidator.cs" />
     <Compile Include="Extensions\ScriptRegisterExtensions.cs" />
     <Compile Include="Extensions\StyleRegisterExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -1772,6 +1775,10 @@
     <ProjectReference Include="..\Kore.Web.ContentManagement\Kore.Web.ContentManagement.csproj">
       <Project>{90ec17f4-d7c5-454f-9e56-947978525e88}</Project>
       <Name>Kore.Web.ContentManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kore.Web.Identity\Kore.Web.Identity.csproj">
+      <Project>{f15ce100-8fef-4e0d-bc8b-59efb993e0c8}</Project>
+      <Name>Kore.Web.Identity</Name>
     </ProjectReference>
     <ProjectReference Include="..\Kore.Web.Php\Kore.Web.Php.csproj">
       <Project>{61df3750-d1cb-4ec5-b69e-5dc2f1984d32}</Project>

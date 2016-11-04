@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Kore.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Tasks;
@@ -37,6 +38,8 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
+            builder.RegisterType<DbSeeder>().As<IDbSeeder>().InstancePerDependency();
+
             builder.RegisterType<DurandalRouteProvider>().As<IDurandalRouteProvider>().SingleInstance();
 
             #region Services

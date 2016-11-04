@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
-using KoreCMS.Data.Domain;
+using Kore.Web.Identity.Domain;
 using Microsoft.AspNet.Identity;
 
-namespace KoreCMS.Data
+namespace Kore.Web.Identity
 {
-    public class ApplicationRoleValidator : RoleValidator<ApplicationRole>
+    public abstract class KoreRoleValidator<TRole> : RoleValidator<TRole>
+        where TRole : KoreIdentityRole
     {
-        private RoleManager<ApplicationRole, string> Manager { get; set; }
+        protected RoleManager<TRole, string> Manager { get; set; }
 
-        public ApplicationRoleValidator(RoleManager<ApplicationRole, string> manager)
+        public KoreRoleValidator(RoleManager<TRole, string> manager)
             : base(manager)
         {
             this.Manager = manager;
         }
 
-        public override async Task<IdentityResult> ValidateAsync(ApplicationRole item)
+        public override async Task<IdentityResult> ValidateAsync(TRole item)
         {
             if (item == null)
             {
@@ -29,7 +30,7 @@ namespace KoreCMS.Data
             return errors.Count <= 0 ? IdentityResult.Success : IdentityResult.Failed(errors.ToArray());
         }
 
-        private async Task ValidateRoleName(ApplicationRole role, List<string> errors)
+        protected virtual async Task ValidateRoleName(TRole role, List<string> errors)
         {
             if (string.IsNullOrWhiteSpace(role.Name))
             {

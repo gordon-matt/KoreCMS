@@ -4,22 +4,23 @@ using System.Globalization;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using KoreCMS.Data.Domain;
+using Kore.Web.Identity.Domain;
 using Microsoft.AspNet.Identity;
 
-namespace KoreCMS.Data
+namespace Kore.Web.Identity
 {
-    public class ApplicationUserValidator : UserValidator<ApplicationUser>
+    public class KoreUserValidator<TUser> : UserValidator<TUser>
+        where TUser : KoreIdentityUser
     {
-        private UserManager<ApplicationUser, string> Manager { get; set; }
+        private UserManager<TUser, string> Manager { get; set; }
 
-        public ApplicationUserValidator(UserManager<ApplicationUser, string> manager)
+        public KoreUserValidator(UserManager<TUser, string> manager)
             : base(manager)
         {
             this.Manager = manager;
         }
 
-        public override async Task<IdentityResult> ValidateAsync(ApplicationUser item)
+        public override async Task<IdentityResult> ValidateAsync(TUser item)
         {
             IdentityResult identityResult;
             if (item == null)
@@ -39,7 +40,7 @@ namespace KoreCMS.Data
             return identityResult;
         }
 
-        private async Task ValidateEmail(ApplicationUser user, List<string> errors)
+        private async Task ValidateEmail(TUser user, List<string> errors)
         {
             string email = user.Email;
             if (!string.IsNullOrWhiteSpace(email))
@@ -65,7 +66,7 @@ namespace KoreCMS.Data
             }
         }
 
-        private async Task ValidateUserName(ApplicationUser user, List<string> errors)
+        private async Task ValidateUserName(TUser user, List<string> errors)
         {
             if (string.IsNullOrWhiteSpace(user.UserName))
             {

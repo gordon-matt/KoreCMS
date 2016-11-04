@@ -86,6 +86,7 @@
     <Compile Include="Data\TaskExtensions.cs" />
     <Compile Include="DropCreateSeedDatabaseIfModelChanges.cs" />
     <Compile Include="EntityNotFoundException.cs" />
+    <Compile Include="IDbSeeder.cs" />
     <Compile Include="ISupportSeed.cs" />
     <Compile Include="Localization\Domain\LanguageMap.cs" />
     <Compile Include="Localization\Domain\LocalizablePropertyMap.cs" />

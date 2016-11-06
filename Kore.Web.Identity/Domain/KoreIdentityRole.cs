@@ -3,7 +3,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Kore.Web.Identity.Domain
 {
-    public class KoreIdentityRole : IdentityRole, ITenantEntity
+    public abstract class KoreIdentityRole : IdentityRole, ITenantEntity
     {
         public KoreIdentityRole()
             : base()

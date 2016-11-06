@@ -6,6 +6,7 @@ using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.Blog;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Newtonsoft.Json.Linq;
+using Kore.Collections;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 {
@@ -50,23 +51,20 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
             if (!string.IsNullOrEmpty(page.AccessRestrictions))
             {
                 dynamic accessRestrictions = JObject.Parse(page.AccessRestrictions);
-                string roleIds = accessRestrictions.Roles;
+                string selectedRoles = accessRestrictions.Roles;
 
-                if (!string.IsNullOrEmpty(roleIds))
+                if (!string.IsNullOrEmpty(selectedRoles))
                 {
                     var membershipService = EngineContext.Current.Resolve<IMembershipService>();
-                    var roles = await membershipService.GetRolesByIds(roleIds.Split(','));
 
-                    var roleNames = roles
-                        .Select(x => x.Name)
-                        .Where(x => x != null)
-                        .ToList();
+                    var roleIds = selectedRoles.Split(',');
+                    var roles = await membershipService.GetRolesByIds(roleIds);
 
-                    bool authorized = roleNames.Any(x => user.IsInRole(x));
-                    if (!authorized)
-                    {
-                        return false;
-                    }
+                    var koreUser = await membershipService.GetUserByName(page.TenantId, user.Identity.Name);
+                    var userRoles = await membershipService.GetRolesForUser(koreUser.Id);
+                    var userRoleIds = userRoles.Select(x => x.Id);
+
+                    return userRoleIds.ContainsAny(selectedRoles.Split(','));
                 }
             }
             return true;

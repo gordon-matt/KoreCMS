@@ -79,17 +79,18 @@ namespace Kore.Web.ContentManagement.Infrastructure
         {
             var set = context.Set<Zone>();
 
-            var zone = set.FirstOrDefault(x => x.Name == zoneName);
+            var zone = set.FirstOrDefault(x => x.TenantId == null && x.Name == zoneName);
 
             if (zone == null)
             {
                 set.Add(new Zone
                 {
                     Id = Guid.NewGuid(),
+                    TenantId = null,
                     Name = zoneName
                 });
                 context.SaveChanges();
-                zone = set.FirstOrDefault(x => x.Name == zoneName);
+                zone = set.FirstOrDefault(x => x.TenantId == null && x.Name == zoneName);
             }
 
             return zone;

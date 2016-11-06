@@ -49,22 +49,24 @@ namespace Kore.Web.ContentManagement.Controllers
             var pageService = EngineContext.Current.Resolve<IPageService>();
             var pageVersionService = EngineContext.Current.Resolve<IPageVersionService>();
 
+            int tenantId = WorkContext.CurrentTenant.Id;
+
             PageVersion currentPageVersion;
             using (var connection = pageVersionService.OpenConnection())
             {
                 currentPageVersion = connection.Query()
                     .Include(x => x.Page)
-                    .FirstOrDefault(y => y.Slug == currentUrlSlug);
+                    .FirstOrDefault(x => x.TenantId == tenantId && x.Slug == currentUrlSlug);
             }
 
-            var allPages = pageService.Find(x => x.IsEnabled);
+            var allPages = pageService.Find(x => x.TenantId == tenantId && x.IsEnabled);
 
             if (currentPageVersion != null)
             {
                 var parentId = currentPageVersion.Page.ParentId;
                 while (parentId != null)
                 {
-                    var parentPage = allPages.FirstOrDefault(y => y.Id == parentId);
+                    var parentPage = allPages.FirstOrDefault(x => x.Id == parentId);
 
                     if (parentPage == null)
                     {
@@ -74,7 +76,6 @@ namespace Kore.Web.ContentManagement.Controllers
                     bool hasAccess = AsyncHelper.RunSync(() => PageSecurityHelper.CheckUserHasAccessToPage(parentPage, User));
                     if (hasAccess)
                     {
-                        int tenantId = WorkContext.CurrentTenant.Id;
                         var currentVersion = pageVersionService.GetCurrentVersion(tenantId, parentPage.Id, WorkContext.CurrentCultureCode);
                         breadcrumbs.Add(new Breadcrumb
                         {
@@ -244,7 +245,9 @@ namespace Kore.Web.ContentManagement.Controllers
                 PageVersion anyVersion = null;
                 using (var connection = pageVersionService.OpenConnection())
                 {
-                    anyVersion = connection.Query(y => y.Slug == currentUrlSlug)
+                    anyVersion = connection.Query(x =>
+                            x.TenantId == tenantId &&
+                            x.Slug == currentUrlSlug)
                         .Include(x => x.Page)
                         .FirstOrDefault();
                 }
@@ -301,7 +304,8 @@ namespace Kore.Web.ContentManagement.Controllers
             var pageVersionService = EngineContext.Current.Resolve<IPageVersionService>();
 
             // Check if it's a CMS page or not.
-            if (currentUrlSlug != null && pageVersionService.Find(x => x.Slug == currentUrlSlug) == null)
+            int tenantId = WorkContext.CurrentTenant.Id;
+            if (currentUrlSlug != null && pageVersionService.Find(x => x.TenantId == tenantId && x.Slug == currentUrlSlug) == null)
             {
                 // It's not a CMS page, so don't try to filter by slug...
                 // Set slug to null, to query for a menu without any URL filter

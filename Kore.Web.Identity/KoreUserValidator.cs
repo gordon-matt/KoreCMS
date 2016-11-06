@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity;
 
 namespace Kore.Web.Identity
 {
-    public class KoreUserValidator<TUser> : UserValidator<TUser>
+    public abstract class KoreUserValidator<TUser> : UserValidator<TUser>
         where TUser : KoreIdentityUser
     {
         private UserManager<TUser, string> Manager { get; set; }

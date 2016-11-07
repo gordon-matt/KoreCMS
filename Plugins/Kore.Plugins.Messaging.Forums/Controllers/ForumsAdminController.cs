@@ -31,43 +31,27 @@ namespace Kore.Plugins.Messaging.Forums.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    Create: '{0}',
-    Delete: '{1}',
-    DeleteRecordConfirm: '{2}',
-    DeleteRecordError: '{3}',
-    DeleteRecordSuccess: '{4}',
-    Edit: '{5}',
-    Forums: '{6}',
-    GetRecordError: '{7}',
-    InsertRecordError: '{8}',
-    InsertRecordSuccess: '{9}',
-    UpdateRecordError: '{10}',
-    UpdateRecordSuccess: '{11}',
-    Columns: {{
-        Name: '{12}',
-        DisplayOrder: '{13}',
-        CreatedOnUtc: '{14}'
-    }}
-}}",
-   T(KoreWebLocalizableStrings.General.Create),
-   T(KoreWebLocalizableStrings.General.Delete),
-   T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord),
-   T(KoreWebLocalizableStrings.General.DeleteRecordError),
-   T(KoreWebLocalizableStrings.General.DeleteRecordSuccess),
-   T(KoreWebLocalizableStrings.General.Edit),
-   T(LocalizableStrings.Forums),
-   T(KoreWebLocalizableStrings.General.GetRecordError),
-   T(KoreWebLocalizableStrings.General.InsertRecordError),
-   T(KoreWebLocalizableStrings.General.InsertRecordSuccess),
-   T(KoreWebLocalizableStrings.General.UpdateRecordError),
-   T(KoreWebLocalizableStrings.General.UpdateRecordSuccess),
-   T(KoreWebLocalizableStrings.General.Name),
-   T(KoreWebLocalizableStrings.General.Order),
-   T(KoreWebLocalizableStrings.General.DateCreatedUtc));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                Create = T(KoreWebLocalizableStrings.General.Create).Text,
+                Delete = T(KoreWebLocalizableStrings.General.Delete).Text,
+                DeleteRecordConfirm = T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text,
+                DeleteRecordError = T(KoreWebLocalizableStrings.General.DeleteRecordError).Text,
+                DeleteRecordSuccess = T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text,
+                Edit = T(KoreWebLocalizableStrings.General.Edit).Text,
+                Forums = T(LocalizableStrings.Forums).Text,
+                GetRecordError = T(KoreWebLocalizableStrings.General.GetRecordError).Text,
+                InsertRecordError = T(KoreWebLocalizableStrings.General.InsertRecordError).Text,
+                InsertRecordSuccess = T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text,
+                UpdateRecordError = T(KoreWebLocalizableStrings.General.UpdateRecordError).Text,
+                UpdateRecordSuccess = T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text,
+                Columns = new
+                {
+                    Name = T(KoreWebLocalizableStrings.General.Name).Text,
+                    DisplayOrder = T(KoreWebLocalizableStrings.General.Order).Text,
+                    CreatedOnUtc = T(KoreWebLocalizableStrings.General.DateCreatedUtc).Text
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

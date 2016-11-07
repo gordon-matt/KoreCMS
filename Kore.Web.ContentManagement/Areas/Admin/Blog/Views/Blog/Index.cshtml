@@ -13,6 +13,8 @@
     }
 }
 
+@Html.Hidden("TinyMCE_RootFolder", "Tenant_" + WorkContext.CurrentTenant.Id)
+
 <link rel="stylesheet" type="text/css" href="@Style.GetBundleUrl("chosen")" />
 
 <style type="text/css">

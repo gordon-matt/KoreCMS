@@ -53,72 +53,47 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    ChangePasswordError: '{0}',
-    ChangePasswordSuccess: '{1}',
-    Create: '{2}',
-    Delete: '{3}',
-    DeleteRecordConfirm: '{4}',
-    DeleteRecordError: '{5}',
-    DeleteRecordSuccess: '{6}',
-    Edit: '{7}',
-    GetRecordError: '{8}',
-    InsertRecordError: '{9}',
-    InsertRecordSuccess: '{10}',
-    Password: '{11}',
-    Permissions: '{12}',
-    Roles: '{13}',
-    SavePermissionsError: '{14}',
-    SavePermissionsSuccess: '{15}',
-    SaveRolesError: '{16}',
-    SaveRolesSuccess: '{17}',
-    UpdateRecordError: '{18}',
-    UpdateRecordSuccess: '{19}',
-
-    Columns: {{
-        User: {{
-            IsActive: '{20}',
-            Roles: '{21}',
-            UserName: '{22}',
-        }},
-        Role: {{
-            Name: '{23}',
-        }},
-        Permission: {{
-            Category: '{24}',
-            Name: '{25}',
-        }}
-    }}
-}}",
-   T(KoreWebLocalizableStrings.Membership.ChangePasswordError),
-   T(KoreWebLocalizableStrings.Membership.ChangePasswordSuccess),
-   T(KoreWebLocalizableStrings.General.Create),
-   T(KoreWebLocalizableStrings.General.Delete),
-   T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord),
-   T(KoreWebLocalizableStrings.General.DeleteRecordError),
-   T(KoreWebLocalizableStrings.General.DeleteRecordSuccess),
-   T(KoreWebLocalizableStrings.General.Edit),
-   T(KoreWebLocalizableStrings.General.GetRecordError),
-   T(KoreWebLocalizableStrings.General.InsertRecordError),
-   T(KoreWebLocalizableStrings.General.InsertRecordSuccess),
-   T(KoreWebLocalizableStrings.Membership.Password),
-   T(KoreWebLocalizableStrings.Membership.Permissions),
-   T(KoreWebLocalizableStrings.Membership.Roles),
-   T(KoreWebLocalizableStrings.Membership.SavePermissionsError),
-   T(KoreWebLocalizableStrings.Membership.SavePermissionsSuccess),
-   T(KoreWebLocalizableStrings.Membership.SaveRolesError),
-   T(KoreWebLocalizableStrings.Membership.SaveRolesSuccess),
-   T(KoreWebLocalizableStrings.General.UpdateRecordError),
-   T(KoreWebLocalizableStrings.General.UpdateRecordSuccess),
-   T(KoreWebLocalizableStrings.Membership.UserModel.IsActive),
-   T(KoreWebLocalizableStrings.Membership.UserModel.Roles),
-   T(KoreWebLocalizableStrings.Membership.UserModel.UserName),
-   T(KoreWebLocalizableStrings.Membership.RoleModel.Name),
-   T(KoreWebLocalizableStrings.Membership.PermissionModel.Category),
-   T(KoreWebLocalizableStrings.Membership.PermissionModel.Name));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                ChangePasswordError = T(KoreWebLocalizableStrings.Membership.ChangePasswordError).Text,
+                ChangePasswordSuccess = T(KoreWebLocalizableStrings.Membership.ChangePasswordSuccess).Text,
+                Create = T(KoreWebLocalizableStrings.General.Create).Text,
+                Delete = T(KoreWebLocalizableStrings.General.Delete).Text,
+                DeleteRecordConfirm = T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text,
+                DeleteRecordError = T(KoreWebLocalizableStrings.General.DeleteRecordError).Text,
+                DeleteRecordSuccess = T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text,
+                Edit = T(KoreWebLocalizableStrings.General.Edit).Text,
+                GetRecordError = T(KoreWebLocalizableStrings.General.GetRecordError).Text,
+                InsertRecordError = T(KoreWebLocalizableStrings.General.InsertRecordError).Text,
+                InsertRecordSuccess = T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text,
+                Password = T(KoreWebLocalizableStrings.Membership.Password).Text,
+                Permissions = T(KoreWebLocalizableStrings.Membership.Permissions).Text,
+                Roles = T(KoreWebLocalizableStrings.Membership.Roles).Text,
+                SavePermissionsError = T(KoreWebLocalizableStrings.Membership.SavePermissionsError).Text,
+                SavePermissionsSuccess = T(KoreWebLocalizableStrings.Membership.SavePermissionsSuccess).Text,
+                SaveRolesError = T(KoreWebLocalizableStrings.Membership.SaveRolesError).Text,
+                SaveRolesSuccess = T(KoreWebLocalizableStrings.Membership.SaveRolesSuccess).Text,
+                UpdateRecordError = T(KoreWebLocalizableStrings.General.UpdateRecordError).Text,
+                UpdateRecordSuccess = T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text,
+                Columns = new
+                {
+                    User = new
+                    {
+                        IsActive = T(KoreWebLocalizableStrings.Membership.UserModel.IsActive).Text,
+                        Roles = T(KoreWebLocalizableStrings.Membership.UserModel.Roles).Text,
+                        UserName = T(KoreWebLocalizableStrings.Membership.UserModel.UserName).Text,
+                    },
+                    Role = new
+                    {
+                        Name = T(KoreWebLocalizableStrings.Membership.RoleModel.Name).Text,
+                    },
+                    Permission = new
+                    {
+                        Category = T(KoreWebLocalizableStrings.Membership.PermissionModel.Category).Text,
+                        Name = T(KoreWebLocalizableStrings.Membership.PermissionModel.Name).Text,
+                    }
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

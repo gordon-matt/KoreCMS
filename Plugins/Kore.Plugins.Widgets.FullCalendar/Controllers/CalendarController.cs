@@ -32,49 +32,34 @@ namespace Kore.Plugins.Widgets.FullCalendar.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    Create: '{0}',
-    Delete: '{1}',
-    DeleteRecordConfirm: '{2}',
-    DeleteRecordError: '{3}',
-    DeleteRecordSuccess: '{4}',
-    Edit: '{5}',
-    Events: '{6}',
-    GetRecordError: '{7}',
-    InsertRecordError: '{8}',
-    InsertRecordSuccess: '{9}',
-    UpdateRecordError: '{10}',
-    UpdateRecordSuccess: '{11}',
-    Columns: {{
-        Calendar: {{
-            Name: '{12}'
-        }},
-        Event: {{
-            Name: '{13}',
-            StartDateTime: '{14}',
-            EndDateTime: '{15}'
-        }}
-    }}
-}}",
-   T(KoreWebLocalizableStrings.General.Create),
-   T(KoreWebLocalizableStrings.General.Delete),
-   T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord),
-   T(KoreWebLocalizableStrings.General.DeleteRecordError),
-   T(KoreWebLocalizableStrings.General.DeleteRecordSuccess),
-   T(KoreWebLocalizableStrings.General.Edit),
-   T(LocalizableStrings.Events),
-   T(KoreWebLocalizableStrings.General.GetRecordError),
-   T(KoreWebLocalizableStrings.General.InsertRecordError),
-   T(KoreWebLocalizableStrings.General.InsertRecordSuccess),
-   T(KoreWebLocalizableStrings.General.UpdateRecordError),
-   T(KoreWebLocalizableStrings.General.UpdateRecordSuccess),
-   T(LocalizableStrings.CalendarModel.Name),
-   T(LocalizableStrings.CalendarEventModel.Name),
-   T(LocalizableStrings.CalendarEventModel.StartDateTime),
-   T(LocalizableStrings.CalendarEventModel.EndDateTime));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                Create = T(KoreWebLocalizableStrings.General.Create).Text,
+                Delete = T(KoreWebLocalizableStrings.General.Delete).Text,
+                DeleteRecordConfirm = T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text,
+                DeleteRecordError = T(KoreWebLocalizableStrings.General.DeleteRecordError).Text,
+                DeleteRecordSuccess = T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text,
+                Edit = T(KoreWebLocalizableStrings.General.Edit).Text,
+                Events = T(LocalizableStrings.Events).Text,
+                GetRecordError = T(KoreWebLocalizableStrings.General.GetRecordError).Text,
+                InsertRecordError = T(KoreWebLocalizableStrings.General.InsertRecordError).Text,
+                InsertRecordSuccess = T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text,
+                UpdateRecordError = T(KoreWebLocalizableStrings.General.UpdateRecordError).Text,
+                UpdateRecordSuccess = T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text,
+                Columns = new
+                {
+                    Calendar = new
+                    {
+                        Name = T(LocalizableStrings.CalendarModel.Name).Text,
+                    },
+                    Event = new
+                    {
+                        Name = T(LocalizableStrings.CalendarEventModel.Name).Text,
+                        StartDateTime = T(LocalizableStrings.CalendarEventModel.StartDateTime).Text,
+                        EndDateTime = T(LocalizableStrings.CalendarEventModel.EndDateTime).Text
+                    }
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

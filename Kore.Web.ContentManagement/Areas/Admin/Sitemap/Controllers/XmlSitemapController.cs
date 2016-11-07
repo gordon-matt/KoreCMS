@@ -32,45 +32,29 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    ConfirmGenerateFile: '{0}',
-    GenerateFileSuccess: '{1}',
-    GenerateFileError: '{2}',
-
-    ChangeFrequencies: {{
-        Always: '{3}',
-        Hourly: '{4}',
-        Daily: '{5}',
-        Weekly: '{6}',
-        Monthly: '{7}',
-        Yearly: '{8}',
-        Never: '{9}',
-    }},
-
-    Columns: {{
-        ChangeFrequency: '{10}',
-        Id: '{11}',
-        Location: '{12}',
-        Priority: '{13}',
-    }}
-}}",
-   T(KoreCmsLocalizableStrings.Sitemap.ConfirmGenerateFile),
-   T(KoreCmsLocalizableStrings.Sitemap.GenerateFileSuccess),
-   T(KoreCmsLocalizableStrings.Sitemap.GenerateFileError),
-   T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Always),
-   T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Hourly),
-   T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Daily),
-   T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Weekly),
-   T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Monthly),
-   T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Yearly),
-   T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Never),
-   T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequency),
-   T(KoreCmsLocalizableStrings.Sitemap.Model.Id),
-   T(KoreCmsLocalizableStrings.Sitemap.Model.Location),
-   T(KoreCmsLocalizableStrings.Sitemap.Model.Priority));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                ConfirmGenerateFile = T(KoreCmsLocalizableStrings.Sitemap.ConfirmGenerateFile).Text,
+                GenerateFileSuccess = T(KoreCmsLocalizableStrings.Sitemap.GenerateFileSuccess).Text,
+                GenerateFileError = T(KoreCmsLocalizableStrings.Sitemap.GenerateFileError).Text,
+                ChangeFrequencies = new
+                {
+                    Always = T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Always).Text,
+                    Hourly = T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Hourly).Text,
+                    Daily = T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Daily).Text,
+                    Weekly = T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Weekly).Text,
+                    Monthly = T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Monthly).Text,
+                    Yearly = T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Yearly).Text,
+                    Never = T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequencies.Never).Text,
+                },
+                Columns = new
+                {
+                    ChangeFrequency = T(KoreCmsLocalizableStrings.Sitemap.Model.ChangeFrequency).Text,
+                    Id = T(KoreCmsLocalizableStrings.Sitemap.Model.Id).Text,
+                    Location = T(KoreCmsLocalizableStrings.Sitemap.Model.Location).Text,
+                    Priority = T(KoreCmsLocalizableStrings.Sitemap.Model.Priority).Text,
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (! CheckPermission(StandardPermissions.FullAccess))
+            if (!CheckPermission(StandardPermissions.FullAccess))
             {
                 return new HttpUnauthorizedResult();
             }
@@ -60,19 +60,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    Columns: {{
-        InvariantValue: '{0}',
-        Key: '{1}',
-        LocalizedValue: '{2}',
-    }}
-}}",
-   T(KoreCmsLocalizableStrings.Localization.LocalizableStringModel.InvariantValue),
-   T(KoreCmsLocalizableStrings.Localization.LocalizableStringModel.Key),
-   T(KoreCmsLocalizableStrings.Localization.LocalizableStringModel.LocalizedValue));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                Columns = new
+                {
+                    InvariantValue = T(KoreCmsLocalizableStrings.Localization.LocalizableStringModel.InvariantValue).Text,
+                    Key = T(KoreCmsLocalizableStrings.Localization.LocalizableStringModel.Key).Text,
+                    LocalizedValue = T(KoreCmsLocalizableStrings.Localization.LocalizableStringModel.LocalizedValue).Text,
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
 
         [Compress]

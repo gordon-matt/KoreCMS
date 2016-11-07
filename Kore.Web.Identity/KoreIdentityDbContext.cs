@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure.Annotations;
+using System.IO;
 using System.Linq;
+using System.Web.Hosting;
 using Kore.Configuration.Domain;
 using Kore.Data;
 using Kore.Data.EntityFramework;
@@ -75,14 +77,22 @@ namespace Kore.Web.Identity
 
         public virtual void Seed()
         {
-            // Create default tenant
-            Tenants.Add(new Tenant
+            var tenant = new Tenant
             {
                 Name = "Default",
                 Url = "my-domain.com",
                 Hosts = "my-domain.com"
-            });
+            };
+
+            // Create default tenant
+            Tenants.Add(tenant);
             SaveChanges();
+
+            var mediaFolder = new DirectoryInfo(HostingEnvironment.MapPath("~/Media/Uploads/Tenant_" + tenant.Id));
+            if (!mediaFolder.Exists)
+            {
+                mediaFolder.Create();
+            }
 
             InitializeLocalizableStrings();
 

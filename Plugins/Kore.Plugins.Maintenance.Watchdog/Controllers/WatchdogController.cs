@@ -41,58 +41,34 @@ namespace Kore.Plugins.Maintenance.Watchdog.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    AddServiceError: '{0}',
-    AddServiceSuccess: '{1}',
-    ConfirmStopService: '{2}',
-    ConfirmRemoveService: '{3}',
-    DeleteRecordConfirm: '{4}',
-    DeleteRecordError: '{5}',
-    DeleteRecordSuccess: '{6}',
-    InsertRecordError: '{7}',
-    InsertRecordSuccess: '{8}',
-    RemoveServiceError: '{9}',
-    RemoveServiceSuccess: '{10}',
-    RestartServiceError: '{11}',
-    RestartServiceSuccess: '{12}',
-    StartServiceError: '{13}',
-    StartServiceSuccess: '{14}',
-    StopServiceError: '{15}',
-    StopServiceSuccess: '{16}',
-
-    Columns: {{
-        DisplayName: '{17}',
-        Password: '{18}',
-        ServiceName: '{19}',
-        Status: '{20}',
-        Url: '{21}',
-    }}
-}}",
-   T(LocalizableStrings.AddServiceError),
-   T(LocalizableStrings.AddServiceSuccess),
-   T(LocalizableStrings.ConfirmStopService),
-   T(LocalizableStrings.ConfirmRemoveService),
-   T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord),
-   T(KoreWebLocalizableStrings.General.DeleteRecordError),
-   T(KoreWebLocalizableStrings.General.DeleteRecordSuccess),
-   T(KoreWebLocalizableStrings.General.InsertRecordError),
-   T(KoreWebLocalizableStrings.General.InsertRecordSuccess),
-   T(LocalizableStrings.RemoveServiceError),
-   T(LocalizableStrings.RemoveServiceSuccess),
-   T(LocalizableStrings.RestartServiceError),
-   T(LocalizableStrings.RestartServiceSuccess),
-   T(LocalizableStrings.StartServiceError),
-   T(LocalizableStrings.StartServiceSuccess),
-   T(LocalizableStrings.StopServiceError),
-   T(LocalizableStrings.StopServiceSuccess),
-   T(LocalizableStrings.Model.DisplayName),
-   T(LocalizableStrings.Model.Password),
-   T(LocalizableStrings.Model.ServiceName),
-   T(LocalizableStrings.Model.Status),
-   T(LocalizableStrings.Model.Url));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                AddServiceError = T(LocalizableStrings.AddServiceError).Text,
+                AddServiceSuccess = T(LocalizableStrings.AddServiceSuccess).Text,
+                ConfirmStopService = T(LocalizableStrings.ConfirmStopService).Text,
+                ConfirmRemoveService = T(LocalizableStrings.ConfirmRemoveService).Text,
+                DeleteRecordConfirm = T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text,
+                DeleteRecordError = T(KoreWebLocalizableStrings.General.DeleteRecordError).Text,
+                DeleteRecordSuccess = T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text,
+                InsertRecordError = T(KoreWebLocalizableStrings.General.InsertRecordError).Text,
+                InsertRecordSuccess = T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text,
+                RemoveServiceError = T(LocalizableStrings.RemoveServiceError).Text,
+                RemoveServiceSuccess = T(LocalizableStrings.RemoveServiceSuccess).Text,
+                RestartServiceError = T(LocalizableStrings.RestartServiceError).Text,
+                RestartServiceSuccess = T(LocalizableStrings.RestartServiceSuccess).Text,
+                StartServiceError = T(LocalizableStrings.StartServiceError).Text,
+                StartServiceSuccess = T(LocalizableStrings.StartServiceSuccess).Text,
+                StopServiceError = T(LocalizableStrings.StopServiceError).Text,
+                StopServiceSuccess = T(LocalizableStrings.StopServiceSuccess).Text,
+                Columns = new
+                {
+                    DisplayName = T(LocalizableStrings.Model.DisplayName).Text,
+                    Password = T(LocalizableStrings.Model.Password).Text,
+                    ServiceName = T(LocalizableStrings.Model.ServiceName).Text,
+                    Status = T(LocalizableStrings.Model.Status).Text,
+                    Url = T(LocalizableStrings.Model.Url).Text
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -32,51 +32,35 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    Create: '{0}',
-    Delete: '{1}',
-    DeleteRecordConfirm: '{2}',
-    DeleteRecordError: '{3}',
-    DeleteRecordSuccess: '{4}',
-    Edit: '{5}',
-    GetRecordError: '{6}',
-    InsertRecordError: '{7}',
-    InsertRecordSuccess: '{8}',
-    Playlists: '{9}',
-    SavePlaylistsError: '{10}',
-    SavePlaylistsSuccess: '{11}',
-    UpdateRecordError: '{12}',
-    UpdateRecordSuccess: '{13}',
-    Columns: {{
-        Playlist: {{
-            Name: '{14}'
-        }},
-        Video: {{
-            ThumbnailUrl: '{15}',
-            Title: '{16}'
-        }}
-    }}
-}}",
-   T(KoreWebLocalizableStrings.General.Create),
-   T(KoreWebLocalizableStrings.General.Delete),
-   T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord),
-   T(KoreWebLocalizableStrings.General.DeleteRecordError),
-   T(KoreWebLocalizableStrings.General.DeleteRecordSuccess),
-   T(KoreWebLocalizableStrings.General.Edit),
-   T(KoreWebLocalizableStrings.General.GetRecordError),
-   T(KoreWebLocalizableStrings.General.InsertRecordError),
-   T(KoreWebLocalizableStrings.General.InsertRecordSuccess),
-   T(LocalizableStrings.Playlists),
-   T(LocalizableStrings.SavePlaylistsError),
-   T(LocalizableStrings.SavePlaylistsSuccess),
-   T(KoreWebLocalizableStrings.General.UpdateRecordError),
-   T(KoreWebLocalizableStrings.General.UpdateRecordSuccess),
-   T(LocalizableStrings.Models.Playlist.Name),
-   T(LocalizableStrings.Models.Video.ThumbnailUrl),
-   T(LocalizableStrings.Models.Video.Title));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                Create = T(KoreWebLocalizableStrings.General.Create).Text,
+                Delete = T(KoreWebLocalizableStrings.General.Delete).Text,
+                DeleteRecordConfirm = T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text,
+                DeleteRecordError = T(KoreWebLocalizableStrings.General.DeleteRecordError).Text,
+                DeleteRecordSuccess = T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text,
+                Edit = T(KoreWebLocalizableStrings.General.Edit).Text,
+                GetRecordError = T(KoreWebLocalizableStrings.General.GetRecordError).Text,
+                InsertRecordError = T(KoreWebLocalizableStrings.General.InsertRecordError).Text,
+                InsertRecordSuccess = T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text,
+                Playlists = T(LocalizableStrings.Playlists).Text,
+                SavePlaylistsError = T(LocalizableStrings.SavePlaylistsError).Text,
+                SavePlaylistsSuccess = T(LocalizableStrings.SavePlaylistsSuccess).Text,
+                UpdateRecordError = T(KoreWebLocalizableStrings.General.UpdateRecordError).Text,
+                UpdateRecordSuccess = T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text,
+                Columns = new
+                {
+                    Playlist = new
+                    {
+                        Name = T(LocalizableStrings.Models.Playlist.Name).Text,
+                    },
+                    Video = new
+                    {
+                        ThumbnailUrl = T(LocalizableStrings.Models.Video.ThumbnailUrl).Text,
+                        Title = T(LocalizableStrings.Models.Video.Title).Text
+                    }
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

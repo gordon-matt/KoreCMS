@@ -52,49 +52,30 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    Create: '{0}',
-    Delete: '{1}',
-    DeleteRecordConfirm: '{2}',
-    DeleteRecordError: '{3}',
-    DeleteRecordSuccess: '{4}',
-    Edit: '{5}',
-    GetRecordError: '{6}',
-    InsertRecordError: '{7}',
-    InsertRecordSuccess: '{8}',
-    Localize: '{9}',
-    ResetLocalizableStringsError: '{10}',
-    ResetLocalizableStringsSuccess: '{11}',
-    UpdateRecordError: '{12}',
-    UpdateRecordSuccess: '{13}',
-    Columns: {{
-        Name: '{14}',
-        CultureCode: '{15}',
-        IsEnabled: '{16}',
-        SortOrder: '{17}',
-    }}
-}}",
-   T(KoreWebLocalizableStrings.General.Create),
-   T(KoreWebLocalizableStrings.General.Delete),
-   T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord),
-   T(KoreWebLocalizableStrings.General.DeleteRecordError),
-   T(KoreWebLocalizableStrings.General.DeleteRecordSuccess),
-   T(KoreWebLocalizableStrings.General.Edit),
-   T(KoreWebLocalizableStrings.General.GetRecordError),
-   T(KoreWebLocalizableStrings.General.InsertRecordError),
-   T(KoreWebLocalizableStrings.General.InsertRecordSuccess),
-   T(KoreCmsLocalizableStrings.Localization.Localize),
-   T(KoreWebLocalizableStrings.Localization.ResetLocalizableStringsError),
-   T(KoreWebLocalizableStrings.Localization.ResetLocalizableStringsSuccess),
-   T(KoreWebLocalizableStrings.General.UpdateRecordError),
-   T(KoreWebLocalizableStrings.General.UpdateRecordSuccess),
-   T(KoreCmsLocalizableStrings.Localization.LanguageModel.Name),
-   T(KoreCmsLocalizableStrings.Localization.LanguageModel.CultureCode),
-   T(KoreCmsLocalizableStrings.Localization.LanguageModel.IsEnabled),
-   T(KoreCmsLocalizableStrings.Localization.LanguageModel.SortOrder));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                Create = T(KoreWebLocalizableStrings.General.Create).Text,
+                Delete = T(KoreWebLocalizableStrings.General.Delete).Text,
+                DeleteRecordConfirm = T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text,
+                DeleteRecordError = T(KoreWebLocalizableStrings.General.DeleteRecordError).Text,
+                DeleteRecordSuccess = T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text,
+                Edit = T(KoreWebLocalizableStrings.General.Edit).Text,
+                GetRecordError = T(KoreWebLocalizableStrings.General.GetRecordError).Text,
+                InsertRecordError = T(KoreWebLocalizableStrings.General.InsertRecordError).Text,
+                InsertRecordSuccess = T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text,
+                Localize = T(KoreCmsLocalizableStrings.Localization.Localize).Text,
+                ResetLocalizableStringsError = T(KoreWebLocalizableStrings.Localization.ResetLocalizableStringsError).Text,
+                ResetLocalizableStringsSuccess = T(KoreWebLocalizableStrings.Localization.ResetLocalizableStringsSuccess).Text,
+                UpdateRecordError = T(KoreWebLocalizableStrings.General.UpdateRecordError).Text,
+                UpdateRecordSuccess = T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text,
+                Columns = new
+                {
+                    Name = T(KoreCmsLocalizableStrings.Localization.LanguageModel.Name).Text,
+                    CultureCode = T(KoreCmsLocalizableStrings.Localization.LanguageModel.CultureCode).Text,
+                    IsEnabled = T(KoreCmsLocalizableStrings.Localization.LanguageModel.IsEnabled).Text,
+                    SortOrder = T(KoreCmsLocalizableStrings.Localization.LanguageModel.SortOrder).Text,
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

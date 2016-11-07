@@ -34,31 +34,21 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    Delete: '{0}',
-    DeleteRecordConfirm: '{1}',
-    DeleteRecordError: '{2}',
-    DeleteRecordSuccess: '{3}',
-    Columns: {{
-        CreatedOnUtc: '{4}',
-        SentOnUtc: '{5}',
-        SentTries: '{6}',
-        Subject: '{7}',
-        ToAddress: '{8}'
-    }}
-}}",
-   T(KoreWebLocalizableStrings.General.Delete),
-   T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord),
-   T(KoreWebLocalizableStrings.General.DeleteRecordError),
-   T(KoreWebLocalizableStrings.General.DeleteRecordSuccess),
-   T(KoreCmsLocalizableStrings.Messaging.QueuedEmailModel.CreatedOnUtc),
-   T(KoreCmsLocalizableStrings.Messaging.QueuedEmailModel.SentOnUtc),
-   T(KoreCmsLocalizableStrings.Messaging.QueuedEmailModel.SentTries),
-   T(KoreCmsLocalizableStrings.Messaging.QueuedEmailModel.Subject),
-   T(KoreCmsLocalizableStrings.Messaging.QueuedEmailModel.ToAddress));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                Delete = T(KoreWebLocalizableStrings.General.Delete).Text,
+                DeleteRecordConfirm = T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text,
+                DeleteRecordError = T(KoreWebLocalizableStrings.General.DeleteRecordError).Text,
+                DeleteRecordSuccess = T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text,
+                Columns = new
+                {
+                    CreatedOnUtc = T(KoreCmsLocalizableStrings.Messaging.QueuedEmailModel.CreatedOnUtc).Text,
+                    SentOnUtc = T(KoreCmsLocalizableStrings.Messaging.QueuedEmailModel.SentOnUtc).Text,
+                    SentTries = T(KoreCmsLocalizableStrings.Messaging.QueuedEmailModel.SentTries).Text,
+                    Subject = T(KoreCmsLocalizableStrings.Messaging.QueuedEmailModel.Subject).Text,
+                    ToAddress = T(KoreCmsLocalizableStrings.Messaging.QueuedEmailModel.ToAddress).Text
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

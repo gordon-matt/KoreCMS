@@ -31,42 +31,26 @@ namespace Kore.Web.Areas.Admin.ScheduledTasks.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    Edit: '{0}',
-    ExecutedTaskSuccess: '{1}',
-    ExecutedTaskError: '{2}',
-    GetRecordError: '{3}',
-    RunNow: '{4}',
-    UpdateRecordError: '{5}',
-    UpdateRecordSuccess: '{6}',
-
-    Columns: {{
-        Enabled: '{7}',
-        LastEndUtc: '{8}',
-        LastStartUtc: '{9}',
-        LastSuccessUtc: '{10}',
-        Name: '{11}',
-        Seconds: '{12}',
-        StopOnError: '{13}',
-    }}
-}}",
-   T(KoreWebLocalizableStrings.General.Edit),
-   T(KoreWebLocalizableStrings.ScheduledTasks.ExecutedTaskSuccess),
-   T(KoreWebLocalizableStrings.ScheduledTasks.ExecutedTaskError),
-   T(KoreWebLocalizableStrings.General.GetRecordError),
-   T(KoreWebLocalizableStrings.ScheduledTasks.RunNow),
-   T(KoreWebLocalizableStrings.General.UpdateRecordError),
-   T(KoreWebLocalizableStrings.General.UpdateRecordSuccess),
-   T(KoreWebLocalizableStrings.ScheduledTasks.Model.Enabled),
-   T(KoreWebLocalizableStrings.ScheduledTasks.Model.LastEndUtc),
-   T(KoreWebLocalizableStrings.ScheduledTasks.Model.LastStartUtc),
-   T(KoreWebLocalizableStrings.ScheduledTasks.Model.LastSuccessUtc),
-   T(KoreWebLocalizableStrings.ScheduledTasks.Model.Name),
-   T(KoreWebLocalizableStrings.ScheduledTasks.Model.Seconds),
-   T(KoreWebLocalizableStrings.ScheduledTasks.Model.StopOnError));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                Edit = T(KoreWebLocalizableStrings.General.Edit).Text,
+                ExecutedTaskSuccess = T(KoreWebLocalizableStrings.ScheduledTasks.ExecutedTaskSuccess).Text,
+                ExecutedTaskError = T(KoreWebLocalizableStrings.ScheduledTasks.ExecutedTaskError).Text,
+                GetRecordError = T(KoreWebLocalizableStrings.General.GetRecordError).Text,
+                RunNow = T(KoreWebLocalizableStrings.ScheduledTasks.RunNow).Text,
+                UpdateRecordError = T(KoreWebLocalizableStrings.General.UpdateRecordError).Text,
+                UpdateRecordSuccess = T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text,
+                Columns = new
+                {
+                    Enabled = T(KoreWebLocalizableStrings.ScheduledTasks.Model.Enabled).Text,
+                    LastEndUtc = T(KoreWebLocalizableStrings.ScheduledTasks.Model.LastEndUtc).Text,
+                    LastStartUtc = T(KoreWebLocalizableStrings.ScheduledTasks.Model.LastStartUtc).Text,
+                    LastSuccessUtc = T(KoreWebLocalizableStrings.ScheduledTasks.Model.LastSuccessUtc).Text,
+                    Name = T(KoreWebLocalizableStrings.ScheduledTasks.Model.Name).Text,
+                    Seconds = T(KoreWebLocalizableStrings.ScheduledTasks.Model.Seconds).Text,
+                    StopOnError = T(KoreWebLocalizableStrings.ScheduledTasks.Model.StopOnError).Text,
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

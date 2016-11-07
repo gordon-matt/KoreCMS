@@ -2,7 +2,6 @@
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
 using Kore.Web.Security.Membership.Permissions;
-using Newtonsoft.Json.Linq;
 
 namespace Kore.Web.Areas.Admin.Tenants.Controllers
 {
@@ -32,37 +31,24 @@ namespace Kore.Web.Areas.Admin.Tenants.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    Create: '{0}',
-    Delete: '{1}',
-    DeleteRecordConfirm: '{2}',
-    DeleteRecordError: '{3}',
-    DeleteRecordSuccess: '{4}',
-    Edit: '{5}',
-    GetRecordError: '{6}',
-    InsertRecordError: '{7}',
-    InsertRecordSuccess: '{8}',
-    UpdateRecordError: '{9}',
-    UpdateRecordSuccess: '{10}',
-    Columns: {{
-        Name: '{11}'
-    }}
-}}",
-   T(KoreWebLocalizableStrings.General.Create),
-   T(KoreWebLocalizableStrings.General.Delete),
-   T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord),
-   T(KoreWebLocalizableStrings.General.DeleteRecordError),
-   T(KoreWebLocalizableStrings.General.DeleteRecordSuccess),
-   T(KoreWebLocalizableStrings.General.Edit),
-   T(KoreWebLocalizableStrings.General.GetRecordError),
-   T(KoreWebLocalizableStrings.General.InsertRecordError),
-   T(KoreWebLocalizableStrings.General.InsertRecordSuccess),
-   T(KoreWebLocalizableStrings.General.UpdateRecordError),
-   T(KoreWebLocalizableStrings.General.UpdateRecordSuccess),
-   T(KoreWebLocalizableStrings.General.Name));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                Create = T(KoreWebLocalizableStrings.General.Create).Text,
+                Delete = T(KoreWebLocalizableStrings.General.Delete).Text,
+                DeleteRecordConfirm = T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text,
+                DeleteRecordError = T(KoreWebLocalizableStrings.General.DeleteRecordError).Text,
+                DeleteRecordSuccess = T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text,
+                Edit = T(KoreWebLocalizableStrings.General.Edit).Text,
+                GetRecordError = T(KoreWebLocalizableStrings.General.GetRecordError).Text,
+                InsertRecordError = T(KoreWebLocalizableStrings.General.InsertRecordError).Text,
+                InsertRecordSuccess = T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text,
+                UpdateRecordError = T(KoreWebLocalizableStrings.General.UpdateRecordError).Text,
+                UpdateRecordSuccess = T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text,
+                Columns = new
+                {
+                    Name = T(KoreWebLocalizableStrings.General.Name)
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

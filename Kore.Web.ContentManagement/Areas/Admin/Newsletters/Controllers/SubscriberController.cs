@@ -59,25 +59,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    Delete: '{0}',
-    DeleteRecordConfirm: '{1}',
-    DeleteRecordError: '{2}',
-    DeleteRecordSuccess: '{3}',
-    Columns: {{
-        Email: '{4}',
-        Name: '{5}',
-    }}
-}}",
-   T(KoreWebLocalizableStrings.General.Delete),
-   T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord),
-   T(KoreWebLocalizableStrings.General.DeleteRecordError),
-   T(KoreWebLocalizableStrings.General.DeleteRecordSuccess),
-   T(KoreCmsLocalizableStrings.ContentBlocks.NewsletterSubscriptionBlock.Email),
-   T(KoreCmsLocalizableStrings.ContentBlocks.NewsletterSubscriptionBlock.Name));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                Delete = T(KoreWebLocalizableStrings.General.Delete).Text,
+                DeleteRecordConfirm = T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text,
+                DeleteRecordError = T(KoreWebLocalizableStrings.General.DeleteRecordError).Text,
+                DeleteRecordSuccess = T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text,
+                Columns = new
+                {
+                    Email = T(KoreCmsLocalizableStrings.ContentBlocks.NewsletterSubscriptionBlock.Email).Text,
+                    Name = T(KoreCmsLocalizableStrings.ContentBlocks.NewsletterSubscriptionBlock.Name).Text,
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
 
         [AllowAnonymous]

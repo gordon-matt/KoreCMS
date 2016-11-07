@@ -32,65 +32,44 @@ namespace Kore.Plugins.Widgets.RevolutionSlider.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    Create: '{0}',
-    Delete: '{1}',
-    DeleteRecordConfirm: '{2}',
-    DeleteRecordError: '{3}',
-    DeleteRecordSuccess: '{4}',
-    Edit: '{5}',
-    GetRecordError: '{6}',
-    InsertRecordError: '{7}',
-    InsertRecordSuccess: '{8}',
-    Layers: '{9}',
-    Sliders: '{10}',
-    Slides: '{11}',
-    UpdateRecordError: '{12}',
-    UpdateRecordSuccess: '{13}',
-    Columns: {{
-        Layer: {{
-            Start: '{14}',
-            Speed: '{15}',
-            CaptionText: '{16}',
-            X: '{17}',
-            Y: '{18}'
-        }},
-        Slider: {{
-            Name: '{19}'
-        }},
-        Slide: {{
-            Order: '{20}',
-            Title: '{21}',
-            Link: '{22}',
-        }}
-    }}
-}}",
-   T(KoreWebLocalizableStrings.General.Create),
-   T(KoreWebLocalizableStrings.General.Delete),
-   T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord),
-   T(KoreWebLocalizableStrings.General.DeleteRecordError),
-   T(KoreWebLocalizableStrings.General.DeleteRecordSuccess),
-   T(KoreWebLocalizableStrings.General.Edit),
-   T(KoreWebLocalizableStrings.General.GetRecordError),
-   T(KoreWebLocalizableStrings.General.InsertRecordError),
-   T(KoreWebLocalizableStrings.General.InsertRecordSuccess),
-   T(LocalizableStrings.Layers),
-   T(LocalizableStrings.Sliders),
-   T(LocalizableStrings.Slides),
-   T(KoreWebLocalizableStrings.General.UpdateRecordError),
-   T(KoreWebLocalizableStrings.General.UpdateRecordSuccess),
-   T(LocalizableStrings.Models.Layer.Start),
-   T(LocalizableStrings.Models.Layer.Speed),
-   T(LocalizableStrings.Models.Layer.CaptionText),
-   T(LocalizableStrings.Models.Layer.X),
-   T(LocalizableStrings.Models.Layer.Y),
-   T(LocalizableStrings.Models.Slider.Name),
-   T(LocalizableStrings.Models.Slide.Order),
-   T(LocalizableStrings.Models.Slide.Title),
-   T(LocalizableStrings.Models.Slide.Link));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                Create = T(KoreWebLocalizableStrings.General.Create).Text,
+                Delete = T(KoreWebLocalizableStrings.General.Delete).Text,
+                DeleteRecordConfirm = T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text,
+                DeleteRecordError = T(KoreWebLocalizableStrings.General.DeleteRecordError).Text,
+                DeleteRecordSuccess = T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text,
+                Edit = T(KoreWebLocalizableStrings.General.Edit).Text,
+                GetRecordError = T(KoreWebLocalizableStrings.General.GetRecordError).Text,
+                InsertRecordError = T(KoreWebLocalizableStrings.General.InsertRecordError).Text,
+                InsertRecordSuccess = T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text,
+                Layers = T(LocalizableStrings.Layers).Text,
+                Sliders = T(LocalizableStrings.Sliders).Text,
+                Slides = T(LocalizableStrings.Slides).Text,
+                UpdateRecordError = T(KoreWebLocalizableStrings.General.UpdateRecordError).Text,
+                UpdateRecordSuccess = T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text,
+                Columns = new
+                {
+                    Layer = new
+                    {
+                        Start = T(LocalizableStrings.Models.Layer.Start).Text,
+                        Speed = T(LocalizableStrings.Models.Layer.Speed).Text,
+                        CaptionText = T(LocalizableStrings.Models.Layer.CaptionText).Text,
+                        X = T(LocalizableStrings.Models.Layer.X).Text,
+                        Y = T(LocalizableStrings.Models.Layer.Y).Text,
+                    },
+                    Slider = new
+                    {
+                        Name = T(LocalizableStrings.Models.Slider.Name).Text,
+                    },
+                    Slide = new
+                    {
+                        Order = T(LocalizableStrings.Models.Slide.Order).Text,
+                        Title = T(LocalizableStrings.Models.Slide.Title).Text,
+                        Link = T(LocalizableStrings.Models.Slide.Link).Text,
+                    }
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

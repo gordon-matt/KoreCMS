@@ -51,23 +51,17 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    Edit: '{0}',
-    GetRecordError: '{1}',
-    UpdateRecordError: '{2}',
-    UpdateRecordSuccess: '{3}',
-    Columns: {{
-        Name: '{4}',
-    }}
-}}",
-   T(KoreWebLocalizableStrings.General.Edit),
-   T(KoreWebLocalizableStrings.General.GetRecordError),
-   T(KoreWebLocalizableStrings.General.UpdateRecordError),
-   T(KoreWebLocalizableStrings.General.UpdateRecordSuccess),
-   T(KoreWebLocalizableStrings.Settings.Model.Name));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                Edit = T(KoreWebLocalizableStrings.General.Edit).Text,
+                GetRecordError = T(KoreWebLocalizableStrings.General.GetRecordError).Text,
+                UpdateRecordError = T(KoreWebLocalizableStrings.General.UpdateRecordError).Text,
+                UpdateRecordSuccess = T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text,
+                Columns = new
+                {
+                    Name = T(KoreWebLocalizableStrings.Settings.Model.Name).Text,
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
 
         [Compress]

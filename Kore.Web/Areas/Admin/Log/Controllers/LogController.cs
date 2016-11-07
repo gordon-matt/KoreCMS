@@ -30,38 +30,24 @@ namespace Kore.Web.Areas.Admin.Log.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    ClearConfirm: '{0}',
-    ClearError: '{1}',
-    ClearSuccess: '{2}',
-    Delete: '{3}',
-    DeleteRecordConfirm: '{4}',
-    DeleteRecordError: '{5}',
-    DeleteRecordSuccess: '{6}',
-    GetRecordError: '{7}',
-    View: '{8}',
-
-    Columns: {{
-        EventLevel: '{9}',
-        EventMessage: '{10}',
-        EventDateTime: '{11}'
-    }}
-}}",
-   T(KoreWebLocalizableStrings.Log.ClearConfirm),
-   T(KoreWebLocalizableStrings.Log.ClearError),
-   T(KoreWebLocalizableStrings.Log.ClearSuccess),
-   T(KoreWebLocalizableStrings.General.Delete),
-   T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord),
-   T(KoreWebLocalizableStrings.General.DeleteRecordError),
-   T(KoreWebLocalizableStrings.General.DeleteRecordSuccess),
-   T(KoreWebLocalizableStrings.General.GetRecordError),
-   T(KoreWebLocalizableStrings.General.View),
-   T(KoreWebLocalizableStrings.Log.Model.EventLevel),
-   T(KoreWebLocalizableStrings.Log.Model.EventMessage),
-   T(KoreWebLocalizableStrings.Log.Model.EventDateTime));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                ClearConfirm = T(KoreWebLocalizableStrings.Log.ClearConfirm).Text,
+                ClearError = T(KoreWebLocalizableStrings.Log.ClearError).Text,
+                ClearSuccess = T(KoreWebLocalizableStrings.Log.ClearSuccess).Text,
+                Delete = T(KoreWebLocalizableStrings.General.Delete).Text,
+                DeleteRecordConfirm = T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text,
+                DeleteRecordError = T(KoreWebLocalizableStrings.General.DeleteRecordError).Text,
+                DeleteRecordSuccess = T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text,
+                GetRecordError = T(KoreWebLocalizableStrings.General.GetRecordError).Text,
+                View = T(KoreWebLocalizableStrings.General.View).Text,
+                Columns = new
+                {
+                    EventLevel = T(KoreWebLocalizableStrings.Log.Model.EventLevel).Text,
+                    EventMessage = T(KoreWebLocalizableStrings.Log.Model.EventMessage).Text,
+                    EventDateTime = T(KoreWebLocalizableStrings.Log.Model.EventDateTime).Text
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

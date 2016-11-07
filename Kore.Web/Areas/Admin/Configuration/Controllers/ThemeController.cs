@@ -33,34 +33,22 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers
         [OutputCache(Duration = 86400, VaryByParam = "none")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    Set: '{0}',
-    SetDesktopThemeError: '{1}',
-    SetDesktopThemeSuccess: '{2}',
-    SetMobileThemeError: '{3}',
-    SetMobileThemeSuccess: '{4}',
-
-    Columns: {{
-        IsDefaultDesktopTheme: '{5}',
-        IsDefaultMobileTheme: '{6}',
-        MobileTheme: '{7}',
-        PreviewImageUrl: '{8}',
-        SupportRtl: '{9}'
-    }}
-}}",
-   T(KoreWebLocalizableStrings.General.Set),
-   T(KoreWebLocalizableStrings.Themes.SetDesktopThemeError),
-   T(KoreWebLocalizableStrings.Themes.SetDesktopThemeSuccess),
-   T(KoreWebLocalizableStrings.Themes.SetMobileThemeError),
-   T(KoreWebLocalizableStrings.Themes.SetMobileThemeSuccess),
-   T(KoreWebLocalizableStrings.Themes.Model.IsDefaultDesktopTheme),
-   T(KoreWebLocalizableStrings.Themes.Model.IsDefaultMobileTheme),
-   T(KoreWebLocalizableStrings.Themes.Model.MobileTheme),
-   T(KoreWebLocalizableStrings.Themes.Model.PreviewImageUrl),
-   T(KoreWebLocalizableStrings.Themes.Model.SupportRtl));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                Set = T(KoreWebLocalizableStrings.General.Set).Text,
+                SetDesktopThemeError = T(KoreWebLocalizableStrings.Themes.SetDesktopThemeError).Text,
+                SetDesktopThemeSuccess = T(KoreWebLocalizableStrings.Themes.SetDesktopThemeSuccess).Text,
+                SetMobileThemeError = T(KoreWebLocalizableStrings.Themes.SetMobileThemeError).Text,
+                SetMobileThemeSuccess = T(KoreWebLocalizableStrings.Themes.SetMobileThemeSuccess).Text,
+                Columns = new
+                {
+                    IsDefaultDesktopTheme = T(KoreWebLocalizableStrings.Themes.Model.IsDefaultDesktopTheme).Text,
+                    IsDefaultMobileTheme = T(KoreWebLocalizableStrings.Themes.Model.IsDefaultMobileTheme).Text,
+                    MobileTheme = T(KoreWebLocalizableStrings.Themes.Model.MobileTheme).Text,
+                    PreviewImageUrl = T(KoreWebLocalizableStrings.Themes.Model.PreviewImageUrl).Text,
+                    SupportRtl = T(KoreWebLocalizableStrings.Themes.Model.SupportRtl).Text
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

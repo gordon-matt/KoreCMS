@@ -31,55 +31,37 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    Create: '{0}',
-    Delete: '{1}',
-    DeleteRecordConfirm: '{2}',
-    DeleteRecordError: '{3}',
-    DeleteRecordSuccess: '{4}',
-    Edit: '{5}',
-    GetRecordError: '{6}',
-    InsertRecordError: '{7}',
-    InsertRecordSuccess: '{8}',
-    NewItem: '{9}',
-    Toggle: '{10}',
-    UpdateRecordError: '{11}',
-    UpdateRecordSuccess: '{12}',
-    Columns: {{
-        Menu: {{
-            Name: '{13}',
-            UrlFilter: '{14}'
-        }},
-        MenuItem: {{
-            Text: '{15}',
-            Url: '{16}',
-            Position: '{17}',
-            Enabled: '{18}'
-        }}
-    }}
-}}",
-   T(KoreWebLocalizableStrings.General.Create),
-   T(KoreWebLocalizableStrings.General.Delete),
-   T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord),
-   T(KoreWebLocalizableStrings.General.DeleteRecordError),
-   T(KoreWebLocalizableStrings.General.DeleteRecordSuccess),
-   T(KoreWebLocalizableStrings.General.Edit),
-   T(KoreWebLocalizableStrings.General.GetRecordError),
-   T(KoreWebLocalizableStrings.General.InsertRecordError),
-   T(KoreWebLocalizableStrings.General.InsertRecordSuccess),
-   T(KoreCmsLocalizableStrings.Menus.NewItem),
-   T(KoreWebLocalizableStrings.General.Toggle),
-   T(KoreWebLocalizableStrings.General.UpdateRecordError),
-   T(KoreWebLocalizableStrings.General.UpdateRecordSuccess),
-   T(KoreCmsLocalizableStrings.Menus.MenuModel.Name),
-   T(KoreCmsLocalizableStrings.Menus.MenuModel.UrlFilter),
-   T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Text),
-   T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Url),
-   T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Position),
-   T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Enabled));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                Create = T(KoreWebLocalizableStrings.General.Create).Text,
+                Delete = T(KoreWebLocalizableStrings.General.Delete).Text,
+                DeleteRecordConfirm = T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text,
+                DeleteRecordError = T(KoreWebLocalizableStrings.General.DeleteRecordError).Text,
+                DeleteRecordSuccess = T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text,
+                Edit = T(KoreWebLocalizableStrings.General.Edit).Text,
+                GetRecordError = T(KoreWebLocalizableStrings.General.GetRecordError).Text,
+                InsertRecordError = T(KoreWebLocalizableStrings.General.InsertRecordError).Text,
+                InsertRecordSuccess = T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text,
+                NewItem = T(KoreCmsLocalizableStrings.Menus.NewItem).Text,
+                Toggle = T(KoreWebLocalizableStrings.General.Toggle).Text,
+                UpdateRecordError = T(KoreWebLocalizableStrings.General.UpdateRecordError).Text,
+                UpdateRecordSuccess = T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text,
+                Columns = new
+                {
+                    Menu = new
+                    {
+                        Name = T(KoreCmsLocalizableStrings.Menus.MenuModel.Name).Text,
+                        UrlFilter = T(KoreCmsLocalizableStrings.Menus.MenuModel.UrlFilter).Text
+                    },
+                    MenuItem = new
+                    {
+                        Text = T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Text).Text,
+                        Url = T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Url).Text,
+                        Position = T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Position).Text,
+                        Enabled = T(KoreCmsLocalizableStrings.Menus.MenuItemModel.Enabled).Text
+                    }
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

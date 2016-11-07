@@ -64,7 +64,7 @@ namespace Kore.Web.Infrastructure
                     ModuleId = "viewmodels/admin/tenants",
                     Route = "tenants",
                     JsPath = scriptRegister.GetBundleUrl("kore-web/tenants"),
-                    Title = localizer(KoreWebLocalizableStrings.ScheduledTasks.Title)
+                    Title = localizer(KoreWebLocalizableStrings.Tenants.Title)
                 });
 
                 routes.Add(new DurandalRoute

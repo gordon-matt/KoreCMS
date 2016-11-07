@@ -12,6 +12,7 @@
 
 @Html.Hidden("GridPageSize", SiteSettings.DefaultGridPageSize)
 @Html.Hidden("DefaultFrontendLayoutPath", KoreWebConstants.DefaultFrontendLayoutPath)
+@Html.Hidden("TinyMCE_RootFolder", "Tenant_" + WorkContext.CurrentTenant.Id)
 
 <div id="page-grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

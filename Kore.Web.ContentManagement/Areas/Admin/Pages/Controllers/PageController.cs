@@ -64,91 +64,56 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         [Route("get-translations")]
         public JsonResult GetTranslations()
         {
-            string json = string.Format(
-@"{{
-    CircularRelationshipError: '{0}',
-    Create: '{1}',
-    ContentBlocks: '{2}',
-    Delete: '{3}',
-    DeleteRecordConfirm: '{4}',
-    DeleteRecordError: '{5}',
-    DeleteRecordSuccess: '{6}',
-    Details: '{7}',
-    Edit: '{8}',
-    GetRecordError: '{9}',
-    GetTranslationError: '{10}',
-    PageHistory: '{11}',
-    InsertRecordError: '{12}',
-    InsertRecordSuccess: '{13}',
-    Localize: '{14}',
-    Move: '{15}',
-    Preview: '{16}',
-    Restore: '{17}',
-    Toggle: '{18}',
-    Translations: '{19}',
-    UpdateRecordError: '{20}',
-    UpdateRecordSuccess: '{21}',
-    UpdateTranslationError: '{22}',
-    UpdateTranslationSuccess: '{23}',
-    View: '{24}',
-
-    PageHistoryRestoreConfirm: '{25}',
-    PageHistoryRestoreError: '{26}',
-    PageHistoryRestoreSuccess: '{27}',
-
-    Columns: {{
-        Page: {{
-            Name: '{28}',
-            IsEnabled: '{29}',
-            ShowOnMenus: '{30}',
-        }},
-        PageType: {{
-            Name: '{31}',
-        }},
-        PageVersion: {{
-            Title: '{32}',
-            Slug: '{33}',
-            DateModifiedUtc: '{34}',
-        }}
-    }}
-}}",
-   T(KoreCmsLocalizableStrings.Messages.CircularRelationshipError),
-   T(KoreWebLocalizableStrings.General.Create),
-   T(KoreCmsLocalizableStrings.ContentBlocks.Title),
-   T(KoreWebLocalizableStrings.General.Delete),
-   T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord),
-   T(KoreWebLocalizableStrings.General.DeleteRecordError),
-   T(KoreWebLocalizableStrings.General.DeleteRecordSuccess),
-   T(KoreWebLocalizableStrings.General.Details),
-   T(KoreWebLocalizableStrings.General.Edit),
-   T(KoreWebLocalizableStrings.General.GetRecordError).Text,
-   T(KoreCmsLocalizableStrings.Messages.GetTranslationError),
-   T(KoreCmsLocalizableStrings.Pages.PageHistory),
-   T(KoreWebLocalizableStrings.General.InsertRecordError).Text,
-   T(KoreWebLocalizableStrings.General.InsertRecordSuccess),
-   T(KoreWebLocalizableStrings.General.Localize),
-   T(KoreWebLocalizableStrings.General.Move),
-   T(KoreWebLocalizableStrings.General.Preview),
-   T(KoreCmsLocalizableStrings.Pages.Restore),
-   T(KoreWebLocalizableStrings.General.Toggle),
-   T(KoreCmsLocalizableStrings.Pages.Translations),
-   T(KoreWebLocalizableStrings.General.UpdateRecordError),
-   T(KoreWebLocalizableStrings.General.UpdateRecordSuccess),
-   T(KoreCmsLocalizableStrings.Messages.UpdateTranslationError),
-   T(KoreCmsLocalizableStrings.Messages.UpdateTranslationSuccess),
-   T(KoreWebLocalizableStrings.General.View),
-   T(KoreCmsLocalizableStrings.Pages.PageHistoryRestoreConfirm),
-   T(KoreCmsLocalizableStrings.Pages.PageHistoryRestoreError),
-   T(KoreCmsLocalizableStrings.Pages.PageHistoryRestoreSuccess),
-   T(KoreCmsLocalizableStrings.Pages.PageModel.Name),
-   T(KoreCmsLocalizableStrings.Pages.PageModel.IsEnabled),
-   T(KoreCmsLocalizableStrings.Pages.PageModel.ShowOnMenus),
-   T(KoreCmsLocalizableStrings.Pages.PageTypeModel.Name),
-   T(KoreCmsLocalizableStrings.Pages.PageVersionModel.Title),
-   T(KoreCmsLocalizableStrings.Pages.PageVersionModel.Slug),
-   T(KoreCmsLocalizableStrings.Pages.PageVersionModel.DateModified));
-
-            return Json(JObject.Parse(json), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                CircularRelationshipError = T(KoreCmsLocalizableStrings.Messages.CircularRelationshipError).Text,
+                Create = T(KoreWebLocalizableStrings.General.Create).Text,
+                ContentBlocks = T(KoreCmsLocalizableStrings.ContentBlocks.Title).Text,
+                Delete = T(KoreWebLocalizableStrings.General.Delete).Text,
+                DeleteRecordConfirm = T(KoreWebLocalizableStrings.General.ConfirmDeleteRecord).Text,
+                DeleteRecordError = T(KoreWebLocalizableStrings.General.DeleteRecordError).Text,
+                DeleteRecordSuccess = T(KoreWebLocalizableStrings.General.DeleteRecordSuccess).Text,
+                Details = T(KoreWebLocalizableStrings.General.Details).Text,
+                Edit = T(KoreWebLocalizableStrings.General.Edit).Text,
+                GetRecordError = T(KoreWebLocalizableStrings.General.GetRecordError).Text,
+                GetTranslationError = T(KoreCmsLocalizableStrings.Messages.GetTranslationError).Text,
+                PageHistory = T(KoreCmsLocalizableStrings.Pages.PageHistory).Text,
+                InsertRecordError = T(KoreWebLocalizableStrings.General.InsertRecordError).Text,
+                InsertRecordSuccess = T(KoreWebLocalizableStrings.General.InsertRecordSuccess).Text,
+                Localize = T(KoreWebLocalizableStrings.General.Localize).Text,
+                Move = T(KoreWebLocalizableStrings.General.Move).Text,
+                Preview = T(KoreWebLocalizableStrings.General.Preview).Text,
+                Restore = T(KoreCmsLocalizableStrings.Pages.Restore).Text,
+                Toggle = T(KoreWebLocalizableStrings.General.Toggle).Text,
+                Translations = T(KoreCmsLocalizableStrings.Pages.Translations).Text,
+                UpdateRecordError = T(KoreWebLocalizableStrings.General.UpdateRecordError).Text,
+                UpdateRecordSuccess = T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text,
+                UpdateTranslationError = T(KoreCmsLocalizableStrings.Messages.UpdateTranslationError).Text,
+                UpdateTranslationSuccess = T(KoreCmsLocalizableStrings.Messages.UpdateTranslationSuccess).Text,
+                View = T(KoreWebLocalizableStrings.General.View).Text,
+                PageHistoryRestoreConfirm = T(KoreCmsLocalizableStrings.Pages.PageHistoryRestoreConfirm).Text,
+                PageHistoryRestoreError = T(KoreCmsLocalizableStrings.Pages.PageHistoryRestoreError).Text,
+                PageHistoryRestoreSuccess = T(KoreCmsLocalizableStrings.Pages.PageHistoryRestoreSuccess).Text,
+                Columns = new
+                {
+                    Page = new
+                    {
+                        Name = T(KoreCmsLocalizableStrings.Pages.PageModel.Name).Text,
+                        IsEnabled = T(KoreCmsLocalizableStrings.Pages.PageModel.IsEnabled).Text,
+                        ShowOnMenus = T(KoreCmsLocalizableStrings.Pages.PageModel.ShowOnMenus).Text,
+                    },
+                    PageType = new
+                    {
+                        Name = T(KoreCmsLocalizableStrings.Pages.PageTypeModel.Name).Text,
+                    },
+                    PageVersion = new
+                    {
+                        Title = T(KoreCmsLocalizableStrings.Pages.PageVersionModel.Title).Text,
+                        Slug = T(KoreCmsLocalizableStrings.Pages.PageVersionModel.Slug).Text,
+                        DateModifiedUtc = T(KoreCmsLocalizableStrings.Pages.PageVersionModel.DateModified).Text,
+                    }
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
 
         [Compress]

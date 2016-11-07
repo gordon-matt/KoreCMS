@@ -69,7 +69,11 @@ if ($show_total_size) {
 *SUB-DIR CODE
 ***/
 
-if (!isset($_SESSION['RF']["subfolder"]))
+if (isset($_GET['rootFolder']))
+{
+	$_SESSION['RF']["subfolder"] = $_GET["rootFolder"];
+}
+else if (!isset($_SESSION['RF']["subfolder"]))
 {
 	$_SESSION['RF']["subfolder"] = '';
 }

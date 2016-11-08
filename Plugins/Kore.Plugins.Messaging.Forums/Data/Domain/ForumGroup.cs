@@ -4,15 +4,18 @@ using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
 using Kore.Plugins.Messaging.Forums;
+using Kore.Tenants.Domain;
 using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Messaging.Forums.Data.Domain
 {
-    public class ForumGroup : IEntity
+    public class ForumGroup : ITenantEntity
     {
         private ICollection<Forum> forums;
 
         public int Id { get; set; }
+
+        public int? TenantId { get; set; }
 
         public string Name { get; set; }
 

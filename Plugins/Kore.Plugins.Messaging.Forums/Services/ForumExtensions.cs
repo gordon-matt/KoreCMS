@@ -14,9 +14,12 @@ namespace Kore.Plugins.Messaging.Forums.Services
             string text = forumPost.Text;
 
             if (string.IsNullOrEmpty(text))
+            {
                 return string.Empty;
+            }
 
-            switch (EngineContext.Current.Resolve<ForumSettings>().ForumEditor)
+            var editor = EngineContext.Current.Resolve<ForumSettings>().ForumEditor;
+            switch (editor)
             {
                 case EditorType.SimpleTextBox:
                     {
@@ -65,7 +68,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
         public static string FormatForumSignatureText(this string text)
         {
             if (string.IsNullOrEmpty(text))
+            {
                 return string.Empty;
+            }
 
             text = HtmlHelper.FormatText(text, false, true, false, false, false, false);
             return text;
@@ -76,7 +81,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
             string text = pm.Text;
 
             if (string.IsNullOrEmpty(text))
+            {
                 return string.Empty;
+            }
 
             text = HtmlHelper.FormatText(text, false, true, false, true, false, false);
 
@@ -86,7 +93,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
         public static ForumTopic GetLastTopic(this Forum forum, IForumService forumService)
         {
             if (forum == null)
+            {
                 throw new ArgumentNullException("forum");
+            }
 
             return AsyncHelper.RunSync(() => forumService.GetTopicById(forum.LastTopicId));
         }
@@ -94,7 +103,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
         public static ForumPost GetLastPost(this Forum forum, IForumService forumService)
         {
             if (forum == null)
+            {
                 throw new ArgumentNullException("forum");
+            }
 
             return AsyncHelper.RunSync(() => forumService.GetPostById(forum.LastPostId));
         }
@@ -102,7 +113,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
         public static KoreUser GetLastPostCustomer(this Forum forum, IMembershipService membershipService)
         {
             if (forum == null)
+            {
                 throw new ArgumentNullException("forum");
+            }
 
             return AsyncHelper.RunSync(() => membershipService.GetUserById(forum.LastPostUserId));
         }
@@ -110,11 +123,15 @@ namespace Kore.Plugins.Messaging.Forums.Services
         public static ForumPost GetFirstPost(this ForumTopic forumTopic, IForumService forumService)
         {
             if (forumTopic == null)
+            {
                 throw new ArgumentNullException("forumTopic");
+            }
 
             var forumPosts = AsyncHelper.RunSync(() => forumService.GetAllPosts(forumTopic.Id, null, string.Empty, 0, 1));
             if (forumPosts.Count > 0)
+            {
                 return forumPosts[0];
+            }
 
             return null;
         }
@@ -122,7 +139,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
         public static ForumPost GetLastPost(this ForumTopic forumTopic, IForumService forumService)
         {
             if (forumTopic == null)
+            {
                 throw new ArgumentNullException("forumTopic");
+            }
 
             return AsyncHelper.RunSync(() => forumService.GetPostById(forumTopic.LastPostId));
         }
@@ -130,7 +149,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
         public static KoreUser GetLastPostCustomer(this ForumTopic forumTopic, IMembershipService membershipService)
         {
             if (forumTopic == null)
+            {
                 throw new ArgumentNullException("forumTopic");
+            }
 
             return AsyncHelper.RunSync(() => membershipService.GetUserById(forumTopic.LastPostUserId));
         }

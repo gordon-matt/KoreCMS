@@ -1,13 +1,16 @@
 ﻿using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Tenants.Domain;
 using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Widgets.RevolutionSlider.Data.Domain
 {
-    public class RevolutionSlider : IEntity
+    public class RevolutionSlider : ITenantEntity
     {
         public int Id { get; set; }
+
+        public int? TenantId { get; set; }
 
         public string Name { get; set; }
 

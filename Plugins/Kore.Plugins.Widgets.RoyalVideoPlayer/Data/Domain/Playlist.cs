@@ -2,13 +2,16 @@
 using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Tenants.Domain;
 using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Data.Domain
 {
-    public class Playlist : IEntity
+    public class Playlist : ITenantEntity
     {
         public int Id { get; set; }
+
+        public int? TenantId { get; set; }
 
         public string Name { get; set; }
 

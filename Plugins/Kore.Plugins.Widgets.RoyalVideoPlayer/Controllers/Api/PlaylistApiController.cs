@@ -12,7 +12,7 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Plugins.Widgets.RoyalVideoPlayer.Controllers.Api
 {
-    public class PlaylistApiController : GenericODataController<Playlist, int>
+    public class PlaylistApiController : GenericTenantODataController<Playlist, int>
     {
         private readonly Lazy<IVideoService> videoService;
         private readonly Lazy<IPlaylistVideoService> playlistVideoService;

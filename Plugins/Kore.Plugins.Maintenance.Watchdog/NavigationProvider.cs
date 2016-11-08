@@ -20,7 +20,7 @@ namespace Kore.Plugins.Maintenance.Watchdog
                     .Url("#maintenance/watchdog")
                     //.Action("Index", "Watchdog", new { area = Constants.RouteArea })
                     .IconCssClass("kore-icon kore-icon-services")
-                    .Permission(StandardPermissions.FullAccess)));
+                    .Permission(WatchdogPermissions.Read)));
         }
     }
 }

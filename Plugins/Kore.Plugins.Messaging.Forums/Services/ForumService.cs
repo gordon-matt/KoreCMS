@@ -31,10 +31,10 @@ namespace Kore.Plugins.Messaging.Forums.Services
         private readonly IRepository<PrivateMessage> forumPrivateMessageRepository;
         private readonly IWorkContext workContext;
 
-        private const string CacheKey_ForumGroupAll = "Kore.ForumGroup.All";
-        private const string CacheKey_ForumAllByForumGroupId = "Kore.Forum.AllByForumGroupId-{0}";
-        private const string CacheKey_Pattern_ForumGroup = "Kore.ForumGroup.";
-        private const string CacheKey_Pattern_Forum = "Kore.Forum.";
+        private const string CacheKey_ForumGroupAll = "Kore.ForumGroup.Tenant_{0}.All";
+        private const string CacheKey_ForumAllByForumGroupId = "Kore.Forum.Tenant_{0}.AllByForumGroupId-{1}";
+        private const string CacheKey_Pattern_ForumGroup = "Kore.ForumGroup.Tenant_{0}.";
+        private const string CacheKey_Pattern_Forum = "Kore.Forum.Tenant_{0}.";
 
         #endregion Private Members
 
@@ -79,8 +79,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
             await forumGroupRepository.DeleteAsync(forumGroup);
 
-            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
-            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
+            int tenantId = workContext.CurrentTenant.Id;
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_ForumGroup, tenantId));
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_Forum, tenantId));
 
             //event notification
             //_eventPublisher.EntityDeleted(forumGroup);
@@ -98,12 +99,17 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
         public virtual async Task<IEnumerable<ForumGroup>> GetAllForumGroups()
         {
-            string key = string.Format(CacheKey_ForumGroupAll);
+            int tenantId = workContext.CurrentTenant.Id;
+            string key = string.Format(CacheKey_ForumGroupAll, tenantId);
+
             return await cacheManager.Get(key, async () =>
             {
                 using (var connection = forumGroupRepository.OpenConnection())
                 {
-                    return await connection.Query().OrderBy(x => x.DisplayOrder).ToListAsync();
+                    return await connection
+                        .Query(x => x.TenantId == tenantId)
+                        .OrderBy(x => x.DisplayOrder)
+                        .ToListAsync();
                 }
             });
         }
@@ -118,8 +124,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
             await forumGroupRepository.InsertAsync(forumGroup);
 
             //cache
-            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
-            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
+            int tenantId = workContext.CurrentTenant.Id;
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_ForumGroup, tenantId));
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_Forum, tenantId));
 
             //event notification
             //_eventPublisher.EntityInserted(forumGroup);
@@ -135,8 +142,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
             await forumGroupRepository.UpdateAsync(forumGroup);
 
             //cache
-            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
-            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
+            int tenantId = workContext.CurrentTenant.Id;
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_ForumGroup, tenantId));
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_Forum, tenantId));
 
             //event notification
             //_eventPublisher.EntityUpdated(forumGroup);
@@ -177,8 +185,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
             //delete forum
             await forumRepository.DeleteAsync(forum);
 
-            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
-            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
+            int tenantId = workContext.CurrentTenant.Id;
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_ForumGroup, tenantId));
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_Forum, tenantId));
 
             //event notification
             //_eventPublisher.EntityDeleted(forum);
@@ -196,7 +205,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
         public virtual async Task<IEnumerable<Forum>> GetAllForumsByGroupId(int forumGroupId)
         {
-            string key = string.Format(CacheKey_ForumAllByForumGroupId, forumGroupId);
+            int tenantId = workContext.CurrentTenant.Id;
+            string key = string.Format(CacheKey_ForumAllByForumGroupId, tenantId, forumGroupId);
+
             return await cacheManager.Get(key, async () =>
             {
                 using (var connection = forumRepository.OpenConnection())
@@ -218,8 +229,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
             await forumRepository.InsertAsync(forum);
 
-            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
-            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
+            int tenantId = workContext.CurrentTenant.Id;
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_ForumGroup, tenantId));
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_Forum, tenantId));
 
             //event notification
             //_eventPublisher.EntityInserted(forum);
@@ -234,8 +246,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
             await forumRepository.UpdateAsync(forum);
 
-            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
-            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
+            int tenantId = workContext.CurrentTenant.Id;
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_ForumGroup, tenantId));
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_Forum, tenantId));
 
             //event notification
             //_eventPublisher.EntityUpdated(forum);
@@ -273,8 +286,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
             await UpdateForumStats(forumId);
             await UpdateUserStats(userId);
 
-            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
-            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
+            int tenantId = workContext.CurrentTenant.Id;
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_ForumGroup, tenantId));
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_Forum, tenantId));
 
             //event notification
             //_eventPublisher.EntityDeleted(forumTopic);
@@ -388,8 +402,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
             await UpdateForumStats(forumTopic.ForumId);
 
             //cache
-            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
-            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
+            int tenantId = workContext.CurrentTenant.Id;
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_ForumGroup, tenantId));
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_Forum, tenantId));
 
             //event notification
             //_eventPublisher.EntityInserted(forumTopic);
@@ -426,8 +441,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
             await forumTopicRepository.UpdateAsync(forumTopic);
 
-            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
-            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
+            int tenantId = workContext.CurrentTenant.Id;
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_ForumGroup, tenantId));
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_Forum, tenantId));
 
             //event notification
             //_eventPublisher.EntityUpdated(forumTopic);
@@ -502,8 +518,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
             await UpdateUserStats(userId);
 
             //clear cache
-            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
-            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
+            int tenantId = workContext.CurrentTenant.Id;
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_ForumGroup, tenantId));
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_Forum, tenantId));
 
             //event notification
             //_eventPublisher.EntityDeleted(forumPost);
@@ -579,8 +596,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
             await UpdateUserStats(userId);
 
             //clear cache
-            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
-            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
+            int tenantId = workContext.CurrentTenant.Id;
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_ForumGroup, tenantId));
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_Forum, tenantId));
 
             //event notification
             //_eventPublisher.EntityInserted(forumPost);
@@ -624,8 +642,9 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
             await forumPostRepository.UpdateAsync(forumPost);
 
-            cacheManager.RemoveByPattern(CacheKey_Pattern_ForumGroup);
-            cacheManager.RemoveByPattern(CacheKey_Pattern_Forum);
+            int tenantId = workContext.CurrentTenant.Id;
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_ForumGroup, tenantId));
+            cacheManager.RemoveByPattern(string.Format(CacheKey_Pattern_Forum, tenantId));
 
             //event notification
             //_eventPublisher.EntityUpdated(forumPost);
@@ -798,7 +817,7 @@ namespace Kore.Plugins.Messaging.Forums.Services
                     .OrderByDescending(x => x.CreatedOnUtc)
                     .ThenByDescending(x => x.Id);
 
-                return  await Task.FromResult(new PagedList<ForumSubscription>(query, pageIndex, pageSize));
+                return await Task.FromResult(new PagedList<ForumSubscription>(query, pageIndex, pageSize));
             }
         }
 

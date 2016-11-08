@@ -9,7 +9,7 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Plugins.Messaging.Forums.Controllers.Api
 {
-    public class ForumGroupApiController : GenericODataController<ForumGroup, int>
+    public class ForumGroupApiController : GenericTenantODataController<ForumGroup, int>
     {
         public ForumGroupApiController(IRepository<ForumGroup> repository)
             : base(repository)

@@ -15,22 +15,19 @@ using Kore.Web.Security.Membership.Permissions;
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 {
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class BlogPostApiController : GenericODataController<BlogPost, Guid>
+    public class BlogPostApiController : GenericTenantODataController<BlogPost, Guid>
     {
         private readonly Lazy<IMembershipService> membershipService;
         private readonly Lazy<IBlogPostTagService> postTagService;
-        private readonly IWorkContext workContext;
 
         public BlogPostApiController(
             IBlogPostService service,
             Lazy<IMembershipService> membershipService,
-            Lazy<IBlogPostTagService> postTagService,
-            IWorkContext workContext)
+            Lazy<IBlogPostTagService> postTagService)
             : base(service)
         {
             this.membershipService = membershipService;
             this.postTagService = postTagService;
-            this.workContext = workContext;
         }
 
         [AllowAnonymous]
@@ -49,8 +46,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 
         public override async Task<IHttpActionResult> Post(BlogPost entity)
         {
+            int tenantId = GetTenantId();
+
+            entity.TenantId = tenantId;
             entity.DateCreatedUtc = DateTime.UtcNow;
-            entity.UserId = (await membershipService.Value.GetUserByName(workContext.CurrentTenant.Id, User.Identity.Name)).Id;
+            entity.UserId = (await membershipService.Value.GetUserByName(tenantId, User.Identity.Name)).Id;
 
             var tags = entity.Tags;
             entity.Tags = null;

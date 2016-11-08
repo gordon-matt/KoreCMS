@@ -140,7 +140,7 @@ namespace Kore.Web.Common
             var service = EngineContext.Current.Resolve<IRegionService>();
             var workContext = EngineContext.Current.Resolve<IWorkContext>();
 
-            var records = service.GetContinents(workContext.CurrentCultureCode)
+            var records = service.GetContinents(workContext.CurrentTenant.Id, workContext.CurrentCultureCode)
                 .OrderBy(x => x.Order == null)
                 .ThenBy(x => x.Order)
                 .ThenBy(x => x.Name);
@@ -157,7 +157,7 @@ namespace Kore.Web.Common
             var service = EngineContext.Current.Resolve<IRegionService>();
             var workContext = EngineContext.Current.Resolve<IWorkContext>();
 
-            var records = service.GetCountries(workContext.CurrentCultureCode)
+            var records = service.GetCountries(workContext.CurrentTenant.Id, workContext.CurrentCultureCode)
                 .OrderBy(x => x.Order == null)
                 .ThenBy(x => x.Order)
                 .ThenBy(x => x.Name);

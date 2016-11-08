@@ -6,14 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Tenants.Domain;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 {
-    public class BlogCategory : IEntity
+    public class BlogCategory : ITenantEntity
     {
         private ICollection<BlogPost> posts;
 
         public int Id { get; set; }
+
+        public int? TenantId { get; set; }
 
         public string Name { get; set; }
 

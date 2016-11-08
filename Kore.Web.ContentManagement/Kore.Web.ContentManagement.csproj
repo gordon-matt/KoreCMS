@@ -177,6 +177,7 @@
     <Compile Include="Areas\Admin\Pages\Controllers\Api\PageVersionApiController.cs" />
     <Compile Include="Areas\Admin\Pages\Services\IPageVersionService.cs" />
     <Compile Include="Areas\Admin\Sitemap\Controllers\Api\XmlSitemapApiController.cs" />
+    <Compile Include="Areas\Admin\Sitemap\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Sitemap\Controllers\XmlSitemapController.cs" />
     <Compile Include="Areas\Admin\Sitemap\Domain\ChangeFrequency.cs" />
     <Compile Include="Areas\Admin\Sitemap\Domain\SitemapConfig.cs" />

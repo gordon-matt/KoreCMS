@@ -5,7 +5,7 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 {
-    public class BlogTagApiController : GenericODataController<BlogTag, int>
+    public class BlogTagApiController : GenericTenantODataController<BlogTag, int>
     {
         public BlogTagApiController(IBlogTagService service)
             : base(service)

@@ -3,12 +3,15 @@ using System.Data.Entity.ModelConfiguration;
 using System.Net.Mail;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Tenants.Domain;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Domain
 {
-    public class QueuedEmail : IEntity, IMailMessage
+    public class QueuedEmail : ITenantEntity, IMailMessage
     {
         public Guid Id { get; set; }
+
+        public int? TenantId { get; set; }
 
         /// <summary>
         /// Gets or sets the priority

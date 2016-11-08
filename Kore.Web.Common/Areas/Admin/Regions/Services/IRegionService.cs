@@ -15,13 +15,13 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
     {
         Region FindOne(int id, string cultureCode = null, bool includeChildren = false, bool includeParent = false);
 
-        IEnumerable<Region> GetContinents(string cultureCode = null, bool includeCountries = false);
+        IEnumerable<Region> GetContinents(int tenantId, string cultureCode = null, bool includeCountries = false);
 
         IEnumerable<Region> GetSubRegions(int regionId, RegionType? regionType = null, string cultureCode = null);
 
         IEnumerable<Region> GetSubRegions(int regionId, int pageIndex, int pageSize, out int total, RegionType? regionType = null, string cultureCode = null);
 
-        IEnumerable<Region> GetCountries(string cultureCode = null);
+        IEnumerable<Region> GetCountries(int tenantId, string cultureCode = null);
 
         IEnumerable<Region> GetStates(int countryId, string cultureCode = null, bool includeCities = false);
     }
@@ -79,30 +79,26 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
             }
         }
 
-        public IEnumerable<Region> GetContinents(string cultureCode = null, bool includeCountries = false)
+        public IEnumerable<Region> GetContinents(int tenantId, string cultureCode = null, bool includeCountries = false)
         {
             ICollection<Region> continents = null;
 
             using (var connection = OpenConnection())
             {
+                var query = connection.Query(x =>
+                    x.RegionType == RegionType.Continent
+                    && x.TenantId == tenantId);
+
                 if (includeCountries)
                 {
-                    continents = connection.Query()
-                        .Include(x => x.Children)
-                        .Where(x => x.RegionType == RegionType.Continent)
-                        .OrderBy(x => x.Order == null)
-                        .ThenBy(x => x.Order)
-                        .ThenBy(x => x.Name)
-                        .ToList();
+                    query = query.Include(x => x.Children);
                 }
-                else
-                {
-                    continents = connection.Query(x => x.RegionType == RegionType.Continent)
-                        .OrderBy(x => x.Order == null)
-                        .ThenBy(x => x.Order)
-                        .ThenBy(x => x.Name)
-                        .ToList();
-                }
+
+                continents = query
+                    .OrderBy(x => x.Order == null)
+                    .ThenBy(x => x.Order)
+                    .ThenBy(x => x.Name)
+                    .ToList();
             }
 
             if (!string.IsNullOrEmpty(cultureCode))
@@ -189,14 +185,16 @@ namespace Kore.Web.Common.Areas.Admin.Regions.Services
             }
         }
 
-        public IEnumerable<Region> GetCountries(string cultureCode = null)
+        public IEnumerable<Region> GetCountries(int tenantId, string cultureCode = null)
         {
             using (var connection = OpenConnection())
             {
                 var countries = connection.Query()
                     .Include(x => x.Parent)
                     .Include(x => x.Children)
-                    .Where(x => x.RegionType == RegionType.Country)
+                    .Where(x =>
+                        x.RegionType == RegionType.Country
+                        && x.TenantId == tenantId)
                     .OrderBy(x => x.Order == null)
                     .ThenBy(x => x.Order)
                     .ThenBy(x => x.Name)

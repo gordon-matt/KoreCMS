@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Web.Mvc;
+using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Services;
 using Kore.Web.Indexing;
 using Kore.Web.Indexing.Services;
@@ -26,7 +27,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog
 
         public IEnumerable<IDocumentIndex> GetDocuments(Func<string, IDocumentIndex> factory)
         {
-            var entries = blogService.Find();
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
+            int tenantId = workContext.CurrentTenant.Id;
+
+            var entries = blogService.Find(x => x.TenantId == tenantId);
             foreach (var entry in entries)
             {
                 var document = factory(entry.Id.ToString());

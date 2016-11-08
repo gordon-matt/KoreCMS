@@ -2,12 +2,15 @@
 using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Tenants.Domain;
 
 namespace Kore.Web.Common.Areas.Admin.Regions.Domain
 {
-    public class Region : IEntity
+    public class Region : ITenantEntity
     {
         public int Id { get; set; }
+
+        public int? TenantId { get; set; }
 
         public string Name { get; set; }
 

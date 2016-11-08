@@ -7,7 +7,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Services
 {
     public interface IMessageTemplateService : IGenericDataService<Domain.MessageTemplate>
     {
-        Domain.MessageTemplate Find(string name);
+        Domain.MessageTemplate Find(int tenantId, string name);
     }
 
     public class MessageTemplateService : GenericDataService<Domain.MessageTemplate>, IMessageTemplateService
@@ -17,9 +17,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Services
         {
         }
 
-        public Domain.MessageTemplate Find(string name)
+        public Domain.MessageTemplate Find(int tenantId, string name)
         {
-            return FindOne(x => x.Name == name);
+            return FindOne(x => x.TenantId == tenantId && x.Name == name);
         }
     }
 }

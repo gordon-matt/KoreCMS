@@ -16,10 +16,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters
     public class NewsletterEventHandler : INewsletterEventHandler
     {
         private readonly IMessageService messageService;
+        private readonly IWorkContext workContext;
 
-        public NewsletterEventHandler(IMessageService messageService)
+        public NewsletterEventHandler(IMessageService messageService, IWorkContext workContext)
         {
             this.messageService = messageService;
+            this.workContext = workContext;
         }
 
         #region INewsletterEventHandler Members
@@ -31,7 +33,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters
                 new Token("[UserName]", user.UserName),
                 new Token("[Email]", user.Email)
             };
-            messageService.SendEmailMessage(NewsletterMessageTemplates.Newsletter_Subscribed, tokens, user.Email);
+            messageService.SendEmailMessage(workContext.CurrentTenant.Id, NewsletterMessageTemplates.Newsletter_Subscribed, tokens, user.Email);
         }
 
         public void Unsubscribed(KoreUser user)
@@ -41,7 +43,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters
                 new Token("[UserName]", user.UserName),
                 new Token("[Email]", user.Email)
             };
-            messageService.SendEmailMessage(NewsletterMessageTemplates.Newsletter_Unsubscribed, tokens, user.Email);
+            messageService.SendEmailMessage(workContext.CurrentTenant.Id, NewsletterMessageTemplates.Newsletter_Unsubscribed, tokens, user.Email);
         }
 
         #endregion INewsletterEventHandler Members

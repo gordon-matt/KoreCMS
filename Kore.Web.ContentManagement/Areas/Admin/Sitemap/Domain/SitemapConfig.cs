@@ -3,11 +3,12 @@ using System.Data.Entity.ModelConfiguration;
 using System.Runtime.Serialization;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Tenants.Domain;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Domain
 {
     [DataContract]
-    public class SitemapConfig : IEntity
+    public class SitemapConfig : ITenantEntity
     {
         public SitemapConfig()
         {
@@ -16,6 +17,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Domain
 
         [DataMember]
         public int Id { get; set; }
+
+        [IgnoreDataMember]
+        public int? TenantId { get; set; }
 
         [DataMember]
         public Guid PageId { get; set; }

@@ -58,6 +58,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
             }
             else
             {
+                int tenantId = WorkContext.CurrentTenant.Id;
+
                 string pageIndexParam = Request.Params["pageIndex"];
                 int pageIndex = string.IsNullOrEmpty(pageIndexParam)
                     ? 1
@@ -66,7 +68,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 List<BlogPost> model = null;
                 using (var connection = postService.Value.OpenConnection())
                 {
-                    model = await connection.Query()
+                    model = await connection.Query(x => x.TenantId == tenantId)
                         .Include(x => x.Category)
                         .Include(x => x.Tags)
                         .OrderByDescending(x => x.DateCreatedUtc)
@@ -89,7 +91,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 return new HttpUnauthorizedResult();
             }
 
-            var category = await categoryService.Value.FindOneAsync(x => x.UrlSlug == categorySlug);
+            int tenantId = WorkContext.CurrentTenant.Id;
+            var category = await categoryService.Value.FindOneAsync(x => x.TenantId == tenantId && x.UrlSlug == categorySlug);
 
             if (category == null)
             {
@@ -133,7 +136,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
         [Route("tag/{tagSlug}")]
         public async Task<ActionResult> Tag(string tagSlug)
         {
-            var tag = await tagService.Value.FindOneAsync(x => x.UrlSlug == tagSlug);
+            int tenantId = WorkContext.CurrentTenant.Id;
+
+            var tag = await tagService.Value.FindOneAsync(x =>
+                x.TenantId == tenantId
+                && x.UrlSlug == tagSlug);
 
             if (tag == null)
             {
@@ -246,13 +253,15 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                 return new HttpUnauthorizedResult();
             }
 
+            int tenantId = WorkContext.CurrentTenant.Id;
+
             BlogPost model = null;
             DateTime? previousEntryDate = null;
             DateTime? nextEntryDate = null;
             using (var connection = postService.Value.OpenConnection())
             {
                 model = await connection
-                    .Query(x => x.Slug == slug)
+                    .Query(x => x.TenantId == tenantId && x.Slug == slug)
                     .Include(x => x.Category)
                     .Include(x => x.Tags)
                     .FirstOrDefaultAsync();
@@ -262,18 +271,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
                     throw new KoreException("Blog post not found!");
                 }
 
-                bool hasPreviousEntry = await connection.Query().AnyAsync(x => x.DateCreatedUtc < model.DateCreatedUtc);
+                bool hasPreviousEntry = await connection.Query(x => x.TenantId == tenantId).AnyAsync(x => x.DateCreatedUtc < model.DateCreatedUtc);
                 if (hasPreviousEntry)
                 {
-                    previousEntryDate = await connection.Query(x => x.DateCreatedUtc < model.DateCreatedUtc)
+                    previousEntryDate = await connection.Query(x => x.TenantId == tenantId && x.DateCreatedUtc < model.DateCreatedUtc)
                         .Select(x => x.DateCreatedUtc)
                         .MaxAsync();
                 }
 
-                bool hasNextEntry = await connection.Query().AnyAsync(x => x.DateCreatedUtc > model.DateCreatedUtc);
+                bool hasNextEntry = await connection.Query(x => x.TenantId == tenantId).AnyAsync(x => x.DateCreatedUtc > model.DateCreatedUtc);
                 if (hasNextEntry)
                 {
-                    nextEntryDate = await connection.Query(x => x.DateCreatedUtc > model.DateCreatedUtc)
+                    nextEntryDate = await connection.Query(x => x.TenantId == tenantId && x.DateCreatedUtc > model.DateCreatedUtc)
                         .Select(x => x.DateCreatedUtc)
                         .MinAsync();
                 }
@@ -283,16 +292,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
             WorkContext.Breadcrumbs.Add(model.Headline);
 
             ViewBag.PreviousEntrySlug = previousEntryDate.HasValue
-                ? (await postService.Value.FindOneAsync(x => x.DateCreatedUtc == previousEntryDate)).Slug
+                ? (await postService.Value.FindOneAsync(x => x.TenantId == tenantId && x.DateCreatedUtc == previousEntryDate)).Slug
                 : null;
 
             ViewBag.NextEntrySlug = nextEntryDate.HasValue
-                ? (await postService.Value.FindOneAsync(x => x.DateCreatedUtc == nextEntryDate)).Slug
+                ? (await postService.Value.FindOneAsync(x => x.TenantId == tenantId && x.DateCreatedUtc == nextEntryDate)).Slug
                 : null;
 
             ViewBag.UserName = (await membershipService.Value.GetUserById(model.UserId)).UserName;
 
-            var tags = await tagService.Value.FindAsync();
+            var tags = await tagService.Value.FindAsync(x => x.TenantId == tenantId);
             ViewBag.Tags = tags.ToDictionary(k => k.Id, v => v.Name);
             ViewBag.TagUrls = tags.ToDictionary(k => k.Id, v => v.UrlSlug);
 

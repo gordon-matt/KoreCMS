@@ -313,7 +313,7 @@ namespace Kore.Web.ContentManagement.Controllers
             }
 
             var service = EngineContext.Current.Resolve<IMenuService>();
-            var menu = service.FindByName(name, currentUrlSlug);
+            var menu = service.FindByName(WorkContext.CurrentTenant.Id, name, currentUrlSlug);
 
             if (menu == null)
             {

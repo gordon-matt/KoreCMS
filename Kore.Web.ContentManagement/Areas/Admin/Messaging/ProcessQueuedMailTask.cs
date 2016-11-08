@@ -44,10 +44,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging
             //var componentContext = EngineContext.Current.Resolve<IComponentContext>();
             //var logger = componentContext.Resolve<ILogger>(new TypedParameter(typeof(Type), typeof(ProcessQueuedMailTask)));
             var logger = LoggingUtilities.Resolve();
+            var workContext = EngineContext.Current.Resolve<IWorkContext>();
 
             foreach (var provider in providers)
             {
-                var queuedEmails = provider.GetQueuedEmails(maxTries, messagesPerBatch);
+                var queuedEmails = provider.GetQueuedEmails(workContext.CurrentTenant.Id, maxTries, messagesPerBatch);
 
                 if (!queuedEmails.Any())
                 {

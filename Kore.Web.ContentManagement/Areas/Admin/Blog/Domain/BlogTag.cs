@@ -2,14 +2,17 @@
 using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Tenants.Domain;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 {
-    public class BlogTag : IEntity
+    public class BlogTag : ITenantEntity
     {
         private ICollection<BlogPostTag> posts;
 
         public int Id { get; set; }
+
+        public int? TenantId { get; set; }
 
         public string Name { get; set; }
 

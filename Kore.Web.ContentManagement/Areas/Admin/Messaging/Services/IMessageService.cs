@@ -12,11 +12,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Services
 {
     public interface IMessageService : IGenericDataService<QueuedEmail>
     {
-        Guid SendEmailMessage(string messageTemplate, IEnumerable<Token> tokens, string toEmailAddress, string toName = null);
+        Guid SendEmailMessage(int tenantId, string messageTemplate, IEnumerable<Token> tokens, string toEmailAddress, string toName = null);
 
-        Guid SendEmailMessage(string subject, string body, string toEmailAddress, string toName = null);
+        Guid SendEmailMessage(int tenantId, string subject, string body, string toEmailAddress, string toName = null);
 
-        Guid SendEmailMessage(MailMessage mailMessage);
+        Guid SendEmailMessage(int tenantId, MailMessage mailMessage);
     }
 
     public class MessageService : GenericDataService<QueuedEmail>, IMessageService, IQueuedMessageProvider
@@ -38,9 +38,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Services
             this.messageTemplateService = messageTemplateService;
         }
 
-        public Guid SendEmailMessage(string messageTemplate, IEnumerable<Token> tokens, string toEmailAddress, string toName = null)
+        public Guid SendEmailMessage(int tenantId, string messageTemplate, IEnumerable<Token> tokens, string toEmailAddress, string toName = null)
         {
-            var template = messageTemplateService.Find(messageTemplate);
+            var template = messageTemplateService.Find(tenantId, messageTemplate);
             if (template == null || !template.Enabled)
             {
                 return Guid.Empty;
@@ -51,10 +51,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Services
                 tokenProvider.GetTokens(messageTemplate, tokens);
             }
 
-            return SendMessage(template, tokens, toEmailAddress, toName);
+            return SendMessage(tenantId, template, tokens, toEmailAddress, toName);
         }
 
-        public Guid SendEmailMessage(string subject, string body, string toEmailAddress, string toName = null)
+        public Guid SendEmailMessage(int tenantId, string subject, string body, string toEmailAddress, string toName = null)
         {
             var mailMessage = new MailMessage
             {
@@ -66,16 +66,17 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Services
             };
             mailMessage.To.Add(new MailAddress(toEmailAddress, toName));
 
-            return SendEmailMessage(mailMessage);
+            return SendEmailMessage(tenantId, mailMessage);
         }
 
-        public Guid SendEmailMessage(MailMessage mailMessage)
+        public Guid SendEmailMessage(int tenantId, MailMessage mailMessage)
         {
             var mailMessageWrap = new MailMessageWrapper(mailMessage);
 
             var queuedEmail = new QueuedEmail
             {
                 Id = Guid.NewGuid(),
+                TenantId = tenantId,
                 Priority = 5,
                 ToAddress = mailMessage.To[0].Address,
                 ToName = mailMessage.To[0].DisplayName,
@@ -89,8 +90,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Services
             return queuedEmail.Id;
         }
 
-        private Guid SendMessage(Domain.MessageTemplate messageTemplate,
-            IEnumerable<Token> tokens, string toEmailAddress, string toName)
+        private Guid SendMessage(
+            int tenantId, 
+            Domain.MessageTemplate messageTemplate,
+            IEnumerable<Token> tokens, 
+            string toEmailAddress, 
+            string toName)
         {
             var subject = messageTemplate.Subject ?? string.Empty;
             var body = messageTemplate.Body ?? string.Empty;
@@ -99,15 +104,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Services
             var subjectReplaced = tokenizer.Replace(subject, tokens, false);
             var bodyReplaced = tokenizer.Replace(body, tokens, true);
 
-            return SendEmailMessage(subjectReplaced, bodyReplaced, toEmailAddress, toName);
+            return SendEmailMessage(tenantId, subjectReplaced, bodyReplaced, toEmailAddress, toName);
         }
 
-        public IEnumerable<IMailMessage> GetQueuedEmails(int maxSendTries, int maxMessageItems)
+        public IEnumerable<IMailMessage> GetQueuedEmails(int tenantId, int maxSendTries, int maxMessageItems)
         {
             using (var connection = OpenConnection())
             {
                 return connection
-                    .Query(x => x.SentTries < maxSendTries && x.SentOnUtc == null)
+                    .Query(x =>
+                        x.TenantId == tenantId
+                        && x.SentTries < maxSendTries
+                        && x.SentOnUtc == null)
                     .OrderBy(x => x.Priority)
                     .ThenBy(x => x.CreatedOnUtc)
                     .Take(maxMessageItems)

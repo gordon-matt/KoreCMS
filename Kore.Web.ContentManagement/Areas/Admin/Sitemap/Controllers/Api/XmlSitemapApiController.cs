@@ -20,25 +20,22 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
 {
-    public class XmlSitemapApiController : GenericODataController<SitemapConfig, int>
+    public class XmlSitemapApiController : GenericTenantODataController<SitemapConfig, int>
     {
         private readonly IPageService pageService;
         private readonly IPageVersionService pageVersionService;
         private readonly Lazy<ILanguageService> languageService;
-        private readonly IWorkContext workContext;
 
         public XmlSitemapApiController(
             IRepository<SitemapConfig> repository,
             IPageService pageService,
             IPageVersionService pageVersionService,
-            Lazy<ILanguageService> languageService,
-            IWorkContext workContext)
+            Lazy<ILanguageService> languageService)
             : base(repository)
         {
             this.pageService = pageService;
             this.pageVersionService = pageVersionService;
             this.languageService = languageService;
-            this.workContext = workContext;
         }
 
         #region GenericODataController<GoogleSitemapPageConfig, int> Members
@@ -79,10 +76,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
                 AllowedQueryOptions = AllowedQueryOptions.All
             });
 
+            int tenantId = GetTenantId();
+
             // First ensure that current pages are in the config
-            var config = await Service.FindAsync();
+            var config = await Service.FindAsync(x => x.TenantId == tenantId);
             var configPageIds = config.Select(x => x.PageId).ToHashSet();
-            int tenantId = workContext.CurrentTenant.Id;
             var pageVersions = pageVersionService.GetCurrentVersions(tenantId, shownOnMenusOnly: false); // temp fix: since we don't support localized routes yet
             var pageVersionIds = pageVersions.Select(x => x.Id).ToHashSet();
 
@@ -100,6 +98,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
                     .Where(x => newPageVersionIds.Contains(x.Id))
                     .Select(x => new SitemapConfig
                     {
+                        TenantId = tenantId,
                         PageId = x.Id,
                         ChangeFrequency = ChangeFrequency.Weekly,
                         Priority = .5f
@@ -107,7 +106,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
 
                 await Service.InsertAsync(toInsert);
             }
-            config = await Service.FindAsync();
+            config = await Service.FindAsync(x => x.TenantId == tenantId);
 
             var collection = new HashSet<SitemapConfigModel>();
             foreach (var item in config)
@@ -174,17 +173,22 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
                 return Unauthorized();
             }
 
-            var config = await Service.FindAsync();
+            int tenantId = GetTenantId();
+
+            var config = await Service.FindAsync(x => x.TenantId == tenantId);
             var file = new SitemapXmlFile();
 
-            var pageVersions = await pageVersionService.FindAsync();
+            var pageVersions = await pageVersionService.FindAsync(x => x.TenantId == tenantId);
 
             var urls = new HashSet<UrlElement>();
 
             List<string> cultures = null;
             using (var connection = languageService.Value.OpenConnection())
             {
-                cultures = await connection.Query().Select(x => x.CultureCode).ToListAsync();
+                cultures = await connection
+                    .Query(x => x.TenantId == tenantId)
+                    .Select(x => x.CultureCode)
+                    .ToListAsync();
             }
 
             string siteUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
@@ -288,7 +292,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
                 xmlns.Add("xhtml", "http://www.w3.org/1999/xhtml");
 
                 file.XmlSerialize(
-                    HostingEnvironment.MapPath("~/sitemap.xml"),
+                    HostingEnvironment.MapPath(string.Format("~/sitemap-{0}.xml", tenantId)),
                     omitXmlDeclaration: false,
                     xmlns: xmlns,
                     encoding: Encoding.UTF8);

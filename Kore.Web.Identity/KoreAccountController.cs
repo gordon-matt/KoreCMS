@@ -134,7 +134,7 @@ namespace Kore.Web.Identity
                         new Token("[ConfirmationToken]", callbackUrl)
                     };
 
-                    messageService.SendEmailMessage(AccountMessageTemplates.Account_Registered, tokens, user.Email);
+                    messageService.SendEmailMessage(WorkContext.CurrentTenant.Id, AccountMessageTemplates.Account_Registered, tokens, user.Email);
 
                     // TODO: Make this a message template
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
@@ -172,7 +172,7 @@ namespace Kore.Web.Identity
                     new Token("[UserName]", user.UserName),
                     new Token("[Email]", user.Email)
                 };
-                messageService.SendEmailMessage(AccountMessageTemplates.Account_Confirmed, tokens, user.Email);
+                messageService.SendEmailMessage(WorkContext.CurrentTenant.Id, AccountMessageTemplates.Account_Confirmed, tokens, user.Email);
 
                 return View("ConfirmEmail");
             }
@@ -275,7 +275,7 @@ namespace Kore.Web.Identity
                         new Token("[UserName]", user.UserName),
                         new Token("[Email]", user.Email)
                     };
-                    messageService.SendEmailMessage(AccountMessageTemplates.Account_PasswordReset, tokens, user.Email);
+                    messageService.SendEmailMessage(WorkContext.CurrentTenant.Id, AccountMessageTemplates.Account_PasswordReset, tokens, user.Email);
 
                     return RedirectToAction("ResetPasswordConfirmation", "Account");
                 }
@@ -716,7 +716,7 @@ namespace Kore.Web.Identity
 
             string body = string.Format("{0}<br/>{1}", message, link);
 
-            messageService.SendEmailMessage(subject, body, email);
+            messageService.SendEmailMessage(WorkContext.CurrentTenant.Id, subject, body, email);
         }
 
         public enum ManageMessageId

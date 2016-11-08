@@ -8,7 +8,7 @@ using Kore.Web.Security.Membership.Permissions;
 namespace Kore.Web.ContentManagement.Areas.Admin.Menus.Controllers.Api
 {
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class MenuApiController : GenericODataController<Menu, Guid>
+    public class MenuApiController : GenericTenantODataController<Menu, Guid>
     {
         public MenuApiController(IMenuService service)
             : base(service)

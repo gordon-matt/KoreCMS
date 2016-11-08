@@ -11,7 +11,7 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
 {
-    public class RegionApiController : GenericODataController<Region, int>
+    public class RegionApiController : GenericTenantODataController<Region, int>
     {
         private readonly Lazy<ILocalizablePropertyService> localizablePropertyService;
 

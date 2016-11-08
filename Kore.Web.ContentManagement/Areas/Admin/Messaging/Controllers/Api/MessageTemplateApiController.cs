@@ -11,7 +11,7 @@ using MessageTemplateEntity = Kore.Web.ContentManagement.Areas.Admin.Messaging.D
 namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers.Api
 {
     //[Authorize(Roles = KoreConstants.Roles.Administrators)]
-    public class MessageTemplateApiController : GenericODataController<MessageTemplateEntity, Guid>
+    public class MessageTemplateApiController : GenericTenantODataController<MessageTemplateEntity, Guid>
     {
         private readonly Lazy<IEnumerable<IMessageTemplateTokensProvider>> tokensProviders;
 

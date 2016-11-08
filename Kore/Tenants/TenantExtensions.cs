@@ -7,17 +7,17 @@ namespace Kore.Tenants
 {
     public static class TenantExtensions
     {
-        public static IEnumerable<string> ParseHostValues(this Tenant store)
+        public static IEnumerable<string> ParseHostValues(this Tenant tenant)
         {
-            if (store == null)
+            if (tenant == null)
             {
-                throw new ArgumentNullException("store");
+                throw new ArgumentNullException("tenant");
             }
 
             var parsedValues = new List<string>();
-            if (!string.IsNullOrEmpty(store.Hosts))
+            if (!string.IsNullOrEmpty(tenant.Hosts))
             {
-                string[] hosts = store.Hosts.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] hosts = tenant.Hosts.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (string host in hosts)
                 {
                     var tmp = host.Trim();
@@ -30,18 +30,18 @@ namespace Kore.Tenants
             return parsedValues;
         }
 
-        public static bool ContainsHostValue(this Tenant store, string host)
+        public static bool ContainsHostValue(this Tenant tenant, string host)
         {
-            if (store == null)
+            if (tenant == null)
             {
-                throw new ArgumentNullException("store");
+                throw new ArgumentNullException("tenant");
             }
             if (string.IsNullOrEmpty(host))
             {
                 return false;
             }
 
-            return store.ParseHostValues().Any(x => x.Equals(host, StringComparison.InvariantCultureIgnoreCase));
+            return tenant.ParseHostValues().Any(x => x.Equals(host, StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

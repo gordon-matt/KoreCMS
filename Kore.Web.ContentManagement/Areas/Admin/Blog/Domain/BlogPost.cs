@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Tenants.Domain;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
 {
-    public class BlogPost : IEntity
+    public class BlogPost : ITenantEntity
     {
         private ICollection<BlogPostTag> tags;
 
         public Guid Id { get; set; }
+
+        public int? TenantId { get; set; }
 
         public string UserId { get; set; }
 

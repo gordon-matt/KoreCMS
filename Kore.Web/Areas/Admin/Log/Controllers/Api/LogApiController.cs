@@ -45,8 +45,8 @@ namespace Kore.Web.Areas.Admin.Log.Controllers.Api
                 return Unauthorized();
             }
 
-            var workContext = EngineContext.Current.Resolve<IWorkContext>();
-            await Service.DeleteAsync(x => x.TenantId == workContext.CurrentTenant.Id);
+            int tenantId = GetTenantId();
+            await Service.DeleteAsync(x => x.TenantId == tenantId);
 
             return Ok();
         }

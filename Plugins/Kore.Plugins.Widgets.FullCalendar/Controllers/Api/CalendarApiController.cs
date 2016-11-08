@@ -5,7 +5,7 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Plugins.Widgets.FullCalendar.Controllers.Api
 {
-    public class CalendarApiController : GenericODataController<Calendar, int>
+    public class CalendarApiController : GenericTenantODataController<Calendar, int>
     {
         public CalendarApiController(ICalendarService service)
             : base(service)

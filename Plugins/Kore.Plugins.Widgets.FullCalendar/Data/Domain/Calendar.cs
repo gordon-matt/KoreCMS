@@ -2,15 +2,18 @@
 using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Tenants.Domain;
 using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Widgets.FullCalendar.Data.Domain
 {
-    public class Calendar : IEntity
+    public class Calendar : ITenantEntity
     {
         private ICollection<CalendarEvent> events;
 
         public int Id { get; set; }
+
+        public int? TenantId { get; set; }
 
         public string Name { get; set; }
 

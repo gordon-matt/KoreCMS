@@ -2,15 +2,19 @@
 using System.Runtime.Serialization;
 using Kore.Data;
 using Kore.Data.EntityFramework;
+using Kore.Tenants.Domain;
 using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Maintenance.Watchdog.Data.Domain
 {
     [DataContract]
-    public class WatchdogInstance : IEntity
+    public class WatchdogInstance : ITenantEntity
     {
         [DataMember]
         public int Id { get; set; }
+
+        [IgnoreDataMember]
+        public int? TenantId { get; set; }
 
         [DataMember]
         public string Url { get; set; }

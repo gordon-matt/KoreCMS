@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 
 namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api
 {
-    public class WatchdogInstanceApiController : GenericODataController<WatchdogInstance, int>
+    public class WatchdogInstanceApiController : GenericTenantODataController<WatchdogInstance, int>
     {
         private const string urlFormat = "{0}/api/WatchdogApi/{1}?password={2}&name={3}";
 

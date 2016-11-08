@@ -6,7 +6,7 @@ using Slider = Kore.Plugins.Widgets.RevolutionSlider.Data.Domain.RevolutionSlide
 
 namespace Kore.Plugins.Widgets.RevolutionSlider.Controllers.Api
 {
-    public class RevolutionSliderApiController : GenericODataController<Slider, int>
+    public class RevolutionSliderApiController : GenericTenantODataController<Slider, int>
     {
         public RevolutionSliderApiController(ISliderService service)
             : base(service)

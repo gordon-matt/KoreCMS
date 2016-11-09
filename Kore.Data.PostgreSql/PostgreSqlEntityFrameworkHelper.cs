@@ -231,7 +231,7 @@ ALTER TABLE dbo.""{0}"" ADD CONSTRAINT ""{1}_fkey"" FOREIGN KEY (""{1}"") REFERE
                         createCommand.ExecuteNonQuery();
                     }
                 }
-                catch (DbException ex)
+                catch (DbException)
                 {
                     // Ignore when have database exception
                     //Logger.Error(ex.Message, ex);

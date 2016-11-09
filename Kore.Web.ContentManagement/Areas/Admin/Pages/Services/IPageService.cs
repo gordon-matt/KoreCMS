@@ -57,6 +57,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             var pages = Find(x => pageIds.Contains(x.Id));
             EnsureNoOrphans(pages);
 
+            ClearCache();
             return rowsAffected;
         }
 
@@ -78,6 +79,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             var pages = Find(x => pageIds.Contains(x.Id));
             EnsureNoOrphans(pages);
 
+            ClearCache();
             return rowsAffected;
         }
 
@@ -96,6 +98,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             // Ensure No Orphans
             EnsureNoOrphans(entity);
 
+            ClearCache();
             return rowsAffected;
         }
 
@@ -117,6 +120,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             // Ensure No Orphans
             EnsureNoOrphans(pages);
 
+            ClearCache();
             return rowsAffected;
         }
 
@@ -138,6 +142,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             // Ensure No Orphans
             EnsureNoOrphans(pages);
 
+            ClearCache();
             return rowsAffected;
         }
 
@@ -159,6 +164,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             // Ensure No Orphans
             await EnsureNoOrphansAsync(pages);
 
+            ClearCache();
             return rowsAffected;
         }
 
@@ -180,6 +186,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             var pages = await FindAsync(x => pageIds.Contains(x.Id));
             await EnsureNoOrphansAsync(pages);
 
+            ClearCache();
             return rowsAffected;
         }
 
@@ -201,6 +208,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             var pages = await FindAsync(x => pageIds.Contains(x.Id));
             await EnsureNoOrphansAsync(pages);
 
+            ClearCache();
             return rowsAffected;
         }
 
@@ -219,6 +227,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             // Ensure No Orphans
             await EnsureNoOrphansAsync(entity);
 
+            ClearCache();
             return rowsAffected;
         }
 
@@ -240,6 +249,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             // Ensure No Orphans
             await EnsureNoOrphansAsync(pages);
 
+            ClearCache();
             return rowsAffected;
         }
 
@@ -265,6 +275,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             });
             rowsAffected += pageVersionRepository.Value.Insert(pageVersions);
 
+            ClearCache();
             return rowsAffected;
         }
 
@@ -285,6 +296,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                 Slug = entity.Name.ToSlugUrl()
             });
 
+            ClearCache();
             return rowsAffected;
         }
 
@@ -306,6 +318,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             });
             rowsAffected += await pageVersionRepository.Value.InsertAsync(pageVersions);
 
+            ClearCache();
             return rowsAffected;
         }
 
@@ -326,6 +339,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                 Slug = entity.Name.ToSlugUrl()
             });
 
+            ClearCache();
             return rowsAffected;
         }
 

@@ -53,15 +53,17 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
 
         public IEnumerable<IContentBlock> GetContentBlocks(string entityType, string entityId, string zoneName, string cultureCode, bool includeDisabled = false)
         {
+            int tenantId = GetTenantId();
+
             string key = string.Format(
-                "Repository_EntityTypeContentBlocks_GetContentBlocks_{0}_{1}_{2}_{3}_{4}",
+                "Repository_EntityTypeContentBlocks_GetContentBlocks_{0}_{1}_{2}_{3}_{4}_{5}",
+                tenantId,
                 entityType,
                 cultureCode,
                 entityId,
                 zoneName,
                 includeDisabled);
 
-            int tenantId = GetTenantId();
             var records = CacheManager.Get(key, () =>
             {
                 var zone = zoneRepository.Value.FindOne(x => x.TenantId == tenantId && x.Name == zoneName);

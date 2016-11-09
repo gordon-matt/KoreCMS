@@ -114,7 +114,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
                 await Service.UpdateAsync(localizedString);
             }
 
-            cacheManager.Remove(string.Concat("Kore_LocalizableStrings_", cultureCode));
+            cacheManager.Remove(string.Concat(KoreConstants.CacheKeys.LocalizableStringsFormat, tenantId, cultureCode));
 
             return Updated(entity);
         }
@@ -141,7 +141,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
             await Service.UpdateAsync(entity);
             //Repository.Delete(entity);
 
-            cacheManager.Remove(string.Concat("Kore_LocalizableStrings_", cultureCode));
+            cacheManager.Remove(string.Concat(KoreConstants.CacheKeys.LocalizableStringsFormat, tenantId, cultureCode));
 
             return StatusCode(HttpStatusCode.NoContent);
         }

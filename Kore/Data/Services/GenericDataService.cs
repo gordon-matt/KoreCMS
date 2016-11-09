@@ -245,12 +245,16 @@ namespace Kore.Data.Services
 
         public virtual async Task<int> InsertAsync(TEntity entity)
         {
-            return await repository.InsertAsync(entity);
+            int rowsAffected = await repository.InsertAsync(entity);
+            ClearCache();
+            return rowsAffected;
         }
 
         public virtual async Task<int> InsertAsync(IEnumerable<TEntity> entities)
         {
-            return await repository.InsertAsync(entities);
+            int rowsAffected = await repository.InsertAsync(entities);
+            ClearCache();
+            return rowsAffected;
         }
 
         #endregion Insert
@@ -273,12 +277,16 @@ namespace Kore.Data.Services
 
         public virtual async Task<int> UpdateAsync(TEntity entity)
         {
-            return await repository.UpdateAsync(entity);
+            int rowsAffected = await repository.UpdateAsync(entity);
+            ClearCache();
+            return rowsAffected;
         }
 
         public virtual async Task<int> UpdateAsync(IEnumerable<TEntity> entities)
         {
-            return await repository.UpdateAsync(entities);
+            int rowsAffected = await repository.UpdateAsync(entities);
+            ClearCache();
+            return rowsAffected;
         }
 
         #endregion Update

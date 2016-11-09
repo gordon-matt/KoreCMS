@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Kore.Infrastructure
 @using Kore.Web.Configuration
+@using KoreIdentityLocalizableStrings = Kore.Web.Identity.LocalizableStrings
 
 @{
     Style.IncludeJQueryUI();
@@ -98,7 +99,7 @@
                     <li>
                         <a href="javascript:document.getElementById('logoutForm').submit()">
                             <i class="kore-icon kore-icon-power-off"></i>
-                            <span>@T(LocalizableStrings.Account.LogOut)</span>
+                            <span>@T(KoreIdentityLocalizableStrings.LogOut)</span>
                         </a>
                     </li>
                 </ul>

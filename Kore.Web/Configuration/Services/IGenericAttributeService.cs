@@ -22,7 +22,7 @@ namespace Kore.Web.Configuration.Services
     public class GenericAttributeService : GenericDataService<GenericAttribute>, IGenericAttributeService
     {
         private const string GenericAttributeKeyFormat = "Kore.GenericAttribute.{0}-{1}";
-        private const string GenericAttributePatternKey = "Kore.GenericAttribute.";
+        private const string GenericAttributePatternKey = "Kore.GenericAttribute.*";
 
         public GenericAttributeService(ICacheManager cacheManager, IRepository<GenericAttribute> repository)
             : base(cacheManager, repository)

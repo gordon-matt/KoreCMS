@@ -32,7 +32,7 @@ namespace Kore.Web.Configuration
         public TSettings GetSettings<TSettings>(int? tenantId = null) where TSettings : ISettings, new()
         {
             string type = typeof(TSettings).FullName;
-            string key = string.Format("Kore_Web_Settings_{0}", type);
+            string key = string.Format(KoreWebConstants.CacheKeys.SettingsKeyFormat, tenantId, type);
             return cacheManager.Get<TSettings>(key, () =>
             {
                 Setting settings = null;
@@ -58,7 +58,7 @@ namespace Kore.Web.Configuration
         public ISettings GetSettings(Type settingsType, int? tenantId = null)
         {
             string type = settingsType.FullName;
-            string key = string.Format("Kore_Web_Settings_{0}", type);
+            string key = string.Format(KoreWebConstants.CacheKeys.SettingsKeyFormat, tenantId, type);
             return cacheManager.Get<ISettings>(key, () =>
             {
                 Setting settings = null;
@@ -102,14 +102,14 @@ namespace Kore.Web.Configuration
                 {
                     setting = new Setting { TenantId = tenantId, Name = iSettings.Name, Type = key, Value = value };
                     repository.Insert(setting);
-                    cacheManager.RemoveByPattern("Kore_Web_Settings_.*");
+                    cacheManager.RemoveByPattern(string.Format(KoreWebConstants.CacheKeys.SettingsKeysPatternFormat, tenantId));
                 }
             }
             else
             {
                 setting.Value = value;
                 repository.Update(setting);
-                cacheManager.RemoveByPattern("Kore_Web_Settings_.*");
+                cacheManager.RemoveByPattern(string.Format(KoreWebConstants.CacheKeys.SettingsKeysPatternFormat, tenantId));
             }
         }
 

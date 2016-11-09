@@ -33,8 +33,8 @@ namespace Kore.Plugins.Messaging.Forums.Services
 
         private const string CacheKey_ForumGroupAll = "Kore.ForumGroup.Tenant_{0}.All";
         private const string CacheKey_ForumAllByForumGroupId = "Kore.Forum.Tenant_{0}.AllByForumGroupId-{1}";
-        private const string CacheKey_Pattern_ForumGroup = "Kore.ForumGroup.Tenant_{0}.";
-        private const string CacheKey_Pattern_Forum = "Kore.Forum.Tenant_{0}.";
+        private const string CacheKey_Pattern_ForumGroup = "Kore.ForumGroup.Tenant_{0}.*";
+        private const string CacheKey_Pattern_Forum = "Kore.Forum.Tenant_{0}.*";
 
         #endregion Private Members
 

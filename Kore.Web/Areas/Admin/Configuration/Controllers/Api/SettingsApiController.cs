@@ -36,7 +36,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
         {
             var result = await base.Put(key, entity);
 
-            string cacheKey = string.Format("Kore_Web_Settings_{0}", entity.Type);
+            string cacheKey = string.Format(KoreWebConstants.CacheKeys.SettingsKeyFormat, entity.TenantId, entity.Type);
             cacheManager.Remove(cacheKey);
 
             // TODO: This is an ugly hack. We need to have a way for each setting to perform some tasks after update
@@ -52,7 +52,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
         {
             var result = await base.Post(entity);
 
-            string cacheKey = string.Format("Kore_Web_Settings_{0}", entity.Type);
+            string cacheKey = string.Format(KoreWebConstants.CacheKeys.SettingsKeyFormat, entity.TenantId, entity.Type);
             cacheManager.Remove(cacheKey);
 
             return result;
@@ -63,7 +63,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
             var result = await base.Patch(key, patch);
 
             var entity = await Service.FindOneAsync(key);
-            string cacheKey = string.Format("Kore_Web_Settings_{0}", entity.Type);
+            string cacheKey = string.Format(KoreWebConstants.CacheKeys.SettingsKeyFormat, entity.TenantId, entity.Type);
             cacheManager.Remove(cacheKey);
 
             return result;
@@ -74,7 +74,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
             var result = base.Delete(key);
 
             var entity = await Service.FindOneAsync(key);
-            string cacheKey = string.Format("Kore_Web_Settings_{0}", entity.Type);
+            string cacheKey = string.Format(KoreWebConstants.CacheKeys.SettingsKeyFormat, entity.TenantId, entity.Type);
             cacheManager.Remove(cacheKey);
 
             return await result;

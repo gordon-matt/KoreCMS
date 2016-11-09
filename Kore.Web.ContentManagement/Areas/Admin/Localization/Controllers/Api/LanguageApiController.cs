@@ -70,7 +70,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
             }
             await localizableStringService.Value.InsertAsync(toInsert);
 
-            cacheManager.Value.RemoveByPattern("Kore_LocalizableStrings_.*");
+            cacheManager.Value.RemoveByPattern(KoreConstants.CacheKeys.LocalizableStringsPatternFormat);
 
             return Ok();
         }

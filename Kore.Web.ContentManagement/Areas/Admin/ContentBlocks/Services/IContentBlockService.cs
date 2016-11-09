@@ -81,8 +81,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
 
         public IEnumerable<IContentBlock> GetContentBlocks(string zoneName, string cultureCode, Guid? pageId = null, bool includeDisabled = false)
         {
+            int tenantId = GetTenantId();
+
             string key = string.Format(
-                "Repository_ContentBlocks_ByPageIdAndZoneAndIncDisabled_{0}_{1}_{2}_{3}",
+                "Repository_ContentBlocks_ByPageIdAndZoneAndIncDisabled_{0}_{1}_{2}_{3}_{4}",
+                tenantId,
                 pageId,
                 cultureCode,
                 zoneName,
@@ -90,7 +93,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
 
             var records = Enumerable.Empty<ContentBlock>();
 
-            int tenantId = GetTenantId();
             if (includeDisabled)
             {
                 records = CacheManager.Get(key, () =>

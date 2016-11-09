@@ -55,6 +55,13 @@ namespace Kore.Web
         public static class CacheKeys
         {
             public const string CurrentCulture = "CacheKeys.CurrentCulture";
+
+            /// <summary>
+            /// {0} for TenantId, {1} for settings "Type"
+            /// </summary>
+            public const string SettingsKeyFormat = "CacheKeys.Settings.Tenant_{0}_{1}";
+
+            public const string SettingsKeysPatternFormat = "CacheKeys.Settings.Tenant_{0}_.*";
         }
 
         public static class Indexing

@@ -49,7 +49,7 @@ namespace Kore.Web.Mvc
                 if (!isRightToLeft.HasValue)
                 {
                     var languageService = EngineContext.Current.Resolve<ILanguageService>();
-                    isRightToLeft = languageService.CheckIfRightToLeft(WorkContext.CurrentCultureCode);
+                    isRightToLeft = languageService.CheckIfRightToLeft(WorkContext.CurrentTenant.Id, WorkContext.CurrentCultureCode);
                 }
                 return isRightToLeft.Value;
             }

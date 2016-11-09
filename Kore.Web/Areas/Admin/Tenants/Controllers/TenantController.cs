@@ -46,7 +46,7 @@ namespace Kore.Web.Areas.Admin.Tenants.Controllers
                 UpdateRecordSuccess = T(KoreWebLocalizableStrings.General.UpdateRecordSuccess).Text,
                 Columns = new
                 {
-                    Name = T(KoreWebLocalizableStrings.General.Name)
+                    Name = T(KoreWebLocalizableStrings.General.Name).Text
                 }
             }, JsonRequestBehavior.AllowGet);
         }

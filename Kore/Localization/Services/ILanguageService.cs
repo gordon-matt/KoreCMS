@@ -9,6 +9,8 @@ namespace Kore.Localization.Services
 {
     public interface ILanguageService : IGenericDataService<LanguageEntity>
     {
+        IEnumerable<LanguageEntity> GetActiveLanguages(int tenantId);
+
         bool CheckIfRightToLeft(int tenantId, string cultureCode);
     }
 
@@ -17,6 +19,11 @@ namespace Kore.Localization.Services
         public LanguageService(ICacheManager cacheManager, IRepository<LanguageEntity> repository)
             : base(cacheManager, repository)
         {
+        }
+
+        public IEnumerable<LanguageEntity> GetActiveLanguages(int tenantId)
+        {
+            return Find(x => x.TenantId == tenantId && x.IsEnabled);
         }
 
         public bool CheckIfRightToLeft(int tenantId, string cultureCode)

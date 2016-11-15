@@ -26,6 +26,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging
             int maxTries;
             int messagesPerBatch;
 
+            // TODO: This will now be a problem because of tenants feature.. we need to do this task for each tenant
             var smtpSettings = EngineContext.Current.Resolve<SmtpSettings>();
             if (!string.IsNullOrEmpty(smtpSettings.Host))
             {

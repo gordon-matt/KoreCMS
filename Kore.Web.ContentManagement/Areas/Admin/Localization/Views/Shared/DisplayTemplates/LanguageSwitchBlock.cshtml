@@ -5,7 +5,7 @@
 @model LanguageSwitchBlock
 
 @{
-    var languages = EngineContext.Current.Resolve<ILanguageService>().GetActiveLanguages().ToList();
+    var languages = EngineContext.Current.Resolve<ILanguageService>().GetActiveLanguages(WorkContext.CurrentTenant.Id).ToList();
 
     if (Model.IncludeInvariant)
     {

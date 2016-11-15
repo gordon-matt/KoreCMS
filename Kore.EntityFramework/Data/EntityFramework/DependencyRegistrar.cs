@@ -18,6 +18,11 @@ namespace Kore.Data.EntityFramework
 
             foreach (var configuration in entityTypeConfigurations)
             {
+                if (configuration.IsGenericType)
+                {
+                    continue;
+                }
+
                 var isEnabled = (Activator.CreateInstance(configuration) as IEntityTypeConfiguration).IsEnabled;
 
                 if (isEnabled)

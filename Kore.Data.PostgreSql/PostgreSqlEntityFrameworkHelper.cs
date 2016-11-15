@@ -78,6 +78,8 @@ namespace Kore.Data.PostgreSql
                 var sSpaceEntityType = sSpaceEntityTypes.FirstOrDefault(x => x.Name == entityType.Name);
 
                 var fields = new HashSet<string>();
+                bool isMultiKey = entityType.KeyProperties.Count > 1;
+                var keys = new List<string>();
 
                 // We need to use a "for" loop, not a "foreach" loop, so we can use the index for...
                 for (int i = 0; i < entityType.DeclaredProperties.Count; i++)
@@ -90,9 +92,24 @@ namespace Kore.Data.PostgreSql
                     //      While the SSpace EdmProperty will contain the actual name for the DB, example: FamilyName
                     var property = entityType.DeclaredProperties[i];
                     var sSpaceProperty = sSpaceEntityType.DeclaredProperties[i];
-                    bool isPrimaryKey = entityType.KeyProperties.Contains(property.Name);
-                    string field = GetFieldDefinition(property, sSpaceProperty.Name, isPrimaryKey);
-                    fields.Add(field);
+
+                    if (!isMultiKey)
+                    {
+                        bool isPrimaryKey = entityType.KeyProperties.Contains(property.Name);
+                        string field = GetFieldDefinition(property, sSpaceProperty.Name, isPrimaryKey);
+                        fields.Add(field);
+                    }
+                    else
+                    {
+                        keys.Add(sSpaceProperty.Name);
+                        string field = GetFieldDefinition(property, sSpaceProperty.Name, false);//pass false here and we do keys after
+                        fields.Add(field);
+                    }
+                }
+
+                if (isMultiKey)
+                {
+                    fields.Add(string.Format("PRIMARY KEY ({0})", string.Join("\",\"", keys).AddDoubleQuotes()));
                 }
 
                 var tableName = sSpaceEntityType.MetadataProperties["TableName"].Value ?? sSpaceEntityType.Name;

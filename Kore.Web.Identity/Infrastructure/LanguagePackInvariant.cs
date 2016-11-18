@@ -24,6 +24,7 @@ namespace Kore.Web.Identity.Infrastructure
                     { LocalizableStrings.EditProfile, "Edit Profile" },
                     { LocalizableStrings.Email, "Email" },
                     { LocalizableStrings.InvalidUserNameOrPassword, "Invalid username or password." },
+                    { LocalizableStrings.Login, "Log in" },
                     { LocalizableStrings.LogOut, "Log out" },
                     { LocalizableStrings.ManageMessages.ChangePasswordSuccess, "Your password has been changed." },
                     { LocalizableStrings.ManageMessages.Error, "An error has occurred." },
@@ -35,6 +36,7 @@ namespace Kore.Web.Identity.Infrastructure
                     { LocalizableStrings.OldPassword, "Current Password" },
                     { LocalizableStrings.Password, "Password" },
                     { LocalizableStrings.ProfileForUser, "Profile For '{0}'" },
+                    { LocalizableStrings.Register, "Register" },
                     { LocalizableStrings.RememberMe, "Remember Me?" },
                     { LocalizableStrings.Title, "Account" },
                     { LocalizableStrings.UserDoesNotExistOrIsNotConfirmed, "The user either does not exist or is not confirmed." }

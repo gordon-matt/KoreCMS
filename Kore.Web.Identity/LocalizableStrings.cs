@@ -8,6 +8,7 @@
         public const string EditProfile = "Kore.Web.Identity/EditProfile";
         public const string Email = "Kore.Web.Identity/Email";
         public const string InvalidUserNameOrPassword = "Kore.Web.Identity/InvalidUserNameOrPassword";
+        public const string Login = "Kore.Web.Identity/Login";
         public const string LogOut = "Kore.Web.Identity/LogOut";
         public const string MyProfile = "Kore.Web.Identity/MyProfile";
         public const string NewPassword = "Kore.Web.Identity/NewPassword";
@@ -15,6 +16,7 @@
         public const string OldPassword = "Kore.Web.Identity/OldPassword";
         public const string Password = "Kore.Web.Identity/Password";
         public const string ProfileForUser = "Kore.Web.Identity/ProfileForUser";
+        public const string Register = "Kore.Web.Identity/Register";
         public const string RememberMe = "Kore.Web.Identity/RememberMe";
         public const string Title = "Kore.Web.Identity/Title";
         public const string UserDoesNotExistOrIsNotConfirmed = "Kore.Web.Identity/UserDoesNotExistOrIsNotConfirmed";

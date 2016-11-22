@@ -57,14 +57,14 @@ namespace Kore.Web.Identity
         {
             return this.GetUserAggregateAsync(x =>
                 x.Email.ToUpper() == email.ToUpper()
-                && (x.TenantId == this.TenantId) || (x.TenantId == null));
+                && (x.TenantId == this.TenantId || (x.TenantId == null)));
         }
 
         public override Task<TUser> FindByNameAsync(string userName)
         {
             return this.GetUserAggregateAsync(x =>
                 x.UserName.ToUpper() == userName.ToUpper()
-                && (x.TenantId == this.TenantId) || (x.TenantId == null));
+                && (x.TenantId == this.TenantId || (x.TenantId == null)));
         }
 
         public override Task AddToRoleAsync(TUser user, string roleName)

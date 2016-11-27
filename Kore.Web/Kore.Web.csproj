@@ -158,6 +158,7 @@
     <Compile Include="Areas\Admin\Log\Controllers\Api\LogApiController.cs" />
     <Compile Include="Areas\Admin\Log\Controllers\LogController.cs" />
     <Compile Include="Areas\Admin\Log\LogAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Log\LogPermissions.cs" />
     <Compile Include="Areas\Admin\Log\Services\ILogService.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\PermissionApiController.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\PublicUserApiController.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="Areas\Admin\Membership\Controllers\Api\UserApiController.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\MembershipController.cs" />
     <Compile Include="Areas\Admin\Membership\MembershipAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Membership\MembershipPermissions.cs" />
     <Compile Include="Areas\Admin\NavigationProvider.cs" />
     <Compile Include="Areas\Admin\ScheduledTasks\Controllers\Api\ScheduledTaskApiController.cs" />
     <Compile Include="Areas\Admin\ScheduledTasks\Controllers\ScheduledTaskController.cs" />

@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
-using Kore.Infrastructure;
 using Kore.Logging.Domain;
 using Kore.Web.Areas.Admin.Log.Services;
 using Kore.Web.Http.OData;
@@ -29,7 +28,7 @@ namespace Kore.Web.Areas.Admin.Log.Controllers.Api
 
         protected override Permission ReadPermission
         {
-            get { return StandardPermissions.FullAccess; }
+            get { return LogPermissions.ReadLog; }
         }
 
         protected override Permission WritePermission

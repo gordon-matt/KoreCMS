@@ -26,12 +26,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers.Api
 
         protected override Permission ReadPermission
         {
-            get { return StandardPermissions.FullAccess; }
+            get { return CmsPermissions.QueuedEmailsRead; }
         }
 
         protected override Permission WritePermission
         {
-            get { return StandardPermissions.FullAccess; }
+            get { return CmsPermissions.QueuedEmailsWrite; }
         }
     }
 }

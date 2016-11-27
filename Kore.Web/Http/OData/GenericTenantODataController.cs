@@ -36,6 +36,7 @@ namespace Kore.Web.Http.OData
             int tenantId = GetTenantId();
             if (CheckPermission(StandardPermissions.FullAccess))
             {
+                // TODO: Not sure if this is the best solution. Maybe we should only show the items with NULL for Tenant ID?
                 return query.Where(x => x.TenantId == null || x.TenantId == tenantId);
             }
             return query.Where(x => x.TenantId == tenantId);
@@ -57,7 +58,7 @@ namespace Kore.Web.Http.OData
 
             if (CheckPermission(StandardPermissions.FullAccess))
             {
-                return true; // Only the administrator should have full access
+                return true; // Only the super admin should have full access
             }
 
             // If not admin user, but possibly the tenant user...
@@ -80,7 +81,7 @@ namespace Kore.Web.Http.OData
 
             if (CheckPermission(StandardPermissions.FullAccess))
             {
-                return true; // Only the administrator should have full access
+                return true; // Only the super admin should have full access
             }
 
             // If not admin user, but possibly the tenant...

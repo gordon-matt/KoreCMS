@@ -1,5 +1,7 @@
 ﻿using Kore.Localization;
 using Kore.Web.Areas.Admin.Configuration;
+using Kore.Web.Areas.Admin.Log;
+using Kore.Web.Areas.Admin.Membership;
 using Kore.Web.Areas.Admin.ScheduledTasks;
 using Kore.Web.Navigation;
 using Kore.Web.Security.Membership.Permissions;
@@ -28,7 +30,7 @@ namespace Kore.Web.Areas.Admin
             builder
                 .Url("#membership")
                 .IconCssClass("kore-icon kore-icon-membership")
-                .Permission(StandardPermissions.FullAccess);
+                .Permission(MembershipPermissions.Manage);
         }
 
         private void BuildConfigurationMenu(NavigationItemBuilder builder)
@@ -73,7 +75,7 @@ namespace Kore.Web.Areas.Admin
             builder.Add(T(KoreWebLocalizableStrings.Log.Title), "5", item => item
                 .Url("#log")
                 .IconCssClass("kore-icon kore-icon-log")
-                .Permission(StandardPermissions.FullAccess));
+                .Permission(LogPermissions.ReadLog));
 
             // Scheduled Tasks
             builder.Add(T(KoreWebLocalizableStrings.ScheduledTasks.Title), "5", item => item

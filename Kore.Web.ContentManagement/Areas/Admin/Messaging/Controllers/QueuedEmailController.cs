@@ -16,7 +16,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(StandardPermissions.FullAccess))
+            if (!CheckPermission(CmsPermissions.QueuedEmailsRead))
             {
                 return new HttpUnauthorizedResult();
             }

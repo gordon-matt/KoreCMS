@@ -15,7 +15,7 @@ namespace Kore.Web.Areas.Admin.Log.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(StandardPermissions.FullAccess))
+            if (!CheckPermission(LogPermissions.ReadLog))
             {
                 return new HttpUnauthorizedResult();
             }

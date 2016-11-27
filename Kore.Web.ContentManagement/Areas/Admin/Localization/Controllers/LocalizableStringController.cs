@@ -37,7 +37,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(StandardPermissions.FullAccess))
+            if (!CheckPermission(CmsPermissions.LocalizableStringsRead))
             {
                 return new HttpUnauthorizedResult();
             }
@@ -75,7 +75,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
         [Route("export/{cultureCode}")]
         public ActionResult ExportLanguagePack(string cultureCode)
         {
+            int tenantId = WorkContext.CurrentTenant.Id;
+
             var localizedStrings = localizableStringService.Value.Find(x =>
+                x.TenantId == tenantId &&
                 x.CultureCode == cultureCode &&
                 x.TextValue != null);
 

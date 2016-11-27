@@ -4,8 +4,6 @@ using Kore.Security.Membership;
 using Kore.Web.Collections;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
-using Kore.Web.Security.Membership.Permissions;
-using Newtonsoft.Json.Linq;
 
 namespace Kore.Web.Areas.Admin.Membership.Controllers
 {
@@ -22,11 +20,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers
 
         protected virtual bool CheckPermissions()
         {
-            if (membershipService.SupportsRolePermissions)
-            {
-                return CheckPermission(StandardPermissions.FullAccess);
-            }
-            return true;
+            return CheckPermission(MembershipPermissions.Manage);
         }
 
         [Compress]

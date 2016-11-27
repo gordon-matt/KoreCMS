@@ -42,7 +42,7 @@ namespace Kore.Web.ContentManagement
                 .Url("#localization/languages")
                 //.Action("Index", "Language", new { area = CmsConstants.Areas.Localization })
                 .IconCssClass("kore-icon kore-icon-localization")
-                .Permission(StandardPermissions.FullAccess));
+                .Permission(CmsPermissions.LanguagesRead));
 
             // Media
             builder.Add(T(KoreCmsLocalizableStrings.Media.Title), "5", item => item

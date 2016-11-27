@@ -34,7 +34,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(StandardPermissions.FullAccess))
+            if (!CheckPermission(CmsPermissions.LanguagesRead))
             {
                 return new HttpUnauthorizedResult();
             }

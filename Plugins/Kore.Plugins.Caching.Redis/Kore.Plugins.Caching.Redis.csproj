@@ -82,7 +82,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>XCOPY /Y /S "$(TargetDir)*.*" "$(SolutionDir)KoreCMS\Plugins\Caching.Redis\*.*"</PostBuildEvent>
+    <PostBuildEvent>XCOPY /Y /S "$(TargetDir)*.*" "$(SolutionDir)$(SolutionName)\Plugins\Caching.Redis\*.*"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

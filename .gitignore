@@ -285,6 +285,6 @@ build/
 KoreCMS/Plugins/*
 KoreCMS/Themes/*
 !KoreCMS/Themes/Default/
-src/Presentation/Nop.Web/Content/Images/Thumbs/*
+KoreCMS/Media/Thumbs/*
 KoreCMS/App_Data/InstalledPlugins.txt
 KoreCMS/App_Data/KoreSettings.xml

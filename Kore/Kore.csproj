@@ -196,7 +196,6 @@
     <Compile Include="Drawing\ColorExtensions.cs" />
     <Compile Include="Drawing\ImageExtensions.cs" />
     <Compile Include="Exceptions\KoreException.cs" />
-    <Compile Include="IAppContextStateProvider.cs" />
     <Compile Include="IClock.cs" />
     <Compile Include="Infrastructure\AppDomainTypeFinder.cs" />
     <Compile Include="Infrastructure\DataSettings.cs" />
@@ -229,7 +228,6 @@
     <Compile Include="Linq\LinqKit\Linq.cs" />
     <Compile Include="Linq\LinqKit\PredicateBuilder.cs" />
     <Compile Include="Linq\Utils.cs" />
-    <Compile Include="Localization\CurrentCultureStateProvider.cs" />
     <Compile Include="Localization\DefaultCultureManager.cs" />
     <Compile Include="Localization\DefaultLanguageManager.cs" />
     <Compile Include="Localization\DefaultLocalizedStringManager.cs" />
@@ -241,7 +239,6 @@
     <Compile Include="Localization\ICultureManager.cs" />
     <Compile Include="Localization\ILanguagePack.cs" />
     <Compile Include="Localization\ILanguageManager.cs" />
-    <Compile Include="Localization\ILocalizableEntity.cs" />
     <Compile Include="Localization\ILocalizedStringManager.cs" />
     <Compile Include="Localization\IText.cs" />
     <Compile Include="Localization\Language.cs" />

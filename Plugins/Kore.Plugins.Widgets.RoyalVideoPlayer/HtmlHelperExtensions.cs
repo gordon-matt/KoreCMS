@@ -54,6 +54,11 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer
         {
             var selectList = GetPlaylistSelectList();
 
+            if (selectList.IsNullOrEmpty())
+            {
+                return MvcHtmlString.Empty;
+            }
+
             return html.CheckBoxList(
                 name,
                 selectList,
@@ -68,6 +73,11 @@ namespace Kore.Plugins.Widgets.RoyalVideoPlayer
             object checkboxHtmlAttributes = null)
         {
             var selectList = GetPlaylistSelectList();
+
+            if (selectList.IsNullOrEmpty())
+            {
+                return MvcHtmlString.Empty;
+            }
 
             return html.CheckBoxListFor(
                 expression,

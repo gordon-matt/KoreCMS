@@ -292,7 +292,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
                 xmlns.Add("xhtml", "http://www.w3.org/1999/xhtml");
 
                 file.XmlSerialize(
-                    HostingEnvironment.MapPath(string.Format("~/sitemap-{0}.xml", tenantId)),
+                    HostingEnvironment.MapPath(string.Format("~/xml/sitemap-{0}.xml", tenantId)),
                     omitXmlDeclaration: false,
                     xmlns: xmlns,
                     encoding: Encoding.UTF8);

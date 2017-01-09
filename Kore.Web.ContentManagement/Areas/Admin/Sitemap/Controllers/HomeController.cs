@@ -11,7 +11,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers
         public ActionResult SitemapXml()
         {
             int tenantId = WorkContext.CurrentTenant.Id;
-            string filePath = HostingEnvironment.MapPath(string.Format("~/sitemap-{0}.xml", tenantId));
+            string filePath = HostingEnvironment.MapPath(string.Format("~/xml/sitemap-{0}.xml", tenantId));
 
             if (!System.IO.File.Exists(filePath))
             {

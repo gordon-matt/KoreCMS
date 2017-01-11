@@ -1,5 +1,4 @@
-﻿using System.Data.Entity;
-using Kore.EntityFramework.Data.EntityFramework;
+﻿using Kore.EntityFramework.Data.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Plugins.Messaging.Forums.Infrastructure;
 using Kore.Web.Plugins;
@@ -12,20 +11,6 @@ namespace Kore.Plugins.Messaging.Forums
         {
             base.Install();
             InstallLanguagePack<LanguagePackInvariant>();
-            var dbContextFactory = EngineContext.Current.Resolve<IDbContextFactory>();
-            var dbContext = dbContextFactory.GetContext();
-
-            if (!CheckIfTableExists(dbContext, Constants.Tables.Groups))
-            {
-                // TODO
-            }
-
-            if (!CheckIfTableExists(dbContext, Constants.Tables.Forums))
-            {
-                // TODO
-            }
-
-            // TODO: etc
         }
 
         public override void Uninstall()

@@ -1,5 +1,4 @@
-﻿using System.Data.Entity;
-using Kore.EntityFramework.Data.EntityFramework;
+﻿using Kore.EntityFramework.Data.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Plugins.Maintenance.Watchdog.Infrastructure;
 using Kore.Web.Plugins;
@@ -12,24 +11,6 @@ namespace Kore.Plugins.Maintenance.Watchdog
         {
             base.Install();
             InstallLanguagePack<LanguagePackInvariant>();
-
-            var dbContextFactory = EngineContext.Current.Resolve<IDbContextFactory>();
-            var dbContext = dbContextFactory.GetContext();
-
-            if (!CheckIfTableExists(dbContext, Constants.Tables.WatchdogInstances))
-            {
-                dbContext.Database.ExecuteSqlCommand(
-@"CREATE TABLE [dbo].[Kore_Maintenance_WatchdogInstances]
-(
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Url] [nvarchar](255) NOT NULL,
-	[Password] [nvarchar](255) NOT NULL,
-	CONSTRAINT [PK_dbo.Kore_Maintenance_WatchdogInstances] PRIMARY KEY CLUSTERED
-	(
-		[Id] ASC
-	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]");
-            }
         }
 
         public override void Uninstall()

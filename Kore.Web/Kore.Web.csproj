@@ -325,6 +325,7 @@
     <Compile Include="Mvc\EmbeddedResources\EmbeddedViewVirtualPathProvider.cs" />
     <Compile Include="Mvc\EmbeddedResources\IEmbeddedResourceResolver.cs" />
     <Compile Include="Mvc\Filters\AdminAntiForgeryAttribute.cs" />
+    <Compile Include="Mvc\Filters\AllowCorsActionFilterAttribute.cs" />
     <Compile Include="Mvc\Filters\IFilterProvider.cs" />
     <Compile Include="Mvc\Filters\KoreFilterProvider.cs" />
     <Compile Include="Mvc\Filters\FrontendAntiForgeryAttribute.cs" />

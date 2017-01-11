@@ -159,6 +159,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UpdateScripts", "UpdateScri
 		_SolutionItems\UpdateScripts\Script_20150708.sql = _SolutionItems\UpdateScripts\Script_20150708.sql
 		_SolutionItems\UpdateScripts\Script_20150728.sql = _SolutionItems\UpdateScripts\Script_20150728.sql
 		_SolutionItems\UpdateScripts\Script_20161121.sql = _SolutionItems\UpdateScripts\Script_20161121.sql
+		_SolutionItems\UpdateScripts\Script_20170104.sql = _SolutionItems\UpdateScripts\Script_20170104.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Data.MySql", "Kore.Data.MySql\Kore.Data.MySql.csproj", "{54E53109-656B-4303-A9D4-F585D0574B76}"

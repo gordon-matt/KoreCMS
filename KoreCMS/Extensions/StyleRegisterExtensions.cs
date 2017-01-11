@@ -15,20 +15,9 @@ namespace KoreCMS.Extensions
             register.Include("bootstrap-chosen.css");
         }
 
-        public static void IncludeFancyBox(this StyleRegister register)
-        {
-            register.Include("jquery.fancybox.css");
-        }
-
         public static void IncludeFontAwesome(this StyleRegister register)
         {
             register.Include("font-awesome.min.css");
-        }
-
-        public static void IncludeJQGrid(this StyleRegister register)
-        {
-            register.Include("jquery.jqGrid/ui.jqgrid.css");
-            register.Include("jquery.jqGrid/jqGrid-custom.css");
         }
 
         public static void IncludeJQueryUI(this StyleRegister register)

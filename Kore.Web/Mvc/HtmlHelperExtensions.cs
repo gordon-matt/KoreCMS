@@ -709,7 +709,9 @@ namespace Kore.Web.Mvc
                         Category = string.IsNullOrEmpty(permission.Category) ? T(KoreWebLocalizableStrings.General.Miscellaneous) : permission.Category,
                         Description = permission.Description
                     };
-                    membershipService.InsertPermission(workContext.CurrentTenant.Id, newPermission);
+
+                    newPermission.TenantId = workContext.CurrentTenant.Id;
+                    membershipService.InsertPermission(newPermission);
                     allPermissions.Add(newPermission);
                 }
             }

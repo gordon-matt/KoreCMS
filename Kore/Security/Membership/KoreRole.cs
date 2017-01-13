@@ -8,6 +8,8 @@ namespace Kore.Security.Membership
     {
         public string Id { get; set; }
 
+        public int? TenantId { get; set; }
+
         public string Name { get; set; }
 
         #region IEntity Members

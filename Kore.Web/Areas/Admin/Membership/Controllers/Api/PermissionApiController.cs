@@ -107,7 +107,8 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            await Service.InsertPermission(workContext.CurrentTenant.Id, entity);
+            entity.TenantId = workContext.CurrentTenant.Id;
+            await Service.InsertPermission(entity);
 
             return Created(entity);
         }

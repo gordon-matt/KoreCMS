@@ -91,6 +91,7 @@ namespace KoreCMS.Services
                 .Select(x => new KoreUser
                 {
                     Id = x.Id,
+                    TenantId = x.TenantId,
                     UserName = x.UserName,
                     Email = x.Email,
                     IsLockedOut = x.LockoutEnabled
@@ -124,6 +125,7 @@ namespace KoreCMS.Services
             return await Task.FromResult(new KoreUser
             {
                 Id = user.Id,
+                TenantId = user.TenantId,
                 UserName = user.UserName,
                 Email = user.Email,
                 IsLockedOut = user.LockoutEnabled
@@ -151,6 +153,7 @@ namespace KoreCMS.Services
             return new KoreUser
             {
                 Id = user.Id,
+                TenantId = user.TenantId,
                 UserName = user.UserName,
                 Email = user.Email,
                 IsLockedOut = user.LockoutEnabled
@@ -178,6 +181,7 @@ namespace KoreCMS.Services
             return new KoreUser
             {
                 Id = user.Id,
+                TenantId = user.TenantId,
                 UserName = user.UserName,
                 Email = user.Email,
                 IsLockedOut = user.LockoutEnabled
@@ -221,7 +225,7 @@ namespace KoreCMS.Services
             return false;
         }
 
-        public async Task InsertUser(int? tenantId, KoreUser user, string password)
+        public async Task InsertUser(KoreUser user, string password)
         {
             // Check for spaces in UserName above, because of this:
             // http://stackoverflow.com/questions/30078332/bug-in-asp-net-identitys-usermanager
@@ -229,7 +233,7 @@ namespace KoreCMS.Services
 
             var appUser = new ApplicationUser
             {
-                TenantId = tenantId,
+                TenantId = user.TenantId,
                 UserName = userName,
                 Email = user.Email,
                 LockoutEnabled = user.IsLockedOut
@@ -515,11 +519,11 @@ namespace KoreCMS.Services
             return false;
         }
 
-        public async Task InsertRole(int? tenantId, KoreRole role)
+        public async Task InsertRole(KoreRole role)
         {
             var result = await roleManager.CreateAsync(new ApplicationRole
             {
-                TenantId = tenantId,
+                TenantId = role.TenantId,
                 Name = role.Name
             });
 
@@ -559,6 +563,7 @@ namespace KoreCMS.Services
             return users.Select(x => new KoreUser
             {
                 Id = x.Id,
+                TenantId = x.TenantId,
                 UserName = x.UserName,
                 Email = x.Email,
                 IsLockedOut = x.LockoutEnabled
@@ -588,6 +593,7 @@ namespace KoreCMS.Services
             return users.Select(x => new KoreUser
             {
                 Id = x.Id,
+                TenantId = x.TenantId,
                 UserName = x.UserName,
                 Email = x.Email,
                 IsLockedOut = x.LockoutEnabled
@@ -778,11 +784,11 @@ namespace KoreCMS.Services
             return false;
         }
 
-        public async Task InsertPermission(int? tenantId, KorePermission permission)
+        public async Task InsertPermission(KorePermission permission)
         {
             dbContext.Permissions.Add(new Permission
             {
-                TenantId = tenantId,
+                TenantId = permission.TenantId,
                 Name = permission.Name,
                 Category = permission.Category,
                 Description = permission.Description
@@ -790,11 +796,11 @@ namespace KoreCMS.Services
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task InsertPermissions(int? tenantId, IEnumerable<KorePermission> permissions)
+        public async Task InsertPermissions(IEnumerable<KorePermission> permissions)
         {
             var toInsert = permissions.Select(x => new Permission
             {
-                TenantId = tenantId,
+                TenantId = x.TenantId,
                 Name = x.Name,
                 Category = x.Category,
                 Description = x.Description
@@ -1028,7 +1034,7 @@ namespace KoreCMS.Services
                 var administratorsRole = await GetRoleByName(tenantId, KoreWebConstants.Roles.Administrators);
                 if (administratorsRole == null)
                 {
-                    await InsertRole(tenantId, new KoreRole { Name = KoreWebConstants.Roles.Administrators });
+                    await InsertRole(new KoreRole { TenantId = tenantId, Name = KoreWebConstants.Roles.Administrators });
                     administratorsRole = await GetRoleByName(tenantId, KoreWebConstants.Roles.Administrators);
 
                     if (administratorsRole != null)

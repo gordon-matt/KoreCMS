@@ -73,6 +73,7 @@ namespace Kore.Web.Infrastructure
                     .Select(x => new KorePermission
                     {
                         Name = x.Name,
+                        TenantId = null,
                         Category = x.Category,
                         Description = x.Description
                     })
@@ -81,7 +82,7 @@ namespace Kore.Web.Infrastructure
 
                 if (!permissionsToAdd.IsNullOrEmpty())
                 {
-                    await membershipService.InsertPermissions(null, permissionsToAdd);
+                    await membershipService.InsertPermissions(permissionsToAdd);
                 }
 
                 var permissionIdsToDelete = installedPermissions
@@ -106,6 +107,7 @@ namespace Kore.Web.Infrastructure
                        .Where(x => !installedPermissionNames.Contains(x.Name))
                        .Select(x => new KorePermission
                        {
+                           TenantId = tenantId,
                            Name = x.Name,
                            Category = x.Category,
                            Description = x.Description
@@ -115,7 +117,7 @@ namespace Kore.Web.Infrastructure
 
                     if (!permissionsToAdd.IsNullOrEmpty())
                     {
-                        await membershipService.InsertPermissions(tenantId, permissionsToAdd);
+                        await membershipService.InsertPermissions(permissionsToAdd);
                     }
 
                     permissionIdsToDelete = installedPermissions
@@ -148,9 +150,9 @@ namespace Kore.Web.Infrastructure
             if (adminUser == null)
             {
                 await membershipService.InsertUser(
-                    null,
                     new KoreUser
                     {
+                        TenantId = null,
                         UserName = dataSettings.AdminEmail,
                         Email = dataSettings.AdminEmail
                     },
@@ -169,7 +171,11 @@ namespace Kore.Web.Infrastructure
                     administratorsRole = await membershipService.GetRoleByName(null, KoreWebConstants.Roles.Administrators);
                     if (administratorsRole == null)
                     {
-                        await membershipService.InsertRole(null, new KoreRole { Name = KoreWebConstants.Roles.Administrators });
+                        await membershipService.InsertRole(new KoreRole
+                        {
+                            TenantId = null,
+                            Name = KoreWebConstants.Roles.Administrators
+                        });
                         administratorsRole = await membershipService.GetRoleByName(null, KoreWebConstants.Roles.Administrators);
                         await membershipService.AssignUserToRoles(null, adminUser.Id, new[] { administratorsRole.Id });
                     }

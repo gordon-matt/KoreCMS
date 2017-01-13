@@ -120,7 +120,8 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
                 membershipSettings.Value.GeneratedPasswordLength,
                 membershipSettings.Value.GeneratedPasswordNumberOfNonAlphanumericChars);
 
-            await Service.InsertUser(workContext.CurrentTenant.Id, entity, password);
+            entity.TenantId = workContext.CurrentTenant.Id;
+            await Service.InsertUser(entity, password);
 
             return Created(entity);
         }

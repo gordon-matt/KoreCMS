@@ -19,15 +19,18 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
     {
         private readonly Lazy<IMembershipService> membershipService;
         private readonly Lazy<IBlogPostTagService> postTagService;
+        private readonly Lazy<IWorkContext> workContext;
 
         public BlogPostApiController(
             IBlogPostService service,
             Lazy<IMembershipService> membershipService,
-            Lazy<IBlogPostTagService> postTagService)
+            Lazy<IBlogPostTagService> postTagService,
+            Lazy<IWorkContext> workContext)
             : base(service)
         {
             this.membershipService = membershipService;
             this.postTagService = postTagService;
+            this.workContext = workContext;
         }
 
         [AllowAnonymous]
@@ -46,16 +49,30 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 
         public override async Task<IHttpActionResult> Post(BlogPost entity)
         {
-            int tenantId = GetTenantId();
+            if (!CanModifyEntity(entity))
+            {
+                return Unauthorized();
+            }
 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            int tenantId = GetTenantId();
             entity.TenantId = tenantId;
             entity.DateCreatedUtc = DateTime.UtcNow;
-            entity.UserId = (await membershipService.Value.GetUserByName(tenantId, User.Identity.Name)).Id;
+            entity.UserId = workContext.Value.CurrentUser.Id;
 
             var tags = entity.Tags;
             entity.Tags = null;
 
-            var result = await base.Post(entity);
+            SetNewId(entity);
+
+            OnBeforeSave(entity);
+            await Service.InsertAsync(entity);
+
+            var result = Created(entity);
 
             if (!tags.IsNullOrEmpty())
             {
@@ -66,6 +83,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
                 });
                 postTagService.Value.Insert(toInsert);
             }
+
+            OnAfterSave(entity);
 
             return result;
         }

@@ -40,7 +40,7 @@ namespace Kore.Security.Membership
 
         Task<bool> DeleteUser(object userId);
 
-        Task InsertUser(int? tenantId, KoreUser user, string password);
+        Task InsertUser(KoreUser user, string password);
 
         Task UpdateUser(KoreUser user);
 
@@ -64,7 +64,7 @@ namespace Kore.Security.Membership
 
         Task<bool> DeleteRole(object roleId);
 
-        Task InsertRole(int? tenantId, KoreRole role);
+        Task InsertRole(KoreRole role);
 
         Task UpdateRole(KoreRole role);
 
@@ -90,9 +90,9 @@ namespace Kore.Security.Membership
 
         Task<bool> DeletePermissions(IEnumerable<object> permissionIds);
 
-        Task InsertPermission(int? tenantId, KorePermission permission);
+        Task InsertPermission(KorePermission permission);
 
-        Task InsertPermissions(int? tenantId, IEnumerable<KorePermission> permissions);
+        Task InsertPermissions(IEnumerable<KorePermission> permissions);
 
         Task UpdatePermission(KorePermission permission);
 

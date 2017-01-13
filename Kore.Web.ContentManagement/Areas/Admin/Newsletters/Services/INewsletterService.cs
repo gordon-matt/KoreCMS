@@ -76,7 +76,13 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Services
                 membershipSettings.Value.GeneratedPasswordLength,
                 membershipSettings.Value.GeneratedPasswordNumberOfNonAlphanumericChars);
 
-            AsyncHelper.RunSync(() => membershipService.Value.InsertUser(workContext.Value.CurrentTenant.Id, new KoreUser { UserName = email, Email = email }, password));
+            AsyncHelper.RunSync(() => membershipService.Value.InsertUser(new KoreUser
+            {
+                TenantId = workContext.Value.CurrentTenant.Id,
+                UserName = email,
+                Email = email
+            }, password));
+
             var user = AsyncHelper.RunSync(() => membershipService.Value.GetUserByEmail(workContext.Value.CurrentTenant.Id, email));
 
             // and sign up for newsletter, as requested.

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Castle.Core.Logging;
 using Kore.Caching;
+using Kore.Events;
+using Kore.Events.Handlers;
+using Kore.Infrastructure;
 using Kore.Logging;
 
 namespace Kore.Data.Services
@@ -17,6 +19,7 @@ namespace Kore.Data.Services
         private static string cacheKey;
         private static string cacheKeyFiltered;
         private readonly ICacheManager cacheManager;
+        private readonly IEventBus eventBus;
         private readonly IRepository<TEntity> repository;
 
         #endregion Private Members
@@ -52,6 +55,11 @@ namespace Kore.Data.Services
             get { return cacheManager; }
         }
 
+        public IEventBus EventBus
+        {
+            get { return eventBus; }
+        }
+
         public ILogger Logger { get; private set; }
 
         //public IRepository<TEntity> Repository
@@ -68,6 +76,11 @@ namespace Kore.Data.Services
             this.cacheManager = cacheManager;
             this.repository = repository;
             this.Logger = LoggingUtilities.Resolve();
+
+            // Resolving eventBus this way for now instead of via constructor injection, because
+            //  putting it into the constructor will mean changing a LOT of classes in multiple projects..
+            //  That will take too much time. Might do it in future, if necessary.
+            this.eventBus = EngineContext.Current.Resolve<IEventBus>();
         }
 
         #endregion Constructor
@@ -176,6 +189,7 @@ namespace Kore.Data.Services
         {
             int rowsAffected = repository.Delete(entity);
             ClearCache();
+            eventBus.Notify<IEntityModifiedEventHandler<TEntity>>(x => x.Deleted(entity));
             return rowsAffected;
         }
 
@@ -202,27 +216,38 @@ namespace Kore.Data.Services
 
         public virtual async Task<int> DeleteAllAsync()
         {
-            return await repository.DeleteAllAsync();
+            int rowsAffected = await repository.DeleteAllAsync();
+            ClearCache();
+            return rowsAffected;
         }
 
         public virtual async Task<int> DeleteAsync(TEntity entity)
         {
-            return await repository.DeleteAsync(entity);
+            int rowsAffected = await repository.DeleteAsync(entity);
+            ClearCache();
+            eventBus.Notify<IEntityModifiedEventHandler<TEntity>>(x => x.Deleted(entity));
+            return rowsAffected;
         }
 
         public virtual async Task<int> DeleteAsync(IEnumerable<TEntity> entities)
         {
-            return await repository.DeleteAsync(entities);
+            int rowsAffected = await repository.DeleteAsync(entities);
+            ClearCache();
+            return rowsAffected;
         }
 
         public virtual async Task<int> DeleteAsync(Expression<Func<TEntity, bool>> filterExpression)
         {
-            return await repository.DeleteAsync(filterExpression);
+            int rowsAffected = await repository.DeleteAsync(filterExpression);
+            ClearCache();
+            return rowsAffected;
         }
 
         public virtual async Task<int> DeleteAsync(IQueryable<TEntity> query)
         {
-            return await repository.DeleteAsync(query);
+            int rowsAffected = await repository.DeleteAsync(query);
+            ClearCache();
+            return rowsAffected;
         }
 
         #endregion Delete
@@ -233,6 +258,7 @@ namespace Kore.Data.Services
         {
             int rowsAffected = repository.Insert(entity);
             ClearCache();
+            eventBus.Notify<IEntityModifiedEventHandler<TEntity>>(x => x.Inserted(entity));
             return rowsAffected;
         }
 
@@ -247,6 +273,7 @@ namespace Kore.Data.Services
         {
             int rowsAffected = await repository.InsertAsync(entity);
             ClearCache();
+            eventBus.Notify<IEntityModifiedEventHandler<TEntity>>(x => x.Inserted(entity));
             return rowsAffected;
         }
 
@@ -265,6 +292,7 @@ namespace Kore.Data.Services
         {
             int rowsAffected = repository.Update(entity);
             ClearCache();
+            eventBus.Notify<IEntityModifiedEventHandler<TEntity>>(x => x.Updated(entity));
             return rowsAffected;
         }
 
@@ -279,6 +307,7 @@ namespace Kore.Data.Services
         {
             int rowsAffected = await repository.UpdateAsync(entity);
             ClearCache();
+            eventBus.Notify<IEntityModifiedEventHandler<TEntity>>(x => x.Updated(entity));
             return rowsAffected;
         }
 

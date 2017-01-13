@@ -6,11 +6,9 @@ using System.Web.Mvc;
 using Kore.Collections;
 using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.Newsletters.Services;
-using Kore.Web.Events;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
 using Kore.Web.Security.Membership;
-using Newtonsoft.Json.Linq;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
 {
@@ -21,19 +19,16 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers
     {
         private readonly Lazy<IMembershipService> membershipService;
         private readonly Lazy<MembershipSettings> membershipSettings;
-        private readonly Lazy<IEventBus> eventBus;
         private readonly Lazy<INewsletterService> newsletterService;
 
         public SubscriberController(
             Lazy<INewsletterService> newsletterService,
             Lazy<IMembershipService> membershipService,
-            Lazy<MembershipSettings> membershipSettings,
-            Lazy<IEventBus> eventBus)
+            Lazy<MembershipSettings> membershipSettings)
         {
             this.newsletterService = newsletterService;
             this.membershipService = membershipService;
             this.membershipSettings = membershipSettings;
-            this.eventBus = eventBus;
         }
 
         [Compress]

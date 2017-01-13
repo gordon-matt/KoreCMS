@@ -20,5 +20,11 @@
         /// Uninstall plugin
         /// </summary>
         void Uninstall();
+
+        /// <summary>
+        /// Notify the plugin that settings have been modified (generally speaking,
+        /// we're only interested in the "LimitedToTenants" property
+        /// </summary>
+        void Modified();
     }
 }

@@ -38,6 +38,15 @@ namespace Kore.Web.Plugins
             PluginManager.MarkPluginAsUninstalled(this.PluginDescriptor.SystemName);
         }
 
+        /// <summary>
+        /// Notify the plugin that settings have been modified (generally speaking,
+        /// we're only interested in the "LimitedToTenants" property
+        /// </summary>
+        public virtual void Modified()
+        {
+            // By default, do nothing (very few plugins care)
+        }
+
         protected bool CheckIfTableExists(DbContext dbContext, string tableName)
         {
             return dbContext.Database

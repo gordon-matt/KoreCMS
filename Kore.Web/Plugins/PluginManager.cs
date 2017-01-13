@@ -307,6 +307,15 @@ namespace Kore.Web.Plugins
             return installedPlugins[systemName];
         }
 
+        public static bool IsPluginLimitedToTenants(string systemName)
+        {
+            if (IsPluginInstalled(systemName))
+            {
+                return ReferencedPlugins.First(x => x.SystemName == systemName).LimitedToTenants.Any();
+            }
+            return false;
+        }
+
         #endregion Methods
 
         #region Utilities

@@ -208,14 +208,6 @@
     <Compile Include="Html\HtmlHelper.cs" />
     <Compile Include="Html\ResolveLinksHelper.cs" />
     <Compile Include="Environment\IHttpContextAccessor.cs" />
-    <Compile Include="Events\DefaultEventBus.cs" />
-    <Compile Include="Events\DelegateHelper.cs" />
-    <Compile Include="Events\EventsInterceptor.cs" />
-    <Compile Include="Events\EventsModule.cs" />
-    <Compile Include="Events\EventsRegistrationSource.cs" />
-    <Compile Include="Events\IContentHandler.cs" />
-    <Compile Include="Events\IEventBus.cs" />
-    <Compile Include="Events\IEventHandler.cs" />
     <Compile Include="Exceptions\DefaultExceptionPolicy.cs" />
     <Compile Include="Exceptions\IExceptionPolicy.cs" />
     <Compile Include="Fakes\Extensions.cs" />

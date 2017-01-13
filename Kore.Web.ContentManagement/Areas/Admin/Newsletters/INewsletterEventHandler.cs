@@ -2,7 +2,7 @@
 using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging.Services;
-using Kore.Web.Events;
+using Kore.Events;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters
 {

@@ -195,6 +195,14 @@
     <Compile Include="Data\Sql\SqlDataSourceEnumeratorExtensions.cs" />
     <Compile Include="Drawing\ColorExtensions.cs" />
     <Compile Include="Drawing\ImageExtensions.cs" />
+    <Compile Include="Events\DefaultEventBus.cs" />
+    <Compile Include="Events\DelegateHelper.cs" />
+    <Compile Include="Events\EventsInterceptor.cs" />
+    <Compile Include="Events\EventsModule.cs" />
+    <Compile Include="Events\EventsRegistrationSource.cs" />
+    <Compile Include="Events\IEntityModifiedEventHandler.cs" />
+    <Compile Include="Events\IEventBus.cs" />
+    <Compile Include="Events\IEventHandler.cs" />
     <Compile Include="Exceptions\KoreException.cs" />
     <Compile Include="IClock.cs" />
     <Compile Include="Infrastructure\AppDomainTypeFinder.cs" />

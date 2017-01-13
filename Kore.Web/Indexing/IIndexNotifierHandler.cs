@@ -1,4 +1,4 @@
-﻿using Kore.Web.Events;
+﻿using Kore.Events;
 
 namespace Kore.Web.Indexing
 {

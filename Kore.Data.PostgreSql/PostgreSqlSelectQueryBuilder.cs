@@ -175,5 +175,17 @@
         {
             return string.Concat('"', identifier, '"');
         }
+
+        protected override string FormatSQLValue(object someValue)
+        {
+            var type = someValue.GetType();
+
+            if (type.Name == "Boolean")
+            {
+                return (bool)someValue ? "true" : "false";
+            }
+
+            return base.FormatSQLValue(someValue);
+        }
     }
 }

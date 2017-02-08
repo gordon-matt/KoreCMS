@@ -1,12 +1,11 @@
 ﻿using System;
 using Kore.Infrastructure;
-using Kore.Web.Infrastructure;
-using KoreCMS.Data;
 using KoreCMS.Data.Domain;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OAuth;
 using Owin;
 using ApplicationDbContext = KoreCMS.Data.ApplicationDbContext;
 
@@ -14,6 +13,10 @@ namespace KoreCMS
 {
     public partial class Startup
     {
+        public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
+
+        public static string PublicClientId { get; private set; }
+
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
@@ -40,6 +43,21 @@ namespace KoreCMS
             });
 
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+
+            // Configure the application for OAuth based flow
+            PublicClientId = "self";
+            OAuthOptions = new OAuthAuthorizationServerOptions
+            {
+                TokenEndpointPath = new PathString("/token"),
+                Provider = new ApplicationOAuthProvider(PublicClientId),
+                AuthorizeEndpointPath = new PathString("/api/account/external-login"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+                // In production mode set AllowInsecureHttp = false
+                AllowInsecureHttp = true
+            };
+
+            // Enable the application to use bearer tokens to authenticate users
+            app.UseOAuthBearerTokens(OAuthOptions);
 
             //// Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
             //app.UseTwoFactorSignInCookie(DefaultAuthenticationTypes.TwoFactorCookie, TimeSpan.FromMinutes(5));

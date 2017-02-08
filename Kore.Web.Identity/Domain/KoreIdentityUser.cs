@@ -27,5 +27,14 @@ namespace Kore.Web.Identity.Domain
             // Add custom user claims here
             return userIdentity;
         }
+
+        public virtual async Task<ClaimsIdentity> GenerateUserIdentityAsync<TUser>(UserManager<TUser, string> manager, string authenticationType)
+            where TUser : KoreIdentityUser
+        {
+            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
+            var userIdentity = await manager.CreateIdentityAsync(this as TUser, authenticationType);
+            // Add custom user claims here
+            return userIdentity;
+        }
     }
 }

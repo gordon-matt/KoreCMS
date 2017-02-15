@@ -1336,12 +1336,12 @@ namespace Kore
             return value.As(defaultValue);
         }
 
-        public static float AsFloat(this string value)
+        public static float AsSingle(this string value)
         {
-            return value.AsFloat(0f);
+            return value.AsSingle(0f);
         }
 
-        public static float AsFloat(this string value, float defaultValue)
+        public static float AsSingle(this string value, float defaultValue)
         {
             float num;
             if (!float.TryParse(value, out num))

@@ -170,25 +170,13 @@ namespace Kore.Web.Mvc
 
         public static MvcHtmlString NumbersDropDown(this HtmlHelper html, string name, int min, int max, int? selected = null, string emptyText = null, object htmlAttributes = null)
         {
-            var items = new List<SelectListItem>();
-
+            var numbers = new List<int>();
             for (int i = min; i <= max; i++)
             {
-                var item = new SelectListItem
-                {
-                    Text = i.ToString(CultureInfo.InvariantCulture),
-                    Value = i.ToString(CultureInfo.InvariantCulture),
-                    Selected = i == selected
-                };
-                items.Add(item);
+                numbers.Add(i);
             }
 
-            if (emptyText != null) // we don't check for empty, because empty string can be valid for emptyText value.
-            {
-                items.Insert(0, new SelectListItem { Value = string.Empty, Text = emptyText });
-            }
-
-            var selectList = new SelectList(items, "Value", "Text");
+            var selectList = numbers.ToSelectList(value => value, text => text.ToString(), selected, emptyText);
 
             return html.DropDownList(name, selectList, htmlAttributes);
         }
@@ -198,25 +186,13 @@ namespace Kore.Web.Mvc
             var func = expression.Compile();
             var selectedValue = func(html.ViewData.Model);
 
-            var items = new List<SelectListItem>();
-
+            var numbers = new List<int>();
             for (int i = min; i <= max; i++)
             {
-                var item = new SelectListItem
-                {
-                    Text = i.ToString(CultureInfo.InvariantCulture),
-                    Value = i.ToString(CultureInfo.InvariantCulture),
-                    Selected = i.Equals(selectedValue)
-                };
-                items.Add(item);
+                numbers.Add(i);
             }
 
-            if (emptyText != null) // we don't check for empty, because empty string can be valid for emptyText value.
-            {
-                items.Insert(0, new SelectListItem { Value = string.Empty, Text = emptyText });
-            }
-
-            var selectList = new SelectList(items, "Value", "Text");
+            var selectList = numbers.ToSelectList(value => value, text => text.ToString(), selectedValue, emptyText);
 
             return html.DropDownListFor(expression, selectList, htmlAttributes);
         }

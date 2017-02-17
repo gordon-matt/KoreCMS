@@ -208,8 +208,6 @@
     <Compile Include="Html\HtmlHelper.cs" />
     <Compile Include="Html\ResolveLinksHelper.cs" />
     <Compile Include="Environment\IHttpContextAccessor.cs" />
-    <Compile Include="Exceptions\DefaultExceptionPolicy.cs" />
-    <Compile Include="Exceptions\IExceptionPolicy.cs" />
     <Compile Include="Fakes\Extensions.cs" />
     <Compile Include="Fakes\FakeHttpContext.cs" />
     <Compile Include="Fakes\FakeHttpContext2.cs" />

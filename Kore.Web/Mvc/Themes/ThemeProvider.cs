@@ -70,7 +70,7 @@ namespace Kore.Web.Mvc.Themes
             {
                 var doc = new XmlDocument();
                 doc.Load(themeConfigFile.FullName);
-                return new ThemeConfiguration(themeDirectory.Name, themeDirectory.FullName, doc);
+                return new ThemeConfiguration(themeDirectory.Name, doc);
             }
 
             return null;

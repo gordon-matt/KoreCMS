@@ -159,7 +159,6 @@
     <Compile Include="Areas\Admin\Log\Controllers\LogController.cs" />
     <Compile Include="Areas\Admin\Log\LogAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Log\LogPermissions.cs" />
-    <Compile Include="Areas\Admin\Log\Services\ILogService.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\PermissionApiController.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\PublicUserApiController.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\RoleApiController.cs" />

@@ -47,7 +47,8 @@ namespace Kore.Web.Mvc.KendoUI
             {"gte", ">="},
             {"startswith", "StartsWith"},
             {"endswith", "EndsWith"},
-            {"contains", "Contains"}
+            {"contains", "Contains"},
+            {"doesnotcontain", "DoesNotContain"}
         };
 
         /// <summary>
@@ -105,9 +106,15 @@ namespace Kore.Web.Mvc.KendoUI
             {
                 return String.Format("{0}.IndexOf(@{1}, System.StringComparison.InvariantCultureIgnoreCase) >= 0", Field, index);
             }
-            if (comparison == "=")
+            if (comparison == "DoesNotContain")
             {
+                return String.Format("{0}.IndexOf(@{1}, System.StringComparison.InvariantCultureIgnoreCase) < 0", Field, index);
+            }
+            if (comparison == "=" && Value is String)
+            {
+                //string only
                 comparison = "Equals";
+                //numeric values use standard "=" char
             }
             if (comparison == "StartsWith" || comparison == "EndsWith" || comparison == "Equals")
             {

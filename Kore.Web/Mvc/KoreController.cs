@@ -14,7 +14,7 @@ namespace Kore.Web.Mvc
 {
     public abstract class KoreController : Controller
     {
-        private HtmlHelper html = null;
+        //private HtmlHelper html = null;
 
         public IWebWorkContext WorkContext { get; set; }
 
@@ -22,17 +22,17 @@ namespace Kore.Web.Mvc
 
         public ILogger Logger { get; set; }
 
-        public HtmlHelper Html
-        {
-            get
-            {
-                if (html == null)
-                {
-                    html = new HtmlHelper(new ViewContext(), new ViewDataContainer(ViewData));
-                }
-                return html;
-            }
-        }
+        //public HtmlHelper Html
+        //{
+        //    get
+        //    {
+        //        if (html == null)
+        //        {
+        //            html = new HtmlHelper(new ViewContext(), new ViewDataContainer(ViewData));
+        //        }
+        //        return html;
+        //    }
+        //}
 
         protected string ClientIPAddress
         {

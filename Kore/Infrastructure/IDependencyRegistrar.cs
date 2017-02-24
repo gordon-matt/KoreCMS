@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Kore.Caching;
 using Kore.Localization.Services;
+using Kore.Logging.Services;
 using Kore.Tasks;
 using Kore.Tenants.Services;
 
@@ -28,6 +29,8 @@ namespace Kore.Infrastructure
             builder.RegisterType<LanguageService>().As<ILanguageService>().InstancePerDependency();
             builder.RegisterType<LocalizableStringService>().As<ILocalizableStringService>().InstancePerDependency();
             builder.RegisterType<LocalizablePropertyService>().As<ILocalizablePropertyService>().InstancePerDependency();
+
+            builder.RegisterType<LogService>().As<ILogService>().InstancePerDependency();
         }
 
         public int Order

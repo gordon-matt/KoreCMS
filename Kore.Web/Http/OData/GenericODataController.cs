@@ -20,7 +20,7 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.Http.OData
 {
-    public abstract class GenericODataController<TEntity, TKey> : ODataController 
+    public abstract class GenericODataController<TEntity, TKey> : ODataController
         where TEntity : class
     {
         #region Non-Public Properties

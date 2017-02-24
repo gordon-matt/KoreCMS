@@ -16,7 +16,6 @@ using Kore.Net.Mail;
 using Kore.Tasks.Services;
 using Kore.Web.Areas.Admin;
 using Kore.Web.Areas.Admin.Configuration;
-using Kore.Web.Areas.Admin.Log.Services;
 using Kore.Web.Areas.Admin.ScheduledTasks;
 using Kore.Web.Configuration;
 using Kore.Web.Configuration.Services;
@@ -186,8 +185,6 @@ namespace Kore.Web.Infrastructure
             builder.RegisterType<LocalizationUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
             builder.RegisterType<MobileUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
             builder.RegisterType<ThemeUserProfileProvider>().As<IUserProfileProvider>().SingleInstance();
-
-            builder.RegisterType<LogService>().As<ILogService>().InstancePerDependency();
 
             builder.RegisterType<DurandalRouteProvider>().As<IDurandalRouteProvider>().SingleInstance();
 

@@ -4,10 +4,9 @@ namespace Kore.Web.Mvc.Themes
 {
     public class ThemeConfiguration
     {
-        public ThemeConfiguration(string themeName, string path, XmlDocument doc)
+        public ThemeConfiguration(string themeName, XmlDocument doc)
         {
             ThemeName = themeName;
-            Path = path;
             var node = doc.SelectSingleNode("Theme");
             if (node != null)
             {
@@ -36,8 +35,6 @@ namespace Kore.Web.Mvc.Themes
         public XmlNode ConfigurationNode { get; protected set; }
 
         public string DefaultLayoutPath { get; protected set; }
-
-        public string Path { get; protected set; }
 
         public string PreviewImageUrl { get; protected set; }
 

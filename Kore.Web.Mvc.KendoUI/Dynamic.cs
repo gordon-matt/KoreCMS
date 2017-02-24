@@ -233,7 +233,7 @@ namespace Kore.Web.Mvc.KendoUI
 
         public override bool Equals(object obj)
         {
-            return obj is Signature ? Equals((Signature)obj) : false;
+            return obj is Signature && Equals((Signature)obj);
         }
 
         public bool Equals(Signature other)

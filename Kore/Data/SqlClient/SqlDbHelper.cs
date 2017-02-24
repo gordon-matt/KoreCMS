@@ -2,8 +2,6 @@
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
-using Kore.Data.Common;
-using Kore.Infrastructure;
 
 namespace Kore.Data.SqlClient
 {

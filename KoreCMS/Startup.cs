@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Cors;
 using Kore.Infrastructure;
-using Kore.Web.Infrastructure;
 using Microsoft.Owin;
+using Microsoft.Owin.Cors;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(KoreCMS.Startup))]
@@ -16,6 +18,28 @@ namespace KoreCMS
             {
                 return;
             }
+
+            var corsPolicy = new CorsPolicy
+            {
+                AllowAnyMethod = true,
+                AllowAnyHeader = true,
+                AllowAnyOrigin = true,
+                SupportsCredentials = true
+            };
+
+            // For OData
+            corsPolicy.ExposedHeaders.Add("DataServiceVersion");
+            corsPolicy.ExposedHeaders.Add("MaxDataServiceVersion");
+
+            var corsOptions = new CorsOptions
+            {
+                PolicyProvider = new CorsPolicyProvider
+                {
+                    PolicyResolver = context => Task.FromResult(corsPolicy)
+                }
+            };
+
+            app.UseCors(corsOptions);
 
             ConfigureAuth(app);
 

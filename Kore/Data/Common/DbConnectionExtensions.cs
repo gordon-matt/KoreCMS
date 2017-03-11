@@ -9,7 +9,6 @@ using System.Linq;
 using System.Reflection;
 using System.Transactions;
 using Kore.Collections;
-using Kore.Reflection;
 
 namespace Kore.Data.Common
 {
@@ -259,48 +258,48 @@ namespace Kore.Data.Common
         {
             //using (var transactionScope = new TransactionScope()) //MySQL doesn't like this...
             //{
-                const string INSERT_INTO_FORMAT = "INSERT INTO {0}({1}) VALUES({2})";
-                string fieldNames = mappings.Values.Join(",");
-                string parameterNames = fieldNames.Replace(",", ",@").Prepend("@");
+            const string INSERT_INTO_FORMAT = "INSERT INTO {0}({1}) VALUES({2})";
+            string fieldNames = mappings.Values.Join(",");
+            string parameterNames = fieldNames.Replace(",", ",@").Prepend("@");
 
-                var properties = typeof(T).GetProperties();
+            var properties = typeof(T).GetProperties();
 
-                using (var command = connection.CreateCommand())
+            using (var command = connection.CreateCommand())
+            {
+                string commandText = string.Format(INSERT_INTO_FORMAT, tableName, fieldNames, parameterNames);
+                command.CommandType = CommandType.Text;
+                command.CommandText = commandText;
+
+                mappings.ForEach(mapping =>
                 {
-                    string commandText = string.Format(INSERT_INTO_FORMAT, tableName, fieldNames, parameterNames);
-                    command.CommandType = CommandType.Text;
-                    command.CommandText = commandText;
+                    var parameter = command.CreateParameter();
+                    parameter.ParameterName = string.Concat("@", mapping.Value);
+                    var property = properties.Single(p => p.Name == mapping.Key);
+                    parameter.DbType = DataTypeConvertor.GetDbType(property.PropertyType);
+                    command.Parameters.Add(parameter);
+                });
 
-                    mappings.ForEach(mapping =>
+                bool alreadyOpen = (connection.State != ConnectionState.Closed);
+
+                if (!alreadyOpen)
+                {
+                    connection.Open();
+                }
+
+                foreach (T entity in entities)
+                {
+                    properties.ForEach(property =>
                     {
-                        var parameter = command.CreateParameter();
-                        parameter.ParameterName = string.Concat("@", mapping.Value);
-                        var property = properties.Single(p => p.Name == mapping.Key);
-                        parameter.DbType = DataTypeConvertor.GetDbType(property.PropertyType);
-                        command.Parameters.Add(parameter);
+                        command.Parameters["@" + property.Name].Value =
+                            GetFormattedValue(property.PropertyType, property.GetValue(entity, null));
                     });
+                    command.ExecuteNonQuery();
+                }
 
-                    bool alreadyOpen = (connection.State != ConnectionState.Closed);
-
-                    if (!alreadyOpen)
-                    {
-                        connection.Open();
-                    }
-
-                    foreach (T entity in entities)
-                    {
-                        properties.ForEach(property =>
-                        {
-                            command.Parameters["@" + property.Name].Value =
-                                GetFormattedValue(property.PropertyType, property.GetValue(entity, null));
-                        });
-                        command.ExecuteNonQuery();
-                    }
-
-                    if (!alreadyOpen)
-                    {
-                        connection.Close();
-                    }
+                if (!alreadyOpen)
+                {
+                    connection.Close();
+                }
 
                 //    transactionScope.Complete();
                 //}
@@ -311,19 +310,9 @@ namespace Kore.Data.Common
         /// Tries to establish a connection.
         /// </summary>
         /// <param name="connection">The DbConnection</param>
-        /// <returns>True if successful. Otherwise, false</returns>
-        public static bool Validate(this DbConnection connection)
-        {
-            return connection.Validate(5);
-        }
-
-        /// <summary>
-        /// Tries to establish a connection.
-        /// </summary>
-        /// <param name="connection">The DbConnection</param>
         /// <param name="maxTries">The number of times to try connecting.</param>
         /// <returns>True if successful. Otherwise, false</returns>
-        public static bool Validate(this DbConnection connection, byte maxTries)
+        public static bool Validate(this DbConnection connection, byte maxTries = 5)
         {
             try
             {

@@ -60,7 +60,7 @@ namespace Kore.Logging
 
         #endregion Constructors
 
-        public override ILogger CreateChildLogger(string loggerName)
+        public override Castle.Core.Logging.ILogger CreateChildLogger(string loggerName)
         {
             throw new NotSupportedException("NLog does not support child loggers.");
         }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
+using Kore.Collections;
 using Kore.EntityFramework.Data;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
@@ -65,7 +66,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Controllers.Api
                 .AsQueryable();
 
             var results = options.ApplyTo(query);
-            return await (results as IQueryable<Subscriber>).ToHashSetAsync();
+            return (results as IQueryable<Subscriber>).ToHashSet();
         }
 
         [EnableQuery]

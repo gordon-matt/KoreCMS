@@ -190,6 +190,8 @@ namespace Kore.Web.Infrastructure
                     { KoreWebLocalizableStrings.Settings.Membership.GeneratedPasswordLength, "Length" },
                     { KoreWebLocalizableStrings.Settings.Membership.GeneratedPasswordNumberOfNonAlphanumericChars, "# Non-Alphanumeric Characters" },
                     { KoreWebLocalizableStrings.Settings.Model.Name, "Name" },
+                    { KoreWebLocalizableStrings.Settings.Security.EnableXsrfProtectionForAdmin, "Enable XSRF Protection for Admin" },
+                    { KoreWebLocalizableStrings.Settings.Security.EnableXsrfProtectionForFrontend, "Enable XSRF Protection for Frontend" },
                     { KoreWebLocalizableStrings.Settings.Site.AdminLayoutPath, "Admin Layout Path" },
                     { KoreWebLocalizableStrings.Settings.Site.AllowUserToSelectTheme, "Allow User To Select Theme" },
                     { KoreWebLocalizableStrings.Settings.Site.DefaultDesktopTheme, "Default Desktop Theme" },

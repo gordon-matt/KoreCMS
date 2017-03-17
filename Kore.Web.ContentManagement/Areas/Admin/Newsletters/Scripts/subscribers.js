@@ -1,11 +1,5 @@
-﻿define(function (require) {
+﻿define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko) {
     'use strict'
-
-    var $ = require('jquery');
-    var ko = require('knockout');
-
-    require('kendo');
-    require('notify');
 
     var ViewModel = function () {
         var self = this;

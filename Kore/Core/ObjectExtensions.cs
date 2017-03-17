@@ -75,6 +75,10 @@ namespace Kore
             {
                 return new Guid(source.ToString());
             }
+            else if (source is Guid && type == typeof(string))
+            {
+                return source.ToString();
+            }
 
             return Convert.ChangeType(source, type);
         }

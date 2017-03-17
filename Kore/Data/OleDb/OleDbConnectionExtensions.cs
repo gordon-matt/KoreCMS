@@ -33,7 +33,7 @@ namespace Kore.Data.OleDb
                 var columnInfo = new ColumnInfo
                     {
                         ColumnName = row.Field<string>("COLUMN_NAME"),
-                        DataType = DataTypeConvertor.GetSystemType((OleDbType)row.Field<int>("DATA_TYPE")),
+                        DataType = DataTypeConvertor.GetDbType((OleDbType)row.Field<int>("DATA_TYPE")),
                         IsNullable = row.Field<bool>("IS_NULLABLE")
                     };
 
@@ -73,6 +73,16 @@ namespace Kore.Data.OleDb
                             }
                         }
                     }
+                }
+
+                if (row["NUMERIC_PRECISION"] != DBNull.Value)
+                {
+                    columnInfo.Precision = row.Field<int>("NUMERIC_PRECISION");
+                }
+
+                if (row["NUMERIC_SCALE"] != DBNull.Value)
+                {
+                    columnInfo.Scale = row.Field<int>("NUMERIC_SCALE");
                 }
 
                 columnData.Add(columnInfo);

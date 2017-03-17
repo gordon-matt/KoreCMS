@@ -14,32 +14,18 @@ namespace Kore.Data.Common
 {
     public static class DbConnectionExtensions
     {
+        private const string INSERT_INTO_FORMAT = "INSERT INTO {0}({1}) VALUES({2})";
+
         public static DbParameter CreateParameter(this DbConnection connection, string parameterName, object value)
         {
-            if (connection is SqlConnection)
-            {
-                return new SqlParameter(parameterName, value);
-            }
-            if (connection is OleDbConnection)
-            {
-                return new OleDbParameter(parameterName, value);
-            }
-            if (connection is OdbcConnection)
-            {
-                return new OdbcParameter(parameterName, value);
-            }
-            return null;
+            var param = GetDbProviderFactory(connection).CreateParameter();
+            param.ParameterName = parameterName;
+            param.Value = value;
+            return param;
         }
 
         public static int ExecuteScalar(this DbConnection connection, string queryText)
         {
-            return connection.ExecuteScalar<int>(queryText);
-        }
-
-        public static T ExecuteScalar<T>(this DbConnection connection, string queryText)
-        {
-            T result;
-
             bool alreadyOpen = (connection.State != ConnectionState.Closed);
 
             if (!alreadyOpen)
@@ -47,42 +33,30 @@ namespace Kore.Data.Common
                 connection.Open();
             }
 
-            using (DbCommand command = connection.CreateCommand())
+            return connection.ExecuteScalar<int>(queryText);
+        }
+
+        public static T ExecuteScalar<T>(this DbConnection connection, string queryText)
+        {
+            bool alreadyOpen = (connection.State != ConnectionState.Closed);
+
+            if (!alreadyOpen)
+            {
+                connection.Open();
+            }
+
+            using (var command = connection.CreateCommand())
             {
                 command.CommandType = CommandType.Text;
                 command.CommandText = queryText;
                 command.CommandTimeout = 300;
-
-                result = (T)command.ExecuteScalar();
+                return (T)command.ExecuteScalar();
             }
-
-            if (!alreadyOpen)
-            {
-                connection.Close();
-            }
-
-            return result;
         }
 
         public static DbProviderFactory GetDbProviderFactory(this DbConnection connection)
         {
             return DbProviderFactories.GetFactory(connection);
-
-            //if (connection is SqlConnection)
-            //{
-            //    return DbProviderFactories.GetFactory("System.Data.SqlClient");
-            //}
-            //if (connection is OleDbConnection)
-            //{
-            //    return DbProviderFactories.GetFactory("System.Data.OleDb");
-            //}
-            //if (connection is OdbcConnection)
-            //{
-            //    return DbProviderFactories.GetFactory("System.Data.Odbc");
-            //}
-
-            //// Only use reflection as last option
-            //return (DbProviderFactory)connection.GetPrivatePropertyValue("DbProviderFactory");
         }
 
         public static DataSet ExecuteStoredProcedure(this DbConnection connection, string storedProcedure, IEnumerable<DbParameter> parameters)
@@ -93,16 +67,16 @@ namespace Kore.Data.Common
 
         public static DataSet ExecuteStoredProcedure(this DbConnection connection, string storedProcedure, IEnumerable<DbParameter> parameters, out Dictionary<string, object> outputValues)
         {
-            using (DbCommand command = connection.CreateCommand())
+            using (var command = connection.CreateCommand())
             {
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = storedProcedure;
                 parameters.ForEach(p => command.Parameters.Add(p));
                 command.Parameters.EnsureDbNulls();
-                DataSet dataSet = new DataSet();
+                var dataSet = new DataSet();
 
                 var factory = connection.GetDbProviderFactory();
-                using (DbDataAdapter adapter = factory.CreateDataAdapter())
+                using (var adapter = factory.CreateDataAdapter())
                 {
                     adapter.SelectCommand = command;
                     adapter.Fill(dataSet);
@@ -122,15 +96,13 @@ namespace Kore.Data.Common
             }
         }
 
-        public static int ExecuteNonQueryStoredProcedure(this DbConnection connection, string storedProcedure, IEnumerable<DbParameter> parameters)
+        public static int ExecuteNonQuery(this DbConnection connection, string queryText)
         {
-            using (DbCommand command = connection.CreateCommand())
+            using (var command = connection.CreateCommand())
             {
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = storedProcedure;
-                parameters.ForEach(p => command.Parameters.Add(p));
-                command.Parameters.EnsureDbNulls();
-
+                command.CommandType = CommandType.Text;
+                command.CommandText = queryText;
+                
                 bool alreadyOpen = (connection.State != ConnectionState.Closed);
 
                 if (!alreadyOpen)
@@ -138,14 +110,20 @@ namespace Kore.Data.Common
                     connection.Open();
                 }
 
-                int rowsAffected = command.ExecuteNonQuery();
+                return command.ExecuteNonQuery();
+            }
+        }
 
-                if (!alreadyOpen)
-                {
-                    connection.Close();
-                }
-
-                return rowsAffected;
+        public static int ExecuteNonQueryStoredProcedure(this DbConnection connection, string storedProcedure, IEnumerable<DbParameter> parameters)
+        {
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = storedProcedure;
+                parameters.ForEach(p => command.Parameters.Add(p));
+                command.Parameters.EnsureDbNulls();
+                
+                return command.ExecuteNonQuery();
             }
         }
 
@@ -158,12 +136,10 @@ namespace Kore.Data.Common
         /// <param name="entity">The entity to persist to Sql database.</param>
         /// <param name="tableName">The table to insert the entity into.</param>
         /// <returns>Number of rows affected.</returns>
-        public static int Insert<T>(this DbConnection connection, T entity, string tableName)
+        public static int Insert<T>(this DbConnection connection, T entity, string tableName, Func<string, string> encloseIdentifier)
         {
-            Dictionary<string, string> mappings = typeof(T).GetProperties()
-                .ToDictionary(k => k.Name, v => v.Name);
-
-            return connection.Insert(entity, tableName, mappings);
+            var mappings = typeof(T).GetProperties().ToDictionary(k => k.Name, v => v.Name);
+            return connection.Insert(entity, tableName, mappings, encloseIdentifier);
         }
 
         /// <summary>
@@ -179,19 +155,28 @@ namespace Kore.Data.Common
         ///     <para>Key = Property Name, Value = Sql Column Name.</para>
         /// </param>
         /// <returns>Number of rows affected.</returns>
-        public static int Insert<T>(this DbConnection connection, T entity, string tableName, IDictionary<string, string> mappings)
+        public static int Insert<T>(
+            this DbConnection connection,
+            T entity,
+            string tableName,
+            IDictionary<string, string> mappings,
+            Func<string, string> encloseIdentifier)
         {
-            using (TransactionScope transactionScope = new TransactionScope())
-            {
-                const string INSERT_INTO_FORMAT = "INSERT INTO {0}({1}) VALUES({2})";
-                string fieldNames = mappings.Values.Join(",");
-                string parameterNames = fieldNames.Replace(",", ",@").Prepend("@");
+            //using (var transactionScope = new TransactionScope()) //MySQL doesn't like this...
+            //{
+                string fieldNames = mappings.Values.Select(x => encloseIdentifier(x)).Join(",");
+                string parameterNames = mappings.Values.Join(",").Replace(",", ",@").Prepend("@");
 
                 PropertyInfo[] properties = typeof(T).GetProperties();
 
                 using (DbCommand command = connection.CreateCommand())
                 {
-                    string commandText = string.Format(INSERT_INTO_FORMAT, tableName, fieldNames, parameterNames);
+                    string commandText = string.Format(
+                        INSERT_INTO_FORMAT,
+                        encloseIdentifier(tableName),
+                        fieldNames,
+                        parameterNames);
+
                     command.CommandType = CommandType.Text;
                     command.CommandText = commandText;
 
@@ -201,29 +186,17 @@ namespace Kore.Data.Common
                         parameter.ParameterName = string.Concat("@", mapping.Value);
                         PropertyInfo property = properties.Single(p => p.Name == mapping.Key);
                         parameter.DbType = Kore.Data.DataTypeConvertor.GetDbType(property.GetType());
-                        parameter.Value = GetFormattedValue(property.PropertyType, property.GetValue(entity, null));
+                        //parameter.Value = GetFormattedValue(property.PropertyType, property.GetValue(entity, null));
+                        parameter.Value = property.GetValue(entity, null);
                         command.Parameters.Add(parameter);
                     });
 
-                    bool alreadyOpen = (connection.State != ConnectionState.Closed);
-
-                    if (!alreadyOpen)
-                    {
-                        connection.Open();
-                    }
-
                     int rowsAffected = command.ExecuteNonQuery();
-
-                    if (!alreadyOpen)
-                    {
-                        connection.Close();
-                    }
-
-                    transactionScope.Complete();
+                    //transactionScope.Complete();
 
                     return rowsAffected;
                 }
-            }
+            //}
         }
 
         /// <summary>
@@ -234,12 +207,10 @@ namespace Kore.Data.Common
         /// <param name="connection">This DbConnection.</param>
         /// <param name="entities">The entities to persist to Sql database.</param>
         /// <param name="tableName">The table to insert the entities into.</param>
-        public static void InsertCollection<T>(this DbConnection connection, IEnumerable<T> entities, string tableName)
+        public static void InsertCollection<T>(this DbConnection connection, IEnumerable<T> entities, string tableName, Func<string, string> encloseIdentifier)
         {
-            Dictionary<string, string> mappings = typeof(T).GetProperties()
-                .ToDictionary(k => k.Name, v => v.Name);
-
-            connection.InsertCollection(entities, tableName, mappings);
+            var mappings = typeof(T).GetProperties().ToDictionary(k => k.Name, v => v.Name);
+            connection.InsertCollection(entities, tableName, mappings, encloseIdentifier);
         }
 
         /// <summary>
@@ -254,19 +225,28 @@ namespace Kore.Data.Common
         ///     <para>A Dictionary to use to map properties to Sql columns.</para>
         ///     <para>Key = Property Name, Value = Sql Column Name.</para>
         /// </param>
-        public static void InsertCollection<T>(this DbConnection connection, IEnumerable<T> entities, string tableName, IDictionary<string, string> mappings)
+        public static void InsertCollection<T>(
+            this DbConnection connection,
+            IEnumerable<T> entities,
+            string tableName,
+            IDictionary<string, string> mappings,
+            Func<string, string> encloseIdentifier)
         {
             //using (var transactionScope = new TransactionScope()) //MySQL doesn't like this...
             //{
-            const string INSERT_INTO_FORMAT = "INSERT INTO {0}({1}) VALUES({2})";
-            string fieldNames = mappings.Values.Join(",");
-            string parameterNames = fieldNames.Replace(",", ",@").Prepend("@");
+            string fieldNames = mappings.Values.Select(x => encloseIdentifier(x)).Join(",");
+            string parameterNames = mappings.Values.Join(",").Replace(",", ",@").Prepend("@");
 
             var properties = typeof(T).GetProperties();
 
             using (var command = connection.CreateCommand())
             {
-                string commandText = string.Format(INSERT_INTO_FORMAT, tableName, fieldNames, parameterNames);
+                string commandText = string.Format(
+                    INSERT_INTO_FORMAT,
+                    encloseIdentifier(tableName),
+                    fieldNames,
+                    parameterNames);
+
                 command.CommandType = CommandType.Text;
                 command.CommandText = commandText;
 
@@ -278,6 +258,55 @@ namespace Kore.Data.Common
                     parameter.DbType = DataTypeConvertor.GetDbType(property.PropertyType);
                     command.Parameters.Add(parameter);
                 });
+                
+                foreach (T entity in entities)
+                {
+                    properties.ForEach(property =>
+                    {
+                        command.Parameters["@" + property.Name].Value = property.GetValue(entity, null);
+
+                        //command.Parameters["@" + property.Name].Value =
+                        //    GetFormattedValue(property.PropertyType, property.GetValue(entity, null));
+                    });
+                    command.ExecuteNonQuery();
+                }
+
+                //    transactionScope.Complete();
+                //}
+            }
+        }
+
+        public static void InsertDataTable(
+            this DbConnection connection,
+            DataTable table,
+            string tableName,
+            IDictionary<string, string> mappings,
+            Func<string, string> encloseIdentifier)
+        {
+            string fieldNames = mappings.Values.Select(x => encloseIdentifier(x)).Join(",");
+            string parameterNames = mappings.Values.Join(",").Replace(",", ",@").Prepend("@");
+
+            var columns = table.Columns.OfType<DataColumn>().Select(x => new { x.ColumnName, x.DataType });
+
+            using (var command = connection.CreateCommand())
+            {
+                string commandText = string.Format(
+                    INSERT_INTO_FORMAT,
+                    tableName,
+                    fieldNames,
+                    parameterNames);
+
+                command.CommandType = CommandType.Text;
+                command.CommandText = commandText;
+
+                mappings.ForEach(mapping =>
+                {
+                    var parameter = command.CreateParameter();
+                    parameter.ParameterName = string.Concat("@", mapping.Value);
+                    var column = columns.Single(x => x.ColumnName == mapping.Key);
+                    parameter.DbType = DataTypeConvertor.GetDbType(column.DataType);
+                    command.Parameters.Add(parameter);
+                });
 
                 bool alreadyOpen = (connection.State != ConnectionState.Closed);
 
@@ -286,22 +315,21 @@ namespace Kore.Data.Common
                     connection.Open();
                 }
 
-                foreach (T entity in entities)
+                foreach (DataRow row in table.Rows)
                 {
-                    properties.ForEach(property =>
+                    foreach (DataColumn column in table.Columns)
                     {
-                        command.Parameters["@" + property.Name].Value =
-                            GetFormattedValue(property.PropertyType, property.GetValue(entity, null));
-                    });
+                        command.Parameters["@" + column.ColumnName].Value = row[column];
+
+                        //command.Parameters["@" + column.ColumnName].Value =
+                        //    GetFormattedValue(column.DataType, row[column]);
+                    }
                     command.ExecuteNonQuery();
                 }
 
-                if (!alreadyOpen)
-                {
-                    connection.Close();
-                }
-
-                //    transactionScope.Complete();
+                //if (!alreadyOpen)
+                //{
+                //    connection.Close();
                 //}
             }
         }
@@ -348,39 +376,21 @@ namespace Kore.Data.Common
             }
         }
 
-        private static string GetFormattedValue(Type type, object value)
-        {
-            if (value == null)
-            {
-                return "NULL";
-            }
+        //private static string GetFormattedValue(Type type, object value)
+        //{
+        //    if (value == null || value == DBNull.Value)
+        //    {
+        //        return "NULL";
+        //    }
 
-            switch (type.Name)
-            {
-                case "Boolean": return (bool)value ? "1" : "0";
-
-                case "String": return ((string)value).Replace("'", "''");
-                case "DateTime": return ((DateTime)value).ToISO8601DateString();
-
-                //case "String": return ((string)value).Replace("'", "''").AddSingleQuotes();
-                //case "DateTime": return ((DateTime)value).ToISO8601DateString().AddSingleQuotes();
-
-                case "Byte":
-                case "Decimal":
-                case "Double":
-                case "Int16":
-                case "Int32":
-                case "Int64":
-                case "SByte":
-                case "Single":
-                case "UInt16":
-                case "UInt32":
-                case "UInt64": return value.ToString();
-
-                case "DBNull": return "NULL";
-
-                default: return value.ToString().AddSingleQuotes();
-            }
-        }
+        //    switch (type.Name)
+        //    {
+        //        case "Boolean": return (bool)value ? "1" : "0";
+        //        case "String": return ((string)value).Replace("'", "''");
+        //        case "DateTime": return ((DateTime)value).ToISO8601DateString();
+        //        case "DBNull": return "NULL";
+        //        default: return value.ToString();
+        //    }
+        //}
     }
 }

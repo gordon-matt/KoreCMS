@@ -19,8 +19,9 @@ namespace Kore.Data.PostgreSql
                 throw new ArgumentException("Specified connection is not an NpgsqlConnection.", "connection");
             }
 
-            var mySqlConnection = connection as NpgsqlConnection;
-            return mySqlConnection.GetTableNames().Contains(tableName);
+            var npgsqlConnection = connection as NpgsqlConnection;
+            // TODO: Allow any schema and make "public" the default
+            return npgsqlConnection.GetTableNames(schema: "dbo").Contains(tableName);
         }
 
         public DbConnection CreateConnection(string connectionString)

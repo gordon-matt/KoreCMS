@@ -165,6 +165,7 @@
     <Compile Include="Data\Common\SqlDbTypeConverter.cs" />
     <Compile Include="Data\Common\SystemTypeConverter.cs" />
     <Compile Include="Data\DataColumnCollectionExtensions.cs" />
+    <Compile Include="Data\DataColumnExtensions.cs" />
     <Compile Include="Data\DataSetExtensions.cs" />
     <Compile Include="Data\DataTableExtensions.cs" />
     <Compile Include="Data\DataTypeConvertor.cs" />

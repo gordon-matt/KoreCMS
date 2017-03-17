@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
+using Kore.Data.Common;
 using Npgsql;
 using NpgsqlTypes;
 
@@ -12,9 +13,14 @@ namespace Kore.Data.PostgreSql
 {
     public static class NpgsqlConnectionExtensions
     {
+        public static int GetRowCount(this NpgsqlConnection connection, string schema, string tableName)
+        {
+            return (int)connection.ExecuteScalar<long>(string.Format(@"SELECT COUNT(*) FROM {0}.""{1}""", schema, tableName));
+        }
+
         public static IEnumerable<string> GetDatabaseNames(this NpgsqlConnection connection)
         {
-            const string CMD_SELECT_DATABASE_NAMES = "SELECT datname FROM pg_database;";
+            const string CMD_SELECT_DATABASE_NAMES = "SELECT datname FROM pg_database ORDER BY datname;";
             var databaseNames = new List<string>();
 
             bool alreadyOpen = (connection.State != ConnectionState.Closed);
@@ -46,7 +52,7 @@ namespace Kore.Data.PostgreSql
             return databaseNames;
         }
 
-        public static IEnumerable<string> GetTableNames(this NpgsqlConnection connection, bool includeViews = false)
+        public static IEnumerable<string> GetTableNames(this NpgsqlConnection connection, bool includeViews = false, string schema = "public")
         {
             string query = string.Empty;
 
@@ -54,14 +60,14 @@ namespace Kore.Data.PostgreSql
             {
                 query = @"SELECT table_name
 FROM information_schema.tables
-WHERE table_schema = 'dbo'
+WHERE table_schema = '{0}'
 ORDER BY table_name";
             }
             else
             {
                 query = @"SELECT table_name
 FROM information_schema.tables
-WHERE table_schema = 'dbo'
+WHERE table_schema = '{0}'
 AND table_type = 'BASE TABLE'
 ORDER BY table_name";
             }
@@ -78,7 +84,7 @@ ORDER BY table_name";
             using (var command = connection.CreateCommand())
             {
                 command.CommandType = CommandType.Text;
-                command.CommandText = query;
+                command.CommandText = string.Format(query, schema);
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -97,7 +103,7 @@ ORDER BY table_name";
             return tables;
         }
 
-        public static ForeignKeyInfoCollection GetForeignKeyData(this NpgsqlConnection connection, string tableName)
+        public static ForeignKeyInfoCollection GetForeignKeyData(this NpgsqlConnection connection, string tableName, string schema = "public")
         {
             const string CMD_FOREIGN_KEYS_FORMAT =
 @"SELECT
@@ -156,10 +162,10 @@ ORDER BY 1,2,3,4";
             return foreignKeyData;
         }
 
-        public static ColumnInfoCollection GetColumnData(this NpgsqlConnection connection, string tableName)
+        public static ColumnInfoCollection GetColumnData(this NpgsqlConnection connection, string tableName, string schema = "public")
         {
             const string CMD_COLUMN_INFO_FORMAT =
-@"SELECT ""column_name"", ""column_default"", ""data_type"", ""character_maximum_length"", ""is_nullable""
+@"SELECT ""column_name"", ""column_default"", ""data_type"", ""character_maximum_length"", ""is_nullable"", ""ordinal_position"", ""numeric_precision"", ""numeric_scale""
 FROM information_schema.""columns""
 WHERE TABLE_NAME = '{0}';";
 
@@ -211,59 +217,65 @@ AND tc.""constraint_type"" = 'PRIMARY KEY'";
                             //{
                             try
                             {
-                                // TODO: SqlDbType won't work for PG!! Need to update this ASAP... get System.Type from PG type
                                 string type = reader.GetString(2).ToLowerInvariant();
                                 switch (type)
                                 {
-                                    case "bigint": columnInfo.DataType = typeof(long); break;
-                                    case "bigserial": columnInfo.DataType = typeof(long); break;
-                                    case "bit": columnInfo.DataType = typeof(bool); break;
-                                    case "bit varying": columnInfo.DataType = typeof(BitArray); break;
-                                    case "boolean": columnInfo.DataType = typeof(bool); break;
-                                    case "box": columnInfo.DataType = typeof(NpgsqlBox); break;
-                                    case "bytea": columnInfo.DataType = typeof(byte[]); break;
-                                    case "character": columnInfo.DataType = typeof(string); break;
-                                    case "character varying": columnInfo.DataType = typeof(string); break;
-                                    case "cidr": columnInfo.DataType = typeof(NpgsqlInet); break;
-                                    case "circle": columnInfo.DataType = typeof(NpgsqlCircle); break;
-                                    case "date": columnInfo.DataType = typeof(DateTime); break;
-                                    case "double precision": columnInfo.DataType = typeof(double); break;
-                                    case "inet": columnInfo.DataType = typeof(IPAddress); break;
-                                    case "integer": columnInfo.DataType = typeof(int); break;
-                                    case "interval": columnInfo.DataType = typeof(TimeSpan); break;
-                                    case "json": columnInfo.DataType = typeof(string); break;
-                                    case "line": columnInfo.DataType = typeof(NpgsqlLine); break;
-                                    case "lseg": columnInfo.DataType = typeof(NpgsqlLSeg); break;
-                                    case "macaddr": columnInfo.DataType = typeof(PhysicalAddress); break;
-                                    case "money": columnInfo.DataType = typeof(decimal); break;
-                                    case "numeric": columnInfo.DataType = typeof(decimal); break;
-                                    case "path": columnInfo.DataType = typeof(NpgsqlPath); break;
-                                    case "point": columnInfo.DataType = typeof(NpgsqlPoint); break;
-                                    case "polygon": columnInfo.DataType = typeof(NpgsqlPolygon); break;
-                                    case "real": columnInfo.DataType = typeof(float); break;
-                                    case "smallint": columnInfo.DataType = typeof(short); break;
-                                    case "smallserial": columnInfo.DataType = typeof(short); break;
-                                    case "serial": columnInfo.DataType = typeof(int); break;
-                                    case "text": columnInfo.DataType = typeof(string); break;
-                                    case "time without time zone": columnInfo.DataType = typeof(TimeSpan); break;
-                                    case "time with time zone": columnInfo.DataType = typeof(DateTimeOffset); break;
-                                    case "timestamp without time zone": columnInfo.DataType = typeof(DateTime); break;
-                                    case "timestamp with time zone": columnInfo.DataType = typeof(DateTime); break;
-                                    case "tsquery": columnInfo.DataType = typeof(NpgsqlTsQuery); break;
-                                    case "tsvector": columnInfo.DataType = typeof(NpgsqlTsVector); break;
-                                    case "txid_snapshot": columnInfo.DataType = typeof(object); break;
-                                    case "uuid": columnInfo.DataType = typeof(Guid); break;
-                                    case "xml": columnInfo.DataType = typeof(string); break;
-                                    default: columnInfo.DataType = typeof(object); break;
+                                    case "bigint": columnInfo.DataType = DbType.Int64; break;
+                                    case "bigserial": columnInfo.DataType = DbType.Int64; break;
+                                    case "bit": columnInfo.DataType = DbType.Boolean; break;
+                                    case "bit varying": columnInfo.DataType = DbType.Binary; break;
+                                    case "boolean": columnInfo.DataType = DbType.Boolean; break;
+                                    case "box": columnInfo.DataType = DbType.Object; break;
+                                    case "bytea": columnInfo.DataType = DbType.Binary; break;
+                                    case "character": columnInfo.DataType = DbType.String; break;
+                                    case "character varying": columnInfo.DataType = DbType.String; break;
+                                    case "cidr": columnInfo.DataType = DbType.Object; break;
+                                    case "circle": columnInfo.DataType = DbType.Object; break;
+                                    case "date": columnInfo.DataType = DbType.DateTime; break;
+                                    case "double precision": columnInfo.DataType = DbType.Double; break;
+                                    case "inet": columnInfo.DataType = DbType.Object; break;
+                                    case "integer": columnInfo.DataType = DbType.Int32; break;
+                                    case "interval": columnInfo.DataType = DbType.Time; break;
+                                    case "json": columnInfo.DataType = DbType.String; break;
+                                    case "line": columnInfo.DataType = DbType.Object; break;
+                                    case "lseg": columnInfo.DataType = DbType.Object; break;
+                                    case "macaddr": columnInfo.DataType = DbType.Object; break;
+                                    case "money": columnInfo.DataType = DbType.Decimal; break;
+                                    case "numeric": columnInfo.DataType = DbType.Decimal; break;
+                                    case "path": columnInfo.DataType = DbType.Object; break;
+                                    case "point": columnInfo.DataType = DbType.Object; break;
+                                    case "polygon": columnInfo.DataType = DbType.Object; break;
+                                    case "real": columnInfo.DataType = DbType.Single; break;
+                                    case "smallint": columnInfo.DataType = DbType.Int16; break;
+                                    case "smallserial": columnInfo.DataType = DbType.Int16; break;
+                                    case "serial": columnInfo.DataType = DbType.Int32; break;
+                                    case "text": columnInfo.DataType = DbType.String; break;
+                                    case "time without time zone": columnInfo.DataType = DbType.Time; break;
+                                    case "time with time zone": columnInfo.DataType = DbType.DateTimeOffset; break;
+                                    case "timestamp without time zone": columnInfo.DataType = DbType.DateTime; break;
+                                    case "timestamp with time zone": columnInfo.DataType = DbType.DateTime; break;
+                                    case "tsquery": columnInfo.DataType = DbType.Object; break;
+                                    case "tsvector": columnInfo.DataType = DbType.Object; break;
+                                    case "txid_snapshot": columnInfo.DataType = DbType.Object; break;
+                                    case "uuid": columnInfo.DataType = DbType.Guid; break;
+                                    case "xml": columnInfo.DataType = DbType.Xml; break;
+                                    default: columnInfo.DataType = DbType.Object; break;
                                 }
                             }
                             catch (ArgumentNullException)
                             {
-                                columnInfo.DataType = typeof(object);
+                                columnInfo.DataType = DbType.Object;
                             }
                             catch (ArgumentException)
                             {
-                                columnInfo.DataType = typeof(object);
+                                columnInfo.DataType = DbType.Object;
+                            }
+
+                            if (columnInfo.DefaultValue != null &&
+                                columnInfo.DefaultValue.Contains("nextval"))
+                            {
+                                columnInfo.IsAutoIncremented = true;
+                                columnInfo.DefaultValue = string.Empty;
                             }
 
                             //}
@@ -278,6 +290,15 @@ AND tc.""constraint_type"" = 'PRIMARY KEY'";
                                 else
                                 { columnInfo.IsNullable = true; }
                             }
+
+                            if (!reader.IsDBNull(5))
+                            { columnInfo.OrdinalPosition = reader.GetInt32(5); }
+
+                            if (!reader.IsDBNull(6))
+                            { columnInfo.Precision = reader.GetInt32(6); }
+
+                            if (!reader.IsDBNull(7))
+                            { columnInfo.Scale = reader.GetInt32(7); }
 
                             list.Add(columnInfo);
                         }
@@ -327,9 +348,9 @@ AND tc.""constraint_type"" = 'PRIMARY KEY'";
             return list;
         }
 
-        public static ColumnInfoCollection GetColumnData(this NpgsqlConnection connection, string tableName, IEnumerable<string> columnNames)
+        public static ColumnInfoCollection GetColumnData(this NpgsqlConnection connection, string tableName, IEnumerable<string> columnNames, string schema = "public")
         {
-            var data = from x in connection.GetColumnData(tableName)
+            var data = from x in connection.GetColumnData(tableName, schema: schema)
                        where columnNames.Contains(x.ColumnName)
                        select x;
 

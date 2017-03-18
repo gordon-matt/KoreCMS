@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
 using Kore.Localization;
+using Kore.Web.ContentManagement.Areas.Admin.Media;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Http.OData;
@@ -138,6 +139,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         {
             entity.DateCreatedUtc = DateTime.UtcNow;
             entity.DateModifiedUtc = DateTime.UtcNow;
+            entity.Fields = MediaHelper.EnsureCorrectUrls(entity.Fields);
             return await base.Post(entity);
         }
 
@@ -178,7 +180,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                         Status = currentVersion.Status,
                         Title = entity.Title,
                         Slug = entity.Slug,
-                        Fields = entity.Fields,
+                        Fields = MediaHelper.EnsureCorrectUrls(entity.Fields),
                         DateCreatedUtc = DateTime.UtcNow,
                         DateModifiedUtc = DateTime.UtcNow,
                     };
@@ -210,6 +212,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     entity.TenantId = currentVersion.TenantId;
                     entity.DateCreatedUtc = currentVersion.DateCreatedUtc;
                     entity.DateModifiedUtc = DateTime.UtcNow;
+                    entity.Fields = MediaHelper.EnsureCorrectUrls(entity.Fields);
                     await Service.UpdateAsync(entity);
                 }
             }

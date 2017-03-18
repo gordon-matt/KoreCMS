@@ -9,6 +9,7 @@ using Kore.Collections;
 using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Services;
+using Kore.Web.ContentManagement.Areas.Admin.Media;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
 
@@ -63,6 +64,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
             entity.TenantId = tenantId;
             entity.DateCreatedUtc = DateTime.UtcNow;
             entity.UserId = workContext.Value.CurrentUser.Id;
+            entity.FullDescription = MediaHelper.EnsureCorrectUrls(entity.FullDescription);
 
             var tags = entity.Tags;
             entity.Tags = null;
@@ -94,6 +96,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
             var currentEntry = await Service.FindOneAsync(entity.Id);
             entity.UserId = currentEntry.UserId;
             entity.DateCreatedUtc = currentEntry.DateCreatedUtc;
+            entity.FullDescription = MediaHelper.EnsureCorrectUrls(entity.FullDescription);
             var result = await base.Put(key, entity);
 
             if (!entity.Tags.IsNullOrEmpty())

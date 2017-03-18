@@ -167,6 +167,7 @@
     <Compile Include="Areas\Admin\ContentBlocks\Services\IEntityTypeContentBlockService.cs" />
     <Compile Include="Areas\Admin\Localization\Models\LanguagePackFile.cs" />
     <Compile Include="Areas\Admin\Media\ContentBlocks\VideoBlock.cs" />
+    <Compile Include="Areas\Admin\Media\MediaHelper.cs" />
     <Compile Include="Areas\Admin\Media\Models\MediaFile.cs" />
     <Compile Include="Areas\Admin\Media\Models\MediaFolder.cs" />
     <Compile Include="Areas\Admin\Media\Services\IMediaPathProvider.cs" />

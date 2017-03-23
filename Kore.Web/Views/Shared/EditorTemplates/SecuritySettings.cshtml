@@ -21,10 +21,10 @@
         viewModel.enableXsrfProtectionForFrontend = ko.observable(false);
 
         if (data) {
-            if (data.PublicKey) {
+            if (data.EnableXsrfProtectionForAdmin && typeof data.EnableXsrfProtectionForAdmin === 'boolean') {
                 viewModel.enableXsrfProtectionForAdmin(data.EnableXsrfProtectionForAdmin);
             }
-            if (data.PrivateKey) {
+            if (data.EnableXsrfProtectionForFrontend && typeof data.EnableXsrfProtectionForFrontend === 'boolean') {
                 viewModel.enableXsrfProtectionForFrontend(data.EnableXsrfProtectionForFrontend);
             }
         }

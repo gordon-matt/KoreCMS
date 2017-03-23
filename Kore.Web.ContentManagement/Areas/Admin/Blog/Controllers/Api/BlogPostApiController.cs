@@ -50,6 +50,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 
         public override async Task<IHttpActionResult> Post(BlogPost entity)
         {
+            int tenantId = GetTenantId();
+            entity.TenantId = tenantId;
+
             if (!CanModifyEntity(entity))
             {
                 return Unauthorized();
@@ -60,8 +63,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
                 return BadRequest(ModelState);
             }
 
-            int tenantId = GetTenantId();
-            entity.TenantId = tenantId;
             entity.DateCreatedUtc = DateTime.UtcNow;
             entity.UserId = workContext.Value.CurrentUser.Id;
             entity.FullDescription = MediaHelper.EnsureCorrectUrls(entity.FullDescription);
@@ -94,6 +95,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
         public override async Task<IHttpActionResult> Put([FromODataUri] Guid key, BlogPost entity)
         {
             var currentEntry = await Service.FindOneAsync(entity.Id);
+            entity.TenantId = currentEntry.TenantId;
             entity.UserId = currentEntry.UserId;
             entity.DateCreatedUtc = currentEntry.DateCreatedUtc;
             entity.FullDescription = MediaHelper.EnsureCorrectUrls(entity.FullDescription);

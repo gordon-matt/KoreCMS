@@ -4,28 +4,28 @@ namespace Kore
 {
     public static class DateTimeExtensions
     {
-        public static bool IsNullOrDefault(this DateTime? dateTime)
+        public static bool IsNullOrDefault(this DateTime? source)
         {
-            return dateTime == null || dateTime == default(DateTime);
+            return source == null || source == default(DateTime);
         }
 
-        public static string ToISO8601DateString(this DateTime dateTime)
+        public static string ToISO8601DateString(this DateTime source)
         {
-            return dateTime.ToString("yyyy-MM-ddTHH:mm:ss.fff");
+            return source.ToString("yyyy-MM-ddTHH:mm:ss.fff");
         }
 
         public static DateTime ParseUnixTimestamp(int unixTimestamp)
         {
-            return new DateTime(1970, 1, 1, 0, 0, 0, 0)
+            return new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                 .AddSeconds(unixTimestamp)
                 .ToLocalTime();
         }
 
-        public static string ToRelative(this DateTime dateTime, bool convertToUserTime = false, string defaultFormat = null)
+        public static string ToRelative(this DateTime source, bool convertToUserTime = false, string defaultFormat = null)
         {
             string result;
 
-            var ts = new TimeSpan(DateTime.UtcNow.Ticks - dateTime.Ticks);
+            var ts = new TimeSpan(DateTime.UtcNow.Ticks - source.Ticks);
             var delta = ts.TotalSeconds;
 
             if (delta > 0)
@@ -74,7 +74,7 @@ namespace Kore
             }
             else
             {
-                DateTime tmp1 = dateTime;
+                DateTime tmp1 = source;
                 if (convertToUserTime)
                 {
                     //TODO
@@ -82,7 +82,7 @@ namespace Kore
                 }
 
                 //default formatting
-                if (!String.IsNullOrEmpty(defaultFormat))
+                if (!string.IsNullOrEmpty(defaultFormat))
                 {
                     result = tmp1.ToString(defaultFormat);
                 }
@@ -94,9 +94,9 @@ namespace Kore
             return result;
         }
 
-        public static double ToUnixTimestamp(this DateTime dateTime)
+        public static double ToUnixTimestamp(this DateTime source)
         {
-            return (dateTime - new DateTime(1970, 1, 1).ToLocalTime()).TotalSeconds * 1000;
+            return (source - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).ToLocalTime()).TotalSeconds * 1000;
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Kore
         /// </returns>
         public static DateTime BeginningThisMonth(this DateTime source)
         {
-            return new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
+            return new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0, source.Kind);
         }
 
         /// <summary>
@@ -127,24 +127,29 @@ namespace Kore
             {
                 dateTime = dateTime.AddDays(-1.0);
             }
-            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 0, 0, 0);
+            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 0, 0, 0, source.Kind);
         }
 
-        public static DateTime StartOfWeek(this DateTime dt, DayOfWeek startOfWeek)
+        public static DateTime StartOfWeek(this DateTime source, DayOfWeek startOfWeek)
         {
-            var diff = dt.DayOfWeek - startOfWeek;
+            var diff = source.DayOfWeek - startOfWeek;
             if (diff < 0)
             {
                 diff += 7;
             }
 
-            return dt.AddDays(-1 * diff).Date;
+            return source.AddDays(-1 * diff).Date;
         }
 
-        public static DateTime EndOfWeek(this DateTime dt, DayOfWeek endOfWeek)
+        public static DateTime EndOfWeek(this DateTime source, DayOfWeek endOfWeek)
         {
-            var diff = endOfWeek - dt.DayOfWeek;
-            return dt.AddDays(diff).Date;
+            var diff = endOfWeek - source.DayOfWeek;
+            return source.AddDays(diff).Date;
+        }
+
+        public static DateTime StartOfMonth(this DateTime source)
+        {
+            return new DateTime(source.Year, source.Month, 1, 0, 0, 0, source.Kind);
         }
     }
 }

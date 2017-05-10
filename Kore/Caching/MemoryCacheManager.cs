@@ -12,10 +12,7 @@ namespace Kore.Caching
     {
         protected ObjectCache Cache
         {
-            get
-            {
-                return MemoryCache.Default;
-            }
+            get { return MemoryCache.Default; }
         }
 
         /// <summary>
@@ -38,10 +35,11 @@ namespace Kore.Caching
         public virtual void Set(string key, object data, int cacheTimeInMinutes)
         {
             if (data == null)
+            {
                 return;
+            }
 
-            var policy = new CacheItemPolicy();
-            policy.AbsoluteExpiration = DateTime.Now + TimeSpan.FromMinutes(cacheTimeInMinutes);
+            var policy = new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(cacheTimeInMinutes) };
             Cache.Add(new CacheItem(key, data), policy);
         }
 
@@ -74,8 +72,12 @@ namespace Kore.Caching
             var keysToRemove = new List<String>();
 
             foreach (var item in Cache)
+            {
                 if (regex.IsMatch(item.Key))
+                {
                     keysToRemove.Add(item.Key);
+                }
+            }
 
             foreach (string key in keysToRemove)
             {
@@ -89,7 +91,9 @@ namespace Kore.Caching
         public virtual void Clear()
         {
             foreach (var item in Cache)
+            {
                 Remove(item.Key);
+            }
         }
     }
 }

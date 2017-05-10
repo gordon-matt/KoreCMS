@@ -66,7 +66,7 @@ namespace Kore.Web.Security.Membership.Permissions
 
                     foreach (var role in rolesToExamine)
                     {
-                        var rolePermissions = AsyncHelper.RunSync(() => membershipService.GetPermissionsForRole(workContext.CurrentTenant.Id, role));
+                        var rolePermissions = AsyncHelper.RunSync(() => membershipService.GetPermissionsForRole(user.TenantId, role));
                         foreach (var rolePermission in rolePermissions)
                         {
                             string possessedName = rolePermission.Name;

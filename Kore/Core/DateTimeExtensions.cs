@@ -151,5 +151,10 @@ namespace Kore
         {
             return new DateTime(source.Year, source.Month, 1, 0, 0, 0, source.Kind);
         }
+
+        public static DateTime StartOfYear(this DateTime source)
+        {
+            return new DateTime(source.Year, 1, 1, 0, 0, 0, source.Kind);
+        }
     }
 }

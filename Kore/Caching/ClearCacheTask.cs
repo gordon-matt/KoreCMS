@@ -1,4 +1,5 @@
-﻿using Kore.Tasks;
+﻿using Kore.Infrastructure;
+using Kore.Tasks;
 
 namespace Kore.Caching
 {
@@ -19,8 +20,11 @@ namespace Kore.Caching
 
         public void Execute()
         {
-            var cacheManager = new MemoryCacheManager();
-            cacheManager.Clear();
+            var staticCacheManager = EngineContext.Current.ResolveNamed<ICacheManager>("Kore_Cache_Static");
+            staticCacheManager.Clear();
+
+            var perRequestCacheManager = EngineContext.Current.ResolveNamed<ICacheManager>("Kore_Cache_Per_Request");
+            perRequestCacheManager.Clear();
         }
     }
 }

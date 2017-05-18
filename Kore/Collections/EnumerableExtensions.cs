@@ -492,7 +492,8 @@ namespace Kore.Collections
             {
                 foreach (PropertyInfo p in properties)
                 {
-                    string value = p.GetValue(row).ToString();
+                    var rawValue = p.GetValue(row);
+                    string value = rawValue == null ? "NULL" : rawValue.ToString();
 
                     sb.Append(value.Contains(",") ? value.AddDoubleQuotes() : value);
 

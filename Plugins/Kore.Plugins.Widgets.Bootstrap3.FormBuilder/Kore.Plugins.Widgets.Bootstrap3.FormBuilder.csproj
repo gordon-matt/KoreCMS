@@ -87,6 +87,7 @@
     <Compile Include="ContentBlocks\FormBuilderBlock.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <Content Include="Scripts\data\buttons.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -176,7 +176,6 @@
     <Compile Include="SystemUserAttributeNames.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <Content Include="Content\images\topic-type1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

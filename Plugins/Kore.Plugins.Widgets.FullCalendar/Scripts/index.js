@@ -193,8 +193,8 @@
                 Id: self.id(),
                 CalendarId: self.calendarId(),
                 Name: self.name(),
-                StartDateTime: startDateTime.format('YYYY-MM-DDTHH:mm'),
-                EndDateTime: endDateTime.format('YYYY-MM-DDTHH:mm')
+                StartDateTime: startDateTime.format('YYYY-MM-DDTHH:mm:00Z'),
+                EndDateTime: endDateTime.format('YYYY-MM-DDTHH:mm:00Z')
             };
 
             if (isNew) {

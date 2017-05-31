@@ -1,10 +1,10 @@
 ﻿namespace Kore.Data.ElasticSearch
 {
     public class ElasticProvider<T> : ElasticSearchProvider<T>
-        where T : class, IEntity
+        where T : class
     {
-        public ElasticProvider(string connectionString) :
-            base(connectionString)
+        public ElasticProvider(string connectionString, string indexPrefix) :
+            base(connectionString, indexPrefix)
         {
         }
     }

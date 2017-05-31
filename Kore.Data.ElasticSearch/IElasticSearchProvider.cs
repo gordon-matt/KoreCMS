@@ -6,8 +6,10 @@ using Nest;
 namespace Kore.Data.ElasticSearch
 {
     public interface IElasticSearchProvider<T>
-        where T : class, IEntity
+        where T : class
     {
+        bool Any(IEnumerable<Func<QueryContainerDescriptor<T>, QueryContainer>> filters);
+
         ISearchResponse<T> Find(Func<SearchDescriptor<T>, ISearchRequest> selector);
 
         Task<ISearchResponse<T>> FindAsync(Func<SearchDescriptor<T>, ISearchRequest> selector);

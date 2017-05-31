@@ -58,7 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ElasticProvider.cs" />
-    <Compile Include="ElasticSearchModule.cs" />
     <Compile Include="ElasticSearchProvider.cs" />
     <Compile Include="IElasticSearchProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -13,17 +13,17 @@ namespace Kore.Data.ElasticSearch
         protected ElasticSearchProvider(string connectionString, string indexPrefix)
         {
             ConnectionString = connectionString;
-            DefaultIndex = string.Concat(indexPrefix, "_", typeof(T).Name.ToLowerInvariant());
+            IndexName = string.Concat(indexPrefix, "_", typeof(T).Name.ToLowerInvariant());
 
             var uri = new Uri(ConnectionString);
             var settings = new ConnectionSettings(uri);
-            settings.DefaultIndex(DefaultIndex);
+            settings.DefaultIndex(IndexName);
             client = new ElasticClient(settings);
         }
 
         protected string ConnectionString { get; }
 
-        protected string DefaultIndex { get; }
+        protected string IndexName { get; }
 
         public bool Any(IEnumerable<Func<QueryContainerDescriptor<T>, QueryContainer>> filters)
         {
@@ -54,7 +54,7 @@ namespace Kore.Data.ElasticSearch
         public IDeleteResponse Delete(T entity)
         {
             var documentPath = new DocumentPath<T>(entity);
-            return client.Delete(documentPath, x => x.Index(DefaultIndex));
+            return client.Delete(documentPath, x => x.Index(IndexName));
         }
 
         public IBulkResponse Delete(IEnumerable<T> entities)
@@ -65,7 +65,7 @@ namespace Kore.Data.ElasticSearch
         public async Task<IDeleteResponse> DeleteAsync(T entity)
         {
             var documentPath = new DocumentPath<T>(entity);
-            return await client.DeleteAsync(documentPath, x => x.Index(DefaultIndex));
+            return await client.DeleteAsync(documentPath, x => x.Index(IndexName));
         }
 
         public async Task<IBulkResponse> DeleteAsync(IEnumerable<T> entities)
@@ -80,22 +80,22 @@ namespace Kore.Data.ElasticSearch
 
         public IIndexResponse InsertOrUpdate(T entity)
         {
-            return client.Index(entity, x => x.Index(DefaultIndex));
+            return client.Index(entity, x => x.Index(IndexName));
         }
 
         public IBulkResponse InsertOrUpdate(IEnumerable<T> entities)
         {
-            return client.IndexMany(entities, DefaultIndex);
+            return client.IndexMany(entities, IndexName);
         }
 
         public async Task<IIndexResponse> InsertOrUpdateAsync(T entity)
         {
-            return await client.IndexAsync(entity, x => x.Index(DefaultIndex));
+            return await client.IndexAsync(entity, x => x.Index(IndexName));
         }
 
         public async Task<IBulkResponse> InsertOrUpdateAsync(IEnumerable<T> entities)
         {
-            return await client.IndexManyAsync(entities, DefaultIndex);
+            return await client.IndexManyAsync(entities, IndexName);
         }
     }
 }

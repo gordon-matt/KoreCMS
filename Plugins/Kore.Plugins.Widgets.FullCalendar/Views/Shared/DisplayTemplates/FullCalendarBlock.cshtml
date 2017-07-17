@@ -13,7 +13,7 @@
 
     string lang = WorkContext.CurrentCultureCode.LeftOf('-');
     
-    if (lang != "en")
+    if (!string.IsNullOrEmpty(lang) && lang != "en")
     {
         Script.IncludePluginScript("fullcalendar-2.3.1/lang/" + lang + ".js");
     }

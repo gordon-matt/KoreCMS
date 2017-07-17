@@ -220,7 +220,9 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                     continue;
                 }
 
-                var contentBlocksByZone = contentBlocks.Where(x => x.ZoneId == zone.Id);
+                var contentBlocksByZone = contentBlocks.Where(x => x.ZoneId == zone.Id).ToList();
+                var contentBlocksByZoneForAllPages = contentBlockService.GetContentBlocks(zone.Name, WorkContext.CurrentCultureCode);
+                contentBlocksByZone.AddRange(contentBlocksByZoneForAllPages);
 
                 string html = RenderRazorPartialViewToString("Kore.Web.ContentManagement.Views.Frontend.ContentBlocksByZone", contentBlocksByZone);
 

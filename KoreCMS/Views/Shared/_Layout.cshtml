@@ -2,8 +2,8 @@
 @{
     Style.IncludeBundle("kore-icons");
     Style.Include("forums.css");
-    
-    Script.IncludeBundle("jquery", 0);
+
+    //Script.IncludeBundle("jquery", 0); // Temporarily moved to <head>. See note there.
     Script.IncludeBootstrap();
     Script.IncludeBundle("jqueryval");
     Script.IncludeBundle("kore/jqueryval");
@@ -50,6 +50,8 @@
             }
         </style>
     }
+    @* Temporary solution for jQuery form builder (and possibly other blocks in future). We need to find some way to load scripts for those at the bottom *@
+    <script type="text/javascript" src="@Script.GetBundleUrl("jquery")"></script>
 </head>
 <body dir="@dir">
     <div class="navbar navbar-default navbar-fixed-top">

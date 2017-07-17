@@ -9,33 +9,28 @@
     string formId = "form-block-" + Model.Id;
 }
 
-@Html.Hidden("Metadata", Model.Metadata)
-
 <form id="@formId" method="post" action="@Url.Action("Save", "FormBlock", new { area = string.Empty })" enctype="multipart/form-data">
     @Html.HiddenFor(m => m.Id)
     @Html.HiddenFor(m => m.ThankYouMessage)
     @Html.HiddenFor(m => m.RedirectUrl)
     @Html.HiddenFor(m => m.EmailAddress)
     @Html.Hidden("ContentBlockTitle", Model.Title)
-    <div class="fb-render"></div>
+    <div id="render-wrap"></div>
 </form>
 
 <script type="text/javascript" src="/Plugins/Widgets.JQueryFormBuilder/Scripts/form-render.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.fb-render').formRender({
-            dataType: 'json',
-            formData: $('#Metadata').val()
+        if (!window.jQuery) {
+            document.write('<script type="text/javascript" src="@Script.GetBundleUrl("jquery")"><\/script>');
+        }
+        $('#render-wrap').formRender({
+            formData: @Html.Raw(Model.Metadata)
         });
     });
 </script>
 @if (Model.UseAjax)
 {
-    <script type="text/javascript">
-        if (!window.jQuery) {
-            document.write('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"><\/script>');
-        }
-    </script>
     <script type="text/javascript">
         $("#@formId").submit(function (e) {
             $.ajax({

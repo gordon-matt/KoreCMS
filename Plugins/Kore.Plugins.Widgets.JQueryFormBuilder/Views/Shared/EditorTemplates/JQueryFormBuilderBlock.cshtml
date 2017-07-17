@@ -1,10 +1,20 @@
 ﻿@using Kore.Plugins.Widgets.JQueryFormBuilder
 @using Kore.Plugins.Widgets.JQueryFormBuilder.ContentBlocks
+@using Kore.Web.Mvc.KoreUI
 @model JQueryFormBuilderBlock
 
 <div id="block-content">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div id="build-wrap"></div>
+        @using (var panel = Html.KoreUI().Begin(new Panel()))
+        {
+            using (var header = panel.BeginHeader("Form Builder"))
+            {
+            }
+            using (var body = panel.BeginBody())
+            {
+                <div id="build-wrap"></div>
+            }
+        }
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -61,13 +71,16 @@
             var data = ko.mapping.fromJSON(blockModel.blockValues());
 
             var fbEditor = document.getElementById('build-wrap');
-            $(fbEditor).formBuilder();
-            var formBuilder = $(fbEditor).formBuilder();
+            blockModel.formBuilder = $(fbEditor).formBuilder({ showActionButtons: false });
 
             if (data) {
                 if (data.Metadata) {
-                    blockModel.metadata(data.Metadata());
-                    formBuilder.actions.setData(data.Metadata());
+                    var metadata = data.Metadata();
+                    blockModel.metadata(metadata);
+
+                    blockModel.formBuilder.promise.then(function (fb) {
+                        fb.actions.setData(metadata);
+                    });
                 }
                 if (data.ThankYouMessage) {
                     blockModel.thankYouMessage(data.ThankYouMessage());
@@ -93,11 +106,11 @@
             delete blockModel.emailAddress;
             delete blockModel.useAjax;
             delete blockModel.tinyMCEConfig;
+            delete blockModel.formBuilder;
         };
         f.onBeforeSave = function (blockModel) {
             var fbEditor = document.getElementById('build-wrap');
-            var formBuilder = $(fbEditor).formBuilder();
-            var fbMetadata = formBuilder.actions.getData('json', true);
+            var fbMetadata = blockModel.formBuilder.actions.getData('json', true);
 
             console.log('source: ' + fbMetadata);
             blockModel.metadata(fbMetadata);

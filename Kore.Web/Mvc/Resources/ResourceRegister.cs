@@ -140,13 +140,13 @@ namespace Kore.Web.Mvc.Resources
             throw new UnregisteredBundleException(bundleUrl);
         }
 
-        public string ThemePath(string virtualPath)
-        {
-            var virtualBasePath = VirtualBasePath.Replace("~/", string.Empty);
-            var path = string.Format("~/Themes/{0}/{1}/{2}", workContext.CurrentDesktopTheme, virtualBasePath, virtualPath);
-            var urlHelper = EngineContext.Current.Resolve<UrlHelper>();
-            return urlHelper.Content(path);
-        }
+        //public string ThemePath(string virtualPath)
+        //{
+        //    var virtualBasePath = VirtualBasePath.Replace("~/", string.Empty);
+        //    var path = string.Format("~/Themes/{0}/{1}/{2}", workContext.CurrentDesktopTheme, virtualBasePath, virtualPath);
+        //    var urlHelper = EngineContext.Current.Resolve<UrlHelper>();
+        //    return urlHelper.Content(path);
+        //}
 
         protected abstract string BuildInlineResources(IEnumerable<string> resources);
 

@@ -1,10 +1,8 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Web;
 using Kore.Data;
 using Kore.EntityFramework;
 using Kore.Infrastructure;
-using Kore.Web.Infrastructure;
 using Kore.Web.Models;
 
 namespace Kore.Web.Installation
@@ -21,7 +19,7 @@ namespace Kore.Web.Installation
         /// </summary>
         private static string ConnectionStringWAFormat = @"Server={0};Initial Catalog={1};Integrated Security=True;Persist Security Info=True;MultipleActiveResultSets=True";
 
-        public static void Install<TContext>(HttpRequestBase httpRequest, InstallationModel model) where TContext : DbContext, IKoreDbContext, ISupportSeed, new()
+        public static void Install<TContext>(InstallationModel model) where TContext : DbContext, IKoreDbContext, ISupportSeed, new()
         {
             var dataSettings = EngineContext.Current.Resolve<DataSettings>();
 

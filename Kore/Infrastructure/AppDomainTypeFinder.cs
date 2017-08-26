@@ -242,7 +242,8 @@ namespace Kore.Infrastructure
         /// <param name="assemblies"></param>
         private void AddAssembliesInAppDomain(List<string> addedAssemblyNames, List<Assembly> assemblies)
         {
-            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            var referencedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (Assembly assembly in referencedAssemblies)
             {
                 if (Matches(assembly.FullName))
                 {

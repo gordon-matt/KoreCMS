@@ -278,7 +278,7 @@ namespace Kore.Collections
 
             foreach (var column in columns)
             {
-                table.Columns.Add(new DataColumn(column.ToString()));
+                table.Columns.Add(new DataColumn(column == null ? null : column.ToString()));
             }
 
             var rows = source

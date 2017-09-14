@@ -168,7 +168,6 @@
     <Content Include="Content\font\revicons.woff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\DisplayTemplates\RevolutionSliderBlock.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

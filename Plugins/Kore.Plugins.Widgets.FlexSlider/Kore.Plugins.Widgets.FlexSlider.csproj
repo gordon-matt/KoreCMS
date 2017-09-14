@@ -131,7 +131,6 @@
     <Content Include="Content\FlexSlider\fonts\flexslider-icon.woff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\DisplayTemplates\FlexSliderBlock.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

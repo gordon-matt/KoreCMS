@@ -38,7 +38,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
-            builder.RegisterType<DbSeeder>().As<IDbSeeder>().InstancePerDependency();
+            //builder.RegisterType<DbSeeder>().As<IDbSeeder>().InstancePerDependency();
 
             builder.RegisterType<DurandalRouteProvider>().As<IDurandalRouteProvider>().SingleInstance();
 

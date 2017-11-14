@@ -31,14 +31,17 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
     public class PageVersionService : GenericDataService<PageVersion>, IPageVersionService
     {
         private readonly IRepository<Page> pageRepository;
+        private readonly PageSettings pageSettings;
 
         public PageVersionService(
             ICacheManager cacheManager,
             IRepository<PageVersion> repository,
-            IRepository<Page> pageRepository)
+            IRepository<Page> pageRepository,
+            PageSettings pageSettings)
             : base(cacheManager, repository)
         {
             this.pageRepository = pageRepository;
+            this.pageSettings = pageSettings;
         }
 
         #region IPageVersionService Members
@@ -119,7 +122,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
 
         #endregion
 
-        private static PageVersion GetCurrentVersionInternal(
+        private PageVersion GetCurrentVersionInternal(
             Guid pageId,
             IEnumerable<PageVersion> pageVersions,
             string cultureCode = null)
@@ -149,6 +152,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                 {
                     return localizedVersion;
                 }
+            }
+            
+            if (!pageSettings.ShowInvariantVersionIfLocalizedUnavailable)
+            {
+                return null;
             }
 
             var invariantVersions = pageVersions

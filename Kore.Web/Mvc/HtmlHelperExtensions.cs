@@ -17,6 +17,7 @@ using Kore.Security.Membership;
 using Kore.Tenants.Services;
 using Kore.Threading;
 using Kore.Web.Collections;
+using Kore.Web.Configuration;
 using Kore.Web.Mvc.Controls;
 using Kore.Web.Mvc.KoreUI;
 using Kore.Web.Mvc.KoreUI.Providers;
@@ -789,9 +790,6 @@ namespace Kore.Web.Mvc
             return html.DropDownListFor(expression, selectList, htmlAttributes);
         }
 
-
-
-
         public MvcHtmlString TenantsCheckBoxList(
             string name,
             IEnumerable<string> selectedTenantIds,
@@ -822,8 +820,12 @@ namespace Kore.Web.Mvc
             }
         }
 
-
-        private static IEnumerable<SelectListItem> GetLanguages(string selectedValue = null, string emptyText = null, bool includeInvariant = false, string invariantText = null)
+        private static IEnumerable<SelectListItem> GetLanguages(
+            string selectedValue = null,
+            string emptyText = null,
+            bool includeInvariant = false,
+            string invariantText = null,
+            bool includeDefault = false)
         {
             var languageManager = EngineContext.Current.Resolve<ILanguageManager>();
             var workContext = EngineContext.Current.Resolve<IWorkContext>();
@@ -838,6 +840,17 @@ namespace Kore.Web.Mvc
                 else
                 {
                     languages.Insert(0, new Language { CultureCode = null, Name = invariantText });
+                }
+            }
+
+            if (!includeDefault)
+            {
+                string defaultLanguageCultureCode = EngineContext.Current.Resolve<KoreSiteSettings>().DefaultLanguage;
+                var match = languages.FirstOrDefault(x => x.CultureCode == defaultLanguageCultureCode);
+
+                if (match != null)
+                {
+                    languages.Remove(match);
                 }
             }
 

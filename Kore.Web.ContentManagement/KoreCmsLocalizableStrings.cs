@@ -358,6 +358,7 @@
             public static class Pages
             {
                 public const string NumberOfPageVersionsToKeep = "Kore.Web.ContentManagement/Settings.Pages.NumberOfPageVersionsToKeep";
+                public const string ShowInvariantVersionIfLocalizedUnavailable = "Kore.Web.ContentManagement/Settings.Pages.ShowInvariantVersionIfLocalizedUnavailable";
             }
         }
 

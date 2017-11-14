@@ -9,6 +9,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
         public PageSettings()
         {
             NumberOfPageVersionsToKeep = 5;
+            ShowInvariantVersionIfLocalizedUnavailable = true;
         }
 
         #region ISettings Members
@@ -32,5 +33,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 
         [LocalizedDisplayName(KoreCmsLocalizableStrings.Settings.Pages.NumberOfPageVersionsToKeep)]
         public short NumberOfPageVersionsToKeep { get; set; }
+
+        [LocalizedDisplayName(KoreCmsLocalizableStrings.Settings.Pages.ShowInvariantVersionIfLocalizedUnavailable)]
+        public bool ShowInvariantVersionIfLocalizedUnavailable { get; set; }
     }
 }

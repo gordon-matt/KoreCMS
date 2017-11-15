@@ -63,7 +63,7 @@
             <div role="tabpanel" class="tab-pane" id="Localization">
                 <div class="form-group">
                     @Html.LabelFor(m => m.DefaultLanguage)
-                    @Html.Kore().LanguagesDropDownListFor(m => m.DefaultLanguage, new { @class = "form-control", data_bind = "value: defaultLanguage" })
+                    @Html.Kore().LanguagesDropDownListFor(m => m.DefaultLanguage, new { @class = "form-control", data_bind = "value: defaultLanguage" }, includeDefault: true)
                     @Html.ValidationMessageFor(m => m.DefaultLanguage)
                 </div>
             </div>

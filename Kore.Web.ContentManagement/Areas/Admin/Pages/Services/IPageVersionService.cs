@@ -152,11 +152,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                 {
                     return localizedVersion;
                 }
-            }
-            
-            if (!pageSettings.ShowInvariantVersionIfLocalizedUnavailable)
-            {
-                return null;
+
+                if (!pageSettings.ShowInvariantVersionIfLocalizedUnavailable)
+                {
+                    return null;
+                }
             }
 
             var invariantVersions = pageVersions

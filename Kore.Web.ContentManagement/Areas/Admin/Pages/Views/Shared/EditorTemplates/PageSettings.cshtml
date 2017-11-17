@@ -18,14 +18,14 @@
 <script type="text/javascript">
     function updateModel(viewModel, data) {
         viewModel.numberOfPageVersionsToKeep = ko.observable("");
-        viewModel.showInvariantVersionIfLocalizedUnavailable = ko.observable(true);
+        viewModel.showInvariantVersionIfLocalizedUnavailable = ko.observable(false);
         
         if (data) {
             if (data.NumberOfPageVersionsToKeep) {
                 viewModel.numberOfPageVersionsToKeep(data.NumberOfPageVersionsToKeep);
             }
 
-            if (data.ShowInvariantVersionIfLocalizedUnavailable) {
+            if (data.ShowInvariantVersionIfLocalizedUnavailable && (typeof data.ShowInvariantVersionIfLocalizedUnavailable === 'boolean')) {
                 viewModel.showInvariantVersionIfLocalizedUnavailable(data.ShowInvariantVersionIfLocalizedUnavailable);
             }
         }

@@ -595,8 +595,16 @@
                     self.roles([]);
                 }
 
+                var getCurrentVersionUrl = "/odata/kore/cms/PageVersionApi/Default.GetCurrentVersion(pageId=" + self.id() + ",cultureCode=";
+                if (self.parent.currentCulture) {
+                    getCurrentVersionUrl += "'" + self.parent.currentCulture + "')";
+                }
+                else {
+                    getCurrentVersionUrl += "null)";
+                }
+
                 $.ajax({
-                    url: "/odata/kore/cms/PageVersionApi/Default.GetCurrentVersion(pageId=" + self.id() + ",cultureCode='" + self.parent.currentCulture + "')",
+                    url: getCurrentVersionUrl,
                     type: "GET",
                     dataType: "json",
                     async: false

@@ -319,7 +319,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 pageId,
                 cultureCode,
                 enabledOnly: false,
-                shownOnMenusOnly: false);
+                shownOnMenusOnly: false,
+                forceGetInvariantIfLocalizedUnavailable: true);
 
             if (currentVersion == null)
             {

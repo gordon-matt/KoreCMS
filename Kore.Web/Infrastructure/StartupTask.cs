@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Kore.Collections;
 using Kore.Configuration.Domain;
 using Kore.Data;
 using Kore.Infrastructure;
+using Kore.Localization.Domain;
+using Kore.Localization.Services;
 using Kore.Security.Membership;
 using Kore.Tenants.Domain;
 using Kore.Tenants.Services;
@@ -206,42 +209,56 @@ namespace Kore.Web.Infrastructure
             var allSettings = EngineContext.Current.ResolveAll<ISettings>();
             var allSettingNames = allSettings.Select(x => x.Name).ToList();
 
-            #region NULL Tenant (In case we want default settings)
+            var settingService = EngineContext.Current.Resolve<ISettingService>();
+            var dataSettings = EngineContext.Current.Resolve<DataSettings>();
+            var languageService = EngineContext.Current.Resolve<ILanguageService>();
 
-            var installedSettings = settingsRepository.Find(x => x.TenantId == null);
-            var installedSettingNames = installedSettings.Select(x => x.Name).ToList();
+            // TODO: Probably need to remove NULL tenant in future... (from everything)
+            //#region NULL Tenant (In case we want default settings)
 
-            var settingsToAdd = allSettings.Where(x => x.IsTenantRestricted && !installedSettingNames.Contains(x.Name)).Select(x => new Setting
-            {
-                Id = Guid.NewGuid(),
-                TenantId = null,
-                Name = x.Name,
-                Type = x.GetType().FullName,
-                Value = Activator.CreateInstance(x.GetType()).ToJson()
-            }).ToList();
+            //var installedSettings = settingsRepository.Find(x => x.TenantId == null);
+            //var installedSettingNames = installedSettings.Select(x => x.Name).ToList();
 
-            if (!settingsToAdd.IsNullOrEmpty())
-            {
-                settingsRepository.Insert(settingsToAdd);
-            }
+            //bool hasSettings = installedSettings.Any();
 
-            var settingsToDelete = installedSettings.Where(x => !allSettingNames.Contains(x.Name)).ToList();
+            //var settingsToAdd = allSettings.Where(x => x.IsTenantRestricted && !installedSettingNames.Contains(x.Name)).Select(x => new Setting
+            //{
+            //    Id = Guid.NewGuid(),
+            //    TenantId = null,
+            //    Name = x.Name,
+            //    Type = x.GetType().FullName,
+            //    Value = Activator.CreateInstance(x.GetType()).ToJson()
+            //}).ToList();
 
-            if (!settingsToDelete.IsNullOrEmpty())
-            {
-                settingsRepository.Delete(settingsToDelete);
-            }
+            //if (!settingsToAdd.IsNullOrEmpty())
+            //{
+            //    settingsRepository.Insert(settingsToAdd);
+            //}
 
-            #endregion NULL Tenant (In case we want default settings)
+            //var settingsToDelete = installedSettings.Where(x => !allSettingNames.Contains(x.Name)).ToList();
+
+            //if (!settingsToDelete.IsNullOrEmpty())
+            //{
+            //    settingsRepository.Delete(settingsToDelete);
+            //}
+
+            //if (!hasSettings)
+            //{
+            //    EnsureDefaultSiteSettings(settingService, dataSettings, languageService, null);
+            //}
+
+            //#endregion NULL Tenant (In case we want default settings)
 
             #region Tenants
 
             foreach (var tenantId in tenantIds)
             {
-                installedSettings = settingsRepository.Find(x => x.TenantId == tenantId);
-                installedSettingNames = installedSettings.Select(x => x.Name).ToList();
+                var installedSettings = settingsRepository.Find(x => x.TenantId == tenantId);
+                var installedSettingNames = installedSettings.Select(x => x.Name).ToList();
 
-                settingsToAdd = allSettings.Where(x => !x.IsTenantRestricted && !installedSettingNames.Contains(x.Name)).Select(x => new Setting
+                bool hasSettings = installedSettings.Any();
+
+                var settingsToAdd = allSettings.Where(x => !x.IsTenantRestricted && !installedSettingNames.Contains(x.Name)).Select(x => new Setting
                 {
                     Id = Guid.NewGuid(),
                     TenantId = tenantId,
@@ -255,15 +272,63 @@ namespace Kore.Web.Infrastructure
                     settingsRepository.Insert(settingsToAdd);
                 }
 
-                settingsToDelete = installedSettings.Where(x => !allSettingNames.Contains(x.Name)).ToList();
+                var settingsToDelete = installedSettings.Where(x => !allSettingNames.Contains(x.Name)).ToList();
 
                 if (!settingsToDelete.IsNullOrEmpty())
                 {
                     settingsRepository.Delete(settingsToDelete);
                 }
+
+                if (!hasSettings)
+                {
+                    EnsureDefaultSiteSettings(settingService, dataSettings, languageService, tenantId);
+                }
             }
 
             #endregion Tenants
+        }
+
+        private static void EnsureDefaultSiteSettings(
+            ISettingService settingService,
+            DataSettings dataSettings,
+            ILanguageService languageService,
+            int? tenantId)
+        {
+            #region First ensure that the language exists
+
+            string name = CultureInfo.GetCultureInfo(dataSettings.DefaultLanguage).DisplayName;
+
+            var existing = languageService.FindOne(x =>
+                x.TenantId == tenantId &&
+                x.Name == name &&
+                x.CultureCode == dataSettings.DefaultLanguage);
+
+            if (existing != null && !existing.IsEnabled)
+            {
+                existing.IsEnabled = true;
+                languageService.Update(existing);
+            }
+            else
+            {
+                languageService.Insert(new Language
+                {
+                    Id = Guid.NewGuid(),
+                    TenantId = tenantId,
+                    Name = name,
+                    CultureCode = dataSettings.DefaultLanguage,
+                    IsEnabled = true
+                });
+            }
+
+            #endregion First ensure that the language exists
+
+            #region Then set it as the default
+
+            var siteSettings = settingService.GetSettings<KoreSiteSettings>(tenantId);
+            siteSettings.DefaultLanguage = dataSettings.DefaultLanguage;
+            settingService.SaveSettings(siteSettings, tenantId);
+
+            #endregion Then set it as the default
         }
 
         public int Order

@@ -56,6 +56,7 @@ namespace Kore.Web.Installation
             dataSettings.AdminEmail = model.AdminEmail;
             dataSettings.AdminPassword = model.AdminPassword;
             dataSettings.CreateSampleData = model.CreateSampleData;
+            dataSettings.DefaultLanguage = model.DefaultLanguage;
 
             DataSettingsManager.SaveSettings(dataSettings);
 

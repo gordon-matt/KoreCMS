@@ -4,6 +4,11 @@ namespace Kore.Web.Models
 {
     public class InstallationModel
     {
+        public InstallationModel()
+        {
+            DefaultLanguage = "en-US";
+        }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Admin Email")]
@@ -43,5 +48,9 @@ namespace Kore.Web.Models
 
         [Display(Name = "Create Sample Data")]
         public bool CreateSampleData { get; set; }
+
+        [Required]
+        [Display(Name = "Default Language")]
+        public string DefaultLanguage { get; set; }
     }
 }

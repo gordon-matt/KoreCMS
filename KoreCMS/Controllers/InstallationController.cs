@@ -15,6 +15,7 @@ namespace KoreCMS.Controllers
             var model = new InstallationModel
             {
                 AdminEmail = "admin@yourSite.com",
+                DefaultLanguage = "en-US"
             };
             return View(model);
         }

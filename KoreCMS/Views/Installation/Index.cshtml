@@ -75,6 +75,24 @@
                     }
                     using (var panel = Html.KoreUI().Begin(new Panel()))
                     {
+                        using (var header = panel.BeginHeader("Default Settings"))
+                        {
+                        }
+                        using (var body = panel.BeginBody())
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.DefaultLanguage, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                        @Html.CulturesDropDownListFor(m => m.DefaultLanguage, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    using (var panel = Html.KoreUI().Begin(new Panel()))
+                    {
                         using (var header = panel.BeginHeader("Database"))
                         {
                         }

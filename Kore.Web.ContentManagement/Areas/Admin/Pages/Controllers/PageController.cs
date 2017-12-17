@@ -144,7 +144,14 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         {
             var currentCulture = WorkContext.CurrentCultureCode;
             var tenantId = WorkContext.CurrentTenant.Id;
-            var pageVersion = pageVersionService.Value.GetCurrentVersion(tenantId, pageId, currentCulture, false, false);
+
+            var pageVersion = pageVersionService.Value.GetCurrentVersion(
+                tenantId,
+                pageId,
+                currentCulture, 
+                enabledOnly: false,
+                shownOnMenusOnly: false,
+                allowReturnDraftVersion: true);
 
             return await PagePreview(pageVersion);
         }

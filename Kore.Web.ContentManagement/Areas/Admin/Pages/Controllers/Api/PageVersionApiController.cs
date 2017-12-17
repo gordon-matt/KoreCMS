@@ -266,7 +266,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 versionToRestore.PageId,
                 versionToRestore.CultureCode,
                 enabledOnly: false,
-                shownOnMenusOnly: false);
+                shownOnMenusOnly: false,
+                allowReturnDraftVersion: true);
 
             if (current == null)
             {
@@ -320,6 +321,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 cultureCode,
                 enabledOnly: false,
                 shownOnMenusOnly: false,
+                allowReturnDraftVersion: true,
                 forceGetInvariantIfLocalizedUnavailable: true);
 
             if (currentVersion == null)

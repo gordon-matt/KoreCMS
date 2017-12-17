@@ -19,6 +19,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             string cultureCode = null,
             bool enabledOnly = true,
             bool shownOnMenusOnly = true,
+            bool allowReturnDraftVersion = false,
             bool forceGetInvariantIfLocalizedUnavailable = false);
 
         IEnumerable<PageVersion> GetCurrentVersions(
@@ -28,6 +29,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             bool shownOnMenusOnly = true,
             bool topLevelOnly = false,
             Guid? parentId = null,
+            bool allowReturnDraftVersion = false,
             bool forceGetInvariantIfLocalizedUnavailable = false);
     }
 
@@ -68,6 +70,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             string cultureCode = null,
             bool enabledOnly = true,
             bool shownOnMenusOnly = true,
+            bool allowReturnDraftVersion = false,
             bool forceGetInvariantIfLocalizedUnavailable = false)
         {
             using (var pageVersionConnection = OpenConnection())
@@ -84,7 +87,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                     query = query.Where(x => x.Page.ShowOnMenus);
                 }
 
-                return GetCurrentVersionInternal(pageId, query, cultureCode, forceGetInvariantIfLocalizedUnavailable);
+                return GetCurrentVersionInternal(
+                    pageId, query, cultureCode, allowReturnDraftVersion, forceGetInvariantIfLocalizedUnavailable);
             }
         }
 
@@ -95,6 +99,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             bool shownOnMenusOnly = true,
             bool topLevelOnly = false,
             Guid? parentId = null,
+            bool allowReturnDraftVersion = false,
             bool forceGetInvariantIfLocalizedUnavailable = false)
         {
             ICollection<Page> pages = null;
@@ -133,7 +138,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                     .ToHashSet();
 
                 return pages
-                    .Select(x => GetCurrentVersionInternal(x.Id, pageVersions, cultureCode, forceGetInvariantIfLocalizedUnavailable))
+                    .Select(x => GetCurrentVersionInternal(
+                        x.Id, pageVersions, cultureCode, allowReturnDraftVersion, forceGetInvariantIfLocalizedUnavailable))
                     .Where(x => x != null);
             }
         }
@@ -152,6 +158,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             Guid pageId,
             IEnumerable<PageVersion> pageVersions,
             string cultureCode = null,
+            bool allowReturnDraftVersion = false,
             bool forceGetInvariantIfLocalizedUnavailable = false)
         {
             // The default culture is ALWAYS treated as the invariant, so if the requested culture is the same as the default, then
@@ -169,7 +176,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                         .OrderByDescending(x => x.DateModifiedUtc)
                         .FirstOrDefault();
 
-                if (localizedVersion == null)
+                if (localizedVersion == null && allowReturnDraftVersion)
                 {
                     localizedVersion = localizedVersions
                         .Where(x => x.Status == VersionStatus.Draft)
@@ -200,7 +207,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                 .OrderByDescending(x => x.DateModifiedUtc)
                 .FirstOrDefault();
 
-            if (publishedVersion == null)
+            if (publishedVersion == null && allowReturnDraftVersion)
             {
                 return invariantVersions
                     .Where(x => x.Status == VersionStatus.Draft)

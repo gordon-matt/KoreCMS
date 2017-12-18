@@ -102,13 +102,6 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                            <div class="checkbox">
-                                <label>
-                                    @Html.CheckBox("ShowOnMenus", new { data_bind = "checked: pageModel.showOnMenus" }) @T(KoreCmsLocalizableStrings.Pages.PageModel.ShowOnMenus)
-                                </label>
-                            </div>
-                        </div>
                     </fieldset>
                 </form>
             }
@@ -138,11 +131,21 @@
                             </div>
                         </div>
 
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <div class="checkbox">
                                     <label>
                                         @Html.CheckBox("Version_IsDraft", new { data_bind = "checked: pageVersionModel.isDraft" }) @T(KoreCmsLocalizableStrings.Pages.PageVersionModel.IsDraft)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBox("Version_ShowOnMenus", new { data_bind = "checked: pageVersionModel.showOnMenus" }) @T(KoreCmsLocalizableStrings.Pages.PageVersionModel.ShowOnMenus)
                                     </label>
                                 </div>
                             </div>
@@ -198,6 +201,10 @@
                         <tr>
                             <th>@T(KoreCmsLocalizableStrings.Pages.PageVersionModel.CultureCode)</th>
                             <td><span data-bind="html: pageVersionModel.cultureCode"></span></td>
+                        </tr>
+                        <tr>
+                            <th>@T(KoreCmsLocalizableStrings.Pages.PageVersionModel.ShowOnMenus)</th>
+                            <td><span data-bind="html: pageVersionModel.showOnMenus"></span></td>
                         </tr>
                     </tbody>
                 </table>

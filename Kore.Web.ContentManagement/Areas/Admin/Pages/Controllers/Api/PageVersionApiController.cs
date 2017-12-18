@@ -112,6 +112,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                         Title = currentVersion.Title,
                         Slug = currentVersion.Slug,
                         Fields = currentVersion.Fields,
+                        ShowOnMenus = currentVersion.ShowOnMenus
                     };
                     await Service.InsertAsync(backup);
 
@@ -181,6 +182,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                         Title = entity.Title,
                         Slug = entity.Slug,
                         Fields = MediaHelper.EnsureCorrectUrls(entity.Fields),
+                        ShowOnMenus = entity.ShowOnMenus,
                         DateCreatedUtc = DateTime.UtcNow,
                         DateModifiedUtc = DateTime.UtcNow,
                     };
@@ -203,6 +205,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                             Title = currentVersion.Title,
                             Slug = currentVersion.Slug,
                             Fields = currentVersion.Fields,
+                            ShowOnMenus = currentVersion.ShowOnMenus
                         };
                         await Service.InsertAsync(backup);
 
@@ -213,6 +216,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     entity.DateCreatedUtc = currentVersion.DateCreatedUtc;
                     entity.DateModifiedUtc = DateTime.UtcNow;
                     entity.Fields = MediaHelper.EnsureCorrectUrls(entity.Fields);
+                    entity.ShowOnMenus = currentVersion.ShowOnMenus;
                     await Service.UpdateAsync(entity);
                 }
             }
@@ -287,6 +291,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 Title = current.Title,
                 Slug = current.Slug,
                 Fields = current.Fields,
+                ShowOnMenus = current.ShowOnMenus
             };
             await Service.InsertAsync(backup);
 
@@ -300,6 +305,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
             current.Title = versionToRestore.Title;
             current.Slug = versionToRestore.Slug;
             current.Fields = versionToRestore.Fields;
+            current.ShowOnMenus = versionToRestore.ShowOnMenus;
 
             await Service.UpdateAsync(current);
 
@@ -337,7 +343,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                 Status = currentVersion.Status,
                 Title = currentVersion.Title,
                 Slug = currentVersion.Slug,
-                Fields = currentVersion.Fields
+                Fields = currentVersion.Fields,
+                ShowOnMenus = currentVersion.ShowOnMenus
             };
 
             return Ok(pageVersion);
@@ -390,5 +397,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
         public string Slug { get; set; }
 
         public string Fields { get; set; }
+
+        public bool ShowOnMenus { get; set; }
     }
 }

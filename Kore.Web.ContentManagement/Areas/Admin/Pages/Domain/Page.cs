@@ -25,8 +25,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
 
         public int Order { get; set; }
 
-        public bool ShowOnMenus { get; set; }
-
         public string AccessRestrictions { get; set; }
 
         public ICollection<PageVersion> Versions
@@ -55,7 +53,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
             Property(x => x.Name).IsRequired().HasMaxLength(255).IsUnicode(true);
             Property(x => x.IsEnabled).IsRequired();
             Property(x => x.Order).IsRequired();
-            Property(x => x.ShowOnMenus).IsRequired();
             Property(x => x.AccessRestrictions).HasMaxLength(1024).IsUnicode(false);
         }
 

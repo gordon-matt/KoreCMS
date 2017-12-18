@@ -305,7 +305,6 @@
                 public const string Order = "Kore.Web.ContentManagement/Pages.PageModel.Order";
                 public const string PageTypeId = "Kore.Web.ContentManagement/Pages.PageModel.PageTypeId";
                 public const string Roles = "Kore.Web.ContentManagement/Pages.PageModel.Roles";
-                public const string ShowOnMenus = "Kore.Web.ContentManagement/Pages.PageModel.ShowOnMenus";
             }
 
             public static class PageVersionModel
@@ -314,6 +313,7 @@
                 public const string DateCreated = "Kore.Web.ContentManagement/Pages.PageVersionModel.DateCreated";
                 public const string DateModified = "Kore.Web.ContentManagement/Pages.PageVersionModel.DateModified";
                 public const string IsDraft = "Kore.Web.ContentManagement/Pages.PageVersionModel.IsDraft";
+                public const string ShowOnMenus = "Kore.Web.ContentManagement/Pages.PageVersionModel.ShowOnMenus";
                 public const string Slug = "Kore.Web.ContentManagement/Pages.PageVersionModel.Slug";
                 public const string Status = "Kore.Web.ContentManagement/Pages.PageVersionModel.Status";
                 public const string Title = "Kore.Web.ContentManagement/Pages.PageVersionModel.Title";

@@ -100,7 +100,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
                     {
                         Name = T(KoreCmsLocalizableStrings.Pages.PageModel.Name).Text,
                         IsEnabled = T(KoreCmsLocalizableStrings.Pages.PageModel.IsEnabled).Text,
-                        ShowOnMenus = T(KoreCmsLocalizableStrings.Pages.PageModel.ShowOnMenus).Text,
                     },
                     PageType = new
                     {

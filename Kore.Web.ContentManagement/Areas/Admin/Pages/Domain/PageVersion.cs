@@ -28,6 +28,8 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
 
         public string Fields { get; set; }
 
+        public bool ShowOnMenus { get; set; }
+
         public virtual Page Page { get; set; }
 
         #region IEntity Members
@@ -61,6 +63,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Domain
             Property(x => x.Title).IsRequired().HasMaxLength(255).IsUnicode(true);
             Property(x => x.Slug).IsRequired().HasMaxLength(255).IsUnicode(true);
             Property(x => x.Fields).IsMaxLength().IsUnicode(true);
+            Property(x => x.ShowOnMenus).IsRequired();
 
             HasRequired(x => x.Page).WithMany(x => x.Versions).HasForeignKey(x => x.PageId);
         }

@@ -213,6 +213,7 @@
         self.title = ko.observable(null);
         self.slug = ko.observable(null);
         self.fields = ko.observable(null);
+        self.showOnMenus = ko.observable(true);
 
         self.isDraft = ko.observable(true);
 
@@ -253,7 +254,7 @@
                             fields: {
                                 Title: { type: "string" },
                                 DateModifiedUtc: { type: "date" },
-                                IsEnabled: { type: "boolean" }
+                                ShowOnMenus: { type: "boolean" }
                             }
                         }
                     },
@@ -286,7 +287,14 @@
                     field: "Slug",
                     title: self.parent.translations.Columns.PageVersion.Slug,
                     filterable: true
-                }, {
+                }, /*{
+                    field: "ShowOnMenus",
+                    title: self.parent.translations.Columns.Page.ShowOnMenus,
+                    template: '<i class="fa #=ShowOnMenus ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
+                    attributes: { "class": "text-center" },
+                    filterable: true,
+                    width: 70
+                },*/ {
                     field: "DateModifiedUtc",
                     title: self.parent.translations.Columns.PageVersion.DateModifiedUtc,
                     filterable: true,
@@ -349,7 +357,6 @@
         self.name = ko.observable(null);
         self.isEnabled = ko.observable(false);
         self.order = ko.observable(0);
-        self.showOnMenus = ko.observable(true);
 
         self.accessRestrictions = null;
         self.roles = ko.observableArray([]);
@@ -416,8 +423,7 @@
                             id: "Id",
                             fields: {
                                 Name: { type: "string" },
-                                IsEnabled: { type: "boolean" },
-                                ShowOnMenus: { type: "boolean" }
+                                IsEnabled: { type: "boolean" }
                             }
                         }
                     },
@@ -459,13 +465,6 @@
                     field: "IsEnabled",
                     title: self.parent.translations.Columns.Page.IsEnabled,
                     template: '<i class="fa #=IsEnabled ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
-                    attributes: { "class": "text-center" },
-                    filterable: true,
-                    width: 70
-                }, {
-                    field: "ShowOnMenus",
-                    title: self.parent.translations.Columns.Page.ShowOnMenus,
-                    template: '<i class="fa #=ShowOnMenus ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
                     attributes: { "class": "text-center" },
                     filterable: true,
                     width: 70
@@ -520,7 +519,6 @@
             self.name(null);
             self.isEnabled(false);
             self.order(0);
-            self.showOnMenus(true);
             self.accessRestrictions = null;
 
             self.roles([]);
@@ -541,6 +539,7 @@
             self.parent.pageVersionModel.title(null);
             self.parent.pageVersionModel.slug(null);
             self.parent.pageVersionModel.fields(null);
+            self.parent.pageVersionModel.showOnMenus(true);
 
             // Clean up from previously injected html/scripts
             if (self.parent.pageVersionModel.pageModelStub != null && typeof self.parent.pageVersionModel.pageModelStub.cleanUp === 'function') {
@@ -584,7 +583,6 @@
                 self.name(json.Name);
                 self.isEnabled(json.IsEnabled);
                 self.order(json.Order);
-                self.showOnMenus(json.ShowOnMenus);
                 self.accessRestrictions = ko.mapping.fromJSON(json.AccessRestrictions);
 
                 if (self.accessRestrictions.Roles != null) {
@@ -642,6 +640,7 @@
             self.parent.pageVersionModel.title(json.Title);
             self.parent.pageVersionModel.slug(json.Slug);
             self.parent.pageVersionModel.fields(json.Fields);
+            self.parent.pageVersionModel.showOnMenus(json.ShowOnMenus);
 
             if (json.Status == 'Draft') {
                 self.parent.pageVersionModel.isDraft(true);
@@ -747,7 +746,6 @@
                 Name: self.name(),
                 IsEnabled: self.isEnabled(),
                 Order: self.order(),
-                ShowOnMenus: self.showOnMenus(),
                 AccessRestrictions: JSON.stringify({
                     Roles: self.roles().join()
                 }),
@@ -828,6 +826,7 @@
                 Title: self.parent.pageVersionModel.title(),
                 Slug: self.parent.pageVersionModel.slug(),
                 Fields: self.parent.pageVersionModel.fields(),
+                ShowOnMenus: self.parent.pageVersionModel.showOnMenus()
             };
 
             // UPDATE only (no option for insert here)
@@ -964,8 +963,7 @@
                             id: "Id",
                             fields: {
                                 Name: { type: "string" },
-                                IsEnabled: { type: "boolean" },
-                                ShowOnMenus: { type: "boolean" }
+                                IsEnabled: { type: "boolean" }
                             }
                         }
                     },
@@ -1007,13 +1005,6 @@
                     field: "IsEnabled",
                     title: self.parent.translations.Columns.Page.IsEnabled,
                     template: '<i class="fa #=IsEnabled ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
-                    attributes: { "class": "text-center" },
-                    filterable: true,
-                    width: 70
-                }, {
-                    field: "ShowOnMenus",
-                    title: self.parent.translations.Columns.Page.ShowOnMenus,
-                    template: '<i class="fa #=ShowOnMenus ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
                     attributes: { "class": "text-center" },
                     filterable: true,
                     width: 70

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using System.Web.Mvc;
+using Kore.Collections;
 
 namespace Kore.Web
 {
@@ -43,7 +44,11 @@ namespace Kore.Web
             return new SelectList(values, "Id", "Name", selectedValue);
         }
 
-        public static SelectList ToSelectList<T>(object selectedValue = null, string emptyText = null, bool nameIsId = false) where T : struct
+        public static SelectList ToSelectList<T>(
+            object selectedValue = null,
+            string emptyText = null,
+            bool nameIsId = false,
+            params T[] ignore) where T : struct
         {
             if (!typeof(T).IsEnum)
             {
@@ -52,7 +57,14 @@ namespace Kore.Web
 
             int order;
 
-            var values = (from T e in Kore.EnumExtensions.GetValues<T>()
+            var query = Kore.EnumExtensions.GetValues<T>().AsEnumerable();
+
+            if (!ignore.IsNullOrEmpty())
+            {
+                query = query.Where(x => !ignore.Contains(x));
+            }
+
+            var values = (from T e in query
                           select new
                           {
                               Id = nameIsId ? e.ToString() : e.ConvertTo<int>().ToString(),

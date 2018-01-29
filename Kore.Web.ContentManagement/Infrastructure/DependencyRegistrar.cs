@@ -13,7 +13,7 @@ using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Localization;
 using Kore.Web.ContentManagement.Areas.Admin.Media.ContentBlocks;
-using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
+//using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging.Services;
@@ -142,10 +142,10 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
             #region Other: Media
 
-            builder.RegisterType<ConfigurationMimeTypeProvider>().As<IMimeTypeProvider>().InstancePerDependency();
-            builder.RegisterType<FileSystemStorageProvider>().As<IStorageProvider>().InstancePerDependency();
-            builder.RegisterType<MediaService>().As<IMediaService>().InstancePerDependency();
-            builder.RegisterType<MediaPathProvider>().As<IMediaPathProvider>().InstancePerDependency();
+            //builder.RegisterType<ConfigurationMimeTypeProvider>().As<IMimeTypeProvider>().InstancePerDependency();
+            //builder.RegisterType<FileSystemStorageProvider>().As<IStorageProvider>().InstancePerDependency();
+            //builder.RegisterType<MediaService>().As<IMediaService>().InstancePerDependency();
+            //builder.RegisterType<MediaPathProvider>().As<IMediaPathProvider>().InstancePerDependency();
 
             #endregion Other: Media
 

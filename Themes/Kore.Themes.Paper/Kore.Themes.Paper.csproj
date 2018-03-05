@@ -68,6 +68,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="theme.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

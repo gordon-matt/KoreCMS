@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using System.Web.OData.Extensions;
 using Kore.Infrastructure;
 using Kore.Web.Infrastructure;
 
@@ -10,6 +11,7 @@ namespace KoreCMS
         {
             // Web API routes
             config.MapHttpAttributeRoutes();
+            config.Select().Expand().Filter().OrderBy().MaxTop(null).Count();
 
             var registrars = EngineContext.Current.ResolveAll<IWebApiRegistrar>();
 

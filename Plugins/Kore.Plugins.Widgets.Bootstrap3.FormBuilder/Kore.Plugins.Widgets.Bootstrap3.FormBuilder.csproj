@@ -91,7 +91,6 @@
     <Compile Include="ContentBlocks\FormBuilderBlock.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <Content Include="FormBuilder\index.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

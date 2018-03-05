@@ -103,7 +103,6 @@
     <Compile Include="ContentBlocks\OwlCarouselBlock.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\DisplayTemplates\OwlCarouselBlock.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

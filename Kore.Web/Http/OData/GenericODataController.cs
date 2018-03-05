@@ -20,10 +20,12 @@ using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.Http.OData
 {
-    public abstract class GenericODataController<TEntity, TKey> : ODataController
+    public abstract class GenericODataController<TEntity, TKey> : ODataController, IDisposable
         where TEntity : class
     {
         #region Non-Public Properties
+
+        private IRepositoryConnection<TEntity> disposableConnection = null;
 
         protected IGenericDataService<TEntity> Service { get; private set; }
 
@@ -50,6 +52,30 @@ namespace Kore.Web.Http.OData
 
         #region Public Methods
 
+        //// GET: odata/<Entity>
+        ////[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
+        //public virtual async Task<IEnumerable<TEntity>> Get(ODataQueryOptions<TEntity> options)
+        //{
+        //    if (!CheckPermission(ReadPermission))
+        //    {
+        //        return Enumerable.Empty<TEntity>().AsQueryable();
+        //    }
+
+        //    options.Validate(new ODataValidationSettings()
+        //    {
+        //        AllowedQueryOptions = AllowedQueryOptions.All
+        //    });
+
+        //    using (var connection = Service.OpenConnection())
+        //    {
+        //        var query = connection.Query();
+        //        query = ApplyMandatoryFilter(query);
+        //        var results = options.ApplyTo(query);
+        //        return await (results as IQueryable<TEntity>).ToHashSetAsync();
+        //    }
+        //}
+
+        // NOTE: Change due to: https://github.com/OData/WebApi/issues/1235
         // GET: odata/<Entity>
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         public virtual async Task<IEnumerable<TEntity>> Get(ODataQueryOptions<TEntity> options)
@@ -64,13 +90,11 @@ namespace Kore.Web.Http.OData
                 AllowedQueryOptions = AllowedQueryOptions.All
             });
 
-            using (var connection = Service.OpenConnection())
-            {
-                var query = connection.Query();
-                query = ApplyMandatoryFilter(query);
-                var results = options.ApplyTo(query);
-                return await (results as IQueryable<TEntity>).ToHashSetAsync();
-            }
+            var connection = GetDisposableConnection();
+            var query = connection.Query();
+            query = ApplyMandatoryFilter(query);
+            var results = options.ApplyTo(query);
+            return await (results as IQueryable<TEntity>).ToHashSetAsync();
         }
 
         // GET: odata/<Entity>(5)
@@ -293,5 +317,60 @@ namespace Kore.Web.Http.OData
         }
 
         #endregion Non-Public Methods
+
+        protected IRepositoryConnection<TEntity> GetDisposableConnection()
+        {
+            if (disposableConnection == null)
+            {
+                disposableConnection = Service.OpenConnection();
+            }
+            return disposableConnection;
+        }
+
+        #region IDisposable Support
+
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects).
+                    if (disposableConnection != null)
+                    {
+                        disposableConnection.Dispose();
+                        disposableConnection = null;
+                    }
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // ~GenericODataController() {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        public new void Dispose()
+        {
+            //base.Dispose();
+
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            // GC.SuppressFinalize(this);
+        }
+
+        #endregion IDisposable Support
     }
 }

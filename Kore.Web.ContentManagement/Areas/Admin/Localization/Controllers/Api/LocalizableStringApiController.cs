@@ -49,25 +49,24 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Localization.Controllers.Api
             else
             {
                 int tenantId = GetTenantId();
-                using (var connection = Service.OpenConnection())
-                {
-                    // With grouping, we use .Where() and then .FirstOrDefault() instead of just the .FirstOrDefault() by itself
-                    //  for compatibility with MySQL.
-                    //  See: http://stackoverflow.com/questions/23480044/entity-framework-select-statement-with-logic
-                    var query = connection.Query(x => x.TenantId == tenantId && (x.CultureCode == null || x.CultureCode == cultureCode))
-                            .GroupBy(x => x.TextKey)
-                            .Select(grp => new ComparitiveLocalizableString
-                            {
-                                Key = grp.Key,
-                                InvariantValue = grp.Where(x => x.CultureCode == null).FirstOrDefault().TextValue,
-                                LocalizedValue = grp.Where(x => x.CultureCode == cultureCode).FirstOrDefault() == null
-                                    ? string.Empty
-                                    : grp.Where(x => x.CultureCode == cultureCode).FirstOrDefault().TextValue
-                            });
+                var connection = GetDisposableConnection();
 
-                    var results = await (options.ApplyTo(query) as IQueryable<ComparitiveLocalizableString>).ToHashSetAsync();
-                    return Ok(results, results.GetType());
-                }
+                // With grouping, we use .Where() and then .FirstOrDefault() instead of just the .FirstOrDefault() by itself
+                //  for compatibility with MySQL.
+                //  See: http://stackoverflow.com/questions/23480044/entity-framework-select-statement-with-logic
+                var query = connection.Query(x => x.TenantId == tenantId && (x.CultureCode == null || x.CultureCode == cultureCode))
+                        .GroupBy(x => x.TextKey)
+                        .Select(grp => new ComparitiveLocalizableString
+                        {
+                            Key = grp.Key,
+                            InvariantValue = grp.Where(x => x.CultureCode == null).FirstOrDefault().TextValue,
+                            LocalizedValue = grp.Where(x => x.CultureCode == cultureCode).FirstOrDefault() == null
+                                ? string.Empty
+                                : grp.Where(x => x.CultureCode == cultureCode).FirstOrDefault().TextValue
+                        });
+
+                var results = await (options.ApplyTo(query) as IQueryable<ComparitiveLocalizableString>).ToHashSetAsync();
+                return Ok(results, results.GetType());
             }
         }
 

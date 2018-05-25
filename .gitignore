@@ -284,7 +284,6 @@ build/
 ### Project Specific ###
 KoreCMS/Plugins/*
 KoreCMS/Themes/*
-!KoreCMS/Themes/Default/
 KoreCMS/Media/Thumbs/*
 KoreCMS/App_Data/InstalledPlugins.txt
 KoreCMS/App_Data/KoreSettings.xml

@@ -285,5 +285,7 @@ build/
 KoreCMS/Plugins/*
 KoreCMS/Themes/*
 KoreCMS/Media/Thumbs/*
+KoreCMS/Media/Uploads/*
 KoreCMS/App_Data/InstalledPlugins.txt
 KoreCMS/App_Data/KoreSettings.xml
+KoreCMS/App_Data/Registration.txt

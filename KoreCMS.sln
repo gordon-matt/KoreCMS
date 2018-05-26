@@ -183,6 +183,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Data.ElasticSearch", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Widgets.JQueryFormBuilder", "Plugins\Kore.Plugins.Widgets.JQueryFormBuilder\Kore.Plugins.Widgets.JQueryFormBuilder.csproj", "{0D990354-3D50-4BD6-B552-70A85C4AAA2F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_NuGet", "_NuGet", "{735883E6-84C5-4FFF-B991-5F6DBEEED52E}"
+	ProjectSection(SolutionItems) = preProject
+		_NuGet\Kore.EntityFramework.nuspec = _NuGet\Kore.EntityFramework.nuspec
+		_NuGet\Kore.nuspec = _NuGet\Kore.nuspec
+		_NuGet\Kore.Web.Common.nuspec = _NuGet\Kore.Web.Common.nuspec
+		_NuGet\Kore.Web.CommonResources.nuspec = _NuGet\Kore.Web.CommonResources.nuspec
+		_NuGet\Kore.Web.ContentManagement.nuspec = _NuGet\Kore.Web.ContentManagement.nuspec
+		_NuGet\Kore.Web.Identity.nuspec = _NuGet\Kore.Web.Identity.nuspec
+		_NuGet\Kore.Web.nuspec = _NuGet\Kore.Web.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

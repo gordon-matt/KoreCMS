@@ -11,6 +11,8 @@ namespace KoreCMS
         {
             // Web API routes
             config.MapHttpAttributeRoutes();
+
+            // Enable all OData functions
             config.Select().Expand().Filter().OrderBy().MaxTop(null).Count();
 
             var registrars = EngineContext.Current.ResolveAll<IWebApiRegistrar>();

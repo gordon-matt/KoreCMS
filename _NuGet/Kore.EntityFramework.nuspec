@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>KoreFramework.EntityFramework</id>
+    <version>1.0.0</version>
+    <title>KoreFramework.EntityFramework</title>
+    <authors>Matt Gordon</authors>
+    <owners>Matt Gordon</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/gordon-matt/KoreCMS</projectUrl>
+    <description>KoreFramework.EntityFramework</description>
+    <language>en-US</language>
+    <tags>Kore Framework CMS Entity</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.7.1">
+        <dependency id="KoreFramework" version="1.0.0" />
+        <dependency id="Autofac" version="4.8.1" />
+        <dependency id="Castle.Core" version="4.2.1" />
+        <dependency id="EntityFramework" version="6.2.0" />
+        <dependency id="EntityFramework.BulkInsert-ef6" version="6.0.2.8" />
+        <dependency id="EntityFramework.Extended" version="6.1.0.168" />
+        <dependency id="EntityFramework.MappingAPI" version="6.2.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="lib\Kore.EntityFramework.dll" target="lib\Kore.EntityFramework.dll" />
+  </files>
+</package>

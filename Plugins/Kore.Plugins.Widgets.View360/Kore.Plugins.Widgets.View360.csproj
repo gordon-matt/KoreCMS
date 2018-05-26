@@ -84,7 +84,6 @@
     <Compile Include="View360Block.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\DisplayTemplates\View360Block.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

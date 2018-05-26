@@ -2,9 +2,9 @@
 var preview = (function () {
   'use strict';
 
-  var PluginManager = tinymce.util.Tools.resolve('tinymce.PluginManager');
+  var global = tinymce.util.Tools.resolve('tinymce.PluginManager');
 
-  var Env = tinymce.util.Tools.resolve('tinymce.Env');
+  var global$1 = tinymce.util.Tools.resolve('tinymce.Env');
 
   var getPreviewDialogWidth = function (editor) {
     return parseInt(editor.getParam('plugin_preview_width', '650'), 10);
@@ -15,24 +15,24 @@ var preview = (function () {
   var getContentStyle = function (editor) {
     return editor.getParam('content_style', '');
   };
-  var $_988iewi6je5o2uiv = {
+  var $_71hkk4isjh8lz146 = {
     getPreviewDialogWidth: getPreviewDialogWidth,
     getPreviewDialogHeight: getPreviewDialogHeight,
     getContentStyle: getContentStyle
   };
 
-  var Tools = tinymce.util.Tools.resolve('tinymce.util.Tools');
+  var global$2 = tinymce.util.Tools.resolve('tinymce.util.Tools');
 
   var getPreviewHtml = function (editor) {
     var previewHtml;
     var headHtml = '';
     var encode = editor.dom.encode;
-    var contentStyle = $_988iewi6je5o2uiv.getContentStyle(editor);
+    var contentStyle = $_71hkk4isjh8lz146.getContentStyle(editor);
     headHtml += '<base href="' + encode(editor.documentBaseURI.getURI()) + '">';
     if (contentStyle) {
       headHtml += '<style type="text/css">' + contentStyle + '</style>';
     }
-    Tools.each(editor.contentCSS, function (url) {
+    global$2.each(editor.contentCSS, function (url) {
       headHtml += '<link type="text/css" rel="stylesheet" href="' + encode(editor.documentBaseURI.toAbsolute(url)) + '">';
     });
     var bodyId = editor.settings.body_id || 'tinymce';
@@ -61,16 +61,16 @@ var preview = (function () {
       iframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(previewHtml);
     }
   };
-  var $_brqxaui7je5o2uix = {
+  var $_65q2xtitjh8lz147 = {
     getPreviewHtml: getPreviewHtml,
     injectIframeContent: injectIframeContent
   };
 
   var open = function (editor) {
-    var sandbox = !Env.ie;
+    var sandbox = !global$1.ie;
     var dialogHtml = '<iframe src="" frameborder="0"' + (sandbox ? ' sandbox="allow-scripts"' : '') + '></iframe>';
-    var dialogWidth = $_988iewi6je5o2uiv.getPreviewDialogWidth(editor);
-    var dialogHeight = $_988iewi6je5o2uiv.getPreviewDialogHeight(editor);
+    var dialogWidth = $_71hkk4isjh8lz146.getPreviewDialogWidth(editor);
+    var dialogHeight = $_71hkk4isjh8lz146.getPreviewDialogHeight(editor);
     editor.windowManager.open({
       title: 'Preview',
       width: dialogWidth,
@@ -84,18 +84,18 @@ var preview = (function () {
       },
       onPostRender: function (e) {
         var iframeElm = e.control.getEl('body').firstChild;
-        $_brqxaui7je5o2uix.injectIframeContent(editor, iframeElm, sandbox);
+        $_65q2xtitjh8lz147.injectIframeContent(editor, iframeElm, sandbox);
       }
     });
   };
-  var $_xkz7gi4je5o2uiu = { open: open };
+  var $_bncxn7iqjh8lz144 = { open: open };
 
   var register = function (editor) {
     editor.addCommand('mcePreview', function () {
-      $_xkz7gi4je5o2uiu.open(editor);
+      $_bncxn7iqjh8lz144.open(editor);
     });
   };
-  var $_ejug2ci3je5o2uis = { register: register };
+  var $_5cptv5ipjh8lz143 = { register: register };
 
   var register$1 = function (editor) {
     editor.addButton('preview', {
@@ -108,11 +108,11 @@ var preview = (function () {
       context: 'view'
     });
   };
-  var $_44bwhi9je5o2uiz = { register: register$1 };
+  var $_fy0w72ivjh8lz14a = { register: register$1 };
 
-  PluginManager.add('preview', function (editor) {
-    $_ejug2ci3je5o2uis.register(editor);
-    $_44bwhi9je5o2uiz.register(editor);
+  global.add('preview', function (editor) {
+    $_5cptv5ipjh8lz143.register(editor);
+    $_fy0w72ivjh8lz14a.register(editor);
   });
   function Plugin () {
   }

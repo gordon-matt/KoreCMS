@@ -84,7 +84,6 @@
     <Compile Include="ContentBlocks\JQueryFormBuilderBlock.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <Content Include="Scripts\form-builder.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

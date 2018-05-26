@@ -1,4 +1,5 @@
-﻿/// <autosync enabled="true" />
+﻿/// <reference path="jquery-ui-1.12.1.js" />
+/// <autosync enabled="true" />
 /// <reference path="../areas/admin/scripts/app/cssloader.js" />
 /// <reference path="../areas/admin/scripts/app/main.js" />
 /// <reference path="../areas/admin/scripts/app/viewmodels/admin/dashboard.js" />
@@ -53,7 +54,6 @@
 /// <reference path="jquery-2.1.1.js" />
 /// <reference path="jquery-migrate-1.2.1.js" />
 /// <reference path="jquery-ui.min-1.11.1.js" />
-/// <reference path="jquery-ui-1.11.1.js" />
 /// <reference path="kendo/2014.1.318/cultures/kendo.culture.af.min.js" />
 /// <reference path="kendo/2014.1.318/cultures/kendo.culture.af-za.min.js" />
 /// <reference path="kendo/2014.1.318/cultures/kendo.culture.am.min.js" />
@@ -538,6 +538,8 @@
 /// <reference path="tinymce/themes/mobile/theme.min.js" />
 /// <reference path="tinymce/tinymce.min.js" />
 /// <reference path="wysiwyg.js" />
- 
- / / /   < r e f e r e n c e   p a t h = " b r e e z e . d e b u g . j s "   / >  
+
+ 
+ / / /   < r e f e r e n c e   p a t h = " b r e e z e . d e b u g . j s "   / > 
+ 
  

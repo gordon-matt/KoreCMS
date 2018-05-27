@@ -30,7 +30,11 @@ As a 1 man team, you'll find my CMS is not quite as featured as many of the comm
 - Menus
 - Sitemap Generator
 - Scheduled Tasks
-- and more... 
+- and more...
+
+## Getting started
+
+Simply clone or download the source, build and run it... On startup, you will be presented with an installation page. Enjoy!
 
 ## License
 

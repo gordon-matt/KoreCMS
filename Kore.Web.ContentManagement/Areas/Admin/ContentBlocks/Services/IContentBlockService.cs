@@ -198,7 +198,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services
                 contentBlock.PageId = record.PageId;
                 contentBlock.Order = record.Order;
                 contentBlock.Enabled = record.IsEnabled;
-                contentBlock.DisplayCondition = record.DisplayCondition;
                 contentBlock.CustomTemplatePath = record.CustomTemplatePath;
                 result.Add(contentBlock);
             }

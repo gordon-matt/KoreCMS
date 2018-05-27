@@ -7,11 +7,10 @@ using Kore.Web.ContentManagement.Areas.Admin.Blog;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Services;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
-using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.RuleEngine;
-using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Localization;
 using Kore.Web.ContentManagement.Areas.Admin.Media.ContentBlocks;
+using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
 
 //using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
@@ -126,25 +125,17 @@ namespace Kore.Web.ContentManagement.Infrastructure
             #endregion Content Blocks
 
             #region Other: Content Blocks
-
-            builder.RegisterType<BuiltinRuleProvider>().As<IRuleProvider>().InstancePerDependency();
-            builder.RegisterType<DisabledRuleProvider>().As<IRuleProvider>().InstancePerDependency();
-            builder.RegisterType<UrlRuleProvider>().As<IRuleProvider>().InstancePerDependency();
-
+            
             builder.RegisterType<DefaultContentBlockProvider>().As<IContentBlockProvider>().InstancePerDependency();
             builder.RegisterType<DefaultEntityTypeContentBlockProvider>().As<IEntityTypeContentBlockProvider>().InstancePerDependency();
-
-            builder.RegisterType<RuleManager>().As<IRuleManager>().InstancePerDependency();
-            builder.RegisterType<ScriptExpressionEvaluator>().As<IScriptExpressionEvaluator>().InstancePerDependency();
 
             #endregion Other: Content Blocks
 
             #region Other: Media
-
-            //builder.RegisterType<ConfigurationMimeTypeProvider>().As<IMimeTypeProvider>().InstancePerDependency();
-            //builder.RegisterType<FileSystemStorageProvider>().As<IStorageProvider>().InstancePerDependency();
-            //builder.RegisterType<MediaService>().As<IMediaService>().InstancePerDependency();
-            //builder.RegisterType<MediaPathProvider>().As<IMediaPathProvider>().InstancePerDependency();
+            
+            builder.RegisterType<FileSystemStorageProvider>().As<IStorageProvider>().InstancePerDependency();
+            builder.RegisterType<MediaService>().As<IMediaService>().InstancePerDependency();
+            builder.RegisterType<MediaPathProvider>().As<IMediaPathProvider>().InstancePerDependency();
 
             #endregion Other: Media
 

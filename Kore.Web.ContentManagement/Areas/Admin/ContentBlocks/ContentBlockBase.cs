@@ -20,10 +20,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
 
         [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.Model.ZoneId)]
         public Guid ZoneId { get; set; }
-
-        [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.Model.DisplayCondition)]
-        public string DisplayCondition { get; set; }
-
+        
         [LocalizedDisplayName(KoreCmsLocalizableStrings.ContentBlocks.Model.CustomTemplatePath)]
         public string CustomTemplatePath { get; set; }
         

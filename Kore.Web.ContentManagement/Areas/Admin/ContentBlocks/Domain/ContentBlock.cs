@@ -22,10 +22,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
         public bool IsEnabled { get; set; }
 
         public string BlockValues { get; set; }
-
-        //TODO: Get rid of this...?
-        public string DisplayCondition { get; set; }
-
+        
         public string CustomTemplatePath { get; set; }
 
         public Guid? PageId { get; set; }
@@ -53,7 +50,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
             Property(x => x.Order).IsRequired();
             Property(x => x.IsEnabled).IsRequired();
             Property(x => x.BlockValues).IsMaxLength().IsUnicode(true);
-            Property(x => x.DisplayCondition).HasMaxLength(255).IsUnicode(true);
             Property(x => x.CustomTemplatePath).HasMaxLength(255).IsUnicode(true);
             //Property(x => x.CultureCode).HasMaxLength(10).HasColumnType("varchar");
         }

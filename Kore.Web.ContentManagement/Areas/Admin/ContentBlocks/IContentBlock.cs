@@ -15,9 +15,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks
         string Name { get; }
 
         Guid ZoneId { get; set; }
-
-        string DisplayCondition { get; set; }
-
+        
         string CustomTemplatePath { get; set; }
 
         Guid? PageId { get; set; }

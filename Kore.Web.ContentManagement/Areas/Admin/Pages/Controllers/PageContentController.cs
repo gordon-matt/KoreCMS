@@ -9,7 +9,6 @@ using Kore.Data;
 using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
-using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.RuleEngine;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
@@ -28,7 +27,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
         private readonly IPageVersionService pageVersionService;
         private readonly IPageTypeService pageTypeService;
         private readonly IRepository<Zone> zoneRepository;
-        private readonly IRuleManager ruleManager;
 
         public PageContentController(
             IPageService pageService,
@@ -36,8 +34,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             IPageTypeService pageTypeService,
             IContentBlockService contentBlockService,
             IRepository<Zone> zoneRepository,
-            Lazy<IMembershipService> membershipService,
-            IRuleManager ruleManager)
+            Lazy<IMembershipService> membershipService)
             : base()
         {
             this.pageService = pageService;
@@ -46,7 +43,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             this.contentBlockService = contentBlockService;
             this.zoneRepository = zoneRepository;
             this.membershipService = membershipService;
-            this.ruleManager = ruleManager;
         }
 
         //[OutputCache(Duration = 600, VaryByParam = "slug")] //TODO: Uncomment this when ready
@@ -175,23 +171,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             {
                 return false;
             }
-
-            // If there are no conditions...
-            if (string.IsNullOrEmpty(contentBlock.DisplayCondition))
-            {
-                return true;
-            }
-
-            string[] conditions = contentBlock.DisplayCondition.Split(';');
-
-            // If any fo the conditions are NOT met, then return false
-            foreach (var condition in conditions)
-            {
-                if (!ruleManager.Matches(condition))
-                {
-                    return false;
-                }
-            }
+            
             return true;
         }
 

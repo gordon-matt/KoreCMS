@@ -338,7 +338,6 @@
     <Compile Include="LocalizableStrings.cs" />
     <Compile Include="Messaging\AccountMessageTemplates.cs" />
     <Compile Include="Messaging\AccountMessageTemplateTokensProvider.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IdentityMembershipService.cs" />
     <Compile Include="Services\MembershipService.cs" />
@@ -862,7 +861,6 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Icon.png" />
     <Content Include="Media\installation-background.jpg" />
     <Content Include="Media\kore-logo-dark-small.png" />
     <Content Include="Media\kore-logo-dark.png" />
@@ -953,12 +951,6 @@
     <Content Include="NLog.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
     <Content Include="filemanager\config\.htaccess" />
     <Content Include="filemanager\js\jPlayer\actionscript\happyworm\jPlayer\ConnectManager.as" />
     <Content Include="filemanager\js\jPlayer\actionscript\happyworm\jPlayer\JplayerEvent.as" />
@@ -982,6 +974,14 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1432,7 +1432,6 @@
     <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\notify.min.js" />
-    <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\q.js" />
     <Content Include="Scripts\q.min.js" />
     <Content Include="Scripts\r.js" />
@@ -2105,13 +2104,6 @@
     <Content Include="Themes\EShopper\Views\Kore.Web.ContentManagement\BlogContent\Index.cshtml" />
     <Content Include="Themes\EShopper\Views\Kore.Web.ContentManagement\Web.config" />
     <Content Include="Themes\EShopper\Views\Kore.Web.ContentManagement\_ViewStart.cshtml" />
-    <Content Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\Checkout\Index.cshtml" />
-    <Content Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\Store\Categories.cshtml" />
-    <Content Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\Store\Index.cshtml" />
-    <Content Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\Store\Product.cshtml" />
-    <Content Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\Store\Products.cshtml" />
-    <Content Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\Web.config" />
-    <Content Include="Themes\EShopper\Views\Plugins\Ecommerce.Simple\_ViewStart.cshtml" />
     <Content Include="Themes\EShopper\Views\Shared\Breadcrumbs.cshtml" />
     <Content Include="Themes\EShopper\Views\Shared\DisplayTemplates\StandardPage.cshtml" />
     <Content Include="Themes\EShopper\Views\Shared\Footer.cshtml" />
@@ -2232,10 +2224,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Configuration\" />
     <Folder Include="Media\Thumbs\" />
     <Folder Include="Media\Uploads\" />
-    <Folder Include="Models\Pages\" />
     <Folder Include="Themes\Default\Content\" />
     <Folder Include="Themes\Default\Views\Home\" />
     <Folder Include="Themes\Default\Views\Plugins\Kore.Web.ContentManagement\Shared\EditorTemplates\" />

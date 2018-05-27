@@ -203,13 +203,10 @@
     <Compile Include="Areas\Admin\Sitemap\Models\SitemapXmlFile.cs" />
     <Compile Include="Areas\Admin\Sitemap\SitemapAreaRegistration.cs" />
     <Compile Include="CmsPermissions.cs" />
-    <Compile Include="FileSystems\Media\ConfigurationMimeTypeProvider.cs" />
-    <Compile Include="FileSystems\Media\FileSystemStorageProvider.cs" />
-    <Compile Include="FileSystems\Media\IMimeTypeProvider.cs" />
-    <Compile Include="FileSystems\Media\IStorageFile.cs" />
-    <Compile Include="FileSystems\Media\IStorageFolder.cs" />
-    <Compile Include="FileSystems\Media\IStorageProvider.cs" />
-    <Compile Include="FileSystems\PathValidation.cs" />
+    <Compile Include="Areas\Admin\Media\Services\FileSystemStorageProvider.cs" />
+    <Compile Include="Areas\Admin\Media\Models\IStorageFile.cs" />
+    <Compile Include="Areas\Admin\Media\Models\IStorageFolder.cs" />
+    <Compile Include="Areas\Admin\Media\Services\IStorageProvider.cs" />
     <Compile Include="Infrastructure\DbSeeder.cs" />
     <Compile Include="Infrastructure\DurandalRouteProvider.cs" />
     <Compile Include="Infrastructure\IAutoMenuProvider.cs" />
@@ -287,41 +284,6 @@
     <Compile Include="Areas\Admin\ContentBlocks\IContentBlock.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\IContentBlockProvider.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\Models\SaveResultModel.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\RuleEngine\BuiltinRuleProvider.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\RuleEngine\DisabledRuleProvider.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\RuleEngine\IRuleManager.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\RuleEngine\IRuleProvider.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\RuleEngine\RuleContext.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\RuleEngine\UrlRuleProvider.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Ast\AbstractSyntaxTree.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Ast\AstNode.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Ast\AstVisitor.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Ast\BinaryAstNode.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Ast\ConstantAstNode.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Ast\ErrorAstNode.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Ast\ErrorNodeCollector.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Ast\IAstNodeWithToken.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Ast\MethodCallAstNode.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Ast\UnaryAstNode.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Compiler\BooleanPrimitiveType.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Compiler\Error.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Compiler\ErrorPrimitiveType.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Compiler\EvaluationContext.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Compiler\EvaluationResult.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Compiler\IntegerPrimitiveType.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Compiler\Interpreter.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Compiler\InterpreterVisitor.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Compiler\Lexer.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Compiler\NullPrimitiveType.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Compiler\Parser.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Compiler\PrimitiveType.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Compiler\StringPrimitiveType.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Compiler\Token.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Compiler\Tokenizer.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\Compiler\TokenKind.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\IGlobalMethodProvider.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\IScriptExpressionEvaluator.cs" />
-    <Compile Include="Areas\Admin\ContentBlocks\Scripting\ScriptExpressionEvaluator.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\Services\IContentBlockService.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\Services\IZoneService.cs" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\FormBlock\SaveResult.cshtml" />
@@ -346,7 +308,6 @@
     <Compile Include="KoreCmsLocalizableStrings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteProvider.cs" />
-    <Compile Include="Routing\CmsRouteConstraint.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Localization\Views\Language\Index.cshtml" />
@@ -440,7 +401,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Media\Scripts\media.js" />
-    <Content Include="Areas\Admin\Media\Services\mimeTypes.txt" />
     <EmbeddedResource Include="Content\jqcloud.min.css" />
     <EmbeddedResource Include="Scripts\jqcloud.min.js" />
   </ItemGroup>

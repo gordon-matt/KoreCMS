@@ -30,7 +30,23 @@ As a 1 man team, you'll find my CMS is not quite as featured as many of the comm
 - Menus
 - Sitemap Generator
 - Scheduled Tasks
-- and more... 
+- and more...
+
+## Getting started
+
+Simply clone or download the source, build and run it... On startup, you will be presented with an installation page. Enjoy!
+
+## NuGet
+
+If you would like to use NuGet packages, you can find them here:
+
+- https://www.nuget.org/packages/KoreFramework/
+- https://www.nuget.org/packages/KoreFramework.EntityFramework/
+- https://www.nuget.org/packages/KoreFramework.Web/
+- https://www.nuget.org/packages/KoreFramework.Web.Common/
+- https://www.nuget.org/packages/KoreFramework.Web.CommonResources/
+- https://www.nuget.org/packages/KoreFramework.Web.ContentManagement/
+- https://www.nuget.org/packages/KoreFramework.Web.Identity/
 
 ## License
 

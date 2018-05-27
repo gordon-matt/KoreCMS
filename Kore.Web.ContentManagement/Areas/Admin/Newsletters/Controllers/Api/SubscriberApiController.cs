@@ -7,7 +7,6 @@ using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Query;
 using Kore.Collections;
-using Kore.EntityFramework.Data;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Web.Security.Membership;

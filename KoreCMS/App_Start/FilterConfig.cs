@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using Kore.Web.Mvc.Optimization;
 
 namespace KoreCMS
 {

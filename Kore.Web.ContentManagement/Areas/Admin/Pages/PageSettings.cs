@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Kore.ComponentModel;
+﻿using Kore.ComponentModel;
 using Kore.Web.Configuration;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages

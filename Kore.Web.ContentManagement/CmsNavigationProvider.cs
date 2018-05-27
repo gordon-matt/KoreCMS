@@ -1,7 +1,5 @@
-﻿using System.Web.Mvc;
-using Kore.Localization;
+﻿using Kore.Localization;
 using Kore.Web.Navigation;
-using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Web.ContentManagement
 {

@@ -1,6 +1,5 @@
 ﻿using Kore.Localization;
 using Kore.Web.Navigation;
-using Kore.Web.Security.Membership.Permissions;
 
 namespace Kore.Plugins.Maintenance.Watchdog
 {

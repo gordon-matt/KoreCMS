@@ -4,7 +4,6 @@ using Kore.EntityFramework.Data.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Web.Common.Areas.Admin.Regions.Domain;
 using Kore.Web.Common.Areas.Admin.Regions.Services;
-using Kore.Web.Infrastructure;
 
 namespace Kore.Web.Common
 {

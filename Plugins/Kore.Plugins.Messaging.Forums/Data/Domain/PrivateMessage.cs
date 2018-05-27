@@ -2,7 +2,6 @@
 using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
-using Kore.Plugins.Messaging.Forums;
 using Kore.Web.Plugins;
 
 namespace Kore.Plugins.Messaging.Forums.Data.Domain

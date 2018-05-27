@@ -1,6 +1,4 @@
-﻿using Kore;
-using Kore.Data;
-using KoreCMS.Data;
+﻿using Kore.Data;
 using KoreCMS.Data.Domain;
 
 namespace KoreCMS.Services

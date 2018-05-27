@@ -1,6 +1,4 @@
-﻿using System.Data.Entity;
-using Autofac;
-using Autofac.Core;
+﻿using Autofac;
 using Kore.Data;
 using Kore.Data.EntityFramework;
 using Kore.Data.SqlClient;

@@ -1,13 +1,13 @@
-﻿using Kore.Collections;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System;
 using Kore.Caching;
+using Kore.Collections;
 using Kore.Data;
 using Kore.Data.Services;
-using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
-using System.Collections.Generic;
 using Kore.Web.Configuration;
+using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
 {
@@ -81,7 +81,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                 {
                     query = query.Where(x => x.Page.IsEnabled);
                 }
-                
+
                 return GetCurrentVersionInternal(
                     pageId,
                     query,
@@ -112,7 +112,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
                 {
                     query = query.Where(x => x.IsEnabled);
                 }
-                
+
                 if (topLevelOnly)
                 {
                     query = query.Where(x => x.ParentId == null);
@@ -144,7 +144,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Services
             }
         }
 
-        #endregion
+        #endregion IPageVersionService Members
 
         /// <summary>
         /// Gets the most recent localized version of a page in the specified culture

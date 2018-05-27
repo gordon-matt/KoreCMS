@@ -1,5 +1,4 @@
 ﻿using System;
-using Kore.Data;
 using Kore.Tenants.Domain;
 
 namespace Kore.Logging.Domain

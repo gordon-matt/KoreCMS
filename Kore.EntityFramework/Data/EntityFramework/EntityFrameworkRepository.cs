@@ -1,5 +1,4 @@
-﻿using Kore.Reflection;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
@@ -14,7 +13,6 @@ using Kore.EntityFramework.Data;
 using Kore.EntityFramework.Data.EntityFramework;
 using Kore.Exceptions;
 using Kore.Logging;
-using System.Collections;
 
 namespace Kore.Data.EntityFramework
 {

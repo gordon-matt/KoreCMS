@@ -6,7 +6,6 @@ using Kore.Infrastructure;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
-using Newtonsoft.Json.Linq;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers
 {

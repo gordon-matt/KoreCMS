@@ -8,18 +8,15 @@ using System.Transactions;
 using Kore;
 using Kore.Collections;
 using Kore.Data;
+using Kore.EntityFramework.Data;
 using Kore.Exceptions;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
-using Kore.Web.Infrastructure;
+using Kore.Web;
 using Kore.Web.Security.Membership;
 using KoreCMS.Data;
 using KoreCMS.Data.Domain;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Kore.EntityFramework.Data;
-using Kore.EntityFramework.Data.EntityFramework;
-using Kore.Web;
 
 namespace KoreCMS.Services
 {

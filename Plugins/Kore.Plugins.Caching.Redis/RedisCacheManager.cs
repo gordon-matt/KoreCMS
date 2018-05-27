@@ -1,10 +1,10 @@
-﻿using Kore.Web;
-using System;
+﻿using System;
+using System.Collections;
 using System.Configuration;
 using Kore.Caching;
-using StackExchange.Redis;
 using Kore.Reflection;
-using System.Collections;
+using Kore.Web;
+using StackExchange.Redis;
 
 namespace Kore.Plugins.Caching.Redis
 {

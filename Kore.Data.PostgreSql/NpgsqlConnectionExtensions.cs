@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Net;
-using System.Net.NetworkInformation;
 using Kore.Data.Common;
 using Npgsql;
-using NpgsqlTypes;
 
 namespace Kore.Data.PostgreSql
 {

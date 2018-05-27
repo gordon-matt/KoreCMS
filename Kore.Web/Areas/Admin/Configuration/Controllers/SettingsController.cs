@@ -5,7 +5,6 @@ using System.Web.Mvc;
 using Kore.Web.Configuration;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
-using Newtonsoft.Json.Linq;
 
 namespace Kore.Web.Areas.Admin.Configuration.Controllers
 {
@@ -27,12 +26,6 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            // NOTE: It would be better if this was in the Installation Controller, however...
-            //  ... doing so would not ensure we ever have the site registered.. because a dev can install
-            //  locally on his machine and then just copy the site and DB to production thereby skipping the
-            //  registration process... so we put it here to be called once when the Site Settings are accessed
-            SiteRegistrar.Register(this.HttpContext);
-
             if (!CheckPermission(ConfigurationPermissions.ReadSettings))
             {
                 return new HttpUnauthorizedResult();

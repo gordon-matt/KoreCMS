@@ -34,7 +34,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting.Compile
         {
             var expr = ParseKeywordNotExpression();
 
-        again:
+            again:
             var token = IsMatch(TokenKind.Or, TokenKind.And);
             if (token != null)
             {
@@ -64,7 +64,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting.Compile
         {
             var expr = ParseLogicalAndExpression();
 
-        again:
+            again:
             var token = IsMatch(TokenKind.OrSign);
             if (token != null)
             {
@@ -81,7 +81,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting.Compile
         {
             var expr = ParseEqualityExpression();
 
-        again:
+            again:
             var token = IsMatch(TokenKind.AndSign);
             if (token != null)
             {
@@ -130,7 +130,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting.Compile
         {
             var expr = ParseMultiplicativeExpression();
 
-        again:
+            again:
             var token = IsMatch(TokenKind.Plus, TokenKind.Minus);
             if (token != null)
             {
@@ -147,7 +147,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting.Compile
         {
             var expr = ParseUnaryExpression();
 
-        again:
+            again:
             var token = IsMatch(TokenKind.Mul, TokenKind.Div);
             if (token != null)
             {

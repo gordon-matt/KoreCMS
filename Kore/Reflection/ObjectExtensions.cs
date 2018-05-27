@@ -149,7 +149,7 @@ namespace Kore.Reflection
         {
             Type propertyType = property.PropertyType;
             string valueAsString = value.ToString();
-            
+
             if (propertyType == typeof(String))
             {
                 property.SetValue(item, valueAsString, null);

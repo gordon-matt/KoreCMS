@@ -1,7 +1,7 @@
 ﻿using Autofac;
-using Kore.Plugins.Indexing.Lucene.Services;
 using Kore.Infrastructure;
 using Kore.Localization;
+using Kore.Plugins.Indexing.Lucene.Services;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks;
 using Kore.Web.Indexing;
 using Kore.Web.Plugins;

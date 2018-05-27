@@ -211,9 +211,9 @@ namespace Kore.Infrastructure
             var assemblies = (from f in Directory.GetFiles(assemblyPath.FullName, "*.dll")
                               select Assembly.LoadFrom(f)
                                   into assembly
-                                  let customAttributes = assembly.GetCustomAttributes(typeof(T), false)
-                                  where customAttributes.Any()
-                                  select assembly).ToList();
+                              let customAttributes = assembly.GetCustomAttributes(typeof(T), false)
+                              where customAttributes.Any()
+                              select assembly).ToList();
             return FindAssembliesWithAttribute<T>(assemblies);
         }
 

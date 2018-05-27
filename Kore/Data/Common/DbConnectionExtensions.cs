@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.Odbc;
-using System.Data.OleDb;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-using System.Transactions;
 using Kore.Collections;
 
 namespace Kore.Data.Common
@@ -102,7 +98,7 @@ namespace Kore.Data.Common
             {
                 command.CommandType = CommandType.Text;
                 command.CommandText = queryText;
-                
+
                 bool alreadyOpen = (connection.State != ConnectionState.Closed);
 
                 if (!alreadyOpen)
@@ -122,7 +118,7 @@ namespace Kore.Data.Common
                 command.CommandText = storedProcedure;
                 parameters.ForEach(p => command.Parameters.Add(p));
                 command.Parameters.EnsureDbNulls();
-                
+
                 return command.ExecuteNonQuery();
             }
         }
@@ -164,38 +160,38 @@ namespace Kore.Data.Common
         {
             //using (var transactionScope = new TransactionScope()) //MySQL doesn't like this...
             //{
-                string fieldNames = mappings.Values.Select(x => encloseIdentifier(x)).Join(",");
-                string parameterNames = mappings.Values.Join(",").Replace(",", ",@").Prepend("@");
+            string fieldNames = mappings.Values.Select(x => encloseIdentifier(x)).Join(",");
+            string parameterNames = mappings.Values.Join(",").Replace(",", ",@").Prepend("@");
 
-                PropertyInfo[] properties = typeof(T).GetProperties();
+            PropertyInfo[] properties = typeof(T).GetProperties();
 
-                using (DbCommand command = connection.CreateCommand())
+            using (DbCommand command = connection.CreateCommand())
+            {
+                string commandText = string.Format(
+                    INSERT_INTO_FORMAT,
+                    encloseIdentifier(tableName),
+                    fieldNames,
+                    parameterNames);
+
+                command.CommandType = CommandType.Text;
+                command.CommandText = commandText;
+
+                mappings.ForEach(mapping =>
                 {
-                    string commandText = string.Format(
-                        INSERT_INTO_FORMAT,
-                        encloseIdentifier(tableName),
-                        fieldNames,
-                        parameterNames);
-
-                    command.CommandType = CommandType.Text;
-                    command.CommandText = commandText;
-
-                    mappings.ForEach(mapping =>
-                    {
-                        DbParameter parameter = command.CreateParameter();
-                        parameter.ParameterName = string.Concat("@", mapping.Value);
-                        PropertyInfo property = properties.Single(p => p.Name == mapping.Key);
-                        parameter.DbType = Kore.Data.DataTypeConvertor.GetDbType(property.GetType());
+                    DbParameter parameter = command.CreateParameter();
+                    parameter.ParameterName = string.Concat("@", mapping.Value);
+                    PropertyInfo property = properties.Single(p => p.Name == mapping.Key);
+                    parameter.DbType = Kore.Data.DataTypeConvertor.GetDbType(property.GetType());
                         //parameter.Value = GetFormattedValue(property.PropertyType, property.GetValue(entity, null));
                         parameter.Value = property.GetValue(entity, null);
-                        command.Parameters.Add(parameter);
-                    });
+                    command.Parameters.Add(parameter);
+                });
 
-                    int rowsAffected = command.ExecuteNonQuery();
-                    //transactionScope.Complete();
+                int rowsAffected = command.ExecuteNonQuery();
+                //transactionScope.Complete();
 
-                    return rowsAffected;
-                }
+                return rowsAffected;
+            }
             //}
         }
 
@@ -258,7 +254,7 @@ namespace Kore.Data.Common
                     parameter.DbType = DataTypeConvertor.GetDbType(property.PropertyType);
                     command.Parameters.Add(parameter);
                 });
-                
+
                 foreach (T entity in entities)
                 {
                     properties.ForEach(property =>

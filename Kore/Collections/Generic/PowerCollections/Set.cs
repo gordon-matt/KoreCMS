@@ -693,7 +693,7 @@ namespace Kore.Collections.Generic
             }
             else
             {
-                RemoveAll(delegate(T item) { return otherSet.Contains(item); });
+                RemoveAll(delegate (T item) { return otherSet.Contains(item); });
             }
         }
 

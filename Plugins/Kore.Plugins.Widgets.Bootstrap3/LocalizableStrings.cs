@@ -15,6 +15,7 @@
                 public const string StartIndex = "Plugins.Widgets.Bootstrap3/ContentBlocks.CarouselBlock.StartIndex";
                 public const string Wrap = "Plugins.Widgets.Bootstrap3/ContentBlocks.CarouselBlock.Wrap";
             }
+
             public static class ImageGalleryBlock
             {
                 public const string MediaFolder = "Plugins.Widgets.Bootstrap3/ContentBlocks.ImageGalleryBlock.MediaFolder";

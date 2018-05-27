@@ -2010,7 +2010,7 @@ namespace Kore.Collections.Generic.C5
         /// <summary>
         ///
         /// </summary>
-        public virtual Func<K, V> Func { get { return delegate(K k) { return this[k]; }; } }
+        public virtual Func<K, V> Func { get { return delegate (K k) { return this[k]; }; } }
 
         /// <summary>
         /// </summary>

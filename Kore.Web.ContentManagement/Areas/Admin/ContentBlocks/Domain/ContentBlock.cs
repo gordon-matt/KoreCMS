@@ -2,7 +2,6 @@
 using System.Data.Entity.ModelConfiguration;
 using Kore.Data;
 using Kore.Data.EntityFramework;
-using Kore.Localization;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain
 {

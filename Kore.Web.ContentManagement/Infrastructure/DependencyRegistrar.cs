@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Kore.EntityFramework;
 using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Tasks;
@@ -13,6 +12,7 @@ using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripting;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Localization;
 using Kore.Web.ContentManagement.Areas.Admin.Media.ContentBlocks;
+
 //using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging;
@@ -22,7 +22,6 @@ using Kore.Web.ContentManagement.Areas.Admin.Newsletters.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.Newsletters.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Pages;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
-using Kore.Web.ContentManagement.FileSystems.Media;
 using Kore.Web.Indexing.Services;
 using Kore.Web.Infrastructure;
 using Kore.Web.Mvc.Themes;

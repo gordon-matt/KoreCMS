@@ -16,7 +16,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             bundles.Add(new ScriptBundle("~/bundles/js/third-party/jQCloud")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Scripts.jqcloud.min.js"));
 
-            #endregion
+            #endregion 3rd Party
 
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/blog")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Blog.Scripts.blog.js"));
@@ -59,7 +59,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/xml-sitemap")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Sitemap.Scripts.index.js"));
 
-            #endregion
+            #endregion Scripts
 
             #region Styles
 
@@ -68,7 +68,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             bundles.Add(new StyleBundle("~/bundles/content/third-party/jQCloud")
                 .Include("~/Content/Kore.Web.ContentManagement.Content.jqcloud.min.css", cssRewriteUrlTransform));
 
-            #endregion
+            #endregion Styles
         }
 
         #endregion IResourceBundleRegistrar Members

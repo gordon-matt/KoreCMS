@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.Entity.ModelConfiguration;
 using System.Net.Mail;
-using Kore.Data;
 using Kore.Data.EntityFramework;
 using Kore.Tenants.Domain;
 

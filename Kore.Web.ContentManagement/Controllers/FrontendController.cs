@@ -138,14 +138,14 @@ namespace Kore.Web.ContentManagement.Controllers
 
             var items = authorizedPages
                 .Select(x => new MenuItem
-            {
-                Id = x.Page.Id,
-                Text = x.Title,
-                Url = "/" + x.Slug,
-                Enabled = true,
-                ParentId = x.Page.ParentId,
-                Position = x.Page.Order
-            });
+                {
+                    Id = x.Page.Id,
+                    Text = x.Title,
+                    Url = "/" + x.Slug,
+                    Enabled = true,
+                    ParentId = x.Page.ParentId,
+                    Position = x.Page.Order
+                });
 
             menuItems.AddRange(items);
 

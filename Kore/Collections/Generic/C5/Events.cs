@@ -83,7 +83,7 @@ namespace Kore.Collections.Generic.C5
     {
         internal EventTypeEnum events;
 
-        event CollectionChangedHandler<T> collectionChanged;
+        private event CollectionChangedHandler<T> collectionChanged;
 
         internal event CollectionChangedHandler<T> CollectionChanged
         {
@@ -103,7 +103,7 @@ namespace Kore.Collections.Generic.C5
         internal void raiseCollectionChanged(object sender)
         { if (collectionChanged != null) collectionChanged(sender); }
 
-        event CollectionClearedHandler<T> collectionCleared;
+        private event CollectionClearedHandler<T> collectionCleared;
 
         internal event CollectionClearedHandler<T> CollectionCleared
         {
@@ -126,7 +126,7 @@ namespace Kore.Collections.Generic.C5
         internal void raiseCollectionCleared(object sender, bool full, int count, int? start)
         { if (collectionCleared != null) collectionCleared(sender, new ClearedRangeEventArgs(full, count, start)); }
 
-        event ItemsAddedHandler<T> itemsAdded;
+        private event ItemsAddedHandler<T> itemsAdded;
 
         internal event ItemsAddedHandler<T> ItemsAdded
         {
@@ -146,7 +146,7 @@ namespace Kore.Collections.Generic.C5
         internal void raiseItemsAdded(object sender, T item, int count)
         { if (itemsAdded != null) itemsAdded(sender, new ItemCountEventArgs<T>(item, count)); }
 
-        event ItemsRemovedHandler<T> itemsRemoved;
+        private event ItemsRemovedHandler<T> itemsRemoved;
 
         internal event ItemsRemovedHandler<T> ItemsRemoved
         {
@@ -166,7 +166,7 @@ namespace Kore.Collections.Generic.C5
         internal void raiseItemsRemoved(object sender, T item, int count)
         { if (itemsRemoved != null) itemsRemoved(sender, new ItemCountEventArgs<T>(item, count)); }
 
-        event ItemInsertedHandler<T> itemInserted;
+        private event ItemInsertedHandler<T> itemInserted;
 
         internal event ItemInsertedHandler<T> ItemInserted
         {
@@ -186,7 +186,7 @@ namespace Kore.Collections.Generic.C5
         internal void raiseItemInserted(object sender, T item, int index)
         { if (itemInserted != null) itemInserted(sender, new ItemAtEventArgs<T>(item, index)); }
 
-        event ItemRemovedAtHandler<T> itemRemovedAt;
+        private event ItemRemovedAtHandler<T> itemRemovedAt;
 
         internal event ItemRemovedAtHandler<T> ItemRemovedAt
         {
@@ -219,7 +219,7 @@ namespace Kore.Collections.Generic.C5
         internal ProxyEventBlock(ICollectionValue<T> proxy, ICollectionValue<T> real)
         { this.proxy = proxy; this.real = real; }
 
-        event CollectionChangedHandler<T> collectionChanged;
+        private event CollectionChangedHandler<T> collectionChanged;
 
         private CollectionChangedHandler<T> collectionChangedProxy;
 
@@ -230,7 +230,7 @@ namespace Kore.Collections.Generic.C5
                 if (collectionChanged == null)
                 {
                     if (collectionChangedProxy == null)
-                        collectionChangedProxy = delegate(object sender) { collectionChanged(proxy); };
+                        collectionChangedProxy = delegate (object sender) { collectionChanged(proxy); };
                     real.CollectionChanged += collectionChangedProxy;
                 }
                 collectionChanged += value;
@@ -243,7 +243,7 @@ namespace Kore.Collections.Generic.C5
             }
         }
 
-        event CollectionClearedHandler<T> collectionCleared;
+        private event CollectionClearedHandler<T> collectionCleared;
 
         private CollectionClearedHandler<T> collectionClearedProxy;
 
@@ -254,7 +254,7 @@ namespace Kore.Collections.Generic.C5
                 if (collectionCleared == null)
                 {
                     if (collectionClearedProxy == null)
-                        collectionClearedProxy = delegate(object sender, ClearedEventArgs e) { collectionCleared(proxy, e); };
+                        collectionClearedProxy = delegate (object sender, ClearedEventArgs e) { collectionCleared(proxy, e); };
                     real.CollectionCleared += collectionClearedProxy;
                 }
                 collectionCleared += value;
@@ -267,7 +267,7 @@ namespace Kore.Collections.Generic.C5
             }
         }
 
-        event ItemsAddedHandler<T> itemsAdded;
+        private event ItemsAddedHandler<T> itemsAdded;
 
         private ItemsAddedHandler<T> itemsAddedProxy;
 
@@ -278,7 +278,7 @@ namespace Kore.Collections.Generic.C5
                 if (itemsAdded == null)
                 {
                     if (itemsAddedProxy == null)
-                        itemsAddedProxy = delegate(object sender, ItemCountEventArgs<T> e) { itemsAdded(proxy, e); };
+                        itemsAddedProxy = delegate (object sender, ItemCountEventArgs<T> e) { itemsAdded(proxy, e); };
                     real.ItemsAdded += itemsAddedProxy;
                 }
                 itemsAdded += value;
@@ -291,7 +291,7 @@ namespace Kore.Collections.Generic.C5
             }
         }
 
-        event ItemInsertedHandler<T> itemInserted;
+        private event ItemInsertedHandler<T> itemInserted;
 
         private ItemInsertedHandler<T> itemInsertedProxy;
 
@@ -302,7 +302,7 @@ namespace Kore.Collections.Generic.C5
                 if (itemInserted == null)
                 {
                     if (itemInsertedProxy == null)
-                        itemInsertedProxy = delegate(object sender, ItemAtEventArgs<T> e) { itemInserted(proxy, e); };
+                        itemInsertedProxy = delegate (object sender, ItemAtEventArgs<T> e) { itemInserted(proxy, e); };
                     real.ItemInserted += itemInsertedProxy;
                 }
                 itemInserted += value;
@@ -315,7 +315,7 @@ namespace Kore.Collections.Generic.C5
             }
         }
 
-        event ItemsRemovedHandler<T> itemsRemoved;
+        private event ItemsRemovedHandler<T> itemsRemoved;
 
         private ItemsRemovedHandler<T> itemsRemovedProxy;
 
@@ -326,7 +326,7 @@ namespace Kore.Collections.Generic.C5
                 if (itemsRemoved == null)
                 {
                     if (itemsRemovedProxy == null)
-                        itemsRemovedProxy = delegate(object sender, ItemCountEventArgs<T> e) { itemsRemoved(proxy, e); };
+                        itemsRemovedProxy = delegate (object sender, ItemCountEventArgs<T> e) { itemsRemoved(proxy, e); };
                     real.ItemsRemoved += itemsRemovedProxy;
                 }
                 itemsRemoved += value;
@@ -339,7 +339,7 @@ namespace Kore.Collections.Generic.C5
             }
         }
 
-        event ItemRemovedAtHandler<T> itemRemovedAt;
+        private event ItemRemovedAtHandler<T> itemRemovedAt;
 
         private ItemRemovedAtHandler<T> itemRemovedAtProxy;
 
@@ -350,7 +350,7 @@ namespace Kore.Collections.Generic.C5
                 if (itemRemovedAt == null)
                 {
                     if (itemRemovedAtProxy == null)
-                        itemRemovedAtProxy = delegate(object sender, ItemAtEventArgs<T> e) { itemRemovedAt(proxy, e); };
+                        itemRemovedAtProxy = delegate (object sender, ItemAtEventArgs<T> e) { itemRemovedAt(proxy, e); };
                     real.ItemRemovedAt += itemRemovedAtProxy;
                 }
                 itemRemovedAt += value;

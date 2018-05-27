@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
+using Kore.Events;
 using Kore.Localization;
 using Kore.Security.Membership;
 using Kore.Threading;
-using Kore.Events;
 using Kore.Web.Security.Membership;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters.Services

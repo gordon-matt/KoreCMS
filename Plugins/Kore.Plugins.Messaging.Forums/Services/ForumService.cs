@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Kore.Caching;
@@ -9,9 +10,6 @@ using Kore.Exceptions;
 using Kore.Plugins.Messaging.Forums.Data.Domain;
 using Kore.Security.Membership;
 using Kore.Web.Configuration.Services;
-using Kore.Web.Security.Membership;
-using System.Data.Entity;
-using Kore.EntityFramework.Data;
 
 namespace Kore.Plugins.Messaging.Forums.Services
 {

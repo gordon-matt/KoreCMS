@@ -168,9 +168,9 @@ namespace Kore.Serialization.Core.Binary
                 return;
             }
 #else
-            if (type == typeof (Decimal))
+            if (type == typeof(Decimal))
             {
-                writer.Write((Decimal) value);
+                writer.Write((Decimal)value);
                 return;
             }
 #endif

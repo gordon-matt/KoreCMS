@@ -627,7 +627,7 @@ namespace Kore.Collections.Generic.C5
                     throw new ArgumentException("Argument not sorted");
 
                 addedItems[numAdded++] = lastitem = res.array[j++] = item;
-            next:
+                next:
                 c = -1;
             }
 

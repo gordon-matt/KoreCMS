@@ -1,11 +1,8 @@
 ﻿using System.Text;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
-using Kore.Infrastructure;
 using Kore.Localization;
 using Kore.Plugins.Messaging.Forums.Models;
-using Kore.Web;
-using Kore.Web.Mvc.Resources;
 
 namespace Kore.Plugins.Messaging.Forums.Extensions
 {
@@ -53,7 +50,7 @@ namespace Kore.Plugins.Messaging.Forums.Extensions
                         //}
                         //else
                         //{
-                            links.Append(html.ActionLink(model.FirstButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.FirstPageTitle) }));
+                        links.Append(html.ActionLink(model.FirstButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.FirstPageTitle) }));
                         //}
                         links.Append("</li>");
                     }
@@ -72,7 +69,7 @@ namespace Kore.Plugins.Messaging.Forums.Extensions
                         //}
                         //else
                         //{
-                            links.Append(html.ActionLink(model.PreviousButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.PreviousPageTitle) }));
+                        links.Append(html.ActionLink(model.PreviousButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.PreviousPageTitle) }));
                         //}
                         links.Append("</li>");
                     }
@@ -99,7 +96,7 @@ namespace Kore.Plugins.Messaging.Forums.Extensions
                             //}
                             //else
                             //{
-                                links.Append(html.ActionLink((i + 1).ToString(), model.RouteActionName, model.RouteValues, new { title = string.Format(localizer(LocalizableStrings.Pager.PageLinkTitle), (i + 1)) }));
+                            links.Append(html.ActionLink((i + 1).ToString(), model.RouteActionName, model.RouteValues, new { title = string.Format(localizer(LocalizableStrings.Pager.PageLinkTitle), (i + 1)) }));
                             //}
                             links.Append("</li>");
                         }
@@ -119,7 +116,7 @@ namespace Kore.Plugins.Messaging.Forums.Extensions
                         //}
                         //else
                         //{
-                            links.Append(html.ActionLink(model.NextButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.NextPageTitle) }));
+                        links.Append(html.ActionLink(model.NextButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.NextPageTitle) }));
                         //}
                         links.Append("</li>");
                     }
@@ -138,7 +135,7 @@ namespace Kore.Plugins.Messaging.Forums.Extensions
                         //}
                         //else
                         //{
-                            links.Append(html.ActionLink(model.LastButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.LastPageTitle) }));
+                        links.Append(html.ActionLink(model.LastButtonText, model.RouteActionName, model.RouteValues, new { title = localizer(LocalizableStrings.Pager.LastPageTitle) }));
                         //}
                         links.Append("</li>");
                     }

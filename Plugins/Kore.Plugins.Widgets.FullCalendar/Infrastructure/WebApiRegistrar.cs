@@ -1,8 +1,8 @@
 ﻿using System.Web.Http;
 using System.Web.OData.Builder;
+using System.Web.OData.Extensions;
 using Kore.Plugins.Widgets.FullCalendar.Data.Domain;
 using Kore.Web.Infrastructure;
-using System.Web.OData.Extensions;
 
 namespace Kore.Plugins.Widgets.FullCalendar.Infrastructure
 {

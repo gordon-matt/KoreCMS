@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using Kore.Web;
 using Kore.Web.Installation;
 using Kore.Web.Models;
 using KoreCMS.Data;

@@ -29,8 +29,6 @@ namespace Kore.Web.CommonResources.Infrastructure
             bundles.Add(new ScriptBundle("~/bundles/js/kore/tinymce")
                 .Include("~/Scripts/Kore.Web.CommonResources.Scripts.kore-tinymce.js"));
 
-
-
             bundles.Add(new ScriptBundle("~/bundles/js/third-party/bootpag")
                 .Include("~/Scripts/Kore.Web.CommonResources.Scripts.jquery.bootpag.min.js"));
 
@@ -46,7 +44,7 @@ namespace Kore.Web.CommonResources.Infrastructure
             bundles.Add(new ScriptBundle("~/bundles/js/third-party/momentjs")
                 .Include("~/Scripts/Kore.Web.CommonResources.Scripts.moment-with-locales.min.js"));
 
-            #endregion
+            #endregion Scripts
 
             #region Styles
 
@@ -61,7 +59,7 @@ namespace Kore.Web.CommonResources.Infrastructure
             bundles.Add(new StyleBundle("~/bundles/content/third-party/metro")
                 .Include("~/Content/Kore.Web.CommonResources.Content.metro.blue.css", cssRewriteUrlTransform));
 
-            #endregion
+            #endregion Styles
         }
 
         #endregion IResourceBundleRegistrar Members

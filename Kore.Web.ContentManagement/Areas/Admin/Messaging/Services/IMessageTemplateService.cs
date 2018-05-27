@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Kore.Caching;
+﻿using Kore.Caching;
 using Kore.Data;
 using Kore.Data.Services;
 

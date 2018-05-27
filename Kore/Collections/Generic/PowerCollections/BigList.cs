@@ -696,7 +696,7 @@ namespace Kore.Collections.Generic
                     return Clone();
 
                 // Create a new list by converting each item in this list via cloning.
-                return new BigList<T>(Algorithms.Convert<T, T>(this, delegate(T item)
+                return new BigList<T>(Algorithms.Convert<T, T>(this, delegate (T item)
                 {
                     if (item == null)
                         return default(T);    // Really null, because we know T is a reference type

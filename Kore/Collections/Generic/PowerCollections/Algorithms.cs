@@ -2374,7 +2374,7 @@ namespace Kore.Collections.Generic
                 // Got through the whole pattern. We have a match.
                 return start;
 
-            NOMATCH:
+                NOMATCH:
                 /* no match found at start. */
                 ;
             }
@@ -4676,7 +4676,7 @@ namespace Kore.Collections.Generic
             if (comparison == null)
                 throw new ArgumentNullException("comparison");
 
-            return delegate(T x, T y) { return -comparison(x, y); };
+            return delegate (T x, T y) { return -comparison(x, y); };
         }
 
         /// <summary>
@@ -5093,7 +5093,7 @@ namespace Kore.Collections.Generic
             if (dictionary == null)
                 throw new ArgumentNullException("dictionary");
 
-            return delegate(TKey key)
+            return delegate (TKey key)
             {
                 TValue value;
                 if (dictionary.TryGetValue(key, out value))

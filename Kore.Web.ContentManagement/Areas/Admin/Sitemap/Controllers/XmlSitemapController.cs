@@ -1,7 +1,6 @@
 ﻿using System.Web.Mvc;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
-using Newtonsoft.Json.Linq;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers
 {

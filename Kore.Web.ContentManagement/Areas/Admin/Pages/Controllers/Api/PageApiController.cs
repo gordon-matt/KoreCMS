@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.OData;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Http.OData;

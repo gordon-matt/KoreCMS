@@ -609,7 +609,7 @@ namespace Kore.Collections.Generic
         /// <returns>A RangeTester delegate that tests for an item in the given range.</returns>
         public RangeTester BoundedRangeTester(bool useFirst, T first, bool useLast, T last)
         {
-            return delegate(T item)
+            return delegate (T item)
             {
                 if (useFirst && comparer.Compare(first, item) > 0)
                     return -1;     // item is before first.
@@ -630,7 +630,7 @@ namespace Kore.Collections.Generic
         /// <returns>A RangeTester delegate that tests for an item in the given range.</returns>
         public RangeTester DoubleBoundedRangeTester(T first, bool firstInclusive, T last, bool lastInclusive)
         {
-            return delegate(T item)
+            return delegate (T item)
             {
                 if (firstInclusive)
                 {
@@ -666,7 +666,7 @@ namespace Kore.Collections.Generic
         /// <returns>A RangeTester delegate that tests for an item in the given range.</returns>
         public RangeTester LowerBoundedRangeTester(T first, bool inclusive)
         {
-            return delegate(T item)
+            return delegate (T item)
             {
                 if (inclusive)
                 {
@@ -693,7 +693,7 @@ namespace Kore.Collections.Generic
         /// <returns>A RangeTester delegate that tests for an item in the given range.</returns>
         public RangeTester UpperBoundedRangeTester(T last, bool inclusive)
         {
-            return delegate(T item)
+            return delegate (T item)
             {
                 if (inclusive)
                 {
@@ -719,7 +719,7 @@ namespace Kore.Collections.Generic
         /// <returns>A RangeTester delegate that tests for an item equal to <paramref name="equalTo"/>.</returns>
         public RangeTester EqualRangeTester(T equalTo)
         {
-            return delegate(T item)
+            return delegate (T item)
             {
                 return comparer.Compare(item, equalTo);
             };
@@ -1006,7 +1006,7 @@ namespace Kore.Collections.Generic
                 }
             }
 
-        FINISHED:
+            FINISHED:
             if (keyNode == null)
             {
                 // We never found a node to delete.

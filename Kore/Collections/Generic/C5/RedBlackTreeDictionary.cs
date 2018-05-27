@@ -19,7 +19,6 @@
  SOFTWARE.
 */
 
-using System;
 using SCG = System.Collections.Generic;
 
 namespace Kore.Collections.Generic.C5

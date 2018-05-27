@@ -1,6 +1,5 @@
 ﻿using System.Data.Entity.ModelConfiguration;
 using System.Runtime.Serialization;
-using Kore.Data;
 using Kore.Data.EntityFramework;
 using Kore.Tenants.Domain;
 using Kore.Web.Plugins;

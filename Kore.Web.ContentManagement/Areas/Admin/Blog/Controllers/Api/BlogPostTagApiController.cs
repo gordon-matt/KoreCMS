@@ -1,10 +1,4 @@
-﻿using System.Linq;
-using System.Web.OData;
-using System.Web.OData.Query;
-using Kore.Infrastructure;
-using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
-using Kore.Web.ContentManagement.Areas.Admin.Blog.Services;
-using Kore.Web.Security.Membership.Permissions;
+﻿using System.Web.OData;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 {

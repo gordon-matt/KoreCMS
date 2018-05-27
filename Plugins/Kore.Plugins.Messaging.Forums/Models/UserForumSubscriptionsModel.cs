@@ -30,6 +30,6 @@ namespace Kore.Plugins.Messaging.Forums.Models
             public string Slug { get; set; }
         }
 
-        #endregion
+        #endregion Nested classes
     }
 }

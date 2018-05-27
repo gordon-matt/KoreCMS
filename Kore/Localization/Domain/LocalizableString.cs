@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using Kore.Data;
 using Kore.Tenants.Domain;
 
 namespace Kore.Localization.Domain

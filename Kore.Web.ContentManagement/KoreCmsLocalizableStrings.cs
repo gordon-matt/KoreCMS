@@ -74,6 +74,7 @@
                 //public const string CenterX = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.CenterX";
                 //public const string CenterY = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.CenterY";
                 public const string AutoResize = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.AutoResize";
+
                 public const string Steps = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.Steps";
                 public const string ClassPattern = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.ClassPattern";
                 public const string AfterCloudRender = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.AfterCloudRender";
@@ -86,7 +87,7 @@
                 public const string FontSizeTo = "Kore.Web.ContentManagement/ContentBlocks.TagCloudBlock.FontSizeTo";
             }
 
-            #endregion
+            #endregion Blog
 
             public static class FormBlock
             {

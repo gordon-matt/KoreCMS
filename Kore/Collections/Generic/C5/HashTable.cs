@@ -240,7 +240,7 @@ namespace Kore.Collections.Generic.C5
             size++;
             if (size > resizethreshhold)
                 expand();
-        notfound:
+            notfound:
             if (raise && add)
                 raiseForAdd(item);
             if (update)

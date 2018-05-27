@@ -1,8 +1,6 @@
 ﻿using System.Web.Mvc;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
-using Kore.Web.Security.Membership.Permissions;
-using Newtonsoft.Json.Linq;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers
 {

@@ -519,7 +519,6 @@
     <Compile Include="Infrastructure\StartupTask.cs" />
     <Compile Include="Security\Membership\SystemUserAttributeNames.cs" />
     <Compile Include="Security\SecuritySettings.cs" />
-    <Compile Include="SiteRegistrar.cs" />
     <Compile Include="UI\HtmlTextWriterExtensions.cs" />
     <Compile Include="UrlBuilder.cs" />
     <EmbeddedResource Include="Views\Shared\EditorTemplates\KoreSiteSettings.cshtml" />

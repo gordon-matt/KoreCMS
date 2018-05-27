@@ -26,7 +26,7 @@
                 case TabPosition.Left: EnsureClass("tabbable tabs-left"); break;
                 case TabPosition.Right: EnsureClass("tabbable tabs-right"); break;
 
-                //case TabPosition.Bottom: EnsureClass("tabbable tabs-bottom"); break;
+                    //case TabPosition.Bottom: EnsureClass("tabbable tabs-bottom"); break;
             }
 
             this.InternalTabTemplate = @"<li><a data-toggle=""tab"" href=""#{href}"">#{label}</a></li>";

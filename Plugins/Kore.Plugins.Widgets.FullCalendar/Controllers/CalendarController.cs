@@ -2,7 +2,6 @@
 using Kore.Web;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
-using Newtonsoft.Json.Linq;
 
 namespace Kore.Plugins.Widgets.FullCalendar.Controllers
 {

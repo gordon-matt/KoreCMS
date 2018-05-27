@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Kore.Caching;
-using Kore.Collections;
+﻿using Kore.Caching;
 using Kore.Data;
 using Kore.Data.Services;
 using Kore.Localization.Domain;
-using Kore.Localization.Models;
 
 namespace Kore.Localization.Services
 {

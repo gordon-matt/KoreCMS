@@ -77,7 +77,7 @@ namespace Kore.Collections.Generic
         /// <returns>A RangeTester delegate that selects the range of items with that range.</returns>
         private RedBlackTree<KeyValuePair<TKey, TValue>>.RangeTester KeyRange(TKey key)
         {
-            return delegate(KeyValuePair<TKey, TValue> pair)
+            return delegate (KeyValuePair<TKey, TValue> pair)
             {
                 return keyComparer.Compare(pair.Key, key);
             };
@@ -93,7 +93,7 @@ namespace Kore.Collections.Generic
         /// <returns>A RangeTester delegate that tests for a key in the given range.</returns>
         private RedBlackTree<KeyValuePair<TKey, TValue>>.RangeTester DoubleBoundedKeyRangeTester(TKey first, bool firstInclusive, TKey last, bool lastInclusive)
         {
-            return delegate(KeyValuePair<TKey, TValue> pair)
+            return delegate (KeyValuePair<TKey, TValue> pair)
             {
                 if (firstInclusive)
                 {
@@ -129,7 +129,7 @@ namespace Kore.Collections.Generic
         /// <returns>A RangeTester delegate that tests for a key in the given range.</returns>
         private RedBlackTree<KeyValuePair<TKey, TValue>>.RangeTester LowerBoundedKeyRangeTester(TKey first, bool inclusive)
         {
-            return delegate(KeyValuePair<TKey, TValue> pair)
+            return delegate (KeyValuePair<TKey, TValue> pair)
             {
                 if (inclusive)
                 {
@@ -156,7 +156,7 @@ namespace Kore.Collections.Generic
         /// <returns>A RangeTester delegate that tests for a key in the given range.</returns>
         private RedBlackTree<KeyValuePair<TKey, TValue>>.RangeTester UpperBoundedKeyRangeTester(TKey last, bool inclusive)
         {
-            return delegate(KeyValuePair<TKey, TValue> pair)
+            return delegate (KeyValuePair<TKey, TValue> pair)
             {
                 if (inclusive)
                 {

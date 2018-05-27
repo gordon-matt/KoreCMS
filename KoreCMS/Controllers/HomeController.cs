@@ -1,8 +1,6 @@
 ﻿using System.Web.Mvc;
-using Kore.Web.Infrastructure;
-using Kore.Web.Mvc.Optimization;
-using Kore.Caching;
 using Kore.Infrastructure;
+using Kore.Web.Mvc.Optimization;
 
 namespace KoreCMS.Controllers
 {

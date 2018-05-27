@@ -20,7 +20,6 @@ using Kore.Web.Helpers;
 using Kore.Web.Html;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Filters;
-using Kore.Web.Security.Membership;
 
 namespace Kore.Plugins.Messaging.Forums.Controllers
 {

@@ -91,10 +91,10 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Services
         }
 
         private Guid SendMessage(
-            int tenantId, 
+            int tenantId,
             Domain.MessageTemplate messageTemplate,
-            IEnumerable<Token> tokens, 
-            string toEmailAddress, 
+            IEnumerable<Token> tokens,
+            string toEmailAddress,
             string toName)
         {
             var subject = messageTemplate.Subject ?? string.Empty;

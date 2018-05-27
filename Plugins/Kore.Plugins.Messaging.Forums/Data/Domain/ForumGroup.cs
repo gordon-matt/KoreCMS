@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
-using Kore.Data;
 using Kore.Data.EntityFramework;
-using Kore.Plugins.Messaging.Forums;
 using Kore.Tenants.Domain;
 using Kore.Web.Plugins;
 

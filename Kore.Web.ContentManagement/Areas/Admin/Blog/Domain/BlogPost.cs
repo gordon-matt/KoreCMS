@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
-using Kore.Data;
 using Kore.Data.EntityFramework;
 using Kore.Tenants.Domain;
 

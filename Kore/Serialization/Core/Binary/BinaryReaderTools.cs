@@ -118,7 +118,7 @@ namespace Kore.Serialization.Core.Binary
 #if DEBUG || PORTABLE || SILVERLIGHT
                 if (type == typeof(decimal)) return readDecimal(reader);
 #else
-                if (type == typeof (Decimal)) return reader.ReadDecimal();
+                if (type == typeof(Decimal)) return reader.ReadDecimal();
 #endif
                 if (type == typeof(Double)) return reader.ReadDouble();
                 if (type == typeof(Int16)) return reader.ReadInt16();

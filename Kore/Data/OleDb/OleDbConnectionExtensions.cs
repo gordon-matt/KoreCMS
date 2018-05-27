@@ -31,11 +31,11 @@ namespace Kore.Data.OleDb
             foreach (DataRow row in columnsSchema.Rows)
             {
                 var columnInfo = new ColumnInfo
-                    {
-                        ColumnName = row.Field<string>("COLUMN_NAME"),
-                        DataType = DataTypeConvertor.GetDbType((OleDbType)row.Field<int>("DATA_TYPE")),
-                        IsNullable = row.Field<bool>("IS_NULLABLE")
-                    };
+                {
+                    ColumnName = row.Field<string>("COLUMN_NAME"),
+                    DataType = DataTypeConvertor.GetDbType((OleDbType)row.Field<int>("DATA_TYPE")),
+                    IsNullable = row.Field<bool>("IS_NULLABLE")
+                };
 
                 if (row["CHARACTER_MAXIMUM_LENGTH"] != DBNull.Value)
                 {

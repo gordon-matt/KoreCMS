@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using Kore.Events;
 using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging.Services;
-using Kore.Events;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Newsletters
 {

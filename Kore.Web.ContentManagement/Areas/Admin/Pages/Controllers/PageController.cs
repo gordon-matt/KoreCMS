@@ -11,7 +11,6 @@ using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 using Kore.Web.Mvc;
 using Kore.Web.Mvc.Optimization;
-using Newtonsoft.Json.Linq;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
 {
@@ -147,7 +146,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers
             var pageVersion = pageVersionService.Value.GetCurrentVersion(
                 tenantId,
                 pageId,
-                currentCulture, 
+                currentCulture,
                 enabledOnly: false,
                 shownOnMenusOnly: false,
                 allowReturnDraftVersion: true);

@@ -3,7 +3,6 @@ using System.Linq;
 using Kore.Collections;
 using Kore.Data;
 using Kore.Infrastructure;
-using Kore.Web.Configuration;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Pages.Services;
 

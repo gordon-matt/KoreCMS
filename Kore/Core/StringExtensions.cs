@@ -13,7 +13,6 @@ using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
 using Kore.Collections;
-using Kore.Serialization;
 
 namespace Kore
 {
@@ -856,29 +855,6 @@ namespace Kore
                 ret = s.Substring(index + 1);
             }
             return ret;
-        }
-
-        public static T SharpDeserialize<T>(this string s)
-        {
-            if (string.IsNullOrEmpty(s))
-            {
-                return default(T);
-            }
-
-            var settings = new SharpSerializerXmlSettings
-            {
-                IncludeAssemblyVersionInTypeName = false,
-                IncludeCultureInTypeName = false,
-                IncludePublicKeyTokenInTypeName = false
-            };
-
-            var sharpSerializer = new SharpSerializer(settings);
-
-            var byteArray = Encoding.UTF8.GetBytes(s);
-            using (var stream = new MemoryStream(byteArray))
-            {
-                return (T)sharpSerializer.Deserialize(stream);
-            }
         }
 
         /// <summary>

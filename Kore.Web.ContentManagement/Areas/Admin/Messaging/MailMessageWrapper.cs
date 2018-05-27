@@ -2,7 +2,6 @@
 using System.IO;
 using System.Net.Mail;
 using System.Text;
-using Kore.Serialization;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Messaging
 {
@@ -256,30 +255,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging
 
         public static MailMessageWrapper Create(string str)
         {
-            var settings = new SharpSerializerXmlSettings
-            {
-                IncludeAssemblyVersionInTypeName = false,
-                IncludeCultureInTypeName = false,
-                IncludePublicKeyTokenInTypeName = false
-            };
-
-            var serializer = new SharpSerializer(settings);
-
-            return (MailMessageWrapper)serializer.DeserializeFromString(str);
+            return str.JsonDeserialize<MailMessageWrapper>();
         }
 
         public override string ToString()
         {
-            var settings = new SharpSerializerXmlSettings
-            {
-                IncludeAssemblyVersionInTypeName = false,
-                IncludeCultureInTypeName = false,
-                IncludePublicKeyTokenInTypeName = false
-            };
-
-            var serializer = new SharpSerializer(settings);
-
-            return serializer.Serialize(this);
+            return this.ToJson();
         }
 
         #region Nested type: AttachmentWrapper

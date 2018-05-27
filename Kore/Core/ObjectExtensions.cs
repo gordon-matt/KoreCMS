@@ -8,7 +8,6 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using Kore.IO;
-using Kore.Serialization;
 
 namespace Kore
 {
@@ -142,27 +141,6 @@ namespace Kore
         public static bool GenericEquals<T>(this T item, T other)
         {
             return EqualityComparer<T>.Default.Equals(item, other);
-        }
-
-        public static string SharpSerialize<T>(this T item)
-        {
-            var sharpSettings = new SharpSerializerXmlSettings
-            {
-                IncludeAssemblyVersionInTypeName = false,
-                IncludeCultureInTypeName = false,
-                IncludePublicKeyTokenInTypeName = false
-            };
-
-            using (var stream = new MemoryStream())
-            {
-                new SharpSerializer(sharpSettings).Serialize(item, stream);
-                stream.Position = 0;
-
-                using (var reader = new StreamReader(stream))
-                {
-                    return reader.ReadToEnd();
-                }
-            }
         }
 
         /// <summary>

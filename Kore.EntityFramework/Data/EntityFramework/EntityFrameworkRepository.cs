@@ -6,13 +6,12 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Castle.Core.Logging;
-using EntityFramework.BulkInsert.Extensions;
-using EntityFramework.Extensions;
 using Kore.Collections;
 using Kore.EntityFramework.Data;
 using Kore.EntityFramework.Data.EntityFramework;
 using Kore.Exceptions;
 using Kore.Logging;
+using Z.EntityFramework.Plus;
 
 namespace Kore.Data.EntityFramework
 {
@@ -473,19 +472,19 @@ namespace Kore.Data.EntityFramework
         {
             using (var context = contextFactory.GetContext())
             {
-                if (efHelper.Value.SupportsBulkInsert && entities.HasMoreThan(20))
+                //if (efHelper.Value.SupportsBulkInsert && entities.HasMoreThan(20))
+                //{
+                //    context.BulkInsert(entities);
+                //    return entities.Count();
+                //}
+                //else
+                //{
+                foreach (var entity in entities)
                 {
-                    context.BulkInsert(entities);
-                    return entities.Count();
+                    context.Set<TEntity>().Add(entity);
                 }
-                else
-                {
-                    foreach (var entity in entities)
-                    {
-                        context.Set<TEntity>().Add(entity);
-                    }
-                    return context.SaveChanges();
-                }
+                return context.SaveChanges();
+                //}
             }
         }
 
@@ -502,20 +501,20 @@ namespace Kore.Data.EntityFramework
         {
             using (var context = contextFactory.GetContext())
             {
-                int count = entities.Count();
-                if (efHelper.Value.SupportsBulkInsert && count > 20)
+                //int count = entities.Count();
+                //if (efHelper.Value.SupportsBulkInsert && count > 20)
+                //{
+                //    context.BulkInsert(entities);
+                //    return await Task.FromResult(count);
+                //}
+                //else
+                //{
+                foreach (var entity in entities)
                 {
-                    context.BulkInsert(entities);
-                    return await Task.FromResult(count);
+                    context.Set<TEntity>().Add(entity);
                 }
-                else
-                {
-                    foreach (var entity in entities)
-                    {
-                        context.Set<TEntity>().Add(entity);
-                    }
-                    return await context.SaveChangesAsync();
-                }
+                return await context.SaveChangesAsync();
+                //}
             }
         }
 

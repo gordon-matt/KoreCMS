@@ -1,8 +1,0 @@
-﻿Group: Widgets
-FriendlyName: View360
-SystemName: Kore.Plugins.Widgets.View360
-Version: 1.00
-SupportedVersions: 1.00
-Author: Widecommerce
-DisplayOrder: 1
-FileName: Kore.Plugins.Widgets.View360.dll

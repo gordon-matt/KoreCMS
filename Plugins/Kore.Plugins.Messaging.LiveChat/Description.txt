@@ -1,8 +1,0 @@
-﻿Group: Messaging
-FriendlyName: Live Chat
-SystemName: Kore.Plugins.Messaging.LiveChat
-Version: 1.0.0
-SupportedVersions: 1.00
-Author: Widecommerce
-DisplayOrder: 1
-FileName: Kore.Plugins.Messaging.LiveChat.dll

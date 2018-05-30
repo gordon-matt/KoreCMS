@@ -18,7 +18,7 @@ namespace Kore.Plugins.Maintenance.Watchdog
                 menu => menu.Add(T(LocalizableStrings.Services), "5", item => item
                     .Url("#maintenance/watchdog")
                     //.Action("Index", "Watchdog", new { area = Constants.RouteArea })
-                    .IconCssClass("kore-icon kore-icon-services")
+                    .IconCssClass("fa fa-cogs")
                     .Permission(WatchdogPermissions.Read)));
         }
     }

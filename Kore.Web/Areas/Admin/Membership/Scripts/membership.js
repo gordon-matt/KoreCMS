@@ -96,13 +96,13 @@
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a data-bind="click: roleModel.editPermissions.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Permissions + '</a>' +
-                        '<a data-bind="click: roleModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
-                        '<a data-bind="click: roleModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
+                        '<button type="button" data-bind="click: roleModel.editPermissions.bind($data,\'#=Id#\')" class="btn btn-default btn-sm" title="' + self.parent.translations.Permissions + '"><i class="fa fa-check-square-o"></i></button>' +
+                        '<button type="button" data-bind="click: roleModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-sm" title="' + self.parent.translations.Edit + '"><i class="fa fa-edit"></i></button>' +
+                        '<button type="button" data-bind="click: roleModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-sm" title="' + self.parent.translations.Delete + '"><i class="fa fa-remove"></i></button>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 200
+                    width: 150
                 }]
             });
         };
@@ -421,14 +421,15 @@
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a data-bind="click: userModel.editRoles.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Roles + '</a>' +
-                        '<a data-bind="click: userModel.changePassword.bind($data,\'#=Id#\',\'#=UserName#\')" class="btn btn-default btn-xs">' + self.parent.translations.Password + '</a>' +
-                        '<a data-bind="click: userModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
-                        '<a data-bind="click: userModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
+                        '<div class="btn-group">' +
+                        '<button type="button" data-bind="click: userModel.editRoles.bind($data,\'#=Id#\')" class="btn btn-default btn-sm" title="' + self.parent.translations.Roles + '"><i class="fa fa-users"></i></button>' +
+                        '<button type="button" data-bind="click: userModel.changePassword.bind($data,\'#=Id#\',\'#=UserName#\')" class="btn btn-default btn-sm" title="' + self.parent.translations.Password + '"><i class="fa fa-lock"></i></button>' +
+                        '<button type="button" data-bind="click: userModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-sm" title="' + self.parent.translations.Edit + '"><i class="fa fa-edit"></i></button>' +
+                        '<button type="button" data-bind="click: userModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-sm" title="' + self.parent.translations.Delete + '"><i class="fa fa-remove"></i></button>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 230
+                    width: 200
                 }]
             });
         };

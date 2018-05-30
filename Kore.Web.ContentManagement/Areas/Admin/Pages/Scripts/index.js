@@ -102,10 +102,12 @@
                     field: "Id",
                     title: " ",
                     template:
-                        '<a data-bind="click: pageTypeModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>',
+                        '<div class="btn-group">' +
+                        '<button type="button" data-bind="click: pageTypeModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-sm" title="' + self.parent.translations.Edit + '"><i class="fa fa-edit"></i></button>' +
+                        '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 130
+                    width: 50
                 }]
             });
         };
@@ -306,12 +308,12 @@
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a data-bind="click: pageVersionModel.restore.bind($data,\'#=Id#\')" class="btn btn-warning btn-xs">' + self.parent.translations.Restore + '</a>' +
-                        '<a data-bind="click: pageVersionModel.preview.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Preview + '</a>' +
+                        '<button type="button" data-bind="click: pageVersionModel.restore.bind($data,\'#=Id#\')" class="btn btn-warning btn-sm" title="' + self.parent.translations.Restore + '"><i class="fa fa-undo"></i></button>' +
+                        '<button type="button" data-bind="click: pageVersionModel.preview.bind($data,\'#=Id#\')" class="btn btn-default btn-sm" title="' + self.parent.translations.Preview + '"><i class="fa fa-search"></i></button>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 130
+                    width: 100
                 }]
             });
         };
@@ -473,36 +475,36 @@
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                            '<a data-bind="click: pageModel.edit.bind($data,\'#=Id#\',null)" class="btn btn-default btn-xs" title="' + self.parent.translations.Edit + '">' +
-                            '<i class="kore-icon kore-icon-edit"></i></a>' +
+                            '<button type="button" data-bind="click: pageModel.edit.bind($data,\'#=Id#\',null)" class="btn btn-default btn-sm" title="' + self.parent.translations.Edit + '">' +
+                            '<i class="fa fa-edit"></i></button>' +
 
-                            '<a data-bind="click: pageModel.remove.bind($data,\'#=Id#\',null)" class="btn btn-danger btn-xs" title="' + self.parent.translations.Delete + '">' +
-                            '<i class="kore-icon kore-icon-trash"></i></a>' +
+                            '<button type="button" data-bind="click: pageModel.remove.bind($data,\'#=Id#\',null)" class="btn btn-danger btn-sm" title="' + self.parent.translations.Delete + '">' +
+                            '<i class="fa fa-remove"></i></button>' +
 
-                            '<a data-bind="click: pageModel.create.bind($data,\'#=Id#\')" class="btn btn-primary btn-xs" title="' + self.parent.translations.Create + '">' +
-                            '<i class="kore-icon kore-icon-add"></i></a>' +
+                            '<button type="button" data-bind="click: pageModel.create.bind($data,\'#=Id#\')" class="btn btn-primary btn-sm" title="' + self.parent.translations.Create + '">' +
+                            '<i class="fa fa-plus"></i></button>' +
 
-                            '<a data-bind="click: pageModel.showPageHistory.bind($data,\'#=Id#\')" class="btn btn-warning btn-xs" title="' + self.parent.translations.PageHistory + '">' +
-                            '<i class="kore-icon kore-icon-history"></i></a>' +
+                            '<button type="button" data-bind="click: pageModel.showPageHistory.bind($data,\'#=Id#\')" class="btn btn-warning btn-sm" title="' + self.parent.translations.PageHistory + '">' +
+                            '<i class="fa fa-clock-o"></i></button>' +
 
-                            '<a href="\\#blocks/content-blocks/#=Id#" class="btn btn-info btn-xs" title="' + self.parent.translations.ContentBlocks + '">' +
-                            '<i class="kore-icon kore-icon-content-blocks"></i></a>' +
+                            '<a href="\\#blocks/content-blocks/#=Id#" class="btn btn-info btn-sm" title="' + self.parent.translations.ContentBlocks + '">' +
+                            '<i class="fa fa-cubes"></i></a>' +
 
-                            '<a data-bind="click: pageModel.toggleEnabled.bind($data,\'#=Id#\',\'#=ParentId#\',#=IsEnabled#)" class="btn btn-default btn-xs" title="' + self.parent.translations.Toggle + '">' +
-                            '<i class="kore-icon kore-icon-toggle-on"></i></a>' +
+                            '<button type="button" data-bind="click: pageModel.toggleEnabled.bind($data,\'#=Id#\',\'#=ParentId#\',#=IsEnabled#)" class="btn btn-default btn-sm" title="' + self.parent.translations.Toggle + '">' +
+                            '<i class="fa #=IsEnabled ? \'fa-toggle-on text-success\' : \'fa-toggle-off text-danger\'#"></i></button>' +
 
-                            '<a data-bind="click: pageModel.localize.bind($data,\'#=Id#\')" class="btn btn-primary btn-xs" title="' + self.parent.translations.Localize + '">' +
-                            '<i class="kore-icon kore-icon-globe"></i></a>' +
+                            '<button type="button" data-bind="click: pageModel.localize.bind($data,\'#=Id#\')" class="btn btn-primary btn-sm" title="' + self.parent.translations.Localize + '">' +
+                            '<i class="fa fa-globe"></i></button>' +
 
-                            '<a data-bind="click: pageModel.preview.bind($data,\'#=Id#\')" class="btn btn-success btn-xs" title="' + self.parent.translations.Preview + '">' +
-                            '<i class="kore-icon kore-icon-preview"></i></a>' +
+                            '<button type="button" data-bind="click: pageModel.preview.bind($data,\'#=Id#\')" class="btn btn-success btn-sm" title="' + self.parent.translations.Preview + '">' +
+                            '<i class="fa fa-search"></i></button>' +
 
-                            '<a data-bind="click: pageModel.move.bind($data,\'#=Id#\')" class="btn btn-default btn-xs" title="' + self.parent.translations.Move + '">' +
-                            '<i class="kore-icon kore-icon-move"></i></a>' +
+                            '<button type="button" data-bind="click: pageModel.move.bind($data,\'#=Id#\')" class="btn btn-default btn-sm" title="' + self.parent.translations.Move + '">' +
+                            '<i class="fa fa-caret-square-o-right"></i></button>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 260
+                    width: 350
                 }],
                 detailTemplate: kendo.template($("#pages-template").html()),
                 detailInit: self.detailInit
@@ -1013,36 +1015,36 @@
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                            '<a data-bind="click: pageModel.edit.bind($data,\'#=Id#\',null)" class="btn btn-default btn-xs" title="' + self.parent.translations.Edit + '">' +
-                            '<i class="kore-icon kore-icon-edit"></i></a>' +
+                            '<button type="button" data-bind="click: pageModel.edit.bind($data,\'#=Id#\',null)" class="btn btn-default btn-sm" title="' + self.parent.translations.Edit + '">' +
+                            '<i class="fa fa-edit"></i></button>' +
 
-                            '<a data-bind="click: pageModel.remove.bind($data,\'#=Id#\',null)" class="btn btn-danger btn-xs" title="' + self.parent.translations.Delete + '">' +
-                            '<i class="kore-icon kore-icon-trash"></i></a>' +
+                            '<button type="button" data-bind="click: pageModel.remove.bind($data,\'#=Id#\',null)" class="btn btn-danger btn-sm" title="' + self.parent.translations.Delete + '">' +
+                            '<i class="fa fa-remove"></i></button>' +
 
-                            '<a data-bind="click: pageModel.create.bind($data,\'#=Id#\')" class="btn btn-primary btn-xs" title="' + self.parent.translations.Create + '">' +
-                            '<i class="kore-icon kore-icon-add"></i></a>' +
+                            '<button type="button" data-bind="click: pageModel.create.bind($data,\'#=Id#\')" class="btn btn-primary btn-sm" title="' + self.parent.translations.Create + '">' +
+                            '<i class="fa fa-plus"></i></button>' +
 
-                            '<a data-bind="click: pageModel.showPageHistory.bind($data,\'#=Id#\')" class="btn btn-warning btn-xs" title="' + self.parent.translations.PageHistory + '">' +
-                            '<i class="kore-icon kore-icon-history"></i></a>' +
+                            '<button type="button" data-bind="click: pageModel.showPageHistory.bind($data,\'#=Id#\')" class="btn btn-warning btn-sm" title="' + self.parent.translations.PageHistory + '">' +
+                            '<i class="fa fa-clock-o"></i></button>' +
 
-                            '<a href="\\#blocks/content-blocks/#=Id#" class="btn btn-info btn-xs" title="' + self.parent.translations.ContentBlocks + '">' +
-                            '<i class="kore-icon kore-icon-content-blocks"></i></a>' +
+                            '<a href="\\#blocks/content-blocks/#=Id#" class="btn btn-info btn-sm" title="' + self.parent.translations.ContentBlocks + '">' +
+                            '<i class="fa fa-cubes"></i></a>' +
 
-                            '<a data-bind="click: pageModel.toggleEnabled.bind($data,\'#=Id#\',\'#=ParentId#\',#=IsEnabled#)" class="btn btn-default btn-xs" title="' + self.parent.translations.Toggle + '">' +
-                            '<i class="kore-icon kore-icon-toggle-on"></i></a>' +
+                            '<button type="button" data-bind="click: pageModel.toggleEnabled.bind($data,\'#=Id#\',\'#=ParentId#\',#=IsEnabled#)" class="btn btn-default btn-sm" title="' + self.parent.translations.Toggle + '">' +
+                            '<i class="fa #=IsEnabled ? \'fa-toggle-on text-success\' : \'fa-toggle-off text-danger\'#"></i></button>' +
 
-                            '<a data-bind="click: pageModel.localize.bind($data,\'#=Id#\')" class="btn btn-primary btn-xs" title="' + self.parent.translations.Localize + '">' +
-                            '<i class="kore-icon kore-icon-globe"></i></a>' +
+                            '<button type="button" data-bind="click: pageModel.localize.bind($data,\'#=Id#\')" class="btn btn-primary btn-sm" title="' + self.parent.translations.Localize + '">' +
+                            '<i class="fa fa-globe"></i></button>' +
 
-                            '<a data-bind="click: pageModel.preview.bind($data,\'#=Id#\')" class="btn btn-success btn-xs" title="' + self.parent.translations.Preview + '">' +
-                            '<i class="kore-icon kore-icon-preview"></i></a>' +
+                            '<button type="button" data-bind="click: pageModel.preview.bind($data,\'#=Id#\')" class="btn btn-success btn-sm" title="' + self.parent.translations.Preview + '">' +
+                            '<i class="fa fa-search"></i></button>' +
 
-                            '<a data-bind="click: pageModel.move.bind($data,\'#=Id#\')" class="btn btn-default btn-xs" title="' + self.parent.translations.Move + '">' +
-                            '<i class="kore-icon kore-icon-move"></i></a>' +
+                            '<button type="button" data-bind="click: pageModel.move.bind($data,\'#=Id#\')" class="btn btn-default btn-sm" title="' + self.parent.translations.Move + '">' +
+                            '<i class="fa fa-caret-square-o-right"></i></button>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 260
+                    width: 350
                 }],
                 detailTemplate: kendo.template($("#pages-template").html()),
                 detailInit: self.detailInit

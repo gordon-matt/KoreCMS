@@ -118,11 +118,12 @@
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a data-bind="click: remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.translations.Delete + '</a>' +
+                        '<div class="btn-group">' +
+                        '<button type="button" data-bind="click: remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-sm" title="' + self.translations.Delete + '"><i class="fa fa-remove"></i></button>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 100
+                    width: 50
                 }]
             });
         };

@@ -17,7 +17,7 @@ namespace Kore.Plugins.Messaging.Forums
             builder.Add(T(Kore.Web.KoreWebLocalizableStrings.Plugins.Title),
                 menu => menu.Add(T(LocalizableStrings.Forums), "5", item => item
                     .Url("#plugins/messaging/forums")
-                    .IconCssClass("kore-icon kore-icon-forums")
+                    .IconCssClass("fa fa-comments-o")
                     .Permission(ForumPermissions.ReadForums)));
         }
     }

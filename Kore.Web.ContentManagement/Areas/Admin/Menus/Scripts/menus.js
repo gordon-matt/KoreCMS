@@ -136,13 +136,15 @@
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a data-bind="click: menuItemModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
-                        '<a data-bind="click: menuItemModel.remove.bind($data,\'#=Id#\', null)" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
-                        '<a data-bind="click: menuItemModel.create.bind($data,\'#=MenuId#\', \'#=Id#\')" class="btn btn-primary btn-xs">' + self.parent.translations.NewItem + '</a>' +
-                        '<a data-bind="click: menuItemModel.toggleEnabled.bind($data,\'#=Id#\',\'#=ParentId#\', #=Enabled#)" class="btn btn-default btn-xs">' + self.parent.translations.Toggle + '</a></div>',
+                        '<div class="btn-group">' +
+                        '<button type="button" data-bind="click: menuItemModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-sm" title="' + self.parent.translations.Edit + '"><i class="fa fa-edit"></i></button>' +
+                        '<button type="button" data-bind="click: menuItemModel.remove.bind($data,\'#=Id#\', null)" class="btn btn-danger btn-sm" title="' + self.parent.translations.Delete + '"><i class="fa fa-remove"></i></button>' +
+                        '<button type="button" data-bind="click: menuItemModel.create.bind($data,\'#=MenuId#\', \'#=Id#\')" class="btn btn-primary btn-sm" title="' + self.parent.translations.NewItem + '"><i class="fa fa-plus"></i></button>' +
+                        '<button type="button" data-bind="click: menuItemModel.toggleEnabled.bind($data,\'#=Id#\',\'#=ParentId#\', #=Enabled#)" class="btn btn-default btn-sm" title="' + self.parent.translations.Toggle + '"><i class="fa #=Enabled ? \'fa-toggle-on text-success\' : \'fa-toggle-off text-danger\'#"></i></button>' +
+                        '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 220
+                    width: 200
                 }],
                 detailTemplate: kendo.template($("#items-template").html()),
                 detailInit: self.parent.menuItemModel.detailInit
@@ -413,13 +415,15 @@
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a data-bind="click: menuItemModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
-                        '<a data-bind="click: menuItemModel.remove.bind($data,\'#=Id#\',\'#=ParentId#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
-                        '<a data-bind="click: menuItemModel.create.bind($data,\'#=MenuId#\', \'#=Id#\')" class="btn btn-primary btn-xs">' + self.parent.translations.NewItem + '</a>' +
-                        '<a data-bind="click: menuItemModel.toggleEnabled.bind($data,\'#=Id#\',\'#=ParentId#\', #=Enabled#)" class="btn btn-default btn-xs">' + self.parent.translations.Toggle + '</a></div>',
+                        '<div class="btn-group">' +
+                        '<button type="button" data-bind="click: menuItemModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-sm" title="' + self.parent.translations.Edit + '"><i class="fa fa-edit"></i></button>' +
+                        '<button type="button" data-bind="click: menuItemModel.remove.bind($data,\'#=Id#\',\'#=ParentId#\')" class="btn btn-danger btn-sm" title="' + self.parent.translations.Delete + '"><i class="fa fa-remove"></i></button>' +
+                        '<button type="button" data-bind="click: menuItemModel.create.bind($data,\'#=MenuId#\', \'#=Id#\')" class="btn btn-primary btn-sm" title="' + self.parent.translations.NewItem + '"><i class="fa fa-plus"></i></button>' +
+                        '<button type="button" data-bind="click: menuItemModel.toggleEnabled.bind($data,\'#=Id#\',\'#=ParentId#\', #=Enabled#)" class="btn btn-default btn-sm" title="' + self.parent.translations.Toggle + '"><i class="fa #=Enabled ? \'fa-toggle-on text-success\' : \'fa-toggle-off text-danger\'#"></i></button>' +
+                        '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 220
+                    width: 200
                 }],
                 detailTemplate: kendo.template($("#items-template").html()),
                 detailInit: self.parent.menuItemModel.detailInit
@@ -515,13 +519,14 @@
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a data-bind="click: menuModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
-                        '<a data-bind="click: menuModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
-                        '<a data-bind="click: menuModel.items.bind($data,\'#=Id#\')" class="btn btn-primary btn-xs">Items</a>' +
+                        '<div class="btn-group">' +
+                        '<button type="button" data-bind="click: menuModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-sm" title="' + self.parent.translations.Edit + '"><i class="fa fa-edit"></i></button>' +
+                        '<button type="button" data-bind="click: menuModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-sm" title="' + self.parent.translations.Delete + '"><i class="fa fa-remove"></i></button>' +
+                        '<button type="button" data-bind="click: menuModel.items.bind($data,\'#=Id#\')" class="btn btn-primary btn-sm" title="Items"><i class="fa fa-bars"></i></button>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 170
+                    width: 150
                 }]
             });
         };

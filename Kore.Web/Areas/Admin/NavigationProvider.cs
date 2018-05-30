@@ -29,64 +29,64 @@ namespace Kore.Web.Areas.Admin
         {
             builder
                 .Url("#membership")
-                .IconCssClass("kore-icon kore-icon-membership")
+                .IconCssClass("fa fa-user")
                 .Permission(MembershipPermissions.Manage);
         }
 
         private void BuildConfigurationMenu(NavigationItemBuilder builder)
         {
-            builder.IconCssClass("kore-icon kore-icon-config");
+            builder.IconCssClass("fa fa-cog");
 
             // Tenants
             builder.Add(T(KoreWebLocalizableStrings.Tenants.Title), "5", item => item
                 .Url("#tenants")
-                .IconCssClass("kore-icon kore-icon-tenants")
+                .IconCssClass("fa fa-building-o")
                 .Permission(StandardPermissions.FullAccess));
 
             // Indexing
             builder.Add(T(KoreWebLocalizableStrings.Indexing.Title), "5", item => item
                 .Url("#indexing")
-                .IconCssClass("kore-icon kore-icon-search")
+                .IconCssClass("fa fa-search")
                 .Permission(StandardPermissions.FullAccess));
 
             // Plugins
             builder.Add(T(KoreWebLocalizableStrings.Plugins.Title), "5", item => item
                 .Url("#plugins")
-                .IconCssClass("kore-icon kore-icon-plugins")
+                .IconCssClass("fa fa-puzzle-piece")
                 .Permission(StandardPermissions.FullAccess));
 
             // Settings
             builder.Add(T(KoreWebLocalizableStrings.General.Settings), "5", item => item
                 .Url("#configuration/settings")
-                .IconCssClass("kore-icon kore-icon-settings")
+                .IconCssClass("fa fa-cog")
                 .Permission(ConfigurationPermissions.ReadSettings));
 
             // Themes
             builder.Add(T(KoreWebLocalizableStrings.General.Themes), "5", item => item
                 .Url("#configuration/themes")
-                .IconCssClass("kore-icon kore-icon-themes")
+                .IconCssClass("fa fa-tint")
                 .Permission(ConfigurationPermissions.ReadThemes));
         }
 
         private void BuildMaintenanceMenu(NavigationItemBuilder builder)
         {
-            builder.IconCssClass("kore-icon kore-icon-maintenance");
+            builder.IconCssClass("fa fa-wrench");
 
             builder.Add(T(KoreWebLocalizableStrings.Log.Title), "5", item => item
                 .Url("#log")
-                .IconCssClass("kore-icon kore-icon-log")
+                .IconCssClass("fa fa-warning")
                 .Permission(LogPermissions.ReadLog));
 
             // Scheduled Tasks
             builder.Add(T(KoreWebLocalizableStrings.ScheduledTasks.Title), "5", item => item
                 .Url("#scheduledtasks")
-                .IconCssClass("kore-icon kore-icon-schedule-tasks")
+                .IconCssClass("fa fa-clock-o")
                 .Permission(ScheduledTasksPermissions.ReadScheduledTasks));
         }
 
         private void BuildPluginsMenu(NavigationItemBuilder builder)
         {
-            builder.IconCssClass("kore-icon kore-icon-plugins");
+            builder.IconCssClass("fa fa-puzzle-piece");
         }
     }
 }

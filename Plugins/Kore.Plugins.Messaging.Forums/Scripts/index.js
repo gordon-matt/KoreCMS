@@ -111,12 +111,12 @@
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a data-bind="click: forumModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
-                        '<a data-bind="click: forumModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
+                        '<button type="button" data-bind="click: forumModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-sm" title="' + self.parent.translations.Edit + '"><i class="fa fa-edit"></i></button>' +
+                        '<button type="button" data-bind="click: forumModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-sm" title="' + self.parent.translations.Delete + '"><i class="fa fa-remove"></i></button>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 180
+                    width: 100
                 }]
             });
         };
@@ -335,13 +335,13 @@
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a data-bind="click: showForums.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Forums + '</a>' +
-                        '<a data-bind="click: forumGroupModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
-                        '<a data-bind="click: forumGroupModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
+                        '<button type="button" data-bind="click: showForums.bind($data,\'#=Id#\')" class="btn btn-default btn-sm" title="' + self.parent.translations.Forums + '"><i class="fa fa-comment-o"></i></button>' +
+                        '<button type="button" data-bind="click: forumGroupModel.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-sm" title="' + self.parent.translations.Edit + '"><i class="fa fa-edit"></i></button>' +
+                        '<button type="button" data-bind="click: forumGroupModel.remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-sm" title="' + self.parent.translations.Delete + '"><i class="fa fa-remove"></i></button>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 180
+                    width: 150
                 }]
             });
         };

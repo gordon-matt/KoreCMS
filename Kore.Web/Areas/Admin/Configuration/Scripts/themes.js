@@ -107,14 +107,14 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
                 }, {
                     field: "SupportRtl",
                     title: self.translations.Columns.SupportRtl,
-                    template: '<i class="kore-icon #=SupportRtl ? \'kore-icon-ok text-success\' : \'kore-icon-no text-danger\'#"></i>',
+                    template: '<i class="fa #=SupportRtl ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
                     attributes: { "class": "text-center" },
                     filterable: true,
                     width: 70
                 }, {
                     field: "MobileTheme",
                     title: self.translations.Columns.MobileTheme,
-                    template: '<i class="kore-icon #=MobileTheme ? \'kore-icon-ok text-success\' : \'kore-icon-no text-danger\'#"></i>',
+                    template: '<i class="fa #=MobileTheme ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
                     attributes: { "class": "text-center" },
                     filterable: true,
                     width: 70
@@ -122,8 +122,8 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
                     field: "IsDefaultDesktopTheme",
                     title: self.translations.Columns.IsDefaultDesktopTheme,
                     template:
-                        '# if(IsDefaultDesktopTheme) {# <i class="kore-icon kore-icon-ok-circle kore-icon-2x text-success"></i> #} ' +
-                        'else {# <a href="javascript:void(0);" data-bind="click: setDesktopTheme.bind($data,\'#=Title#\')" class="btn btn-default btn-sm">' + self.translations.Set + '</a> #} #',
+                        '# if(IsDefaultDesktopTheme) {# <i class="fa fa-check-circle fa-2x text-success"></i> #} ' +
+                        'else {# <button type="button" data-bind="click: setDesktopTheme.bind($data,\'#=Title#\')" class="btn btn-default btn-sm">' + self.translations.Set + '</button> #} #',
                     attributes: { "class": "text-center" },
                     filterable: false,
                     width: 130
@@ -131,11 +131,11 @@ define(['jquery', 'knockout', 'kendo', 'notify'], function ($, ko, kendo, notify
                     field: "IsDefaultMobileTheme",
                     title: self.translations.Columns.IsDefaultMobileTheme,
                     template:
-                        '# if(IsDefaultMobileTheme) {# <i class="kore-icon kore-icon-ok-circle kore-icon-2x text-success"></i> #} ' +
-                        'else {# <a href="javascript:void(0);" data-bind="click: setMobileTheme.bind($data,\'#=Title#\')" class="btn btn-default btn-sm">' + self.translations.Set + '</a> #} #',
+                        '# if(IsDefaultMobileTheme) {# <i class="fa fa-check-circle fa-2x text-success"></i> #} ' +
+                        'else {# <button type="button" data-bind="click: setMobileTheme.bind($data,\'#=Title#\')" class="btn btn-default btn-sm">' + self.translations.Set + '</button> #} #',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 130
+                    width: 150
                 }]
             });
         };

@@ -14,15 +14,15 @@
 <div id="grid-section" class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <a data-bind="click: create" class="btn btn-primary">
-            <i class="kore-icon kore-icon-add"></i>
+            <i class="fa fa-plus"></i>
             @T(KoreWebLocalizableStrings.General.Create)
         </a>
         <a data-bind="click: clear" class="btn btn-warning">
-            <i class="kore-icon kore-icon-warning"></i>
+            <i class="fa fa-warning"></i>
             @T(KoreWebLocalizableStrings.General.Clear)
         </a>
         <a data-bind="click: importLanguagePack" class="btn btn-success">
-            <i class="kore-icon kore-icon-import"></i>
+            <i class="fa fa-upload"></i>
             @T(KoreWebLocalizableStrings.General.Import)
         </a>
     </div>
@@ -50,7 +50,7 @@
                                 @Html.Label("CultureCode", T(KoreCmsLocalizableStrings.Localization.LanguageModel.CultureCode), new { @class = "control-label" })
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="kore-icon kore-icon-globe"></i>
+                                        <i class="fa fa-globe"></i>
                                     </span>
                                     @Html.CulturesDropDownList("CultureCode", null, new { @class = "form-control", data_bind = "value: cultureCode, event: { change: onCultureCodeChanged }" }, string.Empty)
                                 </div>
@@ -61,7 +61,7 @@
                                 @Html.Label("Name", T(KoreCmsLocalizableStrings.Localization.LanguageModel.Name), new { @class = "control-label" })
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="kore-icon kore-icon-file"></i>
+                                        <i class="fa fa-file-o"></i>
                                     </span>
                                     @Html.TextBox("Name", null, new { @class = "form-control", data_bind = "value: name" })
                                 </div>
@@ -88,7 +88,7 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group pull-right">
                                 <button type="button" class="btn btn-default" data-bind="click: cancel">@T(KoreWebLocalizableStrings.General.Cancel)</button>
-                                <button type="button" class="btn btn-primary" data-bind="click: save"><i class="kore-icon kore-icon-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
+                                <button type="button" class="btn btn-primary" data-bind="click: save"><i class="fa fa-save"></i> @T(KoreWebLocalizableStrings.General.Save)</button>
                             </div>
                         </div>
                     </fieldset>

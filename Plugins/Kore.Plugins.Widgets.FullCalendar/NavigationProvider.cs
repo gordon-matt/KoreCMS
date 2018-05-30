@@ -18,7 +18,7 @@ namespace Kore.Plugins.Widgets.FullCalendar
                 menu => menu.Add(T(LocalizableStrings.FullCalendar), "5", item => item
                     .Url("#plugins/widgets/fullcalendar")
                     //.Action("Index", "Calendar", new { area = Constants.RouteArea })
-                    .IconCssClass("kore-icon kore-icon-calendar")
+                    .IconCssClass("fa fa-calendar")
                     .Permission(FullCalendarPermissions.ReadCalendar)));
         }
     }

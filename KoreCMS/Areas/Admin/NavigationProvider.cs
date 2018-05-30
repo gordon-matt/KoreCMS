@@ -22,7 +22,7 @@ namespace KoreCMS.Areas.Admin
         {
             builder.Permission(StandardPermissions.DashboardAccess);
 
-            builder.IconCssClass("kore-icon kore-icon-dashboard")
+            builder.IconCssClass("fa fa-home")
                 .Url("#");
             //.Action("Index", "Home", new { area = KoreWebConstants.Areas.Admin });
         }

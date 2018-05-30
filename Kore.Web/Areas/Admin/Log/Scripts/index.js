@@ -124,12 +124,12 @@
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a data-bind="click: view.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.translations.View + '</a>' +
-                        '<a data-bind="click: remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.translations.Delete + '</a>' +
+                        '<button type="button" data-bind="click: view.bind($data,\'#=Id#\')" class="btn btn-default btn-sm" title="' + self.translations.View + '"><i class="fa fa-eye"></i></button>' +
+                        '<button type="button" data-bind="click: remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-sm" title="' + self.translations.Delete + '"><i class="fa fa-remove"></i></button>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 120
+                    width: 100
                 }]
             });
         };

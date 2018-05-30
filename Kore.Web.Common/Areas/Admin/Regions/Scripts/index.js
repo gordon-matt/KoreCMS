@@ -12,8 +12,7 @@
     require('kore-common');
     require('kore-section-switching');
     require('kore-jqueryval');
-
-    //require('jquery-maphilight');
+    
     require('jquery-image-mapster');
 
     ko.mapping = koMap;
@@ -91,10 +90,13 @@
                 }, {
                     field: "Id",
                     title: " ",
-                    template: '<div class="btn-group"><a data-bind="click: settings.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a></div>',
+                    template:
+                        '<div class="btn-group">' +
+                        '<button type="button" data-bind="click: settings.edit.bind($data,\'#=Id#\')" class="btn btn-default btn-sm" title="' + self.parent.translations.Edit + '"><i class="fa fa-edit"></i></button>' +
+                        '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 120
+                    width: 50
                 }]
             });
         };
@@ -310,12 +312,12 @@
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '# if(HasStates) {# <a data-bind="click: country.showStates.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.States + '</a> #} ' +
-                        'else {# <a data-bind="click: country.showCities.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Cities + '</a> #} # ' +
-                        '<a data-bind="click: country.edit.bind($data,\'#=Id#\', null)" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
-                        '<a data-bind="click: country.localize.bind($data,\'#=Id#\')" class="btn btn-success btn-xs">' + self.parent.translations.Localize + '</a>' +
-                        '<a data-bind="click: country.removeItem.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
-                        '<a data-bind="click: showSettings.bind($data,#=Id#)" class="btn btn-info btn-xs">' + self.parent.translations.Settings + '</a>' +
+                        '# if(HasStates) {# <button type="button" data-bind="click: country.showStates.bind($data,\'#=Id#\')" class="btn btn-default btn-sm">' + self.parent.translations.States + '</button> #} ' +
+                        'else {# <button type="button" data-bind="click: country.showCities.bind($data,\'#=Id#\')" class="btn btn-default btn-sm">' + self.parent.translations.Cities + '</button> #} # ' +
+                        '<button type="button" data-bind="click: country.edit.bind($data,\'#=Id#\', null)" class="btn btn-default btn-sm" title="' + self.parent.translations.Edit + '"><i class="fa fa-edit"></i></button>' +
+                        '<button type="button" data-bind="click: country.localize.bind($data,\'#=Id#\')" class="btn btn-success btn-sm" title="' + self.parent.translations.Localize + '"><i class="fa fa-globe"></i></button>' +
+                        '<button type="button" data-bind="click: country.removeItem.bind($data,\'#=Id#\')" class="btn btn-danger btn-sm" title="' + self.parent.translations.Delete + '"><i class="fa fa-remove"></i></button>' +
+                        '<button type="button" data-bind="click: showSettings.bind($data,#=Id#)" class="btn btn-info btn-sm" title="' + self.parent.translations.Settings + '"><i class="fa fa-cogs"></i></button>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -612,11 +614,11 @@
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a data-bind="click: state.showCities.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.parent.translations.Cities + '</a>' +
-                        '<a data-bind="click: state.edit.bind($data,\'#=Id#\', null)" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
-                        '<a data-bind="click: state.localize.bind($data,\'#=Id#\')" class="btn btn-success btn-xs">' + self.parent.translations.Localize + '</a>' +
-                        '<a data-bind="click: state.removeItem.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
-                        '<a data-bind="click: showSettings.bind($data,#=Id#)" class="btn btn-info btn-xs">' + self.parent.translations.Settings + '</a>' +
+                        '<button type="button" data-bind="click: state.showCities.bind($data,\'#=Id#\')" class="btn btn-default btn-sm">' + self.parent.translations.Cities + '</button>' +
+                        '<button type="button" data-bind="click: state.edit.bind($data,\'#=Id#\', null)" class="btn btn-default btn-sm" title="' + self.parent.translations.Edit + '"><i class="fa fa-edit"></i></button>' +
+                        '<button type="button" data-bind="click: state.localize.bind($data,\'#=Id#\')" class="btn btn-success btn-sm" title="' + self.parent.translations.Localize + '"><i class="fa fa-globe"></i></button>' +
+                        '<button type="button" data-bind="click: state.removeItem.bind($data,\'#=Id#\')" class="btn btn-danger btn-sm" title="' + self.parent.translations.Delete + '"><i class="fa fa-remove"></i></button>' +
+                        '<button type="button" data-bind="click: showSettings.bind($data,#=Id#)" class="btn btn-info btn-sm" title="' + self.parent.translations.Settings + '"><i class="fa fa-cogs"></i></button>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
@@ -894,14 +896,14 @@
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<a data-bind="click: city.edit.bind($data,\'#=Id#\', null)" class="btn btn-default btn-xs">' + self.parent.translations.Edit + '</a>' +
-                        '<a data-bind="click: city.localize.bind($data,\'#=Id#\')" class="btn btn-success btn-xs">' + self.parent.translations.Localize + '</a>' +
-                        '<a data-bind="click: city.removeItem.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.parent.translations.Delete + '</a>' +
-                        '<a data-bind="click: showSettings.bind($data,#=Id#)" class="btn btn-info btn-xs">' + self.parent.translations.Settings + '</a>' +
+                        '<button type="button" data-bind="click: city.edit.bind($data,\'#=Id#\', null)" class="btn btn-default btn-sm" title="' + self.parent.translations.Edit + '"><i class="fa fa-edit"></i></button>' +
+                        '<button type="button" data-bind="click: city.localize.bind($data,\'#=Id#\')" class="btn btn-success btn-sm" title="' + self.parent.translations.Localize + '"><i class="fa fa-globe"></i></button>' +
+                        '<button type="button" data-bind="click: city.removeItem.bind($data,\'#=Id#\')" class="btn btn-danger btn-sm" title="' + self.parent.translations.Delete + '"><i class="fa fa-remove"></i></button>' +
+                        '<button type="button" data-bind="click: showSettings.bind($data,#=Id#)" class="btn btn-info btn-sm" title="' + self.parent.translations.Settings + '"><i class="fa fa-cogs"></i></button>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 220
+                    width: 200
                 }]
             });
         };

@@ -336,20 +336,20 @@
                         var s = '<div class="btn-group">';
 
                         if (dataItem.Status == "Stopped") {
-                            s+= '<a data-bind="click: startService.bind($data,' + instanceId + ', \'' + name + '\')" class="btn btn-success btn-sm"><i class="kore-icon kore-icon-start"></i></a>';
+                            s += '<button type="button" data-bind="click: startService.bind($data,' + instanceId + ', \'' + name + '\')" class="btn btn-success btn-sm"><i class="fa fa-play"></i></button>';
                         }
                         else if (dataItem.Status == "Running") {
-                            s+= '<a data-bind="click: stopService.bind($data,' + instanceId + ', \'' + name + '\')" class="btn btn-danger btn-sm"><i class="kore-icon kore-icon-stop"></i></a>' +
-                            '<a data-bind="click: restartService.bind($data,' + instanceId + ', \'' + name + '\')" class="btn btn-success btn-sm"><i class="kore-icon kore-icon-restart"></i></a>';
+                            s += '<button type="button" data-bind="click: stopService.bind($data,' + instanceId + ', \'' + name + '\')" class="btn btn-danger btn-sm"><i class="fa fa-stop"></i></button>' +
+                            '<button type="button" data-bind="click: restartService.bind($data,' + instanceId + ', \'' + name + '\')" class="btn btn-success btn-sm"><i class="fa fa-refresh"></i></button>';
                         }
                         s += '</div><div class="btn-group">';
 
                         if (self.allowAddRemove) {
                             if (!dataItem.IsWatched) {
-                                s += '<a data-bind="click: addService.bind($data,' + instanceId + ', \'' + name + '\')" class="btn btn-default btn-sm"><i class="kore-icon kore-icon-add"></i></a>';
+                                s += '<button type="button" data-bind="click: addService.bind($data,' + instanceId + ', \'' + name + '\')" class="btn btn-default btn-sm"><i class="fa fa-plus"></i></button>';
                             }
                             else {
-                                s += '<a data-bind="click: removeService.bind($data,' + instanceId + ', \'' + name + '\')" class="btn btn-warning btn-sm"><i class="kore-icon kore-icon-remove"></i></a>';
+                                s += '<button type="button" data-bind="click: removeService.bind($data,' + instanceId + ', \'' + name + '\')" class="btn btn-warning btn-sm"><i class="fa fa-remove"></i></button>';
                             }
                         }
                         s += '</div>';
@@ -357,7 +357,7 @@
                     },
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 180
+                    width: 200
                 }]
             });
 

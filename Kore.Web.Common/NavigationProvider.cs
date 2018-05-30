@@ -18,7 +18,7 @@ namespace Kore.Web.Common
                 menu => menu.Add(T(LocalizableStrings.Regions.Title), "5", item => item
                     .Url("#regions")
                     //.Action("Index", "Region", new { area = Constants.Areas.Regions })
-                    .IconCssClass("kore-icon kore-icon-globe")
+                    .IconCssClass("fa fa-globe")
                     .Permission(Permissions.RegionsRead)));
         }
     }

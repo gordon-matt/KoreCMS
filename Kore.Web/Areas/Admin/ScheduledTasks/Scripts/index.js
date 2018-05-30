@@ -127,14 +127,14 @@ function ($, jQVal, ko, kendo, notify, kSections, kJQVal) {
                 }, {
                     field: "Enabled",
                     title: self.translations.Columns.Enabled,
-                    template: '<i class="kore-icon #=Enabled ? \'kore-icon-ok text-success\' : \'kore-icon-no text-danger\'#"></i>',
+                    template: '<i class="fa #=Enabled ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
                     attributes: { "class": "text-center" },
                     filterable: true,
                     width: 70
                 }, {
                     field: "StopOnError",
                     title: self.translations.Columns.StopOnError,
-                    template: '<i class="kore-icon #=StopOnError ? \'kore-icon-ok text-success\' : \'kore-icon-no text-danger\'#"></i>',
+                    template: '<i class="fa #=StopOnError ? \'fa-check text-success\' : \'fa-times text-danger\'#"></i>',
                     attributes: { "class": "text-center" },
                     filterable: true,
                     width: 70
@@ -164,12 +164,12 @@ function ($, jQVal, ko, kendo, notify, kSections, kJQVal) {
                     title: " ",
                     template:
                         '<div class="btn-group">' +
-                        '<button type="button" data-bind="click: runNow.bind($data,#=Id#)" class="btn btn-primary btn-xs">' + self.translations.RunNow + '</button>' +
-                        '<button type="button" data-bind="click: edit.bind($data,#=Id#)" class="btn btn-default btn-xs">' + self.translations.Edit + '</button>' +
+                        '<button type="button" data-bind="click: runNow.bind($data,#=Id#)" class="btn btn-primary btn-sm" title="' + self.translations.RunNow + '"><i class="fa fa-play"></i></button>' +
+                        '<button type="button" data-bind="click: edit.bind($data,#=Id#)" class="btn btn-default btn-sm" title="' + self.translations.Edit + '"><i class="fa fa-edit"></i></button>' +
                         '</div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 150,
+                    width: 100,
                 }]
             });
         };

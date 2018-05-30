@@ -1,5 +1,5 @@
 ﻿<ul class="breadcrumb">
-    <li><a href="@Url.Action("Index", "Home", new { area = KoreWebConstants.Areas.Admin })" title="Go to Home"><i class="kore-icon kore-icon-home"></i> @T(KoreWebLocalizableStrings.General.Home)</a><span class="divider"></span></li>
+    <li><a href="@Url.Action("Index", "Home", new { area = KoreWebConstants.Areas.Admin })" title="Go to Home"><i class="fa fa-home"></i> @T(KoreWebLocalizableStrings.General.Home)</a><span class="divider"></span></li>
 
     @foreach (var item in WorkContext.Breadcrumbs)
     {

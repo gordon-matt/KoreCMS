@@ -210,9 +210,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Admin\Regions\Scripts\jquery.maphilight.min.js" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Regions\Content\Images\WorldMap.jpg" />
   </ItemGroup>
   <ItemGroup>

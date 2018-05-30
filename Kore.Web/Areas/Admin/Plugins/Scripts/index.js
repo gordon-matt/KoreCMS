@@ -125,18 +125,18 @@ function ($, ko, kendo, kore_common, notify) {
                         '<br />Author: #:Author#' +
                         '<br />SystemName: #:SystemName#' +
                         '<br />DisplayOrder: #:DisplayOrder#' +
-                        '<br />Installed: <i class="kore-icon #=Installed ? \'kore-icon-ok-circle kore-icon-2x text-success\' : \'kore-icon-no-circle kore-icon-2x text-danger\'#"></i>' +
-                        '<br /><a data-bind="click: edit.bind($data,\'#=SystemName#\')" class="btn btn-default btn-sm">' + self.translations.Edit + '</a>',
+                        '<br />Installed: <i class="fa #=Installed ? \'fa-check-circle fa-2x text-success\' : \'fa-times-circle fa-2x text-danger\'#"></i>' +
+                        '<br /><button type="button" data-bind="click: edit.bind($data,\'#=SystemName#\')" class="btn btn-default btn-sm">' + self.translations.Edit + '</button>',
                     filterable: false
                 }, {
                     field: "Installed",
                     title: " ",
                     template:
-                        '# if(Installed) {# <a data-bind="click: uninstall.bind($data,\'#=SystemName#\')" class="btn btn-default btn-sm">' + self.translations.Uninstall + '</a> #} ' +
-                        'else {# <a data-bind="click: install.bind($data,\'#=SystemName#\')" class="btn btn-success btn-sm">' + self.translations.Install + '</a> #} #',
+                        '# if(Installed) {# <button type="button" data-bind="click: uninstall.bind($data,\'#=SystemName#\')" class="btn btn-default btn-sm">' + self.translations.Uninstall + '</button> #} ' +
+                        'else {# <button type="button" data-bind="click: install.bind($data,\'#=SystemName#\')" class="btn btn-success btn-sm">' + self.translations.Install + '</button> #} #',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 130
+                    width: 150
                 }]
             });
         };

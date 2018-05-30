@@ -156,14 +156,15 @@
                     field: "Id",
                     title: " ",
                     template:
-                        '<div class="btn-group"><a data-bind="click: edit.bind($data,\'#=Id#\')" class="btn btn-default btn-xs">' + self.translations.Edit + '</a>' +
-                        '<a data-bind="click: remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-xs">' + self.translations.Delete + '</a>' +
-                        '<a href="\\#localization/localizable-strings/#=CultureCode#" class="btn btn-primary btn-xs">' + self.translations.Localize + '</a>' +
+                        '<div class="btn-group">' +
+                        '<button type="button" data-bind="click: edit.bind($data,\'#=Id#\')" class="btn btn-default btn-sm" title="' + self.translations.Edit + '"><i class="fa fa-edit"></i></button>' +
+                        '<button type="button" data-bind="click: remove.bind($data,\'#=Id#\')" class="btn btn-danger btn-sm" title="' + self.translations.Delete + '"><i class="fa fa-remove"></i></button>' +
+                        '<a href="\\#localization/localizable-strings/#=CultureCode#" class="btn btn-primary btn-sm" title="' + self.translations.Localize + '"><i class="fa fa-globe"></i></a>' +
                         '</div>',
                     //TODO: '<a data-bind="click: setDefault.bind($data,\'#=Id#\', #=IsEnabled#)" class="btn btn-default btn-xs">Set Default</a></div>',
                     attributes: { "class": "text-center" },
                     filterable: false,
-                    width: 170
+                    width: 150
                 }]
             });
         };

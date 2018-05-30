@@ -34,7 +34,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         public virtual async Task<IEnumerable<KorePermission>> Get(ODataQueryOptions<KorePermission> options)
         {
-            if (!CheckPermission(MembershipPermissions.ReadPermissions))
+            if (!CheckPermission(KoreWebPermissions.MembershipPermissionsRead))
             {
                 return Enumerable.Empty<KorePermission>().AsQueryable();
             }
@@ -52,7 +52,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         [EnableQuery]
         public virtual async Task<SingleResult<KorePermission>> Get([FromODataUri] string key)
         {
-            if (!CheckPermission(MembershipPermissions.ReadPermissions))
+            if (!CheckPermission(KoreWebPermissions.MembershipPermissionsRead))
             {
                 return SingleResult.Create(Enumerable.Empty<KorePermission>().AsQueryable());
             }
@@ -62,7 +62,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
 
         public virtual async Task<IHttpActionResult> Put([FromODataUri] string key, KorePermission entity)
         {
-            if (!CheckPermission(MembershipPermissions.WritePermissions))
+            if (!CheckPermission(KoreWebPermissions.MembershipPermissionsWrite))
             {
                 return Unauthorized();
             }
@@ -97,7 +97,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
 
         public virtual async Task<IHttpActionResult> Post(KorePermission entity)
         {
-            if (!CheckPermission(MembershipPermissions.WritePermissions))
+            if (!CheckPermission(KoreWebPermissions.MembershipPermissionsWrite))
             {
                 return Unauthorized();
             }
@@ -116,7 +116,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         [AcceptVerbs("PATCH", "MERGE")]
         public virtual async Task<IHttpActionResult> Patch([FromODataUri] string key, Delta<KorePermission> patch)
         {
-            if (!CheckPermission(MembershipPermissions.WritePermissions))
+            if (!CheckPermission(KoreWebPermissions.MembershipPermissionsWrite))
             {
                 return Unauthorized();
             }
@@ -154,7 +154,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
 
         public virtual async Task<IHttpActionResult> Delete([FromODataUri] string key)
         {
-            if (!CheckPermission(MembershipPermissions.WritePermissions))
+            if (!CheckPermission(KoreWebPermissions.MembershipPermissionsWrite))
             {
                 return Unauthorized();
             }
@@ -173,7 +173,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
         [HttpPost]
         public virtual async Task<IEnumerable<EdmKorePermission>> GetPermissionsForRole(ODataActionParameters parameters)
         {
-            if (!CheckPermission(MembershipPermissions.ReadPermissions))
+            if (!CheckPermission(KoreWebPermissions.MembershipPermissionsRead))
             {
                 return Enumerable.Empty<EdmKorePermission>().AsQueryable();
             }

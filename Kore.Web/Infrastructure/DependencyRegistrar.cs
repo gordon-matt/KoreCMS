@@ -139,8 +139,7 @@ namespace Kore.Web.Infrastructure
 
             // permission providers
             builder.RegisterType<StandardPermissions>().As<IPermissionProvider>().SingleInstance();
-            builder.RegisterType<ConfigurationPermissions>().As<IPermissionProvider>().SingleInstance();
-            builder.RegisterType<ScheduledTasksPermissions>().As<IPermissionProvider>().SingleInstance();
+            builder.RegisterType<KoreWebPermissions>().As<IPermissionProvider>().SingleInstance();
 
             // work context state providers
             builder.RegisterType<CurrentUserStateProvider>().As<IWorkContextStateProvider>();

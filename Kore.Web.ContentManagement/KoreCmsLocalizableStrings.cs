@@ -166,36 +166,6 @@
             }
         }
 
-        public static class Localization
-        {
-            public const string IsRTL = "Kore.Web.ContentManagement/Localization.IsRTL";
-            public const string Languages = "Kore.Web.ContentManagement/Localization.Languages";
-            public const string LocalizableStrings = "Kore.Web.ContentManagement/Localization.LocalizableStrings";
-            public const string Localize = "Kore.Web.ContentManagement/Localization.Localize";
-            public const string ManageLanguages = "Kore.Web.ContentManagement/Localization.ManageLanguages";
-            public const string ManageLocalizableStrings = "Kore.Web.ContentManagement/Localization.ManageLocalizableStrings";
-            public const string SelectLanguage = "Kore.Web.ContentManagement/Localization.SelectLanguage";
-            public const string Title = "Kore.Web.ContentManagement/Localization.Title";
-            public const string Translate = "Kore.Web.ContentManagement/Localization.Translate";
-            public const string Translations = "Kore.Web.ContentManagement/Localization.Translations";
-
-            public static class LanguageModel
-            {
-                public const string CultureCode = "Kore.Web.ContentManagement/Localization.LanguageModel.CultureCode";
-                public const string IsEnabled = "Kore.Web.ContentManagement/Localization.LanguageModel.IsEnabled";
-                public const string IsRTL = "Kore.Web.ContentManagement/Localization.LanguageModel.IsRTL";
-                public const string Name = "Kore.Web.ContentManagement/Localization.LanguageModel.Name";
-                public const string SortOrder = "Kore.Web.ContentManagement/Localization.LanguageModel.SortOrder";
-            }
-
-            public static class LocalizableStringModel
-            {
-                public const string InvariantValue = "Kore.Web.ContentManagement/Localization.LocalizableStringModel.InvariantValue";
-                public const string Key = "Kore.Web.ContentManagement/Localization.LocalizableStringModel.Key";
-                public const string LocalizedValue = "Kore.Web.ContentManagement/Localization.LocalizableStringModel.LocalizedValue";
-            }
-        }
-
         public static class Media
         {
             public const string FileBrowserTitle = "Kore.Web.ContentManagement/Media.FileBrowserTitle";

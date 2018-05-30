@@ -30,7 +30,7 @@ namespace Kore.Web.Areas.Admin
             builder
                 .Url("#membership")
                 .IconCssClass("fa fa-user")
-                .Permission(MembershipPermissions.Manage);
+                .Permission(KoreWebPermissions.MembershipManage);
         }
 
         private void BuildConfigurationMenu(NavigationItemBuilder builder)
@@ -49,6 +49,12 @@ namespace Kore.Web.Areas.Admin
                 .IconCssClass("fa fa-search")
                 .Permission(StandardPermissions.FullAccess));
 
+            // Localization
+            builder.Add(T(KoreWebLocalizableStrings.Localization.Title), "5", item => item
+                .Url("#localization/languages")
+                .IconCssClass("fa fa-globe")
+                .Permission(KoreWebPermissions.LanguagesRead));
+
             // Plugins
             builder.Add(T(KoreWebLocalizableStrings.Plugins.Title), "5", item => item
                 .Url("#plugins")
@@ -59,13 +65,13 @@ namespace Kore.Web.Areas.Admin
             builder.Add(T(KoreWebLocalizableStrings.General.Settings), "5", item => item
                 .Url("#configuration/settings")
                 .IconCssClass("fa fa-cog")
-                .Permission(ConfigurationPermissions.ReadSettings));
+                .Permission(KoreWebPermissions.SettingsRead));
 
             // Themes
             builder.Add(T(KoreWebLocalizableStrings.General.Themes), "5", item => item
                 .Url("#configuration/themes")
                 .IconCssClass("fa fa-tint")
-                .Permission(ConfigurationPermissions.ReadThemes));
+                .Permission(KoreWebPermissions.ThemesRead));
         }
 
         private void BuildMaintenanceMenu(NavigationItemBuilder builder)
@@ -75,13 +81,13 @@ namespace Kore.Web.Areas.Admin
             builder.Add(T(KoreWebLocalizableStrings.Log.Title), "5", item => item
                 .Url("#log")
                 .IconCssClass("fa fa-warning")
-                .Permission(LogPermissions.ReadLog));
+                .Permission(KoreWebPermissions.LogRead));
 
             // Scheduled Tasks
             builder.Add(T(KoreWebLocalizableStrings.ScheduledTasks.Title), "5", item => item
                 .Url("#scheduledtasks")
                 .IconCssClass("fa fa-clock-o")
-                .Permission(ScheduledTasksPermissions.ReadScheduledTasks));
+                .Permission(KoreWebPermissions.ScheduledTasksRead));
         }
 
         private void BuildPluginsMenu(NavigationItemBuilder builder)

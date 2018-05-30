@@ -13,7 +13,6 @@ namespace Kore.Web.ContentManagement
         {
             public const string Blocks = "Admin/Blocks";
             public const string Blog = "Admin/Blog";
-            public const string Localization = "Admin/Localization";
             public const string Media = "Admin/Media";
             public const string Messaging = "Admin/Messaging";
             public const string Menus = "Admin/Menus";

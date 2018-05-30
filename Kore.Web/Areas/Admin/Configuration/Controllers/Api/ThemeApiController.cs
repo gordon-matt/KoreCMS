@@ -39,7 +39,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         public virtual IEnumerable<EdmThemeConfiguration> Get(ODataQueryOptions<EdmThemeConfiguration> options)
         {
-            if (!CheckPermission(ConfigurationPermissions.ReadThemes))
+            if (!CheckPermission(KoreWebPermissions.ThemesRead))
             {
                 return Enumerable.Empty<EdmThemeConfiguration>().AsQueryable();
             }
@@ -74,7 +74,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
         public virtual void SetDesktopTheme(ODataActionParameters parameters)
         {
             // TODO: Change return type to IHttpResult and return UnauthorizedResult
-            if (!CheckPermission(ConfigurationPermissions.WriteThemes))
+            if (!CheckPermission(KoreWebPermissions.ThemesWrite))
             {
                 return;
             }
@@ -101,7 +101,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
         public virtual void SetMobileTheme(ODataActionParameters parameters)
         {
             // TODO: Change return type to IHttpResult and return UnauthorizedResult
-            if (!CheckPermission(ConfigurationPermissions.WriteThemes))
+            if (!CheckPermission(KoreWebPermissions.ThemesWrite))
             {
                 return;
             }

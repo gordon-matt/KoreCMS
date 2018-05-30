@@ -28,7 +28,7 @@ namespace Kore.Web.Areas.Admin.Log.Controllers.Api
 
         protected override Permission ReadPermission
         {
-            get { return LogPermissions.ReadLog; }
+            get { return KoreWebPermissions.LogRead; }
         }
 
         protected override Permission WritePermission

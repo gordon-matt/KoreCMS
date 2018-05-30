@@ -163,7 +163,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Areas\Admin\Configuration\ConfigurationAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Configuration\ConfigurationPermissions.cs" />
     <Compile Include="Areas\Admin\Configuration\Controllers\Api\SettingsApiController.cs" />
     <Compile Include="Areas\Admin\Configuration\Controllers\Api\ThemeApiController.cs" />
     <Compile Include="Areas\Admin\Configuration\Controllers\SettingsController.cs" />
@@ -172,21 +171,25 @@
     <Compile Include="Areas\Admin\Indexing\Controllers\IndexingController.cs" />
     <Compile Include="Areas\Admin\Indexing\Controllers\SearchController.cs" />
     <Compile Include="Areas\Admin\Indexing\IndexingAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\KoreWebPermissions.cs" />
+    <Compile Include="Areas\Admin\Localization\Controllers\Api\LanguageApiController.cs" />
+    <Compile Include="Areas\Admin\Localization\Controllers\Api\LocalizableStringApiController.cs" />
+    <Compile Include="Areas\Admin\Localization\Controllers\LanguageController.cs" />
+    <Compile Include="Areas\Admin\Localization\Controllers\LocalizableStringController.cs" />
+    <Compile Include="Areas\Admin\Localization\LocalizationAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Localization\Models\LanguagePackFile.cs" />
     <Compile Include="Areas\Admin\Log\Controllers\Api\LogApiController.cs" />
     <Compile Include="Areas\Admin\Log\Controllers\LogController.cs" />
     <Compile Include="Areas\Admin\Log\LogAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Log\LogPermissions.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\PermissionApiController.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\PublicUserApiController.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\RoleApiController.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\Api\UserApiController.cs" />
     <Compile Include="Areas\Admin\Membership\Controllers\MembershipController.cs" />
     <Compile Include="Areas\Admin\Membership\MembershipAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Membership\MembershipPermissions.cs" />
     <Compile Include="Areas\Admin\NavigationProvider.cs" />
     <Compile Include="Areas\Admin\ScheduledTasks\Controllers\Api\ScheduledTaskApiController.cs" />
     <Compile Include="Areas\Admin\ScheduledTasks\Controllers\ScheduledTaskController.cs" />
-    <Compile Include="Areas\Admin\ScheduledTasks\ScheduledTasksPermissions.cs" />
     <Compile Include="Areas\Admin\Tenants\Controllers\Api\TenantApiController.cs" />
     <Compile Include="Areas\Admin\Tenants\Controllers\TenantController.cs" />
     <Compile Include="Collections\EnumerableExtensions.cs" />
@@ -502,7 +505,6 @@
     <Compile Include="Plugins\PluginFinder.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="Areas\Admin\Plugins\PluginsAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Plugins\PluginsPermissions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\Membership\AccountUserProfileProvider.cs" />
     <Compile Include="Security\Membership\CurrentUserStateProvider.cs" />
@@ -556,6 +558,9 @@
     <None Include="app.config" />
     <None Include="Areas\Admin\Configuration\Views\web.config" />
     <None Include="Areas\Admin\Indexing\Views\web.config" />
+    <EmbeddedResource Include="Areas\Admin\Localization\Views\Language\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Admin\Localization\Views\LocalizableString\Index.cshtml" />
+    <None Include="Areas\Admin\Localization\Views\web.config" />
     <None Include="Areas\Admin\Log\Views\web.config" />
     <None Include="Areas\Admin\Membership\Views\web.config" />
     <None Include="Areas\Admin\Plugins\Views\web.config" />
@@ -596,9 +601,14 @@
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Indexing\Scripts\indexing.js" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\Admin\Localization\Scripts\index.js" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Tenants\Scripts\index.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Areas\Admin\Localization\Scripts\localizableStrings.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

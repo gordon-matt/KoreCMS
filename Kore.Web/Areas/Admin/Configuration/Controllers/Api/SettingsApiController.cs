@@ -82,12 +82,12 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
 
         protected override Permission ReadPermission
         {
-            get { return ConfigurationPermissions.ReadSettings; }
+            get { return KoreWebPermissions.SettingsRead; }
         }
 
         protected override Permission WritePermission
         {
-            get { return ConfigurationPermissions.WriteSettings; }
+            get { return KoreWebPermissions.SettingsWrite; }
         }
     }
 }

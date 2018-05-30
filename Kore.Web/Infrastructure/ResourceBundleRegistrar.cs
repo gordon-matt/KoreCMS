@@ -11,6 +11,12 @@ namespace Kore.Web.Infrastructure
             bundles.Add(new ScriptBundle("~/bundles/js/kore-web/indexing")
                 .Include("~/Scripts/Kore.Web.Areas.Admin.Indexing.Scripts.indexing.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/kore-web/languages")
+                .Include("~/Scripts/Kore.Web.Areas.Admin.Localization.Scripts.index.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/kore-web/localizable-strings")
+                .Include("~/Scripts/Kore.Web.Areas.Admin.Localization.Scripts.localizableStrings.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/kore-web/log")
                 .Include("~/Scripts/Kore.Web.Areas.Admin.Log.Scripts.index.js"));
 

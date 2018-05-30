@@ -70,12 +70,12 @@ namespace Kore.Web.Areas.Admin.ScheduledTasks.Controllers.Api
 
         protected override Permission ReadPermission
         {
-            get { return ScheduledTasksPermissions.ReadScheduledTasks; }
+            get { return KoreWebPermissions.ScheduledTasksRead; }
         }
 
         protected override Permission WritePermission
         {
-            get { return ScheduledTasksPermissions.WriteScheduledTasks; }
+            get { return KoreWebPermissions.ScheduledTasksWrite; }
         }
     }
 }

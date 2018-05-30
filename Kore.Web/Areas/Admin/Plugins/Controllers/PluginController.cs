@@ -71,7 +71,7 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
         {
             systemName = systemName.Replace('-', '.');
 
-            if (!CheckPermission(PluginsPermissions.ManagePlugins))
+            if (!CheckPermission(KoreWebPermissions.PluginsManage))
             {
                 return Json(new { Success = false, Message = "Unauthorized" });
                 //return new HttpUnauthorizedResult();
@@ -119,7 +119,7 @@ namespace Kore.Web.Areas.Admin.Plugins.Controllers
         {
             systemName = systemName.Replace('-', '.');
 
-            if (!CheckPermission(PluginsPermissions.ManagePlugins))
+            if (!CheckPermission(KoreWebPermissions.PluginsManage))
             {
                 return Json(new { Success = false, Message = "Unauthorized" });
                 //return new HttpUnauthorizedResult();

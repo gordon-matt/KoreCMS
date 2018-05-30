@@ -26,7 +26,7 @@ namespace Kore.Web.Areas.Admin.Configuration.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            if (!CheckPermission(ConfigurationPermissions.ReadSettings))
+            if (!CheckPermission(KoreWebPermissions.SettingsRead))
             {
                 return new HttpUnauthorizedResult();
             }

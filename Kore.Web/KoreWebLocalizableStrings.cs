@@ -110,8 +110,34 @@
 
         public static class Localization
         {
+            public const string IsRTL = "Kore.Web/Localization.IsRTL";
+            public const string Languages = "Kore.Web/Localization.Languages";
+            public const string LocalizableStrings = "Kore.Web/Localization.LocalizableStrings";
+            public const string Localize = "Kore.Web/Localization.Localize";
+            public const string ManageLanguages = "Kore.Web/Localization.ManageLanguages";
+            public const string ManageLocalizableStrings = "Kore.Web/Localization.ManageLocalizableStrings";
+            public const string SelectLanguage = "Kore.Web/Localization.SelectLanguage";
+            public const string Title = "Kore.Web/Localization.Title";
+            public const string Translate = "Kore.Web/Localization.Translate";
+            public const string Translations = "Kore.Web/Localization.Translations";
             public const string ResetLocalizableStringsError = "Kore.Web/Localization.ResetLocalizableStringsError";
             public const string ResetLocalizableStringsSuccess = "Kore.Web/Localization.ResetLocalizableStringsSuccess";
+
+            public static class LanguageModel
+            {
+                public const string CultureCode = "Kore.Web/Localization.LanguageModel.CultureCode";
+                public const string IsEnabled = "Kore.Web/Localization.LanguageModel.IsEnabled";
+                public const string IsRTL = "Kore.Web/Localization.LanguageModel.IsRTL";
+                public const string Name = "Kore.Web/Localization.LanguageModel.Name";
+                public const string SortOrder = "Kore.Web/Localization.LanguageModel.SortOrder";
+            }
+
+            public static class LocalizableStringModel
+            {
+                public const string InvariantValue = "Kore.Web/Localization.LocalizableStringModel.InvariantValue";
+                public const string Key = "Kore.Web/Localization.LocalizableStringModel.Key";
+                public const string LocalizedValue = "Kore.Web/Localization.LocalizableStringModel.LocalizedValue";
+            }
         }
 
         public static class Log

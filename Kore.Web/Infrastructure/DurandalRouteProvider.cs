@@ -29,6 +29,22 @@ namespace Kore.Web.Infrastructure
 
                 routes.Add(new DurandalRoute
                 {
+                    ModuleId = "viewmodels/admin/localization/languages",
+                    Route = "localization/languages",
+                    JsPath = scriptRegister.GetBundleUrl("kore-web/languages"),
+                    Title = localizer(KoreWebLocalizableStrings.Localization.Languages)
+                });
+
+                routes.Add(new DurandalRoute
+                {
+                    ModuleId = "viewmodels/admin/localization/localizable-strings",
+                    Route = "localization/localizable-strings/:cultureCode",
+                    JsPath = scriptRegister.GetBundleUrl("kore-web/localizable-strings"),
+                    Title = localizer(KoreWebLocalizableStrings.Localization.LocalizableStrings)
+                });
+
+                routes.Add(new DurandalRoute
+                {
                     ModuleId = "viewmodels/admin/log",
                     Route = "log",
                     JsPath = scriptRegister.GetBundleUrl("kore-web/log"),

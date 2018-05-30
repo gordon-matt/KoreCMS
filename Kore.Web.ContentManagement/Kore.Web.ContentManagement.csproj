@@ -182,7 +182,6 @@
     <Compile Include="Areas\Admin\ContentBlocks\IFormBlockProcessor.cs" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Scripts\zoneModel.js" />
     <Compile Include="Areas\Admin\ContentBlocks\Services\IEntityTypeContentBlockService.cs" />
-    <Compile Include="Areas\Admin\Localization\Models\LanguagePackFile.cs" />
     <Compile Include="Areas\Admin\Media\ContentBlocks\VideoBlock.cs" />
     <Compile Include="Areas\Admin\Media\MediaHelper.cs" />
     <Compile Include="Areas\Admin\Media\Models\MediaFile.cs" />
@@ -207,7 +206,6 @@
     <Compile Include="Areas\Admin\Media\Models\IStorageFile.cs" />
     <Compile Include="Areas\Admin\Media\Models\IStorageFolder.cs" />
     <Compile Include="Areas\Admin\Media\Services\IStorageProvider.cs" />
-    <Compile Include="Infrastructure\DbSeeder.cs" />
     <Compile Include="Infrastructure\DurandalRouteProvider.cs" />
     <Compile Include="Infrastructure\IAutoMenuProvider.cs" />
     <Compile Include="Areas\Admin\Newsletters\ContentBlocks\NewsletterSubscriptionBlock.cs" />
@@ -217,12 +215,7 @@
     <Compile Include="Areas\Admin\Newsletters\NewsletterMessageTemplates.cs" />
     <Compile Include="Areas\Admin\Newsletters\NewslettersAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Newsletters\NewsletterUserProfileProvider.cs" />
-    <Compile Include="Areas\Admin\Localization\Controllers\Api\LanguageApiController.cs" />
-    <Compile Include="Areas\Admin\Localization\Controllers\Api\LocalizableStringApiController.cs" />
-    <Compile Include="Areas\Admin\Localization\Controllers\LanguageController.cs" />
-    <Compile Include="Areas\Admin\Localization\Controllers\LocalizableStringController.cs" />
     <Compile Include="Areas\Admin\Localization\LanguageSwitchBlock.cs" />
-    <Compile Include="Areas\Admin\Localization\LocalizationAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Media\Controllers\MediaController.cs" />
     <Compile Include="Areas\Admin\Media\MediaAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Menus\Controllers\Api\MenuItemApiController.cs" />
@@ -287,7 +280,6 @@
     <Compile Include="Areas\Admin\ContentBlocks\Services\IContentBlockService.cs" />
     <Compile Include="Areas\Admin\ContentBlocks\Services\IZoneService.cs" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\FormBlock\SaveResult.cshtml" />
-    <Compile Include="Infrastructure\RequireJSConfigProvider.cs" />
     <Compile Include="StartupTask.cs" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\Shared\DisplayTemplates\FormBlock.cshtml" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\Shared\DisplayTemplates\HtmlBlock.cshtml" />
@@ -310,8 +302,6 @@
     <Compile Include="RouteProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Admin\Localization\Views\Language\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Admin\Localization\Views\LocalizableString\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Menus\Views\Menu\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Pages\Views\Page\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Views\ContentBlock\Index.cshtml" />
@@ -387,8 +377,6 @@
     <EmbeddedResource Include="Scripts\moment.js" />
     <EmbeddedResource Include="Areas\Admin\Messaging\Scripts\queuedEmails.js" />
     <EmbeddedResource Include="Areas\Admin\Messaging\Scripts\messageTemplates.js" />
-    <EmbeddedResource Include="Areas\Admin\Localization\Scripts\index.js" />
-    <EmbeddedResource Include="Areas\Admin\Localization\Scripts\localizableStrings.js" />
     <EmbeddedResource Include="Areas\Admin\Blog\Scripts\blog.js" />
     <EmbeddedResource Include="Areas\Admin\Blog\Scripts\blogContent.js" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Scripts\entityTypeContentBlocks.js" />

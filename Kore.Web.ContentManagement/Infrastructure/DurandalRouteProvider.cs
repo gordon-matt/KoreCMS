@@ -46,22 +46,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
                 routes.Add(new DurandalRoute
                 {
-                    ModuleId = "viewmodels/admin/localization/languages",
-                    Route = "localization/languages",
-                    JsPath = scriptRegister.GetBundleUrl("kore-cms/languages"),
-                    Title = localizer(KoreCmsLocalizableStrings.Localization.Languages)
-                });
-
-                routes.Add(new DurandalRoute
-                {
-                    ModuleId = "viewmodels/admin/localization/localizable-strings",
-                    Route = "localization/localizable-strings/:cultureCode",
-                    JsPath = scriptRegister.GetBundleUrl("kore-cms/localizable-strings"),
-                    Title = localizer(KoreCmsLocalizableStrings.Localization.LocalizableStrings)
-                });
-
-                routes.Add(new DurandalRoute
-                {
                     ModuleId = "viewmodels/admin/media",
                     Route = "media",
                     JsPath = scriptRegister.GetBundleUrl("kore-cms/media"),

@@ -20,7 +20,7 @@ namespace Kore.Web.Areas.Admin.Membership.Controllers
 
         protected virtual bool CheckPermissions()
         {
-            return CheckPermission(MembershipPermissions.Manage);
+            return CheckPermission(KoreWebPermissions.MembershipManage);
         }
 
         [Compress]

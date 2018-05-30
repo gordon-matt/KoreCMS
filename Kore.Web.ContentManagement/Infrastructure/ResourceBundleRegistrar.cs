@@ -32,12 +32,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/entity-type-content-blocks")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Scripts.entityTypeContentBlocks.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/languages")
-                .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Localization.Scripts.index.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/localizable-strings")
-                .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Localization.Scripts.localizableStrings.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/js/kore-cms/media")
                 .Include("~/Scripts/Kore.Web.ContentManagement.Areas.Admin.Media.Scripts.media.js"));
 

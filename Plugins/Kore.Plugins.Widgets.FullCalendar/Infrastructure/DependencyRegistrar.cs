@@ -38,10 +38,7 @@ namespace Kore.Plugins.Widgets.FullCalendar.Infrastructure
             builder.RegisterType<CalendarEventService>().As<ICalendarEventService>().InstancePerDependency();
         }
 
-        public int Order
-        {
-            get { return 9999; }
-        }
+        public int Order => 9999;
 
         #endregion IDependencyRegistrar<ContainerBuilder> Members
     }

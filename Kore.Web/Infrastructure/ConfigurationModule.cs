@@ -51,10 +51,7 @@ namespace Kore.Web.Infrastructure
                     .CreateRegistration();
             }
 
-            public bool IsAdapterForIndividualComponents
-            {
-                get { return false; }
-            }
+            public bool IsAdapterForIndividualComponents => false;
         }
     }
 }

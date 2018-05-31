@@ -19,20 +19,11 @@ namespace Kore.Plugins.Maintenance.Watchdog
 
         #region ISettings Members
 
-        public string Name
-        {
-            get { return "Maintenance: Watchdog Settings"; }
-        }
+        public string Name => "Maintenance: Watchdog Settings";
 
-        public bool IsTenantRestricted
-        {
-            get { return false; }
-        }
+        public bool IsTenantRestricted => false;
 
-        public string EditorTemplatePath
-        {
-            get { return "/Plugins/Maintenance.Watchdog/Views/Shared/EditorTemplates/WatchdogSettings.cshtml"; }
-        }
+        public string EditorTemplatePath => "/Plugins/Maintenance.Watchdog/Views/Shared/EditorTemplates/WatchdogSettings.cshtml";
 
         #endregion ISettings Members
     }

@@ -22,20 +22,11 @@ namespace Kore.Web.Security.Membership
 
         #region ISettings Members
 
-        public string Name
-        {
-            get { return "Membership Settings"; }
-        }
+        public string Name => "Membership Settings";
 
-        public bool IsTenantRestricted
-        {
-            get { return false; }
-        }
+        public bool IsTenantRestricted => false;
 
-        public string EditorTemplatePath
-        {
-            get { return "Kore.Web.Views.Shared.EditorTemplates.MembershipSettings"; }
-        }
+        public string EditorTemplatePath => "Kore.Web.Views.Shared.EditorTemplates.MembershipSettings";
 
         #endregion ISettings Members
     }

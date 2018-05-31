@@ -13,20 +13,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages
 
         #region ISettings Members
 
-        public string Name
-        {
-            get { return "CMS: Page Settings"; }
-        }
+        public string Name => "CMS: Page Settings";
 
-        public bool IsTenantRestricted
-        {
-            get { return false; }
-        }
+        public bool IsTenantRestricted => false;
 
-        public string EditorTemplatePath
-        {
-            get { return "Kore.Web.ContentManagement.Areas.Admin.Pages.Views.Shared.EditorTemplates.PageSettings"; }
-        }
+        public string EditorTemplatePath => "Kore.Web.ContentManagement.Areas.Admin.Pages.Views.Shared.EditorTemplates.PageSettings";
 
         #endregion ISettings Members
 

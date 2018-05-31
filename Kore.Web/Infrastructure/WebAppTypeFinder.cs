@@ -12,9 +12,8 @@ namespace Kore.Infrastructure
     /// </summary>
     public class WebAppTypeFinder : AppDomainTypeFinder
     {
-        #region Fields
 
-        private bool _ensureBinFolderAssembliesLoaded = true;
+        #region Fields
         private bool _binFolderAssembliesLoaded = false;
 
         #endregion Fields
@@ -23,7 +22,7 @@ namespace Kore.Infrastructure
 
         public WebAppTypeFinder()
         {
-            this._ensureBinFolderAssembliesLoaded = true; //TODO: put into web.config
+            this.EnsureBinFolderAssembliesLoaded = true; //TODO: put into web.config
             //this._ensureBinFolderAssembliesLoaded = KoreConfigurationSection.Instance.DynamicDiscovery;
         }
 
@@ -34,11 +33,7 @@ namespace Kore.Infrastructure
         /// <summary>
         /// Gets or sets wether assemblies in the bin folder of the web application should be specificly checked for beeing loaded on application load. This is need in situations where plugins need to be loaded in the AppDomain after the application been reloaded.
         /// </summary>
-        public bool EnsureBinFolderAssembliesLoaded
-        {
-            get { return _ensureBinFolderAssembliesLoaded; }
-            set { _ensureBinFolderAssembliesLoaded = value; }
-        }
+        public bool EnsureBinFolderAssembliesLoaded { get; set; } = true;
 
         #endregion Properties
 
@@ -64,7 +59,7 @@ namespace Kore.Infrastructure
 
         public override IEnumerable<Assembly> GetAssemblies()
         {
-            if (this.EnsureBinFolderAssembliesLoaded && !_binFolderAssembliesLoaded)
+            if (EnsureBinFolderAssembliesLoaded && !_binFolderAssembliesLoaded)
             {
                 _binFolderAssembliesLoaded = true;
                 string binPath = GetBinDirectory();

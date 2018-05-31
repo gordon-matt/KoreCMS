@@ -28,10 +28,7 @@ namespace Kore.Web.Common.Infrastructure
             builder.RegisterType<WebApiRegistrar>().As<IWebApiRegistrar>().SingleInstance();
         }
 
-        public int Order
-        {
-            get { return 1; }
-        }
+        public int Order => 1;
 
         #endregion IDependencyRegistrar Members
     }

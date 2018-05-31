@@ -223,10 +223,7 @@ namespace Kore.Web.Infrastructure
             return new UrlHelper(context.Resolve<RequestContext>(), context.Resolve<RouteCollection>());
         }
 
-        public int Order
-        {
-            get { return 100; }
-        }
+        public int Order => 100;
 
         /// <summary>
         /// standin context for background tasks.

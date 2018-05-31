@@ -17,9 +17,7 @@
         <dependency id="Autofac" version="4.8.1" />
         <dependency id="Castle.Core" version="4.2.1" />
         <dependency id="EntityFramework" version="6.2.0" />
-        <dependency id="EntityFramework.BulkInsert-ef6" version="6.0.2.8" />
-        <dependency id="EntityFramework.Extended" version="6.1.0.168" />
-        <dependency id="EntityFramework.MappingAPI" version="6.2.0" />
+        <dependency id="Z.EntityFramework.Plus.EF6" version="1.7.19" />
       </group>
     </dependencies>
   </metadata>

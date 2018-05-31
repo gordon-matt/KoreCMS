@@ -33,10 +33,7 @@ namespace Kore.Infrastructure
             builder.RegisterType<LogService>().As<ILogService>().InstancePerDependency();
         }
 
-        public int Order
-        {
-            get { return 0; }
-        }
+        public int Order => 0;
 
         #endregion IDependencyRegistrar<ContainerBuilder> Members
     }

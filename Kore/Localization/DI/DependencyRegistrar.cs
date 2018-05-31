@@ -12,10 +12,7 @@ namespace Kore.Localization.DI
             builder.RegisterModule<LocalizationModule>();
         }
 
-        public int Order
-        {
-            get { return 1; }
-        }
+        public int Order => 1;
 
         #endregion IDependencyRegistrar Members
     }

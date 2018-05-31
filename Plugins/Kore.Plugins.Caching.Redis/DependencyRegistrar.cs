@@ -18,9 +18,6 @@ namespace Kore.Plugins.Caching.Redis
             builder.RegisterType<RedisCacheManager>().As<ICacheManager>().Named<ICacheManager>("Kore_Cache_Per_Request").InstancePerLifetimeScope();
         }
 
-        public int Order
-        {
-            get { return 99999; }
-        }
+        public int Order => 99999;
     }
 }

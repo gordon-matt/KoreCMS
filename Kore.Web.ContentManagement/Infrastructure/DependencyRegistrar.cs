@@ -11,8 +11,6 @@ using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Localization;
 using Kore.Web.ContentManagement.Areas.Admin.Media.ContentBlocks;
 using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
-
-//using Kore.Web.ContentManagement.Areas.Admin.Media.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Menus.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging;
 using Kore.Web.ContentManagement.Areas.Admin.Messaging.Services;
@@ -36,8 +34,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
 
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {
-            //builder.RegisterType<DbSeeder>().As<IDbSeeder>().InstancePerDependency();
-
             builder.RegisterType<DurandalRouteProvider>().As<IDurandalRouteProvider>().SingleInstance();
 
             #region Services
@@ -161,10 +157,7 @@ namespace Kore.Web.ContentManagement.Infrastructure
             builder.RegisterType<NewsletterMessageTemplates>().As<IMessageTemplatesProvider>().InstancePerDependency();
         }
 
-        public int Order
-        {
-            get { return 1; }
-        }
+        public int Order => 1;
 
         #endregion IDependencyRegistrar Members
     }

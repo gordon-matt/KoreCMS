@@ -10,10 +10,7 @@ namespace Kore.Demos.ConsoleApp.Infrastructure
 {
     public class DependencyRegistrar : IDependencyRegistrar<ContainerBuilder>
     {
-        public int Order
-        {
-            get { return 1; }
-        }
+        public int Order => 1;
 
         public void Register(ContainerBuilder builder, ITypeFinder typeFinder)
         {

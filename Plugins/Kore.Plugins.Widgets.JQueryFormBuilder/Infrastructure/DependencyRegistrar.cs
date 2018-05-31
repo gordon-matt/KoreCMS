@@ -22,10 +22,7 @@ namespace Kore.Plugins.Widgets.JQueryFormBuilder.Infrastructure
             builder.RegisterType<JQueryFormBuilderBlock>().As<IContentBlock>().InstancePerDependency();
         }
 
-        public int Order
-        {
-            get { return 9999; }
-        }
+        public int Order => 9999;
 
         #endregion IDependencyRegistrar<ContainerBuilder> Members
     }

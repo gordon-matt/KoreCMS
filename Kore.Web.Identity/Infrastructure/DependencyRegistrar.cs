@@ -14,10 +14,7 @@ namespace Kore.Web.Identity.Infrastructure
             builder.RegisterType<LanguagePackInvariant>().As<ILanguagePack>().SingleInstance();
         }
 
-        public int Order
-        {
-            get { return 0; }
-        }
+        public int Order => 0;
 
         #endregion IDependencyRegistrar Members
     }

@@ -31,10 +31,7 @@ namespace Kore.Data.EntityFramework
             }
         }
 
-        public int Order
-        {
-            get { return 0; }
-        }
+        public int Order => 0;
 
         #endregion IDependencyRegistrar Members
     }

@@ -27,10 +27,7 @@ namespace Kore.Plugins.Widgets.Google.Infrastructure
             builder.RegisterType<LocationFormatProvider>().As<ILocationFormatProvider>().SingleInstance();
         }
 
-        public int Order
-        {
-            get { return 9999; }
-        }
+        public int Order => 9999;
 
         #endregion IDependencyRegistrar<ContainerBuilder> Members
     }

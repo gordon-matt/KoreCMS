@@ -73,10 +73,7 @@ namespace KoreCMS.Infrastructure
             builder.RegisterType<AccountMessageTemplateTokensProvider>().As<IMessageTemplateTokensProvider>().SingleInstance();
         }
 
-        public int Order
-        {
-            get { return 0; }
-        }
+        public int Order => 0;
 
         #endregion IDependencyRegistrar Members
     }

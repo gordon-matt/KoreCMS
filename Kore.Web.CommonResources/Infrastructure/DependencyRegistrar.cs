@@ -14,10 +14,7 @@ namespace Kore.Web.CommonResources.Infrastructure
             builder.RegisterType<RequireJSConfigProvider>().As<IRequireJSConfigProvider>().SingleInstance();
         }
 
-        public int Order
-        {
-            get { return 1; }
-        }
+        public int Order => 1;
 
         #endregion IDependencyRegistrar Members
     }

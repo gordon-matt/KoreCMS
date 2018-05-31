@@ -5,7 +5,6 @@
     'transitions': '../../../../Scripts/durandal/transitions',
 
     'bootstrap': '../../../../Scripts/bootstrap',
-    'breeze': '../../../../Scripts/breeze.debug',
     'chosen': '../../../../Scripts/chosen.jquery',
     'datajs': '../../../../Scripts/datajs-1.1.3',
     'jqueryval': '../../../../Scripts/jquery.validate',
@@ -15,7 +14,6 @@
     'knockout-mapping': '../../../../Scripts/knockout.mapping-latest.debug',
     'notify': '../../../../Scripts/notify.min',
     'OData': '../../../../Scripts/datajs-1.1.3',
-    'Q': '../../../../Scripts/q',
     'tinymce': '../../../../Scripts/tinymce/tinymce.min',
     'tinymce-jquery': '../../../../Scripts/tinymce/jquery.tinymce.min',
     'tinymce-knockout': '../../../../Scripts/wysiwyg.min',
@@ -23,7 +21,6 @@
 
 var shim = {
     'bootstrap': ['jquery'],
-    'breeze': ['jquery', 'datajs', 'Q'],
     'datajs': ['jquery'],
     'jqueryval': ['jquery'],
     'jqueryval-unobtrusive': ['jquery', 'jqueryval'],

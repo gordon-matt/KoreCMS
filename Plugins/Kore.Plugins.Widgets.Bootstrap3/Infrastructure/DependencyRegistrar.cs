@@ -23,10 +23,7 @@ namespace Kore.Plugins.Widgets.Bootstrap3.Infrastructure
             builder.RegisterType<Bootstrap3ImageGalleryBlock>().As<IContentBlock>().InstancePerDependency();
         }
 
-        public int Order
-        {
-            get { return 9999; }
-        }
+        public int Order => 9999;
 
         #endregion IDependencyRegistrar<ContainerBuilder> Members
     }

@@ -13,11 +13,6 @@ namespace KoreCMS
 
             bundles.Add(new ScriptBundle("~/bundles/js/bootstrap").Include("~/Scripts/bootstrap.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/breeze")
-                .Include("~/Scripts/datajs-1.1.3.min.js")
-                .Include("~/Scripts/q.min.js")
-                .Include("~/Scripts/breeze.min.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/js/chosen").Include("~/Scripts/chosen.jquery.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/jquery").Include("~/Scripts/jquery-{version}.js"));

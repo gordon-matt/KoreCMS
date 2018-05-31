@@ -190,7 +190,6 @@ namespace Kore.Web.ContentManagement.Infrastructure
                     { KoreCmsLocalizableStrings.Settings.Blog.MenuPosition, "Menu Position" },
                     { KoreCmsLocalizableStrings.Settings.Blog.PageTitle, "Page Title" },
                     { KoreCmsLocalizableStrings.Settings.Blog.ShowOnMenus, "Show on Menus" },
-                    { KoreCmsLocalizableStrings.Settings.Blog.UseAjax, "Use Ajax" },
                     { KoreCmsLocalizableStrings.Settings.Blog.LayoutPathOverride, "Layout Path (Override)" },
                     { KoreCmsLocalizableStrings.Settings.Pages.NumberOfPageVersionsToKeep, "# Page Versions to Keep" },
                     { KoreCmsLocalizableStrings.Settings.Pages.ShowInvariantVersionIfLocalizedUnavailable, "Show Invariant Version if Localized Unavailable" },

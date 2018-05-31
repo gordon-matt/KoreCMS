@@ -29,9 +29,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog
         [LocalizedDisplayName(KoreCmsLocalizableStrings.Settings.Blog.MenuPosition)]
         public byte MenuPosition { get; set; }
 
-        [LocalizedDisplayName(KoreCmsLocalizableStrings.Settings.Blog.UseAjax)]
-        public bool UseAjax { get; set; }
-
         [LocalizedDisplayName(KoreCmsLocalizableStrings.Settings.Blog.AccessRestrictions)]
         public string AccessRestrictions { get; set; }
 
@@ -40,20 +37,11 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog
 
         #region ISettings Members
 
-        public string Name
-        {
-            get { return "CMS: Blog Settings"; }
-        }
+        public string Name => "CMS: Blog Settings";
 
-        public bool IsTenantRestricted
-        {
-            get { return false; }
-        }
+        public bool IsTenantRestricted => false;
 
-        public string EditorTemplatePath
-        {
-            get { return "Kore.Web.ContentManagement.Areas.Admin.Blog.Views.Shared.EditorTemplates.BlogSettings"; }
-        }
+        public string EditorTemplatePath => "Kore.Web.ContentManagement.Areas.Admin.Blog.Views.Shared.EditorTemplates.BlogSettings";
 
         #endregion ISettings Members
     }

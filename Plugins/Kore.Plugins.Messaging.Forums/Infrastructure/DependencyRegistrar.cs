@@ -37,10 +37,7 @@ namespace Kore.Plugins.Messaging.Forums.Infrastructure
             builder.RegisterType<ForumService>().As<IForumService>().InstancePerDependency();
         }
 
-        public int Order
-        {
-            get { return 9999; }
-        }
+        public int Order => 9999;
 
         #endregion IDependencyRegistrar<ContainerBuilder> Members
     }

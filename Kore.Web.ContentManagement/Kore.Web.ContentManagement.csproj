@@ -315,7 +315,6 @@
     <EmbeddedResource Include="Areas\Admin\Blog\Views\BlogContent\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Blog\Index.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\Shared\EditorTemplates\BlogSettings.cshtml" />
-    <EmbeddedResource Include="Areas\Admin\Blog\Views\BlogContent\IndexAjax.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Blog\Views\BlogContent\Details.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Newsletters\Views\Shared\DisplayTemplates\NewsletterUserProfileProvider.cshtml" />
     <EmbeddedResource Include="Areas\Admin\Newsletters\Views\Shared\EditorTemplates\NewsletterUserProfileProvider.cshtml" />
@@ -378,7 +377,6 @@
     <EmbeddedResource Include="Areas\Admin\Messaging\Scripts\queuedEmails.js" />
     <EmbeddedResource Include="Areas\Admin\Messaging\Scripts\messageTemplates.js" />
     <EmbeddedResource Include="Areas\Admin\Blog\Scripts\blog.js" />
-    <EmbeddedResource Include="Areas\Admin\Blog\Scripts\blogContent.js" />
     <EmbeddedResource Include="Areas\Admin\ContentBlocks\Scripts\entityTypeContentBlocks.js" />
     <EmbeddedResource Include="Areas\Admin\Menus\Scripts\menus.js" />
     <EmbeddedResource Include="Areas\Admin\Pages\Scripts\index.js" />

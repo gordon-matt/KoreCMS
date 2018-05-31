@@ -32,10 +32,7 @@ namespace Kore.Plugins.Maintenance.Watchdog.Infrastructure
             builder.RegisterType<WatchdogInstanceService>().As<IWatchdogInstanceService>().InstancePerDependency();
         }
 
-        public int Order
-        {
-            get { return 999; }
-        }
+        public int Order => 999;
 
         #endregion IDependencyRegistrar<ContainerBuilder> Members
     }

@@ -1,3 +1,5 @@
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=gordon_matt%40live%2ecom&lc=AU&currency_code=AUD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
+
 ![Kore CMS](https://github.com/Widecommerce/kore-cms/blob/master/KoreCMS/Media/kore-logo-dark.png)
 
 ## Intro
@@ -48,3 +50,8 @@ If you would like to use NuGet packages, you can find them here:
 ## License
 
 This project is licensed under the [MIT license](LICENSE.txt).
+
+## Donate
+If you find this project helpful, consider buying me a cup of coffee.  :-)
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=gordon_matt%40live%2ecom&lc=AU&currency_code=AUD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)

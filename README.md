@@ -6,11 +6,10 @@ I am a freelancer and Kore is a web framework and CMS for ASP.NET MVC5 that I ha
 
 ## Tech
 
-
 | | | |
 | :---: | :---: | :---: |
-|[**Durandal**<br />![Durandal](https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/NET%20MVC.png) ](https://github.com/BlueSpire/Durandal)|[**Durandal**<br />![Durandal](https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/Durandal.jpg) ](https://github.com/BlueSpire/Durandal)|[**Web API OData**<br />![Web API OData](https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/OData.png) ](https://github.com/OData/WebApi)|
-| [**Bootstrap**<br />![Bootstrap](https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/Bootstrap.jpg) ](http://getbootstrap.com/) |[**KendoUI**<br />![KendoUI](https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/KendoUI.png) ](https://github.com/gothinkster/react-mobx-realworld-example-app)
+|[<br />![Durandal](https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/NET%20MVC.png) ](https://github.com/BlueSpire/Durandal)|[<br />![Durandal](https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/Durandal.jpg) ](https://github.com/BlueSpire/Durandal)|[<br />![Web API OData](https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/OData.png) ](https://github.com/OData/WebApi)|
+| [<br />![Bootstrap](https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/Bootstrap.jpg) ](http://getbootstrap.com/) |[<br />![KendoUI](https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/KendoUI.png) ](https://github.com/gothinkster/react-mobx-realworld-example-app)
 
 ## Features
 

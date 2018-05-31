@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/bundles/content/bootstrap")
-    @Styles.Render("~/bundles/content/kore-icons")
+    <link rel="stylesheet" type="text/css" href="~/Content/font-awesome.min.css" />
 
     <style type="text/css">
         body {
@@ -36,7 +36,7 @@
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(string.Empty, new { @class = "text-danger" })
-                    
+
                     using (var panel = Html.KoreUI().Begin(new Panel()))
                     {
                         using (var header = panel.BeginHeader("Admin Login Details"))
@@ -87,6 +87,17 @@
                                         <span class="input-group-addon"><i class="fa fa-globe"></i></span>
                                         @Html.CulturesDropDownListFor(m => m.DefaultLanguage, new { @class = "form-control" })
                                     </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Theme, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-tint"></i></span>
+                                        @Html.Kore().ThemesDropDownListFor(m => m.Theme, new { @class = "form-control", onchange = "onThemeChange(this);" })
+                                    </div>
+                                    <br />
+                                    <img id="theme-preview" src="http://via.placeholder.com/250x150" alt="Theme Preview" class="thumbnail" style="max-width:250px;" />
                                 </div>
                             </div>
                         }
@@ -204,6 +215,10 @@
                 $('#database-username-group').show();
                 $('#database-password-group').show();
             }
+        }
+        function onThemeChange() {
+            var themeName = $('#Theme').val();
+            $('#theme-preview').attr('src', '/Themes/' + themeName + '/thumbnail.png');
         }
     </script>
 </body>

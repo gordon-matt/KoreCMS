@@ -327,9 +327,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Content\css\dashboard.css" />
-    <Content Include="Areas\Admin\Content\css\icons.css" />
     <Content Include="Areas\Admin\Content\fonts\fontawesome-webfont.svg" />
-    <Content Include="Areas\Admin\Scripts\App\cssLoader.js" />
     <Content Include="Areas\Admin\Scripts\App\main.js" />
     <Content Include="Areas\Admin\Scripts\App\viewmodels\admin\dashboard.js" />
     <Content Include="Areas\Admin\Scripts\App\viewmodels\dummy.js" />
@@ -927,7 +925,6 @@
     <Content Include="Areas\Admin\Content\fonts\fontawesome-webfont.ttf" />
     <Content Include="Areas\Admin\Content\fonts\fontawesome-webfont.woff" />
     <Content Include="Areas\Admin\Content\fonts\FontAwesome.otf" />
-    <Content Include="Areas\Admin\Content\less\icons.less" />
     <Content Include="NLog.config">
       <SubType>Designer</SubType>
     </Content>

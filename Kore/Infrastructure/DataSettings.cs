@@ -18,6 +18,8 @@ namespace Kore.Infrastructure
 
         public string DefaultLanguage { get; set; }
 
+        public string Theme { get; set; }
+
         public bool IsValid()
         {
             return !string.IsNullOrEmpty(this.ProviderName) && !string.IsNullOrEmpty(this.ConnectionString);

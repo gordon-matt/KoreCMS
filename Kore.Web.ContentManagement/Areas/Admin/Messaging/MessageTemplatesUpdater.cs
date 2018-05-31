@@ -56,10 +56,7 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Messaging
             }
         }
 
-        public int Order
-        {
-            get { return 9999; }
-        }
+        public int Order => 9999;
 
         #endregion IStartupTask Members
     }

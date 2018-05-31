@@ -7,6 +7,7 @@ namespace Kore.Web.Models
         public InstallationModel()
         {
             DefaultLanguage = "en-US";
+            Theme = "Default";
         }
 
         [Required]
@@ -52,5 +53,9 @@ namespace Kore.Web.Models
         [Required]
         [Display(Name = "Default Language")]
         public string DefaultLanguage { get; set; }
+
+        [Required]
+        [Display(Name = "Theme")]
+        public string Theme { get; set; }
     }
 }

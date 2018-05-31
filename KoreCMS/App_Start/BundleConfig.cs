@@ -90,9 +90,6 @@ namespace KoreCMS
                 .Include("~/Content/themes/jquery-ui-bootstrap.css", cssRewriteUrlTransform)
                 .Include("~/Content/bootstrap.min.css", cssRewriteUrlTransform));
 
-            bundles.Add(new StyleBundle("~/bundles/content/kore-icons")
-                .Include("~/Areas/Admin/Content/css/icons.css", cssRewriteUrlTransform));
-
             #endregion Styles
 
             var registrars = EngineContext.Current.ResolveAll<IResourceBundleRegistrar>();

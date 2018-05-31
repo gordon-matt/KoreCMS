@@ -1,13 +1,10 @@
-﻿@using Microsoft.AspNet.Identity
-@using Kore.Infrastructure
-@using Kore.Web.Configuration
-@using KoreIdentityLocalizableStrings = Kore.Web.Identity.LocalizableStrings
+﻿@using KoreIdentityLocalizableStrings = Kore.Web.Identity.LocalizableStrings
 
 @{
     Style.IncludeJQueryUI();
     Style.IncludeBundle("kendo-ui");
     Style.IncludeBootstrap();
-    Style.IncludeBundle("kore-icons");
+    Style.IncludeFontAwesome();
     Style.IncludeExternal("~/Areas/Admin/Content/css/dashboard.css");
 
     Script.IncludeJQuery();

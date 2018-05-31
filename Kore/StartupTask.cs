@@ -50,10 +50,7 @@ namespace Kore
             }
         }
 
-        public int Order
-        {
-            get { return 0; }
-        }
+        public int Order => 0;
 
         #endregion IStartupTask Members
     }

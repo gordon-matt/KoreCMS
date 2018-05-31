@@ -294,14 +294,35 @@ namespace Kore.Web.Infrastructure
             ILanguageService languageService,
             int? tenantId)
         {
-            #region First ensure that the language exists
+            EnsureSettingsLanguage(languageService, dataSettings.DefaultLanguage, tenantId);
 
-            string name = CultureInfo.GetCultureInfo(dataSettings.DefaultLanguage).DisplayName;
+            #region Then set it as the default
+
+            var siteSettings = settingService.GetSettings<KoreSiteSettings>(tenantId);
+            siteSettings.DefaultLanguage = dataSettings.DefaultLanguage;
+
+            if (!string.IsNullOrEmpty(dataSettings.Theme))
+            {
+                siteSettings.DefaultDesktopTheme = dataSettings.Theme;
+                siteSettings.DefaultMobileTheme = dataSettings.Theme;
+            }
+
+            settingService.SaveSettings(siteSettings, tenantId);
+
+            #endregion Then set it as the default
+        }
+
+        private static void EnsureSettingsLanguage(
+            ILanguageService languageService,
+            string cultureCode,
+            int? tenantId)
+        {
+            string name = CultureInfo.GetCultureInfo(cultureCode).DisplayName;
 
             var existing = languageService.FindOne(x =>
                 x.TenantId == tenantId &&
                 x.Name == name &&
-                x.CultureCode == dataSettings.DefaultLanguage);
+                x.CultureCode == cultureCode);
 
             if (existing != null && !existing.IsEnabled)
             {
@@ -315,26 +336,13 @@ namespace Kore.Web.Infrastructure
                     Id = Guid.NewGuid(),
                     TenantId = tenantId,
                     Name = name,
-                    CultureCode = dataSettings.DefaultLanguage,
+                    CultureCode = cultureCode,
                     IsEnabled = true
                 });
             }
-
-            #endregion First ensure that the language exists
-
-            #region Then set it as the default
-
-            var siteSettings = settingService.GetSettings<KoreSiteSettings>(tenantId);
-            siteSettings.DefaultLanguage = dataSettings.DefaultLanguage;
-            settingService.SaveSettings(siteSettings, tenantId);
-
-            #endregion Then set it as the default
         }
 
-        public int Order
-        {
-            get { return 1; }
-        }
+        public int Order => 1;
 
         #endregion IStartupTask Members
     }

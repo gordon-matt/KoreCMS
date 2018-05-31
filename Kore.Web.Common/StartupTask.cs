@@ -73,10 +73,7 @@ namespace Kore.Web.Common
             EnsureData(dbContext);
         }
 
-        public int Order
-        {
-            get { return 10; }
-        }
+        public int Order => 10;
 
         #endregion IStartupTask Members
 

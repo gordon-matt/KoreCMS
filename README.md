@@ -4,7 +4,7 @@
 
 ## Intro
 
-I am a freelancer and Kore is a web framework and CMS for ASP.NET MVC5 that I have been working on for the last few years. My customers seem pleased with it and I have decided to make it a public repository now for anyone who might find it useful. I am also currently working on a MUCH improved version for .NET Core, the name of which has been changed to MantleCMS for obvious reasons that Kore on .NET Core sounds a bit confusing. I will link to it here once it is ready.
+Kore is both a CMS and just a general purpose MVC5 web framework, built up with various extensions / helper classes. This is a project I have been working on for the last few years and I have now decided to make the repository public for anyone who might find it useful. I am also currently working on a MUCH improved version for .NET Core, the name of which has been changed to MantleCMS for obvious reasons that Kore on .NET Core sounds a bit confusing. Mantle uses [Aurelia](https://aurelia.io/) for the "Admin Area" and I will link to it here once I make it public.
 
 ## Tech
 

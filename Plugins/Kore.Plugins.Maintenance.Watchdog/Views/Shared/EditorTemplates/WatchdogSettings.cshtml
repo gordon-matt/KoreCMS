@@ -29,7 +29,7 @@
             if (data.OnlyShowWatched && typeof data.OnlyShowWatched === 'boolean') {
                 viewModel.onlyShowWatched(data.OnlyShowWatched);
             }
-            if (data.AllowAddRemove && typeof data.AllowAddRemove === 'boolean') {
+            if (data.AllowAddRemove != null && data.AllowAddRemove !== undefined && typeof data.AllowAddRemove === 'boolean') {
                 viewModel.allowAddRemove(data.AllowAddRemove);
             }
         }

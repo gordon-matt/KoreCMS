@@ -111,7 +111,7 @@
                 if (data.Source) {
                     blockModel.source(data.Source());
                 }
-                if (data.ShowControls && typeof data.ShowControls() === 'boolean') {
+                if (data.ShowControls != null && data.ShowControls !== undefined && typeof data.ShowControls() === 'boolean') {
                     blockModel.showControls(data.ShowControls());
                 }
                 if (data.AutoPlay && typeof data.AutoPlay() === 'boolean') {

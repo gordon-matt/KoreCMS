@@ -137,10 +137,10 @@
                 if (data.Shape) {
                     blockModel.shape(data.Shape());
                 }
-                if (data.RemoveOverflowing && typeof data.RemoveOverflowing() === 'boolean') {
+                if (data.RemoveOverflowing != null && data.RemoveOverflowing !== undefined && typeof data.RemoveOverflowing() === 'boolean') {
                     blockModel.removeOverflowing(data.RemoveOverflowing());
                 }
-                if (data.EncodeURI && typeof data.EncodeURI() === 'boolean') {
+                if (data.EncodeURI != null && data.EncodeURI !== undefined && typeof data.EncodeURI() === 'boolean') {
                     blockModel.encodeURI(data.EncodeURI());
                 }
                 if (data.Colors) {

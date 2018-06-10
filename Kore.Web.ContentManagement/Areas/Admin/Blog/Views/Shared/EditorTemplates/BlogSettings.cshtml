@@ -64,7 +64,7 @@
             if (data.ItemsPerPage) {
                 viewModel.itemsPerPage(data.ItemsPerPage);
             }
-            if (data.ShowOnMenus && typeof data.ShowOnMenus === 'boolean') {
+            if (data.ShowOnMenus != null && data.ShowOnMenus !== undefined && typeof data.ShowOnMenus === 'boolean') {
                 viewModel.showOnMenus(data.ShowOnMenus);
             }
             if (data.MenuPosition) {

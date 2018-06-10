@@ -216,7 +216,6 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Pages.Controllers.Api
                     entity.DateCreatedUtc = currentVersion.DateCreatedUtc;
                     entity.DateModifiedUtc = DateTime.UtcNow;
                     entity.Fields = MediaHelper.EnsureCorrectUrls(entity.Fields);
-                    entity.ShowOnMenus = currentVersion.ShowOnMenus;
                     await Service.UpdateAsync(entity);
                 }
             }

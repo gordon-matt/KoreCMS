@@ -220,11 +220,11 @@
         viewModel.layoutPathOverride = ko.observable('');
 
         if (data) {
-            if (data.ForumsEnabled && typeof data.ForumsEnabled === 'boolean') { viewModel.forumsEnabled(data.ForumsEnabled); }
-            if (data.RelativeDateTimeFormattingEnabled && typeof data.RelativeDateTimeFormattingEnabled === 'boolean') { viewModel.relativeDateTimeFormattingEnabled(data.RelativeDateTimeFormattingEnabled); }
-            if (data.AllowUsersToEditPosts && typeof data.AllowUsersToEditPosts === 'boolean') { viewModel.allowUsersToEditPosts(data.AllowUsersToEditPosts); }
-            if (data.AllowUsersToManageSubscriptions && typeof data.AllowUsersToManageSubscriptions === 'boolean') { viewModel.allowUsersToManageSubscriptions(data.AllowUsersToManageSubscriptions); }
-            if (data.AllowUsersToDeletePosts && typeof data.AllowUsersToDeletePosts === 'boolean') { viewModel.allowUsersToDeletePosts(data.AllowUsersToDeletePosts); }
+            if (data.ForumsEnabled != null && data.ForumsEnabled !== undefined && typeof data.ForumsEnabled === 'boolean') { viewModel.forumsEnabled(data.ForumsEnabled); }
+            if (data.RelativeDateTimeFormattingEnabled != null && data.RelativeDateTimeFormattingEnabled !== undefined && typeof data.RelativeDateTimeFormattingEnabled === 'boolean') { viewModel.relativeDateTimeFormattingEnabled(data.RelativeDateTimeFormattingEnabled); }
+            if (data.AllowUsersToEditPosts != null && data.AllowUsersToEditPosts !== undefined && typeof data.AllowUsersToEditPosts === 'boolean') { viewModel.allowUsersToEditPosts(data.AllowUsersToEditPosts); }
+            if (data.AllowUsersToManageSubscriptions != null && data.AllowUsersToManageSubscriptions !== undefined && typeof data.AllowUsersToManageSubscriptions === 'boolean') { viewModel.allowUsersToManageSubscriptions(data.AllowUsersToManageSubscriptions); }
+            if (data.AllowUsersToDeletePosts != null && data.AllowUsersToDeletePosts !== undefined && typeof data.AllowUsersToDeletePosts === 'boolean') { viewModel.allowUsersToDeletePosts(data.AllowUsersToDeletePosts); }
             if (data.TopicSubjectMaxLength) { viewModel.topicSubjectMaxLength(data.TopicSubjectMaxLength); }
             if (data.StrippedTopicMaxLength) { viewModel.strippedTopicMaxLength(data.StrippedTopicMaxLength); }
             if (data.PostMaxLength) { viewModel.postMaxLength(data.PostMaxLength); }
@@ -233,24 +233,24 @@
             if (data.SearchResultsPageSize) { viewModel.searchResultsPageSize(data.SearchResultsPageSize); }
             if (data.ActiveDiscussionsPageSize) { viewModel.activeDiscussionsPageSize(data.ActiveDiscussionsPageSize); }
             if (data.LatestUserPostsPageSize) { viewModel.latestUserPostsPageSize(data.LatestUserPostsPageSize); }
-            if (data.ShowUsersPostCount && typeof data.ShowUsersPostCount === 'boolean') { viewModel.showUsersPostCount(data.ShowUsersPostCount); }
+            if (data.ShowUsersPostCount != null && data.ShowUsersPostCount !== undefined && typeof data.ShowUsersPostCount === 'boolean') { viewModel.showUsersPostCount(data.ShowUsersPostCount); }
             if (data.ForumEditor) { viewModel.forumEditor(data.ForumEditor); }
-            if (data.SignaturesEnabled && typeof data.SignaturesEnabled === 'boolean') { viewModel.signaturesEnabled(data.SignaturesEnabled); }
+            if (data.SignaturesEnabled != null && data.SignaturesEnabled !== undefined && typeof data.SignaturesEnabled === 'boolean') { viewModel.signaturesEnabled(data.SignaturesEnabled); }
             if (data.AllowPrivateMessages && typeof data.AllowPrivateMessages === 'boolean') { viewModel.allowPrivateMessages(data.AllowPrivateMessages); }
-            if (data.ShowAlertForPM && typeof data.ShowAlertForPM === 'boolean') { viewModel.showAlertForPM(data.ShowAlertForPM); }
+            if (data.ShowAlertForPM != null && data.ShowAlertForPM !== undefined && typeof data.ShowAlertForPM === 'boolean') { viewModel.showAlertForPM(data.ShowAlertForPM); }
             if (data.PrivateMessagesPageSize) { viewModel.privateMessagesPageSize(data.PrivateMessagesPageSize); }
             if (data.ForumSubscriptionsPageSize) { viewModel.forumSubscriptionsPageSize(data.ForumSubscriptionsPageSize); }
-            if (data.NotifyAboutPrivateMessages && typeof data.NotifyAboutPrivateMessages === 'boolean') { viewModel.notifyAboutPrivateMessages(data.NotifyAboutPrivateMessages); }
+            if (data.NotifyAboutPrivateMessages != null && data.NotifyAboutPrivateMessages !== undefined && typeof data.NotifyAboutPrivateMessages === 'boolean') { viewModel.notifyAboutPrivateMessages(data.NotifyAboutPrivateMessages); }
             if (data.PMSubjectMaxLength) { viewModel.pmSubjectMaxLength(data.PMSubjectMaxLength); }
             if (data.PMTextMaxLength) { viewModel.pmTextMaxLength(data.PMTextMaxLength); }
             if (data.HomePageActiveDiscussionsTopicCount) { viewModel.homePageActiveDiscussionsTopicCount(data.HomePageActiveDiscussionsTopicCount); }
             if (data.ActiveDiscussionsFeedCount) { viewModel.activeDiscussionsFeedCount(data.ActiveDiscussionsFeedCount); }
-            if (data.ActiveDiscussionsFeedEnabled && typeof data.ActiveDiscussionsFeedEnabled === 'boolean') { viewModel.activeDiscussionsFeedEnabled(data.ActiveDiscussionsFeedEnabled); }
-            if (data.ForumFeedsEnabled && typeof data.ForumFeedsEnabled === 'boolean') { viewModel.forumFeedsEnabled(data.ForumFeedsEnabled); }
+            if (data.ActiveDiscussionsFeedEnabled != null && data.ActiveDiscussionsFeedEnabled !== undefined && typeof data.ActiveDiscussionsFeedEnabled === 'boolean') { viewModel.activeDiscussionsFeedEnabled(data.ActiveDiscussionsFeedEnabled); }
+            if (data.ForumFeedsEnabled != null && data.ForumFeedsEnabled !== undefined && typeof data.ForumFeedsEnabled === 'boolean') { viewModel.forumFeedsEnabled(data.ForumFeedsEnabled); }
             if (data.ForumFeedCount) { viewModel.forumFeedCount(data.ForumFeedCount); }
             if (data.ForumSearchTermMinimumLength) { viewModel.forumSearchTermMinimumLength(data.ForumSearchTermMinimumLength); }
             if (data.PageTitle) { viewModel.pageTitle(data.PageTitle); }
-            if (data.ShowOnMenus && typeof data.ShowOnMenus === 'boolean') { viewModel.showOnMenus(data.ShowOnMenus); }
+            if (data.ShowOnMenus != null && data.ShowOnMenus !== undefined && typeof data.ShowOnMenus === 'boolean') { viewModel.showOnMenus(data.ShowOnMenus); }
             if (data.MenuPosition) { viewModel.menuPosition(data.MenuPosition); }
             if (data.LayoutPathOverride) { viewModel.layoutPathOverride(data.LayoutPathOverride); }
         }

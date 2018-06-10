@@ -104,6 +104,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Installation\INSTALL_x64.bat" />
     <None Include="Installation\INSTALL_x86.bat" />
     <None Include="Installation\UNINSTALL_x64.bat" />

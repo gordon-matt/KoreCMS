@@ -14,6 +14,7 @@
     <dependencies>
       <group targetFramework=".NETFramework4.7.1">
         <dependency id="KoreFramework" version="1.0.4" />
+        <dependency id="KoreFramework.EntityFramework" version="1.0.4" />
         <dependency id="Autofac" version="4.8.1" />
         <dependency id="Castle.Core" version="4.3.0" />
         <dependency id="Newtonsoft.Json" version="11.0.2" />

@@ -7,6 +7,7 @@
     'bootstrap': '../../../../Scripts/bootstrap',
     'chosen': '../../../../Scripts/chosen.jquery',
     'datajs': '../../../../Scripts/datajs-1.1.3',
+    'jquery-migrate': '../../../../Scripts/jquery-migrate-3.0.0',
     'jqueryval': '../../../../Scripts/jquery.validate',
     'jqueryval-unobtrusive': '../../../../Scripts/jquery.validate.unobtrusive',
     'kendo': '../../../../Scripts/kendo/2014.1.318/kendo.web.min',
@@ -22,6 +23,7 @@
 var shim = {
     'bootstrap': ['jquery'],
     'datajs': ['jquery'],
+    'jquery-migrate': ['jquery'],
     'jqueryval': ['jquery'],
     'jqueryval-unobtrusive': ['jquery', 'jqueryval'],
     'kendo-knockout': ['kendo', 'knockout'],

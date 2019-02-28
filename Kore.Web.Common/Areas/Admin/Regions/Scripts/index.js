@@ -5,6 +5,7 @@
     var ko = require('knockout');
     var koMap = require('knockout-mapping');
 
+    require('jquery-migrate');
     require('jqueryval');
     require('kendo');
     require('notify');

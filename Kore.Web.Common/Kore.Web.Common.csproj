@@ -215,9 +215,6 @@
     <EmbeddedResource Include="Areas\Admin\Regions\Scripts\index.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Admin\Regions\Scripts\jquery.imagemapster.min.js" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Areas\Admin\Regions\Scripts\jquery.imagemapster-mod.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

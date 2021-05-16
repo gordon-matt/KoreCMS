@@ -131,6 +131,9 @@ namespace Kore.Web.Identity
                 throw new ArgumentNullException("modelBuilder");
             }
 
+            // Use datetime2 for all DateTime columns by default (prevents some bugs when comparing with milliseconds)
+            modelBuilder.Properties<DateTime>().Configure(x => x.HasColumnType("datetime2"));
+
             var usersTable = modelBuilder.Entity<TUser>().ToTable("AspNetUsers");
             usersTable.HasMany(x => x.Roles).WithRequired().HasForeignKey(x => x.UserId);
             usersTable.HasMany(x => x.Claims).WithRequired().HasForeignKey(x => x.UserId);

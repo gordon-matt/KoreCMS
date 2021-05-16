@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>KoreFramework.Data.PostgreSql</id>
-    <version>1.0.4</version>
+    <version>1.1.0</version>
     <title>KoreFramework.Data.PostgreSql</title>
     <authors>Matt Gordon</authors>
     <owners>Matt Gordon</owners>
@@ -12,15 +12,23 @@
     <language>en-US</language>
     <tags>Kore Framework PostgreSql Npgsql</tags>
     <dependencies>
-      <group targetFramework=".NETFramework4.7.1">
-        <dependency id="KoreFramework" version="1.0.4" />
-        <dependency id="KoreFramework.EntityFramework" version="1.0.4" />
-        <dependency id="Autofac" version="4.8.1" />
-        <dependency id="Castle.Core" version="4.3.0" />
-        <dependency id="Newtonsoft.Json" version="11.0.2" />
-        <dependency id="NLog" version="4.5.6" />
-        <dependency id="npgsql" version="3.1.5" />
-        <dependency id="Owin" version="1.0.0" />
+      <group targetFramework=".NETFramework4.8">
+        <dependency id="KoreFramework" version="1.1.0" />
+        <dependency id="KoreFramework.EntityFramework" version="1.1.0" />
+		<dependency id="EntityFramework" version="6.4.4" />
+		<dependency id="EntityFramework.SqlServer" version="6.4.4" />
+		<dependency id="EntityFramework6.Npgsql" version="6.4.1" />
+		<dependency id="Microsoft.Bcl.AsyncInterfaces" version="5.0.0" />
+		<dependency id="Npgsql" version="5.0.5" />
+		<dependency id="System.Buffers" version="4.5.1" />
+		<dependency id="System.Memory" version="4.5.4" />
+		<dependency id="System.Numerics.Vectors" version="4.5.0" />
+		<dependency id="System.Runtime.CompilerServices.Unsafe" version="5.0.0" />
+		<dependency id="System.Text.Encodings.Web" version="5.0.1" />
+		<dependency id="System.Text.Json" version="5.0.2" />
+		<dependency id="System.Threading.Channels" version="5.0.0" />
+		<dependency id="System.Threading.Tasks.Extensions" version="4.5.4" />
+		<dependency id="System.ValueTuple" version="4.5.0" />
       </group>
     </dependencies>
   </metadata>

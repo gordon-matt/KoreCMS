@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>KoreFramework.Web.CommonResources</id>
-    <version>1.0.2</version>
+    <version>1.1.0</version>
     <title>KoreFramework.Web.CommonResources</title>
     <authors>Matt Gordon</authors>
     <owners>Matt Gordon</owners>
@@ -12,17 +12,20 @@
     <language>en-US</language>
     <tags>Kore Framework CMS</tags>
     <dependencies>
-      <group targetFramework=".NETFramework4.7.1">
-        <dependency id="KoreFramework" version="1.0.2" />
-        <dependency id="KoreFramework.Web" version="1.0.2" />
-        <dependency id="Antlr" version="3.5.0.2" />
-        <dependency id="Autofac" version="4.8.1" />
-        <dependency id="Microsoft.AspNet.Razor" version="3.2.6" />
-        <dependency id="Microsoft.AspNet.Web.Optimization" version="1.1.3" />
-        <dependency id="Microsoft.AspNet.WebPages" version="3.2.6" />
-        <dependency id="Microsoft.Web.Infrastructure" version="1.0.0" />
-        <dependency id="Newtonsoft.Json" version="11.0.2" />
-        <dependency id="WebGrease" version="1.6.0" />
+      <group targetFramework=".NETFramework4.8">
+        <dependency id="KoreFramework" version="1.1.0" />
+        <dependency id="KoreFramework.Web" version="1.1.0" />
+		<dependency id="Antlr3.Runtime" version="3.5.0.2" />
+		<dependency id="Autofac" version="4.9.4" />
+		<dependency id="Microsoft.Web.Infrastructure" version="1.0.0.0" />
+		<dependency id="Newtonsoft.Json" version="13.0.1" />
+		<dependency id="System.Web.Helpers" version="3.2.7" />
+		<dependency id="System.Web.Optimization" version="1.1.3" />
+		<dependency id="System.Web.Razor" version="3.2.7" />
+		<dependency id="System.Web.WebPages" version="3.2.7" />
+		<dependency id="System.Web.WebPages.Deployment" version="3.2.7" />
+		<dependency id="System.Web.WebPages.Razor" version="3.2.7" />
+		<dependency id="WebGrease" version="1.6.0" />
       </group>
     </dependencies>
   </metadata>

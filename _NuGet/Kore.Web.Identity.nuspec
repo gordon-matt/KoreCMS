@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>KoreFramework.Web.Identity</id>
-    <version>1.0.2</version>
+    <version>1.1.0</version>
     <title>KoreFramework.Web.Identity</title>
     <authors>Matt Gordon</authors>
     <owners>Matt Gordon</owners>
@@ -12,32 +12,35 @@
     <language>en-US</language>
     <tags>Kore Framework CMS Identity Membership</tags>
     <dependencies>
-      <group targetFramework=".NETFramework4.7.1">
-        <dependency id="KoreFramework" version="1.0.2" />
-        <dependency id="KoreFramework.EntityFramework" version="1.0.2" />
-        <dependency id="KoreFramework.Web" version="1.0.2" />
-        <dependency id="KoreFramework.Web.ContentManagement" version="1.0.2" />
-        <dependency id="Autofac" version="4.8.1" />
-        <dependency id="EntityFramework" version="6.2.0" />
-        <dependency id="Microsoft.AspNet.Identity.Core" version="2.2.1" />
-        <dependency id="Microsoft.AspNet.Identity.EntityFramework" version="2.2.1" />
-        <dependency id="Microsoft.AspNet.Identity.Owin" version="2.2.1" />
-        <dependency id="Microsoft.AspNet.Mvc" version="5.2.6" />
-        <dependency id="Microsoft.AspNet.Razor" version="3.2.6" />
-        <dependency id="Microsoft.AspNet.WebApi" version="5.2.6" />
-        <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.6" />
-        <dependency id="Microsoft.AspNet.WebApi.Core" version="5.2.6" />
-        <dependency id="Microsoft.AspNet.WebApi.Owin" version="5.2.6" />
-        <dependency id="Microsoft.AspNet.WebApi.WebHost" version="5.2.6" />
-        <dependency id="Microsoft.AspNet.WebPages" version="3.2.6" />
-        <dependency id="Microsoft.Owin" version="4.0.0" />
-        <dependency id="Microsoft.Owin.Host.SystemWeb" version="4.0.0" />
-        <dependency id="Microsoft.Owin.Security" version="4.0.0" />
-        <dependency id="Microsoft.Owin.Security.Cookies" version="4.0.0" />
-        <dependency id="Microsoft.Owin.Security.OAuth" version="4.0.0" />
-        <dependency id="Microsoft.Web.Infrastructure" version="1.0.0" />
-        <dependency id="Newtonsoft.Json" version="11.0.2" />
-        <dependency id="Owin" version="1.0.0" />
+      <group targetFramework=".NETFramework4.8">
+        <dependency id="KoreFramework" version="1.1.0" />
+        <dependency id="KoreFramework.EntityFramework" version="1.1.0" />
+        <dependency id="KoreFramework.Web" version="1.1.0" />
+        <dependency id="KoreFramework.Web.ContentManagement" version="1.1.0" />
+		<dependency id="Autofac" version="4.9.4" />
+		<dependency id="EntityFramework" version="6.4.4" />
+		<dependency id="EntityFramework.SqlServer" version="6.4.4" />
+		<dependency id="Microsoft.AspNet.Identity.Core" version="2.2.3" />
+		<dependency id="Microsoft.AspNet.Identity.EntityFramework" version="2.2.3" />
+		<dependency id="Microsoft.AspNet.Identity.Owin" version="2.2.3" />
+		<dependency id="Microsoft.Owin" version="4.2.0" />
+		<dependency id="Microsoft.Owin.Host.SystemWeb" version="4.2.0" />
+		<dependency id="Microsoft.Owin.Security" version="4.2.0" />
+		<dependency id="Microsoft.Owin.Security.Cookies" version="4.2.0" />
+		<dependency id="Microsoft.Owin.Security.OAuth" version="4.2.0" />
+		<dependency id="Microsoft.Web.Infrastructure" version="1.0.0.0" />
+		<dependency id="Newtonsoft.Json" version="13.0.1" />
+		<dependency id="Owin" version="1.0.0" />
+		<dependency id="System.Net.Http.Formatting" version="5.2.7" />
+		<dependency id="System.Web.Helpers" version="3.2.7" />
+		<dependency id="System.Web.Http" version="5.2.7" />
+		<dependency id="System.Web.Http.Owin" version="5.2.7" />
+		<dependency id="System.Web.Http.WebHost" version="5.2.7" />
+		<dependency id="System.Web.Mvc" version="5.2.7" />
+		<dependency id="System.Web.Razor" version="3.2.7" />
+		<dependency id="System.Web.WebPages" version="3.2.7" />
+		<dependency id="System.Web.WebPages.Deployment" version="3.2.7" />
+		<dependency id="System.Web.WebPages.Razor" version="3.2.7" />
       </group>
     </dependencies>
   </metadata>

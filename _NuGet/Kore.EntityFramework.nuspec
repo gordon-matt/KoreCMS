@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>KoreFramework.EntityFramework</id>
-    <version>1.0.4</version>
+    <version>1.1.0</version>
     <title>KoreFramework.EntityFramework</title>
     <authors>Matt Gordon</authors>
     <owners>Matt Gordon</owners>
@@ -12,12 +12,15 @@
     <language>en-US</language>
     <tags>Kore Framework CMS Entity</tags>
     <dependencies>
-      <group targetFramework=".NETFramework4.7.1">
-        <dependency id="KoreFramework" version="1.0.4" />
-        <dependency id="Autofac" version="4.8.1" />
-        <dependency id="Castle.Core" version="4.3.0" />
-        <dependency id="EntityFramework" version="6.2.0" />
-        <dependency id="Z.EntityFramework.Plus.EF6" version="1.8.0" />
+      <group targetFramework=".NETFramework4.8">
+        <dependency id="KoreFramework" version="1.1.0" />
+        <dependency id="Autofac" version="4.9.4" />
+        <dependency id="Castle.Core" version="4.4.1" />
+        <dependency id="EntityFramework" version="6.4.4" />
+        <dependency id="EntityFramework.SqlServer" version="6.4.4" />
+        <dependency id="Z.EntityFramework.Extensions" version="5.1.36" />
+        <dependency id="Z.EntityFramework.Plus.EF6" version="5.1.36" />
+        <dependency id="Z.Expressions.Eval" version="4.0.43" />
       </group>
     </dependencies>
   </metadata>

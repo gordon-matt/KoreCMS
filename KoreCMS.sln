@@ -97,6 +97,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kore.Plugins.Widgets.JQuery
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_NuGet", "_NuGet", "{735883E6-84C5-4FFF-B991-5F6DBEEED52E}"
 	ProjectSection(SolutionItems) = preProject
+		_NuGet\Kore.Data.MySql.nuspec = _NuGet\Kore.Data.MySql.nuspec
+		_NuGet\Kore.Data.PostgreSql.nuspec = _NuGet\Kore.Data.PostgreSql.nuspec
 		_NuGet\Kore.EntityFramework.nuspec = _NuGet\Kore.EntityFramework.nuspec
 		_NuGet\Kore.nuspec = _NuGet\Kore.nuspec
 		_NuGet\Kore.Web.Common.nuspec = _NuGet\Kore.Web.Common.nuspec

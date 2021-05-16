@@ -225,45 +225,6 @@ namespace Kore.Collections
             return (from object item in enumerable select item.ConvertTo<T>()).ToList();
         }
 
-        /// <summary>
-        /// <para>Creates a Kore.Collections.Generic.PairCollection&lt;TFirst,TSecond&gt; from a System.Collections.Generic.IEnumerable&lt;T&gt;</para>
-        /// <para>according to specified first and second selector functions.</para>
-        /// </summary>
-        /// <typeparam name="TSource">The type of the elements of source.</typeparam>
-        /// <typeparam name="TFirst">The type of the First returned by firstSelector.</typeparam>
-        /// <typeparam name="TSecond">The type of the Second returned by secondSelector.</typeparam>
-        /// <param name="source">An System.Collections.Generic.IEnumerable&lt;T&gt; to create a Kore.Collections.Generic.PairCollection&lt;TFirst,TSecond&gt; from</param>
-        /// <param name="firstSelector">A transform function to produce a result element First from each element.</param>
-        /// <param name="secondSelector">A transform function to produce a result element Second from each element.</param>
-        /// <returns>
-        /// <para>A Kore.Collections.Generic.PairCollection&lt;TFirst,TSecond&gt; that contains values</para>
-        /// <para> of type TFirst and TSecond selected from the input sequence.</para>
-        /// </returns>
-        public static PairList<TFirst, TSecond> ToPairList<TSource, TFirst, TSecond>(
-            this IEnumerable<TSource> source,
-            Func<TSource, TFirst> firstSelector,
-            Func<TSource, TSecond> secondSelector)
-        {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
-            if (firstSelector == null)
-            {
-                throw new ArgumentNullException("firstSelector");
-            }
-            if (secondSelector == null)
-            {
-                throw new ArgumentNullException("secondSelector");
-            }
-            var dictionary = new PairList<TFirst, TSecond>();
-            foreach (TSource item in source)
-            {
-                dictionary.Add(firstSelector(item), secondSelector(item));
-            }
-            return dictionary;
-        }
-
         // http://stackoverflow.com/questions/17971921/how-to-convert-row-to-column-in-linq-and-sql
         public static DataTable ToPivotTable<T, TColumn, TRow, TData>(
             this IEnumerable<T> source,
@@ -340,52 +301,6 @@ namespace Kore.Collections
                 stack.Push(item);
             }
             return stack;
-        }
-
-        /// <summary>
-        /// <para>Creates a Kore.Collections.Generic.TripleCollection&lt;TFirst,TSecond,TThird&gt; from a System.Collections.Generic.IEnumerable&lt;T&gt;</para>
-        /// <para>according to specified first and second selector functions.</para>
-        /// </summary>
-        /// <typeparam name="TSource">The type of the elements of source.</typeparam>
-        /// <typeparam name="TFirst">The type of the First returned by firstSelector.</typeparam>
-        /// <typeparam name="TSecond">The type of the Second returned by secondSelector.</typeparam>
-        /// <typeparam name="TThird">The type of the Third returned by thirdSelector.</typeparam>
-        /// <param name="source"></param>
-        /// <param name="firstSelector">A transform function to produce a result element First from each element.</param>
-        /// <param name="secondSelector">A transform function to produce a result element Second from each element.</param>
-        /// <param name="thirdSelector">A transform function to produce a result element Third from each element.</param>
-        /// <returns>
-        /// <para>A Kore.Collections.Generic.TripleCollection&lt;TFirst,TSecond,TThird&gt; that contains values</para>
-        /// <para> of type TFirst, TSecond and TThird selected from the input sequence.</para>
-        /// </returns>
-        public static TripleList<TFirst, TSecond, TThird> ToTripleList<TSource, TFirst, TSecond, TThird>(
-            this IEnumerable<TSource> source,
-            Func<TSource, TFirst> firstSelector,
-            Func<TSource, TSecond> secondSelector,
-            Func<TSource, TThird> thirdSelector)
-        {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
-            if (firstSelector == null)
-            {
-                throw new ArgumentNullException("firstSelector");
-            }
-            if (secondSelector == null)
-            {
-                throw new ArgumentNullException("secondSelector");
-            }
-            if (thirdSelector == null)
-            {
-                throw new ArgumentNullException("thirdSelector");
-            }
-            var dictionary = new TripleList<TFirst, TSecond, TThird>();
-            foreach (TSource item in source)
-            {
-                dictionary.Add(firstSelector(item), secondSelector(item), thirdSelector(item));
-            }
-            return dictionary;
         }
 
         //public static IEnumerable<T> GetAncestors<T>(this T source, Func<T, T> parentOf)

@@ -25,7 +25,6 @@ namespace Kore.Data.MySql
                 hashSet.Add(MySqlDbType.Blob, typeof(object));
                 hashSet.Add(MySqlDbType.Byte, typeof(sbyte));
                 hashSet.Add(MySqlDbType.Date, typeof(DateTime));
-                hashSet.Add(MySqlDbType.Datetime, typeof(DateTime));
                 hashSet.Add(MySqlDbType.DateTime, typeof(DateTime));
                 hashSet.Add(MySqlDbType.Decimal, typeof(decimal));
                 hashSet.Add(MySqlDbType.Double, typeof(double));
@@ -70,7 +69,6 @@ namespace Kore.Data.MySql
                 hashSet.Add(MySqlDbType.Blob, DbType.Object);
                 hashSet.Add(MySqlDbType.Byte, DbType.SByte);
                 hashSet.Add(MySqlDbType.Date, DbType.DateTime);
-                hashSet.Add(MySqlDbType.Datetime, DbType.DateTime);
                 hashSet.Add(MySqlDbType.DateTime, DbType.DateTime);
                 hashSet.Add(MySqlDbType.Decimal, DbType.Decimal);
                 hashSet.Add(MySqlDbType.Double, DbType.Double);
@@ -115,7 +113,6 @@ namespace Kore.Data.MySql
                 hashSet.Add(MySqlDbType.Blob, OleDbType.Binary);
                 hashSet.Add(MySqlDbType.Byte, OleDbType.TinyInt);
                 hashSet.Add(MySqlDbType.Date, OleDbType.Date);
-                hashSet.Add(MySqlDbType.Datetime, OleDbType.DBTimeStamp);
                 hashSet.Add(MySqlDbType.DateTime, OleDbType.DBTimeStamp);
                 hashSet.Add(MySqlDbType.Decimal, OleDbType.Decimal);
                 hashSet.Add(MySqlDbType.Double, OleDbType.Double);
@@ -160,7 +157,6 @@ namespace Kore.Data.MySql
                 hashSet.Add(MySqlDbType.Blob, SqlDbType.Binary);
                 hashSet.Add(MySqlDbType.Byte, SqlDbType.TinyInt);
                 hashSet.Add(MySqlDbType.Date, SqlDbType.Date);
-                hashSet.Add(MySqlDbType.Datetime, SqlDbType.DateTime);
                 hashSet.Add(MySqlDbType.DateTime, SqlDbType.DateTime);
                 hashSet.Add(MySqlDbType.Decimal, SqlDbType.Decimal);
                 hashSet.Add(MySqlDbType.Double, SqlDbType.Float);

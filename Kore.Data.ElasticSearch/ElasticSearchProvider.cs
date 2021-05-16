@@ -51,49 +51,49 @@ namespace Kore.Data.ElasticSearch
             return await client.ScrollAsync<T>(scrollTime, scrollId);
         }
 
-        public IDeleteResponse Delete(T entity)
+        public DeleteResponse Delete(T entity)
         {
             var documentPath = new DocumentPath<T>(entity);
             return client.Delete(documentPath, x => x.Index(IndexName));
         }
 
-        public IBulkResponse Delete(IEnumerable<T> entities)
+        public BulkResponse Delete(IEnumerable<T> entities)
         {
             return client.DeleteMany(entities);
         }
 
-        public async Task<IDeleteResponse> DeleteAsync(T entity)
+        public async Task<DeleteResponse> DeleteAsync(T entity)
         {
             var documentPath = new DocumentPath<T>(entity);
             return await client.DeleteAsync(documentPath, x => x.Index(IndexName));
         }
 
-        public async Task<IBulkResponse> DeleteAsync(IEnumerable<T> entities)
+        public async Task<BulkResponse> DeleteAsync(IEnumerable<T> entities)
         {
             return await client.DeleteManyAsync(entities);
         }
 
-        public IDeleteByQueryResponse DeleteAll()
+        public DeleteByQueryResponse DeleteAll()
         {
             return client.DeleteByQuery<T>(x => x.AllIndices());
         }
 
-        public IIndexResponse InsertOrUpdate(T entity)
+        public IndexResponse InsertOrUpdate(T entity)
         {
             return client.Index(entity, x => x.Index(IndexName));
         }
 
-        public IBulkResponse InsertOrUpdate(IEnumerable<T> entities)
+        public BulkResponse InsertOrUpdate(IEnumerable<T> entities)
         {
             return client.IndexMany(entities, IndexName);
         }
 
-        public async Task<IIndexResponse> InsertOrUpdateAsync(T entity)
+        public async Task<IndexResponse> InsertOrUpdateAsync(T entity)
         {
             return await client.IndexAsync(entity, x => x.Index(IndexName));
         }
 
-        public async Task<IBulkResponse> InsertOrUpdateAsync(IEnumerable<T> entities)
+        public async Task<BulkResponse> InsertOrUpdateAsync(IEnumerable<T> entities)
         {
             return await client.IndexManyAsync(entities, IndexName);
         }

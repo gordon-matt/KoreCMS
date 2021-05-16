@@ -18,22 +18,22 @@ namespace Kore.Data.ElasticSearch
 
         Task<ISearchResponse<T>> ScrollAsync(Time scrollTime, string scrollId);
 
-        IDeleteResponse Delete(T entity);
+        DeleteResponse Delete(T entity);
 
-        IBulkResponse Delete(IEnumerable<T> entities);
+        BulkResponse Delete(IEnumerable<T> entities);
 
-        Task<IDeleteResponse> DeleteAsync(T entity);
+        Task<DeleteResponse> DeleteAsync(T entity);
 
-        Task<IBulkResponse> DeleteAsync(IEnumerable<T> entities);
+        Task<BulkResponse> DeleteAsync(IEnumerable<T> entities);
 
-        IDeleteByQueryResponse DeleteAll();
+        DeleteByQueryResponse DeleteAll();
 
-        IIndexResponse InsertOrUpdate(T entity);
+        IndexResponse InsertOrUpdate(T entity);
 
-        IBulkResponse InsertOrUpdate(IEnumerable<T> entities);
+        BulkResponse InsertOrUpdate(IEnumerable<T> entities);
 
-        Task<IIndexResponse> InsertOrUpdateAsync(T entity);
+        Task<IndexResponse> InsertOrUpdateAsync(T entity);
 
-        Task<IBulkResponse> InsertOrUpdateAsync(IEnumerable<T> entities);
+        Task<BulkResponse> InsertOrUpdateAsync(IEnumerable<T> entities);
     }
 }

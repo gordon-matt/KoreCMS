@@ -283,7 +283,6 @@ build/
 
 ### Project Specific ###
 KoreCMS/Plugins/*
-KoreCMS/Themes/*
 KoreCMS/Media/Thumbs/*
 KoreCMS/Media/Uploads/*
 KoreCMS/App_Data/InstalledPlugins.txt

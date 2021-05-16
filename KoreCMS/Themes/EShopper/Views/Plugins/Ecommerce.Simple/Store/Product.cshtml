@@ -1,0 +1,471 @@
+﻿@using Kore.Web.ContentManagement
+@using StoreLocalizableStrings = Kore.Plugins.Ecommerce.Simple.LocalizableStrings
+@using StoreConstants = Kore.Plugins.Ecommerce.Simple.Constants
+
+@model Product
+
+@{
+    Layout = KoreWebConstants.DefaultFrontendLayoutPath;
+
+    var settings = EngineContext.Current.Resolve<StoreSettings>();
+    ViewBag.Title = settings.PageTitle;
+}
+
+@*@Html.Partial("CheckoutButton")*@
+
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="left-sidebar">
+                    <h2>Category</h2>
+                    @Html.Action("Filter", "Store", new { area = string.Empty })
+                    @*<div class="brands_products">
+                        <h2>Brands</h2>
+                        <div class="brands-name">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href=""> <span class="pull-right">(50)</span>Acne</a></li>
+                                <li><a href=""> <span class="pull-right">(56)</span>Grüne Erde</a></li>
+                                <li><a href=""> <span class="pull-right">(27)</span>Albiro</a></li>
+                                <li><a href=""> <span class="pull-right">(32)</span>Ronhill</a></li>
+                                <li><a href=""> <span class="pull-right">(5)</span>Oddmolly</a></li>
+                                <li><a href=""> <span class="pull-right">(9)</span>Boudestijn</a></li>
+                                <li><a href=""> <span class="pull-right">(4)</span>Rösch creative culture</a></li>
+                            </ul>
+                        </div>
+                    </div>*@
+                    <div class="price-range">
+                        <h2>Price Range</h2>
+                        <div class="well">
+                            <div class="slider slider-horizontal" style="width: 175px;"><div class="slider-track"><div class="slider-selection" style="left: 41.6667%; width: 33.3333%;"></div><div class="slider-handle round left-round" style="left: 41.6667%;"></div><div class="slider-handle round" style="left: 75%;"></div></div><div class="tooltip top" style="top: -30px; left: 69.5833px;"><div class="tooltip-arrow"></div><div class="tooltip-inner">250 : 450</div></div><input type="text" id="sl2" data-slider-value="[250,450]" data-slider-step="5" data-slider-max="600" data-slider-min="0" value="" class="span2" style=""></div><br>
+                            <b>$ 0</b> <b class="pull-right">$ 600</b>
+                        </div>
+                    </div>
+
+                    <div class="shipping text-center">
+                        <img alt="" src="/Themes/EShopper/Content/images/home/shipping.jpg">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-9 padding-right">
+                <div class="product-details">
+                    <!--product-details-->
+                    <div class="col-sm-5">
+                        <div class="view-product">
+                            <img src="@Model.MainImageUrl" alt="@Model.Name" />
+                            @*<h3>ZOOM</h3>*@
+                        </div>
+                        <div class="clearfix"></div>
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                @Html.Raw(Model.FullDescription)
+                            </div>
+                        </div>
+                        @*<div data-ride="carousel" class="carousel slide" id="similar-product">
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <a href=""><img alt="" src="/Themes/EShopper/Content/images/product-details/similar1.jpg"></a>
+                                    <a href=""><img alt="" src="/Themes/EShopper/Content/images/product-details/similar2.jpg"></a>
+                                    <a href=""><img alt="" src="/Themes/EShopper/Content/images/product-details/similar3.jpg"></a>
+                                </div>
+                                <div class="item">
+                                    <a href=""><img alt="" src="/Themes/EShopper/Content/images/product-details/similar1.jpg"></a>
+                                    <a href=""><img alt="" src="/Themes/EShopper/Content/images/product-details/similar2.jpg"></a>
+                                    <a href=""><img alt="" src="/Themes/EShopper/Content/images/product-details/similar3.jpg"></a>
+                                </div>
+                                <div class="item">
+                                    <a href=""><img alt="" src="/Themes/EShopper/Content/images/product-details/similar1.jpg"></a>
+                                    <a href=""><img alt="" src="/Themes/EShopper/Content/images/product-details/similar2.jpg"></a>
+                                    <a href=""><img alt="" src="/Themes/EShopper/Content/images/product-details/similar3.jpg"></a>
+                                </div>
+
+                            </div>
+                            <!-- Controls -->
+                            <a data-slide="prev" href="#similar-product" class="left item-control">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a data-slide="next" href="#similar-product" class="right item-control">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </div>*@
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="product-information">
+                            <!--/product-information-->
+                            @*<img alt="" class="newarrival" src="/Themes/EShopper/Content/images/product-details/new.jpg">*@
+                            <h2>@Model.Name</h2>
+                            @*<p>Web ID: 1089772</p>*@
+                            @*<img alt="" src="/Themes/EShopper/Content/images/product-details/rating.png">*@
+                            <span>
+                                <span>@settings.Currency @Model.Price.ToString("N2")</span>
+                                @*<label>Quantity:</label>
+                                <input type="text" value="3" />*@
+                                <button class="btn btn-default cart" type="button" onclick="addToCart(@Model.Id)">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    @T(StoreLocalizableStrings.AddToCart)
+                                </button>
+                            </span>
+                            <p><b>@T(StoreLocalizableStrings.Tax):</b> @settings.Currency @Model.Tax.ToString("N2")</p>
+                            <p><b>@T(StoreLocalizableStrings.Shipping):</b> @settings.Currency @Model.ShippingCost.ToString("N2")</p>
+                            @*<p><b>Brand:</b> E-SHOPPER</p>*@
+                            @*<a href=""><img alt="" class="share img-responsive" src="/Themes/EShopper/Content/images/product-details/share.png"></a>*@
+                        </div><!--/product-information-->
+                    </div>
+                </div><!--/product-details-->
+
+
+                @*<div class="category-tab shop-details-tab">
+                    <!--category-tab-->
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs">
+                            <li class=""><a data-toggle="tab" href="#details">Details</a></li>
+                            <li class="active"><a data-toggle="tab" href="#companyprofile">Company Profile</a></li>
+                            <li class=""><a data-toggle="tab" href="#tag">Tag</a></li>
+                            <li class=""><a data-toggle="tab" href="#reviews">Reviews (5)</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div id="details" class="tab-pane fade">
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img alt="" src="/Themes/EShopper/Content/images/home/gallery1.jpg">
+                                            <h2>$56</h2>
+                                            <p>Easy Polo Black Edition</p>
+                                            <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img alt="" src="/Themes/EShopper/Content/images/home/gallery2.jpg">
+                                            <h2>$56</h2>
+                                            <p>Easy Polo Black Edition</p>
+                                            <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img alt="" src="/Themes/EShopper/Content/images/home/gallery3.jpg">
+                                            <h2>$56</h2>
+                                            <p>Easy Polo Black Edition</p>
+                                            <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img alt="" src="/Themes/EShopper/Content/images/home/gallery4.jpg">
+                                            <h2>$56</h2>
+                                            <p>Easy Polo Black Edition</p>
+                                            <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="companyprofile" class="tab-pane fade active in">
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img alt="" src="/Themes/EShopper/Content/images/home/gallery1.jpg">
+                                            <h2>$56</h2>
+                                            <p>Easy Polo Black Edition</p>
+                                            <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img alt="" src="/Themes/EShopper/Content/images/home/gallery3.jpg">
+                                            <h2>$56</h2>
+                                            <p>Easy Polo Black Edition</p>
+                                            <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img alt="" src="/Themes/EShopper/Content/images/home/gallery2.jpg">
+                                            <h2>$56</h2>
+                                            <p>Easy Polo Black Edition</p>
+                                            <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img alt="" src="/Themes/EShopper/Content/images/home/gallery4.jpg">
+                                            <h2>$56</h2>
+                                            <p>Easy Polo Black Edition</p>
+                                            <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="tag" class="tab-pane fade">
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img alt="" src="/Themes/EShopper/Content/images/home/gallery1.jpg">
+                                            <h2>$56</h2>
+                                            <p>Easy Polo Black Edition</p>
+                                            <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img alt="" src="/Themes/EShopper/Content/images/home/gallery2.jpg">
+                                            <h2>$56</h2>
+                                            <p>Easy Polo Black Edition</p>
+                                            <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img alt="" src="/Themes/EShopper/Content/images/home/gallery3.jpg">
+                                            <h2>$56</h2>
+                                            <p>Easy Polo Black Edition</p>
+                                            <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img alt="" src="/Themes/EShopper/Content/images/home/gallery4.jpg">
+                                            <h2>$56</h2>
+                                            <p>Easy Polo Black Edition</p>
+                                            <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="reviews" class="tab-pane fade">
+                            <div class="col-sm-12">
+                                <ul>
+                                    <li><a href=""><i class="fa fa-user"></i>EUGEN</a></li>
+                                    <li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
+                                    <li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
+                                </ul>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                                <p><b>Write Your Review</b></p>
+
+                                <form action="#">
+                                    <span>
+                                        <input type="text" placeholder="Your Name">
+                                        <input type="email" placeholder="Email Address">
+                                    </span>
+                                    <textarea name=""></textarea>
+                                    <b>Rating: </b> <img alt="" src="/Themes/EShopper/Content/images/product-details/rating.png">
+                                    <button class="btn btn-default pull-right" type="button">
+                                        Submit
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div><!--/category-tab-->
+
+                <div class="recommended_items">
+                    <!--recommended_items-->
+                    <h2 class="title text-center">recommended items</h2>
+
+                    <div data-ride="carousel" class="carousel slide" id="recommended-item-carousel">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img alt="" src="/Themes/EShopper/Content/images/home/recommend1.jpg">
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img alt="" src="/Themes/EShopper/Content/images/home/recommend2.jpg">
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img alt="" src="/Themes/EShopper/Content/images/home/recommend3.jpg">
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img alt="" src="/Themes/EShopper/Content/images/home/recommend1.jpg">
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img alt="" src="/Themes/EShopper/Content/images/home/recommend2.jpg">
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img alt="" src="/Themes/EShopper/Content/images/home/recommend3.jpg">
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <button class="btn btn-default add-to-cart" type="button"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a data-slide="prev" href="#recommended-item-carousel" class="left recommended-item-control">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a data-slide="next" href="#recommended-item-carousel" class="right recommended-item-control">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+                </div><!--/recommended_items-->*@
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<article class="product-details">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <img src="@Model.MainImageUrl" alt="@Model.Name" class="img-responsive" />
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
+            <h1>@Model.Name</h1>
+            <p><strong>@T(StoreLocalizableStrings.Price)</strong> @settings.Currency @Model.Price.ToString("N2")</p>
+            <p><strong>@T(StoreLocalizableStrings.Tax)</strong> @settings.Currency @Model.Tax.ToString("N2")</p>
+            <p><strong>@T(StoreLocalizableStrings.Shipping)</strong> @settings.Currency @Model.ShippingCost.ToString("N2")</p>
+            
+            <a href="javascript:void(0);" onclick="addToCart(@Model.Id)" class="btn btn-primary">
+                @T(StoreLocalizableStrings.AddToCart)
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            @Html.Raw(Model.FullDescription)
+        </div>
+    </div>
+</article>*@
+
+@using (Script.AtFoot())
+{
+    <script type="text/javascript">
+        function addToCart(productId) {
+            $.ajax({
+                url: "/store/cart/add-item-to-cart",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    productId: productId
+                }
+            })
+            .done(function (json) {
+                alert("Added to cart.");
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                alert(errorThrown);
+                console.log(textStatus + ': ' + errorThrown);
+            });
+        }
+    </script>
+}

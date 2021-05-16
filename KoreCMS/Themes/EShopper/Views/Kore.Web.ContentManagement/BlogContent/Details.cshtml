@@ -1,0 +1,204 @@
+﻿@using Kore.Infrastructure
+@using Kore.Web.ContentManagement.Areas.Admin.Blog
+@using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain
+@model Post
+
+@{
+    if (string.IsNullOrEmpty(SiteSettings.DefaultFrontendLayoutPath))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = SiteSettings.DefaultFrontendLayoutPath;
+    }
+
+    ViewBag.Title = Model.Headline;
+
+    SetMeta("keywords", Model.MetaKeywords);
+    SetMeta("description", Model.MetaDescription);
+
+    string previousSlug = ViewBag.PreviousEntrySlug;
+    string nextSlug = ViewBag.NextEntrySlug;
+    string userName = ViewBag.UserName;
+
+    string teaserImageUrl = string.IsNullOrEmpty(Model.TeaserImageUrl)
+        ? "http://placehold.it/280x136&text=Image+Missing"
+        : Model.TeaserImageUrl;
+}
+
+<style type="text/css">
+    .pager-area .pager li a {
+        width: auto !important;
+    }
+</style>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="pull-right">
+                    @Html.ActionLink("Back", "Index", "BlogContent", new { area = string.Empty }, new { @class = "btn btn-primary" })
+                </div>
+                <div class="blog-post-area">
+                    <h2 class="title text-center">Blog</h2>
+                    <div class="single-blog-post">
+                        <h3>@Model.Headline</h3>
+                        <div class="post-meta">
+                            <ul>
+                                <li><i class="fa fa-user"></i> @userName</li>
+                                <li><i class="fa fa-clock-o"></i> @Model.DateCreatedUtc.ToShortTimeString()</li>
+                                <li><i class="fa fa-calendar"></i> @Model.DateCreatedUtc.ToShortDateString()</li>
+                            </ul>
+                            <span>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half-o"></i>
+                            </span>
+                        </div>
+                        <a href="">
+                            <img alt="@Model.Headline" src="@teaserImageUrl" style="max-height:300px">
+                        </a>
+                        <p>@Html.Raw(Model.FullDescription)</p>
+                        <div class="pager-area">
+                            <ul class="pager pull-right">
+                                @if (!string.IsNullOrEmpty(previousSlug))
+                                {
+                                    <li>@Html.ActionLink(T(KoreWebLocalizableStrings.General.Previous), "Details", "BlogContent", new { area = string.Empty, slug = previousSlug }, null)</li>
+                                }
+                                @if (!string.IsNullOrEmpty(nextSlug))
+                                {
+                                    <li>@Html.ActionLink(T(KoreWebLocalizableStrings.General.Next), "Details", "BlogContent", new { area = string.Empty, slug = nextSlug }, null)</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="rating-area">
+                    <ul class="ratings">
+                        <li class="rate-this">Rate this item:</li>
+                        <li>
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </li>
+                        <li class="color">(6 votes)</li>
+                    </ul>
+                    <ul class="tag">
+                        <li>TAG:</li>
+                        <li><a href="" class="color">Pink <span>/</span></a></li>
+                        <li><a href="" class="color">T-Shirt <span>/</span></a></li>
+                        <li><a href="" class="color">Girls</a></li>
+                    </ul>
+                </div><!--/rating-area-->
+                <div class="socials-share">
+                    <a href=""><img alt="" src="images/blog/socials.png"></a>
+                </div><!--/socials-share-->
+                <div class="media commnets">
+                    <a href="#" class="pull-left">
+                        <img alt="" src="images/blog/man-one.jpg" class="media-object">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">Annie Davis</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <div class="blog-socials">
+                            <ul>
+                                <li><a href=""><i class="fa fa-facebook"></i></a></li>
+                                <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                                <li><a href=""><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href=""><i class="fa fa-google-plus"></i></a></li>
+                            </ul>
+                            <a href="" class="btn btn-primary">Other Posts</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="response-area">
+                    <h2>3 RESPONSES</h2>
+                    <ul class="media-list">
+                        <li class="media">
+
+                            <a href="#" class="pull-left">
+                                <img alt="" src="images/blog/man-two.jpg" class="media-object">
+                            </a>
+                            <div class="media-body">
+                                <ul class="sinlge-post-meta">
+                                    <li><i class="fa fa-user"></i>Janis Gallagher</li>
+                                    <li><i class="fa fa-clock-o"></i> 1:33 pm</li>
+                                    <li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
+                                </ul>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                <a href="" class="btn btn-primary"><i class="fa fa-reply"></i>Replay</a>
+                            </div>
+                        </li>
+                        <li class="media second-media">
+                            <a href="#" class="pull-left">
+                                <img alt="" src="images/blog/man-three.jpg" class="media-object">
+                            </a>
+                            <div class="media-body">
+                                <ul class="sinlge-post-meta">
+                                    <li><i class="fa fa-user"></i>Janis Gallagher</li>
+                                    <li><i class="fa fa-clock-o"></i> 1:33 pm</li>
+                                    <li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
+                                </ul>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                <a href="" class="btn btn-primary"><i class="fa fa-reply"></i>Replay</a>
+                            </div>
+                        </li>
+                        <li class="media">
+                            <a href="#" class="pull-left">
+                                <img alt="" src="images/blog/man-four.jpg" class="media-object">
+                            </a>
+                            <div class="media-body">
+                                <ul class="sinlge-post-meta">
+                                    <li><i class="fa fa-user"></i>Janis Gallagher</li>
+                                    <li><i class="fa fa-clock-o"></i> 1:33 pm</li>
+                                    <li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
+                                </ul>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                <a href="" class="btn btn-primary"><i class="fa fa-reply"></i>Replay</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="replay-box">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2>Leave a replay</h2>
+                            <form>
+                                <div class="blank-arrow">
+                                    <label>Your Name</label>
+                                </div>
+                                <span>*</span>
+                                <input type="text" placeholder="write your name...">
+                                <div class="blank-arrow">
+                                    <label>Email Address</label>
+                                </div>
+                                <span>*</span>
+                                <input type="email" placeholder="your email address...">
+                                <div class="blank-arrow">
+                                    <label>Web Site</label>
+                                </div>
+                                <input type="email" placeholder="current city...">
+                            </form>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="text-area">
+                                <div class="blank-arrow">
+                                    <label>Your Name</label>
+                                </div>
+                                <span>*</span>
+                                <textarea rows="11" name="message"></textarea>
+                                <a href="" class="btn btn-primary">post comment</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</section>

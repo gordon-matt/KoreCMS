@@ -1,0 +1,71 @@
+﻿@using Kore.Infrastructure
+@{
+    Style.IncludeBundle("kore-icons");
+
+    Style.Include("css/bootstrap.min.css", true);
+    Style.Include("css/font-awesome.min.css", true);
+    Style.Include("css/prettyPhoto.css", true);
+    Style.Include("css/price-range.css", true);
+    Style.Include("css/animate.css", true);
+    Style.Include("css/main.css", true);
+    Style.Include("css/responsive.css", true);
+    Style.Include("css/custom.css", true);
+
+    //Script.Include("jquery.js", true, 0);
+    Script.IncludeBundle("jquery", 0);
+    Script.IncludeBundle("jqueryval");
+    Script.IncludeBundle("kore/jqueryval");
+    //Script.Include("bootstrap.min.js", true);
+   // Script.Include("jquery.scrollUp.min.js", true);
+    //Script.Include("price-range.js", true);
+    //Script.Include("jquery.prettyPhoto.js", true);
+    //Script.Include("main.js", true);
+
+    string siteName = string.IsNullOrEmpty(SiteSettings.SiteName) ? "My Kore App" : SiteSettings.SiteName;
+
+    string dir = IsRightToLeft ? "rtl" : string.Empty;
+    string lang = WorkContext.CurrentCultureCode.LeftOf('-');
+
+    if (IsRightToLeft)
+    {
+        Style.IncludeExternal("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.2.0-rc2/css/bootstrap-rtl.min.css");
+    }
+}
+
+<!DOCTYPE html>
+<html lang="@lang">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @RenderMetas()
+    <title>@ViewBag.Title - @siteName</title>
+    @RenderStyles()
+    @RenderSection("styles", required: false)
+
+    <style type="text/css">
+        .input-group-btn button.btn-primary {
+            margin-top: 0px !important;
+        }
+    </style>
+
+    <!--[if lt IE 9]>
+    <script src="/Themes/EShopper/Scripts/html5shiv.js"></script>
+    <script src="/Themes/EShopper/Scripts/respond.min.js"></script>
+    <![endif]-->
+    <link rel="shortcut icon" href="images/ico/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/Themes/EShopper/Content/images/ico/apple-touch-icon-144-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/Themes/EShopper/Content/images/ico/apple-touch-icon-114-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/Themes/EShopper/Content/images/ico/apple-touch-icon-72-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" href="/Themes/EShopper/Content/images/ico/apple-touch-icon-57-precomposed.png" />
+</head>
+<body dir="@dir">
+    @Html.Partial("Header")
+
+    @RenderBody()
+
+    @Html.Partial("Footer")
+
+    @RenderScripts()
+    @RenderSection("scripts", required: false)
+</body>
+</html>

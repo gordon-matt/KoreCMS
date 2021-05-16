@@ -215,10 +215,10 @@ namespace Kore.Collections
             return table;
         }
 
-        public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source)
-        {
-            return new HashSet<T>(source);
-        }
+        //public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source)
+        //{
+        //    return new HashSet<T>(source);
+        //}
 
         public static List<T> ToListOf<T>(this IEnumerable enumerable)
         {

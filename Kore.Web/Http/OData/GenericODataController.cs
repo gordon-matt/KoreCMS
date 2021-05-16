@@ -5,10 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
 using System.Web.Http.Results;
-using System.Web.OData;
-using System.Web.OData.Query;
 using Castle.Core.Logging;
 using Kore.Caching;
 using Kore.Data;
@@ -17,6 +14,8 @@ using Kore.EntityFramework.Data;
 using Kore.Infrastructure;
 using Kore.Logging;
 using Kore.Web.Security.Membership.Permissions;
+using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Query;
 
 namespace Kore.Web.Http.OData
 {

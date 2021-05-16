@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.OData;
 using Kore.Caching;
 using Kore.Configuration.Domain;
 using Kore.Data;
 using Kore.Web.Configuration;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
+using Microsoft.AspNet.OData;
 
 namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
 {

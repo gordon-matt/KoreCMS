@@ -1,14 +1,14 @@
 ﻿using System.Web.Http;
-using System.Web.OData.Builder;
 using Kore.Configuration.Domain;
 using Kore.Logging.Domain;
 using Kore.Security.Membership;
 using Kore.Tasks.Domain;
+using Kore.Tenants.Domain;
 using Kore.Web.Areas.Admin.Configuration.Models;
 using Kore.Web.Areas.Admin.Membership.Controllers.Api;
 using Kore.Web.Areas.Admin.Plugins.Models;
-using System.Web.OData.Extensions;
-using Kore.Tenants.Domain;
+using Microsoft.AspNet.OData.Builder;
+using Microsoft.AspNet.OData.Extensions;
 
 namespace Kore.Web.Infrastructure
 {

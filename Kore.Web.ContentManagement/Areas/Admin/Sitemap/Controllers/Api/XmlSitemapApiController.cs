@@ -6,8 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Http;
-using System.Web.OData;
-using System.Web.OData.Query;
 using System.Xml.Serialization;
 using Kore.Collections;
 using Kore.Data;
@@ -17,6 +15,8 @@ using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Models;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
+using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Query;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Sitemap.Controllers.Api
 {

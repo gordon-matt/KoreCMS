@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.OData;
 using Kore.Caching;
 using Kore.Infrastructure;
 using Kore.Localization;
@@ -10,6 +9,7 @@ using Kore.Localization.Domain;
 using Kore.Localization.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
+using Microsoft.AspNet.OData;
 using LanguageEntity = Kore.Localization.Domain.Language;
 
 namespace Kore.Web.Areas.Admin.Localization.Controllers.Api

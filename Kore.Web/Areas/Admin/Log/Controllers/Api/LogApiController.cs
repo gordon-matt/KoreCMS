@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.OData;
 using Kore.Logging.Domain;
 using Kore.Logging.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
+using Microsoft.AspNet.OData;
 
 namespace Kore.Web.Areas.Admin.Log.Controllers.Api
 {

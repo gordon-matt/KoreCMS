@@ -163,6 +163,12 @@ namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers
 
             var userIds = model.Select(x => x.UserId).Distinct();
             var userNames = (await membershipService.Value.GetUsers(WorkContext.CurrentTenant.Id, x => userIds.Contains(x.Id))).ToDictionary(k => k.Id, v => v.UserName);
+            var userNames2 = (await membershipService.Value.GetUsers(null, x => userIds.Contains(x.Id))).ToDictionary(k => k.Id, v => v.UserName);
+            
+            foreach (var keyValue in userNames2)
+            {
+                userNames.Add(keyValue.Key, keyValue.Value);
+            }
 
             int total = await postService.Value.CountAsync();
 

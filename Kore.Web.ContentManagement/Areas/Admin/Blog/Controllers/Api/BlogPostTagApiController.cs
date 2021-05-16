@@ -1,4 +1,4 @@
-﻿using System.Web.OData;
+﻿using Microsoft.AspNet.OData;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 {

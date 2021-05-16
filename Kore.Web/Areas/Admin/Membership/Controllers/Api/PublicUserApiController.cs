@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.OData;
-using System.Web.OData.Query;
 using Kore.Collections;
 using Kore.Security.Membership;
+using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Query;
 
 namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
 {

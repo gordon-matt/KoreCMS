@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Compilation;
 using System.Web.Hosting;
 using Castle.Core.Logging;
+using Kore.Infrastructure;
 using Kore.Logging;
 using Kore.Web.Plugins;
 
@@ -46,6 +47,13 @@ namespace Kore.Web.Plugins
 
         static PluginManager()
         {
+            // Because this code gets run before "Application_Start()", then we need to ensure the EngineContext is initialized.
+            //  Better if this wasn't here, but don't have a better solution at the moment
+            if (EngineContext.Default == null)
+            {
+                EngineContext.Default = new KoreWebEngine();
+            }
+
             Logger = LoggingUtilities.Resolve();
         }
 

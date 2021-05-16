@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.OData;
-using System.Web.OData.Query;
 using Kore.Collections;
 using Kore.Security.Membership;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
@@ -12,6 +10,8 @@ using Kore.Web.ContentManagement.Areas.Admin.Blog.Services;
 using Kore.Web.ContentManagement.Areas.Admin.Media;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
+using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Query;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Blog.Controllers.Api
 {

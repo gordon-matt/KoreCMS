@@ -5,14 +5,14 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.OData;
-using System.Web.OData.Query;
 using Castle.Core.Logging;
 using Kore.Collections;
 using Kore.Infrastructure;
 using Kore.Security.Membership;
 using Kore.Threading;
 using Kore.Web.Security.Membership.Permissions;
+using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Query;
 
 namespace Kore.Web.Areas.Admin.Membership.Controllers.Api
 {

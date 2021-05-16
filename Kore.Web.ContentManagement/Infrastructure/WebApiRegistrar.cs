@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Web.Http;
-using System.Web.OData.Builder;
-using System.Web.OData.Extensions;
 using Kore.Localization.Domain;
 using Kore.Localization.Models;
 using Kore.Web.ContentManagement.Areas.Admin.Blog.Domain;
@@ -14,6 +12,8 @@ using Kore.Web.ContentManagement.Areas.Admin.Pages.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.Sitemap.Models;
 using Kore.Web.Infrastructure;
+using Microsoft.AspNet.OData.Builder;
+using Microsoft.AspNet.OData.Extensions;
 
 namespace Kore.Web.ContentManagement.Infrastructure
 {

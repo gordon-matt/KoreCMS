@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using System.Web.OData;
-using System.Web.OData.Query;
 using Kore.Collections;
 using Kore.Web.Areas.Admin.Configuration.Models;
 using Kore.Web.Configuration;
 using Kore.Web.Mvc.Themes;
 using Kore.Web.Security.Membership.Permissions;
+using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Query;
 
 namespace Kore.Web.Areas.Admin.Configuration.Controllers.Api
 {

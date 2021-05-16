@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using System.Web.OData;
 using Kore.Data;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
+using Microsoft.AspNet.OData;
 using MessageTemplateEntity = Kore.Web.ContentManagement.Areas.Admin.Messaging.Domain.MessageTemplate;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.Messaging.Controllers.Api

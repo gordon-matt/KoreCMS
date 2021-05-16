@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.OData;
 using Kore.Data;
 using Kore.Tasks.Domain;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
+using Microsoft.AspNet.OData;
 using KoreTask = Kore.Tasks.Task;
 
 namespace Kore.Web.Areas.Admin.ScheduledTasks.Controllers.Api

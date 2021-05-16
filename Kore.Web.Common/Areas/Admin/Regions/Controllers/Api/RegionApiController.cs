@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.OData;
 using Kore.Localization.Domain;
 using Kore.Localization.Services;
 using Kore.Web.Common.Areas.Admin.Regions.Domain;
 using Kore.Web.Common.Areas.Admin.Regions.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
+using Microsoft.AspNet.OData;
 
 namespace Kore.Web.Common.Areas.Admin.Regions.Controllers.Api
 {

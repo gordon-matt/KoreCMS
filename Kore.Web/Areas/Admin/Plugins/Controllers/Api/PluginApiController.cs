@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.OData;
-using System.Web.OData.Query;
 using Castle.Core.Logging;
 using Kore.Collections;
 using Kore.Infrastructure;
 using Kore.Web.Areas.Admin.Plugins.Models;
 using Kore.Web.Plugins;
 using Kore.Web.Security.Membership.Permissions;
+using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Query;
 
 namespace Kore.Web.Areas.Admin.Plugins.Controllers.Api
 {

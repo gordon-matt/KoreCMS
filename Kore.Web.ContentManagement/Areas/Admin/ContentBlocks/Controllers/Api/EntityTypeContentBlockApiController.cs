@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.OData;
 using Kore.Infrastructure;
 using Kore.Localization.Domain;
 using Kore.Localization.Services;
@@ -10,6 +9,7 @@ using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Domain;
 using Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
+using Microsoft.AspNet.OData;
 
 namespace Kore.Web.ContentManagement.Areas.Admin.ContentBlocks.Controllers.Api
 {

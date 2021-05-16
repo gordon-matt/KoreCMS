@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
-using System.Web.OData.Extensions;
 using Kore.Infrastructure;
 using Kore.Web.Infrastructure;
+using Microsoft.AspNet.OData.Extensions;
 
 namespace KoreCMS
 {

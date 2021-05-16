@@ -4,8 +4,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.OData;
-using System.Web.OData.Query;
 using Kore.Collections;
 using Kore.Localization;
 using Kore.Plugins.Maintenance.Watchdog.Data.Domain;
@@ -13,6 +11,8 @@ using Kore.Plugins.Maintenance.Watchdog.Models;
 using Kore.Plugins.Maintenance.Watchdog.Services;
 using Kore.Web.Http.OData;
 using Kore.Web.Security.Membership.Permissions;
+using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Query;
 using Newtonsoft.Json;
 
 namespace Kore.Plugins.Maintenance.Watchdog.Controllers.Api

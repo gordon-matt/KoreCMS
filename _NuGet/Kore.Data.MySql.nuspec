@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>KoreFramework.Data.MySql</id>
-    <version>1.1.0</version>
+    <version>1.1.3</version>
     <title>KoreFramework.Data.MySql</title>
     <authors>Matt Gordon</authors>
     <owners>Matt Gordon</owners>
@@ -13,22 +13,19 @@
     <tags>Kore Framework MySql</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.8">
-        <dependency id="KoreFramework" version="1.1.0" />
-		<dependency id="BouncyCastle.Crypto" version="1.8.5" />
+        <dependency id="KoreFramework" version="1.1.3" />
+		<dependency id="BouncyCastle" version="1.8.5" />
 		<dependency id="EntityFramework" version="6.4.4" />
-		<dependency id="EntityFramework.SqlServer" version="6.4.4" />
 		<dependency id="Google.Protobuf" version="3.17.0" />
 		<dependency id="K4os.Compression.LZ4" version="1.1.11" />
 		<dependency id="K4os.Compression.LZ4.Streams" version="1.1.11" />
 		<dependency id="K4os.Hash.xxHash" version="1.0.6" />
 		<dependency id="MySql.Data" version="8.0.25" />
-		<dependency id="MySql.Data.Entity.EF6" version="6.10.7" />
+		<dependency id="MySql.Data.Entity" version="6.10.7" />
 		<dependency id="System.Buffers" version="4.5.1" />
 		<dependency id="System.Memory" version="4.5.4" />
 		<dependency id="System.Numerics.Vectors" version="4.5.0" />
 		<dependency id="System.Runtime.CompilerServices.Unsafe" version="5.0.0" />
-		<dependency id="Ubiety.Dns.Core" version="8.0.25" />
-		<dependency id="Zstandard.Net" version="8.0.25" />
       </group>
     </dependencies>
   </metadata>

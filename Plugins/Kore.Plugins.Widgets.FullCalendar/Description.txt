@@ -2,7 +2,7 @@
 FriendlyName: Full Calendar
 SystemName: Kore.Plugins.Widgets.FullCalendar
 Version: 2.3.1
-SupportedVersions: 1.00
+SupportedVersions: 1.1.0
 Author: Widecommerce
 DisplayOrder: 1
 FileName: Kore.Plugins.Widgets.FullCalendar.dll

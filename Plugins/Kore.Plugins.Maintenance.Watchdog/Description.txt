@@ -1,8 +1,8 @@
 ﻿Group: Maintenance
 FriendlyName: Watchdog
 SystemName: Kore.Plugins.Maintenance.Watchdog
-Version: 1.00
-SupportedVersions: 1.00
+Version: 1.1.0
+SupportedVersions: 1.1.0
 Author: Matt Gordon
 DisplayOrder: 1
 FileName: Kore.Plugins.Maintenance.Watchdog.dll

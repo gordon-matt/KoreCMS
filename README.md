@@ -10,10 +10,23 @@ Kore is both a CMS and just a general purpose MVC5 web framework, built up with 
 
 ## Tech
 
-| | | |
-| :---: | :---: | :---: |
-|[<br />![Durandal](https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/NET%20MVC.png) ](https://docs.microsoft.com/en-us/aspnet/mvc/mvc5)|[<br />![Durandal](https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/Durandal.jpg) ](https://github.com/BlueSpire/Durandal)|[<br />![Web API OData](https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/OData.png) ](https://github.com/OData/WebApi)|
-| [<br />![Bootstrap](https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/Bootstrap.jpg) ](http://getbootstrap.com/) |[<br />![KendoUI](https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/KendoUI.png) ](https://github.com/telerik/kendo-ui-core)
+<p align="left">
+    <a href="https://docs.microsoft.com/en-us/aspnet/mvc/mvc5" target="_blank" rel="noreferrer">
+        <img src="https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/NET%20MVC.png" alt="dotnet" height="60"/>
+    </a>&nbsp;&nbsp;&nbsp;
+    <a href="https://github.com/BlueSpire/Durandal" target="_blank" rel="noreferrer">
+        <img src="https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/Durandal.jpg" alt="dotnet" height="60"/>
+    </a>&nbsp;
+    <a href="https://github.com/OData/WebApi" target="_blank" rel="noreferrer">
+        <img src="https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/OData.png" alt="dotnet" height="60"/>
+    </a>&nbsp;
+    <a href="http://getbootstrap.com/" target="_blank" rel="noreferrer">
+        <img src="https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/Bootstrap.jpg" alt="dotnet" height="60"/>
+    </a>&nbsp;
+    <a href="https://github.com/telerik/kendo-ui-core" target="_blank" rel="noreferrer">
+        <img src="https://raw.githubusercontent.com/gordon-matt/KoreCMS/master/_SolutionItems/Logos/KendoUI.png" alt="dotnet" height="60"/>
+    </a>
+</p>
 
 ## Features
 
@@ -41,13 +54,17 @@ Simply clone or download the source, build and run it... On startup, you will be
 
 If you would like to use NuGet packages, you can find them here:
 
-- https://www.nuget.org/packages/KoreFramework/
-- https://www.nuget.org/packages/KoreFramework.EntityFramework/
-- https://www.nuget.org/packages/KoreFramework.Web/
-- https://www.nuget.org/packages/KoreFramework.Web.Common/
-- https://www.nuget.org/packages/KoreFramework.Web.CommonResources/
-- https://www.nuget.org/packages/KoreFramework.Web.ContentManagement/
-- https://www.nuget.org/packages/KoreFramework.Web.Identity/
+| Package | Version | Downloads |
+|---------|---------|-----------|
+| KoreFramework | [![NuGet](https://img.shields.io/nuget/v/KoreFramework?style=flat-square&logo=nuget&label=Version)](https://www.nuget.org/packages/KoreFramework) | [![NuGet](https://img.shields.io/nuget/dt/KoreFramework?style=flat-square&logo=nuget&label=Downloads)](https://www.nuget.org/packages/KoreFramework) |
+| KoreFramework.EntityFramework | [![NuGet](https://img.shields.io/nuget/v/KoreFramework.EntityFramework?style=flat-square&logo=nuget&label=Version)](https://www.nuget.org/packages/KoreFramework.EntityFramework) | [![NuGet](https://img.shields.io/nuget/dt/KoreFramework.EntityFramework?style=flat-square&logo=nuget&label=Downloads)](https://www.nuget.org/packages/KoreFramework.EntityFramework) |
+| KoreFramework.Data.PostgreSql | [![NuGet](https://img.shields.io/nuget/v/KoreFramework.Data.PostgreSql?style=flat-square&logo=nuget&label=Version)](https://www.nuget.org/packages/KoreFramework.Data.PostgreSql) | [![NuGet](https://img.shields.io/nuget/dt/KoreFramework.Data.PostgreSql?style=flat-square&logo=nuget&label=Downloads)](https://www.nuget.org/packages/KoreFramework.Data.PostgreSql) |
+| KoreFramework.Data.MySql | [![NuGet](https://img.shields.io/nuget/v/KoreFramework.Data.MySql?style=flat-square&logo=nuget&label=Version)](https://www.nuget.org/packages/KoreFramework.Data.MySql) | [![NuGet](https://img.shields.io/nuget/dt/KoreFramework.Data.MySql?style=flat-square&logo=nuget&label=Downloads)](https://www.nuget.org/packages/KoreFramework.Data.MySql) |
+| KoreFramework.Web | [![NuGet](https://img.shields.io/nuget/v/KoreFramework.Web?style=flat-square&logo=nuget&label=Version)](https://www.nuget.org/packages/KoreFramework.Web) | [![NuGet](https://img.shields.io/nuget/dt/KoreFramework.Web?style=flat-square&logo=nuget&label=Downloads)](https://www.nuget.org/packages/KoreFramework.Web) |
+| KoreFramework.Web.Common | [![NuGet](https://img.shields.io/nuget/v/KoreFramework.Web.Common?style=flat-square&logo=nuget&label=Version)](https://www.nuget.org/packages/KoreFramework.Web.Common) | [![NuGet](https://img.shields.io/nuget/dt/KoreFramework.Web.Common?style=flat-square&logo=nuget&label=Downloads)](https://www.nuget.org/packages/KoreFramework.Web.Common) |
+| KoreFramework.Web.CommonResources | [![NuGet](https://img.shields.io/nuget/v/KoreFramework.Web.CommonResources?style=flat-square&logo=nuget&label=Version)](https://www.nuget.org/packages/KoreFramework.Web.CommonResources) | [![NuGet](https://img.shields.io/nuget/dt/KoreFramework.Web.CommonResources?style=flat-square&logo=nuget&label=Downloads)](https://www.nuget.org/packages/KoreFramework.Web.CommonResources) |
+| KoreFramework.Web.ContentManagement | [![NuGet](https://img.shields.io/nuget/v/KoreFramework.Web.ContentManagement?style=flat-square&logo=nuget&label=Version)](https://www.nuget.org/packages/KoreFramework.Web.ContentManagement) | [![NuGet](https://img.shields.io/nuget/dt/KoreFramework.Web.ContentManagement?style=flat-square&logo=nuget&label=Downloads)](https://www.nuget.org/packages/KoreFramework.Web.ContentManagement) |
+| KoreFramework.Web.Identity | [![NuGet](https://img.shields.io/nuget/v/KoreFramework.Web.Identity?style=flat-square&logo=nuget&label=Version)](https://www.nuget.org/packages/KoreFramework.Web.Identity) | [![NuGet](https://img.shields.io/nuget/dt/KoreFramework.Web.Identity?style=flat-square&logo=nuget&label=Downloads)](https://www.nuget.org/packages/KoreFramework.Web.Identity) |
 
 ## License
 
